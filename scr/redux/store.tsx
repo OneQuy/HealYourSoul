@@ -1,4 +1,4 @@
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { useDispatch, useSelector } from 'react-redux'
 import type { TypedUseSelectorHook } from 'react-redux'
 import {
@@ -20,7 +20,9 @@ const persistConfig = {
   storage: AsyncStorage
 }
 
-const persistedReducer = persistReducer(persistConfig, loginSlice)
+const reducers = combineReducers({login: loginSlice});
+
+const persistedReducer = persistReducer(persistConfig, reducers);
 
 export const store = configureStore({
   reducer: persistedReducer,
