@@ -1,10 +1,16 @@
-import { View, Text, StyleSheet, Image, } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity, } from 'react-native'
 import React from 'react'
 import { FontSize, Outline, Size } from '../../app_common/AppConstants';
+import { useAppDispatch, useAppSelector } from '../../redux/store';
+import { LoginState, login } from '../../redux/loginSlice';
 
 const imgTmp = 'https://i.ytimg.com/vi/4cJF1EHfVQg/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCabcnXx7w38merVU5KlBHXHb-paA';
 
 const MediaWithCopyrightScreen = () => {
+  const userID = useAppSelector((state: LoginState) => state.userID);
+  const dispatch = useAppDispatch();
+
+  console.log(userID);
 
   // main render
 
@@ -26,6 +32,9 @@ const MediaWithCopyrightScreen = () => {
         <Text style={style.creditAuthorTxt}>Author</Text>
       </View>
 
+    <TouchableOpacity onPress={() => dispatch(login(Math.random().toString(36)))}>
+      <Text> set usr name</Text>
+    </TouchableOpacity>
     </View>
   )
 }

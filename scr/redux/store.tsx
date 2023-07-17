@@ -1,21 +1,30 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { useDispatch, useSelector } from 'react-redux'
 import type { TypedUseSelectorHook } from 'react-redux'
+import {
+  persistStore,
+  persistReducer,
+} from 'redux-persist'
 
-import counterReducer from '../features/counter/counterSlice'
+import loginSlice from './loginSlice'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+
+const persistConfig = {
+  key: 'root',
+  version: 1,
+  storage: AsyncStorage
+}
+
+const persistedReducer = persistReducer(persistConfig, loginSlice)
 
 export const store = configureStore({
-    reducer: {
-      counter: counterReducer,
-    },
-  })
+  reducer: persistedReducer,
+})
 
-// Infer the `RootState` and `AppDispatch` types from the store itself
+export const persistor = persistStore(store)
+
 export type RootState = ReturnType<typeof store.getState>
-// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch
 
-
-// Use throughout your app instead of plain `useDispatch` and `useSelector`
 export const useAppDispatch: () => AppDispatch = useDispatch
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
