@@ -11,8 +11,18 @@ export enum ScreenName {
 
 export enum  Outline {
   Horizontal = wp('4%'),
+  GapVertical = hp('1%'),
 }
 
+// size
+
+export enum  Size {
+  WP100 = wp('100%'),
+}
+
+// font size
+
 export enum FontSize {
-  Title = wp('5%'),
+  Big = wp('7%'),
+  Normal = wp('5%'),
 }
