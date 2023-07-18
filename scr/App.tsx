@@ -25,7 +25,7 @@ const AppRender = () => {
   const isLightTheme = useAppSelector((state: RootState) => state.misc.isLightTheme);
 
   return (
-    <ThemeContext.Provider value={GetColors(false)} >
+    <ThemeContext.Provider value={GetColors(isLightTheme)} >
       <View style={CommonStyles.flex_1}>
         {
           loadedAppData ? <Navigator /> : <SplashScreen />
