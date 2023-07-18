@@ -1,13 +1,16 @@
 import { View } from 'react-native'
-import React from 'react'
+import React, { createContext } from 'react'
 import { CommonStyles } from './common/CommonConstants'
 import Navigator from './navigation/Navigator'
 import { PersistGate } from 'redux-persist/integration/react'
 import { Provider } from 'react-redux'
-import { persistor, store } from './redux/Store'
+import { RootState, persistor, store, useAppSelector } from './redux/Store'
 import useAsyncHandle from './hooks/useAsyncHandle'
 import { LoadAppData } from './handle/LoadAppData'
 import SplashScreen from './screens/others/SplashScreen'
+import { GetColors } from './app_common/Colors'
+
+const ThemeContext = createContext(GetColors(true));
 
 const App = () => {
   return (
@@ -21,9 +24,10 @@ const App = () => {
 
 const AppRender = () => {
   const loadedAppData = useAsyncHandle(LoadAppData);
+  const isLightTheme = useAppSelector((state: RootState) => state.misc.isLightTheme);
 
   // if (!loadedAppData)
-    return <SplashScreen />;
+    // return <SplashScreen />;
 
   return (
   <View style={CommonStyles.flex_1}>
