@@ -4,7 +4,7 @@ import { CommonStyles } from './common/CommonConstants'
 import Navigator from './navigation/Navigator'
 import { PersistGate } from 'redux-persist/integration/react'
 import { Provider } from 'react-redux'
-import { persistor, store } from './redux/store'
+import { persistor, store } from './redux/Store'
 
 const App = () => {
   return (

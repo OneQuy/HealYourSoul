@@ -1,8 +1,8 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity, } from 'react-native'
 import React from 'react'
 import { FontSize, Outline, Size } from '../../app_common/AppConstants';
-import { RootState, useAppDispatch, useAppSelector } from '../../redux/store';
-import { LoginState, login } from '../../redux/loginSlice';
+import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
+import { login } from '../../redux/LoginSlice';
 
 const imgTmp = 'https://i.ytimg.com/vi/4cJF1EHfVQg/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCabcnXx7w38merVU5KlBHXHb-paA';
 
