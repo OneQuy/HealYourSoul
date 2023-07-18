@@ -9,7 +9,7 @@ const initialState: LoginState = {
   userID: null,
 }
 
-export const loginSlice = createSlice({
+const loginSlice = createSlice({
   name: 'login',
   initialState,
   reducers: {
