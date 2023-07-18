@@ -24,13 +24,12 @@ const AppRender = () => {
   const loadedAppData = useAsyncHandle(LoadAppData);
   const isLightTheme = useAppSelector((state: RootState) => state.misc.isLightTheme);
 
-  // if (!loadedAppData)
-  return <SplashScreen />;
-
   return (
-    <ThemeContext.Provider value={GetColors(isLightTheme)} >
+    <ThemeContext.Provider value={GetColors(false)} >
       <View style={CommonStyles.flex_1}>
-        <Navigator />
+        {
+          loadedAppData ? <Navigator /> : <SplashScreen />
+        }        
       </View>
     </ThemeContext.Provider>);
 }

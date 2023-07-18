@@ -7,13 +7,12 @@ const logoScr = require('../../../assets/images/logo.png');
 
 const SplashScreen = () => {
     const theme = useContext(ThemeContext);
-    console.log(theme);
     
     return (
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <View style={{backgroundColor: theme.background, flex: 1, justifyContent: 'center', alignItems: 'center'}}>
             <Image source={logoScr} style={{ width: 100, height: 100 }} />
-            <Text style={{marginTop: Outline.GapVertical, fontSize: FontSize.Big}}>Warm</Text>
-            <Text>Heal your Soul</Text>
+            <Text style={{color: theme.text, marginTop: Outline.GapVertical, fontSize: FontSize.Big}}>Warm</Text>
+            <Text style={{color: theme.text,}}>Heal your Soul</Text>
         </View>
     )
 }
