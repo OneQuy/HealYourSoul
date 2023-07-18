@@ -1,4 +1,4 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit'
+import { configureStore } from '@reduxjs/toolkit'
 import { useDispatch, useSelector } from 'react-redux'
 import type { TypedUseSelectorHook } from 'react-redux'
 import {
@@ -11,16 +11,14 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist'
-import loginSlice from './LoginSlice'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { reducers } from './Reducers'
 
 const persistConfig = {
   key: 'root',
   version: 1,
   storage: AsyncStorage
 }
-
-const reducers = combineReducers({login: loginSlice});
 
 const persistedReducer = persistReducer(persistConfig, reducers);
 
