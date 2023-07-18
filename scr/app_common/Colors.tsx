@@ -1,3 +1,5 @@
+import { createContext } from "react";
+
 export type ThemeColor = {
     background: string,
     text: string,
@@ -16,3 +18,5 @@ const DarkColors: ThemeColor = {
 export function GetColors(isLight: boolean) {
     return isLight ? LightColors : DarkColors;
 }
+
+export const ThemeContext = createContext(GetColors(true));

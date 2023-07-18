@@ -1,5 +1,5 @@
 import { View } from 'react-native'
-import React, { createContext } from 'react'
+import React from 'react'
 import { CommonStyles } from './common/CommonConstants'
 import Navigator from './navigation/Navigator'
 import { PersistGate } from 'redux-persist/integration/react'
@@ -8,9 +8,7 @@ import { RootState, persistor, store, useAppSelector } from './redux/Store'
 import useAsyncHandle from './hooks/useAsyncHandle'
 import { LoadAppData } from './handle/LoadAppData'
 import SplashScreen from './screens/others/SplashScreen'
-import { GetColors } from './app_common/Colors'
-
-const ThemeContext = createContext(GetColors(true));
+import { GetColors, ThemeContext } from './app_common/Colors'
 
 const App = () => {
   return (
@@ -27,12 +25,14 @@ const AppRender = () => {
   const isLightTheme = useAppSelector((state: RootState) => state.misc.isLightTheme);
 
   // if (!loadedAppData)
-    // return <SplashScreen />;
+  return <SplashScreen />;
 
   return (
-  <View style={CommonStyles.flex_1}>
-    <Navigator />
-  </View>);
+    <ThemeContext.Provider value={GetColors(isLightTheme)} >
+      <View style={CommonStyles.flex_1}>
+        <Navigator />
+      </View>
+    </ThemeContext.Provider>);
 }
 
 export default App
