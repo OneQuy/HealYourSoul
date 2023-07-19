@@ -1,6 +1,6 @@
 import { View } from 'react-native'
 import React from 'react'
-import { CommonStyles } from './common/CommonConstants'
+import { CommonStyles } from './constants/CommonConstants'
 import Navigator from './navigation/Navigator'
 import { PersistGate } from 'redux-persist/integration/react'
 import { Provider } from 'react-redux'
@@ -8,7 +8,7 @@ import { RootState, persistor, store, useAppSelector } from './redux/Store'
 import useAsyncHandle from './hooks/useAsyncHandle'
 import { LoadAppData } from './handle/LoadAppData'
 import SplashScreen from './screens/others/SplashScreen'
-import { GetColors, ThemeContext } from './app_common/Colors'
+import { GetColors, ThemeContext } from './constants/Colors'
 
 const App = () => {
   return (

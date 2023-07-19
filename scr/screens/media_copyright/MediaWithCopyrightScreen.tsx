@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity, } from 'react-native'
 import React from 'react'
-import { FontSize, Outline, Size } from '../../app_common/AppConstants';
+import { FontSize, Outline, Size } from '../../constants/AppConstants';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { login } from '../../redux/LoginSlice';
 

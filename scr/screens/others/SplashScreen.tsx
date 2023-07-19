@@ -1,7 +1,7 @@
 import { View, Text, Image } from 'react-native'
 import React, { useContext } from 'react'
-import { FontSize, Outline } from '../../app_common/AppConstants';
-import { ThemeContext } from '../../app_common/Colors';
+import { FontSize, Outline } from '../../constants/AppConstants';
+import { ThemeContext } from '../../constants/Colors';
 
 const logoScr = require('../../../assets/images/logo.png');
 

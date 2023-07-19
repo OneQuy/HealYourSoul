@@ -4,7 +4,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import MediaWithCopyrightScreen from '../screens/media_copyright/MediaWithCopyrightScreen';
 import RealMediaScreen from '../screens/real_media/RealMediaScreen';
-import { ScreenName } from '../app_common/AppConstants';
+import { ScreenName } from '../constants/AppConstants';
 
 export type DrawerParamList = {
   [ScreenName.MediaWithCopyright]: undefined,

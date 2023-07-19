@@ -26,3 +26,9 @@ export enum FontSize {
   Big = wp('7%'),
   Normal = wp('5%'),
 }
+
+// dir / file
+
+export enum DirName {
+  MasterDir = 'master_dir',
+}
