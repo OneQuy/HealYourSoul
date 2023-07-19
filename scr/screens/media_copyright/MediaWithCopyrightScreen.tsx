@@ -1,25 +1,21 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity, } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import { FontSize, Outline, Size } from '../../constants/AppConstants';
-import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
-import { login } from '../../redux/LoginSlice';
+import { ThemeContext } from '../../constants/Colors';
 
 const imgTmp = 'https://i.ytimg.com/vi/4cJF1EHfVQg/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCabcnXx7w38merVU5KlBHXHb-paA';
 
 const MediaWithCopyrightScreen = () => {
-  const userID = useAppSelector((state: RootState) => state.login.userID);
-  const dispatch = useAppDispatch();
-
-  console.log(userID);
+  const theme = useContext(ThemeContext);
 
   // main render
 
   return (
     // master view
-    <View style={style.masterView}>
+    <View style={[style.masterView, { backgroundColor: theme.background }]}>
       {/* title */}
       <View style={style.titleView}>
-        <Text style={style.titleTxt}>Post title</Text>
+        <Text style={[style.titleTxt, { color: theme.text }]}>Post title</Text>
       </View>
 
       {/* media view */}
@@ -29,12 +25,8 @@ const MediaWithCopyrightScreen = () => {
 
       {/* credit author */}
       <View style={style.creditView}>
-        <Text style={style.creditAuthorTxt}>Author</Text>
+        <Text style={[style.creditAuthorTxt, { color: theme.text }]}>Author</Text>
       </View>
-
-    <TouchableOpacity onPress={() => dispatch(login(Math.random().toString(36)))}>
-      <Text> set usr name</Text>
-    </TouchableOpacity>
     </View>
   )
 }
