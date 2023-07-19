@@ -1,5 +1,6 @@
 import { FirebaseInit } from "../firebase/Firebase";
 import { CheckAndClearAllLocalFileBeforeLoadApp } from "./AppUtils";
+import { HandleVersionsFileAsync } from "./VersionsHandler";
 
 export async function LoadAppData() {
     // await new Promise(resolve => setTimeout(resolve, 5000))
@@ -12,10 +13,6 @@ export async function LoadAppData() {
  
      await CheckAndClearAllLocalFileBeforeLoadApp();
  
-     // setup user ID
- 
-     await SetupUserIDAsync();
-     
      // handle: versions file
          
      var error = await HandleVersionsFileAsync();
@@ -26,13 +23,13 @@ export async function LoadAppData() {
          throw 'HandleVersionsFile: Failed: ' + error;
      }
  
-     // handle: warm list file
+    //  // handle: warm list file
          
-     error = await HandleWarmOnLoadAppAsync();
+    //  error = await HandleWarmOnLoadAppAsync();
      
-     if (error)
-     {
-         //todo: dialog show here & need reload
-         throw 'HandleWarmOnLoadApp: Failed: ' + error;
-     }
+    //  if (error)
+    //  {
+    //      //todo: dialog show here & need reload
+    //      throw 'HandleWarmOnLoadApp: Failed: ' + error;
+    //  }
 }
