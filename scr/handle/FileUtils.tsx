@@ -1,5 +1,9 @@
 // https://github.com/itinance/react-native-fs
 
+// install:
+// npm install react-native-fs
+// npx pod-install ios
+
 import RNFS from "react-native-fs";
 import { DownloadProgressCallbackResult } from "react-native-fs";
 
@@ -93,13 +97,13 @@ export async function ReadTextAsync(path: string, isRLP: boolean = true): Promis
  */
 export async function DeleteFileAsync(path: string, isRLP: boolean = true): Promise<null | any> {
   try {
-    if (path) {
-      throw 'path is invalid to DeleteFileAsync';
+    if (!path) {
+      throw 'path is null/underfined';
     }
 
     path = isRLP ? RNFS.DocumentDirectoryPath + '/' + path : path;
     var isExist = await RNFS.exists(path);
-
+    console.log(path);
     if (isExist)
       await RNFS.unlink(path);
 

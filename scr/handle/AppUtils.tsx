@@ -12,7 +12,7 @@ export async function CheckAndClearAllLocalFileBeforeLoadApp() {
     let error = await DeleteFileAsync(DirName.MasterDir, true);
 
     if (error)
-        console.error('CANNOT delete', DirName.MasterDir, 'error:', error);
+        console.error('CANNOT delete: ', DirName.MasterDir, ', error:', error);
     else
         console.log('COMPLETELY DELETED all local files!');
 }

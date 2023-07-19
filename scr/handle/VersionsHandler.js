@@ -16,7 +16,7 @@ export async function HandleVersionsFileAsync() {
     }
 
     versions = result.value;
-    console.log(versions);
+
     if (Cheat('IsLog_TimeVersion'))
     {
         let now = new Date();       
