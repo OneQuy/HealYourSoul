@@ -3,7 +3,12 @@ import { Cheat } from "./Cheat";
 
 const FirebaseDBAppVersionsPath = 'app/versions';
 
-export var versions  = null;
+export type Versions = {
+    copyright: number,
+}
+
+export var versions: Versions;
+
 
 export async function HandleVersionsFileAsync() {    
     let time = new Date();       
@@ -15,12 +20,12 @@ export async function HandleVersionsFileAsync() {
         return result.error;
     }
 
-    versions = result.value;
+    versions = result.value as Versions;
 
     if (Cheat('IsLog_TimeVersion'))
     {
         let now = new Date();       
-        console.log('time version: ' + (now - time));
+        console.log('time version: ' + (now.valueOf() - time.valueOf()));
     }
     
     return null;
