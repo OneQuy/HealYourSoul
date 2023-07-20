@@ -1,6 +1,8 @@
+// install:
+// npm i @reduxjs/toolkit react-redux @react-native-async-storage/async-storage redux-persist
+
 import { configureStore } from '@reduxjs/toolkit'
-import { useDispatch, useSelector } from 'react-redux'
-import type { TypedUseSelectorHook } from 'react-redux'
+import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux'
 import {
   persistStore,
   persistReducer,
@@ -12,6 +14,7 @@ import {
   REGISTER,
 } from 'redux-persist'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+
 import { reducers } from './Reducers'
 
 const persistConfig = {
