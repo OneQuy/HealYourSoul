@@ -1,7 +1,10 @@
 import { View, Text, FlatList, ListRenderItemInfo, Image, SafeAreaView, Button, TextInput, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { MediaType } from '../../constants/Types';
 import { GetFileExtensionByFilepath } from '../../handle/UtilsTS';
+import { DownloadAndSaveFileList, DownloadAndSaveFileListAsync } from '../../handle/AppUtils';
+import { Category } from '../../constants/AppConstants';
+import { FirebaseInit } from '../../firebase/Firebase';
 
 const urll = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSv8YKWeHIPLLphkGKO_vAqq3xz3kYPTadI3Q&usqp=CAU';
 
@@ -12,12 +15,17 @@ const UploadScreen = () => {
     const [creditURL, setCreditURL] = useState('');
 
 
-    const onPressUpload = () => {
-
+    const onPressUpload =  async () => {
+       const res = await DownloadAndSaveFileListAsync(Category.Draw);
+       console.log(res.version);
     };
 
     const mediaURLs = [urll, urll, urll, urll, urll, urll, urll, urll];
    
+    useEffect(() => {
+        FirebaseInit();
+    }, []);
+
     return (
         <SafeAreaView style={{ marginHorizontal: 10, gap: 20 }}>
             <FlatList
@@ -56,7 +64,7 @@ const UploadScreen = () => {
                     <Text>quote</Text>
                 </TouchableOpacity>
             </View>
-            <Button title='Upload' />
+            <Button title='Upload' onPress={onPressUpload} />
         </SafeAreaView>
     )
 }

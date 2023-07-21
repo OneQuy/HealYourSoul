@@ -1,5 +1,5 @@
 import { Alert, NativeModules, Platform } from 'react-native';
-import { ResultCode } from '../CommonConstants';
+import { ResultCode } from '../constants/CommonConstants';
 
 // const
 

@@ -20,7 +20,7 @@ export async function CheckAndClearAllLocalFileBeforeLoadApp() {
 }
 
 export const GetListFileRLP = (cat: Category, localOrFb: boolean) => {
-    if (localOrFb) {
+    if (!localOrFb) {
         if (cat === Category.Draw)
             return FirebasePath.ListFile_Draw;
         else if (cat === Category.Real)
@@ -42,7 +42,7 @@ export const GetListFileRLP = (cat: Category, localOrFb: boolean) => {
     }
 }
 
-export async function DownloadAndSaveFileList(cat: Category): Promise<FileList> {
+export async function DownloadAndSaveFileListAsync(cat: Category): Promise<FileList> {
     const res = await FirebaseStorage_DownloadAndReadJsonAsync(GetListFileRLP(cat, false), GetListFileRLP(cat, true));
 
     if (res.error)

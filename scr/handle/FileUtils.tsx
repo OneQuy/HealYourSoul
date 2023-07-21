@@ -5,7 +5,7 @@
 // npx pod-install ios
 
 import RNFS, { DownloadProgressCallbackResult } from "react-native-fs";
-import { IsErrorObject_Empty, LoadJsonFromURLAsync } from "./Utils";
+import { LoadJsonFromURLAsync } from "./Utils";
 
 /**
  * @returns null if success, otherwise error
@@ -183,7 +183,7 @@ export async function DownloadFile_GetJsonAsync(url: string, saveLocalRelativeFi
         var s = JSON.stringify(res.json);
         var writeFileResObj = await WriteTextAsync(saveLocalRelativeFilepath, s);
 
-        if (IsErrorObject_Empty(writeFileResObj.errorObject)) // success
+        if (writeFileResObj === null) // success
         {
             return {
                 json: res.json,
@@ -194,7 +194,7 @@ export async function DownloadFile_GetJsonAsync(url: string, saveLocalRelativeFi
         {
             return {
                 json: res.json,
-                error: writeFileResObj.errorObject.error
+                error: writeFileResObj
             };
         }
     }
