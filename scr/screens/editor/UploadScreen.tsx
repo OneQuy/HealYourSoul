@@ -1,5 +1,5 @@
 import { View, Text, FlatList, ListRenderItemInfo, Image, SafeAreaView, Button, TextInput, TouchableOpacity } from 'react-native'
-import React, { useCallback, useState } from 'react'
+import React, { useState } from 'react'
 import { MediaType } from '../../constants/Types';
 import { GetFileExtensionByFilepath } from '../../handle/UtilsTS';
 
@@ -47,10 +47,10 @@ const UploadScreen = () => {
             />
             <View style={{ flexDirection: 'row', gap: 20 }}>
                 <TouchableOpacity>
-                    <Text>comic</Text>
+                    <Text>draw</Text>
                 </TouchableOpacity>
                 <TouchableOpacity>
-                    <Text>media</Text>
+                    <Text>real</Text>
                 </TouchableOpacity>
                 <TouchableOpacity>
                     <Text>quote</Text>

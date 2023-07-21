@@ -9,3 +9,8 @@ export type PostMetadata = {
     url: string,
     media: MediaType[],
 }
+
+export type FileList = {
+    version: number,
+    posts: PostMetadata[]
+}

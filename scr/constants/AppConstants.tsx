@@ -29,6 +29,23 @@ export enum FontSize {
 
 // dir / file
 
-export enum DirName {
-  MasterDir = 'master_dir',
+export enum LocalPath {
+  MasterDirName = 'master_dir',
+  ListFile_Draw = LocalPath.MasterDirName + '/draw/list.json',
+  ListFile_Real = LocalPath.MasterDirName + '/real/list.json',
+  ListFile_Quote = LocalPath.MasterDirName + '/quote/list.json'
+}
+
+export enum FirebasePath {
+  ListFile_Draw = 'draw/list.json',
+  ListFile_Real = 'real/list.json',
+  ListFile_Quote = 'quote/list.json',
+}
+
+// category
+
+export enum Category {
+  Draw = 0,
+  Real = 1,
+  Quote = 2
 }

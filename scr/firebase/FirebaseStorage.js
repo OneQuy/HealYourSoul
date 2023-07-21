@@ -1,9 +1,9 @@
 // https://firebase.google.com/docs/storage/web/download-files
 
 import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
-import { ErrorObject_Empty } from "../CommonConstants";
-import { DeleteAsync, DownloadFileAsync, DownloadFile_GetJsonAsync, IsFileOrDirExistAsync, WriteTextToFileAsync } from "../ExpoFileSystem";
-import { ErrorObject_FileNotFound, ErrorObject_NoIdentity, GetTempFileRLP, IsErrorObject_Empty } from "../Utils/Utils";
+import { ErrorObject_Empty } from "../constants/CommonConstants";
+import { ErrorObject_FileNotFound, ErrorObject_NoIdentity, GetTempFileRLP, IsErrorObject_Empty } from "../handle/Utils";
+import { DeleteFileAsync, DownloadFileAsync, DownloadFile_GetJsonAsync, IsExisted, WriteTextAsync } from "../handle/FileUtils";
 
 var storage = null;
 
@@ -57,6 +57,9 @@ export async function FirebaseStorage_GetDownloadURLAsync(relativePath)
     }
 }
 
+/**
+ * @returns null if success, otherwise error
+ */
 export async function FirebaseStorage_DownloadAsync(relativeFirebasePath, relativeLocalPath)
 {
     try {
@@ -66,29 +69,23 @@ export async function FirebaseStorage_DownloadAsync(relativeFirebasePath, relati
         
         if (urlResult.error)
         {
-            return {
-                fileFullLocalPath: null,                              
-                error: urlResult.error
-            };
+            return urlResult.error;
         }
 
-        // downoad & get full file local path
+        // downoad
 
         let result = await DownloadFileAsync(urlResult.url, relativeLocalPath);
         return result;
     } 
     catch (error) {
-        return {
-            fileFullLocalPath: null,                              
-            error: error
-        };;
+        return error;
     }
 }
 
 export async function FirebaseStorage_UploadAsync(relativeFirebasePath, fileURI) // main 
 {
     try {
-        let fileExists = await IsFileOrDirExistAsync(fileURI);
+        let fileExists = await IsExisted(fileURI);
         
         if (!fileExists)
         {
@@ -113,7 +110,7 @@ export async function FirebaseStorage_UploadTextAsFileAsync(relativeFirebasePath
     // write to local file
 
     let tempRLP = GetTempFileRLP(true);
-    let resObj = await WriteTextToFileAsync(text, tempRLP)
+    let resObj = await WriteTextAsync(tempRLP, text);
 
     // upload this file
 
@@ -128,7 +125,7 @@ export async function FirebaseStorage_UploadTextAsFileAsync(relativeFirebasePath
 
     // delete file
 
-    await DeleteAsync(tempFLP, false)
+    await DeleteFileAsync(tempFLP, false)
 
     // return
 

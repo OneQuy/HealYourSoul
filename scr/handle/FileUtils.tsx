@@ -4,8 +4,8 @@
 // npm install react-native-fs
 // npx pod-install ios
 
-import RNFS from "react-native-fs";
-import { DownloadProgressCallbackResult } from "react-native-fs";
+import RNFS, { DownloadProgressCallbackResult } from "react-native-fs";
+import { IsErrorObject_Empty, LoadJsonFromURLAsync } from "./Utils";
 
 /**
  * @returns null if success, otherwise error
@@ -103,7 +103,7 @@ export async function DeleteFileAsync(path: string, isRLP: boolean = true): Prom
 
     path = isRLP ? RNFS.DocumentDirectoryPath + '/' + path : path;
     var isExist = await RNFS.exists(path);
-    console.log(path);
+
     if (isExist)
       await RNFS.unlink(path);
 
@@ -111,6 +111,20 @@ export async function DeleteFileAsync(path: string, isRLP: boolean = true): Prom
   }
   catch (e) {
     return e;
+  }
+}
+
+export async function IsExisted(path: string, isRLP: boolean = true): Promise<boolean> {
+  try {
+    if (!path) {
+      throw 'path is null/underfined';
+    }
+
+    path = isRLP ? RNFS.DocumentDirectoryPath + '/' + path : path;
+    return await RNFS.exists(path);
+  }
+  catch (e) {
+    throw 'check IsExisted failed at path: ' + path;
   }
 }
 
@@ -148,10 +162,47 @@ export async function DownloadFileAsync(
     if (res.statusCode !== 200) {
       throw '[' + url + ']' + ' downloaded failed, code: ' + res.statusCode;
     }
-    console.log(saveLocalPath);
+
     return null;
   }
   catch (e) {
     return e;
   }
+}
+
+export async function DownloadFile_GetJsonAsync(url: string, saveLocalRelativeFilepath: string)
+{
+    // get json from url
+
+    var res = await LoadJsonFromURLAsync(url);
+
+    if (res.json) // sucess
+    {
+        // write to local
+
+        var s = JSON.stringify(res.json);
+        var writeFileResObj = await WriteTextAsync(saveLocalRelativeFilepath, s);
+
+        if (IsErrorObject_Empty(writeFileResObj.errorObject)) // success
+        {
+            return {
+                json: res.json,
+                error: null
+            };
+        }
+        else // failed
+        {
+            return {
+                json: res.json,
+                error: writeFileResObj.errorObject.error
+            };
+        }
+    }
+    else // failed
+    {
+        return {
+            json: null,
+            error: res.error
+        };
+    }
 }
