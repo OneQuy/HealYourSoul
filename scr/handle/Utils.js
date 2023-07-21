@@ -1,5 +1,10 @@
 import { Alert, NativeModules, Platform } from 'react-native';
-import { ResultCode } from '../constants/CommonConstants';
+
+export const ResultCode = {
+    JustError: 'JustError',
+    FileNotFound: 'FileNotFound',
+    NoIdentity: 'NoIdentity',
+}
 
 // const
 

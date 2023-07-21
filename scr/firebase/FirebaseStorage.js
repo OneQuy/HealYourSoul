@@ -3,7 +3,7 @@
 import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { ErrorObject_Empty } from "../constants/CommonConstants";
 import { ErrorObject_FileNotFound, ErrorObject_NoIdentity, GetTempFileRLP, IsErrorObject_Empty } from "../handle/Utils";
-import { DeleteFileAsync, DownloadFileAsync, DownloadFile_GetJsonAsync, IsExisted, WriteTextAsync } from "../handle/FileUtils";
+import { DeleteFileAsync, DownloadFileAsync, DownloadFile_GetJsonAsync, GetFLPFromRLP, IsExisted, WriteTextAsync } from "../handle/FileUtils";
 
 var storage = null;
 
@@ -82,19 +82,23 @@ export async function FirebaseStorage_DownloadAsync(relativeFirebasePath, relati
     }
 }
 
-export async function FirebaseStorage_UploadAsync(relativeFirebasePath, fileURI) // main 
+/**
+ * 
+ * @returns ErrorObject_Empty if success, ErrorObject_NoIdentity(error) if fail
+ */
+export async function FirebaseStorage_UploadAsync(relativeFirebasePath, fileFLP) // main 
 {
     try {
-        let fileExists = await IsExisted(fileURI);
+        let fileExists = await IsExisted(fileFLP, false);
         
         if (!fileExists)
         {
-            return ErrorObject_FileNotFound("Local file not found: " + fileURI);
+            return ErrorObject_FileNotFound("Local file not found: " + fileFLP);
         }
 
         CheckAndInit();
         let fireRef = ref(storage, relativeFirebasePath);         
-        let respone = await fetch(fileURI);
+        let respone = await fetch(fileFLP);
         let blob = await respone.blob();
         await uploadBytes(fireRef, blob);
         
@@ -105,23 +109,27 @@ export async function FirebaseStorage_UploadAsync(relativeFirebasePath, fileURI)
     }
 }
 
+/**
+ * 
+ * @returns ErrorObject_Empty if success, ErrorObject_NoIdentity(error) if fail
+ */
 export async function FirebaseStorage_UploadTextAsFileAsync(relativeFirebasePath, text) // sub 
 {
     // write to local file
 
     let tempRLP = GetTempFileRLP(true);
-    let resObj = await WriteTextAsync(tempRLP, text);
+    let res = await WriteTextAsync(tempRLP, text);
 
     // upload this file
 
-    if (!IsErrorObject_Empty(resObj.errorObject)) // failed
+    if (res) // failed
     {
-        return resObj.errorObject;
+        return res;
     }
-    
-    let tempFLP = resObj.fullLocalPath;
+   
+    let tempFLP = GetFLPFromRLP(tempRLP);
 
-    resObj = await FirebaseStorage_UploadAsync(relativeFirebasePath, tempFLP);
+    res = await FirebaseStorage_UploadAsync(relativeFirebasePath, tempFLP);
 
     // delete file
 
@@ -129,7 +137,7 @@ export async function FirebaseStorage_UploadTextAsFileAsync(relativeFirebasePath
 
     // return
 
-    return resObj;
+    return res;
 }
 
 export async function FirebaseStorage_DownloadAndReadJsonAsync(firebaseRelativePath, saveLocalRelativePath)

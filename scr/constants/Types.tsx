@@ -4,6 +4,7 @@ export enum MediaType {
 }
 
 export type PostMetadata = {
+    id: number,
     title: string,
     author: string,
     url: string,

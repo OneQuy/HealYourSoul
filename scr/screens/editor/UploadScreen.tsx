@@ -1,10 +1,12 @@
-import { View, Text, FlatList, ListRenderItemInfo, Image, SafeAreaView, Button, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, FlatList, ListRenderItemInfo, Image, SafeAreaView, Button, TextInput, TouchableOpacity, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { MediaType } from '../../constants/Types';
+import { MediaType, PostMetadata } from '../../constants/Types';
 import { GetFileExtensionByFilepath } from '../../handle/UtilsTS';
-import { DownloadAndSaveFileList, DownloadAndSaveFileListAsync } from '../../handle/AppUtils';
+import { DownloadAndSaveFileListAsync, GetListFileRLP } from '../../handle/AppUtils';
 import { Category } from '../../constants/AppConstants';
 import { FirebaseInit } from '../../firebase/Firebase';
+import { FirebaseStorage_UploadTextAsFileAsync } from '../../firebase/FirebaseStorage';
+import { IsErrorObject_Empty } from '../../handle/Utils';
 
 const urll = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSv8YKWeHIPLLphkGKO_vAqq3xz3kYPTadI3Q&usqp=CAU';
 
@@ -13,15 +15,34 @@ const UploadScreen = () => {
     const [title, setTitle] = useState('');
     const [author, setAuthor] = useState('');
     const [creditURL, setCreditURL] = useState('');
+    const [category, setCategory] = useState(Category.Draw);
 
 
-    const onPressUpload =  async () => {
-       const res = await DownloadAndSaveFileListAsync(Category.Draw);
-       console.log(res.version);
+    const onPressUpload = async () => {
+        const fileList = await DownloadAndSaveFileListAsync(category);
+        const latestID = fileList.posts[0].id;
+
+        const newPost: PostMetadata = {
+            id: latestID + 1,
+            author,
+            url: creditURL,
+            title,
+            media: UriArrToMediaTypeArr(mediaURIs)
+        }
+
+        fileList.posts.unshift(newPost);
+        fileList.version++;
+
+        var res = await FirebaseStorage_UploadTextAsFileAsync(GetListFileRLP(category, false), JSON.stringify(fileList, null, 1));
+
+        if (IsErrorObject_Empty(res))
+            Alert.alert('Success', 'hihi');
+        else
+            Alert.alert('Fail', JSON.stringify(res));
     };
 
     const mediaURLs = [urll, urll, urll, urll, urll, urll, urll, urll];
-   
+
     useEffect(() => {
         FirebaseInit();
     }, []);
@@ -54,14 +75,14 @@ const UploadScreen = () => {
                 onChangeText={setCreditURL}
             />
             <View style={{ flexDirection: 'row', gap: 20 }}>
-                <TouchableOpacity>
-                    <Text>draw</Text>
+                <TouchableOpacity onPress={() => setCategory(Category.Draw)}>
+                    <Text style={[category === Category.Draw ? {backgroundColor: 'pink'} : undefined]}>draw</Text>
                 </TouchableOpacity>
-                <TouchableOpacity>
-                    <Text>real</Text>
+                <TouchableOpacity onPress={() => setCategory(Category.Real)}>
+                    <Text style={[category === Category.Real ? {backgroundColor: 'pink'} : undefined]}>real</Text>
                 </TouchableOpacity>
-                <TouchableOpacity>
-                    <Text>quote</Text>
+                <TouchableOpacity onPress={() => setCategory(Category.Quote)}>
+                    <Text style={[category === Category.Quote ? {backgroundColor: 'pink'} : undefined]}>quote</Text>
                 </TouchableOpacity>
             </View>
             <Button title='Upload' onPress={onPressUpload} />
@@ -73,17 +94,15 @@ const UriArrToMediaTypeArr = (uris: string[]) => {
     return uris.map(i => GetMediaTypeByFileExtension(GetFileExtensionByFilepath(i)));
 }
 
-
-function GetMediaTypeByFileExtension(extension: string) : MediaType
-{
+function GetMediaTypeByFileExtension(extension: string): MediaType {
     extension = extension.toLowerCase();
 
-    if (extension == 'jpg' || 
+    if (extension == 'jpg' ||
         extension == 'jpeg' ||
         extension == 'gif' ||
         extension == 'png')
         return MediaType.Image;
-    else if (extension == 'mp4')        
+    else if (extension == 'mp4')
         return MediaType.Video;
     else
         throw new Error(extension + ' extention is not able to regconize');

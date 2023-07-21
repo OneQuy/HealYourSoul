@@ -47,6 +47,7 @@ export async function WriteTextAsync(path: string, text: string | null, isRLP: b
     // write
 
     await RNFS.writeFile(path, text ? text : '');
+
     return null;
   }
   catch (e) {
@@ -205,4 +206,8 @@ export async function DownloadFile_GetJsonAsync(url: string, saveLocalRelativeFi
             error: res.error
         };
     }
+}
+
+export function GetFLPFromRLP(rlp: string): string {
+  return RNFS.DocumentDirectoryPath + '/' + rlp;
 }
