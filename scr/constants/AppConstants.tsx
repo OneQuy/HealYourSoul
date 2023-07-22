@@ -42,6 +42,12 @@ export enum FirebasePath {
   ListFile_Quote = 'quote/list.json',
 }
 
+export enum FirebaseDBPath {
+  Version_Draw = 'app/versions/draw',
+  Version_Real = 'app/versions/real',
+  Version_Quote = 'app/versions/quote'
+}
+
 // category
 
 export enum Category {

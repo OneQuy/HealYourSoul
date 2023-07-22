@@ -5,7 +5,7 @@
 // npx pod-install ios
 
 import RNFS, { DownloadProgressCallbackResult } from "react-native-fs";
-import { LoadJsonFromURLAsync } from "./Utils";
+import { LoadJsonFromURLAsync, TempDirName } from "./Utils";
 
 /**
  * @returns null if success, otherwise error
@@ -113,6 +113,13 @@ export async function DeleteFileAsync(path: string, isRLP: boolean = true): Prom
   catch (e) {
     return e;
   }
+}
+
+/**
+ * @returns null if not existed or deleted success, otherwise error
+ */
+export async function DeleteTempDirAsync() {
+  return await DeleteFileAsync(TempDirName, true);
 }
 
 export async function IsExisted(path: string, isRLP: boolean = true): Promise<boolean> {

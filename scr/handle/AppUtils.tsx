@@ -1,4 +1,4 @@
-import { Category, FirebasePath, LocalPath } from "../constants/AppConstants";
+import { Category, FirebaseDBPath, FirebasePath, LocalPath } from "../constants/AppConstants";
 import { FileList } from "../constants/Types";
 import { FirebaseStorage_DownloadAndReadJsonAsync } from "../firebase/FirebaseStorage";
 import { Cheat } from "./Cheat";
@@ -40,6 +40,17 @@ export const GetListFileRLP = (cat: Category, localOrFb: boolean) => {
         else
             throw new Error('GetListFileRLP: ' + cat);
     }
+}
+
+export const GetDBPath = (cat: Category) => {
+    if (cat === Category.Draw)
+        return FirebaseDBPath.Version_Draw;
+    else if (cat === Category.Real)
+        return FirebaseDBPath.Version_Real;
+    else if (cat === Category.Quote)
+        return FirebaseDBPath.Version_Quote;
+    else
+        throw new Error('GetDBPath: ' + cat);
 }
 
 export async function DownloadAndSaveFileListAsync(cat: Category): Promise<FileList> {

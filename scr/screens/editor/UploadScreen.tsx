@@ -2,11 +2,12 @@ import { View, Text, FlatList, ListRenderItemInfo, Image, SafeAreaView, Button, 
 import React, { useEffect, useState } from 'react'
 import { MediaType, PostMetadata } from '../../constants/Types';
 import { GetFileExtensionByFilepath } from '../../handle/UtilsTS';
-import { DownloadAndSaveFileListAsync, GetListFileRLP } from '../../handle/AppUtils';
-import { Category } from '../../constants/AppConstants';
+import { DownloadAndSaveFileListAsync, GetDBPath, GetListFileRLP } from '../../handle/AppUtils';
+import { Category, FirebaseDBPath } from '../../constants/AppConstants';
 import { FirebaseInit } from '../../firebase/Firebase';
 import { FirebaseStorage_UploadTextAsFileAsync } from '../../firebase/FirebaseStorage';
 import { IsErrorObject_Empty } from '../../handle/Utils';
+import { FirebaseDatabase_IncreaseNumberAsync, FirebaseDatabase_SetValueAsync } from '../../firebase/FirebaseDatabase';
 
 const urll = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSv8YKWeHIPLLphkGKO_vAqq3xz3kYPTadI3Q&usqp=CAU';
 
@@ -16,7 +17,6 @@ const UploadScreen = () => {
     const [author, setAuthor] = useState('');
     const [creditURL, setCreditURL] = useState('');
     const [category, setCategory] = useState(Category.Draw);
-
 
     const onPressUpload = async () => {
         const fileList = await DownloadAndSaveFileListAsync(category);
@@ -35,10 +35,12 @@ const UploadScreen = () => {
 
         var res = await FirebaseStorage_UploadTextAsFileAsync(GetListFileRLP(category, false), JSON.stringify(fileList, null, 1));
 
-        if (IsErrorObject_Empty(res))
-            Alert.alert('Success', 'hihi');
+        const versionRes = await FirebaseDatabase_SetValueAsync(GetDBPath(category), fileList.version);
+
+        if (IsErrorObject_Empty(res) && !versionRes)
+            Alert.alert('Success', 'FileList & DB version: ' + fileList.version + '\nPost ID: ' + (latestID + 1)); 
         else
-            Alert.alert('Fail', JSON.stringify(res));
+            Alert.alert('Fail', JSON.stringify(res) + '\n\n' + versionRes);
     };
 
     const mediaURLs = [urll, urll, urll, urll, urll, urll, urll, urll];
