@@ -27,6 +27,31 @@ const MediaWithCopyrightScreen = () => {
       <View style={style.creditView}>
         <Text style={[style.creditAuthorTxt, { color: theme.text }]}>Author</Text>
       </View>
+
+      {/* link credit */}
+      <View style={style.creditView}>
+        <Text style={[style.creditAuthorTxt, { color: theme.text }]}>Link Author</Text>
+      </View>
+
+      {/* navi part */}
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        <TouchableOpacity style={{flex: 1}} >
+          <Text style={[{ color: theme.text }]}>Link Author</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={{flex: 1}} >
+          <Text style={[{ color: theme.text }]}>Link Author</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* menu part */}
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        <TouchableOpacity style={{flex: 1}} >
+          <Text style={[{ color: theme.text }]}>Link Author</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={{flex: 1}} >
+          <Text style={[{ color: theme.text }]}>Link Author</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   )
 }
@@ -48,8 +73,7 @@ const style = StyleSheet.create({
   },
 
   mediaView: {
-    width: Size.WP100,
-    height: Size.WP100,
+    flex: 1,
   },
 
   mediaImg: {
