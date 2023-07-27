@@ -40,7 +40,7 @@ const MediaWithCopyrightScreen = () => {
             </TouchableOpacity>
             <TouchableOpacity style={{ paddingVertical: hp('2%'), opacity: Opacity.Primary, borderTopLeftRadius: Outline.BorderRadius, borderBottomLeftRadius: Outline.BorderRadius, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
               <MaterialIcons name="keyboard-arrow-right" color={theme.counterPrimary} size={Size.IconSmaller} />
-            </TouchableOpacity>    
+            </TouchableOpacity>
           </View>
         </View>
       </View>
