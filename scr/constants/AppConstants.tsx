@@ -12,13 +12,20 @@ export enum ScreenName {
 
 export enum  Outline {
   Horizontal = wp('4%'),
+  VerticalMini = hp('0.7%'),
+
   GapVertical = hp('1%'),
+  GapHorizontal = wp('1%'),
+  
+  BorderRadius = 8,
 }
 
 // size
 
 export enum  Size {
   WP100 = wp('100%'),
+  Icon = 25,
+  IconSmaller = 20,
 }
 
 // font size
@@ -26,6 +33,7 @@ export enum  Size {
 export enum FontSize {
   Big = wp('7%'),
   Normal = wp('5%'),
+  Small = wp('3%'),
 }
 
 // dir / file

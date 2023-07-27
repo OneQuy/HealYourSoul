@@ -2,16 +2,22 @@ import { createContext } from "react";
 
 export type ThemeColor = {
     background: string,
+    primary: string,
+    counterPrimary: string,
     text: string,
 }
 
 const LightColors: ThemeColor = {
-    background: '#f2f2f2',
+    background: '#fff',
+    primary: '#fff39c',
+    counterPrimary: '#000',
     text: '#000000',
 }
 
 const DarkColors: ThemeColor = {
     background: '#0d111c',
+    primary: '#fff39c',
+    counterPrimary: '#000',
     text: '#ffffff',
 }
 
