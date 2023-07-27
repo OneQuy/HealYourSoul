@@ -53,6 +53,26 @@ export const GetDBPath = (cat: Category) => {
         throw new Error('GetDBPath: ' + cat);
 }
 
+export const GetDataFullPath = (localOrFb: boolean, cat: Category, postID: number, mediaIdx: number) => {
+    let path;
+
+    if (cat === Category.Draw)
+        path = `draw/data/${postID}/${mediaIdx}`;
+    else if (cat === Category.Real)
+        path = `real/data/${postID}/${mediaIdx}`;
+    else if (cat === Category.Quote)
+        path = `quote/data/${postID}/${mediaIdx}`;
+    else
+        throw new Error('GetDataFullPath: ' + cat);
+
+    if (localOrFb) {
+        return GetFLPFromRLP(LocalPath.MasterDirName + '/' + path)
+    }
+    else {
+       return path;
+    }
+}
+
 export async function DownloadAndSaveFileListAsync(cat: Category): Promise<FileList> {
     const res = await FirebaseStorage_DownloadAndReadJsonAsync(GetListFileRLP(cat, false), GetListFileRLP(cat, true));
 
