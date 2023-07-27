@@ -1,7 +1,8 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity, } from 'react-native'
 import React, { useContext } from 'react'
-import { FontSize, Outline, Size } from '../../constants/AppConstants';
+import { FontSize, Outline } from '../../constants/AppConstants';
 import { ThemeContext } from '../../constants/Colors';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const imgTmp = 'https://i.ytimg.com/vi/4cJF1EHfVQg/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCabcnXx7w38merVU5KlBHXHb-paA';
 
@@ -50,6 +51,7 @@ const MediaWithCopyrightScreen = () => {
         </TouchableOpacity>
         <TouchableOpacity style={{flex: 1}} >
           <Text style={[{ color: theme.text }]}>Link Author</Text>
+          <MaterialCommunityIcons name="heart" color={'blue'} size={43} />
         </TouchableOpacity>
       </View>
     </View>

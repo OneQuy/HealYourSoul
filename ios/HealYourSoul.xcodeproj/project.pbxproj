@@ -14,6 +14,9 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		7699B88040F8A987B510C191 /* libPods-HealYourSoul-HealYourSoulTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-HealYourSoul-HealYourSoulTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		C6C7F93C2A7264A900A4C9A4 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C6C7F9392A7264A900A4C9A4 /* Ionicons.ttf */; };
+		C6C7F93D2A7264A900A4C9A4 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C6C7F93A2A7264A900A4C9A4 /* MaterialCommunityIcons.ttf */; };
+		C6C7F93E2A7264A900A4C9A4 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C6C7F93B2A7264A900A4C9A4 /* MaterialIcons.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +46,9 @@
 		5DCACB8F33CDC322A6C60F78 /* libPods-HealYourSoul.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HealYourSoul.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = HealYourSoul/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-HealYourSoul-HealYourSoulTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealYourSoul-HealYourSoulTests.release.xcconfig"; path = "Target Support Files/Pods-HealYourSoul-HealYourSoulTests/Pods-HealYourSoul-HealYourSoulTests.release.xcconfig"; sourceTree = "<group>"; };
+		C6C7F9392A7264A900A4C9A4 /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
+		C6C7F93A2A7264A900A4C9A4 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
+		C6C7F93B2A7264A900A4C9A4 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -86,6 +92,7 @@
 		13B07FAE1A68108700A75B9A /* HealYourSoul */ = {
 			isa = PBXGroup;
 			children = (
+				C69092312A725F6A00AF1A4C /* Fonts */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -146,6 +153,16 @@
 				89C6BE57DB24E9ADA2F236DE /* Pods-HealYourSoul-HealYourSoulTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		C69092312A725F6A00AF1A4C /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				C6C7F9392A7264A900A4C9A4 /* Ionicons.ttf */,
+				C6C7F93A2A7264A900A4C9A4 /* MaterialCommunityIcons.ttf */,
+				C6C7F93B2A7264A900A4C9A4 /* MaterialIcons.ttf */,
+			);
+			name = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -244,6 +261,9 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				C6C7F93E2A7264A900A4C9A4 /* MaterialIcons.ttf in Resources */,
+				C6C7F93D2A7264A900A4C9A4 /* MaterialCommunityIcons.ttf in Resources */,
+				C6C7F93C2A7264A900A4C9A4 /* Ionicons.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
