@@ -31,7 +31,7 @@ export enum Size {
 // opacity
 
 export enum Opacity {
- Main = 0.7,
+ Primary = 0.5,
 }
 
 // font size

@@ -35,10 +35,10 @@ const MediaWithCopyrightScreen = () => {
         <View style={{ width: '100%', height: '100%', position: 'absolute' }} >
           {/* navigation buttons */}
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', flex: 1, alignItems: 'center' }} >
-            <TouchableOpacity style={{ paddingVertical: hp('2%'), opacity: Opacity.Main, borderTopRightRadius: Outline.BorderRadius, borderBottomRightRadius: Outline.BorderRadius, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
+            <TouchableOpacity style={{ paddingVertical: hp('2%'), opacity: Opacity.Primary, borderTopRightRadius: Outline.BorderRadius, borderBottomRightRadius: Outline.BorderRadius, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
               <MaterialIcons name="keyboard-arrow-left" color={theme.counterPrimary} size={Size.IconSmaller} />
             </TouchableOpacity>
-            <TouchableOpacity style={{ paddingVertical: hp('2%'), opacity: Opacity.Main, borderTopLeftRadius: Outline.BorderRadius, borderBottomLeftRadius: Outline.BorderRadius, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
+            <TouchableOpacity style={{ paddingVertical: hp('2%'), opacity: Opacity.Primary, borderTopLeftRadius: Outline.BorderRadius, borderBottomLeftRadius: Outline.BorderRadius, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
               <MaterialIcons name="keyboard-arrow-right" color={theme.counterPrimary} size={Size.IconSmaller} />
             </TouchableOpacity>    
           </View>
