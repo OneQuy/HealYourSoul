@@ -20,24 +20,24 @@ const MediaWithCopyrightScreen = () => {
 
   return (
     // master view
-    <View style={[style.masterView, { backgroundColor: theme.background }]}>
+    <View style={{ backgroundColor: theme.background, flex: 1, gap: Outline.GapVertical, }}>
       {/* title */}
-      <View style={style.titleView}>
-        <Text style={[style.titleTxt, { color: theme.text }]}>Post title</Text>
+      <View style={{ paddingHorizontal: Outline.Horizontal, paddingTop: Outline.GapVertical }}>
+        <Text style={{ textAlignVertical: 'center', fontSize: FontSize.Normal, color: theme.text }}>Have a nice day! Have a nice day!</Text>
       </View>
 
       {/* media view */}
-      <View style={style.mediaView} >
-        <Image style={style.mediaImg} source={{ uri: imgTmp }} />
+      <View style={{ flex: 1 }} >
+        <Image style={{ width: '100%', height: '100%', }} source={{ uri: imgTmp }} />
       </View>
 
       {/* credit author */}
-      <View style={style.creditView}>
+      <View style={{ paddingHorizontal: Outline.Horizontal, }}>
         <Text style={{ fontSize: FontSize.Normal, color: theme.text }}>Author</Text>
       </View>
 
       {/* link credit */}
-      <View style={style.creditView}>
+      <View style={{ paddingHorizontal: Outline.Horizontal, }}>
         <Text style={{ fontSize: FontSize.Small, color: theme.text }}>www.google.vn</Text>
       </View>
 
@@ -71,31 +71,3 @@ const MediaWithCopyrightScreen = () => {
 }
 
 export default MediaWithCopyrightScreen;
-
-const style = StyleSheet.create({
-  masterView: {
-    flex: 1,
-    gap: Outline.GapVertical,
-  },
-
-  titleView: {
-    paddingHorizontal: Outline.Horizontal,
-  },
-
-  titleTxt: {
-    fontSize: FontSize.Big,
-  },
-
-  mediaView: {
-    flex: 1,
-  },
-
-  mediaImg: {
-    width: '100%',
-    height: '100%',
-  },
-
-  creditView: {
-    paddingHorizontal: Outline.Horizontal,
-  },
-})
