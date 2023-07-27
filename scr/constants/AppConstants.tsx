@@ -3,8 +3,9 @@ import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-nat
 // screen names
 
 export enum ScreenName {
-  MediaWithCopyright = 'Media Copyright',
+  Comic = 'Comics',
   RealMedia = 'Real Media',
+  Quote = 'Quotes',
 }
 
 // margin / padding

@@ -9,23 +9,22 @@ import useAsyncHandle from './hooks/useAsyncHandle'
 import { LoadAppData } from './handle/LoadAppData'
 import SplashScreen from './screens/others/SplashScreen'
 import { GetColors, ThemeContext } from './constants/Colors'
-import UploadScreen from './screens/editor/UploadScreen'
-
-const App = () => {
-  return (
-    <UploadScreen />
-  )
-}
 
 // const App = () => {
 //   return (
-//     <Provider store={store}>
-//       <PersistGate loading={null} persistor={persistor}>
-//         <AppRender />
-//       </PersistGate>
-//     </Provider>
+//     <UploadScreen />
 //   )
 // }
+
+const App = () => {
+  return (
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <AppRender />
+      </PersistGate>
+    </Provider>
+  )
+}
 
 const AppRender = () => {
   const loadedAppData = useAsyncHandle(LoadAppData);

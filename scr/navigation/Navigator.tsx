@@ -7,7 +7,7 @@ import RealMediaScreen from '../screens/real_media/RealMediaScreen';
 import { ScreenName } from '../constants/AppConstants';
 
 export type DrawerParamList = {
-  [ScreenName.MediaWithCopyright]: undefined,
+  [ScreenName.Comic]: undefined,
   [ScreenName.RealMedia]: undefined,
 }
 
@@ -16,8 +16,8 @@ const Drawer = createDrawerNavigator<DrawerParamList>();
 const Navigator = () => {
   return (
   <NavigationContainer>
-    <Drawer.Navigator initialRouteName={ScreenName.MediaWithCopyright}>
-      <Drawer.Screen name={ScreenName.MediaWithCopyright} component={MediaWithCopyrightScreen} />
+    <Drawer.Navigator initialRouteName={ScreenName.Comic}>
+      <Drawer.Screen name={ScreenName.Comic} component={MediaWithCopyrightScreen} />
       <Drawer.Screen name={ScreenName.RealMedia} component={RealMediaScreen} />
     </Drawer.Navigator>
   </NavigationContainer>

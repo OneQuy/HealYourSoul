@@ -2,7 +2,7 @@ import { Category, FirebaseDBPath, FirebasePath, LocalPath } from "../constants/
 import { FileList } from "../constants/Types";
 import { FirebaseStorage_DownloadAndReadJsonAsync } from "../firebase/FirebaseStorage";
 import { Cheat } from "./Cheat";
-import { DeleteFileAsync } from "./FileUtils";
+import { DeleteFileAsync, GetFLPFromRLP } from "./FileUtils";
 
 /**
  * cheat clear whole folder data
