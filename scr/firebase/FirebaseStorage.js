@@ -1,35 +1,33 @@
 // https://firebase.google.com/docs/storage/web/download-files
 
-import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
+import { getStorage, ref, getDownloadURL, uploadBytes, deleteObject } from "firebase/storage";
 import { ErrorObject_Empty } from "../constants/CommonConstants";
 import { ErrorObject_FileNotFound, ErrorObject_NoIdentity, GetTempFileRLP, IsErrorObject_Empty } from "../handle/Utils";
 import { DeleteFileAsync, DownloadFileAsync, DownloadFile_GetJsonAsync, GetFLPFromRLP, IsExisted, WriteTextAsync } from "../handle/FileUtils";
+import { GetBlobFromFLPAsync } from "../handle/UtilsTS";
 
 var storage = null;
 
-function CheckAndInit() {    
+function CheckAndInit() {
     if (!storage)
         storage = getStorage();
 }
 
 // Usage:  
 // FirebaseStorage_GetDownloadURL('data/warm/content/0/33.mp4', (url)=>{ console.log(url); }, (error)=>{ console.error(error); }); 
-export function FirebaseStorage_GetDownloadURL(relativePath, urlCallback, errorCallback)
-{
+export function FirebaseStorage_GetDownloadURL(relativePath, urlCallback, errorCallback) {
     CheckAndInit();
     let starsRef = ref(storage, relativePath);
 
     getDownloadURL(starsRef)
         .then((url) => {
-            if (urlCallback)
-            {
+            if (urlCallback) {
                 urlCallback(url);
             }
         })
-        .catch((error) => {        
+        .catch((error) => {
             // https://firebase.google.com/docs/storage/web/handle-errors
-            if (errorCallback)
-            {
+            if (errorCallback) {
                 errorCallback(error);
             }
         });
@@ -38,17 +36,16 @@ export function FirebaseStorage_GetDownloadURL(relativePath, urlCallback, errorC
 /**
 return { url, error };
 */
-export async function FirebaseStorage_GetDownloadURLAsync(relativePath)
-{
+export async function FirebaseStorage_GetDownloadURLAsync(relativePath) {
     try {
         CheckAndInit();
-        let starsRef = ref(storage, relativePath);         
+        let starsRef = ref(storage, relativePath);
         let url = await getDownloadURL(starsRef);
         return {
             url: url,
             error: null
         };
-    } 
+    }
     catch (error) {
         return {
             url: null,
@@ -58,17 +55,30 @@ export async function FirebaseStorage_GetDownloadURLAsync(relativePath)
 }
 
 /**
+ * @returns null if sucess, otherwise error
+ */
+export async function FirebaseStorage_DeleteAsync(relativePath) {
+    try {
+        CheckAndInit();
+        const starsRef = ref(storage, relativePath);
+        await deleteObject(starsRef);
+        return null;
+    }
+    catch (error) {
+        return error;
+    }
+}
+
+/**
  * @returns null if success, otherwise error
  */
-export async function FirebaseStorage_DownloadAsync(relativeFirebasePath, relativeLocalPath)
-{
+export async function FirebaseStorage_DownloadAsync(relativeFirebasePath, relativeLocalPath) {
     try {
         // get url
 
-        let urlResult = await FirebaseStorage_GetDownloadURLAsync(relativeFirebasePath);         
-        
-        if (urlResult.error)
-        {
+        let urlResult = await FirebaseStorage_GetDownloadURLAsync(relativeFirebasePath);
+
+        if (urlResult.error) {
             return urlResult.error;
         }
 
@@ -76,34 +86,34 @@ export async function FirebaseStorage_DownloadAsync(relativeFirebasePath, relati
 
         let result = await DownloadFileAsync(urlResult.url, relativeLocalPath);
         return result;
-    } 
+    }
     catch (error) {
         return error;
     }
 }
 
 /**
- * 
  * @returns ErrorObject_Empty if success, ErrorObject_NoIdentity(error) if fail
  */
 export async function FirebaseStorage_UploadAsync(relativeFirebasePath, fileFLP) // main 
 {
     try {
         let fileExists = await IsExisted(fileFLP, false);
-        
-        if (!fileExists)
-        {
+
+        if (!fileExists) {
             return ErrorObject_FileNotFound("Local file not found: " + fileFLP);
         }
 
+        // let respone = await fetch(fileFLP); // this way get error: Network request failed
+        // let blob = await respone.blob();
+
         CheckAndInit();
-        let fireRef = ref(storage, relativeFirebasePath);         
-        let respone = await fetch(fileFLP);
-        let blob = await respone.blob();
-        await uploadBytes(fireRef, blob);
-        
+        const theRef = ref(storage, relativeFirebasePath);
+        const blob = await GetBlobFromFLPAsync(fileFLP);
+        await uploadBytes(theRef, blob);
+
         return ErrorObject_Empty;
-    } 
+    }
     catch (error) {
         return ErrorObject_NoIdentity(error);
     }
@@ -126,44 +136,43 @@ export async function FirebaseStorage_UploadTextAsFileAsync(relativeFirebasePath
     {
         return res;
     }
-   
-    let tempFLP = GetFLPFromRLP(tempRLP);
 
+    let tempFLP = GetFLPFromRLP(tempRLP, true);
     res = await FirebaseStorage_UploadAsync(relativeFirebasePath, tempFLP);
 
     // delete file
 
-    await DeleteFileAsync(tempFLP, false)
+    var delErr = await DeleteFileAsync(tempFLP, false)
+
+    if (delErr)
+        console.error('delete tempFLP after upload error: ' + delErr);
 
     // return
 
     return res;
 }
 
-export async function FirebaseStorage_DownloadAndReadJsonAsync(firebaseRelativePath, saveLocalRelativePath)
-{
+export async function FirebaseStorage_DownloadAndReadJsonAsync(firebaseRelativePath, saveLocalRelativePath) {
     // get full URL
 
-    var result = await FirebaseStorage_GetDownloadURLAsync(firebaseRelativePath);     
-    
-    if (!result.url)
-    {
+    var result = await FirebaseStorage_GetDownloadURLAsync(firebaseRelativePath);
+
+    if (!result.url) {
         return {
             json: null,
             error: result.error
-        };        
+        };
     }
-    
+
     // download json & read 
 
     result = await DownloadFile_GetJsonAsync(result.url, saveLocalRelativePath)
-    
-    if (!result.json)
-    {
+
+    if (!result.json) {
         return {
             json: null,
             error: result.error
-        };        
+        };
     }
 
     return {

@@ -6,6 +6,7 @@
 
 import RNFS, { DownloadProgressCallbackResult } from "react-native-fs";
 import { LoadJsonFromURLAsync, TempDirName } from "./Utils";
+import { Platform } from "react-native";
 
 /**
  * @returns null if success, otherwise error
@@ -40,7 +41,7 @@ export async function WriteTextAsync(path: string, text: string | null, isRLP: b
     // check & create dir first
 
     var res = await CheckAndMkDirOfFilepathAsync(path);
-    
+
     if (res)
       throw 'can not write file, error when CheckAndMkDirOfFilepathAsync: ' + res;
 
@@ -151,7 +152,7 @@ export async function DownloadFileAsync(
     }
 
     saveLocalPath = isRLP ? RNFS.DocumentDirectoryPath + '/' + saveLocalPath : saveLocalPath;
-    
+
     // check & create dir first
 
     var res = await CheckAndMkDirOfFilepathAsync(saveLocalPath);
@@ -178,43 +179,45 @@ export async function DownloadFileAsync(
   }
 }
 
-export async function DownloadFile_GetJsonAsync(url: string, saveLocalRelativeFilepath: string)
-{
-    // get json from url
+export async function DownloadFile_GetJsonAsync(url: string, saveLocalRelativeFilepath: string) {
+  // get json from url
 
-    var res = await LoadJsonFromURLAsync(url);
+  var res = await LoadJsonFromURLAsync(url);
 
-    if (res.json) // sucess
+  if (res.json) // sucess
+  {
+    // write to local
+
+    var s = JSON.stringify(res.json);
+    var writeFileResObj = await WriteTextAsync(saveLocalRelativeFilepath, s);
+
+    if (writeFileResObj === null) // success
     {
-        // write to local
-
-        var s = JSON.stringify(res.json);
-        var writeFileResObj = await WriteTextAsync(saveLocalRelativeFilepath, s);
-
-        if (writeFileResObj === null) // success
-        {
-            return {
-                json: res.json,
-                error: null
-            };
-        }
-        else // failed
-        {
-            return {
-                json: res.json,
-                error: writeFileResObj
-            };
-        }
+      return {
+        json: res.json,
+        error: null
+      };
     }
     else // failed
     {
-        return {
-            json: null,
-            error: res.error
-        };
+      return {
+        json: res.json,
+        error: writeFileResObj
+      };
     }
+  }
+  else // failed
+  {
+    return {
+      json: null,
+      error: res.error
+    };
+  }
 }
 
-export function GetFLPFromRLP(rlp: string): string {
-  return RNFS.DocumentDirectoryPath + '/' + rlp;
+export function GetFLPFromRLP(rlp: string, checkAddFileAndSplashIfAndroid?: boolean): string {
+  if (Platform.OS === 'android' && checkAddFileAndSplashIfAndroid === true)
+    return 'file://' + RNFS.DocumentDirectoryPath + '/' + rlp;
+  else
+    return RNFS.DocumentDirectoryPath + '/' + rlp;
 }
