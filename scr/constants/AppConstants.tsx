@@ -10,22 +10,28 @@ export enum ScreenName {
 
 // margin / padding
 
-export enum  Outline {
+export enum Outline {
   Horizontal = wp('4%'),
   VerticalMini = hp('0.7%'),
 
   GapVertical = hp('1%'),
   GapHorizontal = wp('1%'),
-  
+
   BorderRadius = 8,
 }
 
 // size
 
-export enum  Size {
+export enum Size {
   WP100 = wp('100%'),
   Icon = 25,
   IconSmaller = 20,
+}
+
+// opacity
+
+export enum Opacity {
+ Main = 0.7,
 }
 
 // font size

@@ -1,9 +1,10 @@
 // https://oblador.github.io/react-native-vector-icons/
 
-import { View, Text, StyleSheet, Image, TouchableOpacity, } from 'react-native'
+import { View, Text, Image, TouchableOpacity, } from 'react-native'
 import React, { useContext } from 'react'
-import { FontSize, Outline, Size } from '../../constants/AppConstants';
+import { FontSize, Opacity, Outline, Size } from '../../constants/AppConstants';
 import { ThemeContext } from '../../constants/Colors';
+import { heightPercentageToDP as hp, } from "react-native-responsive-screen";
 
 // @ts-ignore
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -28,7 +29,20 @@ const MediaWithCopyrightScreen = () => {
 
       {/* media view */}
       <View style={{ flex: 1 }} >
-        <Image style={{ width: '100%', height: '100%', }} source={{ uri: imgTmp }} />
+        <Image resizeMode='contain' style={{ width: '100%', height: '100%', }} source={{ uri: imgTmp }} />
+
+        {/* menu overlay */}
+        <View style={{ width: '100%', height: '100%', position: 'absolute' }} >
+          {/* navigation buttons */}
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', flex: 1, alignItems: 'center' }} >
+            <TouchableOpacity style={{ paddingVertical: hp('2%'), opacity: Opacity.Main, borderTopRightRadius: Outline.BorderRadius, borderBottomRightRadius: Outline.BorderRadius, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
+              <MaterialIcons name="keyboard-arrow-left" color={theme.counterPrimary} size={Size.IconSmaller} />
+            </TouchableOpacity>
+            <TouchableOpacity style={{ paddingVertical: hp('2%'), opacity: Opacity.Main, borderTopLeftRadius: Outline.BorderRadius, borderBottomLeftRadius: Outline.BorderRadius, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
+              <MaterialIcons name="keyboard-arrow-right" color={theme.counterPrimary} size={Size.IconSmaller} />
+            </TouchableOpacity>    
+          </View>
+        </View>
       </View>
 
       {/* credit author */}
