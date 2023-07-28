@@ -2,7 +2,8 @@ import { Category, FirebaseDBPath, FirebasePath, LocalPath } from "../constants/
 import { FileList } from "../constants/Types";
 import { FirebaseStorage_DownloadAndReadJsonAsync } from "../firebase/FirebaseStorage";
 import { Cheat } from "./Cheat";
-import { DeleteFileAsync, GetFLPFromRLP } from "./FileUtils";
+import { DeleteFileAsync, GetFLPFromRLP, ReadTextAsync } from "./FileUtils";
+import { versions } from "./VersionsHandler";
 
 /**
  * cheat clear whole folder data
@@ -42,7 +43,7 @@ export const GetListFileRLP = (cat: Category, localOrFb: boolean) => {
     }
 }
 
-export const GetDBPath = (cat: Category) => {
+export const GetDBVersionPath = (cat: Category) => {
     if (cat === Category.Draw)
         return FirebaseDBPath.Version_Draw;
     else if (cat === Category.Real)
@@ -69,15 +70,40 @@ export const GetDataFullPath = (localOrFb: boolean, cat: Category, postID: numbe
         return GetFLPFromRLP(LocalPath.MasterDirName + '/' + path)
     }
     else {
-       return path;
+        return path;
     }
 }
 
-export async function DownloadAndSaveFileListAsync(cat: Category): Promise<FileList> {
+async function DownloadAndSaveFileListAsync(cat: Category): Promise<FileList> {
     const res = await FirebaseStorage_DownloadAndReadJsonAsync(GetListFileRLP(cat, false), GetListFileRLP(cat, true));
 
     if (res.error)
         throw new Error(res.error as string);
 
     return res.json as FileList;
+}
+
+export async function CheckAndGetFileList(cat: Category): Promise<FileList> {
+    const localRLP = GetListFileRLP(cat, true);
+    const readLocalRes = await ReadTextAsync(localRLP, true);
+    let localFileList: FileList | null = null;
+
+    if (typeof readLocalRes.text === 'string') { 
+        localFileList = JSON.parse(readLocalRes.text) as FileList;
+    }
+
+    const localVersion: number = localFileList === null ? -1 : localFileList.version;
+    let needDownload = false;
+
+    if (cat === Category.Draw && localVersion < versions.draw)
+        needDownload = true;
+    else if (cat === Category.Quote && localVersion < versions.quote)
+        needDownload = true;
+    else if (cat === Category.Real && localVersion < versions.real)
+        needDownload = true;
+
+    if (!needDownload && localFileList !== null)
+        return localFileList;
+
+    return await DownloadAndSaveFileListAsync(cat);
 }
