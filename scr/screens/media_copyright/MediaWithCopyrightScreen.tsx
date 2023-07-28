@@ -46,13 +46,19 @@ const MediaWithCopyrightScreen = () => {
       </View>
 
       {/* credit author */}
-      <View style={{ paddingHorizontal: Outline.Horizontal, }}>
+      <View style={{ paddingHorizontal: Outline.Horizontal, justifyContent: 'space-between', alignItems: 'center',  flexDirection: 'row' }}>
         <Text style={{ fontSize: FontSize.Normal, color: theme.text }}>Author</Text>
+        <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center' }} >
+          <MaterialIcons name={'content-copy'} color={theme.counterPrimary} size={Size.IconSmaller} />
+        </TouchableOpacity>
       </View>
 
       {/* link credit */}
-      <View style={{ paddingHorizontal: Outline.Horizontal, }}>
+      <View style={{ paddingHorizontal: Outline.Horizontal, justifyContent: 'space-between', alignItems: 'center',  flexDirection: 'row' }}>
         <Text style={{ fontSize: FontSize.Small, color: theme.text }}>www.google.vn</Text>
+        <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center' }} >
+          <MaterialIcons name={'content-copy'} color={theme.counterPrimary} size={Size.IconSmaller} />
+        </TouchableOpacity>
       </View>
 
       {/* navi part */}
