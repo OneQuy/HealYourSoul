@@ -2,7 +2,7 @@
 
 import { View, Text, Image, TouchableOpacity, } from 'react-native'
 import React, { useContext } from 'react'
-import { FontSize, Opacity, Outline, Size } from '../../constants/AppConstants';
+import { Category, FontSize, Opacity, Outline, Size } from '../../constants/AppConstants';
 import { ThemeContext } from '../../constants/Colors';
 import { heightPercentageToDP as hp, } from "react-native-responsive-screen";
 
@@ -14,7 +14,11 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 const imgTmp = 'https://i.ytimg.com/vi/4cJF1EHfVQg/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCabcnXx7w38merVU5KlBHXHb-paA';
 
-const MediaWithCopyrightScreen = () => {
+type ThePageProps = {
+    category: Category
+}
+
+const ThePage = ({ category } : ThePageProps) => {
   const theme = useContext(ThemeContext);
 
   // main render
@@ -90,4 +94,4 @@ const MediaWithCopyrightScreen = () => {
   )
 }
 
-export default MediaWithCopyrightScreen;
+export default ThePage;
