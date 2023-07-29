@@ -11,11 +11,11 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { FileList } from '../../constants/Types';
+import { FileList, PostMetadata } from '../../constants/Types';
 import { CheckAndGetFileListAsync } from '../../handle/AppUtils';
 import { useNavigation } from '@react-navigation/native';
 
-const imgTmp = 'https://i.ytimg.com/vi/4cJF1EHfVQg/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCabcnXx7w38merVU5KlBHXHb-paA';
+const noPic = require('../../../assets/images/no-pic.png');
 
 type ThePageProps = {
     category: Category
@@ -25,6 +25,8 @@ const ThePage = ({ category }: ThePageProps) => {
     const theme = useContext(ThemeContext);
     const [isFavorited, setFavorited] = useState(false);
     const [handling, setHandling] = useState(false);
+    const [mediaURI, setMediaURI] = useState('');
+    const [post, setPost] = useState<PostMetadata | null>(null);
     const fileList = useRef<FileList | null>(null);
     const navigation = useNavigation();
 
@@ -64,45 +66,61 @@ const ThePage = ({ category }: ThePageProps) => {
 
     return (
         // master view
-        <View style={{ backgroundColor: theme.background, flex: 1, gap: Outline.GapVertical, }}>
+        <View style={{ pointerEvents: handling ? 'none' : 'auto', backgroundColor: theme.background, flex: 1, gap: Outline.GapVertical, }}>
             {/* title */}
             <View style={{ paddingHorizontal: Outline.Horizontal, paddingTop: Outline.GapVertical }}>
-                <Text style={{ textAlignVertical: 'center', fontSize: FontSize.Normal, color: theme.text }}>Have a nice day! Have a nice day!</Text>
+                {
+                    post === null || !post.title ? null :
+                        <Text style={{ textAlignVertical: 'center', fontSize: FontSize.Normal, color: theme.text }}>{post.title}</Text>
+                }
             </View>
 
             {/* media view */}
-            <View style={{ flex: 1 }} >
-                <Image resizeMode='contain' style={{ width: '100%', height: '100%', }} source={{ uri: imgTmp }} />
-
-                {/* menu overlay */}
-                <View style={{ width: '100%', height: '100%', position: 'absolute' }} >
-                    {/* navigation buttons */}
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', flex: 1, alignItems: 'center' }} >
-                        <TouchableOpacity style={{ paddingVertical: hp('2%'), opacity: Opacity.Primary, borderTopRightRadius: Outline.BorderRadius, borderBottomRightRadius: Outline.BorderRadius, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
-                            <MaterialIcons name="keyboard-arrow-left" color={theme.counterPrimary} size={Size.IconSmaller} />
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{ paddingVertical: hp('2%'), opacity: Opacity.Primary, borderTopLeftRadius: Outline.BorderRadius, borderBottomLeftRadius: Outline.BorderRadius, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
-                            <MaterialIcons name="keyboard-arrow-right" color={theme.counterPrimary} size={Size.IconSmaller} />
-                        </TouchableOpacity>
+            {
+                mediaURI === '' ?
+                    // no media
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
+                        <Image resizeMode='contain' style={{ width: '50%', height: '50%', }} source={noPic} />
+                    </View> :
+                    // have media
+                    <View style={{ flex: 1 }} >
+                        <Image resizeMode='contain' style={{ width: '100%', height: '100%', }} source={{ uri: mediaURI }} />
+                        {/* menu overlay */}
+                        <View style={{ width: '100%', height: '100%', position: 'absolute' }} >
+                            {/* navigation buttons */}
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', flex: 1, alignItems: 'center' }} >
+                                <TouchableOpacity style={{ paddingVertical: hp('2%'), opacity: Opacity.Primary, borderTopRightRadius: Outline.BorderRadius, borderBottomRightRadius: Outline.BorderRadius, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
+                                    <MaterialIcons name="keyboard-arrow-left" color={theme.counterPrimary} size={Size.IconSmaller} />
+                                </TouchableOpacity>
+                                <TouchableOpacity style={{ paddingVertical: hp('2%'), opacity: Opacity.Primary, borderTopLeftRadius: Outline.BorderRadius, borderBottomLeftRadius: Outline.BorderRadius, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
+                                    <MaterialIcons name="keyboard-arrow-right" color={theme.counterPrimary} size={Size.IconSmaller} />
+                                </TouchableOpacity>
+                            </View>
+                        </View>
                     </View>
-                </View>
-            </View>
+            }
 
             {/* credit author */}
-            <View style={{ paddingHorizontal: Outline.Horizontal, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
-                <Text style={{ fontSize: FontSize.Normal, color: theme.text }}>Author</Text>
-                <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center' }} >
-                    <MaterialIcons name={'content-copy'} color={theme.counterPrimary} size={Size.IconSmaller} />
-                </TouchableOpacity>
-            </View>
+            {
+                post === null || !post.author ? null :
+                    <View style={{ paddingHorizontal: Outline.Horizontal, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
+                        <Text style={{ fontSize: FontSize.Normal, color: theme.text }}>{post.author}</Text>
+                        <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center' }} >
+                            <MaterialIcons name={'content-copy'} color={theme.counterPrimary} size={Size.IconSmaller} />
+                        </TouchableOpacity>
+                    </View>
+            }
 
             {/* link credit */}
-            <View style={{ paddingHorizontal: Outline.Horizontal, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
-                <Text style={{ fontSize: FontSize.Small, color: theme.text }}>www.google.vn</Text>
-                <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center' }} >
-                    <MaterialIcons name={'content-copy'} color={theme.counterPrimary} size={Size.IconSmaller} />
-                </TouchableOpacity>
-            </View>
+            {
+                post === null || !post.url ? null :
+                    <View style={{ paddingHorizontal: Outline.Horizontal, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
+                        <Text style={{ fontSize: FontSize.Small, color: theme.text }}>{post.url}</Text>
+                        <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center' }} >
+                            <MaterialIcons name={'content-copy'} color={theme.counterPrimary} size={Size.IconSmaller} />
+                        </TouchableOpacity>
+                    </View>
+            }
 
             {/* navi part */}
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: Outline.Horizontal, gap: Outline.GapHorizontal }}>
