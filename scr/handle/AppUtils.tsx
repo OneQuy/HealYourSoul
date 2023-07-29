@@ -1,8 +1,8 @@
 import { Category, FirebaseDBPath, FirebasePath, LocalPath } from "../constants/AppConstants";
-import { FileList } from "../constants/Types";
-import { FirebaseStorage_DownloadAndReadJsonAsync } from "../firebase/FirebaseStorage";
+import { FileList, PostMetadata } from "../constants/Types";
+import { FirebaseStorage_DownloadAndReadJsonAsync, FirebaseStorage_DownloadAsync } from "../firebase/FirebaseStorage";
 import { Cheat } from "./Cheat";
-import { DeleteFileAsync, DeleteTempDirAsync, GetFLPFromRLP, ReadTextAsync } from "./FileUtils";
+import { DeleteFileAsync, DeleteTempDirAsync, GetFLPFromRLP, IsExistedAsync, ReadTextAsync } from "./FileUtils";
 import { versions } from "./VersionsHandler";
 
 /**
@@ -61,26 +61,6 @@ export const GetDBVersionPath = (cat: Category) => {
         throw new Error('GetDBPath: ' + cat);
 }
 
-export const GetDataFullPath = (localOrFb: boolean, cat: Category, postID: number, mediaIdx: number) => {
-    let path;
-
-    if (cat === Category.Draw)
-        path = `draw/data/${postID}/${mediaIdx}`;
-    else if (cat === Category.Real)
-        path = `real/data/${postID}/${mediaIdx}`;
-    else if (cat === Category.Quote)
-        path = `quote/data/${postID}/${mediaIdx}`;
-    else
-        throw new Error('GetDataFullPath: ' + cat);
-
-    if (localOrFb) {
-        return GetFLPFromRLP(LocalPath.MasterDirName + '/' + path)
-    }
-    else {
-        return path;
-    }
-}
-
 async function DownloadAndSaveFileListAsync(cat: Category): Promise<FileList> {
     const res = await FirebaseStorage_DownloadAndReadJsonAsync(GetListFileRLP(cat, false), GetListFileRLP(cat, true));
 
@@ -122,4 +102,35 @@ export async function CheckAndGetFileListAsync(cat: Category): Promise<FileList>
     }
 
     return await DownloadAndSaveFileListAsync(cat);
+}
+
+const GetMediaFullPath = (localOrFb: boolean, cat: Category, postID: number, mediaIdx: number) => {
+    let path;
+
+    if (cat === Category.Draw)
+        path = `draw/data/${postID}/${mediaIdx}`;
+    else if (cat === Category.Real)
+        path = `real/data/${postID}/${mediaIdx}`;
+    else if (cat === Category.Quote)
+        path = `quote/data/${postID}/${mediaIdx}`;
+    else
+        throw new Error('GetDataFullPath: ' + cat);
+
+    if (localOrFb) {
+        return GetFLPFromRLP(LocalPath.MasterDirName + '/' + path)
+    }
+    else {
+        return path;
+    }
+}
+
+export async function CheckLocalFileAndGetURIAsync(cat: Category, post: PostMetadata, mediaIdx: number): Promise<string> {
+    const flp = GetMediaFullPath(true, cat, post.id, mediaIdx);
+
+    if (await IsExistedAsync(flp, false))
+        return flp;
+
+    const fbPath = GetMediaFullPath(false, cat, post.id, mediaIdx);
+
+    const res = FirebaseStorage_DownloadAsync(fbPath, )
 }

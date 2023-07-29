@@ -3,7 +3,7 @@
 import { getStorage, ref, getDownloadURL, uploadBytes, deleteObject } from "firebase/storage";
 import { ErrorObject_Empty } from "../constants/CommonConstants";
 import { ErrorObject_FileNotFound, ErrorObject_NoIdentity, GetTempFileRLP, IsErrorObject_Empty } from "../handle/Utils";
-import { DeleteFileAsync, DownloadFileAsync, DownloadFile_GetJsonAsync, GetFLPFromRLP, IsExisted, WriteTextAsync } from "../handle/FileUtils";
+import { DeleteFileAsync, DownloadFileAsync, DownloadFile_GetJsonAsync, GetFLPFromRLP, IsExistedAsync, WriteTextAsync } from "../handle/FileUtils";
 import { GetBlobFromFLPAsync } from "../handle/UtilsTS";
 
 var storage = null;
@@ -72,7 +72,7 @@ export async function FirebaseStorage_DeleteAsync(relativePath) {
 /**
  * @returns null if success, otherwise error
  */
-export async function FirebaseStorage_DownloadAsync(relativeFirebasePath, relativeLocalPath) {
+export async function FirebaseStorage_DownloadAsync(relativeFirebasePath, savePath, isRLP) {
     try {
         // get url
 
@@ -84,7 +84,7 @@ export async function FirebaseStorage_DownloadAsync(relativeFirebasePath, relati
 
         // downoad
 
-        let result = await DownloadFileAsync(urlResult.url, relativeLocalPath);
+        let result = await DownloadFileAsync(urlResult.url, savePath, isRLP);
         return result;
     }
     catch (error) {
@@ -98,7 +98,7 @@ export async function FirebaseStorage_DownloadAsync(relativeFirebasePath, relati
 export async function FirebaseStorage_UploadAsync(relativeFirebasePath, fileFLP) // main 
 {
     try {
-        let fileExists = await IsExisted(fileFLP, false);
+        let fileExists = await IsExistedAsync(fileFLP, false);
 
         if (!fileExists) {
             return ErrorObject_FileNotFound("Local file not found: " + fileFLP);

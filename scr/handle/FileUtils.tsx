@@ -123,7 +123,7 @@ export async function DeleteTempDirAsync() {
   return await DeleteFileAsync(TempDirName, true);
 }
 
-export async function IsExisted(path: string, isRLP: boolean = true): Promise<boolean> {
+export async function IsExistedAsync(path: string, isRLP: boolean = true): Promise<boolean> {
   try {
     if (!path) {
       throw 'path is null/underfined';
