@@ -14,6 +14,8 @@ import { heightPercentageToDP as hp, } from "react-native-responsive-screen";
 import { FileList, PostMetadata } from '../../constants/Types';
 import { CheckAndGetFileListAsync } from '../../handle/AppUtils';
 import { useNavigation } from '@react-navigation/native';
+import { RootState, useAppSelector } from '../../redux/Store';
+import { PickRandomElement } from '../../handle/Utils';
 
 const noPic = require('../../../assets/images/no-pic.png');
 
@@ -22,13 +24,46 @@ type ThePageProps = {
 }
 
 const ThePage = ({ category }: ThePageProps) => {
+    // general state
+    
     const theme = useContext(ThemeContext);
     const [isFavorited, setFavorited] = useState(false);
     const [handling, setHandling] = useState(false);
-    const [mediaURI, setMediaURI] = useState('');
-    const [post, setPost] = useState<PostMetadata | null>(null);
     const fileList = useRef<FileList | null>(null);
     const navigation = useNavigation();
+    
+    const seenIDs = useAppSelector((state: RootState) => {
+        if (category === Category.Draw)
+            return state.userData.drawSeenIDs;
+        else if (category === Category.Real)
+            return state.userData.realSeenIDs;
+        else if (category === Category.Quote)
+            return state.userData.quoteSeenIDs;
+        else
+            throw new Error('not implement cat: ' + category);
+    });
+    
+    // a post state
+
+    const [mediaURI, setMediaURI] = useState('');
+    const [post, setPost] = useState<PostMetadata | null>(null);
+    const curMediaIdx = useRef<number>(0);
+
+    // handles
+
+    const loadNextPost = useCallback((isNext: boolean) => {
+        let findPost = fileList.current?.posts.find(i => !seenIDs.includes(i.id));
+
+        if (!findPost) {
+            findPost = PickRandomElement(fileList.current?.posts);
+        }
+
+        if (!findPost)
+            throw '';
+
+        setPost(findPost);
+
+    }, [seenIDs]);
 
     // button handles
 
@@ -45,6 +80,8 @@ const ThePage = ({ category }: ThePageProps) => {
             if (fileList.current === null) {
                 fileList.current = await CheckAndGetFileListAsync(category);
             }
+
+            loadNextPost(true);
 
             setHandling(false);
         }
