@@ -1,6 +1,6 @@
 // https://oblador.github.io/react-native-vector-icons/
 
-import { View, Text, Image, TouchableOpacity, } from 'react-native'
+import { View, Text, Image, TouchableOpacity, ActivityIndicator, } from 'react-native'
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { Category, FontSize, Opacity, Outline, Size } from '../../constants/AppConstants';
 import { ThemeContext } from '../../constants/Colors';
@@ -13,6 +13,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { FileList } from '../../constants/Types';
 import { CheckAndGetFileListAsync } from '../../handle/AppUtils';
+import { useNavigation } from '@react-navigation/native';
 
 const imgTmp = 'https://i.ytimg.com/vi/4cJF1EHfVQg/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCabcnXx7w38merVU5KlBHXHb-paA';
 
@@ -25,24 +26,39 @@ const ThePage = ({ category }: ThePageProps) => {
     const [isFavorited, setFavorited] = useState(false);
     const [handling, setHandling] = useState(false);
     const fileList = useRef<FileList | null>(null);
+    const navigation = useNavigation();
 
     // button handles
 
     const onPresssFavorite = useCallback(() => {
         setFavorited(val => !val);
     }, []);
-    
+
     // init once 
 
     useEffect(() => {
         async function Load() {
+            setHandling(true);
+
             if (fileList.current === null) {
                 fileList.current = await CheckAndGetFileListAsync(category);
             }
+
+            setHandling(false);
         }
 
         Load();
     }, []);
+
+    // handling indicator
+
+    useEffect(() => {
+        navigation.setOptions({
+            headerRight: !handling ? undefined : () => (
+                <ActivityIndicator style={{ marginRight: Outline.Horizontal }} />
+            )
+        });
+    }, [handling]);
 
     // main render
 
