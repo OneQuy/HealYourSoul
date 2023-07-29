@@ -49,9 +49,14 @@ const ThePage = ({ category }: ThePageProps) => {
     const [post, setPost] = useState<PostMetadata | null>(null);
     const curMediaIdx = useRef<number>(0);
 
+    // calculations
+
+    const showNextMediaButton: boolean = post !== null && curMediaIdx.current < post.media.length - 1;
+    const showPreviousMediaButton: boolean = post !== null && curMediaIdx.current > 0;
+
     // handles
 
-    const loadNextMediaAsync = useCallback(async (isNext: boolean, forPost?: PostMetadata) => {
+    const loadNextMediaAsync = useCallback(async (isNext: boolean, forPost?: PostMetadata, isSetNewPost?: boolean) => {
         let handlePost;
 
         if (forPost)
@@ -61,12 +66,16 @@ const ThePage = ({ category }: ThePageProps) => {
         else
             return;
 
-        const nextIdx = curMediaIdx.current + 1;
+        const nextIdx = isSetNewPost ? 0 : curMediaIdx.current + 1;
         const uriRes = await CheckLocalFileAndGetURIAsync(category, handlePost, nextIdx);
 
         if (uriRes.uri) { // success
             curMediaIdx.current = nextIdx;
             setMediaURI(uriRes.uri);
+
+            if (isSetNewPost) {
+                setPost(handlePost);
+            }
         } else { // fail
             Alert.alert('Failed to load media', `Post ID: ${handlePost.id}, media index: ${nextIdx}\n\nError: ${uriRes.error}`);
         }
@@ -83,9 +92,7 @@ const ThePage = ({ category }: ThePageProps) => {
         if (!findPost)
             throw '';
 
-        setPost(findPost);
-        curMediaIdx.current = -1;
-        await loadNextMediaAsync(true, findPost);
+        await loadNextMediaAsync(true, findPost, true);
     }, [seenIDs, loadNextMediaAsync]);
 
     // button handles
@@ -149,10 +156,10 @@ const ThePage = ({ category }: ThePageProps) => {
                         <View style={{ width: '100%', height: '100%', position: 'absolute' }} >
                             {/* navigation buttons */}
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', flex: 1, alignItems: 'center' }} >
-                                <TouchableOpacity style={{ paddingVertical: hp('2%'), opacity: Opacity.Primary, borderTopRightRadius: Outline.BorderRadius, borderBottomRightRadius: Outline.BorderRadius, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
+                                <TouchableOpacity disabled={!showPreviousMediaButton} style={{ paddingVertical: hp('2%'), opacity: showPreviousMediaButton ? Opacity.Primary : 0, borderTopRightRadius: Outline.BorderRadius, borderBottomRightRadius: Outline.BorderRadius, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
                                     <MaterialIcons name="keyboard-arrow-left" color={theme.counterPrimary} size={Size.IconSmaller} />
                                 </TouchableOpacity>
-                                <TouchableOpacity style={{ paddingVertical: hp('2%'), opacity: Opacity.Primary, borderTopLeftRadius: Outline.BorderRadius, borderBottomLeftRadius: Outline.BorderRadius, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
+                                <TouchableOpacity disabled={!showNextMediaButton} style={{ paddingVertical: hp('2%'), opacity: showNextMediaButton ? Opacity.Primary : 0, borderTopLeftRadius: Outline.BorderRadius, borderBottomLeftRadius: Outline.BorderRadius, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
                                     <MaterialIcons name="keyboard-arrow-right" color={theme.counterPrimary} size={Size.IconSmaller} />
                                 </TouchableOpacity>
                             </View>
