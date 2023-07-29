@@ -12,7 +12,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { FileList } from '../../constants/Types';
-import { DownloadAndSaveFileListAsync } from '../../handle/AppUtils';
+import { CheckAndGetFileListAsync } from '../../handle/AppUtils';
 
 const imgTmp = 'https://i.ytimg.com/vi/4cJF1EHfVQg/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCabcnXx7w38merVU5KlBHXHb-paA';
 
@@ -23,6 +23,7 @@ type ThePageProps = {
 const ThePage = ({ category }: ThePageProps) => {
     const theme = useContext(ThemeContext);
     const [isFavorited, setFavorited] = useState(false);
+    const [handling, setHandling] = useState(false);
     const fileList = useRef<FileList | null>(null);
 
     // button handles
@@ -36,7 +37,7 @@ const ThePage = ({ category }: ThePageProps) => {
     useEffect(() => {
         async function Load() {
             if (fileList.current === null) {
-                fileList.current = await DownloadAndSaveFileListAsync(category);
+                fileList.current = await CheckAndGetFileListAsync(category);
             }
         }
 

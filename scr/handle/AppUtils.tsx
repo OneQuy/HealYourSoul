@@ -2,7 +2,7 @@ import { Category, FirebaseDBPath, FirebasePath, LocalPath } from "../constants/
 import { FileList } from "../constants/Types";
 import { FirebaseStorage_DownloadAndReadJsonAsync } from "../firebase/FirebaseStorage";
 import { Cheat } from "./Cheat";
-import { DeleteFileAsync, GetFLPFromRLP, ReadTextAsync } from "./FileUtils";
+import { DeleteFileAsync, DeleteTempDirAsync, GetFLPFromRLP, ReadTextAsync } from "./FileUtils";
 import { versions } from "./VersionsHandler";
 
 /**
@@ -17,7 +17,14 @@ export async function CheckAndClearAllLocalFileBeforeLoadApp() {
     if (error)
         console.error('CANNOT delete: ', LocalPath.MasterDirName, ', error:', error);
     else
-        console.log('COMPLETELY DELETED all local files!');
+        console.log('COMPLETELY DELETED ' + LocalPath.MasterDirName);
+
+    error = await DeleteTempDirAsync();
+
+    if (error)
+        console.error('CANNOT delete: Temp Dir, error:', error);
+    else
+        console.log('COMPLETELY DELETED Temp Dir!');
 }
 
 export const GetListFileRLP = (cat: Category, localOrFb: boolean) => {
@@ -83,12 +90,12 @@ async function DownloadAndSaveFileListAsync(cat: Category): Promise<FileList> {
     return res.json as FileList;
 }
 
-export async function CheckAndGetFileList(cat: Category): Promise<FileList> {
+export async function CheckAndGetFileListAsync(cat: Category): Promise<FileList> {
     const localRLP = GetListFileRLP(cat, true);
     const readLocalRes = await ReadTextAsync(localRLP, true);
     let localFileList: FileList | null = null;
 
-    if (typeof readLocalRes.text === 'string') { 
+    if (typeof readLocalRes.text === 'string') {
         localFileList = JSON.parse(readLocalRes.text) as FileList;
     }
 
@@ -102,8 +109,17 @@ export async function CheckAndGetFileList(cat: Category): Promise<FileList> {
     else if (cat === Category.Real && localVersion < versions.real)
         needDownload = true;
 
-    if (!needDownload && localFileList !== null)
+    if (!needDownload && localFileList !== null) {
+        if (Cheat('IsLog_LoadFileList')) {
+            console.log(Category[cat], 'Loaded FileList from local');
+        }
+
         return localFileList;
+    }
+
+    if (Cheat('IsLog_LoadFileList')) {
+        console.log(Category[cat], 'Loaded FileList from FB');
+    }
 
     return await DownloadAndSaveFileListAsync(cat);
 }
