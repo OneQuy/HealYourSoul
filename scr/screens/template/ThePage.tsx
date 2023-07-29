@@ -6,13 +6,13 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { View, Text, Image, TouchableOpacity, ActivityIndicator, } from 'react-native'
+import { View, Text, Image, TouchableOpacity, ActivityIndicator, Alert, } from 'react-native'
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { Category, FontSize, Opacity, Outline, Size } from '../../constants/AppConstants';
 import { ThemeContext } from '../../constants/Colors';
 import { heightPercentageToDP as hp, } from "react-native-responsive-screen";
 import { FileList, PostMetadata } from '../../constants/Types';
-import { CheckAndGetFileListAsync } from '../../handle/AppUtils';
+import { CheckAndGetFileListAsync, CheckLocalFileAndGetURIAsync } from '../../handle/AppUtils';
 import { useNavigation } from '@react-navigation/native';
 import { RootState, useAppSelector } from '../../redux/Store';
 import { PickRandomElement } from '../../handle/Utils';
@@ -25,13 +25,13 @@ type ThePageProps = {
 
 const ThePage = ({ category }: ThePageProps) => {
     // general state
-    
+
     const theme = useContext(ThemeContext);
     const [isFavorited, setFavorited] = useState(false);
     const [handling, setHandling] = useState(false);
     const fileList = useRef<FileList | null>(null);
     const navigation = useNavigation();
-    
+
     const seenIDs = useAppSelector((state: RootState) => {
         if (category === Category.Draw)
             return state.userData.drawSeenIDs;
@@ -42,7 +42,7 @@ const ThePage = ({ category }: ThePageProps) => {
         else
             throw new Error('not implement cat: ' + category);
     });
-    
+
     // a post state
 
     const [mediaURI, setMediaURI] = useState('');
@@ -51,7 +51,28 @@ const ThePage = ({ category }: ThePageProps) => {
 
     // handles
 
-    const loadNextPost = useCallback((isNext: boolean) => {
+    const loadNextMediaAsync = useCallback(async (isNext: boolean, forPost?: PostMetadata) => {
+        let handlePost;
+
+        if (forPost)
+            handlePost = forPost;
+        else if (post)
+            handlePost = post;
+        else
+            return;
+
+        const nextIdx = curMediaIdx.current + 1;
+        const uriRes = await CheckLocalFileAndGetURIAsync(category, handlePost, nextIdx);
+
+        if (uriRes.uri) { // success
+            curMediaIdx.current = nextIdx;
+            setMediaURI(uriRes.uri);
+        } else { // fail
+            Alert.alert('Failed to load media', `Post ID: ${handlePost.id}, media index: ${nextIdx}\n\nError: ${uriRes.error}`);
+        }
+    }, [post]);
+
+    const loadNextPostAsync = useCallback(async (isNext: boolean) => {
         let findPost = fileList.current?.posts.find(i => !seenIDs.includes(i.id));
 
         if (!findPost) {
@@ -63,12 +84,9 @@ const ThePage = ({ category }: ThePageProps) => {
             throw '';
 
         setPost(findPost);
-
-    }, [seenIDs]);
-   
-    const loadNextMedia = useCallback((isNext: boolean) => {
-        
-    }, [seenIDs]);
+        curMediaIdx.current = -1;
+        await loadNextMediaAsync(true, findPost);
+    }, [seenIDs, loadNextMediaAsync]);
 
     // button handles
 
@@ -86,7 +104,7 @@ const ThePage = ({ category }: ThePageProps) => {
                 fileList.current = await CheckAndGetFileListAsync(category);
             }
 
-            loadNextPost(true);
+            loadNextPostAsync(true);
 
             setHandling(false);
         }
