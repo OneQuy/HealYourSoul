@@ -124,13 +124,29 @@ const GetMediaFullPath = (localOrFb: boolean, cat: Category, postID: number, med
     }
 }
 
-export async function CheckLocalFileAndGetURIAsync(cat: Category, post: PostMetadata, mediaIdx: number): Promise<string> {
-    const flp = GetMediaFullPath(true, cat, post.id, mediaIdx);
+export async function CheckLocalFileAndGetURIAsync(cat: Category, post: PostMetadata, mediaIdx: number): Promise<{uri: string | null, error: any}> {
+    const uri = GetMediaFullPath(true, cat, post.id, mediaIdx);
 
-    if (await IsExistedAsync(flp, false))
-        return flp;
+    if (await IsExistedAsync(uri, false)) {
+        if (Cheat('IsLog_LoadMedia')) {
+            console.log(Category[cat], 'loaded media from LOCAL', 'post: ' + post.id, 'media idx: ' + mediaIdx);
+        }
 
+        return {
+            uri,
+            error: null
+        }
+    }
     const fbPath = GetMediaFullPath(false, cat, post.id, mediaIdx);
 
-    const res = FirebaseStorage_DownloadAsync(fbPath, )
+    const res = await FirebaseStorage_DownloadAsync(fbPath, uri, false);
+
+    if (Cheat('IsLog_LoadMedia')) {
+        console.log(Category[cat], 'DOWNLOADED media', 'post: ' + post.id, 'media idx: ' + mediaIdx, 'success: ' + (res === null));
+    }
+
+    return {
+        uri: res ? null : uri,
+        error: res
+    }
 }

@@ -56,6 +56,7 @@ const ThePage = ({ category }: ThePageProps) => {
 
         if (!findPost) {
             findPost = PickRandomElement(fileList.current?.posts);
+            console.log('seen all posts, so picking randomly');
         }
 
         if (!findPost)
@@ -63,6 +64,10 @@ const ThePage = ({ category }: ThePageProps) => {
 
         setPost(findPost);
 
+    }, [seenIDs]);
+   
+    const loadNextMedia = useCallback((isNext: boolean) => {
+        
     }, [seenIDs]);
 
     // button handles
