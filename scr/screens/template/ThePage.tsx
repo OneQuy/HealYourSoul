@@ -16,7 +16,7 @@ import { CheckAndGetFileListAsync, CheckLocalFileAndGetURIAsync } from '../../ha
 import { useNavigation } from '@react-navigation/native';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { PickRandomElement } from '../../handle/Utils';
-import { addDrawSeenID } from '../../redux/UserDataSlice';
+import { addDrawSeenID, addQuoteSeenID, addRealSeenID } from '../../redux/UserDataSlice';
 
 const noPic = require('../../../assets/images/no-pic.png');
 
@@ -105,7 +105,15 @@ const ThePage = ({ category }: ThePageProps) => {
         if (!post.current)
             return;
 
-        dispatch(addDrawSeenID(post.current.id));
+        if (category === Category.Real)
+            dispatch(addRealSeenID(post.current.id));
+        else if (category === Category.Draw)
+            dispatch(addDrawSeenID(post.current.id));
+        else if (category === Category.Quote)
+            dispatch(addQuoteSeenID(post.current.id));
+        else
+            throw new Error('NI cat: ' + category);
+            
         setNeedLoadPost(isNext ? 'next' : 'previous');
     }, []);
 
