@@ -27,7 +27,7 @@ const slice = createSlice({
     initialState,
     reducers: {
         clearAllUserData: () => initialState,
-        
+
         addDrawSeenID(state, action: PayloadAction<number>) {
             if (!state.drawSeenIDs.includes(action.payload))
                 state.drawSeenIDs.push(action.payload);
@@ -36,6 +36,10 @@ const slice = createSlice({
         addDrawFavoritedID(state, action: PayloadAction<number>) {
             if (!state.drawFavoritedIDs.includes(action.payload))
                 state.drawFavoritedIDs.push(action.payload);
+        },
+
+        removeDrawFavoritedID(state, action: PayloadAction<number>) {
+            [action.payload, ...state.drawFavoritedIDs] = state.drawFavoritedIDs;
         },
 
         addRealSeenID(state, action: PayloadAction<number>) {
@@ -48,6 +52,10 @@ const slice = createSlice({
                 state.realFavoritedIDs.push(action.payload);
         },
 
+        removeRealFavoritedID(state, action: PayloadAction<number>) {
+            [action.payload, ...state.realFavoritedIDs] = state.realFavoritedIDs;
+        },
+
         addQuoteSeenID(state, action: PayloadAction<number>) {
             if (!state.quoteSeenIDs.includes(action.payload))
                 state.quoteSeenIDs.push(action.payload);
@@ -57,20 +65,27 @@ const slice = createSlice({
             if (!state.quoteFavoritedIDs.includes(action.payload))
                 state.quoteFavoritedIDs.push(action.payload);
         },
+
+        removeQuoteFavoritedID(state, action: PayloadAction<number>) {
+            [action.payload, ...state.quoteFavoritedIDs] = state.quoteFavoritedIDs;
+        },
     }
 });
 
 export const {
-    clearAllUserData, 
-    
+    clearAllUserData,
+
     addDrawSeenID,
     addDrawFavoritedID,
+    removeDrawFavoritedID,
 
     addRealSeenID,
     addRealFavoritedID,
+    removeRealFavoritedID,
 
     addQuoteSeenID,
     addQuoteFavoritedID,
+    removeQuoteFavoritedID,
 } = slice.actions;
 
 export default slice.reducer;

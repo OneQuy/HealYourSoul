@@ -7,7 +7,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { View, Text, Image, TouchableOpacity, ActivityIndicator, Alert, } from 'react-native'
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { Category, FontSize, Opacity, Outline, Size } from '../../constants/AppConstants';
 import { ThemeContext } from '../../constants/Colors';
 import { heightPercentageToDP as hp, } from "react-native-responsive-screen";
@@ -16,7 +16,7 @@ import { CheckAndGetFileListAsync, CheckLocalFileAndGetURIAsync } from '../../ha
 import { useNavigation } from '@react-navigation/native';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { PickRandomElement } from '../../handle/Utils';
-import { addDrawSeenID, addQuoteSeenID, addRealSeenID } from '../../redux/UserDataSlice';
+import { addDrawFavoritedID, addDrawSeenID, addQuoteFavoritedID, addQuoteSeenID, addRealFavoritedID, addRealSeenID, removeDrawFavoritedID, removeQuoteFavoritedID, removeRealFavoritedID } from '../../redux/UserDataSlice';
 
 const noPic = require('../../../assets/images/no-pic.png');
 
@@ -30,7 +30,6 @@ const ThePage = ({ category }: ThePageProps) => {
     // general state
 
     const theme = useContext(ThemeContext);
-    const [isFavorited, setFavorited] = useState(false);
     const [handling, setHandling] = useState(false);
     const [needLoadPost, setNeedLoadPost] = useState<NeedLoadPostType>('none');
     const fileList = useRef<FileList | null>(null);
@@ -48,6 +47,17 @@ const ThePage = ({ category }: ThePageProps) => {
             throw new Error('not implement cat: ' + category);
     });
 
+    const favoritedIDs = useAppSelector((state: RootState) => {
+        if (category === Category.Draw)
+            return state.userData.drawFavoritedIDs;
+        else if (category === Category.Real)
+            return state.userData.realFavoritedIDs;
+        else if (category === Category.Quote)
+            return state.userData.quoteFavoritedIDs;
+        else
+            throw new Error('NI cat: ' + category);
+    });
+
     // a post state
 
     const [mediaURI, setMediaURI] = useState('');
@@ -59,6 +69,10 @@ const ThePage = ({ category }: ThePageProps) => {
     const showNextMediaButton: boolean = post.current !== null && curMediaIdx.current < post.current.media.length - 1;
     const showPreviousMediaButton: boolean = post.current !== null && curMediaIdx.current > 0;
     const currentMediaIsImage: boolean = post.current !== null && post.current.media[curMediaIdx.current] === MediaType.Image;
+
+    const isFavorited: boolean = useMemo(() => {
+        return post.current !== null && favoritedIDs.includes(post.current.id);
+    }, [favoritedIDs, post.current?.id])
 
     // handles
 
@@ -99,8 +113,29 @@ const ThePage = ({ category }: ThePageProps) => {
     // button handles
 
     const onPresssFavorite = useCallback(() => {
-        setFavorited(val => !val);
-    }, []);
+        if (!post.current)
+            return;
+
+        if (category === Category.Quote) {
+            if (isFavorited)
+                dispatch(removeQuoteFavoritedID(post.current.id));
+            else
+                dispatch(addQuoteFavoritedID(post.current.id));
+        } else if (category === Category.Draw) {
+            if (isFavorited)
+                dispatch(removeDrawFavoritedID(post.current.id));
+            else
+                dispatch(addDrawFavoritedID(post.current.id));
+        }
+        else if (category === Category.Real) {
+            if (isFavorited)
+                dispatch(removeRealFavoritedID(post.current.id));
+            else
+                dispatch(addRealFavoritedID(post.current.id));
+        }
+        else
+            throw new Error('NI cat: ' + category);
+    }, [isFavorited]);
 
     const onPressNextPost = useCallback(async (isNext: boolean) => {
         if (!post.current)
@@ -117,7 +152,7 @@ const ThePage = ({ category }: ThePageProps) => {
 
         setNeedLoadPost(isNext ? 'next' : 'previous');
     }, []);
-   
+
     const onPressNextMedia = useCallback(async (isNext: boolean) => {
         if (!post.current)
             return;
