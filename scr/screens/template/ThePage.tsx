@@ -58,33 +58,25 @@ const ThePage = ({ category }: ThePageProps) => {
 
     // handles
 
-    const loadNextMediaAsync = useCallback(async (isNext: boolean, forPost?: PostMetadata, isSetNewPost?: boolean) => {
-        setHandling(true);
-        let handlePost;
+    const loadNextMediaAsync = useCallback(async (isNext: boolean, forPost: PostMetadata, isSetNewPost?: boolean) => {
+        setHandling(true);    
 
-        if (forPost)
-            handlePost = forPost;
-        else if (post)
-            handlePost = post;
-        else
-            return;
-            
         const nextIdx = isSetNewPost ? 0 : curMediaIdx.current + 1;
-        const uriRes = await CheckLocalFileAndGetURIAsync(category, handlePost, nextIdx);
+        const uriRes = await CheckLocalFileAndGetURIAsync(category, forPost, nextIdx);
 
         if (uriRes.uri) { // success
             curMediaIdx.current = nextIdx;
             setMediaURI(uriRes.uri);
 
             if (isSetNewPost) {
-                setPost(handlePost);
+                setPost(forPost);
             }
         } else { // fail
-            Alert.alert('Failed to load media', `Post ID: ${handlePost.id}, media index: ${nextIdx}\n\nError: ${uriRes.error}`);
+            Alert.alert('Failed to load media', `Post ID: ${forPost.id}, media index: ${nextIdx}\n\nError: ${uriRes.error}`);
         }
 
         setHandling(false);
-    }, [post]);
+    }, []);
 
     const loadNextPostAsync = useCallback(async (isNext: boolean) => {
         let findPost = fileList.current?.posts.find(i => !seenIDs.includes(i.id));
@@ -95,7 +87,7 @@ const ThePage = ({ category }: ThePageProps) => {
         }
 
         if (!findPost)
-            throw '';
+            throw 'cant find post';
 
         await loadNextMediaAsync(true, findPost, true);
     }, [seenIDs, loadNextMediaAsync]);
@@ -106,13 +98,10 @@ const ThePage = ({ category }: ThePageProps) => {
         setFavorited(val => !val);
     }, []);
 
-    console.log('seeenn ' + JSON.stringify(seenIDs));
-
     const onPressNextPost = useCallback(async (isNext: boolean) => {
         if (!post)
             return;
 
-            console.log('add', post.id);
         dispatch(addDrawSeenID(post.id));
     }, [post]);
 
