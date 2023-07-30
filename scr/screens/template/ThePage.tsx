@@ -51,13 +51,13 @@ const ThePage = ({ category }: ThePageProps) => {
     // a post state
 
     const [mediaURI, setMediaURI] = useState('');
-    const [post, setPost] = useState<PostMetadata | null>(null);
+    const post = useRef<PostMetadata | null>(null);
     const curMediaIdx = useRef<number>(0);
 
     // calculations
 
-    const showNextMediaButton: boolean = post !== null && curMediaIdx.current < post.media.length - 1;
-    const showPreviousMediaButton: boolean = post !== null && curMediaIdx.current > 0;
+    const showNextMediaButton: boolean = post.current !== null && curMediaIdx.current < post.current.media.length - 1;
+    const showPreviousMediaButton: boolean = post.current !== null && curMediaIdx.current > 0;
 
     // handles
 
@@ -72,7 +72,7 @@ const ThePage = ({ category }: ThePageProps) => {
             setMediaURI(uriRes.uri);
 
             if (isSetNewPost) {
-                setPost(forPost);
+                post.current = forPost;
             }
         } else { // fail
             Alert.alert('Failed to load media', `Post ID: ${forPost.id}, media index: ${nextIdx}\n\nError: ${uriRes.error}`);
@@ -102,10 +102,10 @@ const ThePage = ({ category }: ThePageProps) => {
     }, []);
 
     const onPressNextPost = useCallback(async (isNext: boolean) => {
-        if (!post)
+        if (!post.current)
             return;
 
-        dispatch(addDrawSeenID(post.id));
+        dispatch(addDrawSeenID(post.current.id));
         needLoadPost.current = isNext ? 'next' : 'previous';
     }, [post]);
 
@@ -149,7 +149,7 @@ const ThePage = ({ category }: ThePageProps) => {
 
     // main render
 
-    // console.log('RENDER: ' + Date.now());
+    console.log('RENDER: ' + Date.now());
 
     return (
         // master view
@@ -157,8 +157,8 @@ const ThePage = ({ category }: ThePageProps) => {
             {/* title */}
             <View style={{ paddingHorizontal: Outline.Horizontal, paddingTop: Outline.GapVertical }}>
                 {
-                    post === null || !post.title ? null :
-                        <Text style={{ textAlignVertical: 'center', fontSize: FontSize.Normal, color: theme.text }}>{post.title}</Text>
+                    post.current === null || !post.current.title ? null :
+                        <Text style={{ textAlignVertical: 'center', fontSize: FontSize.Normal, color: theme.text }}>{post.current.title}</Text>
                 }
             </View>
 
@@ -189,9 +189,9 @@ const ThePage = ({ category }: ThePageProps) => {
 
             {/* credit author */}
             {
-                post === null || !post.author ? null :
+                post.current === null || !post.current.author ? null :
                     <View style={{ paddingHorizontal: Outline.Horizontal, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
-                        <Text style={{ fontSize: FontSize.Normal, color: theme.text }}>{post.author}</Text>
+                        <Text style={{ fontSize: FontSize.Normal, color: theme.text }}>{post.current.author}</Text>
                         <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center' }} >
                             <MaterialIcons name={'content-copy'} color={theme.counterPrimary} size={Size.IconSmaller} />
                         </TouchableOpacity>
@@ -200,9 +200,9 @@ const ThePage = ({ category }: ThePageProps) => {
 
             {/* link credit */}
             {
-                post === null || !post.url ? null :
+                post.current === null || !post.current.url ? null :
                     <View style={{ paddingHorizontal: Outline.Horizontal, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
-                        <Text style={{ fontSize: FontSize.Small, color: theme.text }}>{post.url}</Text>
+                        <Text style={{ fontSize: FontSize.Small, color: theme.text }}>{post.current.url}</Text>
                         <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center' }} >
                             <MaterialIcons name={'content-copy'} color={theme.counterPrimary} size={Size.IconSmaller} />
                         </TouchableOpacity>
