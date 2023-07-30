@@ -26,6 +26,8 @@ const slice = createSlice({
     name: 'userData',
     initialState,
     reducers: {
+        clearAllUserData: () => initialState,
+        
         addDrawSeenID(state, action: PayloadAction<number>) {
             if (!state.drawSeenIDs.includes(action.payload))
                 state.drawSeenIDs.push(action.payload);
@@ -59,6 +61,8 @@ const slice = createSlice({
 });
 
 export const {
+    clearAllUserData, 
+    
     addDrawSeenID,
     addDrawFavoritedID,
 

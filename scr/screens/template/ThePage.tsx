@@ -149,7 +149,7 @@ const ThePage = ({ category }: ThePageProps) => {
 
     // main render
 
-    console.log('RENDER');
+    // console.log('RENDER: ' + Date.now());
 
     return (
         // master view
