@@ -143,12 +143,13 @@ const ThePage = ({ category }: ThePageProps) => {
         if (needLoadPost.current === 'none')
             return;
 
-        console.log('effect load post');
         loadNextPostAsync(needLoadPost.current === 'next');
         needLoadPost.current = 'none';
     }, [needLoadPost.current]);
 
     // main render
+
+    console.log('RENDER');
 
     return (
         // master view
