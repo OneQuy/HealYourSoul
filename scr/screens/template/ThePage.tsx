@@ -11,7 +11,7 @@ import React, { useCallback, useContext, useEffect, useRef, useState } from 'rea
 import { Category, FontSize, Opacity, Outline, Size } from '../../constants/AppConstants';
 import { ThemeContext } from '../../constants/Colors';
 import { heightPercentageToDP as hp, } from "react-native-responsive-screen";
-import { FileList, PostMetadata } from '../../constants/Types';
+import { FileList, MediaType, PostMetadata } from '../../constants/Types';
 import { CheckAndGetFileListAsync, CheckLocalFileAndGetURIAsync } from '../../handle/AppUtils';
 import { useNavigation } from '@react-navigation/native';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
@@ -58,6 +58,7 @@ const ThePage = ({ category }: ThePageProps) => {
 
     const showNextMediaButton: boolean = post.current !== null && curMediaIdx.current < post.current.media.length - 1;
     const showPreviousMediaButton: boolean = post.current !== null && curMediaIdx.current > 0;
+    const currentMediaIsImage: boolean = post.current !== null && post.current.media[curMediaIdx.current] === MediaType.Image;
 
     // handles
 
@@ -113,7 +114,7 @@ const ThePage = ({ category }: ThePageProps) => {
             dispatch(addQuoteSeenID(post.current.id));
         else
             throw new Error('NI cat: ' + category);
-            
+
         setNeedLoadPost(isNext ? 'next' : 'previous');
     }, []);
 
@@ -177,7 +178,12 @@ const ThePage = ({ category }: ThePageProps) => {
                     </View> :
                     // have media
                     <View style={{ flex: 1 }} >
-                        <Image resizeMode='contain' style={{ width: '100%', height: '100%', }} source={{ uri: mediaURI }} />
+                        {
+                            currentMediaIsImage ?
+                                <Image resizeMode='contain' style={{ width: '100%', height: '100%', }} source={{ uri: mediaURI }} />
+                                :
+                                <View style={{ width: '100%', height: '100%', backgroundColor: 'green' }} />
+                        }
                         {/* menu overlay */}
                         <View style={{ width: '100%', height: '100%', position: 'absolute' }} >
                             {/* navigation buttons */}
