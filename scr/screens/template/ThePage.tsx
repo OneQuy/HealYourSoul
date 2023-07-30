@@ -24,12 +24,15 @@ type ThePageProps = {
     category: Category
 }
 
+type NeedLoadPostType = 'next' | 'previous' | 'none';
+
 const ThePage = ({ category }: ThePageProps) => {
     // general state
 
     const theme = useContext(ThemeContext);
     const [isFavorited, setFavorited] = useState(false);
     const [handling, setHandling] = useState(false);
+    const needLoadPost = useRef<NeedLoadPostType>('none');
     const fileList = useRef<FileList | null>(null);
     const navigation = useNavigation();
     const dispatch = useAppDispatch();
@@ -59,7 +62,7 @@ const ThePage = ({ category }: ThePageProps) => {
     // handles
 
     const loadNextMediaAsync = useCallback(async (isNext: boolean, forPost: PostMetadata, isSetNewPost?: boolean) => {
-        setHandling(true);    
+        setHandling(true);
 
         const nextIdx = isSetNewPost ? 0 : curMediaIdx.current + 1;
         const uriRes = await CheckLocalFileAndGetURIAsync(category, forPost, nextIdx);
@@ -103,6 +106,7 @@ const ThePage = ({ category }: ThePageProps) => {
             return;
 
         dispatch(addDrawSeenID(post.id));
+        needLoadPost.current = isNext ? 'next' : 'previous';
     }, [post]);
 
     // init once 
@@ -115,7 +119,7 @@ const ThePage = ({ category }: ThePageProps) => {
                 fileList.current = await CheckAndGetFileListAsync(category);
             }
 
-            loadNextPostAsync(true);
+            needLoadPost.current = 'next';
 
             setHandling(false);
         }
@@ -132,6 +136,17 @@ const ThePage = ({ category }: ThePageProps) => {
             )
         });
     }, [handling]);
+
+    // load post
+
+    useEffect(() => {
+        if (needLoadPost.current === 'none')
+            return;
+
+        console.log('effect load post');
+        loadNextPostAsync(needLoadPost.current === 'next');
+        needLoadPost.current = 'none';
+    }, [needLoadPost.current]);
 
     // main render
 
