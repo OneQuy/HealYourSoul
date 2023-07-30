@@ -107,7 +107,7 @@ const ThePage = ({ category }: ThePageProps) => {
 
         dispatch(addDrawSeenID(post.current.id));
         needLoadPost.current = isNext ? 'next' : 'previous';
-    }, [post]);
+    }, []);
 
     // init once 
 
