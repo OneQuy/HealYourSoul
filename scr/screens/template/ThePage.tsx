@@ -32,7 +32,7 @@ const ThePage = ({ category }: ThePageProps) => {
     const theme = useContext(ThemeContext);
     const [isFavorited, setFavorited] = useState(false);
     const [handling, setHandling] = useState(false);
-    const needLoadPost = useRef<NeedLoadPostType>('none');
+    const [needLoadPost, setNeedLoadPost] = useState<NeedLoadPostType>('none');
     const fileList = useRef<FileList | null>(null);
     const navigation = useNavigation();
     const dispatch = useAppDispatch();
@@ -106,22 +106,20 @@ const ThePage = ({ category }: ThePageProps) => {
             return;
 
         dispatch(addDrawSeenID(post.current.id));
-        needLoadPost.current = isNext ? 'next' : 'previous';
+        setNeedLoadPost(isNext ? 'next' : 'previous');
     }, []);
 
     // init once 
 
     useEffect(() => {
         async function Load() {
-            setHandling(true);
-
             if (fileList.current === null) {
+                setHandling(true);
                 fileList.current = await CheckAndGetFileListAsync(category);
+                setHandling(false);
             }
 
-            needLoadPost.current = 'next';
-
-            setHandling(false);
+            setNeedLoadPost('next');
         }
 
         Load();
@@ -140,16 +138,16 @@ const ThePage = ({ category }: ThePageProps) => {
     // load post
 
     useEffect(() => {
-        if (needLoadPost.current === 'none')
+        if (needLoadPost === 'none')
             return;
 
-        loadNextPostAsync(needLoadPost.current === 'next');
-        needLoadPost.current = 'none';
-    }, [needLoadPost.current]);
+        loadNextPostAsync(needLoadPost === 'next');
+        setNeedLoadPost('none');
+    }, [needLoadPost]);
 
     // main render
 
-    console.log('RENDER: ' + Date.now());
+    // console.log('RENDER: ' + Date.now());
 
     return (
         // master view
