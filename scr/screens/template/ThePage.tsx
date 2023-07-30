@@ -65,7 +65,7 @@ const ThePage = ({ category }: ThePageProps) => {
     const loadNextMediaAsync = useCallback(async (isNext: boolean, forPost: PostMetadata, isSetNewPost?: boolean) => {
         setHandling(true);
 
-        const nextIdx = isSetNewPost ? 0 : curMediaIdx.current + 1;
+        const nextIdx = isSetNewPost ? 0 : curMediaIdx.current + (isNext ? 1 : -1);
         const uriRes = await CheckLocalFileAndGetURIAsync(category, forPost, nextIdx);
 
         if (uriRes.uri) { // success
@@ -117,6 +117,13 @@ const ThePage = ({ category }: ThePageProps) => {
 
         setNeedLoadPost(isNext ? 'next' : 'previous');
     }, []);
+   
+    const onPressNextMedia = useCallback(async (isNext: boolean) => {
+        if (!post.current)
+            return;
+
+        loadNextMediaAsync(isNext, post.current, false);
+    }, [loadNextMediaAsync]);
 
     // init once 
 
@@ -188,10 +195,10 @@ const ThePage = ({ category }: ThePageProps) => {
                         <View style={{ width: '100%', height: '100%', position: 'absolute' }} >
                             {/* navigation buttons */}
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', flex: 1, alignItems: 'center' }} >
-                                <TouchableOpacity disabled={!showPreviousMediaButton} style={{ paddingVertical: hp('2%'), opacity: showPreviousMediaButton ? Opacity.Primary : 0, borderTopRightRadius: Outline.BorderRadius, borderBottomRightRadius: Outline.BorderRadius, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
+                                <TouchableOpacity onPress={() => onPressNextMedia(false)} disabled={!showPreviousMediaButton} style={{ paddingVertical: hp('2%'), opacity: showPreviousMediaButton ? Opacity.Primary : 0, borderTopRightRadius: Outline.BorderRadius, borderBottomRightRadius: Outline.BorderRadius, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
                                     <MaterialIcons name="keyboard-arrow-left" color={theme.counterPrimary} size={Size.IconSmaller} />
                                 </TouchableOpacity>
-                                <TouchableOpacity disabled={!showNextMediaButton} style={{ paddingVertical: hp('2%'), opacity: showNextMediaButton ? Opacity.Primary : 0, borderTopLeftRadius: Outline.BorderRadius, borderBottomLeftRadius: Outline.BorderRadius, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
+                                <TouchableOpacity onPress={() => onPressNextMedia(true)} disabled={!showNextMediaButton} style={{ paddingVertical: hp('2%'), opacity: showNextMediaButton ? Opacity.Primary : 0, borderTopLeftRadius: Outline.BorderRadius, borderBottomLeftRadius: Outline.BorderRadius, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
                                     <MaterialIcons name="keyboard-arrow-right" color={theme.counterPrimary} size={Size.IconSmaller} />
                                 </TouchableOpacity>
                             </View>
