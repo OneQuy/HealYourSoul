@@ -14,8 +14,9 @@ import { heightPercentageToDP as hp, } from "react-native-responsive-screen";
 import { FileList, PostMetadata } from '../../constants/Types';
 import { CheckAndGetFileListAsync, CheckLocalFileAndGetURIAsync } from '../../handle/AppUtils';
 import { useNavigation } from '@react-navigation/native';
-import { RootState, useAppSelector } from '../../redux/Store';
+import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { PickRandomElement } from '../../handle/Utils';
+import { addDrawSeenID } from '../../redux/UserDataSlice';
 
 const noPic = require('../../../assets/images/no-pic.png');
 
@@ -31,6 +32,7 @@ const ThePage = ({ category }: ThePageProps) => {
     const [handling, setHandling] = useState(false);
     const fileList = useRef<FileList | null>(null);
     const navigation = useNavigation();
+    const dispatch = useAppDispatch();
 
     const seenIDs = useAppSelector((state: RootState) => {
         if (category === Category.Draw)
@@ -57,6 +59,7 @@ const ThePage = ({ category }: ThePageProps) => {
     // handles
 
     const loadNextMediaAsync = useCallback(async (isNext: boolean, forPost?: PostMetadata, isSetNewPost?: boolean) => {
+        setHandling(true);
         let handlePost;
 
         if (forPost)
@@ -65,7 +68,7 @@ const ThePage = ({ category }: ThePageProps) => {
             handlePost = post;
         else
             return;
-
+            
         const nextIdx = isSetNewPost ? 0 : curMediaIdx.current + 1;
         const uriRes = await CheckLocalFileAndGetURIAsync(category, handlePost, nextIdx);
 
@@ -79,6 +82,8 @@ const ThePage = ({ category }: ThePageProps) => {
         } else { // fail
             Alert.alert('Failed to load media', `Post ID: ${handlePost.id}, media index: ${nextIdx}\n\nError: ${uriRes.error}`);
         }
+
+        setHandling(false);
     }, [post]);
 
     const loadNextPostAsync = useCallback(async (isNext: boolean) => {
@@ -100,6 +105,16 @@ const ThePage = ({ category }: ThePageProps) => {
     const onPresssFavorite = useCallback(() => {
         setFavorited(val => !val);
     }, []);
+
+    console.log('seeenn ' + JSON.stringify(seenIDs));
+
+    const onPressNextPost = useCallback(async (isNext: boolean) => {
+        if (!post)
+            return;
+
+            console.log('add', post.id);
+        dispatch(addDrawSeenID(post.id));
+    }, [post]);
 
     // init once 
 
@@ -197,7 +212,7 @@ const ThePage = ({ category }: ThePageProps) => {
                 <TouchableOpacity style={{ borderRadius: Outline.BorderRadius, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
                     <MaterialIcons name="keyboard-arrow-left" color={theme.counterPrimary} size={Size.Icon} />
                 </TouchableOpacity>
-                <TouchableOpacity style={{ borderRadius: Outline.BorderRadius, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
+                <TouchableOpacity onPress={() => onPressNextPost(true)} style={{ borderRadius: Outline.BorderRadius, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
                     <MaterialIcons name="keyboard-arrow-right" color={theme.counterPrimary} size={Size.Icon} />
                 </TouchableOpacity>
             </View>

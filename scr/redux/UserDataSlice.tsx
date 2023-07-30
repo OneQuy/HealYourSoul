@@ -27,41 +27,47 @@ const slice = createSlice({
     initialState,
     reducers: {
         addDrawSeenID(state, action: PayloadAction<number>) {
-            state.drawSeenIDs.push(action.payload);
+            if (!state.drawSeenIDs.includes(action.payload))
+                state.drawSeenIDs.push(action.payload);
         },
 
         addDrawFavoritedID(state, action: PayloadAction<number>) {
-            state.drawFavoritedIDs.push(action.payload);
+            if (!state.drawFavoritedIDs.includes(action.payload))
+                state.drawFavoritedIDs.push(action.payload);
         },
 
         addRealSeenID(state, action: PayloadAction<number>) {
-            state.realSeenIDs.push(action.payload);
+            if (!state.realSeenIDs.includes(action.payload))
+                state.realSeenIDs.push(action.payload);
         },
 
         addRealFavoritedID(state, action: PayloadAction<number>) {
-            state.realFavoritedIDs.push(action.payload);
+            if (!state.realFavoritedIDs.includes(action.payload))
+                state.realFavoritedIDs.push(action.payload);
         },
 
         addQuoteSeenID(state, action: PayloadAction<number>) {
-            state.quoteSeenIDs.push(action.payload);
+            if (!state.quoteSeenIDs.includes(action.payload))
+                state.quoteSeenIDs.push(action.payload);
         },
 
         addQuoteFavoritedID(state, action: PayloadAction<number>) {
-            state.quoteFavoritedIDs.push(action.payload);
+            if (!state.quoteFavoritedIDs.includes(action.payload))
+                state.quoteFavoritedIDs.push(action.payload);
         },
     }
 });
 
-export const { 
+export const {
     addDrawSeenID,
     addDrawFavoritedID,
-    
+
     addRealSeenID,
     addRealFavoritedID,
-    
+
     addQuoteSeenID,
     addQuoteFavoritedID,
- } = slice.actions;
+} = slice.actions;
 
 export default slice.reducer;
 

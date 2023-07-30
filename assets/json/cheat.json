@@ -1,5 +1,5 @@
 {
-    "IsClearAllLocalFileBeforeLoadApp": 0,
+    "IsClearAllLocalFileBeforeLoadApp": 1,
     "IsLog_TimeVersion": 0,
     "IsLog_LoadFileList": 1,
     "IsLog_LoadMedia": 1
