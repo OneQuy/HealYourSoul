@@ -17,6 +17,7 @@ import { useNavigation } from '@react-navigation/native';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { PickRandomElement } from '../../handle/Utils';
 import { addDrawFavoritedID, addDrawSeenID, addQuoteFavoritedID, addQuoteSeenID, addRealFavoritedID, addRealSeenID, removeDrawFavoritedID, removeQuoteFavoritedID, removeRealFavoritedID } from '../../redux/UserDataSlice';
+import Video from 'react-native-video';
 
 const noPic = require('../../../assets/images/no-pic.png');
 
@@ -85,7 +86,7 @@ const ThePage = ({ category }: ThePageProps) => {
         if (uriRes.uri) { // success
             curMediaIdx.current = nextIdx;
             setMediaURI(uriRes.uri);
-
+            console.log(uriRes.uri);
             if (isSetNewPost) {
                 post.current = forPost;
             }
@@ -224,7 +225,9 @@ const ThePage = ({ category }: ThePageProps) => {
                             currentMediaIsImage ?
                                 <Image resizeMode='contain' style={{ width: '100%', height: '100%', }} source={{ uri: mediaURI }} />
                                 :
-                                <View style={{ width: '100%', height: '100%', backgroundColor: 'green' }} />
+                                <View style={{ width: '100%', height: '100%' }} >
+                                    <Video source={{ uri: mediaURI }} resizeMode={'contain'} style={{ flex: 1}} />
+                                </View>
                         }
                         {/* menu overlay */}
                         <View style={{ width: '100%', height: '100%', position: 'absolute' }} >
