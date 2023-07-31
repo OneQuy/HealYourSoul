@@ -117,7 +117,7 @@ const GetMediaFullPath = (localOrFb: boolean, cat: Category, postID: number, med
         throw new Error('GetDataFullPath: ' + cat);
 
     if (localOrFb) {
-        return GetFLPFromRLP(LocalPath.MasterDirName + '/' + path)
+        return GetFLPFromRLP(LocalPath.MasterDirName + '/' + path, true)
     }
     else {
         return path;
