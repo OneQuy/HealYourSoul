@@ -1,4 +1,5 @@
-// https://oblador.github.io/react-native-vector-icons/
+// @ts-ignore
+import Video from 'react-native-video';
 
 // @ts-ignore
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -17,7 +18,6 @@ import { useNavigation } from '@react-navigation/native';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { PickRandomElement } from '../../handle/Utils';
 import { addDrawFavoritedID, addDrawSeenID, addQuoteFavoritedID, addQuoteSeenID, addRealFavoritedID, addRealSeenID, removeDrawFavoritedID, removeQuoteFavoritedID, removeRealFavoritedID } from '../../redux/UserDataSlice';
-import Video from 'react-native-video';
 
 const noPic = require('../../../assets/images/no-pic.png');
 
