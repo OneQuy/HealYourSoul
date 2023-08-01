@@ -23,9 +23,8 @@ export const ArrayGroupElements = (array, property) => array.reduce((grouped, el
 
 // time
 
-export function AddDayToDate(dateTime, daysToAdd)
-{
-    var dateOffset = (24*60*60*1000) * daysToAdd;
+export function AddDayToDate(dateTime, daysToAdd) {
+    var dateOffset = (24 * 60 * 60 * 1000) * daysToAdd;
     dateTime.setTime(dateTime.getTime() - dateOffset);
     return dateTime;
 }
@@ -174,9 +173,13 @@ export function RGBToRGBAText(colorText, opacity) {
     return colorText.replace(')', ', ' + opacity + ')').replace('rgb', 'rgba');
 }
 
-export function PickRandomElement(list) {
-    let idx = Math.floor(Math.random() * list.length);
-    return list[idx];
+export function PickRandomElement(list, excludeElement) {
+    while (true) {
+        let idx = Math.floor(Math.random() * list.length);
+
+        if (list.length <= 1 || excludeElement === undefined || excludeElement === null || !Object.is(list[idx], excludeElement))
+            return list[idx];
+    }
 }
 
 export function SortObject() {

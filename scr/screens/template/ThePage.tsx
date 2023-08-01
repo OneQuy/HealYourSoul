@@ -101,7 +101,7 @@ const ThePage = ({ category }: ThePageProps) => {
         let findPost = fileList.current?.posts.find(i => !seenIDs.includes(i.id));
 
         if (!findPost) {
-            findPost = PickRandomElement(fileList.current?.posts);
+            findPost = PickRandomElement(fileList.current?.posts, post.current);
             console.log('seen all posts, so picking randomly');
         }
 
