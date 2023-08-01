@@ -34,6 +34,7 @@ const ThePage = ({ category }: ThePageProps) => {
     const [handling, setHandling] = useState(false);
     const [needLoadPost, setNeedLoadPost] = useState<NeedLoadPostType>('none');
     const fileList = useRef<FileList | null>(null);
+    const previousPostIDs = useRef<number[]>([]);
     const navigation = useNavigation();
     const dispatch = useAppDispatch();
 
@@ -70,6 +71,7 @@ const ThePage = ({ category }: ThePageProps) => {
     const showNextMediaButton: boolean = post.current !== null && curMediaIdx.current < post.current.media.length - 1;
     const showPreviousMediaButton: boolean = post.current !== null && curMediaIdx.current > 0;
     const currentMediaIsImage: boolean = post.current !== null && post.current.media[curMediaIdx.current] === MediaType.Image;
+    const activePreviousPostButton: boolean = previousPostIDs.current.length > 0 && post.current !== null && previousPostIDs.current.indexOf(post.current.id) !== 0;
 
     const isFavorited: boolean = useMemo(() => {
         return post.current !== null && favoritedIDs.includes(post.current.id);
@@ -86,8 +88,16 @@ const ThePage = ({ category }: ThePageProps) => {
         if (uriRes.uri) { // success
             curMediaIdx.current = nextIdx;
             setMediaURI(uriRes.uri);
-            console.log(uriRes.uri);
+
             if (isSetNewPost) {
+                // add to previous list
+
+                if (post.current !== null && !previousPostIDs.current.includes(post.current.id)) {
+                    previousPostIDs.current.push(post.current.id);
+                }
+
+                // set new post
+
                 post.current = forPost;
             }
         } else { // fail
@@ -98,17 +108,34 @@ const ThePage = ({ category }: ThePageProps) => {
     }, []);
 
     const loadNextPostAsync = useCallback(async (isNext: boolean) => {
-        let findPost = fileList.current?.posts.find(i => !seenIDs.includes(i.id));
+        let foundPost: PostMetadata | undefined;
 
-        if (!findPost) {
-            findPost = PickRandomElement(fileList.current?.posts, post.current);
-            console.log('seen all posts, so picking randomly');
+        if (isNext) {
+            foundPost = fileList.current?.posts.find(i => !seenIDs.includes(i.id));
+
+            if (!foundPost) {
+                foundPost = PickRandomElement(fileList.current?.posts, post.current);
+                // console.log('seen all posts, so picking randomly');
+            }
+        }
+        else { // previous
+            if (!post.current)
+                return;
+
+            const curPostIdx = previousPostIDs.current.indexOf(post.current.id);
+
+            if (curPostIdx > 0)
+                foundPost = fileList.current?.posts.find(p => p.id === previousPostIDs.current[curPostIdx - 1]);
+            else if (previousPostIDs.current.length > 0)
+                foundPost = fileList.current?.posts.find(p => p.id === previousPostIDs.current[previousPostIDs.current.length - 1]);
+            else
+                return;
         }
 
-        if (!findPost)
+        if (!foundPost)
             throw 'cant find post';
 
-        await loadNextMediaAsync(true, findPost, true);
+        await loadNextMediaAsync(true, foundPost, true);
     }, [seenIDs, loadNextMediaAsync]);
 
     // button handles
@@ -226,7 +253,7 @@ const ThePage = ({ category }: ThePageProps) => {
                                 <Image resizeMode='contain' style={{ width: '100%', height: '100%', }} source={{ uri: mediaURI }} />
                                 :
                                 <View style={{ width: '100%', height: '100%' }} >
-                                    <Video source={{ uri: mediaURI }} resizeMode={'contain'} style={{ flex: 1}} />
+                                    <Video source={{ uri: mediaURI }} resizeMode={'contain'} style={{ flex: 1 }} />
                                 </View>
                         }
                         {/* menu overlay */}
@@ -271,9 +298,12 @@ const ThePage = ({ category }: ThePageProps) => {
                 <TouchableOpacity onPress={onPresssFavorite} style={{ borderRadius: Outline.BorderRadius, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
                     <MaterialCommunityIcons name={!isFavorited ? "cards-heart-outline" : 'cards-heart'} color={theme.counterPrimary} size={Size.IconSmaller} />
                 </TouchableOpacity>
-                <TouchableOpacity style={{ borderRadius: Outline.BorderRadius, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
-                    <MaterialIcons name="keyboard-arrow-left" color={theme.counterPrimary} size={Size.Icon} />
-                </TouchableOpacity>
+                {
+                    !activePreviousPostButton ? undefined :
+                    <TouchableOpacity onPress={() => onPressNextPost(false)} style={{ borderRadius: Outline.BorderRadius, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
+                        <MaterialIcons name="keyboard-arrow-left" color={theme.counterPrimary} size={Size.Icon} />
+                    </TouchableOpacity>
+                }
                 <TouchableOpacity onPress={() => onPressNextPost(true)} style={{ borderRadius: Outline.BorderRadius, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
                     <MaterialIcons name="keyboard-arrow-right" color={theme.counterPrimary} size={Size.Icon} />
                 </TouchableOpacity>
