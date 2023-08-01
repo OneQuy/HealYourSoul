@@ -188,6 +188,10 @@ const ThePage = ({ category }: ThePageProps) => {
         loadNextMediaAsync(isNext, post.current, false);
     }, [loadNextMediaAsync]);
 
+    const onPlayVideoError = useCallback(() => {        
+        onPressNextPost(true);
+    }, [onPressNextPost]);
+
     // init once 
 
     useEffect(() => {
@@ -253,7 +257,7 @@ const ThePage = ({ category }: ThePageProps) => {
                                 <Image resizeMode='contain' style={{ width: '100%', height: '100%', }} source={{ uri: mediaURI }} />
                                 :
                                 <View style={{ width: '100%', height: '100%' }} >
-                                    <Video source={{ uri: mediaURI }} resizeMode={'contain'} style={{ flex: 1 }} />
+                                    <Video onLoad={onPlayVideoError} onError={onPlayVideoError} source={{ uri: mediaURI }} resizeMode={'contain'} style={{ flex: 1 }} />
                                 </View>
                         }
                         {/* menu overlay */}
