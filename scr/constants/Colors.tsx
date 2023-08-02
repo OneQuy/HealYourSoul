@@ -7,6 +7,8 @@ export type ThemeColor = {
     text: string,
 }
 
+export const ThemeList = ['green','pink', 'red'];
+
 const LightColors: ThemeColor = {
     background: '#fff',
     primary: '#fff39c',
