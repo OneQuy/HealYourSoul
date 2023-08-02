@@ -71,7 +71,7 @@ const ThePage = ({ category }: ThePageProps) => {
     const showNextMediaButton: boolean = post.current !== null && curMediaIdx.current < post.current.media.length - 1;
     const showPreviousMediaButton: boolean = post.current !== null && curMediaIdx.current > 0;
     const currentMediaIsImage: boolean = post.current !== null && post.current.media[curMediaIdx.current] === MediaType.Image;
-    const activePreviousPostButton: boolean = previousPostIDs.current.length > 0 && post.current !== null && previousPostIDs.current.indexOf(post.current.id) !== 0;
+    const activePreviousPostButton: boolean = previousPostIDs.current.length > 0 && post.current !== null && previousPostIDs.current.indexOf(post.current.id) > 0;
 
     const isFavorited: boolean = useMemo(() => {
         return post.current !== null && favoritedIDs.includes(post.current.id);
@@ -79,21 +79,27 @@ const ThePage = ({ category }: ThePageProps) => {
 
     // handles
 
-    const loadNextMediaAsync = useCallback(async (isNext: boolean, forPost: PostMetadata, isSetNewPost?: boolean) => {
+    const loadNextMediaAsync = useCallback(async (isNext: boolean, forPost: PostMetadata, isNextPost: NeedLoadPostType) => {
         setHandling(true);
 
-        const nextIdx = isSetNewPost ? 0 : curMediaIdx.current + (isNext ? 1 : -1);
+        const nextIdx = isNextPost !== 'none' ? 0 : curMediaIdx.current + (isNext ? 1 : -1);
         const uriRes = await CheckLocalFileAndGetURIAsync(category, forPost, nextIdx);
 
         if (uriRes.uri) { // success
             curMediaIdx.current = nextIdx;
             setMediaURI(uriRes.uri);
 
-            if (isSetNewPost) {
+            if (isNextPost !== 'none') {
                 // add to previous list
 
-                if (post.current !== null && !previousPostIDs.current.includes(post.current.id)) {
-                    previousPostIDs.current.push(post.current.id);
+                if (isNextPost === 'next') {
+                    const idx = previousPostIDs.current.indexOf(forPost.id);
+
+                    if (idx >= 0) {                         
+                        previousPostIDs.current.splice(idx, 1);
+                    }
+
+                    previousPostIDs.current.push(forPost.id);
                 }
 
                 // set new post
@@ -106,7 +112,7 @@ const ThePage = ({ category }: ThePageProps) => {
 
         setHandling(false);
     }, []);
-
+    
     const loadNextPostAsync = useCallback(async (isNext: boolean) => {
         let foundPost: PostMetadata | undefined;
 
@@ -124,18 +130,17 @@ const ThePage = ({ category }: ThePageProps) => {
 
             const curPostIdx = previousPostIDs.current.indexOf(post.current.id);
 
-            if (curPostIdx > 0)
+            if (curPostIdx > 0) {
                 foundPost = fileList.current?.posts.find(p => p.id === previousPostIDs.current[curPostIdx - 1]);
-            else if (previousPostIDs.current.length > 0)
-                foundPost = fileList.current?.posts.find(p => p.id === previousPostIDs.current[previousPostIDs.current.length - 1]);
+            }
             else
                 return;
         }
 
         if (!foundPost)
-            throw 'cant find post';
+            throw new Error('cant find post');
 
-        await loadNextMediaAsync(true, foundPost, true);
+        await loadNextMediaAsync(true, foundPost, isNext ? 'next' : 'previous');
     }, [seenIDs, loadNextMediaAsync]);
 
     // button handles
@@ -185,10 +190,10 @@ const ThePage = ({ category }: ThePageProps) => {
         if (!post.current)
             return;
 
-        loadNextMediaAsync(isNext, post.current, false);
+        loadNextMediaAsync(isNext, post.current, 'none');
     }, [loadNextMediaAsync]);
 
-    const onPlayVideoError = useCallback(() => {        
+    const onPlayVideoError = useCallback(() => {
         onPressNextPost(true);
     }, [onPressNextPost]);
 
@@ -224,8 +229,9 @@ const ThePage = ({ category }: ThePageProps) => {
         if (needLoadPost === 'none')
             return;
 
-        loadNextPostAsync(needLoadPost === 'next');
+        const isNext = needLoadPost === 'next';
         setNeedLoadPost('none');
+        loadNextPostAsync(isNext);        
     }, [needLoadPost]);
 
     // main render
@@ -304,9 +310,9 @@ const ThePage = ({ category }: ThePageProps) => {
                 </TouchableOpacity>
                 {
                     !activePreviousPostButton ? undefined :
-                    <TouchableOpacity onPress={() => onPressNextPost(false)} style={{ borderRadius: Outline.BorderRadius, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
-                        <MaterialIcons name="keyboard-arrow-left" color={theme.counterPrimary} size={Size.Icon} />
-                    </TouchableOpacity>
+                        <TouchableOpacity onPress={() => onPressNextPost(false)} style={{ borderRadius: Outline.BorderRadius, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
+                            <MaterialIcons name="keyboard-arrow-left" color={theme.counterPrimary} size={Size.Icon} />
+                        </TouchableOpacity>
                 }
                 <TouchableOpacity onPress={() => onPressNextPost(true)} style={{ borderRadius: Outline.BorderRadius, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
                     <MaterialIcons name="keyboard-arrow-right" color={theme.counterPrimary} size={Size.Icon} />
