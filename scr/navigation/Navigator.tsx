@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React from 'react'
+import React, { useRef } from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
 import { createDrawerNavigator, DrawerContentComponentProps, DrawerContentScrollView, DrawerItemList, } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
@@ -35,7 +35,7 @@ const Navigator = () => {
 }
 
 function CustomDrawerContent(props: DrawerContentComponentProps) {
-  const themeValues = Object.keys(themes);
+  const themeValues = useRef(Object.keys(themes));
   const dispatch = useAppDispatch();
   const currentTheme = useAppSelector((state: RootState) => state.misc.themeType);
 
@@ -49,7 +49,11 @@ function CustomDrawerContent(props: DrawerContentComponentProps) {
         <View style={{ flexDirection: 'row', gap: 20 }}>
           <Text style={{fontWeight: '500'}}>Theme</Text>
           {
-            themeValues.map((theme, index) => <TouchableOpacity onPress={() => dispatch(setTheme(theme as ThemeType))} key={index} style={{borderWidth: currentTheme === theme ? 1 : 0, width: 20, height: 20, borderRadius: 10, backgroundColor: themes[theme as ThemeType].primary }} />)
+            themeValues.current.map((theme, index) => 
+              <TouchableOpacity 
+              onPress={() => dispatch(setTheme(theme as ThemeType))} 
+              key={index} 
+              style={{borderWidth: currentTheme === theme ? 1 : 0, width: 20, height: 20, borderRadius: 10, backgroundColor: themes[theme as ThemeType].primary }} />)
           }
         </View>
       </View>
