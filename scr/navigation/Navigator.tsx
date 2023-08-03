@@ -1,13 +1,13 @@
 import 'react-native-gesture-handler';
 import React from 'react'
-import {Text, TouchableOpacity, View } from 'react-native'
+import { Text, ScrollView, TouchableOpacity, View } from 'react-native'
 import { createDrawerNavigator, DrawerContentComponentProps, DrawerContentScrollView, DrawerItem, DrawerItemList, } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { ScreenName } from '../constants/AppConstants';
 import ComicScreen from '../screens/comic/ComicScreen';
 import RealScreen from '../screens/real/RealScreen';
 import QuoteScreen from '../screens/quote/QuoteScreen';
-import { ThemeList } from '../constants/Colors';
+import { themes } from '../constants/Colors';
 
 export type DrawerParamList = {
   [ScreenName.Comic]: undefined,
@@ -33,20 +33,16 @@ const Navigator = () => {
 }
 
 function CustomDrawerContent(props: DrawerContentComponentProps) {
-  
+var arr = Object.values(themes);
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <DrawerContentScrollView {...props}>
         <DrawerItemList {...props} />
       </DrawerContentScrollView>
       <View>
-        <View style={{flexDirection: 'row'}}>
+        <View style={{ flexDirection: 'row' }}>
           <Text>Theme</Text>
-
-          { 
-            ThemeList.map(theme => <TouchableOpacity style={{width: 10, height: 10, backgroundColor: theme}} />)
-          }
-         
+          {/* themtyp.map((theme, index) => <TouchableOpacity key={theme + index} style={{ width: 10, height: 10, backgroundColor: theme }} />)           */}
         </View>
       </View>
     </View>

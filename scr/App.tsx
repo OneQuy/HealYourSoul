@@ -18,7 +18,7 @@ import { clearAllUserData } from './redux/UserDataSlice'
 //   )
 // }
 
-const App = () => {
+const App = () => {  
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
@@ -30,7 +30,7 @@ const App = () => {
 
 const AppRender = () => {
   const loadedAppData = useAsyncHandle(LoadAppData);
-  const isLightTheme = useAppSelector((state: RootState) => state.misc.isLightTheme);
+  const themeType = useAppSelector((state: RootState) => state.misc.themeType);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -42,7 +42,7 @@ const AppRender = () => {
   }, []);
 
   return (
-    <ThemeContext.Provider value={GetColors(isLightTheme)} >
+    <ThemeContext.Provider value={GetColors(themeType)} >
       <View style={CommonStyles.flex_1}>
         {
           loadedAppData ? <Navigator /> : <SplashScreen />

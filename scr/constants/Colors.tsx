@@ -1,30 +1,34 @@
 import { createContext } from "react";
 
-export type ThemeColor = {
+type ThemeColor = {
     background: string,
     primary: string,
     counterPrimary: string,
     text: string,
 }
 
-export const ThemeList = ['green','pink', 'red'];
+export const defaultThemeType: ThemeType = 'yellow';
 
-const LightColors: ThemeColor = {
-    background: '#fff',
-    primary: '#fff39c',
-    counterPrimary: '#000',
-    text: '#000000',
+export type ThemeType = keyof typeof themes;
+
+export const themes = {
+    yellow: {
+        background: '#fff',
+        primary: '#fff39c',
+        counterPrimary: '#000',
+        text: '#000000',
+    } as ThemeColor,
+    
+    dark: {
+        background: '#0d111c',
+        primary: '#fff39c',
+        counterPrimary: '#000',
+        text: '#ffffff',
+    } as ThemeColor,
 }
 
-const DarkColors: ThemeColor = {
-    background: '#0d111c',
-    primary: '#fff39c',
-    counterPrimary: '#000',
-    text: '#ffffff',
+export function GetColors(type: ThemeType) {
+    return themes[type];
 }
 
-export function GetColors(isLight: boolean) {
-    return isLight ? LightColors : DarkColors;
-}
-
-export const ThemeContext = createContext(GetColors(true));
+export const ThemeContext = createContext(GetColors('yellow'));

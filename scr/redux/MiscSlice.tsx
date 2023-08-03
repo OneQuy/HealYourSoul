@@ -1,24 +1,25 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { PayloadAction, createSlice } from "@reduxjs/toolkit"
+import { defaultThemeType, ThemeType } from "../constants/Colors";
 
 export type MiscState = {
-    isLightTheme: boolean,
+    themeType: ThemeType,
 } 
 
 const initialState: MiscState = {
-    isLightTheme: true,
+    themeType: defaultThemeType,
 }
 
 const slice = createSlice({
     name: 'misc',
     initialState,
     reducers: {
-        toggleTheme: (state) => {
-            state.isLightTheme = !state.isLightTheme
+        setTheme: (state, action: PayloadAction<ThemeType>) => {
+            state.themeType = action.payload;
         }
     }
 });
 
-export const { toggleTheme } = slice.actions;
+export const { setTheme } = slice.actions;
 
 export default slice.reducer;
 
