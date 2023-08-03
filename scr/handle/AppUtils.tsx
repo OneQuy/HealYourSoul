@@ -1,5 +1,5 @@
 import { Category, FirebaseDBPath, FirebasePath, LocalPath } from "../constants/AppConstants";
-import { FileList, PostMetadata } from "../constants/Types";
+import { FileList, MediaType, PostMetadata } from "../constants/Types";
 import { FirebaseStorage_DownloadAndReadJsonAsync, FirebaseStorage_DownloadAsync } from "../firebase/FirebaseStorage";
 import { Cheat } from "./Cheat";
 import { DeleteFileAsync, DeleteTempDirAsync, GetFLPFromRLP, IsExistedAsync, ReadTextAsync } from "./FileUtils";
@@ -104,7 +104,7 @@ export async function CheckAndGetFileListAsync(cat: Category): Promise<FileList>
     return await DownloadAndSaveFileListAsync(cat);
 }
 
-const GetMediaFullPath = (localOrFb: boolean, cat: Category, postID: number, mediaIdx: number) => {
+const GetMediaFullPath = (localOrFb: boolean, cat: Category, postID: number, mediaIdx: number, mediaType: MediaType) => {
     let path;
 
     if (cat === Category.Draw)
@@ -116,6 +116,9 @@ const GetMediaFullPath = (localOrFb: boolean, cat: Category, postID: number, med
     else
         throw new Error('GetDataFullPath: ' + cat);
 
+    if (localOrFb && mediaType === MediaType.Video)
+        path += '.mp4';
+
     if (localOrFb) {
         return GetFLPFromRLP(LocalPath.MasterDirName + '/' + path, true)
     }
@@ -125,7 +128,7 @@ const GetMediaFullPath = (localOrFb: boolean, cat: Category, postID: number, med
 }
 
 export async function CheckLocalFileAndGetURIAsync(cat: Category, post: PostMetadata, mediaIdx: number): Promise<{uri: string | null, error: any}> {
-    const uri = GetMediaFullPath(true, cat, post.id, mediaIdx);
+    const uri = GetMediaFullPath(true, cat, post.id, mediaIdx, post.media[mediaIdx]);
 
     if (await IsExistedAsync(uri, false)) {
         if (Cheat('IsLog_LoadMedia')) {
@@ -137,7 +140,7 @@ export async function CheckLocalFileAndGetURIAsync(cat: Category, post: PostMeta
             error: null
         }
     }
-    const fbPath = GetMediaFullPath(false, cat, post.id, mediaIdx);
+    const fbPath = GetMediaFullPath(false, cat, post.id, mediaIdx, post.media[mediaIdx]);
 
     const res = await FirebaseStorage_DownloadAsync(fbPath, uri, false);
 

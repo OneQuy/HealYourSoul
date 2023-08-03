@@ -194,7 +194,7 @@ const ThePage = ({ category }: ThePageProps) => {
     }, [loadNextMediaAsync]);
 
     const onPlayVideoError = useCallback((error: any) => {
-        Alert.alert('Video load failed', 'Can not play this video. Let\'s go to the next post!\n\nError: ' + JSON.stringify(error),
+        Alert.alert('Video load failed', 'Can not play this video (Post ID: ' + post.current?.id + '). Let\'s go to the next post!\n\nError: ' + JSON.stringify(error),
             [
                 {
                     text: 'OK',
