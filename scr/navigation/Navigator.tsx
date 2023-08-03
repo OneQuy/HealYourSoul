@@ -8,7 +8,7 @@ import ComicScreen from '../screens/comic/ComicScreen';
 import RealScreen from '../screens/real/RealScreen';
 import QuoteScreen from '../screens/quote/QuoteScreen';
 import { ThemeType, themes } from '../constants/Colors';
-import { useAppDispatch } from '../redux/Store';
+import { RootState, useAppDispatch, useAppSelector } from '../redux/Store';
 import { setTheme } from '../redux/MiscSlice';
 
 export type DrawerParamList = {
@@ -37,6 +37,7 @@ const Navigator = () => {
 function CustomDrawerContent(props: DrawerContentComponentProps) {
   const themeValues = Object.keys(themes);
   const dispatch = useAppDispatch();
+  const currentTheme = useAppSelector((state: RootState) => state.misc.themeType);
 
   return (
     <View style={{ flex: 1 }}>
@@ -48,7 +49,7 @@ function CustomDrawerContent(props: DrawerContentComponentProps) {
         <View style={{ flexDirection: 'row', gap: 20 }}>
           <Text style={{fontWeight: '500'}}>Theme</Text>
           {
-            themeValues.map((theme, index) => <TouchableOpacity onPress={() => dispatch(setTheme(theme as ThemeType))} key={index} style={{ width: 20, height: 20, borderRadius: 10, backgroundColor: themes[theme as ThemeType].primary }} />)
+            themeValues.map((theme, index) => <TouchableOpacity onPress={() => dispatch(setTheme(theme as ThemeType))} key={index} style={{borderWidth: currentTheme === theme ? 1 : 0, width: 20, height: 20, borderRadius: 10, backgroundColor: themes[theme as ThemeType].primary }} />)
           }
         </View>
       </View>
