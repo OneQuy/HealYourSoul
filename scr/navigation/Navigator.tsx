@@ -7,7 +7,9 @@ import { ScreenName } from '../constants/AppConstants';
 import ComicScreen from '../screens/comic/ComicScreen';
 import RealScreen from '../screens/real/RealScreen';
 import QuoteScreen from '../screens/quote/QuoteScreen';
-import { themes } from '../constants/Colors';
+import { ThemeType, themes } from '../constants/Colors';
+import { useAppDispatch } from '../redux/Store';
+import { setTheme } from '../redux/MiscSlice';
 
 export type DrawerParamList = {
   [ScreenName.Comic]: undefined,
@@ -33,16 +35,21 @@ const Navigator = () => {
 }
 
 function CustomDrawerContent(props: DrawerContentComponentProps) {
-var arr = Object.values(themes);
+  const themeValues = Object.keys(themes);
+  const dispatch = useAppDispatch();
+
   return (
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView {...props}>
         <DrawerItemList {...props} />
       </DrawerContentScrollView>
-      <View>
-        <View style={{ flexDirection: 'row' }}>
-          <Text>Theme</Text>
-          {/* themtyp.map((theme, index) => <TouchableOpacity key={theme + index} style={{ width: 10, height: 10, backgroundColor: theme }} />)           */}
+      <View style={{marginLeft: 20, marginBottom: 20}}>
+        {/* theme setting */}
+        <View style={{ flexDirection: 'row', gap: 20 }}>
+          <Text style={{fontWeight: '500'}}>Theme</Text>
+          {
+            themeValues.map((theme, index) => <TouchableOpacity onPress={() => dispatch(setTheme(theme as ThemeType))} key={index} style={{ width: 20, height: 20, borderRadius: 10, backgroundColor: themes[theme as ThemeType].primary }} />)
+          }
         </View>
       </View>
     </View>

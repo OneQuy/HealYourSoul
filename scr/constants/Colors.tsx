@@ -21,7 +21,7 @@ export const themes = {
     
     dark: {
         background: '#0d111c',
-        primary: '#fff39c',
+        primary: '#dda',
         counterPrimary: '#000',
         text: '#ffffff',
     } as ThemeColor,
