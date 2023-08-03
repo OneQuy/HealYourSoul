@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 import React from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
-import { createDrawerNavigator, DrawerContentComponentProps, DrawerContentScrollView, DrawerItem, DrawerItemList, } from '@react-navigation/drawer';
+import { createDrawerNavigator, DrawerContentComponentProps, DrawerContentScrollView, DrawerItemList, } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { ScreenName } from '../constants/AppConstants';
 import ComicScreen from '../screens/comic/ComicScreen';
