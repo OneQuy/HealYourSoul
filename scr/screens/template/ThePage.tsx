@@ -193,8 +193,8 @@ const ThePage = ({ category }: ThePageProps) => {
         loadNextMediaAsync(isNext, post.current, 'none');
     }, [loadNextMediaAsync]);
 
-    const onPlayVideoError = useCallback(() => {
-        Alert.alert('Video load failed', 'Can not play this video. Let\'s go to the next post!',
+    const onPlayVideoError = useCallback((error: any) => {
+        Alert.alert('Video load failed', 'Can not play this video. Let\'s go to the next post!\n\nError: ' + JSON.stringify(error),
             [
                 {
                     text: 'OK',
@@ -269,7 +269,7 @@ const ThePage = ({ category }: ThePageProps) => {
                                 <Image resizeMode='contain' style={{ width: '100%', height: '100%', }} source={{ uri: mediaURI }} />
                                 :
                                 <View style={{ width: '100%', height: '100%' }} >
-                                    <Video onError={onPlayVideoError} source={{ uri: mediaURI }} resizeMode={'contain'} style={{ flex: 1 }} />
+                                    <Video onError={(e: any) => onPlayVideoError(e)} source={{ uri: mediaURI }} resizeMode={'contain'} style={{ flex: 1 }} />
                                 </View>
                         }
                         {/* menu overlay */}
