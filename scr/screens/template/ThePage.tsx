@@ -16,8 +16,10 @@ import { FileList, MediaType, PostMetadata } from '../../constants/Types';
 import { CheckAndGetFileListAsync, CheckLocalFileAndGetURIAsync } from '../../handle/AppUtils';
 import { useNavigation } from '@react-navigation/native';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
-import { PickRandomElement } from '../../handle/Utils';
+import { PickRandomElement, RGBToRGBAText } from '../../handle/Utils';
 import { addDrawFavoritedID, addDrawSeenID, addQuoteFavoritedID, addQuoteSeenID, addRealFavoritedID, addRealSeenID, removeDrawFavoritedID, removeQuoteFavoritedID, removeRealFavoritedID } from '../../redux/UserDataSlice';
+import { setMutedVideo } from '../../redux/MiscSlice';
+import { useHandler } from 'react-native-reanimated';
 
 const noPic = require('../../../assets/images/no-pic.png');
 
@@ -60,6 +62,8 @@ const ThePage = ({ category }: ThePageProps) => {
             throw new Error('NI cat: ' + category);
     });
 
+    const isMutedVideo = useAppSelector((state: RootState) => state.misc.mutedVideo);
+
     // a post state
 
     const [mediaURI, setMediaURI] = useState('');
@@ -95,7 +99,7 @@ const ThePage = ({ category }: ThePageProps) => {
                 if (isNextPost === 'next') {
                     const idx = previousPostIDs.current.indexOf(forPost.id);
 
-                    if (idx >= 0) {                         
+                    if (idx >= 0) {
                         previousPostIDs.current.splice(idx, 1);
                     }
 
@@ -112,7 +116,7 @@ const ThePage = ({ category }: ThePageProps) => {
 
         setHandling(false);
     }, []);
-    
+
     const loadNextPostAsync = useCallback(async (isNext: boolean) => {
         let foundPost: PostMetadata | undefined;
 
@@ -200,8 +204,13 @@ const ThePage = ({ category }: ThePageProps) => {
                     text: 'OK',
                     onPress: () => onPressNextPost(true)
                 }
-            ]);        
+            ]);
     }, [onPressNextPost]);
+
+    const onPressToggleMutedVideo = useCallback(() => {
+        dispatch(setMutedVideo());
+        console.log(11);
+    }, []);
 
     // init once 
 
@@ -237,7 +246,7 @@ const ThePage = ({ category }: ThePageProps) => {
 
         const isNext = needLoadPost === 'next';
         setNeedLoadPost('none');
-        loadNextPostAsync(isNext);        
+        loadNextPostAsync(isNext);
     }, [needLoadPost]);
 
     // main render
@@ -269,12 +278,16 @@ const ThePage = ({ category }: ThePageProps) => {
                                 <Image resizeMode='contain' style={{ width: '100%', height: '100%', }} source={{ uri: mediaURI }} />
                                 :
                                 <View style={{ width: '100%', height: '100%' }} >
-                                    <Video onError={(e: any) => onPlayVideoError(e)} source={{ uri: mediaURI }} resizeMode={'contain'} style={{ flex: 1 }} />
+                                    <Video
+                                        onError={(e: any) => onPlayVideoError(e)}
+                                        source={{ uri: mediaURI }} resizeMode={'contain'}
+                                        muted={isMutedVideo}
+                                        style={{ flex: 1 }} />
                                 </View>
                         }
                         {/* menu overlay */}
                         <View style={{ width: '100%', height: '100%', position: 'absolute' }} >
-                            {/* navigation buttons */}
+                            {/* media navigation buttons */}
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', flex: 1, alignItems: 'center' }} >
                                 <TouchableOpacity onPress={() => onPressNextMedia(false)} disabled={!showPreviousMediaButton} style={{ paddingVertical: hp('2%'), opacity: showPreviousMediaButton ? Opacity.Primary : 0, borderTopRightRadius: Outline.BorderRadius, borderBottomRightRadius: Outline.BorderRadius, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
                                     <MaterialIcons name="keyboard-arrow-left" color={theme.counterPrimary} size={Size.IconSmaller} />
@@ -283,6 +296,15 @@ const ThePage = ({ category }: ThePageProps) => {
                                     <MaterialIcons name="keyboard-arrow-right" color={theme.counterPrimary} size={Size.IconSmaller} />
                                 </TouchableOpacity>
                             </View>
+                            {/* video controller */}
+                            {
+                                currentMediaIsImage ? undefined :
+                                <View style={{ backgroundColor: RGBToRGBAText('rgb(255, 255, 255)', 0.7), paddingHorizontal: Outline.Horizontal, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }} >
+                                    <TouchableOpacity style={{}} onPress={onPressToggleMutedVideo} >
+                                        <MaterialIcons name={isMutedVideo ? 'volume-off' : 'volume-up'} color={theme.counterPrimary} size={Size.Icon} />
+                                    </TouchableOpacity>
+                                </View>
+                            }
                         </View>
                     </View>
             }
