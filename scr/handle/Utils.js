@@ -169,10 +169,6 @@ export async function DelayAsync(msTime) {
     return new Promise(resolve => setTimeout(resolve, msTime));
 }
 
-export function RGBToRGBAText(colorText, opacity) {
-    return colorText.replace(')', ', ' + opacity + ')').replace('rgb', 'rgba');
-}
-
 export function PickRandomElement(list, excludeElement) {
     while (true) {
         let idx = Math.floor(Math.random() * list.length);
@@ -195,36 +191,6 @@ export function SortObject() {
     for (let element of sorted) {
         console.log(element[0] + ': ' + element[1]);
     }
-}
-
-// logs
-
-export function LogCheat(content) {
-    console.log('\n*****\n' + content + '\n*****\n');
-}
-
-export function LogNumberWithTime_0(content) {
-    LogNumberWithTime(0, content);
-}
-
-export function LogNumberWithTime_1(content) {
-    LogNumberWithTime(1, content);
-}
-
-export function LogNumberWithTime_2(content) {
-    LogNumberWithTime(2, content);
-}
-
-export function LogNumberWithTime_3(content) {
-    LogNumberWithTime(3, content);
-}
-
-export function LogNumberWithTime(number, content) {
-    console.log('\n[' + number + '] ' + (new Date()).toLocaleTimeString() + ' | ' + content + '\n');
-}
-
-export function NewLineLogJsonObject(obj, space = 0) {
-    console.log('\n' + JSON.stringify(obj, null, space) + '\n');
 }
 
 // json

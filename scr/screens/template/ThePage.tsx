@@ -7,7 +7,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { View, Text, Image, TouchableOpacity, ActivityIndicator, Alert, } from 'react-native'
+import { View, Text, Image, TouchableOpacity, ActivityIndicator, Alert, PanResponder, } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { Category, FontSize, Opacity, Outline, Size } from '../../constants/AppConstants';
 import { ThemeContext } from '../../constants/Colors';
@@ -16,10 +16,10 @@ import { FileList, MediaType, PostMetadata } from '../../constants/Types';
 import { CheckAndGetFileListAsync, CheckLocalFileAndGetURIAsync } from '../../handle/AppUtils';
 import { useNavigation } from '@react-navigation/native';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
-import { PickRandomElement, RGBToRGBAText } from '../../handle/Utils';
+import { PickRandomElement } from '../../handle/Utils';
 import { addDrawFavoritedID, addDrawSeenID, addQuoteFavoritedID, addQuoteSeenID, addRealFavoritedID, addRealSeenID, removeDrawFavoritedID, removeQuoteFavoritedID, removeRealFavoritedID } from '../../redux/UserDataSlice';
 import { setMutedVideo } from '../../redux/MiscSlice';
-import { useHandler } from 'react-native-reanimated';
+import { ColorNameToRgb } from '../../handle/UtilsTS';
 
 const noPic = require('../../../assets/images/no-pic.png');
 
@@ -31,7 +31,8 @@ type NeedLoadPostType = 'next' | 'previous' | 'none';
 
 const ThePage = ({ category }: ThePageProps) => {
     // general state
-
+    // console.log(ColorNameToRgb('green', 0.7));
+    
     const theme = useContext(ThemeContext);
     const [handling, setHandling] = useState(false);
     const [needLoadPost, setNeedLoadPost] = useState<NeedLoadPostType>('none');
@@ -63,6 +64,22 @@ const ThePage = ({ category }: ThePageProps) => {
     });
 
     const isMutedVideo = useAppSelector((state: RootState) => state.misc.mutedVideo);
+
+    const panResponder = useRef(
+        PanResponder.create({
+            onMoveShouldSetPanResponder: () => true,
+            // onPanResponderMove: (e, state) => { 
+            //     console.log('--------------');
+            //     console.log(e);
+            //     console.log(state);
+            // },
+            onPanResponderRelease: (e, state) => { 
+                console.log('--------------');
+                console.log(e);
+                console.log(state);
+            },
+        }),
+    ).current;
 
     // a post state
 
@@ -209,7 +226,6 @@ const ThePage = ({ category }: ThePageProps) => {
 
     const onPressToggleMutedVideo = useCallback(() => {
         dispatch(setMutedVideo());
-        console.log(11);
     }, []);
 
     // init once 
@@ -298,12 +314,18 @@ const ThePage = ({ category }: ThePageProps) => {
                             </View>
                             {/* video controller */}
                             {
-                                currentMediaIsImage ? undefined :
-                                <View style={{ backgroundColor: RGBToRGBAText('rgb(255, 255, 255)', 0.7), paddingHorizontal: Outline.Horizontal, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }} >
-                                    <TouchableOpacity style={{}} onPress={onPressToggleMutedVideo} >
-                                        <MaterialIcons name={isMutedVideo ? 'volume-off' : 'volume-up'} color={theme.counterPrimary} size={Size.Icon} />
-                                    </TouchableOpacity>
-                                </View>
+                                !currentMediaIsImage ? undefined :
+                                    <View style={{ backgroundColor: ColorNameToRgb('skyblue'), marginHorizontal: Outline.Horizontal, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }} >
+                                        <TouchableOpacity style={{}} onPress={onPressToggleMutedVideo} >
+                                            <MaterialIcons name={isMutedVideo ? 'pause' : 'play'} color={theme.counterPrimary} size={Size.Icon} />
+                                        </TouchableOpacity>
+                                        <View style={{flex: 1, height: 5, backgroundColor: 'white', marginHorizontal: Outline.Horizontal }}>
+
+                                        </View>
+                                        <TouchableOpacity style={{}} onPress={onPressToggleMutedVideo} >
+                                            <MaterialIcons name={isMutedVideo ? 'volume-off' : 'volume-up'} color={theme.counterPrimary} size={Size.Icon} />
+                                        </TouchableOpacity>
+                                    </View>
                             }
                         </View>
                     </View>
@@ -312,7 +334,7 @@ const ThePage = ({ category }: ThePageProps) => {
             {/* credit author */}
             {
                 post.current === null || !post.current.author ? null :
-                    <View style={{ paddingHorizontal: Outline.Horizontal, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
+                    <View {...panResponder.panHandlers} style={{ paddingHorizontal: Outline.Horizontal, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
                         <Text style={{ fontSize: FontSize.Normal, color: theme.text }}>{post.current.author}</Text>
                         <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center' }} >
                             <MaterialIcons name={'content-copy'} color={theme.counterPrimary} size={Size.IconSmaller} />
