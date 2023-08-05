@@ -7,7 +7,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { View, Text, Image, TouchableOpacity, ActivityIndicator, Alert, PanResponder, } from 'react-native'
+import { View, Text, Image, TouchableOpacity, ActivityIndicator, Alert, PanResponder, LayoutChangeEvent, GestureResponderEvent, } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { Category, FontSize, Opacity, Outline, Size } from '../../constants/AppConstants';
 import { ThemeContext } from '../../constants/Colors';
@@ -32,12 +32,13 @@ type NeedLoadPostType = 'next' | 'previous' | 'none';
 const ThePage = ({ category }: ThePageProps) => {
     // general state
     // console.log(ColorNameToRgb('green', 0.7));
-    
+
     const theme = useContext(ThemeContext);
     const [handling, setHandling] = useState(false);
     const [needLoadPost, setNeedLoadPost] = useState<NeedLoadPostType>('none');
     const fileList = useRef<FileList | null>(null);
     const previousPostIDs = useRef<number[]>([]);
+    const videoBarWidth = useRef<number>(0);
     const navigation = useNavigation();
     const dispatch = useAppDispatch();
 
@@ -67,16 +68,15 @@ const ThePage = ({ category }: ThePageProps) => {
 
     const panResponder = useRef(
         PanResponder.create({
-            onMoveShouldSetPanResponder: () => true,
-            // onPanResponderMove: (e, state) => { 
-            //     console.log('--------------');
-            //     console.log(e);
-            //     console.log(state);
-            // },
-            onPanResponderRelease: (e, state) => { 
-                console.log('--------------');
-                console.log(e);
-                console.log(state);
+            onPanResponderStart(e, gestureState) {
+
+                // console.log(gestureState)
+                return true
+            },
+            onPanRjesponderRelease: (e, state) => {
+                // console.log('--------------');
+                // // console.log(e);
+                // console.log(state);
             },
         }),
     ).current;
@@ -163,6 +163,18 @@ const ThePage = ({ category }: ThePageProps) => {
 
         await loadNextMediaAsync(true, foundPost, isNext ? 'next' : 'previous');
     }, [seenIDs, loadNextMediaAsync]);
+
+    const onTouchVideoBar = useCallback((e: GestureResponderEvent) => {
+        if (videoBarWidth.current === 0)
+            return;
+
+        const percent = e.nativeEvent.locationX / videoBarWidth.current;
+        console.log(percent);
+    }, []);
+
+    const onLayoutVideoBar = useCallback((e: LayoutChangeEvent) => {
+        videoBarWidth.current = e.nativeEvent.layout.width;
+    }, []);
 
     // button handles
 
@@ -314,13 +326,26 @@ const ThePage = ({ category }: ThePageProps) => {
                             </View>
                             {/* video controller */}
                             {
-                                !currentMediaIsImage ? undefined :
+                                !true ? undefined :
                                     <View style={{ backgroundColor: ColorNameToRgb('skyblue'), marginHorizontal: Outline.Horizontal, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }} >
                                         <TouchableOpacity style={{}} onPress={onPressToggleMutedVideo} >
                                             <MaterialIcons name={isMutedVideo ? 'pause' : 'play'} color={theme.counterPrimary} size={Size.Icon} />
                                         </TouchableOpacity>
-                                        <View style={{flex: 1, height: 5, backgroundColor: 'white', marginHorizontal: Outline.Horizontal }}>
-
+                                        {/* video bar */}
+                                        <View
+                                            onLayout={onLayoutVideoBar}
+                                            onTouchStart={onTouchVideoBar}
+                                            // {...panResponder.panHandlers} 
+                                            style={{ flex: 1, flexDirection: 'row', height: '100%', marginHorizontal: Outline.Horizontal, }}>
+                                            {/* bar bg */}
+                                            <View style={{ width: '100%', height: 7, borderRadius: 5, alignSelf: 'center', backgroundColor: 'white', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
+                                                {/* bar */}
+                                                <View style={{ width: '50%', height: '100%', borderRadius: 5, backgroundColor: 'black' }}>
+                                                </View>
+                                                {/* numb */}
+                                                <View style={{ position: 'absolute', width: 15, height: 15, borderRadius: 7.5, backgroundColor: 'black' }}>
+                                                </View>
+                                            </View>
                                         </View>
                                         <TouchableOpacity style={{}} onPress={onPressToggleMutedVideo} >
                                             <MaterialIcons name={isMutedVideo ? 'volume-off' : 'volume-up'} color={theme.counterPrimary} size={Size.Icon} />
@@ -334,7 +359,7 @@ const ThePage = ({ category }: ThePageProps) => {
             {/* credit author */}
             {
                 post.current === null || !post.current.author ? null :
-                    <View {...panResponder.panHandlers} style={{ paddingHorizontal: Outline.Horizontal, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
+                    <View style={{ paddingHorizontal: Outline.Horizontal, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
                         <Text style={{ fontSize: FontSize.Normal, color: theme.text }}>{post.current.author}</Text>
                         <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center' }} >
                             <MaterialIcons name={'content-copy'} color={theme.counterPrimary} size={Size.IconSmaller} />
