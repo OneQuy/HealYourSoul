@@ -34,17 +34,32 @@ const ThePage = ({ category }: ThePageProps) => {
     // general state
     // console.log(ColorNameToRgb('green', 0.7));
 
+    const navigation = useNavigation();
+    const dispatch = useAppDispatch();
     const theme = useContext(ThemeContext);
     const [handling, setHandling] = useState(false);
     const [needLoadPost, setNeedLoadPost] = useState<NeedLoadPostType>('none');
     const fileList = useRef<FileList | null>(null);
     const previousPostIDs = useRef<number[]>([]);
     const videoBarWholeWidth = useRef<number>(0);
-    const navigation = useNavigation();
     const videoNumbPosX = useRef(new Animated.Value(0)).current;
     const videoBarCurrentWidth = useRef(new Animated.Value(0)).current;
+    const videoBarPreventTouchEvent = useRef(false);
 
-    const dispatch = useAppDispatch();
+    const videoBarPanResponder = useRef(
+        PanResponder.create({
+            onMoveShouldSetPanResponder: () => true,
+
+            onPanResponderMove: (_, state) => {
+
+            },
+
+            onPanResponderRelease: (_, state) => {
+                console.log('moved', state.dx);
+                videoBarPreventTouchEvent.current = true;
+            },
+        }),
+    ).current;
 
     const seenIDs = useAppSelector((state: RootState) => {
         if (category === Category.Draw)
@@ -69,19 +84,6 @@ const ThePage = ({ category }: ThePageProps) => {
     });
 
     const isMutedVideo = useAppSelector((state: RootState) => state.misc.mutedVideo);
-
-    // const panResponder = useRef(
-    //     PanResponder.create({
-    //         onPanResponderStart(e, gestureState) {
-
-    //             // console.log(gestureState)
-    //             return true
-    //         },
-    //         onPanRjesponderRelease: (e, state) => {
-
-    //         },
-    //     }),
-    // ).current;
 
     // a post state
 
@@ -166,9 +168,14 @@ const ThePage = ({ category }: ThePageProps) => {
         await loadNextMediaAsync(true, foundPost, isNext ? 'next' : 'previous');
     }, [seenIDs, loadNextMediaAsync]);
 
-    const onTouchVideoBar = useCallback((e: GestureResponderEvent) => {
+    const onTouchEndVideoBar = useCallback((e: GestureResponderEvent) => {
         if (videoBarWholeWidth.current === 0)
             return;
+
+        if (videoBarPreventTouchEvent.current) {
+            videoBarPreventTouchEvent.current = false;
+            return;
+        }
 
         // numb
 
@@ -355,8 +362,8 @@ const ThePage = ({ category }: ThePageProps) => {
                                         {/* video bar */}
                                         <View
                                             onLayout={onLayoutVideoBar}
-                                            onTouchStart={onTouchVideoBar}
-                                            // {...panResponder.panHandlers} 
+                                            onTouchEnd={onTouchEndVideoBar}
+                                            {...videoBarPanResponder.panHandlers}
                                             style={{ flex: 1, flexDirection: 'row', height: '100%', marginHorizontal: Outline.Horizontal, }}>
                                             {/* bar bg */}
                                             <View style={{ width: '100%', height: 3, borderRadius: 5, alignSelf: 'center', backgroundColor: 'white', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
