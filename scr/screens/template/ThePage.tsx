@@ -368,7 +368,7 @@ const ThePage = ({ category }: ThePageProps) => {
                                                     }), height: '100%', borderRadius: 5, backgroundColor: 'black'
                                                 }]} />
                                                 {/* numb */}
-                                                <Animated.View style={[{ transform: [{ translateX: videoNumbPosX }] }, { position: 'absolute', width: videoNumbSize, height: videoNumbSize, borderRadius: videoNumbSize / 2, backgroundColor: 'black' }]} />
+                                                <Animated.View pointerEvents={'none'} style={[{ transform: [{ translateX: videoNumbPosX }] }, { position: 'absolute', width: videoNumbSize, height: videoNumbSize, borderRadius: videoNumbSize / 2, backgroundColor: 'black' }]} />
                                             </View>
                                         </View>
                                         <TouchableOpacity style={{}} onPress={onPressToggleMutedVideo} >
