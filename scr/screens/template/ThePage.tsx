@@ -7,7 +7,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { View, Text, Image, TouchableOpacity, ActivityIndicator, Alert, PanResponder, LayoutChangeEvent, GestureResponderEvent, } from 'react-native'
+import { View, Text, Image, TouchableOpacity, ActivityIndicator, Alert, PanResponder, LayoutChangeEvent, GestureResponderEvent, Animated, } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { Category, FontSize, Opacity, Outline, Size } from '../../constants/AppConstants';
 import { ThemeContext } from '../../constants/Colors';
@@ -22,6 +22,7 @@ import { setMutedVideo } from '../../redux/MiscSlice';
 import { ColorNameToRgb } from '../../handle/UtilsTS';
 
 const noPic = require('../../../assets/images/no-pic.png');
+const videoNumbSize = 15;
 
 type ThePageProps = {
     category: Category
@@ -38,8 +39,11 @@ const ThePage = ({ category }: ThePageProps) => {
     const [needLoadPost, setNeedLoadPost] = useState<NeedLoadPostType>('none');
     const fileList = useRef<FileList | null>(null);
     const previousPostIDs = useRef<number[]>([]);
-    const videoBarWidth = useRef<number>(0);
+    const videoBarWholeWidth = useRef<number>(0);
     const navigation = useNavigation();
+    const videoNumbPosX = useRef(new Animated.Value(0)).current;
+    const videoBarCurrentWidth = useRef(new Animated.Value(0)).current;
+
     const dispatch = useAppDispatch();
 
     const seenIDs = useAppSelector((state: RootState) => {
@@ -66,20 +70,18 @@ const ThePage = ({ category }: ThePageProps) => {
 
     const isMutedVideo = useAppSelector((state: RootState) => state.misc.mutedVideo);
 
-    const panResponder = useRef(
-        PanResponder.create({
-            onPanResponderStart(e, gestureState) {
+    // const panResponder = useRef(
+    //     PanResponder.create({
+    //         onPanResponderStart(e, gestureState) {
 
-                // console.log(gestureState)
-                return true
-            },
-            onPanRjesponderRelease: (e, state) => {
-                // console.log('--------------');
-                // // console.log(e);
-                // console.log(state);
-            },
-        }),
-    ).current;
+    //             // console.log(gestureState)
+    //             return true
+    //         },
+    //         onPanRjesponderRelease: (e, state) => {
+
+    //         },
+    //     }),
+    // ).current;
 
     // a post state
 
@@ -165,15 +167,34 @@ const ThePage = ({ category }: ThePageProps) => {
     }, [seenIDs, loadNextMediaAsync]);
 
     const onTouchVideoBar = useCallback((e: GestureResponderEvent) => {
-        if (videoBarWidth.current === 0)
+        if (videoBarWholeWidth.current === 0)
             return;
 
-        const percent = e.nativeEvent.locationX / videoBarWidth.current;
-        console.log(percent);
+        // numb
+
+        Animated.spring(
+            videoNumbPosX,
+            {
+                toValue: e.nativeEvent.locationX - videoNumbSize / 2,
+                useNativeDriver: true
+            }
+        ).start();
+
+        // bar
+
+        const percent = e.nativeEvent.locationX / videoBarWholeWidth.current;
+
+        Animated.spring(
+            videoBarCurrentWidth,
+            {
+                toValue: percent,
+                useNativeDriver: false
+            }
+        ).start();
     }, []);
 
     const onLayoutVideoBar = useCallback((e: LayoutChangeEvent) => {
-        videoBarWidth.current = e.nativeEvent.layout.width;
+        videoBarWholeWidth.current = e.nativeEvent.layout.width;
     }, []);
 
     // button handles
@@ -327,7 +348,7 @@ const ThePage = ({ category }: ThePageProps) => {
                             {/* video controller */}
                             {
                                 !true ? undefined :
-                                    <View style={{ backgroundColor: ColorNameToRgb('skyblue'), marginHorizontal: Outline.Horizontal, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }} >
+                                    <View style={{ backgroundColor: ColorNameToRgb('skyblue', 0.5), marginHorizontal: Outline.Horizontal, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }} >
                                         <TouchableOpacity style={{}} onPress={onPressToggleMutedVideo} >
                                             <MaterialIcons name={isMutedVideo ? 'pause' : 'play'} color={theme.counterPrimary} size={Size.Icon} />
                                         </TouchableOpacity>
@@ -338,13 +359,16 @@ const ThePage = ({ category }: ThePageProps) => {
                                             // {...panResponder.panHandlers} 
                                             style={{ flex: 1, flexDirection: 'row', height: '100%', marginHorizontal: Outline.Horizontal, }}>
                                             {/* bar bg */}
-                                            <View style={{ width: '100%', height: 7, borderRadius: 5, alignSelf: 'center', backgroundColor: 'white', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
+                                            <View style={{ width: '100%', height: 3, borderRadius: 5, alignSelf: 'center', backgroundColor: 'white', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
                                                 {/* bar */}
-                                                <View style={{ width: '50%', height: '100%', borderRadius: 5, backgroundColor: 'black' }}>
-                                                </View>
+                                                <Animated.View style={[{
+                                                    width: videoBarCurrentWidth.interpolate({
+                                                        inputRange: [0, 1],
+                                                        outputRange: ['0%', '100%'],
+                                                    }), height: '100%', borderRadius: 5, backgroundColor: 'black'
+                                                }]} />
                                                 {/* numb */}
-                                                <View style={{ position: 'absolute', width: 15, height: 15, borderRadius: 7.5, backgroundColor: 'black' }}>
-                                                </View>
+                                                <Animated.View style={[{ transform: [{ translateX: videoNumbPosX }] }, { position: 'absolute', width: videoNumbSize, height: videoNumbSize, borderRadius: videoNumbSize / 2, backgroundColor: 'black' }]} />
                                             </View>
                                         </View>
                                         <TouchableOpacity style={{}} onPress={onPressToggleMutedVideo} >
