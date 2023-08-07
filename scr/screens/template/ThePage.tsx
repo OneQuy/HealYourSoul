@@ -210,28 +210,6 @@ const ThePage = ({ category }: ThePageProps) => {
         const percent = (e.nativeEvent.locationX - videoNumbSize / 2) / videoBarWholeWidth.current;
 
         videoRef.current.seek(percent * videoWholeDuration.current);
-
-        // videoNumbLastPosX.current = e.nativeEvent.locationX - videoNumbSize / 2;
-
-        // // numb
-
-        // Animated.spring(
-        //     videoNumbPosX,
-        //     {
-        //         toValue: videoNumbLastPosX.current,
-        //         useNativeDriver: true
-        //     }
-        // ).start();
-
-        // // bar
-
-        // Animated.spring(
-        //     videoBarPercent,
-        //     {
-        //         toValue: percent,
-        //         useNativeDriver: false
-        //     }
-        // ).start();
     }, []);
 
     const onLayoutVideoBar = useCallback((e: LayoutChangeEvent) => {
