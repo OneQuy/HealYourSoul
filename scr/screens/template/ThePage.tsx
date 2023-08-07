@@ -19,7 +19,7 @@ import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { PickRandomElement } from '../../handle/Utils';
 import { addDrawFavoritedID, addDrawSeenID, addQuoteFavoritedID, addQuoteSeenID, addRealFavoritedID, addRealSeenID, removeDrawFavoritedID, removeQuoteFavoritedID, removeRealFavoritedID } from '../../redux/UserDataSlice';
 import { setMutedVideo } from '../../redux/MiscSlice';
-import { ColorNameToRgb } from '../../handle/UtilsTS';
+import { ColorNameToRgb, HexToRgb } from '../../handle/UtilsTS';
 
 const noPic = require('../../../assets/images/no-pic.png');
 const videoNumbSize = 15;
@@ -41,26 +41,7 @@ const ThePage = ({ category }: ThePageProps) => {
     const [needLoadPost, setNeedLoadPost] = useState<NeedLoadPostType>('none');
     const fileList = useRef<FileList | null>(null);
     const previousPostIDs = useRef<number[]>([]);
-    const videoBarWholeWidth = useRef<number>(0);
-    const videoNumbPosX = useRef(new Animated.Value(0)).current;
-    const videoBarCurrentWidth = useRef(new Animated.Value(0)).current;
-    const videoBarPreventTouchEvent = useRef(false);
-
-    const videoBarPanResponder = useRef(
-        PanResponder.create({
-            onMoveShouldSetPanResponder: () => true,
-
-            onPanResponderMove: (_, state) => {
-
-            },
-
-            onPanResponderRelease: (_, state) => {
-                console.log('moved', state.dx);
-                videoBarPreventTouchEvent.current = true;
-            },
-        }),
-    ).current;
-
+  
     const seenIDs = useAppSelector((state: RootState) => {
         if (category === Category.Draw)
             return state.userData.drawSeenIDs;
@@ -82,6 +63,41 @@ const ThePage = ({ category }: ThePageProps) => {
         else
             throw new Error('NI cat: ' + category);
     });
+
+    // video states
+
+    const videoBarWholeWidth = useRef<number>(0);
+    const videoNumbPosX = useRef(new Animated.Value(0)).current;
+    const videoBarPercent = useRef(new Animated.Value(0)).current;
+    const videoBarPreventTouchEvent = useRef(false);
+    const videoNumbLastPosX = useRef(0);
+
+    const videoBarPanResponder = useRef(
+        PanResponder.create({
+            onMoveShouldSetPanResponder: () => true,
+
+            onPanResponderMove: (_, state) => {
+                if (videoBarWholeWidth.current <= 0)
+                    return;
+
+                const newPost = Math.max(0, Math.min(videoNumbLastPosX.current + state.dx, videoBarWholeWidth.current));
+                videoNumbPosX.setValue(newPost);
+
+                const percent = newPost / videoBarWholeWidth.current;
+                videoBarPercent.setValue(percent);
+            },
+
+            onPanResponderRelease: (_, state) => {
+                videoBarPreventTouchEvent.current = true;
+
+                if (videoBarWholeWidth.current <= 0)
+                    return;
+
+                const newPost = Math.max(0, Math.min(videoNumbLastPosX.current + state.dx, videoBarWholeWidth.current));
+                videoNumbLastPosX.current = newPost;
+            },
+        }),
+    ).current;
 
     const isMutedVideo = useAppSelector((state: RootState) => state.misc.mutedVideo);
 
@@ -177,12 +193,14 @@ const ThePage = ({ category }: ThePageProps) => {
             return;
         }
 
+        videoNumbLastPosX.current = e.nativeEvent.locationX - videoNumbSize / 2;
+
         // numb
 
         Animated.spring(
             videoNumbPosX,
             {
-                toValue: e.nativeEvent.locationX - videoNumbSize / 2,
+                toValue: videoNumbLastPosX.current,
                 useNativeDriver: true
             }
         ).start();
@@ -192,7 +210,7 @@ const ThePage = ({ category }: ThePageProps) => {
         const percent = e.nativeEvent.locationX / videoBarWholeWidth.current;
 
         Animated.spring(
-            videoBarCurrentWidth,
+            videoBarPercent,
             {
                 toValue: percent,
                 useNativeDriver: false
@@ -202,6 +220,12 @@ const ThePage = ({ category }: ThePageProps) => {
 
     const onLayoutVideoBar = useCallback((e: LayoutChangeEvent) => {
         videoBarWholeWidth.current = e.nativeEvent.layout.width;
+    }, []);
+    
+    const onVideoProcess = useCallback((e: any) => {
+        const percent = e.currentTime / e.seekableDuration;
+        console.log(percent);
+        
     }, []);
 
     // button handles
@@ -338,6 +362,7 @@ const ThePage = ({ category }: ThePageProps) => {
                                         onError={(e: any) => onPlayVideoError(e)}
                                         source={{ uri: mediaURI }} resizeMode={'contain'}
                                         muted={isMutedVideo}
+                                        onProgress={onVideoProcess}
                                         style={{ flex: 1 }} />
                                 </View>
                         }
@@ -355,9 +380,9 @@ const ThePage = ({ category }: ThePageProps) => {
                             {/* video controller */}
                             {
                                 !true ? undefined :
-                                    <View style={{ backgroundColor: ColorNameToRgb('skyblue', 0.5), marginHorizontal: Outline.Horizontal, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }} >
+                                    <View style={{ backgroundColor: HexToRgb(theme.primary, 0.5), marginHorizontal: Outline.Horizontal, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }} >
                                         <TouchableOpacity style={{}} onPress={onPressToggleMutedVideo} >
-                                            <MaterialIcons name={isMutedVideo ? 'pause' : 'play'} color={theme.counterPrimary} size={Size.Icon} />
+                                            <MaterialIcons name={isMutedVideo ? 'pause' : 'pause'} color={theme.counterPrimary} size={Size.Icon} />
                                         </TouchableOpacity>
                                         {/* video bar */}
                                         <View
@@ -369,10 +394,13 @@ const ThePage = ({ category }: ThePageProps) => {
                                             <View style={{ width: '100%', height: 3, borderRadius: 5, alignSelf: 'center', backgroundColor: 'white', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
                                                 {/* bar */}
                                                 <Animated.View style={[{
-                                                    width: videoBarCurrentWidth.interpolate({
+                                                    width: videoBarPercent.interpolate({
                                                         inputRange: [0, 1],
                                                         outputRange: ['0%', '100%'],
-                                                    }), height: '100%', borderRadius: 5, backgroundColor: 'black'
+                                                    }), 
+                                                    height: '100%', 
+                                                    borderRadius: 5, 
+                                                    backgroundColor: 'black'
                                                 }]} />
                                                 {/* numb */}
                                                 <Animated.View pointerEvents={'none'} style={[{ transform: [{ translateX: videoNumbPosX }] }, { position: 'absolute', width: videoNumbSize, height: videoNumbSize, borderRadius: videoNumbSize / 2, backgroundColor: 'black' }]} />
