@@ -41,7 +41,7 @@ const ThePage = ({ category }: ThePageProps) => {
     const [needLoadPost, setNeedLoadPost] = useState<NeedLoadPostType>('none');
     const fileList = useRef<FileList | null>(null);
     const previousPostIDs = useRef<number[]>([]);
-  
+
     const seenIDs = useAppSelector((state: RootState) => {
         if (category === Category.Draw)
             return state.userData.drawSeenIDs;
@@ -221,11 +221,21 @@ const ThePage = ({ category }: ThePageProps) => {
     const onLayoutVideoBar = useCallback((e: LayoutChangeEvent) => {
         videoBarWholeWidth.current = e.nativeEvent.layout.width;
     }, []);
-    
+
     const onVideoProcess = useCallback((e: any) => {
+        if (!e || !e.currentTime || !e.seekableDuration)
+            return;
+
         const percent = e.currentTime / e.seekableDuration;
         console.log(percent);
-        
+
+        if (videoBarWholeWidth.current <= 0)
+            return;
+
+        const newPost = videoBarWholeWidth.current * percent;
+        videoNumbPosX.setValue(newPost);
+        videoBarPercent.setValue(percent);
+        videoNumbLastPosX.current = newPost;
     }, []);
 
     // button handles
@@ -397,9 +407,9 @@ const ThePage = ({ category }: ThePageProps) => {
                                                     width: videoBarPercent.interpolate({
                                                         inputRange: [0, 1],
                                                         outputRange: ['0%', '100%'],
-                                                    }), 
-                                                    height: '100%', 
-                                                    borderRadius: 5, 
+                                                    }),
+                                                    height: '100%',
+                                                    borderRadius: 5,
                                                     backgroundColor: 'black'
                                                 }]} />
                                                 {/* numb */}
