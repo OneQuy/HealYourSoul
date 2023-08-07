@@ -72,12 +72,16 @@ const ThePage = ({ category }: ThePageProps) => {
     const videoBarPercent = useRef(new Animated.Value(0)).current;
     const videoBarPreventTouchEvent = useRef(false);
     const videoNumbLastPosX = useRef(0);
+    const videoBarTouchMoving = useRef<boolean>(false);
     const videoRef = useRef<Video>();
 
 
     const videoBarPanResponder = useRef(
         PanResponder.create({
-            onMoveShouldSetPanResponder: () => true,
+            onMoveShouldSetPanResponder: () => {
+                videoBarTouchMoving.current = true
+                return true
+            },
 
             onPanResponderMove: (_, state) => {
                 if (videoBarWholeWidth.current <= 0)
@@ -88,10 +92,13 @@ const ThePage = ({ category }: ThePageProps) => {
 
                 const percent = newPost / videoBarWholeWidth.current;
                 videoBarPercent.setValue(percent);
+
+                videoRef.current.seek(percent * videoWholeDuration.current);
             },
 
             onPanResponderRelease: (_, state) => {
                 videoBarPreventTouchEvent.current = true;
+                videoBarTouchMoving.current = false;
 
                 if (videoBarWholeWidth.current <= 0)
                     return;
@@ -199,11 +206,11 @@ const ThePage = ({ category }: ThePageProps) => {
             videoBarPreventTouchEvent.current = false;
             return;
         }
-        
+
         const percent = (e.nativeEvent.locationX - videoNumbSize / 2) / videoBarWholeWidth.current;
 
         videoRef.current.seek(percent * videoWholeDuration.current);
-        
+
         // videoNumbLastPosX.current = e.nativeEvent.locationX - videoNumbSize / 2;
 
         // // numb
@@ -233,6 +240,9 @@ const ThePage = ({ category }: ThePageProps) => {
 
     const onVideoProcess = useCallback((e: any) => {
         if (!e.currentTime || !e.seekableDuration)
+            return;
+
+        if (videoBarTouchMoving.current)
             return;
 
         const percent = e.currentTime / e.seekableDuration;
@@ -374,7 +384,7 @@ const ThePage = ({ category }: ThePageProps) => {
                                 :
                                 <View style={{ width: '100%', height: '100%' }} >
                                     <Video
-                                        ref={videoRef}   
+                                        ref={videoRef}
                                         onError={(e: any) => onPlayVideoError(e)}
                                         onLoad={onVideoLoaded}
                                         source={{ uri: mediaURI }} resizeMode={'contain'}
