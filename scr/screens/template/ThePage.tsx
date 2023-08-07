@@ -67,6 +67,7 @@ const ThePage = ({ category }: ThePageProps) => {
     // video states
 
     const videoBarWholeWidth = useRef<number>(0);
+    const videoWholeDuration = useRef<number>(0);
     const videoNumbPosX = useRef(new Animated.Value(0)).current;
     const videoBarPercent = useRef(new Animated.Value(0)).current;
     const videoBarPreventTouchEvent = useRef(false);
@@ -186,6 +187,10 @@ const ThePage = ({ category }: ThePageProps) => {
         await loadNextMediaAsync(true, foundPost, isNext ? 'next' : 'previous');
     }, [seenIDs, loadNextMediaAsync]);
 
+    const onVideoLoaded = useCallback((e: any) => {
+        videoWholeDuration.current = e.duration;
+    }, []);
+
     const onTouchEndVideoBar = useCallback((e: GestureResponderEvent) => {
         if (videoBarWholeWidth.current === 0)
             return;
@@ -194,32 +199,32 @@ const ThePage = ({ category }: ThePageProps) => {
             videoBarPreventTouchEvent.current = false;
             return;
         }
+        
+        const percent = (e.nativeEvent.locationX - videoNumbSize / 2) / videoBarWholeWidth.current;
 
-        videoRef.current.seek(3);
-        return;
-        videoNumbLastPosX.current = e.nativeEvent.locationX - videoNumbSize / 2;
+        videoRef.current.seek(percent * videoWholeDuration.current);
+        
+        // videoNumbLastPosX.current = e.nativeEvent.locationX - videoNumbSize / 2;
 
-        // numb
+        // // numb
 
-        Animated.spring(
-            videoNumbPosX,
-            {
-                toValue: videoNumbLastPosX.current,
-                useNativeDriver: true
-            }
-        ).start();
+        // Animated.spring(
+        //     videoNumbPosX,
+        //     {
+        //         toValue: videoNumbLastPosX.current,
+        //         useNativeDriver: true
+        //     }
+        // ).start();
 
-        // bar
+        // // bar
 
-        const percent = e.nativeEvent.locationX / videoBarWholeWidth.current;
-
-        Animated.spring(
-            videoBarPercent,
-            {
-                toValue: percent,
-                useNativeDriver: false
-            }
-        ).start();
+        // Animated.spring(
+        //     videoBarPercent,
+        //     {
+        //         toValue: percent,
+        //         useNativeDriver: false
+        //     }
+        // ).start();
     }, []);
 
     const onLayoutVideoBar = useCallback((e: LayoutChangeEvent) => {
@@ -371,6 +376,7 @@ const ThePage = ({ category }: ThePageProps) => {
                                     <Video
                                         ref={videoRef}   
                                         onError={(e: any) => onPlayVideoError(e)}
+                                        onLoad={onVideoLoaded}
                                         source={{ uri: mediaURI }} resizeMode={'contain'}
                                         muted={isMutedVideo}
                                         onProgress={onVideoProcess}
