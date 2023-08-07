@@ -74,7 +74,8 @@ const ThePage = ({ category }: ThePageProps) => {
     const videoNumbLastPosX = useRef(0);
     const videoBarTouchMoving = useRef<boolean>(false);
     const videoRef = useRef<Video>();
-
+    const videoIsCompleted = useRef<boolean>(false);
+    const [videoIsPlaying, setVideoIsPlaying] = useState<boolean>(false);
 
     const videoBarPanResponder = useRef(
         PanResponder.create({
@@ -87,7 +88,7 @@ const ThePage = ({ category }: ThePageProps) => {
                 if (videoBarWholeWidth.current <= 0)
                     return;
 
-                const newPost = Math.max(0, Math.min(videoNumbLastPosX.current + state.dx, videoBarWholeWidth.current));
+                const newPost = Math.max(0 - videoNumbSize / 2, Math.min(videoNumbLastPosX.current + state.dx, videoBarWholeWidth.current - videoNumbSize / 2));
                 videoNumbPosX.setValue(newPost);
 
                 const percent = newPost / videoBarWholeWidth.current;
@@ -103,7 +104,7 @@ const ThePage = ({ category }: ThePageProps) => {
                 if (videoBarWholeWidth.current <= 0)
                     return;
 
-                const newPost = Math.max(0, Math.min(videoNumbLastPosX.current + state.dx, videoBarWholeWidth.current));
+                const newPost = Math.max(0 - videoNumbSize / 2, Math.min(videoNumbLastPosX.current + state.dx, videoBarWholeWidth.current - videoNumbSize / 2));
                 videoNumbLastPosX.current = newPost;
             },
         }),
@@ -207,7 +208,7 @@ const ThePage = ({ category }: ThePageProps) => {
             return;
         }
 
-        const percent = (e.nativeEvent.locationX - videoNumbSize / 2) / videoBarWholeWidth.current;
+        const percent = (e.nativeEvent.locationX) / videoBarWholeWidth.current;
 
         videoRef.current.seek(percent * videoWholeDuration.current);
     }, []);
@@ -216,7 +217,14 @@ const ThePage = ({ category }: ThePageProps) => {
         videoBarWholeWidth.current = e.nativeEvent.layout.width;
     }, []);
 
+    const onVideoCompleted = useCallback(() => {
+        setVideoIsPlaying(false);
+        videoIsCompleted.current = true;
+    }, []);
+
     const onVideoProcess = useCallback((e: any) => {
+        videoIsCompleted.current = false;
+
         if (!e.currentTime || !e.seekableDuration)
             return;
 
@@ -224,10 +232,10 @@ const ThePage = ({ category }: ThePageProps) => {
             return;
 
         const percent = e.currentTime / e.seekableDuration;
-
-        const newPost = videoBarWholeWidth.current * percent;
-        videoNumbPosX.setValue(newPost);
         videoBarPercent.setValue(percent);
+
+        const newPost = videoBarWholeWidth.current * percent - videoNumbSize / 2;
+        videoNumbPosX.setValue(newPost);
         videoNumbLastPosX.current = newPost;
     }, []);
 
@@ -293,6 +301,16 @@ const ThePage = ({ category }: ThePageProps) => {
 
     const onPressToggleMutedVideo = useCallback(() => {
         dispatch(setMutedVideo());
+    }, []);
+
+    const onPressPlayVideo = useCallback(() => {
+        setVideoIsPlaying(val => !val);
+
+        if (videoIsCompleted.current)
+            videoRef.current.seek(0);
+
+        // console.log(videoNumbSize / 2 - videoBarWholeWidth.current + videoNumbLastPosX.current);
+
     }, []);
 
     // init once 
@@ -367,7 +385,9 @@ const ThePage = ({ category }: ThePageProps) => {
                                         onLoad={onVideoLoaded}
                                         source={{ uri: mediaURI }} resizeMode={'contain'}
                                         muted={isMutedVideo}
+                                        paused={!videoIsPlaying}
                                         onProgress={onVideoProcess}
+                                        onEnd={onVideoCompleted}
                                         style={{ flex: 1 }} />
                                 </View>
                         }
@@ -384,10 +404,10 @@ const ThePage = ({ category }: ThePageProps) => {
                             </View>
                             {/* video controller */}
                             {
-                                !true ? undefined :
+                                currentMediaIsImage ? undefined :
                                     <View style={{ backgroundColor: HexToRgb(theme.primary, 0.5), marginHorizontal: Outline.Horizontal, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }} >
-                                        <TouchableOpacity style={{}} onPress={onPressToggleMutedVideo} >
-                                            <MaterialIcons name={isMutedVideo ? 'pause' : 'pause'} color={theme.counterPrimary} size={Size.Icon} />
+                                        <TouchableOpacity style={{}} onPress={onPressPlayVideo} >
+                                            <MaterialIcons name={videoIsPlaying ? 'pause' : 'play-arrow'} color={theme.counterPrimary} size={Size.Icon} />
                                         </TouchableOpacity>
                                         {/* video bar */}
                                         <View
