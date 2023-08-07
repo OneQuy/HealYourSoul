@@ -19,7 +19,7 @@ import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { PickRandomElement } from '../../handle/Utils';
 import { addDrawFavoritedID, addDrawSeenID, addQuoteFavoritedID, addQuoteSeenID, addRealFavoritedID, addRealSeenID, removeDrawFavoritedID, removeQuoteFavoritedID, removeRealFavoritedID } from '../../redux/UserDataSlice';
 import { setMutedVideo } from '../../redux/MiscSlice';
-import { ColorNameToRgb, HexToRgb } from '../../handle/UtilsTS';
+import { HexToRgb } from '../../handle/UtilsTS';
 
 const noPic = require('../../../assets/images/no-pic.png');
 const videoNumbSize = 15;
@@ -68,7 +68,6 @@ const ThePage = ({ category }: ThePageProps) => {
 
     const videoBarWholeWidth = useRef<number>(0);
     const videoNumbPosX = useRef(new Animated.Value(0)).current;
-    const videoBarPercent = useRef(new Animated.Value(0)).current;
     const videoBarPreventTouchEvent = useRef(false);
     const videoNumbLastPosX = useRef(0);
 
@@ -82,9 +81,6 @@ const ThePage = ({ category }: ThePageProps) => {
 
                 const newPost = Math.max(0, Math.min(videoNumbLastPosX.current + state.dx, videoBarWholeWidth.current));
                 videoNumbPosX.setValue(newPost);
-
-                const percent = newPost / videoBarWholeWidth.current;
-                videoBarPercent.setValue(percent);
             },
 
             onPanResponderRelease: (_, state) => {
@@ -201,18 +197,6 @@ const ThePage = ({ category }: ThePageProps) => {
             videoNumbPosX,
             {
                 toValue: videoNumbLastPosX.current,
-                useNativeDriver: true
-            }
-        ).start();
-
-        // bar
-
-        const percent = e.nativeEvent.locationX / videoBarWholeWidth.current;
-
-        Animated.spring(
-            videoBarPercent,
-            {
-                toValue: percent,
                 useNativeDriver: false
             }
         ).start();
@@ -394,8 +378,8 @@ const ThePage = ({ category }: ThePageProps) => {
                                             <View style={{ width: '100%', height: 3, borderRadius: 5, alignSelf: 'center', backgroundColor: 'white', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
                                                 {/* bar */}
                                                 <Animated.View style={[{
-                                                    width: videoBarPercent.interpolate({
-                                                        inputRange: [0, 1],
+                                                    width: videoNumbPosX.interpolate({
+                                                        inputRange: [0, videoBarWholeWidth.current],
                                                         outputRange: ['0%', '100%'],
                                                     }), 
                                                     height: '100%', 
