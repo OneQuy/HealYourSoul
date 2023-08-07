@@ -71,6 +71,8 @@ const ThePage = ({ category }: ThePageProps) => {
     const videoBarPercent = useRef(new Animated.Value(0)).current;
     const videoBarPreventTouchEvent = useRef(false);
     const videoNumbLastPosX = useRef(0);
+    const videoRef = useRef<Video>();
+
 
     const videoBarPanResponder = useRef(
         PanResponder.create({
@@ -193,6 +195,8 @@ const ThePage = ({ category }: ThePageProps) => {
             return;
         }
 
+        videoRef.current.seek(3);
+        return;
         videoNumbLastPosX.current = e.nativeEvent.locationX - videoNumbSize / 2;
 
         // numb
@@ -223,14 +227,10 @@ const ThePage = ({ category }: ThePageProps) => {
     }, []);
 
     const onVideoProcess = useCallback((e: any) => {
-        if (!e || !e.currentTime || !e.seekableDuration)
+        if (!e.currentTime || !e.seekableDuration)
             return;
 
         const percent = e.currentTime / e.seekableDuration;
-        console.log(percent);
-
-        if (videoBarWholeWidth.current <= 0)
-            return;
 
         const newPost = videoBarWholeWidth.current * percent;
         videoNumbPosX.setValue(newPost);
@@ -369,6 +369,7 @@ const ThePage = ({ category }: ThePageProps) => {
                                 :
                                 <View style={{ width: '100%', height: '100%' }} >
                                     <Video
+                                        ref={videoRef}   
                                         onError={(e: any) => onPlayVideoError(e)}
                                         source={{ uri: mediaURI }} resizeMode={'contain'}
                                         muted={isMutedVideo}
