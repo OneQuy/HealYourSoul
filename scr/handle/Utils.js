@@ -43,7 +43,7 @@ export function TimestampNow() {
 }
 
 export function prependZero(number) {
-    if (number < 9)
+    if (number < 10)
         return '0' + number;
     else
         return number;
