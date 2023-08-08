@@ -96,7 +96,9 @@ const ThePage = ({ category }: ThePageProps) => {
                 const percent = (newPost + videoNumbSize / 2) / videoBarWholeWidth.current;
                 videoBarPercent.setValue(percent);
 
-                videoRef.current.seek(percent * videoWholeDuration.current);
+                const seekToSeconds = percent * videoWholeDuration.current;
+                videoRef.current.seek(seekToSeconds);
+                setVideoTimeRemain(videoWholeDuration.current - seekToSeconds)
             },
 
             onPanResponderRelease: (_, __) => {
