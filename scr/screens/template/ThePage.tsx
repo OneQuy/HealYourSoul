@@ -26,6 +26,7 @@ import { toast } from '@baronha/ting';
 const noPic = require('../../../assets/images/no-pic.png');
 const videoNumbSize = 10;
 const videoTouchEffectRadius = 100;
+const creditToAuthorText = 'Credit to the author.';
 
 type ThePageProps = {
     category: Category
@@ -133,6 +134,7 @@ const ThePage = ({ category }: ThePageProps) => {
     const showPreviousMediaButton: boolean = post.current !== null && curMediaIdx.current > 0;
     const currentMediaIsImage: boolean = post.current !== null && post.current.media[curMediaIdx.current] === MediaType.Image;
     const activePreviousPostButton: boolean = previousPostIDs.current.length > 0 && post.current !== null && previousPostIDs.current.indexOf(post.current.id) > 0;
+    const hasCredit: boolean = post.current !== null && post.current.author != null && post.current.author.length > 0;
 
     const isFavorited: boolean = useMemo(() => {
         return post.current !== null && favoritedIDs.includes(post.current.id);
@@ -178,8 +180,8 @@ const ThePage = ({ category }: ThePageProps) => {
         let foundPost: PostMetadata | undefined;
 
         if (isNext) {
-            // foundPost = fileList.current?.posts.find(i => !seenIDs.includes(i.id));
-            foundPost = fileList.current?.posts.find(i => post.current !== i && i.media[0] === MediaType.Video);
+            foundPost = fileList.current?.posts.find(i => !seenIDs.includes(i.id));
+            // foundPost = fileList.current?.posts.find(i => post.current !== i && i.media[0] === MediaType.Video);
 
             if (!foundPost) {
                 foundPost = PickRandomElement(fileList.current?.posts, post.current);
@@ -500,15 +502,15 @@ const ThePage = ({ category }: ThePageProps) => {
             }
 
             {/* credit author */}
-            {
-                post.current === null || !post.current.author ? null :
-                    <View style={{ paddingHorizontal: Outline.Horizontal, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
-                        <Text numberOfLines={1} style={{ flex: 1, fontSize: FontSize.Normal, color: theme.text }}>{post.current.author}</Text>
+            <View style={{ paddingHorizontal: Outline.Horizontal, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
+                <Text numberOfLines={1} style={{ flex: 1, fontSize: FontSize.Normal, color: theme.text }}>{hasCredit ? post.current?.author : creditToAuthorText}</Text>
+                {
+                    !hasCredit ? undefined :
                         <TouchableOpacity onPress={() => onPressCopy(post.current?.author)} style={{ marginLeft: Outline.Horizontal, justifyContent: 'center', alignItems: 'center' }} >
                             <MaterialIcons name={'content-copy'} color={theme.counterPrimary} size={Size.IconSmaller} />
                         </TouchableOpacity>
-                    </View>
-            }
+                }
+            </View>
 
             {/* link credit */}
             {
