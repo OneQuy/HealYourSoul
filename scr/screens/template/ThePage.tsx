@@ -19,10 +19,11 @@ import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { PickRandomElement, RoundNumber, SecondsToHourMinuteSecondString } from '../../handle/Utils';
 import { addDrawFavoritedID, addDrawSeenID, addQuoteFavoritedID, addQuoteSeenID, addRealFavoritedID, addRealSeenID, removeDrawFavoritedID, removeQuoteFavoritedID, removeRealFavoritedID } from '../../redux/UserDataSlice';
 import { setMutedVideo } from '../../redux/MiscSlice';
-import { HexToRgb } from '../../handle/UtilsTS';
+import { ColorNameToHex, ColorNameToRgb, HexToRgb } from '../../handle/UtilsTS';
 
 const noPic = require('../../../assets/images/no-pic.png');
 const videoNumbSize = 10;
+const videoTouchEffectRadius = 100;
 
 type ThePageProps = {
     category: Category
@@ -68,8 +69,6 @@ const ThePage = ({ category }: ThePageProps) => {
 
     const videoBarWholeWidth = useRef<number>(0);
     const videoWholeDuration = useRef<number>(0);
-    const videoNumbPosX = useRef(new Animated.Value(0)).current;
-    const videoBarPercent = useRef(new Animated.Value(0)).current;
     const videoBarPreventTouchEvent = useRef(false);
     const videoNumbLastPosX = useRef(0);
     const videoBarTouchMoving = useRef<boolean>(false);
@@ -78,6 +77,10 @@ const ThePage = ({ category }: ThePageProps) => {
     const videoTimeRemainLastUpdate = useRef(0);
     const [videoIsPlaying, setVideoIsPlaying] = useState<boolean>(false);
     const [videoTimeRemain, setVideoTimeRemain] = useState<number>(0);
+    const videoNumbPosX = useRef(new Animated.Value(0)).current;
+    const videoBarPercent = useRef(new Animated.Value(0)).current;
+    const videoTouchEffectTranslate = useRef(new Animated.ValueXY()).current;
+    const videoTouchEffectZoomAV = useRef(new Animated.Value(0)).current;
 
     const videoBarPanResponder = useRef(
         PanResponder.create({
@@ -317,10 +320,24 @@ const ThePage = ({ category }: ThePageProps) => {
         dispatch(setMutedVideo());
     }, []);
 
-    const onPressPlayVideo = useCallback(() => {
+    const onTouchEndBigView = useCallback((e: GestureResponderEvent) => {
         if (!videoRef.current)
             return;
 
+        videoTouchEffectTranslate.setValue({ x: e.nativeEvent.locationX - videoTouchEffectRadius / 2, y: e.nativeEvent.locationY - videoTouchEffectRadius / 2 })
+
+        videoTouchEffectZoomAV.setValue(0);
+
+        Animated.timing(
+            videoTouchEffectZoomAV, 
+            {
+                toValue: 1,
+                duration: 300,
+                useNativeDriver: false,
+            }).start(() => videoTouchEffectZoomAV.setValue(0));
+    }, []);
+
+    const onPressPlayVideo = useCallback(() => {
         setVideoIsPlaying(val => !val);
 
         if (videoIsCompleted.current)
@@ -413,8 +430,11 @@ const ThePage = ({ category }: ThePageProps) => {
                                 <TouchableOpacity onPress={() => onPressNextMedia(false)} disabled={!showPreviousMediaButton} style={{ paddingVertical: hp('2%'), opacity: showPreviousMediaButton ? Opacity.Primary : 0, borderTopRightRadius: Outline.BorderRadius, borderBottomRightRadius: Outline.BorderRadius, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
                                     <MaterialIcons name="keyboard-arrow-left" color={theme.counterPrimary} size={Size.IconSmaller} />
                                 </TouchableOpacity>
-                                {/* center view & big play btn */}
-                                <View onTouchEnd={onPressPlayVideo} style={{ flex: 1, height: '100%' }} />
+                                {/* center view & big play video btn */}
+                                <View onTouchEnd={onTouchEndBigView} style={{ flex: 1, height: '100%' }} >
+                                    {/* effect touch */}
+                                    <Animated.View pointerEvents={'none'} style={[videoTouchEffectTranslate.getLayout(), { transform: [{ scale: videoTouchEffectZoomAV },], width: videoTouchEffectRadius, height: videoTouchEffectRadius, borderRadius: videoTouchEffectRadius / 2, backgroundColor: ColorNameToRgb('white', 0.3) }]} />
+                                </View>
                                 {/* next media btn */}
                                 <TouchableOpacity onPress={() => onPressNextMedia(true)} disabled={!showNextMediaButton} style={{ paddingVertical: hp('2%'), opacity: showNextMediaButton ? Opacity.Primary : 0, borderTopLeftRadius: Outline.BorderRadius, borderBottomLeftRadius: Outline.BorderRadius, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
                                     <MaterialIcons name="keyboard-arrow-right" color={theme.counterPrimary} size={Size.IconSmaller} />
