@@ -21,6 +21,7 @@ import { addDrawFavoritedID, addDrawSeenID, addQuoteFavoritedID, addQuoteSeenID,
 import { setMutedVideo } from '../../redux/MiscSlice';
 import { ColorNameToRgb, HexToRgb } from '../../handle/UtilsTS';
 import Clipboard from '@react-native-clipboard/clipboard';
+import { toast } from '@baronha/ting';
 
 const noPic = require('../../../assets/images/no-pic.png');
 const videoNumbSize = 10;
@@ -320,8 +321,14 @@ const ThePage = ({ category }: ThePageProps) => {
     const onPressCopy = useCallback((s: string | undefined) => {
         if (!s)
             return;
-        
+
         Clipboard.setString(s);
+
+        const options = {
+            title: 'Copied'
+        };
+
+        toast(options); // easy to use
     }, []);
 
     const onPressToggleMutedVideo = useCallback(() => {
@@ -344,7 +351,7 @@ const ThePage = ({ category }: ThePageProps) => {
         videoTouchEffectZoomAV.setValue(0);
 
         Animated.timing(
-            videoTouchEffectZoomAV, 
+            videoTouchEffectZoomAV,
             {
                 toValue: 1,
                 duration: 300,
@@ -496,8 +503,8 @@ const ThePage = ({ category }: ThePageProps) => {
             {
                 post.current === null || !post.current.author ? null :
                     <View style={{ paddingHorizontal: Outline.Horizontal, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
-                        <Text style={{ fontSize: FontSize.Normal, color: theme.text }}>{post.current.author}</Text>
-                        <TouchableOpacity onPress={() => onPressCopy(post.current?.author)} style={{ justifyContent: 'center', alignItems: 'center' }} >
+                        <Text numberOfLines={1} style={{ flex: 1, fontSize: FontSize.Normal, color: theme.text }}>{post.current.author}</Text>
+                        <TouchableOpacity onPress={() => onPressCopy(post.current?.author)} style={{ marginLeft: Outline.Horizontal, justifyContent: 'center', alignItems: 'center' }} >
                             <MaterialIcons name={'content-copy'} color={theme.counterPrimary} size={Size.IconSmaller} />
                         </TouchableOpacity>
                     </View>
@@ -507,8 +514,8 @@ const ThePage = ({ category }: ThePageProps) => {
             {
                 post.current === null || !post.current.url ? null :
                     <View style={{ paddingHorizontal: Outline.Horizontal, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
-                        <Text style={{ fontSize: FontSize.Small, color: theme.text }}>{post.current.url}</Text>
-                        <TouchableOpacity onPress={() => onPressCopy(post.current?.url)} style={{ justifyContent: 'center', alignItems: 'center' }} >
+                        <Text numberOfLines={1} style={{ flex: 1, fontSize: FontSize.Small, color: theme.text }}>{post.current.url}</Text>
+                        <TouchableOpacity onPress={() => onPressCopy(post.current?.url)} style={{ marginLeft: Outline.Horizontal, justifyContent: 'center', alignItems: 'center' }} >
                             <MaterialIcons name={'content-copy'} color={theme.counterPrimary} size={Size.IconSmaller} />
                         </TouchableOpacity>
                     </View>

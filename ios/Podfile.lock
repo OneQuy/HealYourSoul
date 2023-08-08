@@ -533,6 +533,10 @@ PODS:
     - React-Core
     - React-RCTImage
   - SocketRocket (0.6.1)
+  - SPAlert (4.2.0)
+  - Ting (1.1.0):
+    - React-Core
+    - SPAlert (= 4.2.0)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -608,6 +612,7 @@ DEPENDENCIES:
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - "Ting (from `../node_modules/@baronha/ting`)"
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -625,6 +630,7 @@ SPEC REPOS:
     - libevent
     - OpenSSL-Universal
     - SocketRocket
+    - SPAlert
     - YogaKit
 
 EXTERNAL SOURCES:
@@ -721,6 +727,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  Ting:
+    :path: "../node_modules/@baronha/ting"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -784,6 +792,8 @@ SPEC CHECKSUMS:
   RNReanimated: 9f7068e43b9358a46a688d94a5a3adb258139457
   RNScreens: 50ffe2fa2342eabb2d0afbe19f7c1af286bc7fb3
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
+  SPAlert: 735da1f16a887e294719217572ce1f936d8c8782
+  Ting: 8f31e1ea5195095e69645fb574b8038511a19d35
   Yoga: 8796b55dba14d7004f980b54bcc9833ee45b28ce
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
