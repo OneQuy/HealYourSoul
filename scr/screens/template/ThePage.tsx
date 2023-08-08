@@ -8,7 +8,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { View, Text, Image, TouchableOpacity, ActivityIndicator, Alert, PanResponder, LayoutChangeEvent, GestureResponderEvent, Animated, } from 'react-native'
-import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useContext, useDeferredValue, useEffect, useMemo, useRef, useState } from 'react'
 import { Category, FontSize, Opacity, Outline, Size } from '../../constants/AppConstants';
 import { ThemeContext } from '../../constants/Colors';
 import { heightPercentageToDP as hp, } from "react-native-responsive-screen";
@@ -16,10 +16,10 @@ import { FileList, MediaType, PostMetadata } from '../../constants/Types';
 import { CheckAndGetFileListAsync, CheckLocalFileAndGetURIAsync } from '../../handle/AppUtils';
 import { useNavigation } from '@react-navigation/native';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
-import { PickRandomElement } from '../../handle/Utils';
+import { PickRandomElement, RoundNumber, SecondsToHourMinuteSecondString } from '../../handle/Utils';
 import { addDrawFavoritedID, addDrawSeenID, addQuoteFavoritedID, addQuoteSeenID, addRealFavoritedID, addRealSeenID, removeDrawFavoritedID, removeQuoteFavoritedID, removeRealFavoritedID } from '../../redux/UserDataSlice';
 import { setMutedVideo } from '../../redux/MiscSlice';
-import { ColorNameToRgb, HexToRgb } from '../../handle/UtilsTS';
+import { HexToRgb } from '../../handle/UtilsTS';
 
 const noPic = require('../../../assets/images/no-pic.png');
 const videoNumbSize = 15;
@@ -75,7 +75,9 @@ const ThePage = ({ category }: ThePageProps) => {
     const videoBarTouchMoving = useRef<boolean>(false);
     const videoRef = useRef<Video>();
     const videoIsCompleted = useRef<boolean>(false);
+    const videoTimeRemainLastUpdate = useRef(0);
     const [videoIsPlaying, setVideoIsPlaying] = useState<boolean>(false);
+    const [videoTimeRemain, setVideoTimeRemain] = useState<number>(0);
 
     const videoBarPanResponder = useRef(
         PanResponder.create({
@@ -197,6 +199,7 @@ const ThePage = ({ category }: ThePageProps) => {
 
     const onVideoLoaded = useCallback((e: any) => {
         videoWholeDuration.current = e.duration;
+        setVideoTimeRemain(RoundNumber(e.duration));
 
         videoNumbPosX.setValue(-videoNumbSize / 2);
         videoBarPercent.setValue(0);
@@ -223,6 +226,7 @@ const ThePage = ({ category }: ThePageProps) => {
     const onVideoCompleted = useCallback(() => {
         setVideoIsPlaying(false);
         videoIsCompleted.current = true;
+        setVideoTimeRemain(0);
     }, []);
 
     const onVideoProcess = useCallback((e: any) => {
@@ -230,6 +234,11 @@ const ThePage = ({ category }: ThePageProps) => {
 
         if (!e.currentTime || !e.seekableDuration)
             return;
+
+        if (Date.now() - videoTimeRemainLastUpdate.current > 1000) {
+            videoTimeRemainLastUpdate.current = Date.now();
+            setVideoTimeRemain(RoundNumber(e.seekableDuration - e.currentTime));
+        }
 
         if (videoBarTouchMoving.current)
             return;
@@ -307,6 +316,9 @@ const ThePage = ({ category }: ThePageProps) => {
     }, []);
 
     const onPressPlayVideo = useCallback(() => {
+        if (!videoRef.current)
+            return;
+
         setVideoIsPlaying(val => !val);
 
         if (videoIsCompleted.current)
@@ -400,7 +412,7 @@ const ThePage = ({ category }: ThePageProps) => {
                                     <MaterialIcons name="keyboard-arrow-left" color={theme.counterPrimary} size={Size.IconSmaller} />
                                 </TouchableOpacity>
                                 {/* center view & big play btn */}
-                                <View onTouchEnd={onPressPlayVideo} style={{flex: 1, height: '100%'}} />
+                                <View onTouchEnd={onPressPlayVideo} style={{ flex: 1, height: '100%' }} />
                                 {/* next media btn */}
                                 <TouchableOpacity onPress={() => onPressNextMedia(true)} disabled={!showNextMediaButton} style={{ paddingVertical: hp('2%'), opacity: showNextMediaButton ? Opacity.Primary : 0, borderTopLeftRadius: Outline.BorderRadius, borderBottomLeftRadius: Outline.BorderRadius, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
                                     <MaterialIcons name="keyboard-arrow-right" color={theme.counterPrimary} size={Size.IconSmaller} />
@@ -410,6 +422,7 @@ const ThePage = ({ category }: ThePageProps) => {
                             {
                                 currentMediaIsImage ? undefined :
                                     <View style={{ backgroundColor: HexToRgb(theme.primary, 0.5), marginHorizontal: Outline.Horizontal, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }} >
+                                        {/* play btn */}
                                         <TouchableOpacity style={{}} onPress={onPressPlayVideo} >
                                             <MaterialIcons name={videoIsPlaying ? 'pause' : 'play-arrow'} color={theme.counterPrimary} size={Size.Icon} />
                                         </TouchableOpacity>
@@ -435,6 +448,9 @@ const ThePage = ({ category }: ThePageProps) => {
                                                 <Animated.View pointerEvents={'none'} style={[{ transform: [{ translateX: videoNumbPosX }] }, { position: 'absolute', width: videoNumbSize, height: videoNumbSize, borderRadius: videoNumbSize / 2, backgroundColor: 'black' }]} />
                                             </View>
                                         </View>
+                                        {/* time remain text */}
+                                        <Text style={{ marginRight: Outline.Horizontal, color: theme.counterPrimary }}>{SecondsToHourMinuteSecondString(videoTimeRemain, true)}</Text>
+                                        {/* muted btn */}
                                         <TouchableOpacity style={{}} onPress={onPressToggleMutedVideo} >
                                             <MaterialIcons name={isMutedVideo ? 'volume-off' : 'volume-up'} color={theme.counterPrimary} size={Size.Icon} />
                                         </TouchableOpacity>
