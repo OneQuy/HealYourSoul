@@ -22,6 +22,7 @@ import { setMutedVideo } from '../../redux/MiscSlice';
 import { ColorNameToRgb, HexToRgb } from '../../handle/UtilsTS';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { toast } from '@baronha/ting';
+import { useDrawerStatus } from '@react-navigation/drawer';
 
 const noPic = require('../../../assets/images/no-pic.png');
 const videoNumbSize = 10;
@@ -40,6 +41,7 @@ const ThePage = ({ category }: ThePageProps) => {
 
     const navigation = useNavigation();
     const dispatch = useAppDispatch();
+    const drawerStatus = useDrawerStatus();
     const theme = useContext(ThemeContext);
     const [handling, setHandling] = useState(false);
     const [needLoadPost, setNeedLoadPost] = useState<NeedLoadPostType>('none');
@@ -260,6 +262,14 @@ const ThePage = ({ category }: ThePageProps) => {
         videoNumbLastPosX.current = newPost;
     }, []);
 
+    const checkAndPauseVideo = useCallback(() => {
+        if (!videoRef.current)
+            return;
+
+        if (videoIsPlaying)
+            setVideoIsPlaying(false);
+    }, [videoIsPlaying]);
+
     // button handles
 
     const onPresssFavorite = useCallback(() => {
@@ -378,6 +388,14 @@ const ThePage = ({ category }: ThePageProps) => {
 
         Load();
     }, []);
+
+    // pause video when open drawer
+
+    useEffect(() => {
+        if (drawerStatus === 'open') {
+            checkAndPauseVideo();
+        }
+    }, [drawerStatus]);
 
     // handling indicator
 
