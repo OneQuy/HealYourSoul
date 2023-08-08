@@ -20,6 +20,7 @@ import { PickRandomElement, RoundNumber, SecondsToHourMinuteSecondString } from 
 import { addDrawFavoritedID, addDrawSeenID, addQuoteFavoritedID, addQuoteSeenID, addRealFavoritedID, addRealSeenID, removeDrawFavoritedID, removeQuoteFavoritedID, removeRealFavoritedID } from '../../redux/UserDataSlice';
 import { setMutedVideo } from '../../redux/MiscSlice';
 import { ColorNameToRgb, HexToRgb } from '../../handle/UtilsTS';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 const noPic = require('../../../assets/images/no-pic.png');
 const videoNumbSize = 10;
@@ -316,6 +317,13 @@ const ThePage = ({ category }: ThePageProps) => {
             ]);
     }, [onPressNextPost]);
 
+    const onPressCopy = useCallback((s: string | undefined) => {
+        if (!s)
+            return;
+        
+        Clipboard.setString(s);
+    }, []);
+
     const onPressToggleMutedVideo = useCallback(() => {
         dispatch(setMutedVideo());
     }, []);
@@ -489,7 +497,7 @@ const ThePage = ({ category }: ThePageProps) => {
                 post.current === null || !post.current.author ? null :
                     <View style={{ paddingHorizontal: Outline.Horizontal, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
                         <Text style={{ fontSize: FontSize.Normal, color: theme.text }}>{post.current.author}</Text>
-                        <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center' }} >
+                        <TouchableOpacity onPress={() => onPressCopy(post.current?.author)} style={{ justifyContent: 'center', alignItems: 'center' }} >
                             <MaterialIcons name={'content-copy'} color={theme.counterPrimary} size={Size.IconSmaller} />
                         </TouchableOpacity>
                     </View>
@@ -500,7 +508,7 @@ const ThePage = ({ category }: ThePageProps) => {
                 post.current === null || !post.current.url ? null :
                     <View style={{ paddingHorizontal: Outline.Horizontal, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
                         <Text style={{ fontSize: FontSize.Small, color: theme.text }}>{post.current.url}</Text>
-                        <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center' }} >
+                        <TouchableOpacity onPress={() => onPressCopy(post.current?.url)} style={{ justifyContent: 'center', alignItems: 'center' }} >
                             <MaterialIcons name={'content-copy'} color={theme.counterPrimary} size={Size.IconSmaller} />
                         </TouchableOpacity>
                     </View>
