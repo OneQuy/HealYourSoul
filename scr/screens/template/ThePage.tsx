@@ -320,6 +320,13 @@ const ThePage = ({ category }: ThePageProps) => {
         dispatch(setMutedVideo());
     }, []);
 
+    const onPressPlayVideo = useCallback(() => {
+        setVideoIsPlaying(val => !val);
+
+        if (videoIsCompleted.current)
+            videoRef.current.seek(0);
+    }, []);
+
     const onTouchEndBigView = useCallback((e: GestureResponderEvent) => {
         if (!videoRef.current)
             return;
@@ -335,14 +342,9 @@ const ThePage = ({ category }: ThePageProps) => {
                 duration: 300,
                 useNativeDriver: false,
             }).start(() => videoTouchEffectZoomAV.setValue(0));
-    }, []);
 
-    const onPressPlayVideo = useCallback(() => {
-        setVideoIsPlaying(val => !val);
-
-        if (videoIsCompleted.current)
-            videoRef.current.seek(0);
-    }, []);
+        onPressPlayVideo();
+    }, [onPressPlayVideo]);
 
     // init once 
 
