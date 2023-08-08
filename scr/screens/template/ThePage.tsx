@@ -91,21 +91,21 @@ const ThePage = ({ category }: ThePageProps) => {
                 const newPost = Math.max(0 - videoNumbSize / 2, Math.min(videoNumbLastPosX.current + state.dx, videoBarWholeWidth.current - videoNumbSize / 2));
                 videoNumbPosX.setValue(newPost);
 
-                const percent = newPost / videoBarWholeWidth.current;
+                const percent = (newPost + videoNumbSize / 2) / videoBarWholeWidth.current;
                 videoBarPercent.setValue(percent);
 
                 videoRef.current.seek(percent * videoWholeDuration.current);
             },
 
-            onPanResponderRelease: (_, state) => {
+            onPanResponderRelease: (_, __) => {
                 videoBarPreventTouchEvent.current = true;
                 videoBarTouchMoving.current = false;
 
-                if (videoBarWholeWidth.current <= 0)
-                    return;
+                // if (videoBarWholeWidth.current <= 0)
+                //     return;
 
-                const newPost = Math.max(0 - videoNumbSize / 2, Math.min(videoNumbLastPosX.current + state.dx, videoBarWholeWidth.current - videoNumbSize / 2));
-                videoNumbLastPosX.current = newPost;
+                // const newPost = Math.max(0 - videoNumbSize / 2, Math.min(videoNumbLastPosX.current + state.dx, videoBarWholeWidth.current - videoNumbSize / 2));
+                // videoNumbLastPosX.current = newPost;
             },
         }),
     ).current;
@@ -169,11 +169,11 @@ const ThePage = ({ category }: ThePageProps) => {
         let foundPost: PostMetadata | undefined;
 
         if (isNext) {
-            foundPost = fileList.current?.posts.find(i => !seenIDs.includes(i.id));
+            // foundPost = fileList.current?.posts.find(i => !seenIDs.includes(i.id));
+            foundPost = fileList.current?.posts.find(i => post.current !== i && i.media[0] === MediaType.Video);
 
             if (!foundPost) {
                 foundPost = PickRandomElement(fileList.current?.posts, post.current);
-                // console.log('seen all posts, so picking randomly');
             }
         }
         else { // previous
@@ -308,9 +308,6 @@ const ThePage = ({ category }: ThePageProps) => {
 
         if (videoIsCompleted.current)
             videoRef.current.seek(0);
-
-        // console.log(videoNumbSize / 2 - videoBarWholeWidth.current + videoNumbLastPosX.current);
-
     }, []);
 
     // init once 
