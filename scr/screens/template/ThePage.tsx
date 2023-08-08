@@ -22,7 +22,7 @@ import { setMutedVideo } from '../../redux/MiscSlice';
 import { HexToRgb } from '../../handle/UtilsTS';
 
 const noPic = require('../../../assets/images/no-pic.png');
-const videoNumbSize = 15;
+const videoNumbSize = 10;
 
 type ThePageProps = {
     category: Category
