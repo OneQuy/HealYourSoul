@@ -197,6 +197,9 @@ const ThePage = ({ category }: ThePageProps) => {
 
     const onVideoLoaded = useCallback((e: any) => {
         videoWholeDuration.current = e.duration;
+
+        videoNumbPosX.setValue(-videoNumbSize / 2);
+        videoBarPercent.setValue(0);
     }, []);
 
     const onTouchEndVideoBar = useCallback((e: GestureResponderEvent) => {
