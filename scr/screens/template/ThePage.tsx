@@ -28,6 +28,7 @@ const noPic = require('../../../assets/images/no-pic.png');
 const videoNumbSize = 10;
 const videoTouchEffectRadius = 100;
 const creditToAuthorText = 'Credit to the author.';
+const videoBarTouchMovingThreshold = 5;
 
 type ThePageProps = {
     category: Category
@@ -98,6 +99,10 @@ const ThePage = ({ category }: ThePageProps) => {
                 if (videoBarWholeWidth.current <= 0)
                     return;
 
+                    if (state.dx < videoBarTouchMovingThreshold) {
+                        return;
+                    }
+
                 const newPost = Math.max(0 - videoNumbSize / 2, Math.min(videoNumbLastPosX.current + state.dx, videoBarWholeWidth.current - videoNumbSize / 2));
                 videoNumbPosX.setValue(newPost);
 
@@ -109,15 +114,12 @@ const ThePage = ({ category }: ThePageProps) => {
                 setVideoTimeRemain(videoWholeDuration.current - seekToSeconds)
             },
 
-            onPanResponderRelease: (_, __) => {
-                videoBarPreventTouchEvent.current = true;
+            onPanResponderRelease: (_, state) => {
+                if (state.dx >= videoBarTouchMovingThreshold) {
+                    videoBarPreventTouchEvent.current = true;                    
+                }               
+
                 videoBarTouchMoving.current = false;
-
-                // if (videoBarWholeWidth.current <= 0)
-                //     return;
-
-                // const newPost = Math.max(0 - videoNumbSize / 2, Math.min(videoNumbLastPosX.current + state.dx, videoBarWholeWidth.current - videoNumbSize / 2));
-                // videoNumbLastPosX.current = newPost;
             },
         }),
     ).current;
@@ -228,7 +230,10 @@ const ThePage = ({ category }: ThePageProps) => {
         const percent = (e.nativeEvent.locationX) / videoBarWholeWidth.current;
 
         videoRef.current.seek(percent * videoWholeDuration.current);
-    }, []);
+
+        if (!videoIsPlaying)
+            setVideoIsPlaying(true);
+    }, [videoIsPlaying]);
 
     const onLayoutVideoBar = useCallback((e: LayoutChangeEvent) => {
         videoBarWholeWidth.current = e.nativeEvent.layout.width;
