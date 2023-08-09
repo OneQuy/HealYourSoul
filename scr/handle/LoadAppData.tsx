@@ -1,8 +1,14 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FirebaseInit } from "../firebase/Firebase";
 import { CheckAndClearAllLocalFileBeforeLoadApp } from "./AppUtils";
 import { HandleVersionsFileAsync } from "./VersionsHandler";
+import { DrawerParamList } from "../navigation/Navigator";
 
-export async function LoadAppData() {
+type LoadAppDataResult = {
+    categoryScreenToOpenFirst: keyof DrawerParamList | null
+}
+
+export async function LoadAppData(): Promise<LoadAppDataResult> {
     // firebase init
 
     FirebaseInit();
@@ -13,9 +19,17 @@ export async function LoadAppData() {
   
     // handle: versions file
 
-    var error = await HandleVersionsFileAsync();
+    let error = await HandleVersionsFileAsync();
 
     if (error) {
         throw new Error('HandleVersionsFile: Failed: ' + error);
     }
+
+    // load screen to open
+
+    const categoryScreenToOpenFirst = await AsyncStorage.getItem('categoryScreenToOpenFirst');
+
+    return {
+        categoryScreenToOpenFirst
+    } as LoadAppDataResult;
 }

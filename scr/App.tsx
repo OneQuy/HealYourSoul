@@ -29,7 +29,7 @@ const App = () => {
 }
 
 const AppRender = () => {
-  const loadedAppData = useAsyncHandle(LoadAppData);
+  const {handled, result} = useAsyncHandle(LoadAppData);
   const themeType = useAppSelector((state: RootState) => state.misc.themeType);
   const dispatch = useAppDispatch();
 
@@ -45,7 +45,7 @@ const AppRender = () => {
     <ThemeContext.Provider value={GetColors(themeType)} >
       <View style={CommonStyles.flex_1}>
         {
-          loadedAppData ? <Navigator /> : <SplashScreen />
+          handled ? <Navigator initialRouteName={result?.categoryScreenToOpenFirst} /> : <SplashScreen />
         }
       </View>
     </ThemeContext.Provider>);

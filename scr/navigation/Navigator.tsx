@@ -17,13 +17,17 @@ export type DrawerParamList = {
   [ScreenName.Quote]: undefined,
 }
 
+type MainNavigatorProps = {
+  initialRouteName: keyof typeof ScreenName | null
+}
+
 const Drawer = createDrawerNavigator<DrawerParamList>();
 
-const Navigator = () => {
+const Navigator = ({ initialRouteName }: MainNavigatorProps) => {
   return (
     <NavigationContainer>
       <Drawer.Navigator
-        initialRouteName={ScreenName.Comic}
+        initialRouteName={initialRouteName === null ? ScreenName.Comic : initialRouteName}
         drawerContent={(props) => <CustomDrawerContent {...props} />}
       >
         <Drawer.Screen name={ScreenName.Comic} component={ComicScreen} />
