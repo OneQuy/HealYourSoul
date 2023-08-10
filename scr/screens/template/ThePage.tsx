@@ -228,7 +228,11 @@ const ThePage = ({ category }: ThePageProps) => {
             return;
         }
 
-        const percent = (e.nativeEvent.locationX) / videoBarWholeWidth.current;
+        
+        videoNumbPosX.setValue(e.nativeEvent.locationX - videoNumbSize / 2);
+        
+        const percent = (e.nativeEvent.locationX) / videoBarWholeWidth.current;        
+        videoBarPercent.setValue(percent);        
 
         videoRef.current.seek(percent * videoWholeDuration.current);
 
