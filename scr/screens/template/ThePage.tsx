@@ -14,7 +14,7 @@ import { ThemeContext } from '../../constants/Colors';
 import { heightPercentageToDP as hp, } from "react-native-responsive-screen";
 import { FileList, MediaType, PostMetadata } from '../../constants/Types';
 import { CheckAndGetFileListAsync, CheckLocalFileAndGetURIAsync } from '../../handle/AppUtils';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { PickRandomElement, RoundNumber, SecondsToHourMinuteSecondString } from '../../handle/Utils';
 import { addDrawFavoritedID, addDrawSeenID, addQuoteFavoritedID, addQuoteSeenID, addRealFavoritedID, addRealSeenID, removeDrawFavoritedID, removeQuoteFavoritedID, removeRealFavoritedID } from '../../redux/UserDataSlice';
@@ -23,6 +23,7 @@ import { ColorNameToRgb, HexToRgb } from '../../handle/UtilsTS';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { toast } from '@baronha/ting';
 import { useDrawerStatus } from '@react-navigation/drawer';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const noPic = require('../../../assets/images/no-pic.png');
 const videoNumbSize = 10;
@@ -99,9 +100,9 @@ const ThePage = ({ category }: ThePageProps) => {
                 if (videoBarWholeWidth.current <= 0)
                     return;
 
-                    if (state.dx < videoBarTouchMovingThreshold) {
-                        return;
-                    }
+                if (state.dx < videoBarTouchMovingThreshold) {
+                    return;
+                }
 
                 const newPost = Math.max(0 - videoNumbSize / 2, Math.min(videoNumbLastPosX.current + state.dx, videoBarWholeWidth.current - videoNumbSize / 2));
                 videoNumbPosX.setValue(newPost);
@@ -116,8 +117,8 @@ const ThePage = ({ category }: ThePageProps) => {
 
             onPanResponderRelease: (_, state) => {
                 if (state.dx >= videoBarTouchMovingThreshold) {
-                    videoBarPreventTouchEvent.current = true;                    
-                }               
+                    videoBarPreventTouchEvent.current = true;
+                }
 
                 videoBarTouchMoving.current = false;
             },
@@ -393,6 +394,16 @@ const ThePage = ({ category }: ThePageProps) => {
 
         Load();
     }, []);
+
+    // on focus
+
+    useFocusEffect(
+        useCallback(() => {
+            const state = navigation.getState();
+            const screenName = state.routeNames[state.index];
+            AsyncStorage.setItem('categoryScreenToOpenFirst', screenName);
+        }, [])
+    );
 
     // pause video when open drawer
 
