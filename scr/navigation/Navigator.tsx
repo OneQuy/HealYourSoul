@@ -18,7 +18,7 @@ export type DrawerParamList = {
 }
 
 type MainNavigatorProps = {
-  initialRouteName: keyof typeof ScreenName | null
+  initialRouteName: keyof DrawerParamList | null
 }
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
@@ -27,7 +27,7 @@ const Navigator = ({ initialRouteName }: MainNavigatorProps) => {
   return (
     <NavigationContainer>
       <Drawer.Navigator
-        initialRouteName={initialRouteName === null ? ScreenName.Comic : initialRouteName}
+        initialRouteName={!initialRouteName ? ScreenName.Comic : initialRouteName}
         drawerContent={(props) => <CustomDrawerContent {...props} />}
       >
         <Drawer.Screen name={ScreenName.Comic} component={ComicScreen} />

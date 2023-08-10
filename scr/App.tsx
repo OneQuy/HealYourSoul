@@ -40,12 +40,12 @@ const AppRender = () => {
       console.log('ClearAllUserData');
     }
   }, []);
-
+  
   return (
     <ThemeContext.Provider value={GetColors(themeType)} >
       <View style={CommonStyles.flex_1}>
         {
-          handled ? <Navigator initialRouteName={result?.categoryScreenToOpenFirst} /> : <SplashScreen />
+          handled && result  ? <Navigator initialRouteName={result.categoryScreenToOpenFirst} /> : <SplashScreen />
         }
       </View>
     </ThemeContext.Provider>);

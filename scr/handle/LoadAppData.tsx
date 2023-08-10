@@ -4,7 +4,7 @@ import { CheckAndClearAllLocalFileBeforeLoadApp } from "./AppUtils";
 import { HandleVersionsFileAsync } from "./VersionsHandler";
 import { DrawerParamList } from "../navigation/Navigator";
 
-type LoadAppDataResult = {
+export type LoadAppDataResult = {
     categoryScreenToOpenFirst: keyof DrawerParamList | null
 }
 
