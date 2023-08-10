@@ -93,6 +93,7 @@ const ThePage = ({ category }: ThePageProps) => {
         PanResponder.create({
             onMoveShouldSetPanResponder: () => {
                 videoBarTouchMoving.current = true
+                setVideoIsPlaying(false)
                 return true
             },
 
@@ -100,7 +101,7 @@ const ThePage = ({ category }: ThePageProps) => {
                 if (videoBarWholeWidth.current <= 0)
                     return;
 
-                if (state.dx < videoBarTouchMovingThreshold) {
+                if (Math.abs(state.dx) < videoBarTouchMovingThreshold) {
                     return;
                 }
 
@@ -109,18 +110,24 @@ const ThePage = ({ category }: ThePageProps) => {
 
                 const percent = (newPost + videoNumbSize / 2) / videoBarWholeWidth.current;
                 videoBarPercent.setValue(percent);
-
-                const seekToSeconds = percent * videoWholeDuration.current;
-                videoRef.current.seek(seekToSeconds);
-                setVideoTimeRemain(videoWholeDuration.current - seekToSeconds)
             },
 
             onPanResponderRelease: (_, state) => {
-                if (state.dx >= videoBarTouchMovingThreshold) {
+                if (Math.abs(state.dx) >= videoBarTouchMovingThreshold) {
                     videoBarPreventTouchEvent.current = true;
                 }
 
                 videoBarTouchMoving.current = false;
+
+                const newPost = Math.max(0 - videoNumbSize / 2, Math.min(videoNumbLastPosX.current + state.dx, videoBarWholeWidth.current - videoNumbSize / 2));
+                const percent = (newPost + videoNumbSize / 2) / videoBarWholeWidth.current;
+                const seekToSeconds = percent * videoWholeDuration.current;
+
+                videoRef.current.seek(seekToSeconds);
+
+                setVideoTimeRemain(videoWholeDuration.current - seekToSeconds)
+
+                setVideoIsPlaying(true)
             },
         }),
     ).current;
@@ -228,11 +235,10 @@ const ThePage = ({ category }: ThePageProps) => {
             return;
         }
 
-        
         videoNumbPosX.setValue(e.nativeEvent.locationX - videoNumbSize / 2);
-        
-        const percent = (e.nativeEvent.locationX) / videoBarWholeWidth.current;        
-        videoBarPercent.setValue(percent);        
+
+        const percent = (e.nativeEvent.locationX) / videoBarWholeWidth.current;
+        videoBarPercent.setValue(percent);
 
         videoRef.current.seek(percent * videoWholeDuration.current);
 
