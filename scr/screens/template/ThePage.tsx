@@ -111,6 +111,15 @@ const ThePage = ({ category }: ThePageProps) => {
 
                 const percent = (newPost + videoNumbSize / 2) / videoBarWholeWidth.current;
                 videoBarPercent.setValue(percent);
+
+                // set time remain
+
+                if (Date.now() - videoTimeRemainLastUpdate.current > 200) {
+                    videoTimeRemainLastUpdate.current = Date.now();
+
+                    const seekToSeconds = percent * videoWholeDuration.current;
+                    setVideoTimeRemain(videoWholeDuration.current - seekToSeconds)
+                }                    
             },
 
             onPanResponderRelease: (_, state) => {
@@ -242,6 +251,9 @@ const ThePage = ({ category }: ThePageProps) => {
         videoBarPercent.setValue(percent);
 
         videoRef.current.seek(percent * videoWholeDuration.current);
+
+        const seekToSeconds = percent * videoWholeDuration.current;
+        setVideoTimeRemain(videoWholeDuration.current - seekToSeconds)
 
         if (!videoIsPlaying)
             setVideoIsPlaying(true);
@@ -385,7 +397,7 @@ const ThePage = ({ category }: ThePageProps) => {
         const distanceFromStart = Math.sqrt(
             Math.pow(e.nativeEvent.locationX - bigViewStartTouchNERef.current.locationX, 2) +
             Math.pow(e.nativeEvent.locationY - bigViewStartTouchNERef.current.locationY, 2));
-        
+
         const isTouch = distanceFromStart < touchDistanceThreshold;
 
         const howLongFromStart = e.nativeEvent.timestamp - bigViewStartTouchNERef.current.timestamp;
@@ -396,7 +408,7 @@ const ThePage = ({ category }: ThePageProps) => {
                 title: 'Long Pressed',
                 backgroundColor: theme.primary
             };
-    
+
             toast(options);
         }
 
