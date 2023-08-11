@@ -21,7 +21,7 @@ import { addDrawFavoritedID, addDrawSeenID, addQuoteFavoritedID, addQuoteSeenID,
 import { setMutedVideo } from '../../redux/MiscSlice';
 import { ColorNameToRgb, HexToRgb } from '../../handle/UtilsTS';
 import Clipboard from '@react-native-clipboard/clipboard';
-import { toast } from '@baronha/ting';
+import { ToastOptions, toast } from '@baronha/ting';
 import { useDrawerStatus } from '@react-navigation/drawer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -352,12 +352,13 @@ const ThePage = ({ category }: ThePageProps) => {
 
         Clipboard.setString(s);
 
-        const options = {
-            title: 'Copied'
+        const options: ToastOptions = {
+            title: 'Copied',
+            backgroundColor: theme.primary
         };
 
         toast(options); // easy to use
-    }, []);
+    }, [theme]);
 
     const onPressToggleMutedVideo = useCallback(() => {
         dispatch(setMutedVideo());
@@ -494,7 +495,7 @@ const ThePage = ({ category }: ThePageProps) => {
                                     <MaterialIcons name="keyboard-arrow-left" color={theme.counterPrimary} size={Size.IconSmaller} />
                                 </TouchableOpacity>
                                 {/* center view & big play video btn */}
-                                <View onTouchEnd={onTouchEndBigView} style={{ flex: 1, height: '100%' }} >
+                                <View  onTouchEnd={onTouchEndBigView} style={{ flex: 1, height: '100%' }} >
                                     {/* effect touch */}
                                     <Animated.View pointerEvents={'none'} style={[videoTouchEffectTranslate.getLayout(), { transform: [{ scale: videoTouchEffectZoomAV },], width: videoTouchEffectRadius, height: videoTouchEffectRadius, borderRadius: videoTouchEffectRadius / 2, backgroundColor: ColorNameToRgb('white', 0.3) }]} />
                                 </View>
