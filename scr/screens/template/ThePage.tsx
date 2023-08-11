@@ -29,7 +29,7 @@ const noPic = require('../../../assets/images/no-pic.png');
 const videoNumbSize = 10;
 const videoTouchEffectRadius = 100;
 const creditToAuthorText = 'Credit to the author.';
-const videoBarTouchMovingThreshold = 5;
+const touchDistanceThreshold = 5;
 
 type ThePageProps = {
     category: Category
@@ -49,6 +49,7 @@ const ThePage = ({ category }: ThePageProps) => {
     const [needLoadPost, setNeedLoadPost] = useState<NeedLoadPostType>('none');
     const fileList = useRef<FileList | null>(null);
     const previousPostIDs = useRef<number[]>([]);
+    const bigViewStartTouchNERef = useRef<GestureResponderEvent['nativeEvent'] | null>(null);
 
     const seenIDs = useAppSelector((state: RootState) => {
         if (category === Category.Draw)
@@ -101,7 +102,7 @@ const ThePage = ({ category }: ThePageProps) => {
                 if (videoBarWholeWidth.current <= 0)
                     return;
 
-                if (Math.abs(state.dx) < videoBarTouchMovingThreshold) {
+                if (Math.abs(state.dx) < touchDistanceThreshold) {
                     return;
                 }
 
@@ -113,7 +114,7 @@ const ThePage = ({ category }: ThePageProps) => {
             },
 
             onPanResponderRelease: (_, state) => {
-                if (Math.abs(state.dx) >= videoBarTouchMovingThreshold) {
+                if (Math.abs(state.dx) >= touchDistanceThreshold) {
                     videoBarPreventTouchEvent.current = true;
                 }
 
@@ -357,7 +358,7 @@ const ThePage = ({ category }: ThePageProps) => {
             backgroundColor: theme.primary
         };
 
-        toast(options); // easy to use
+        toast(options);
     }, [theme]);
 
     const onPressToggleMutedVideo = useCallback(() => {
@@ -371,8 +372,37 @@ const ThePage = ({ category }: ThePageProps) => {
             videoRef.current.seek(0);
     }, []);
 
+    const onTouchStartBigView = useCallback((e: GestureResponderEvent) => {
+        bigViewStartTouchNERef.current = e.nativeEvent;
+    }, []);
+
     const onTouchEndBigView = useCallback((e: GestureResponderEvent) => {
-        if (!videoRef.current)
+        if (!bigViewStartTouchNERef.current)
+            return;
+
+        // general handle for image / video
+
+        const distanceFromStart = Math.sqrt(
+            Math.pow(e.nativeEvent.locationX - bigViewStartTouchNERef.current.locationX, 2) +
+            Math.pow(e.nativeEvent.locationY - bigViewStartTouchNERef.current.locationY, 2));
+        
+        const isTouch = distanceFromStart < touchDistanceThreshold;
+
+        const howLongFromStart = e.nativeEvent.timestamp - bigViewStartTouchNERef.current.timestamp;
+        const isLongPressed = howLongFromStart > 500 && isTouch;
+
+        if (isLongPressed) {
+            const options: ToastOptions = {
+                title: 'Long Pressed',
+                backgroundColor: theme.primary
+            };
+    
+            toast(options);
+        }
+
+        // handle touch effect for video
+
+        if (!videoRef.current || !isTouch || isLongPressed)
             return;
 
         videoTouchEffectTranslate.setValue({ x: e.nativeEvent.locationX - videoTouchEffectRadius / 2, y: e.nativeEvent.locationY - videoTouchEffectRadius / 2 })
@@ -495,7 +525,10 @@ const ThePage = ({ category }: ThePageProps) => {
                                     <MaterialIcons name="keyboard-arrow-left" color={theme.counterPrimary} size={Size.IconSmaller} />
                                 </TouchableOpacity>
                                 {/* center view & big play video btn */}
-                                <View  onTouchEnd={onTouchEndBigView} style={{ flex: 1, height: '100%' }} >
+                                <View
+                                    onTouchStart={onTouchStartBigView}
+                                    onTouchEnd={onTouchEndBigView}
+                                    style={{ flex: 1, height: '100%' }} >
                                     {/* effect touch */}
                                     <Animated.View pointerEvents={'none'} style={[videoTouchEffectTranslate.getLayout(), { transform: [{ scale: videoTouchEffectZoomAV },], width: videoTouchEffectRadius, height: videoTouchEffectRadius, borderRadius: videoTouchEffectRadius / 2, backgroundColor: ColorNameToRgb('white', 0.3) }]} />
                                 </View>
