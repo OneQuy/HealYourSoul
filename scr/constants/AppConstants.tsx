@@ -70,3 +70,9 @@ export enum Category {
   Real = 1,
   Quote = 2
 }
+
+// texts
+
+export const LocalText = {
+  offline_mode: "Offine mode"
+}

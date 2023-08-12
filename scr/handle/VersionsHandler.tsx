@@ -1,5 +1,9 @@
+import { toast } from "@baronha/ting";
 import { FirebaseDatabase_GetValueAsync } from "../firebase/FirebaseDatabase";
+import { IsInternetAvailable, ToastTheme } from "./AppUtils";
 import { Cheat } from "./Cheat";
+import { LocalText } from "../constants/AppConstants";
+import { ThemeColor } from "../constants/Colors";
 
 const FirebaseDBAppVersionsPath = 'app/versions';
 
@@ -11,9 +15,20 @@ export type Versions = {
 
 export var versions: Versions;
 
-export async function HandleVersionsFileAsync() {    
+export async function HandleVersionsFileAsync(theme: ThemeColor) {    
     let time = new Date();       
-    var result = await FirebaseDatabase_GetValueAsync(FirebaseDBAppVersionsPath);
+
+    const isInternet = await IsInternetAvailable();
+
+    if (!isInternet) {
+        toast({ 
+            title: LocalText.offline_mode,
+            preset: 'none',
+            ...ToastTheme(theme)
+        })
+    }        
+
+    const result = await FirebaseDatabase_GetValueAsync(FirebaseDBAppVersionsPath);
     
     if (result.error)
     {

@@ -3,12 +3,13 @@ import { FirebaseInit } from "../firebase/Firebase";
 import { CheckAndClearAllLocalFileBeforeLoadApp } from "./AppUtils";
 import { HandleVersionsFileAsync } from "./VersionsHandler";
 import { DrawerParamList } from "../navigation/Navigator";
+import { ThemeColor } from "../constants/Colors";
 
 export type LoadAppDataResult = {
     categoryScreenToOpenFirst: keyof DrawerParamList | null
 }
 
-export async function LoadAppData(): Promise<LoadAppDataResult> {
+export async function LoadAppData(theme: ThemeColor): Promise<LoadAppDataResult> {
     // firebase init
 
     FirebaseInit();
@@ -19,7 +20,7 @@ export async function LoadAppData(): Promise<LoadAppDataResult> {
   
     // handle: versions file
 
-    let error = await HandleVersionsFileAsync();
+    let error = await HandleVersionsFileAsync(theme);
 
     if (error) {
         throw new Error('HandleVersionsFile: Failed: ' + error);

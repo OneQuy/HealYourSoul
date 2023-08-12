@@ -1,6 +1,6 @@
 import { createContext } from "react";
 
-type ThemeColor = {
+export type ThemeColor = {
     background: string,
     primary: string,
     counterPrimary: string,

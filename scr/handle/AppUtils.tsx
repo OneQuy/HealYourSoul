@@ -1,9 +1,11 @@
 import { Category, FirebaseDBPath, FirebasePath, LocalPath } from "../constants/AppConstants";
+import { ThemeColor } from "../constants/Colors";
 import { FileList, MediaType, PostMetadata } from "../constants/Types";
 import { FirebaseStorage_DownloadAndReadJsonAsync, FirebaseStorage_DownloadAsync } from "../firebase/FirebaseStorage";
 import { Cheat } from "./Cheat";
 import { DeleteFileAsync, DeleteTempDirAsync, GetFLPFromRLP, IsExistedAsync, ReadTextAsync } from "./FileUtils";
 import { versions } from "./VersionsHandler";
+import NetInfo from '@react-native-community/netinfo'
 
 /**
  * cheat clear whole folder data
@@ -127,7 +129,7 @@ const GetMediaFullPath = (localOrFb: boolean, cat: Category, postID: number, med
     }
 }
 
-export async function CheckLocalFileAndGetURIAsync(cat: Category, post: PostMetadata, mediaIdx: number): Promise<{uri: string | null, error: any}> {
+export async function CheckLocalFileAndGetURIAsync(cat: Category, post: PostMetadata, mediaIdx: number): Promise<{ uri: string | null, error: any }> {
     const uri = GetMediaFullPath(true, cat, post.id, mediaIdx, post.media[mediaIdx]);
 
     if (await IsExistedAsync(uri, false)) {
@@ -151,5 +153,18 @@ export async function CheckLocalFileAndGetURIAsync(cat: Category, post: PostMeta
     return {
         uri: res ? null : uri,
         error: res
+    }
+}
+
+export async function IsInternetAvailable(): Promise<boolean> {
+    const state = await NetInfo.fetch();
+    return state.isConnected === true;
+}
+
+export function ToastTheme(theme: ThemeColor) {
+    return {
+        backgroundColor: theme.primary,
+        titleColor: theme.counterPrimary,
+        messageColor: theme.counterPrimary,
     }
 }
