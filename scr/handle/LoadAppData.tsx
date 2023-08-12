@@ -3,18 +3,12 @@ import { FirebaseInit } from "../firebase/Firebase";
 import { CheckAndClearAllLocalFileBeforeLoadApp } from "./AppUtils";
 import { HandleVersionsFileAsync } from "./VersionsHandler";
 import { DrawerParamList } from "../navigation/Navigator";
-import NetInfo from '@react-native-community/netinfo'
 
 export type LoadAppDataResult = {
     categoryScreenToOpenFirst: keyof DrawerParamList | null
 }
 
 export async function LoadAppData(): Promise<LoadAppDataResult> {
-    NetInfo.fetch().then(state => {
-        console.log("Connection type", state.type);
-        console.log("Is connected?", state.isConnected);
-      })
-
     // firebase init
 
     FirebaseInit();
