@@ -4,6 +4,7 @@ import { CheckAndClearAllLocalFileBeforeLoadApp } from "./AppUtils";
 import { HandleVersionsFileAsync } from "./VersionsHandler";
 import { DrawerParamList } from "../navigation/Navigator";
 import { ThemeColor } from "../constants/Colors";
+import { Alert } from "react-native";
 
 export type LoadAppDataResult = {
     categoryScreenToOpenFirst: keyof DrawerParamList | null
@@ -20,11 +21,7 @@ export async function LoadAppData(theme: ThemeColor): Promise<LoadAppDataResult>
   
     // handle: versions file
 
-    let error = await HandleVersionsFileAsync(theme);
-
-    if (error) {
-        throw new Error('HandleVersionsFile: Failed: ' + error);
-    }
+    await HandleVersionsFileAsync(theme);
 
     // load screen to open
 

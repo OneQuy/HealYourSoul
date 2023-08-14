@@ -1,6 +1,6 @@
 // file / dir
 
-import { Platform } from "react-native";
+import { Alert, Platform, AlertButton } from "react-native";
 
 const colorNameToHexDefines = {
     "aliceblue": "#f0f8ff",
@@ -221,3 +221,37 @@ export function GetBlobFromFLPAsync(flp: string): Promise<Blob> {
         xhr.send(null);
     });
 };
+
+/**
+ * @usage const isPressRight = await AlertAsync('title', 'message', 'cancel', 'OK');
+ */
+export const AlertAsync = async (
+    title: string,
+    msg?: string,    
+    rightText?: string,
+    leftText?: string,
+) => new Promise((resolve) => {
+    const rightBtn: AlertButton =  {
+        text: rightText ?? 'OK',
+        onPress: () => resolve(true)
+    }
+
+    Alert.alert(
+        title,
+        msg,
+        leftText ? 
+        [ // case 2 btns
+            {
+                text: leftText,
+                onPress: () => resolve(false)
+            },
+           rightBtn
+        ] :
+        [ // case 1 btn
+            rightBtn
+        ],
+        {
+            cancelable: false,
+        }
+    );
+})

@@ -1,4 +1,5 @@
-import { Category, FirebaseDBPath, FirebasePath, LocalPath } from "../constants/AppConstants";
+import { Alert } from "react-native";
+import { Category, FirebaseDBPath, FirebasePath, LocalPath, LocalText } from "../constants/AppConstants";
 import { ThemeColor } from "../constants/Colors";
 import { FileList, MediaType, PostMetadata } from "../constants/Types";
 import { FirebaseStorage_DownloadAndReadJsonAsync, FirebaseStorage_DownloadAsync } from "../firebase/FirebaseStorage";
@@ -6,6 +7,9 @@ import { Cheat } from "./Cheat";
 import { DeleteFileAsync, DeleteTempDirAsync, GetFLPFromRLP, IsExistedAsync, ReadTextAsync } from "./FileUtils";
 import { versions } from "./VersionsHandler";
 import NetInfo from '@react-native-community/netinfo'
+import { ToastOptions } from "@baronha/ting";
+import { AlertAsync, ColorNameToHex } from "./UtilsTS";
+import { AppLog } from "./AppLog";
 
 /**
  * cheat clear whole folder data
@@ -64,12 +68,32 @@ export const GetDBVersionPath = (cat: Category) => {
 }
 
 async function DownloadAndSaveFileListAsync(cat: Category): Promise<FileList> {
-    const res = await FirebaseStorage_DownloadAndReadJsonAsync(GetListFileRLP(cat, false), GetListFileRLP(cat, true));
+    while (true) {
+        const isInternet = await IsInternetAvailableAsync();
 
-    if (res.error)
-        throw new Error(res.error as string);
+        if (!isInternet) {
+            await AlertNeedInternetAsync();
+            continue;
+        }
 
-    return res.json as FileList;
+        const isPressRight = await AlertAsync('tiiii', 'mssgggg');
+        console.log(isPressRight);
+        continue;
+
+        const result = await FirebaseStorage_DownloadAndReadJsonAsync(GetListFileRLP(cat, false), GetListFileRLP(cat, true));
+
+        if (result.error) {
+            const err = 'DownloadAndSaveFileListAsync - ' + JSON.stringify(result.error);
+        
+            console.error(err);
+            Track('error', err);
+            AppLog.Log(err);
+    
+            continue;
+        }
+
+        return result.json as FileList;
+    }
 }
 
 export async function CheckAndGetFileListAsync(cat: Category): Promise<FileList> {
@@ -84,7 +108,10 @@ export async function CheckAndGetFileListAsync(cat: Category): Promise<FileList>
     const localVersion: number = localFileList === null ? -1 : localFileList.version;
     let needDownload = false;
 
-    if (cat === Category.Draw && localVersion < versions.draw)
+    if (localFileList === null)
+        needDownload = true;
+    else if (!versions) { } // offline mode
+    else if (cat === Category.Draw && localVersion < versions.draw)
         needDownload = true;
     else if (cat === Category.Quote && localVersion < versions.quote)
         needDownload = true;
@@ -156,15 +183,39 @@ export async function CheckLocalFileAndGetURIAsync(cat: Category, post: PostMeta
     }
 }
 
-export async function IsInternetAvailable(): Promise<boolean> {
+export async function IsInternetAvailableAsync(): Promise<boolean> {
     const state = await NetInfo.fetch();
+    // console.log(state);
+
     return state.isConnected === true;
 }
 
-export function ToastTheme(theme: ThemeColor) {
+export function ToastTheme(theme: ThemeColor, preset: ToastOptions['preset']) {
     return {
-        backgroundColor: theme.primary,
-        titleColor: theme.counterPrimary,
-        messageColor: theme.counterPrimary,
+        backgroundColor: preset === 'error' ? ColorNameToHex('tomato') : theme.primary,
+        titleColor: preset === 'error' ? ColorNameToHex('white') : theme.counterPrimary,
+        messageColor: preset === 'error' ? ColorNameToHex('white') : theme.counterPrimary,
+        preset
     }
+}
+
+export const AlertNeedInternetAsync = async () => new Promise((resolve) => {
+    Alert.alert(
+        LocalText.popup_title_need_internet,
+        LocalText.popup_content_need_internet,
+        [
+            {
+                text: LocalText.retry,
+                onPress: resolve
+            }
+        ],
+        {
+            cancelable: false
+        }
+    )
+})
+
+export const Track = (event: string, data?: string) => {
+    // todo
+    // Track('error', JSON.stringify(result.error));
 }

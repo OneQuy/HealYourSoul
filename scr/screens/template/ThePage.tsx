@@ -9,11 +9,11 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import { View, Text, Image, TouchableOpacity, ActivityIndicator, Alert, PanResponder, LayoutChangeEvent, GestureResponderEvent, Animated, } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
-import { Category, FontSize, Opacity, Outline, Size } from '../../constants/AppConstants';
+import { Category, FontSize, LocalText, Opacity, Outline, Size } from '../../constants/AppConstants';
 import { ThemeContext } from '../../constants/Colors';
 import { heightPercentageToDP as hp, } from "react-native-responsive-screen";
 import { FileList, MediaType, PostMetadata } from '../../constants/Types';
-import { CheckAndGetFileListAsync, CheckLocalFileAndGetURIAsync } from '../../handle/AppUtils';
+import { CheckAndGetFileListAsync, CheckLocalFileAndGetURIAsync, ToastTheme } from '../../handle/AppUtils';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { PickRandomElement, RoundNumber, SecondsToHourMinuteSecondString } from '../../handle/Utils';
@@ -28,7 +28,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const noPic = require('../../../assets/images/no-pic.png');
 const videoNumbSize = 10;
 const videoTouchEffectRadius = 100;
-const creditToAuthorText = 'Credit to the author.';
 const touchDistanceThreshold = 5;
 
 type ThePageProps = {
@@ -406,7 +405,7 @@ const ThePage = ({ category }: ThePageProps) => {
         if (isLongPressed) {
             const options: ToastOptions = {
                 title: 'Long Pressed',
-                backgroundColor: theme.primary
+                ...ToastTheme(theme, 'done')
             };
 
             toast(options);
@@ -593,7 +592,7 @@ const ThePage = ({ category }: ThePageProps) => {
 
             {/* credit author */}
             <View style={{ paddingHorizontal: Outline.Horizontal, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
-                <Text numberOfLines={1} style={{ flex: 1, fontSize: FontSize.Normal, color: theme.text }}>{hasCredit ? post.current?.author : creditToAuthorText}</Text>
+                <Text numberOfLines={1} style={{ flex: 1, fontSize: FontSize.Normal, color: theme.text }}>{hasCredit ? post.current?.author : LocalText.credit_to_author}</Text>
                 {
                     !hasCredit ? undefined :
                         <TouchableOpacity onPress={() => onPressCopy(post.current?.author)} style={{ marginLeft: Outline.Horizontal, justifyContent: 'center', alignItems: 'center' }} >

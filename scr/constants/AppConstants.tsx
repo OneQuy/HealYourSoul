@@ -74,5 +74,14 @@ export enum Category {
 // texts
 
 export const LocalText = {
-  offline_mode: "Offine mode"
+  offline_mode: "Offine mode",
+  retry: "Retry",
+  error: "Error",
+  credit_to_author: 'Credit to the author.',
+  error_toast: 'Something\'s wrong',
+
+  // popup
+
+  popup_title_need_internet: 'No Internet',
+  popup_content_need_internet: 'Please check your network and try again.',
 }
