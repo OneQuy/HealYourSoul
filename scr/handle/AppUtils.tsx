@@ -181,7 +181,7 @@ export async function IsInternetAvailableAsync(): Promise<boolean> {
     const state = await NetInfo.fetch();
     // console.log(state);
 
-    return state.isConnected === true;
+    return state.isConnected === true && state.isInternetReachable === true;
 }
 
 export function ToastTheme(theme: ThemeColor, preset: ToastOptions['preset']) {

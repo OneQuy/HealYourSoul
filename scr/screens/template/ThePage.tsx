@@ -297,6 +297,27 @@ const ThePage = ({ category }: ThePageProps) => {
             setVideoIsPlaying(false);
     }, [videoIsPlaying]);
 
+    const checkAndLoadFileListAsync = useCallback(async () => {
+        if (fileList.current !== null)
+            return false;
+
+        setHandling(true);
+        setReasonToReload(NeedReloadReason.None);
+
+        const res = await CheckAndGetFileListAsync(category);
+
+        if (typeof res === 'object') {
+            fileList.current = res;
+            setNeedLoadPost('next');
+        }
+        else {
+            setReasonToReload(res);
+        }
+
+        setHandling(false);
+        return true;
+    }, []);
+
     // button handles
 
     const onPresssFavorite = useCallback(() => {
@@ -385,10 +406,6 @@ const ThePage = ({ category }: ThePageProps) => {
     const onTouchStartBigView = useCallback((e: GestureResponderEvent) => {
         bigViewStartTouchNERef.current = e.nativeEvent;
     }, []);
-    
-    const onPressReload = useCallback(() => {
-        
-    }, []);
 
     const onTouchEndBigView = useCallback((e: GestureResponderEvent) => {
         if (!bigViewStartTouchNERef.current)
@@ -434,28 +451,18 @@ const ThePage = ({ category }: ThePageProps) => {
         onPressPlayVideo();
     }, [onPressPlayVideo]);
 
+    const onPressReloadAsync = useCallback(async () => {
+        let needHandle = await checkAndLoadFileListAsync();
+
+        console.log(needHandle);
+        
+    }, [checkAndLoadFileListAsync]);
+
     // init once 
 
     useEffect(() => {
-        async function Load() {
-            if (fileList.current === null) {
-                setHandling(true);
-                const res = await CheckAndGetFileListAsync(category);
-
-                if (typeof res === 'object') {
-                    fileList.current = res;
-                    setNeedLoadPost('next');
-                }
-                else {
-                    setReasonToReload(res);
-                }
-
-                setHandling(false);
-            }
-        }
-
-        Load();
-    }, []);
+        onPressReloadAsync();
+    }, [onPressReloadAsync]);
 
     // on focus
 
@@ -514,14 +521,14 @@ const ThePage = ({ category }: ThePageProps) => {
             {/* media view */}
             {
                 mediaURI === '' ?
-                // true ?
+                    // true ?
                     // no media
                     <View style={{ flex: 1 }} >
                         {
                             // true ?
                             reasonToReload !== NeedReloadReason.None ?
                                 // need to reload
-                                <TouchableOpacity onPress={onPressReload} style={{ flex: 1, justifyContent: 'center', alignItems: 'center', gap: Outline.GapVertical }} >
+                                <TouchableOpacity onPress={onPressReloadAsync} style={{ flex: 1, justifyContent: 'center', alignItems: 'center', gap: Outline.GapVertical }} >
                                     <MaterialCommunityIcons name={'file-image-outline'} color={theme.primary} size={100} />
                                     <Text style={{ fontSize: FontSize.Big, color: theme.counterPrimary }}>{reasonToReload === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
                                     <Text style={{ fontSize: FontSize.Normal, color: theme.counterPrimary }}>{LocalText.tap_to_retry}</Text>
