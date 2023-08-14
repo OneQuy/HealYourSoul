@@ -71,6 +71,14 @@ export enum Category {
   Quote = 2
 }
 
+// need reload reason
+
+export enum NeedReloadReason {
+  None,
+  NoInternet,
+  FailToGetContent
+}
+
 // texts
 
 export const LocalText = {
@@ -79,6 +87,10 @@ export const LocalText = {
   error: "Error",
   credit_to_author: 'Credit to the author.',
   error_toast: 'Something\'s wrong',
+  tap_to_retry: 'Tap to retry.',
+  no_internet: 'No internet!',
+  cant_get_content: 'Cant get the content!',
+
 
   // popup
 

@@ -1,5 +1,5 @@
 import { Alert } from "react-native";
-import { Category, FirebaseDBPath, FirebasePath, LocalPath, LocalText } from "../constants/AppConstants";
+import { Category, FirebaseDBPath, FirebasePath, LocalPath, LocalText, NeedReloadReason } from "../constants/AppConstants";
 import { ThemeColor } from "../constants/Colors";
 import { FileList, MediaType, PostMetadata } from "../constants/Types";
 import { FirebaseStorage_DownloadAndReadJsonAsync, FirebaseStorage_DownloadAsync } from "../firebase/FirebaseStorage";
@@ -67,36 +67,30 @@ export const GetDBVersionPath = (cat: Category) => {
         throw new Error('GetDBPath: ' + cat);
 }
 
-async function DownloadAndSaveFileListAsync(cat: Category): Promise<FileList> {
-    while (true) {
-        const isInternet = await IsInternetAvailableAsync();
+async function DownloadAndSaveFileListAsync(cat: Category): Promise<FileList | NeedReloadReason> {
+    const isInternet = await IsInternetAvailableAsync();
 
-        if (!isInternet) {
-            await AlertNeedInternetAsync();
-            continue;
-        }
-
-        const isPressRight = await AlertAsync('tiiii', 'mssgggg');
-        console.log(isPressRight);
-        continue;
-
-        const result = await FirebaseStorage_DownloadAndReadJsonAsync(GetListFileRLP(cat, false), GetListFileRLP(cat, true));
-
-        if (result.error) {
-            const err = 'DownloadAndSaveFileListAsync - ' + JSON.stringify(result.error);
-        
-            console.error(err);
-            Track('error', err);
-            AppLog.Log(err);
-    
-            continue;
-        }
-
-        return result.json as FileList;
+    if (!isInternet) {
+        AlertNoInternet();
+        return NeedReloadReason.NoInternet;
     }
+
+    const result = await FirebaseStorage_DownloadAndReadJsonAsync(GetListFileRLP(cat, false), GetListFileRLP(cat, true));
+
+    if (result.error) {
+        const err = 'DownloadAndSaveFileListAsync - ' + JSON.stringify(result.error);
+
+        console.error(err);
+        Track('error', err);
+        AppLog.Log(err);
+
+        return NeedReloadReason.FailToGetContent;
+    }
+
+    return result.json as FileList;
 }
 
-export async function CheckAndGetFileListAsync(cat: Category): Promise<FileList> {
+export async function CheckAndGetFileListAsync(cat: Category): Promise<FileList | NeedReloadReason> {
     const localRLP = GetListFileRLP(cat, true);
     const readLocalRes = await ReadTextAsync(localRLP, true);
     let localFileList: FileList | null = null;
@@ -199,21 +193,28 @@ export function ToastTheme(theme: ThemeColor, preset: ToastOptions['preset']) {
     }
 }
 
-export const AlertNeedInternetAsync = async () => new Promise((resolve) => {
+export const AlertNoInternet = () => {
     Alert.alert(
         LocalText.popup_title_need_internet,
         LocalText.popup_content_need_internet,
-        [
-            {
-                text: LocalText.retry,
-                onPress: resolve
-            }
-        ],
-        {
-            cancelable: false
-        }
-    )
-})
+    );
+}
+
+// export const AlertNeedInternetAsync = async () => new Promise((resolve) => {
+//     Alert.alert(
+//         LocalText.popup_title_need_internet,
+//         LocalText.popup_content_need_internet,
+//         [
+//             {
+//                 text: LocalText.retry,
+//                 onPress: resolve
+//             }
+//         ],
+//         {
+//             cancelable: false
+//         }
+//     )
+// })
 
 export const Track = (event: string, data?: string) => {
     // todo

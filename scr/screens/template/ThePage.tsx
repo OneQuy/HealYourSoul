@@ -9,7 +9,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import { View, Text, Image, TouchableOpacity, ActivityIndicator, Alert, PanResponder, LayoutChangeEvent, GestureResponderEvent, Animated, } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
-import { Category, FontSize, LocalText, Opacity, Outline, Size } from '../../constants/AppConstants';
+import { Category, FontSize, LocalText, NeedReloadReason, Opacity, Outline, Size } from '../../constants/AppConstants';
 import { ThemeContext } from '../../constants/Colors';
 import { heightPercentageToDP as hp, } from "react-native-responsive-screen";
 import { FileList, MediaType, PostMetadata } from '../../constants/Types';
@@ -25,7 +25,6 @@ import { ToastOptions, toast } from '@baronha/ting';
 import { useDrawerStatus } from '@react-navigation/drawer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const noPic = require('../../../assets/images/no-pic.png');
 const videoNumbSize = 10;
 const videoTouchEffectRadius = 100;
 const touchDistanceThreshold = 5;
@@ -38,14 +37,14 @@ type NeedLoadPostType = 'next' | 'previous' | 'none';
 
 const ThePage = ({ category }: ThePageProps) => {
     // general state
-    // console.log(ColorNameToRgb('green', 0.7));
 
-    const navigation = useNavigation();
     const dispatch = useAppDispatch();
+    const navigation = useNavigation();
     const drawerStatus = useDrawerStatus();
     const theme = useContext(ThemeContext);
     const [handling, setHandling] = useState(false);
     const [needLoadPost, setNeedLoadPost] = useState<NeedLoadPostType>('none');
+    const [reasonToReload, setReasonToReload] = useState<NeedReloadReason>(NeedReloadReason.None);
     const fileList = useRef<FileList | null>(null);
     const previousPostIDs = useRef<number[]>([]);
     const bigViewStartTouchNERef = useRef<GestureResponderEvent['nativeEvent'] | null>(null);
@@ -118,7 +117,7 @@ const ThePage = ({ category }: ThePageProps) => {
 
                     const seekToSeconds = percent * videoWholeDuration.current;
                     setVideoTimeRemain(videoWholeDuration.current - seekToSeconds)
-                }                    
+                }
             },
 
             onPanResponderRelease: (_, state) => {
@@ -386,6 +385,10 @@ const ThePage = ({ category }: ThePageProps) => {
     const onTouchStartBigView = useCallback((e: GestureResponderEvent) => {
         bigViewStartTouchNERef.current = e.nativeEvent;
     }, []);
+    
+    const onPressReload = useCallback(() => {
+        
+    }, []);
 
     const onTouchEndBigView = useCallback((e: GestureResponderEvent) => {
         if (!bigViewStartTouchNERef.current)
@@ -437,11 +440,18 @@ const ThePage = ({ category }: ThePageProps) => {
         async function Load() {
             if (fileList.current === null) {
                 setHandling(true);
-                fileList.current = await CheckAndGetFileListAsync(category);
+                const res = await CheckAndGetFileListAsync(category);
+
+                if (typeof res === 'object') {
+                    fileList.current = res;
+                    setNeedLoadPost('next');
+                }
+                else {
+                    setReasonToReload(res);
+                }
+
                 setHandling(false);
             }
-
-            setNeedLoadPost('next');
         }
 
         Load();
@@ -504,9 +514,23 @@ const ThePage = ({ category }: ThePageProps) => {
             {/* media view */}
             {
                 mediaURI === '' ?
+                // true ?
                     // no media
-                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
-                        <Image resizeMode='contain' style={{ width: '50%', height: '50%', }} source={noPic} />
+                    <View style={{ flex: 1 }} >
+                        {
+                            // true ?
+                            reasonToReload !== NeedReloadReason.None ?
+                                // need to reload
+                                <TouchableOpacity onPress={onPressReload} style={{ flex: 1, justifyContent: 'center', alignItems: 'center', gap: Outline.GapVertical }} >
+                                    <MaterialCommunityIcons name={'file-image-outline'} color={theme.primary} size={100} />
+                                    <Text style={{ fontSize: FontSize.Big, color: theme.counterPrimary }}>{reasonToReload === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
+                                    <Text style={{ fontSize: FontSize.Normal, color: theme.counterPrimary }}>{LocalText.tap_to_retry}</Text>
+                                </TouchableOpacity> :
+                                // loading
+                                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
+                                    <MaterialCommunityIcons name={'file-image-outline'} color={theme.primary} size={100} />
+                                </View>
+                        }
                     </View> :
                     // have media
                     <View style={{ flex: 1 }} >
