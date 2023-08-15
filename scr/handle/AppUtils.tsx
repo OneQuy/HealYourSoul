@@ -7,7 +7,7 @@ import { Cheat } from "./Cheat";
 import { DeleteFileAsync, DeleteTempDirAsync, GetFLPFromRLP, IsExistedAsync, ReadTextAsync } from "./FileUtils";
 import { versions } from "./VersionsHandler";
 import NetInfo from '@react-native-community/netinfo'
-import { ToastOptions } from "@baronha/ting";
+import { ToastOptions, toast } from "@baronha/ting";
 import { AlertAsync, ColorNameToHex } from "./UtilsTS";
 import { AppLog } from "./AppLog";
 
@@ -78,12 +78,7 @@ async function DownloadAndSaveFileListAsync(cat: Category): Promise<FileList | N
     const result = await FirebaseStorage_DownloadAndReadJsonAsync(GetListFileRLP(cat, false), GetListFileRLP(cat, true));
 
     if (result.error) {
-        const err = 'DownloadAndSaveFileListAsync - ' + JSON.stringify(result.error);
-
-        console.error(err);
-        Track('error', err);
-        AppLog.Log(err);
-
+        HandleError('DownloadFileList', result.error)
         return NeedReloadReason.FailToGetContent;
     }
 
@@ -150,7 +145,24 @@ const GetMediaFullPath = (localOrFb: boolean, cat: Category, postID: number, med
     }
 }
 
-export async function CheckLocalFileAndGetURIAsync(cat: Category, post: PostMetadata, mediaIdx: number): Promise<{ uri: string | null, error: any }> {
+export const HandleError = (methodName: string, error: any, themeForToast?: ThemeColor) => {
+    const err = methodName + ' - ' + JSON.stringify(error);
+
+    // console.error(err);
+    Track('error', err);
+    AppLog.Log(err);
+
+    if (!themeForToast)
+        Alert.alert(LocalText.error, LocalText.cant_get_content + '\n\nError: ' + err)
+    else {
+        toast({
+            title: LocalText.error_toast,
+            ...ToastTheme(themeForToast, 'error')
+        })
+    }
+}
+
+export async function CheckLocalFileAndGetURIAsync(cat: Category, post: PostMetadata, mediaIdx: number): Promise<string | NeedReloadReason> {
     const uri = GetMediaFullPath(true, cat, post.id, mediaIdx, post.media[mediaIdx]);
 
     if (await IsExistedAsync(uri, false)) {
@@ -158,23 +170,31 @@ export async function CheckLocalFileAndGetURIAsync(cat: Category, post: PostMeta
             console.log(Category[cat], 'loaded media from LOCAL', 'post: ' + post.id, 'media idx: ' + mediaIdx);
         }
 
-        return {
-            uri,
-            error: null
-        }
+        return uri;
     }
+
+    // const isInternet = await IsInternetAvailableAsync();
+
+    // if (!isInternet) {
+    //     AlertNoInternet();
+    //     return NeedReloadReason.NoInternet;
+    // }
+
     const fbPath = GetMediaFullPath(false, cat, post.id, mediaIdx, post.media[mediaIdx]);
 
-    const res = await FirebaseStorage_DownloadAsync(fbPath, uri, false);
+    const error = await FirebaseStorage_DownloadAsync(fbPath, uri, false);
 
     if (Cheat('IsLog_LoadMedia')) {
-        console.log(Category[cat], 'DOWNLOADED media', 'post: ' + post.id, 'media idx: ' + mediaIdx, 'success: ' + (res === null));
+        console.log(Category[cat], 'DOWNLOADED media', 'post: ' + post.id, 'media idx: ' + mediaIdx, 'success: ' + (error === null));
     }
 
-    return {
-        uri: res ? null : uri,
-        error: res
+    if (error) { // error
+        const e = `Cat: ${Category[cat]}, PostID: ${post.id}, Idx: ${mediaIdx}, ` + (error.code ?? JSON.stringify(error));
+        HandleError('DownloadMedia', e)
+        return NeedReloadReason.FailToGetContent;
     }
+
+    return uri;
 }
 
 export async function IsInternetAvailableAsync(): Promise<boolean> {
@@ -199,22 +219,6 @@ export const AlertNoInternet = () => {
         LocalText.popup_content_need_internet,
     );
 }
-
-// export const AlertNeedInternetAsync = async () => new Promise((resolve) => {
-//     Alert.alert(
-//         LocalText.popup_title_need_internet,
-//         LocalText.popup_content_need_internet,
-//         [
-//             {
-//                 text: LocalText.retry,
-//                 onPress: resolve
-//             }
-//         ],
-//         {
-//             cancelable: false
-//         }
-//     )
-// })
 
 export const Track = (event: string, data?: string) => {
     // todo

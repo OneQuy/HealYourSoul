@@ -44,7 +44,7 @@ const ThePage = ({ category }: ThePageProps) => {
     const theme = useContext(ThemeContext);
     const [handling, setHandling] = useState(false);
     const [needLoadPost, setNeedLoadPost] = useState<NeedLoadPostType>('none');
-    const [reasonToReload, setReasonToReload] = useState<NeedReloadReason>(NeedReloadReason.None);
+    const reasonToReload = useRef<NeedReloadReason>(NeedReloadReason.None);
     const fileList = useRef<FileList | null>(null);
     const previousPostIDs = useRef<number[]>([]);
     const bigViewStartTouchNERef = useRef<GestureResponderEvent['nativeEvent'] | null>(null);
@@ -164,13 +164,14 @@ const ThePage = ({ category }: ThePageProps) => {
 
     const loadNextMediaAsync = useCallback(async (isNext: boolean, forPost: PostMetadata, isNextPost: NeedLoadPostType) => {
         setHandling(true);
+        setMediaURI('');
 
         const nextIdx = isNextPost !== 'none' ? 0 : curMediaIdx.current + (isNext ? 1 : -1);
         const uriRes = await CheckLocalFileAndGetURIAsync(category, forPost, nextIdx);
 
-        if (uriRes.uri) { // success
+        if (typeof uriRes === 'string') { // success
             curMediaIdx.current = nextIdx;
-            setMediaURI(uriRes.uri);
+            setMediaURI(uriRes);
 
             if (isNextPost !== 'none') {
                 // add to previous list
@@ -190,7 +191,7 @@ const ThePage = ({ category }: ThePageProps) => {
                 post.current = forPost;
             }
         } else { // fail
-            Alert.alert('Failed to load media', `Post ID: ${forPost.id}, media index: ${nextIdx}\n\nError: ${uriRes.error}`);
+            reasonToReload.current = uriRes;
         }
 
         setHandling(false);
@@ -302,7 +303,6 @@ const ThePage = ({ category }: ThePageProps) => {
             return false;
 
         setHandling(true);
-        setReasonToReload(NeedReloadReason.None);
 
         const res = await CheckAndGetFileListAsync(category);
 
@@ -311,7 +311,7 @@ const ThePage = ({ category }: ThePageProps) => {
             setNeedLoadPost('next');
         }
         else {
-            setReasonToReload(res);
+            reasonToReload.current = res;
         }
 
         setHandling(false);
@@ -452,6 +452,8 @@ const ThePage = ({ category }: ThePageProps) => {
     }, [onPressPlayVideo]);
 
     const onPressReloadAsync = useCallback(async () => {
+        reasonToReload.current = NeedReloadReason.None;
+
         // check file list
 
         let needHandle = await checkAndLoadFileListAndStartShowPostAsync();
@@ -464,12 +466,18 @@ const ThePage = ({ category }: ThePageProps) => {
         needHandle = post.current === null;
 
         if (needHandle) {
-
+            await loadNextPostAsync(true);
             return;
         }
 
         // check media
         
+        needHandle = mediaURI === '';
+
+        if (needHandle && post.current !== null) {
+            await loadNextMediaAsync(true, post.current, 'none');
+            return;
+        }
     }, [checkAndLoadFileListAndStartShowPostAsync]);
 
     // init once 
@@ -540,11 +548,11 @@ const ThePage = ({ category }: ThePageProps) => {
                     <View style={{ flex: 1 }} >
                         {
                             // true ?
-                            reasonToReload !== NeedReloadReason.None ?
+                            reasonToReload.current !== NeedReloadReason.None ?
                                 // need to reload
                                 <TouchableOpacity onPress={onPressReloadAsync} style={{ flex: 1, justifyContent: 'center', alignItems: 'center', gap: Outline.GapVertical }} >
                                     <MaterialCommunityIcons name={'file-image-outline'} color={theme.primary} size={100} />
-                                    <Text style={{ fontSize: FontSize.Big, color: theme.counterPrimary }}>{reasonToReload === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
+                                    <Text style={{ fontSize: FontSize.Big, color: theme.counterPrimary }}>{reasonToReload.current === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
                                     <Text style={{ fontSize: FontSize.Normal, color: theme.counterPrimary }}>{LocalText.tap_to_retry}</Text>
                                 </TouchableOpacity> :
                                 // loading

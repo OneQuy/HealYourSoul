@@ -1,6 +1,6 @@
 import { toast } from "@baronha/ting";
 import { FirebaseDatabase_GetValueAsync } from "../firebase/FirebaseDatabase";
-import { IsInternetAvailableAsync, ToastTheme, Track } from "./AppUtils";
+import { HandleError, IsInternetAvailableAsync, ToastTheme, Track } from "./AppUtils";
 import { Cheat } from "./Cheat";
 import { LocalText } from "../constants/AppConstants";
 import { ThemeColor } from "../constants/Colors";
@@ -35,16 +35,7 @@ export async function HandleVersionsFileAsync(theme: ThemeColor) {
     // fail
 
     if (result.error) {
-        const err = 'HandleVersionsFileAsync - ' + JSON.stringify(result.error);
-        
-        console.error(err);
-        Track('error', err);
-        AppLog.Log(err);
-
-        toast({
-            title: LocalText.error_toast,
-            ...ToastTheme(theme, 'error')
-        })
+        HandleError('HandleVersions', result.error, theme)
         return;
     }
 
