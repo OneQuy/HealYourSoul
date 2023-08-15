@@ -297,7 +297,7 @@ const ThePage = ({ category }: ThePageProps) => {
             setVideoIsPlaying(false);
     }, [videoIsPlaying]);
 
-    const checkAndLoadFileListAsync = useCallback(async () => {
+    const checkAndLoadFileListAndStartShowPostAsync = useCallback(async () => {
         if (fileList.current !== null)
             return false;
 
@@ -452,11 +452,25 @@ const ThePage = ({ category }: ThePageProps) => {
     }, [onPressPlayVideo]);
 
     const onPressReloadAsync = useCallback(async () => {
-        let needHandle = await checkAndLoadFileListAsync();
+        // check file list
 
-        console.log(needHandle);
+        let needHandle = await checkAndLoadFileListAndStartShowPostAsync();
+
+        if (needHandle)
+            return;
+
+        // check post
+
+        needHandle = post.current === null;
+
+        if (needHandle) {
+
+            return;
+        }
+
+        // check media
         
-    }, [checkAndLoadFileListAsync]);
+    }, [checkAndLoadFileListAndStartShowPostAsync]);
 
     // init once 
 
