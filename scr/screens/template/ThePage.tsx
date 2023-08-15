@@ -165,13 +165,14 @@ const ThePage = ({ category }: ThePageProps) => {
     const loadNextMediaAsync = useCallback(async (isNext: boolean, forPost: PostMetadata, isNextPost: NeedLoadPostType) => {
         setHandling(true);
         setMediaURI('');
+        reasonToReload.current = NeedReloadReason.None;
 
         const nextIdx = isNextPost !== 'none' ? 0 : curMediaIdx.current + (isNext ? 1 : -1);
-        const uriRes = await CheckLocalFileAndGetURIAsync(category, forPost, nextIdx);
+        const uriOrReasonToReload = await CheckLocalFileAndGetURIAsync(category, forPost, nextIdx);
 
-        if (typeof uriRes === 'string') { // success
+        if (typeof uriOrReasonToReload === 'string') { // success
             curMediaIdx.current = nextIdx;
-            setMediaURI(uriRes);
+            setMediaURI(uriOrReasonToReload);
 
             if (isNextPost !== 'none') {
                 // add to previous list
@@ -191,13 +192,14 @@ const ThePage = ({ category }: ThePageProps) => {
                 post.current = forPost;
             }
         } else { // fail
-            reasonToReload.current = uriRes;
+            reasonToReload.current = uriOrReasonToReload;
         }
 
         setHandling(false);
     }, []);
 
     const loadNextPostAsync = useCallback(async (isNext: boolean) => {
+        reasonToReload.current = NeedReloadReason.None;
         let foundPost: PostMetadata | undefined;
 
         if (isNext) {

@@ -255,3 +255,15 @@ export const AlertAsync = async (
         }
     );
 })
+
+export const ToCanPrint = (something: any) => {
+    if (typeof something === 'object') {
+        const res = JSON.stringify(something);
+
+        if (res === '{}') {
+            return '' + something;
+        }
+    }
+
+    return something;
+}

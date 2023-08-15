@@ -13,6 +13,9 @@ function CheckAndInit() {
         storage = getStorage();
 }
 
+export const TimeOutError = '[time_out]';
+export const DefaultTimeOut = 5000;
+
 // Usage:  
 // FirebaseStorage_GetDownloadURL('data/warm/content/0/33.mp4', (url)=>{ console.log(url); }, (error)=>{ console.error(error); }); 
 export function FirebaseStorage_GetDownloadURL(relativePath, urlCallback, errorCallback) {
@@ -36,20 +39,32 @@ export function FirebaseStorage_GetDownloadURL(relativePath, urlCallback, errorC
 /**
 return { url, error };
 */
-export async function FirebaseStorage_GetDownloadURLAsync(relativePath) {
+export async function FirebaseStorage_GetDownloadURLAsync(relativePath, timeOut = DefaultTimeOut) {
     try {
         CheckAndInit();
         let starsRef = ref(storage, relativePath);
-        let url = await getDownloadURL(starsRef);
-        return {
-            url: url,
-            error: null
-        };
+        let url;
+
+        if (timeOut > 0) {
+            const timeOutPromise = new Promise((resolve) => setTimeout(resolve, timeOut, TimeOutError))
+            url = await Promise.any([getDownloadURL(starsRef), timeOutPromise]);
+        }
+        else
+            url = await getDownloadURL(starsRef);
+
+        if (url === TimeOutError)
+            throw TimeOutError
+        else {
+            return {
+                url,
+                error: null,
+            };
+        }
     }
     catch (error) {
         return {
             url: null,
-            error: error
+            error
         };;
     }
 }
@@ -73,11 +88,11 @@ export async function FirebaseStorage_DeleteAsync(relativePath) {
  * @returns null if success, otherwise error
  * @MAYBE error could be unknown type OR look like this: {\"code\":\"storage/retry-limit-exceeded\",\"customData\":{\"serverResponse\":null},\"name\":\"FirebaseError\",\"status_\":0,\"_baseMessage\":\"Firebase Storage: Max retry time for operation exceeded, please try again. (storage/retry-limit-exceeded)\"}"
  */
-export async function FirebaseStorage_DownloadAsync(relativeFirebasePath, savePath, isRLP) {
+export async function FirebaseStorage_DownloadAsync(relativeFirebasePath, savePath, isRLP, timeOut = DefaultTimeOut) {
     try {
         // get url
 
-        let urlResult = await FirebaseStorage_GetDownloadURLAsync(relativeFirebasePath);
+        let urlResult = await FirebaseStorage_GetDownloadURLAsync(relativeFirebasePath, timeOut);
 
         if (urlResult.error) {
             return urlResult.error;
@@ -153,10 +168,10 @@ export async function FirebaseStorage_UploadTextAsFileAsync(relativeFirebasePath
     return res;
 }
 
-export async function FirebaseStorage_DownloadAndReadJsonAsync(firebaseRelativePath, saveLocalRelativePath) {
+export async function FirebaseStorage_DownloadAndReadJsonAsync(firebaseRelativePath, saveLocalRelativePath, timeOut = DefaultTimeOut) {
     // get full URL
 
-    var result = await FirebaseStorage_GetDownloadURLAsync(firebaseRelativePath);
+    var result = await FirebaseStorage_GetDownloadURLAsync(firebaseRelativePath, timeOut);
 
     if (!result.url) {
         return {

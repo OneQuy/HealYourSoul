@@ -8,7 +8,7 @@ import { DeleteFileAsync, DeleteTempDirAsync, GetFLPFromRLP, IsExistedAsync, Rea
 import { versions } from "./VersionsHandler";
 import NetInfo from '@react-native-community/netinfo'
 import { ToastOptions, toast } from "@baronha/ting";
-import { AlertAsync, ColorNameToHex } from "./UtilsTS";
+import { AlertAsync, ColorNameToHex, ToCanPrint } from "./UtilsTS";
 import { AppLog } from "./AppLog";
 
 /**
@@ -146,9 +146,8 @@ const GetMediaFullPath = (localOrFb: boolean, cat: Category, postID: number, med
 }
 
 export const HandleError = (methodName: string, error: any, themeForToast?: ThemeColor) => {
-    const err = methodName + ' - ' + JSON.stringify(error);
+    const err = methodName + ' - ' + error;
 
-    // console.error(err);
     Track('error', err);
     AppLog.Log(err);
 
@@ -173,23 +172,23 @@ export async function CheckLocalFileAndGetURIAsync(cat: Category, post: PostMeta
         return uri;
     }
 
-    // const isInternet = await IsInternetAvailableAsync();
+    const isInternet = await IsInternetAvailableAsync();
 
-    // if (!isInternet) {
-    //     AlertNoInternet();
-    //     return NeedReloadReason.NoInternet;
-    // }
+    if (!isInternet) {
+        AlertNoInternet();
+        return NeedReloadReason.NoInternet;
+    }
 
     const fbPath = GetMediaFullPath(false, cat, post.id, mediaIdx, post.media[mediaIdx]);
 
     const error = await FirebaseStorage_DownloadAsync(fbPath, uri, false);
 
     if (Cheat('IsLog_LoadMedia')) {
-        console.log(Category[cat], 'DOWNLOADED media', 'post: ' + post.id, 'media idx: ' + mediaIdx, 'success: ' + (error === null));
+        console.log(Category[cat], 'Tried DOWNLOADED media', 'post: ' + post.id, 'media idx: ' + mediaIdx, 'success: ' + (error === null));
     }
-
+    
     if (error) { // error
-        const e = `Cat: ${Category[cat]}, PostID: ${post.id}, Idx: ${mediaIdx}, ` + (error.code ?? JSON.stringify(error));
+        const e = `Cat: ${Category[cat]}, PostID: ${post.id}, Idx: ${mediaIdx}, ` + (error.code ?? ToCanPrint(error));
         HandleError('DownloadMedia', e)
         return NeedReloadReason.FailToGetContent;
     }
