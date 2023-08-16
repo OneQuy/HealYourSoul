@@ -153,7 +153,7 @@ const ThePage = ({ category }: ThePageProps) => {
     const showNextMediaButton: boolean = post.current !== null && curMediaIdx.current < post.current.media.length - 1;
     const showPreviousMediaButton: boolean = post.current !== null && curMediaIdx.current > 0;
     const currentMediaIsImage: boolean = post.current !== null && post.current.media[curMediaIdx.current] === MediaType.Image;
-    const activePreviousPostButton: boolean = previousPostIDs.current.length > 0 && post.current !== null && previousPostIDs.current.indexOf(post.current.id) > 0;
+    const activePreviousPostButton: boolean = previousPostIDs.current.length > 0 && post.current !== null && previousPostIDs.current.indexOf(post.current.id) !== 0;
     const hasCredit: boolean = post.current !== null && post.current.author != null && post.current.author.length > 0;
 
     const isFavorited: boolean = useMemo(() => {
