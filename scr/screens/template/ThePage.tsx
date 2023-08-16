@@ -144,7 +144,7 @@ const ThePage = ({ category }: ThePageProps) => {
 
     // a post state
 
-    const [mediaURI, setMediaURI] = useState('');
+    const mediaURI = useRef('');
     const post = useRef<PostMetadata | null>(null);
     const curMediaIdx = useRef<number>(0);
 
@@ -164,15 +164,24 @@ const ThePage = ({ category }: ThePageProps) => {
 
     const loadNextMediaAsync = useCallback(async (isNext: boolean, forPost: PostMetadata, isNextPost: NeedLoadPostType) => {
         setHandling(true);
-        setMediaURI('');
+
         reasonToReload.current = NeedReloadReason.None;
 
-        const nextIdx = isNextPost !== 'none' ? 0 : curMediaIdx.current + (isNext ? 1 : -1);
-        const uriOrReasonToReload = await CheckLocalFileAndGetURIAsync(category, forPost, nextIdx);
+        let mediaIdxToLoad: number;
+
+        if (mediaURI.current !== '')
+            mediaIdxToLoad = isNextPost !== 'none' ? 0 : curMediaIdx.current + (isNext ? 1 : -1);
+        else
+            mediaIdxToLoad = curMediaIdx.current;
+
+        // nextIdx = Math.max(0, Math.min(forPost.media.length - 1, nextIdx))
+
+        mediaURI.current = ''
+        const uriOrReasonToReload = await CheckLocalFileAndGetURIAsync(category, forPost, mediaIdxToLoad);
 
         if (typeof uriOrReasonToReload === 'string') { // success
-            curMediaIdx.current = nextIdx;
-            setMediaURI(uriOrReasonToReload);
+            curMediaIdx.current = mediaIdxToLoad;
+            mediaURI.current = uriOrReasonToReload;
 
             if (isNextPost !== 'none') {
                 // add to previous list
@@ -186,10 +195,6 @@ const ThePage = ({ category }: ThePageProps) => {
 
                     previousPostIDs.current.push(forPost.id);
                 }
-
-                // set new post
-
-                post.current = forPost;
             }
         } else { // fail
             reasonToReload.current = uriOrReasonToReload;
@@ -226,6 +231,7 @@ const ThePage = ({ category }: ThePageProps) => {
         if (!foundPost)
             throw new Error('cant find post');
 
+        post.current = foundPost;
         await loadNextMediaAsync(true, foundPost, isNext ? 'next' : 'previous');
     }, [seenIDs, loadNextMediaAsync]);
 
@@ -473,8 +479,8 @@ const ThePage = ({ category }: ThePageProps) => {
         }
 
         // check media
-        
-        needHandle = mediaURI === '';
+
+        needHandle = mediaURI.current === '';
 
         if (needHandle && post.current !== null) {
             await loadNextMediaAsync(true, post.current, 'none');
@@ -544,7 +550,7 @@ const ThePage = ({ category }: ThePageProps) => {
 
             {/* media view */}
             {
-                mediaURI === '' ?
+                mediaURI.current === '' ?
                     // true ?
                     // no media
                     <View style={{ flex: 1 }} >
@@ -567,14 +573,14 @@ const ThePage = ({ category }: ThePageProps) => {
                     <View style={{ flex: 1 }} >
                         {
                             currentMediaIsImage ?
-                                <Image resizeMode='contain' style={{ width: '100%', height: '100%', }} source={{ uri: mediaURI }} />
+                                <Image resizeMode='contain' style={{ width: '100%', height: '100%', }} source={{ uri: mediaURI.current }} />
                                 :
                                 <View style={{ width: '100%', height: '100%' }} >
                                     <Video
                                         ref={videoRef}
                                         onError={(e: any) => onPlayVideoError(e)}
                                         onLoad={onVideoLoaded}
-                                        source={{ uri: mediaURI }} resizeMode={'contain'}
+                                        source={{ uri: mediaURI.current }} resizeMode={'contain'}
                                         muted={isMutedVideo}
                                         paused={!videoIsPlaying}
                                         onProgress={onVideoProcess}

@@ -13,7 +13,7 @@ function CheckAndInit() {
         storage = getStorage();
 }
 
-export const DefaultTimeOut = 5000;
+const DefaultGetDownloadURLTimeOut = 10000;
 
 // Usage:  
 // FirebaseStorage_GetDownloadURL('data/warm/content/0/33.mp4', (url)=>{ console.log(url); }, (error)=>{ console.error(error); }); 
@@ -38,14 +38,14 @@ export function FirebaseStorage_GetDownloadURL(relativePath, urlCallback, errorC
 /**
 return { url, error };
 */
-export async function FirebaseStorage_GetDownloadURLAsync(relativePath, timeOut = DefaultTimeOut) {
+export async function FirebaseStorage_GetDownloadURLAsync(relativePath, getDownloadURLTimeOut = DefaultGetDownloadURLTimeOut) {
     try {
         CheckAndInit();
         let starsRef = ref(storage, relativePath);
         let url;
 
-        if (timeOut > 0) {
-            const timeOutPromise = new Promise((resolve) => setTimeout(resolve, timeOut, TimeOutError))
+        if (getDownloadURLTimeOut > 0) {
+            const timeOutPromise = new Promise((resolve) => setTimeout(resolve, getDownloadURLTimeOut, TimeOutError))
             url = await Promise.any([getDownloadURL(starsRef), timeOutPromise]);
         }
         else
@@ -87,11 +87,11 @@ export async function FirebaseStorage_DeleteAsync(relativePath) {
  * @returns null if success, otherwise error
  * @MAYBE error could be unknown type OR look like this: {\"code\":\"storage/retry-limit-exceeded\",\"customData\":{\"serverResponse\":null},\"name\":\"FirebaseError\",\"status_\":0,\"_baseMessage\":\"Firebase Storage: Max retry time for operation exceeded, please try again. (storage/retry-limit-exceeded)\"}"
  */
-export async function FirebaseStorage_DownloadAsync(relativeFirebasePath, savePath, isRLP, timeOut = DefaultTimeOut) {
+export async function FirebaseStorage_DownloadAsync(relativeFirebasePath, savePath, isRLP, getDownloadURLTimeOut = DefaultGetDownloadURLTimeOut) {
     try {
         // get url
 
-        let urlResult = await FirebaseStorage_GetDownloadURLAsync(relativeFirebasePath, timeOut);
+        let urlResult = await FirebaseStorage_GetDownloadURLAsync(relativeFirebasePath, getDownloadURLTimeOut);
 
         if (urlResult.error) {
             return urlResult.error;
@@ -167,10 +167,10 @@ export async function FirebaseStorage_UploadTextAsFileAsync(relativeFirebasePath
     return res;
 }
 
-export async function FirebaseStorage_DownloadAndReadJsonAsync(firebaseRelativePath, saveLocalRelativePath, timeOut = DefaultTimeOut) {
+export async function FirebaseStorage_DownloadAndReadJsonAsync(firebaseRelativePath, saveLocalRelativePath, getDownloadURLTimeOut = DefaultGetDownloadURLTimeOut) {
     // get full URL
 
-    var result = await FirebaseStorage_GetDownloadURLAsync(firebaseRelativePath, timeOut);
+    var result = await FirebaseStorage_GetDownloadURLAsync(firebaseRelativePath, getDownloadURLTimeOut);
 
     if (!result.url) {
         return {

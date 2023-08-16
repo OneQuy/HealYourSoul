@@ -273,9 +273,12 @@ export const ToCanPrint = (something: any) => {
 }
 
 export async function IsInternetAvailableAsync(): Promise<boolean> {
-    const timeoutPM = new Promise(resolve => setTimeout(resolve, 1000, TimeOutError));
-    const res = await Promise.any([fetch('https://www.timeanddate.com/'), timeoutPM]);
-    // console.log(res);
+    const res = await Promise.any([
+        fetch('https://www.timeanddate.com/'),
+        new Promise(resolve => setTimeout(resolve, 1000, TimeOutError))
+    ]);
+    
+    // console.log('is time out', res === TimeOutError);
     
     if (res === TimeOutError) {
         return false;
