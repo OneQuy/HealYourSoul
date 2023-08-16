@@ -2,9 +2,9 @@
 
 import { getStorage, ref, getDownloadURL, uploadBytes, deleteObject } from "firebase/storage";
 import { ErrorObject_Empty } from "../constants/CommonConstants";
-import { ErrorObject_FileNotFound, ErrorObject_NoIdentity, GetTempFileRLP, IsErrorObject_Empty } from "../handle/Utils";
+import { ErrorObject_FileNotFound, ErrorObject_NoIdentity, GetTempFileRLP } from "../handle/Utils";
 import { DeleteFileAsync, DownloadFileAsync, DownloadFile_GetJsonAsync, GetFLPFromRLP, IsExistedAsync, WriteTextAsync } from "../handle/FileUtils";
-import { GetBlobFromFLPAsync } from "../handle/UtilsTS";
+import { GetBlobFromFLPAsync, TimeOutError } from "../handle/UtilsTS";
 
 var storage = null;
 
@@ -13,7 +13,6 @@ function CheckAndInit() {
         storage = getStorage();
 }
 
-export const TimeOutError = '[time_out]';
 export const DefaultTimeOut = 5000;
 
 // Usage:  

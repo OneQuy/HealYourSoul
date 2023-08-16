@@ -1,10 +1,11 @@
 import { toast } from "@baronha/ting";
 import { FirebaseDatabase_GetValueAsync } from "../firebase/FirebaseDatabase";
-import { HandleError, IsInternetAvailableAsync, ToastTheme, Track } from "./AppUtils";
+import { HandleError, ToastTheme, Track } from "./AppUtils";
 import { Cheat } from "./Cheat";
 import { LocalText } from "../constants/AppConstants";
 import { ThemeColor } from "../constants/Colors";
 import { AppLog } from "./AppLog";
+import { IsInternetAvailableAsync } from "./UtilsTS";
 
 const FirebaseDBAppVersionsPath = 'app/versions';
 

@@ -6,9 +6,8 @@ import { FirebaseStorage_DownloadAndReadJsonAsync, FirebaseStorage_DownloadAsync
 import { Cheat } from "./Cheat";
 import { DeleteFileAsync, DeleteTempDirAsync, GetFLPFromRLP, IsExistedAsync, ReadTextAsync } from "./FileUtils";
 import { versions } from "./VersionsHandler";
-import NetInfo from '@react-native-community/netinfo'
 import { ToastOptions, toast } from "@baronha/ting";
-import { AlertAsync, ColorNameToHex, ToCanPrint } from "./UtilsTS";
+import { ColorNameToHex, IsInternetAvailableAsync, ToCanPrint } from "./UtilsTS";
 import { AppLog } from "./AppLog";
 
 /**
@@ -196,12 +195,12 @@ export async function CheckLocalFileAndGetURIAsync(cat: Category, post: PostMeta
     return uri;
 }
 
-export async function IsInternetAvailableAsync(): Promise<boolean> {
-    const state = await NetInfo.fetch();
-    // console.log(state);
+// export async function IsInternetAvailableAsync(): Promise<boolean> {
+//     const state = await NetInfo.fetch();
+//     console.log(state);
 
-    return state.isConnected === true && state.isInternetReachable === true;
-}
+//     return state.isConnected === true && state.isInternetReachable === true;
+// }
 
 export function ToastTheme(theme: ThemeColor, preset: ToastOptions['preset']) {
     return {

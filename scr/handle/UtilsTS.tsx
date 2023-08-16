@@ -149,7 +149,9 @@ const colorNameToHexDefines = {
 
 export type ColorName = keyof typeof colorNameToHexDefines;
 
-export function ColorNameToHex(name: ColorName): string {    
+export const TimeOutError = '[time_out]';
+
+export function ColorNameToHex(name: ColorName): string {
     return colorNameToHexDefines[name];
 }
 
@@ -227,11 +229,11 @@ export function GetBlobFromFLPAsync(flp: string): Promise<Blob> {
  */
 export const AlertAsync = async (
     title: string,
-    msg?: string,    
+    msg?: string,
     rightText?: string,
     leftText?: string,
 ) => new Promise((resolve) => {
-    const rightBtn: AlertButton =  {
+    const rightBtn: AlertButton = {
         text: rightText ?? 'OK',
         onPress: () => resolve(true)
     }
@@ -239,17 +241,17 @@ export const AlertAsync = async (
     Alert.alert(
         title,
         msg,
-        leftText ? 
-        [ // case 2 btns
-            {
-                text: leftText,
-                onPress: () => resolve(false)
-            },
-           rightBtn
-        ] :
-        [ // case 1 btn
-            rightBtn
-        ],
+        leftText ?
+            [ // case 2 btns
+                {
+                    text: leftText,
+                    onPress: () => resolve(false)
+                },
+                rightBtn
+            ] :
+            [ // case 1 btn
+                rightBtn
+            ],
         {
             cancelable: false,
         }
@@ -263,7 +265,23 @@ export const ToCanPrint = (something: any) => {
         if (res === '{}') {
             return '' + something;
         }
+        else
+            return res;
     }
 
     return something;
+}
+
+export async function IsInternetAvailableAsync(): Promise<boolean> {
+    const timeoutPM = new Promise(resolve => setTimeout(resolve, 1000, TimeOutError));
+    const res = await Promise.any([fetch('https://www.timeanddate.com/'), timeoutPM]);
+    // console.log(res);
+    
+    if (res === TimeOutError) {
+        return false;
+    }
+    else {
+        const respone = res as Response;
+        return respone && respone.status >= 200 && respone.status < 300;
+    }
 }
