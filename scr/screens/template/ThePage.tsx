@@ -353,38 +353,12 @@ const ThePage = ({ category }: ThePageProps) => {
             throw new Error('NI cat: ' + category);
     }, [isFavorited]);
 
-    const onPressNextPost = useCallback(async (isNext: boolean) => {
-        if (!post.current)
-            return;
-
-        if (category === Category.Real)
-            dispatch(addRealSeenID(post.current.id));
-        else if (category === Category.Draw)
-            dispatch(addDrawSeenID(post.current.id));
-        else if (category === Category.Quote)
-            dispatch(addQuoteSeenID(post.current.id));
-        else
-            throw new Error('NI cat: ' + category);
-
-        setNeedLoadPost(isNext ? 'next' : 'previous');
-    }, []);
-
     const onPressNextMedia = useCallback(async (isNext: boolean) => {
         if (!post.current)
             return;
 
         loadNextMediaAsync(isNext, post.current, 'none');
     }, [loadNextMediaAsync]);
-
-    const onPlayVideoError = useCallback((error: any) => {
-        Alert.alert('Video load failed', 'Can not play this video (Post ID: ' + post.current?.id + '). Let\'s go to the next post!\n\nError: ' + JSON.stringify(error),
-            [
-                {
-                    text: 'OK',
-                    onPress: () => onPressNextPost(true)
-                }
-            ]);
-    }, [onPressNextPost]);
 
     const onPressCopy = useCallback((s: string | undefined) => {
         if (!s)
@@ -487,6 +461,38 @@ const ThePage = ({ category }: ThePageProps) => {
             return;
         }
     }, [checkAndLoadFileListAndStartShowPostAsync]);
+
+    const onPressNextPost = useCallback(async (isNext: boolean) => {
+        if (!fileList.current) {
+            onPressReloadAsync();
+            return;
+        }
+        
+        if (!post.current) {
+            return;
+        }
+
+        if (category === Category.Real)
+            dispatch(addRealSeenID(post.current.id));
+        else if (category === Category.Draw)
+            dispatch(addDrawSeenID(post.current.id));
+        else if (category === Category.Quote)
+            dispatch(addQuoteSeenID(post.current.id));
+        else
+            throw new Error('NI cat: ' + category);
+        
+        setNeedLoadPost(isNext ? 'next' : 'previous');
+    }, [onPressReloadAsync]);
+
+    const onPlayVideoError = useCallback((error: any) => {
+        Alert.alert('Video load failed', 'Can not play this video (Post ID: ' + post.current?.id + '). Let\'s go to the next post!\n\nError: ' + JSON.stringify(error),
+            [
+                {
+                    text: 'OK',
+                    onPress: () => onPressNextPost(true)
+                }
+            ]);
+    }, [onPressNextPost]);
 
     // init once 
 
