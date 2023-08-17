@@ -167,20 +167,17 @@ const ThePage = ({ category }: ThePageProps) => {
 
         reasonToReload.current = NeedReloadReason.None;
 
-        let mediaIdxToLoad: number;
-
-        if (mediaURI.current !== '')
-            mediaIdxToLoad = isNextPost !== 'none' ? 0 : curMediaIdx.current + (isNext ? 1 : -1);
-        else
-            mediaIdxToLoad = curMediaIdx.current;
-
-        // nextIdx = Math.max(0, Math.min(forPost.media.length - 1, nextIdx))
+        if (isNextPost === 'none') { // just change media
+            if (mediaURI.current !== '')
+                curMediaIdx.current = curMediaIdx.current + (isNext ? 1 : -1);
+        }
+        else // change post too
+            curMediaIdx.current = 0;
 
         mediaURI.current = ''
-        const uriOrReasonToReload = await CheckLocalFileAndGetURIAsync(category, forPost, mediaIdxToLoad);
+        const uriOrReasonToReload = await CheckLocalFileAndGetURIAsync(category, forPost, curMediaIdx.current);
 
         if (typeof uriOrReasonToReload === 'string') { // success
-            curMediaIdx.current = mediaIdxToLoad;
             mediaURI.current = uriOrReasonToReload;
 
             if (isNextPost !== 'none') {
@@ -216,16 +213,13 @@ const ThePage = ({ category }: ThePageProps) => {
             }
         }
         else { // previous
-            if (!post.current)
-                return;
-
-            const curPostIdx = previousPostIDs.current.indexOf(post.current.id);
+            const curPostIdx = post.current ? previousPostIDs.current.indexOf(post.current.id) : -1;
 
             if (curPostIdx > 0) {
                 foundPost = fileList.current?.posts.find(p => p.id === previousPostIDs.current[curPostIdx - 1]);
             }
             else
-                return;
+                foundPost = fileList.current?.posts.find(p => p.id === previousPostIDs.current[previousPostIDs.current.length - 1]);
         }
 
         if (!foundPost)
@@ -467,20 +461,18 @@ const ThePage = ({ category }: ThePageProps) => {
             onPressReloadAsync();
             return;
         }
-        
-        if (!post.current) {
-            return;
+
+        if (post.current) {
+            if (category === Category.Real)
+                dispatch(addRealSeenID(post.current.id));
+            else if (category === Category.Draw)
+                dispatch(addDrawSeenID(post.current.id));
+            else if (category === Category.Quote)
+                dispatch(addQuoteSeenID(post.current.id));
+            else
+                throw new Error('NI cat: ' + category);
         }
 
-        if (category === Category.Real)
-            dispatch(addRealSeenID(post.current.id));
-        else if (category === Category.Draw)
-            dispatch(addDrawSeenID(post.current.id));
-        else if (category === Category.Quote)
-            dispatch(addQuoteSeenID(post.current.id));
-        else
-            throw new Error('NI cat: ' + category);
-        
         setNeedLoadPost(isNext ? 'next' : 'previous');
     }, [onPressReloadAsync]);
 
