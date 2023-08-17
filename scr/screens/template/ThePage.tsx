@@ -24,6 +24,7 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import { ToastOptions, toast } from '@baronha/ting';
 import { useDrawerStatus } from '@react-navigation/drawer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { DownloadProgressCallbackResult } from 'react-native-fs';
 
 const videoNumbSize = 10;
 const videoTouchEffectRadius = 100;
@@ -44,6 +45,7 @@ const ThePage = ({ category }: ThePageProps) => {
     const theme = useContext(ThemeContext);
     const [handling, setHandling] = useState(false);
     const [needLoadPost, setNeedLoadPost] = useState<NeedLoadPostType>('none');
+    const [downloadPercent, setDownloadPercent] = useState(0);
     const reasonToReload = useRef<NeedReloadReason>(NeedReloadReason.None);
     const fileList = useRef<FileList | null>(null);
     const previousPostIDs = useRef<number[]>([]);
@@ -164,6 +166,7 @@ const ThePage = ({ category }: ThePageProps) => {
 
     const loadNextMediaAsync = useCallback(async (isNext: boolean, forPost: PostMetadata, isNextPost: NeedLoadPostType) => {
         setHandling(true);
+        setDownloadPercent(0);
 
         reasonToReload.current = NeedReloadReason.None;
 
@@ -175,7 +178,11 @@ const ThePage = ({ category }: ThePageProps) => {
             curMediaIdx.current = 0;
 
         mediaURI.current = ''
-        const uriOrReasonToReload = await CheckLocalFileAndGetURIAsync(category, forPost, curMediaIdx.current);
+
+        const uriOrReasonToReload = await CheckLocalFileAndGetURIAsync(category, forPost, curMediaIdx.current, (process: DownloadProgressCallbackResult) => {
+            const percent = RoundNumber(process.bytesWritten / process.contentLength * 100, 0);
+            setDownloadPercent(percent);
+        });
 
         if (typeof uriOrReasonToReload === 'string') { // success
             mediaURI.current = uriOrReasonToReload;
@@ -562,8 +569,9 @@ const ThePage = ({ category }: ThePageProps) => {
                                     <Text style={{ fontSize: FontSize.Normal, color: theme.counterPrimary }}>{LocalText.tap_to_retry}</Text>
                                 </TouchableOpacity> :
                                 // loading
-                                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
+                                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', gap: Outline.GapVertical }} >
                                     <MaterialCommunityIcons name={'file-image-outline'} color={theme.primary} size={100} />
+                                    <Text style={{ fontSize: FontSize.Big }}>{downloadPercent}%</Text>
                                 </View>
                         }
                     </View> :

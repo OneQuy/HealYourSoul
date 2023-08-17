@@ -145,7 +145,7 @@ export async function DownloadFileAsync(
   url: string,
   saveLocalPath: string,
   isRLP: boolean = true,
-  process?: (p: DownloadProgressCallbackResult) => void): Promise<null | NonNullable<any>> {
+  progress?: (p: DownloadProgressCallbackResult) => void): Promise<null | NonNullable<any>> {
   try {
     if (!url || !saveLocalPath) {
       throw 'url or saveLocalPath is invalid to download';
@@ -161,11 +161,12 @@ export async function DownloadFileAsync(
       throw 'can not download file, error when CheckAndMkDirOfFilepathAsync: ' + res;
 
     // download
-
+    
     res = await RNFS.downloadFile({
       fromUrl: url,
       toFile: saveLocalPath,
-      progress: process
+      begin: () => {},
+      progress
     }).promise;
 
     if (res.statusCode !== 200) {

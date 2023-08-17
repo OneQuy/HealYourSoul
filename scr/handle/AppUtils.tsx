@@ -9,6 +9,7 @@ import { versions } from "./VersionsHandler";
 import { ToastOptions, toast } from "@baronha/ting";
 import { ColorNameToHex, IsInternetAvailableAsync, ToCanPrint } from "./UtilsTS";
 import { AppLog } from "./AppLog";
+import RNFS, { DownloadProgressCallbackResult } from "react-native-fs";
 
 /**
  * cheat clear whole folder data
@@ -144,6 +145,9 @@ const GetMediaFullPath = (localOrFb: boolean, cat: Category, postID: number, med
     }
 }
 
+const GetOfflinePostIDs = async () => {
+}
+
 export const HandleError = (methodName: string, error: any, themeForToast?: ThemeColor) => {
     const err = methodName + ' - ' + error;
 
@@ -160,7 +164,7 @@ export const HandleError = (methodName: string, error: any, themeForToast?: Them
     }
 }
 
-export async function CheckLocalFileAndGetURIAsync(cat: Category, post: PostMetadata, mediaIdx: number): Promise<string | NeedReloadReason> {
+export async function CheckLocalFileAndGetURIAsync(cat: Category, post: PostMetadata, mediaIdx: number, progress: (p: DownloadProgressCallbackResult) => void): Promise<string | NeedReloadReason> {
     const uri = GetMediaFullPath(true, cat, post.id, mediaIdx, post.media[mediaIdx]);
 
     if (await IsExistedAsync(uri, false)) {
@@ -180,7 +184,7 @@ export async function CheckLocalFileAndGetURIAsync(cat: Category, post: PostMeta
 
     const fbPath = GetMediaFullPath(false, cat, post.id, mediaIdx, post.media[mediaIdx]);
 
-    const error = await FirebaseStorage_DownloadAsync(fbPath, uri, false);
+    const error = await FirebaseStorage_DownloadAsync(fbPath, uri, false, progress);
 
     if (Cheat('IsLog_LoadMedia')) {
         console.log(Category[cat], 'Tried DOWNLOADED media', 'post: ' + post.id, 'media idx: ' + mediaIdx, 'success: ' + (error === null));

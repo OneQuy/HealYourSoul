@@ -87,7 +87,7 @@ export async function FirebaseStorage_DeleteAsync(relativePath) {
  * @returns null if success, otherwise error
  * @MAYBE error could be unknown type OR look like this: {\"code\":\"storage/retry-limit-exceeded\",\"customData\":{\"serverResponse\":null},\"name\":\"FirebaseError\",\"status_\":0,\"_baseMessage\":\"Firebase Storage: Max retry time for operation exceeded, please try again. (storage/retry-limit-exceeded)\"}"
  */
-export async function FirebaseStorage_DownloadAsync(relativeFirebasePath, savePath, isRLP, getDownloadURLTimeOut = DefaultGetDownloadURLTimeOut) {
+export async function FirebaseStorage_DownloadAsync(relativeFirebasePath, savePath, isRLP, process = any, getDownloadURLTimeOut = DefaultGetDownloadURLTimeOut) {
     try {
         // get url
 
@@ -99,7 +99,7 @@ export async function FirebaseStorage_DownloadAsync(relativeFirebasePath, savePa
 
         // downoad
 
-        let result = await DownloadFileAsync(urlResult.url, savePath, isRLP);
+        let result = await DownloadFileAsync(urlResult.url, savePath, isRLP, process);
         return result;
     }
     catch (error) {
