@@ -145,9 +145,6 @@ const GetMediaFullPath = (localOrFb: boolean, cat: Category, postID: number, med
     }
 }
 
-const GetOfflinePostIDs = async () => {
-}
-
 export const HandleError = (methodName: string, error: any, themeForToast?: ThemeColor) => {
     const err = methodName + ' - ' + error;
 

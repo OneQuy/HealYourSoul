@@ -82,7 +82,8 @@ export enum NeedReloadReason {
 // texts
 
 export const LocalText = {
-  offline_mode: "Offine mode",
+  offline_mode: "Offline mode",
+  you_are_offline: "You are offline",
   retry: "Retry",
   error: "Error",
   credit_to_author: 'Credit to the author.',

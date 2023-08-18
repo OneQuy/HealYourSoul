@@ -9,7 +9,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import { View, Text, Image, TouchableOpacity, ActivityIndicator, Alert, PanResponder, LayoutChangeEvent, GestureResponderEvent, Animated, } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
-import { Category, FontSize, LocalText, NeedReloadReason, Opacity, Outline, Size } from '../../constants/AppConstants';
+import { Category, FontSize, LocalText, NeedReloadReason, Opacity, Outline, ScreenName, Size } from '../../constants/AppConstants';
 import { ThemeContext } from '../../constants/Colors';
 import { heightPercentageToDP as hp, } from "react-native-responsive-screen";
 import { FileList, MediaType, PostMetadata } from '../../constants/Types';
@@ -25,6 +25,7 @@ import { ToastOptions, toast } from '@baronha/ting';
 import { useDrawerStatus } from '@react-navigation/drawer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { DownloadProgressCallbackResult } from 'react-native-fs';
+import { NetLord } from '../../handle/NetLord';
 
 const videoNumbSize = 10;
 const videoTouchEffectRadius = 100;
@@ -36,6 +37,8 @@ type ThePageProps = {
 
 type NeedLoadPostType = 'next' | 'previous' | 'none';
 
+var CurrentCategory: Category;
+
 const ThePage = ({ category }: ThePageProps) => {
     // general state
 
@@ -46,6 +49,7 @@ const ThePage = ({ category }: ThePageProps) => {
     const [handling, setHandling] = useState(false);
     const [needLoadPost, setNeedLoadPost] = useState<NeedLoadPostType>('none');
     const [downloadPercent, setDownloadPercent] = useState(0);
+    const [isInternetAvailabe, setIsInternetAvailabe] = useState(true);
     const reasonToReload = useRef<NeedReloadReason>(NeedReloadReason.None);
     const fileList = useRef<FileList | null>(null);
     const previousPostIDs = useRef<number[]>([]);
@@ -497,6 +501,19 @@ const ThePage = ({ category }: ThePageProps) => {
 
     useEffect(() => {
         onPressReloadAsync();
+        setIsInternetAvailabe(NetLord.IsAvailable);
+
+        const unsubNet = NetLord.Subscribe(() => {
+            setIsInternetAvailabe(NetLord.IsAvailable);
+            console.log(CurrentCategory);
+            
+            if (NetLord.IsAvailable && reasonToReload.current !== NeedReloadReason.None && CurrentCategory === category)
+                onPressReloadAsync();
+        });
+
+        return () => {
+            unsubNet();
+        }
     }, [onPressReloadAsync]);
 
     // on focus
@@ -506,6 +523,7 @@ const ThePage = ({ category }: ThePageProps) => {
             const state = navigation.getState();
             const screenName = state.routeNames[state.index];
             AsyncStorage.setItem('categoryScreenToOpenFirst', screenName);
+            CurrentCategory = category;            
         }, [])
     );
 
@@ -545,8 +563,16 @@ const ThePage = ({ category }: ThePageProps) => {
     return (
         // master view
         <View style={{ pointerEvents: handling ? 'none' : 'auto', backgroundColor: theme.background, flex: 1, gap: Outline.GapVertical, }}>
+            {/* net state */}
+            {
+                isInternetAvailabe ? null :
+                    <View style={{ paddingHorizontal: Outline.Horizontal, paddingVertical: 2, backgroundColor: ColorNameToRgb('tomato', 0.5), alignItems: 'center' }}>
+                        <Text style={{ textAlignVertical: 'center', fontSize: FontSize.Small, color: theme.text }}>{LocalText.you_are_offline}</Text>
+                    </View>
+            }
+
             {/* title */}
-            <View style={{ paddingHorizontal: Outline.Horizontal, paddingTop: Outline.GapVertical }}>
+            <View style={{ paddingHorizontal: Outline.Horizontal, paddingTop: 0 }}>
                 {
                     post.current === null || !post.current.title ? null :
                         <Text style={{ textAlignVertical: 'center', fontSize: FontSize.Normal, color: theme.text }}>{post.current.title}</Text>
@@ -556,11 +582,9 @@ const ThePage = ({ category }: ThePageProps) => {
             {/* media view */}
             {
                 mediaURI.current === '' ?
-                    // true ?
                     // no media
                     <View style={{ flex: 1 }} >
                         {
-                            // true ?
                             reasonToReload.current !== NeedReloadReason.None ?
                                 // need to reload
                                 <TouchableOpacity onPress={onPressReloadAsync} style={{ flex: 1, justifyContent: 'center', alignItems: 'center', gap: Outline.GapVertical }} >
