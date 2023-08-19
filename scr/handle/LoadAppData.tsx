@@ -4,7 +4,7 @@ import { CheckAndClearAllLocalFileBeforeLoadApp } from "./AppUtils";
 import { HandleVersionsFileAsync } from "./VersionsHandler";
 import { DrawerParamList } from "../navigation/Navigator";
 import { ThemeColor } from "../constants/Colors";
-import { Alert } from "react-native";
+import { NetLord } from "./NetLord";
 
 export type LoadAppDataResult = {
     categoryScreenToOpenFirst: keyof DrawerParamList | null
@@ -19,6 +19,10 @@ export async function LoadAppData(theme: ThemeColor): Promise<LoadAppDataResult>
 
     await CheckAndClearAllLocalFileBeforeLoadApp();
   
+    // init net checker
+
+    await NetLord.InitAsync();
+    
     // handle: versions file
 
     await HandleVersionsFileAsync(theme);

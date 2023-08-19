@@ -7,9 +7,10 @@ import { Cheat } from "./Cheat";
 import { DeleteFileAsync, DeleteTempDirAsync, GetFLPFromRLP, IsExistedAsync, ReadTextAsync } from "./FileUtils";
 import { versions } from "./VersionsHandler";
 import { ToastOptions, toast } from "@baronha/ting";
-import { ColorNameToHex, IsInternetAvailableAsync, ToCanPrint } from "./UtilsTS";
+import { ColorNameToHex, ToCanPrint } from "./UtilsTS";
 import { AppLog } from "./AppLog";
-import RNFS, { DownloadProgressCallbackResult } from "react-native-fs";
+import { DownloadProgressCallbackResult } from "react-native-fs";
+import { IsInternetAvailableAsync } from "./NetLord";
 
 /**
  * cheat clear whole folder data

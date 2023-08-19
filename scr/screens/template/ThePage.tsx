@@ -49,7 +49,7 @@ const ThePage = ({ category }: ThePageProps) => {
     const [handling, setHandling] = useState(false);
     const [needLoadPost, setNeedLoadPost] = useState<NeedLoadPostType>('none');
     const [downloadPercent, setDownloadPercent] = useState(0);
-    const [isInternetAvailabe, setIsInternetAvailabe] = useState(true);
+    const [isInternetAvailable, setIsInternetAvailable] = useState(true);
     const reasonToReload = useRef<NeedReloadReason>(NeedReloadReason.None);
     const fileList = useRef<FileList | null>(null);
     const previousPostIDs = useRef<number[]>([]);
@@ -331,7 +331,19 @@ const ThePage = ({ category }: ThePageProps) => {
         return true;
     }, []);
 
+    const onInternetChanged = useCallback(() => {
+        const isNet = NetLord.IsAvailableLastestCheck();
+        setIsInternetAvailable(isNet);
+        console.log('cur cat', CurrentCategory);
+        
+        if (isNet && reasonToReload.current !== NeedReloadReason.None && CurrentCategory === category)
+            onPressReloadAsync();
+    }, [CurrentCategory]);
+
     // button handles
+
+    const onPresssDownloadMedia = useCallback(() => {
+    }, []);
 
     const onPresssFavorite = useCallback(() => {
         if (!post.current)
@@ -500,21 +512,15 @@ const ThePage = ({ category }: ThePageProps) => {
     // init once 
 
     useEffect(() => {
+        setIsInternetAvailable(NetLord.IsAvailableLastestCheck());
         onPressReloadAsync();
-        setIsInternetAvailabe(NetLord.IsAvailable);
 
-        const unsubNet = NetLord.Subscribe(() => {
-            setIsInternetAvailabe(NetLord.IsAvailable);
-            console.log(CurrentCategory);
-            
-            if (NetLord.IsAvailable && reasonToReload.current !== NeedReloadReason.None && CurrentCategory === category)
-                onPressReloadAsync();
-        });
+        const unsubNet = NetLord.Subscribe(onInternetChanged);
 
         return () => {
             unsubNet();
         }
-    }, [onPressReloadAsync]);
+    }, []);
 
     // on focus
 
@@ -565,7 +571,7 @@ const ThePage = ({ category }: ThePageProps) => {
         <View style={{ pointerEvents: handling ? 'none' : 'auto', backgroundColor: theme.background, flex: 1, gap: Outline.GapVertical, }}>
             {/* net state */}
             {
-                isInternetAvailabe ? null :
+                isInternetAvailable ? null :
                     <View style={{ paddingHorizontal: Outline.Horizontal, paddingVertical: 2, backgroundColor: ColorNameToRgb('tomato', 0.5), alignItems: 'center' }}>
                         <Text style={{ textAlignVertical: 'center', fontSize: FontSize.Small, color: theme.text }}>{LocalText.you_are_offline}</Text>
                     </View>
@@ -721,7 +727,8 @@ const ThePage = ({ category }: ThePageProps) => {
 
             {/* menu part */}
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: Outline.Horizontal, gap: Outline.GapHorizontal, marginBottom: Outline.GapVertical, }}>
-                <TouchableOpacity style={{ borderRadius: Outline.BorderRadius, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
+                {/* download media */}
+                <TouchableOpacity onPress={onPresssDownloadMedia} style={{ borderRadius: Outline.BorderRadius, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
                     <MaterialCommunityIcons name={'download'} color={theme.counterPrimary} size={Size.IconSmaller} />
                 </TouchableOpacity>
                 <TouchableOpacity style={{ borderRadius: Outline.BorderRadius, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >

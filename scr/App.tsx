@@ -11,7 +11,6 @@ import SplashScreen from './screens/others/SplashScreen'
 import { GetColors, ThemeContext } from './constants/Colors'
 import { Cheat } from './handle/Cheat'
 import { clearAllUserData } from './redux/UserDataSlice'
-import { NetLord } from './handle/NetLord'
 
 // const App = () => {
 //   return (
@@ -35,14 +34,16 @@ const AppRender = () => {
   const {handled, result} = useAsyncHandle(async () => LoadAppData(theme));
   const dispatch = useAppDispatch();
 
+  // init once
+
   useEffect(() => {
+    // check clear user data
+
     if (Cheat('ClearAllUserData')) {
       dispatch(clearAllUserData());
 
       console.log('ClearAllUserData');
     }
-    
-    NetLord.CheckAndInitAsync();
   }, []);
   
   return (

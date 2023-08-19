@@ -1,24 +1,54 @@
-import { IsInternetAvailableAsync } from "./UtilsTS"
+import { TimeOutError } from "./UtilsTS"
 
-const ThresholdCheckTime = 500;
+const IntervalCheckTime = 500;
+const ThresholdFetchTime = 500;
 
 export class NetLord {
-    private static lastCheckTick: number = 0;
-    private static lastIsAvailable: boolean | undefined = undefined;
+    private static startTick: number = 0;
     private static listSubscribers: (() => void)[] = [];
-    static IsAvailable: boolean = false;
+    private static isInited: boolean = false;
+    private static isAvailableLastestCheck: boolean = false;
 
-    static CheckAndInitAsync = async () => {
-        this.lastCheckTick = Date.now();
+    private static LoopAsync = async () => {
+        this.startTick = Date.now();
         this.SetStatus(await IsInternetAvailableAsync());
 
-        const remainMS = ThresholdCheckTime - Date.now() + this.lastCheckTick;
-        // console.log(remainMS, this.IsAvailable, Date.now() - this.lastCheckTick);
+        const remainMS = IntervalCheckTime - (Date.now() - this.startTick);
+        // console.log('check time:', (Date.now() - this.startTick), 'available:', this.isAvailableLastestCheck);
 
         if (remainMS <= 0)
-            this.CheckAndInitAsync();
+            this.LoopAsync();
         else
-            setTimeout(this.CheckAndInitAsync, remainMS);
+            setTimeout(this.LoopAsync, remainMS);
+    }
+
+    private static OnChangedStatus() {
+        console.log('changed', this.isAvailableLastestCheck);
+
+        this.listSubscribers.forEach(callback => callback());
+    }
+
+    private static SetStatus(yes: boolean) {
+        const changed = this.isAvailableLastestCheck !== yes;
+        this.isAvailableLastestCheck = yes;
+
+        if (changed)
+            this.OnChangedStatus();
+    }
+
+    static IsAvailableLastestCheck = () => {
+        if (!this.isInited)
+            throw 'NetLord not inited yet.'
+
+        return this.isAvailableLastestCheck;
+    }
+
+    static InitAsync = async () => {
+        if (this.isInited)
+            return;
+
+        this.isInited = true;
+        await this.LoopAsync();
     }
 
     static Unsubscribe = (callbackOnChanged: () => void) => {
@@ -32,27 +62,25 @@ export class NetLord {
 
     static Subscribe = (callbackOnChanged: () => void) => {
         this.listSubscribers.push(callbackOnChanged);
-        // console.log('sub');
-        
+        console.log('sub');
+
         return () => {
             this.Unsubscribe(callbackOnChanged);
         }
     }
+}
 
-    private static OnChangedStatus() {
-        // console.log('changed', this.IsAvailable);
+export async function IsInternetAvailableAsync(): Promise<boolean> {
+    const res = await Promise.any([
+        fetch('https://www.timeanddate.com/'),
+        new Promise(resolve => setTimeout(resolve, ThresholdFetchTime, TimeOutError))
+    ]);
 
-        this.listSubscribers.forEach(element => {
-            element();
-        });
+    if (res === TimeOutError) {
+        return false;
     }
-
-    private static SetStatus(yes: boolean) {
-        this.IsAvailable = yes;
-
-        if (this.lastIsAvailable !== yes) {
-            this.OnChangedStatus();
-            this.lastIsAvailable = yes;
-        }
+    else {
+        const respone = res as Response;
+        return respone && respone.status >= 200 && respone.status < 300;
     }
 }
