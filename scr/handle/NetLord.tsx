@@ -33,7 +33,7 @@ export class NetLord {
     }
 
     private static OnChangedStatus() {
-        console.log('changed', this.isAvailableLastestCheck);
+        // console.log('changed', this.isAvailableLastestCheck);
 
         this.listSubscribers.forEach(callback => callback());
     }
@@ -66,13 +66,13 @@ export class NetLord {
 
         if (idx >= 0) {
             this.listSubscribers.splice(idx, 1);
-            console.log('unsub success');
+            // console.log('unsub success');
         }
     }
 
     static Subscribe = (callbackOnChanged: () => void) => {
         this.listSubscribers.push(callbackOnChanged);
-        console.log('sub');
+        // console.log('sub');
 
         return () => {
             this.Unsubscribe(callbackOnChanged);
