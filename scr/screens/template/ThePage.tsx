@@ -575,7 +575,7 @@ const ThePage = ({ category }: ThePageProps) => {
 
     // main render
 
-    // console.log('RENDER: ' + Date.now());
+    // console.log(Category[category], 'RENDER: ' + Date.now());
 
     return (
         // master view
