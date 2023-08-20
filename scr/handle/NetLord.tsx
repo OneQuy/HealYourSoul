@@ -1,7 +1,17 @@
 import { TimeOutError } from "./UtilsTS"
 
 const IntervalCheckTime = 500;
-const ThresholdFetchTime = 500;
+const ThresholdFetchTime = 2000;
+
+// https://downloads.intercomcdn.com/i/o/118519/ddfeac07590ae764956095e7/4e16b83b84b7649bece46ae25a166d47.png
+
+// https://cdn.sanity.io/images/fuvbjjlp/production/36cbc8ae92c7711afb9ab1ec9f7174863f4d7c19-22x24.svg
+
+// https://avatars.githubusercontent.com/u/42239399?s=48&v=4
+
+// https://licensebuttons.net/l/by-sa/4.0/88x31.png
+
+const FetchURL = 'https://s1cdn.vnecdn.net/vnexpress/restruct/i/v800/v2_2019/pc/graphics/logo.svg'
 
 export class NetLord {
     private static startTick: number = 0;
@@ -70,9 +80,20 @@ export class NetLord {
     }
 }
 
+// var totalTime = 0;
+// var count = 0;
+// var max = 0;
+// var min = 1000;
+
+const myHeaders = new Headers();
+myHeaders.append('pragma', 'no-cache');
+myHeaders.append('cache-control', 'no-cache');
+
 export async function IsInternetAvailableAsync(): Promise<boolean> {
+    // const start = Date.now();
+
     const res = await Promise.any([
-        fetch('https://www.timeanddate.com/'),
+        fetch(FetchURL, { headers: myHeaders }),
         new Promise(resolve => setTimeout(resolve, ThresholdFetchTime, TimeOutError))
     ]);
 
@@ -80,6 +101,15 @@ export async function IsInternetAvailableAsync(): Promise<boolean> {
         return false;
     }
     else {
+        // var passedTime = Date.now() - start;
+        // max = Math.max(passedTime, max);
+        // min = Math.min(passedTime, min)
+        // totalTime += passedTime;
+        // count++;
+
+        // console.log('time', passedTime, 'avg', totalTime / count, 'max', max, 'min', min, 'count', count);
+        // console.log(res);
+        
         const respone = res as Response;
         return respone && respone.status >= 200 && respone.status < 300;
     }

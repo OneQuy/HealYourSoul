@@ -334,11 +334,10 @@ const ThePage = ({ category }: ThePageProps) => {
     const onInternetChanged = useCallback(() => {
         const isNet = NetLord.IsAvailableLastestCheck();
         setIsInternetAvailable(isNet);
-        console.log('cur cat', CurrentCategory);
         
         if (isNet && reasonToReload.current !== NeedReloadReason.None && CurrentCategory === category)
             onPressReloadAsync();
-    }, [CurrentCategory]);
+    }, []);
 
     // button handles
 
@@ -572,7 +571,7 @@ const ThePage = ({ category }: ThePageProps) => {
             {/* net state */}
             {
                 isInternetAvailable ? null :
-                    <View style={{ paddingHorizontal: Outline.Horizontal, paddingVertical: 2, backgroundColor: ColorNameToRgb('tomato', 0.5), alignItems: 'center' }}>
+                    <View style={{ paddingHorizontal: Outline.Horizontal, paddingVertical: 2, backgroundColor: ColorNameToRgb('silver', 0.5), alignItems: 'center' }}>
                         <Text style={{ textAlignVertical: 'center', fontSize: FontSize.Small, color: theme.text }}>{LocalText.you_are_offline}</Text>
                     </View>
             }
