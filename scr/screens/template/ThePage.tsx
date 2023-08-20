@@ -37,7 +37,7 @@ type ThePageProps = {
 
 type NeedLoadPostType = 'next' | 'previous' | 'none';
 
-var CurrentCategory: Category;
+var globalCurrentCategory: Category;
 
 const ThePage = ({ category }: ThePageProps) => {
     // general state
@@ -334,8 +334,8 @@ const ThePage = ({ category }: ThePageProps) => {
     const onInternetChanged = useCallback(() => {
         const isNet = NetLord.IsAvailableLastestCheck();
         setIsInternetAvailable(isNet);
-        
-        if (isNet && reasonToReload.current !== NeedReloadReason.None && CurrentCategory === category)
+
+        if (isNet && reasonToReload.current !== NeedReloadReason.None && globalCurrentCategory === category)
             onPressReloadAsync();
     }, []);
 
@@ -525,10 +525,22 @@ const ThePage = ({ category }: ThePageProps) => {
 
     useFocusEffect(
         useCallback(() => {
+            // save last visit category screen
+
             const state = navigation.getState();
             const screenName = state.routeNames[state.index];
             AsyncStorage.setItem('categoryScreenToOpenFirst', screenName);
-            CurrentCategory = category;            
+
+            // update global cat
+
+            globalCurrentCategory = category;
+
+            // refresh if last time is offline
+
+            if (NetLord.IsAvailableLastestCheck() &&
+                reasonToReload.current !== NeedReloadReason.None &&
+                globalCurrentCategory === category)
+                onPressReloadAsync();
         }, [])
     );
 
