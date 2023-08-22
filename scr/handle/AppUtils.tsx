@@ -9,7 +9,7 @@ import { versions } from "./VersionsHandler";
 import { ToastOptions, toast } from "@baronha/ting";
 import { ColorNameToHex, ToCanPrint } from "./UtilsTS";
 import { AppLog } from "./AppLog";
-import { DownloadProgressCallbackResult } from "react-native-fs";
+import RNFS, { DownloadProgressCallbackResult, ReadDirItem } from "react-native-fs";
 import { IsInternetAvailableAsync } from "./NetLord";
 
 /**
@@ -146,6 +146,30 @@ const GetMediaFullPath = (localOrFb: boolean, cat: Category, postID: number, med
     }
 }
 
+export const GetAllSavedLocalPostIDsListAsync = async (cat: Category) => {
+    let path;
+
+    if (cat === Category.Draw)
+        path = `draw/data`;
+    else if (cat === Category.Real)
+        path = `real/data`;
+    else if (cat === Category.Quote)
+        path = `quote/data`;
+    else
+        throw new Error('GetDataFullPath: ' + cat);
+
+    path = GetFLPFromRLP(LocalPath.MasterDirName + '/' + path, true);
+
+    try {
+        const items: ReadDirItem[] = await RNFS.readDir(path);
+        return items.map(i => Number.parseInt(i.name));
+    }
+    catch
+    {
+        return undefined;
+    }
+}
+
 export const HandleError = (methodName: string, error: any, themeForToast?: ThemeColor) => {
     const err = methodName + ' - ' + error;
 
@@ -187,7 +211,7 @@ export async function CheckLocalFileAndGetURIAsync(cat: Category, post: PostMeta
     if (Cheat('IsLog_LoadMedia')) {
         console.log(Category[cat], 'Tried DOWNLOADED media', 'post: ' + post.id, 'media idx: ' + mediaIdx, 'success: ' + (error === null));
     }
-    
+
     if (error) { // error
         const e = `Cat: ${Category[cat]}, PostID: ${post.id}, Idx: ${mediaIdx}, ` + (error.code ?? ToCanPrint(error));
         HandleError('DownloadMedia', e)

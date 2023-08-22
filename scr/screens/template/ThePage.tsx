@@ -13,7 +13,7 @@ import { Category, FontSize, LocalText, NeedReloadReason, Opacity, Outline, Scre
 import { ThemeContext } from '../../constants/Colors';
 import { heightPercentageToDP as hp, } from "react-native-responsive-screen";
 import { FileList, MediaType, PostMetadata } from '../../constants/Types';
-import { CheckAndGetFileListAsync, CheckLocalFileAndGetURIAsync, ToastTheme } from '../../handle/AppUtils';
+import { CheckAndGetFileListAsync, CheckLocalFileAndGetURIAsync, GetAllSavedLocalPostIDsListAsync, ToastTheme } from '../../handle/AppUtils';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { PickRandomElement, RoundNumber, SecondsToHourMinuteSecondString } from '../../handle/Utils';
@@ -54,6 +54,7 @@ const ThePage = ({ category }: ThePageProps) => {
     const fileList = useRef<FileList | null>(null);
     const previousPostIDs = useRef<number[]>([]);
     const bigViewStartTouchNERef = useRef<GestureResponderEvent['nativeEvent'] | null>(null);
+    const allSavedLocalPostIdsRef = useRef<number[] | undefined>(undefined);
 
     const seenIDs = useAppSelector((state: RootState) => {
         if (category === Category.Draw)
@@ -216,8 +217,15 @@ const ThePage = ({ category }: ThePageProps) => {
         let foundPost: PostMetadata | undefined;
 
         if (isNext) {
-            foundPost = fileList.current?.posts.find(i => !seenIDs.includes(i.id));
-            // foundPost = fileList.current?.posts.find(i => post.current !== i && i.media[0] === MediaType.Video);
+            if (!NetLord.IsAvailableLastestCheck()) { // offline mode
+                const offlineID = getPostIDForOffline();
+
+                if (typeof offlineID === 'number')
+                    foundPost = fileList.current?.posts.find(post => post.id === offlineID);
+            }
+
+            if (!foundPost) // default
+                foundPost = fileList.current?.posts.find(i => !seenIDs.includes(i.id));
 
             if (!foundPost) {
                 foundPost = PickRandomElement(fileList.current?.posts, post.current);
@@ -331,6 +339,20 @@ const ThePage = ({ category }: ThePageProps) => {
         return true;
     }, []);
 
+    const getPostIDForOffline = useCallback(() => {
+        const savedLocalIDs = allSavedLocalPostIdsRef.current;
+
+        if (!savedLocalIDs)
+            return undefined
+
+        const fidx = savedLocalIDs.findIndex(id => previousPostIDs.current.indexOf(id) === -1)
+
+        if (fidx < 0)
+            return PickRandomElement(savedLocalIDs, post.current?.id)
+        else
+            return savedLocalIDs[fidx];
+    }, []);
+
     const onInternetChanged = useCallback(() => {
         const isNet = NetLord.IsAvailableLastestCheck();
         setIsInternetAvailable(isNet);
@@ -341,7 +363,7 @@ const ThePage = ({ category }: ThePageProps) => {
 
     // button handles
 
-    const onPresssDownloadMedia = useCallback(() => {
+    const onPresssDownloadMedia = useCallback(async () => {
     }, []);
 
     const onPresssFavorite = useCallback(() => {
@@ -511,13 +533,29 @@ const ThePage = ({ category }: ThePageProps) => {
     // init once 
 
     useEffect(() => {
-        setIsInternetAvailable(NetLord.IsAvailableLastestCheck());
-        onPressReloadAsync();
+        const Init = async () => {
+            // set net state
 
-        const unsubNet = NetLord.Subscribe(onInternetChanged);
+            if (isInternetAvailable !== NetLord.IsAvailableLastestCheck())
+                setIsInternetAvailable(NetLord.IsAvailableLastestCheck());
+
+            // subscribe net
+
+            NetLord.Subscribe(onInternetChanged);
+
+            // get list offline post
+
+            allSavedLocalPostIdsRef.current = await GetAllSavedLocalPostIDsListAsync(category);
+
+            // start load
+
+            onPressReloadAsync();
+        }
+
+        Init();
 
         return () => {
-            unsubNet();
+            NetLord.Unsubscribe(onInternetChanged)
         }
     }, []);
 
