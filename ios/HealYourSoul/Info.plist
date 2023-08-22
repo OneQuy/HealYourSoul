@@ -8,6 +8,10 @@
 		<string>MaterialCommunityIcons.ttf</string>
 		<string>Ionicons.ttf</string>
 	</array>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>To download these media to your Gallery please accept this request</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>To download these media to your Gallery please accept this request</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>

@@ -91,6 +91,8 @@ export const LocalText = {
   tap_to_retry: 'Tap to retry.',
   no_internet: 'No internet!',
   cant_get_content: 'Cant get the content!',
+  copied: 'Copied!',
+  saved: 'Saved!',
 
 
   // popup

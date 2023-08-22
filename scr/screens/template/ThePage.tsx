@@ -26,6 +26,7 @@ import { useDrawerStatus } from '@react-navigation/drawer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { DownloadProgressCallbackResult } from 'react-native-fs';
 import { NetLord } from '../../handle/NetLord';
+import { SaveToGalleryAsync } from '../../handle/CameraRoll';
 
 const videoNumbSize = 10;
 const videoTouchEffectRadius = 100;
@@ -379,10 +380,21 @@ const ThePage = ({ category }: ThePageProps) => {
 
     // button handles
 
-    const onPresssDownloadMedia = useCallback(async () => {
+    const onPressDownloadMedia = useCallback(async () => {
+        if (!mediaURI.current)
+            return;
+
+        const res = await SaveToGalleryAsync(mediaURI.current)
+
+        const options: ToastOptions = {
+            title: LocalText.saved,
+            backgroundColor: theme.primary
+        };
+
+        toast(options);
     }, []);
 
-    const onPresssFavorite = useCallback(() => {
+    const onPressFavorite = useCallback(() => {
         if (!post.current)
             return;
 
@@ -421,7 +433,7 @@ const ThePage = ({ category }: ThePageProps) => {
         Clipboard.setString(s);
 
         const options: ToastOptions = {
-            title: 'Copied',
+            title: LocalText.copied,
             backgroundColor: theme.primary
         };
 
@@ -776,7 +788,7 @@ const ThePage = ({ category }: ThePageProps) => {
 
             {/* navi part */}
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: Outline.Horizontal, gap: Outline.GapHorizontal }}>
-                <TouchableOpacity onPress={onPresssFavorite} style={{ borderRadius: Outline.BorderRadius, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
+                <TouchableOpacity onPress={onPressFavorite} style={{ borderRadius: Outline.BorderRadius, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
                     <MaterialCommunityIcons name={!isFavorited ? "cards-heart-outline" : 'cards-heart'} color={theme.counterPrimary} size={Size.IconSmaller} />
                 </TouchableOpacity>
                 {
@@ -793,7 +805,7 @@ const ThePage = ({ category }: ThePageProps) => {
             {/* menu part */}
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: Outline.Horizontal, gap: Outline.GapHorizontal, marginBottom: Outline.GapVertical, }}>
                 {/* download media */}
-                <TouchableOpacity onPress={onPresssDownloadMedia} style={{ borderRadius: Outline.BorderRadius, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
+                <TouchableOpacity onPress={onPressDownloadMedia} style={{ borderRadius: Outline.BorderRadius, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
                     <MaterialCommunityIcons name={'download'} color={theme.counterPrimary} size={Size.IconSmaller} />
                 </TouchableOpacity>
                 <TouchableOpacity style={{ borderRadius: Outline.BorderRadius, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
