@@ -190,21 +190,25 @@ const ThePage = ({ category }: ThePageProps) => {
         });
 
         if (typeof uriOrReasonToReload === 'string') { // success
+            // update media
+
             mediaURI.current = uriOrReasonToReload;
 
-            if (isNextPost !== 'none') {
-                // add to previous list
+            // add to previous list
 
-                if (isNextPost === 'next') {
-                    const idx = previousPostIDs.current.indexOf(forPost.id);
+            if (isNextPost === 'next') {
+                const idx = previousPostIDs.current.indexOf(forPost.id);
 
-                    if (idx >= 0) {
-                        previousPostIDs.current.splice(idx, 1);
-                    }
-
-                    previousPostIDs.current.push(forPost.id);
+                if (idx >= 0) {
+                    previousPostIDs.current.splice(idx, 1);
                 }
+
+                previousPostIDs.current.push(forPost.id);
             }
+
+            // update offline ids
+
+            addPostIDToOfflineList(forPost.id);            
         } else { // fail
             reasonToReload.current = uriOrReasonToReload;
         }
@@ -337,6 +341,18 @@ const ThePage = ({ category }: ThePageProps) => {
 
         setHandling(false);
         return true;
+    }, []);
+
+    const addPostIDToOfflineList = useCallback((id: number) => {
+        if (!allSavedLocalPostIdsRef.current) {
+            allSavedLocalPostIdsRef.current = [id];
+            return;
+        }
+
+        if (allSavedLocalPostIdsRef.current.indexOf(id) >= 0)
+            return;
+
+        allSavedLocalPostIdsRef.current.push(id);
     }, []);
 
     const getPostIDForOffline = useCallback(() => {
@@ -546,7 +562,7 @@ const ThePage = ({ category }: ThePageProps) => {
             // get list offline post
 
             allSavedLocalPostIdsRef.current = await GetAllSavedLocalPostIDsListAsync(category);
-
+            
             // start load
 
             onPressReloadAsync();
@@ -613,7 +629,7 @@ const ThePage = ({ category }: ThePageProps) => {
 
     // main render
 
-    // console.log(Category[category], 'RENDER: ' + Date.now());
+    // console.log(Category[category], 'post', post.current?.id, 'RENDER: ' + Date.now());
 
     return (
         // master view
