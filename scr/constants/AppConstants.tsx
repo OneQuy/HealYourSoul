@@ -93,6 +93,8 @@ export const LocalText = {
   cant_get_content: 'Cant get the content!',
   copied: 'Copied!',
   saved: 'Saved!',
+  no_media_to_download: 'No media to download!',
+  oops: 'Oooops',
 
 
   // popup

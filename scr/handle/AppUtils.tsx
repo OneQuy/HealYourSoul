@@ -135,8 +135,12 @@ const GetMediaFullPath = (localOrFb: boolean, cat: Category, postID: number, med
     else
         throw new Error('GetDataFullPath: ' + cat);
 
-    if (localOrFb && mediaType === MediaType.Video)
-        path += '.mp4';
+    if (localOrFb) {
+        if (mediaType === MediaType.Video)
+            path += '.mp4';
+        else
+            path += '.jpg';
+    }
 
     if (localOrFb) {
         return GetFLPFromRLP(LocalPath.MasterDirName + '/' + path, true)

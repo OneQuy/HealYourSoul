@@ -30,9 +30,9 @@ async function hasAndroidPermission() {
       ]).then(
         (statuses) =>
           statuses[PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES] ===
-            PermissionsAndroid.RESULTS.GRANTED &&
+          PermissionsAndroid.RESULTS.GRANTED &&
           statuses[PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO] ===
-            PermissionsAndroid.RESULTS.GRANTED,
+          PermissionsAndroid.RESULTS.GRANTED,
       );
     } else {
       return PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE).then((status) => status === PermissionsAndroid.RESULTS.GRANTED);
@@ -43,10 +43,18 @@ async function hasAndroidPermission() {
 }
 
 export async function SaveToGalleryAsync(flp: string) {
-  if (Platform.OS === "android" && !(await hasAndroidPermission())) {
-    return;
-  }
+  try {
+    if (Platform.OS === "android" && !(await hasAndroidPermission())) {
+      return 'required_permission';
+    }
 
-//   CameraRoll.save(flp, { type, album })
-  return await CameraRoll.save(flp)
+    console.log(flp);
+
+    // CameraRoll.save(flp, { type, album })
+    await CameraRoll.save(flp)
+    return null;
+  }
+  catch (error) {
+    return error;
+  }
 };

@@ -19,7 +19,7 @@ import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { PickRandomElement, RoundNumber, SecondsToHourMinuteSecondString } from '../../handle/Utils';
 import { addDrawFavoritedID, addDrawSeenID, addQuoteFavoritedID, addQuoteSeenID, addRealFavoritedID, addRealSeenID, removeDrawFavoritedID, removeQuoteFavoritedID, removeRealFavoritedID } from '../../redux/UserDataSlice';
 import { setMutedVideo } from '../../redux/MiscSlice';
-import { ColorNameToRgb, HexToRgb } from '../../handle/UtilsTS';
+import { ColorNameToRgb, HexToRgb, ToCanPrint } from '../../handle/UtilsTS';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { ToastOptions, toast } from '@baronha/ting';
 import { useDrawerStatus } from '@react-navigation/drawer';
@@ -209,7 +209,7 @@ const ThePage = ({ category }: ThePageProps) => {
 
             // update offline ids
 
-            addPostIDToOfflineList(forPost.id);            
+            addPostIDToOfflineList(forPost.id);
         } else { // fail
             reasonToReload.current = uriOrReasonToReload;
         }
@@ -381,17 +381,26 @@ const ThePage = ({ category }: ThePageProps) => {
     // button handles
 
     const onPressDownloadMedia = useCallback(async () => {
-        if (!mediaURI.current)
+        if (!mediaURI.current) {
+            Alert.alert(LocalText.oops, LocalText.no_media_to_download);
             return;
+        }
+        
+        setHandling(true);
+        const error = await SaveToGalleryAsync(mediaURI.current)
+        setHandling(false);
 
-        const res = await SaveToGalleryAsync(mediaURI.current)
+        if (error !== null) { // error
+            Alert.alert(LocalText.error, ToCanPrint(error));
+        }
+        else { // success
+            const options: ToastOptions = {
+                title: LocalText.saved,
+                backgroundColor: theme.primary
+            };
 
-        const options: ToastOptions = {
-            title: LocalText.saved,
-            backgroundColor: theme.primary
-        };
-
-        toast(options);
+            toast(options);
+        }
     }, []);
 
     const onPressFavorite = useCallback(() => {
@@ -574,7 +583,7 @@ const ThePage = ({ category }: ThePageProps) => {
             // get list offline post
 
             allSavedLocalPostIdsRef.current = await GetAllSavedLocalPostIDsListAsync(category);
-            
+
             // start load
 
             onPressReloadAsync();
