@@ -396,7 +396,7 @@ const ThePage = ({ category }: ThePageProps) => {
         else { // success
             const options: ToastOptions = {
                 title: LocalText.saved,
-                backgroundColor: theme.primary
+                ...ToastTheme(theme, 'done')
             };
 
             toast(options);
@@ -443,7 +443,7 @@ const ThePage = ({ category }: ThePageProps) => {
 
         const options: ToastOptions = {
             title: LocalText.copied,
-            backgroundColor: theme.primary
+            ...ToastTheme(theme, 'done')
         };
 
         toast(options);
