@@ -30,7 +30,7 @@ async function CheckAndMkDirOfFilepathAsync(fullFilepath: string): Promise<null 
  * usage: const res = await WriteTextAsync('dataDir/file.txt', 'losemp text losemp text');
  * @returns null if success, otherwise error
  */
-export async function WriteTextAsync(path: string, text: string | null, isRLP: boolean = true): Promise<null | any> {
+export async function WriteTextAsync(path: string, text: string | null, isRLP: boolean = true, encode?: string): Promise<null | any> {
   try {
     if (!path) {
       throw 'url or saveLocalPath is invalid to WriteTextAsync';
@@ -46,8 +46,8 @@ export async function WriteTextAsync(path: string, text: string | null, isRLP: b
       throw 'can not write file, error when CheckAndMkDirOfFilepathAsync: ' + res;
 
     // write
-
-    await RNFS.writeFile(path, text ? text : '');
+    
+    await RNFS.writeFile(path, text ? text : '', encode);
 
     return null;
   }

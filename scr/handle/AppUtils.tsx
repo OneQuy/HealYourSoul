@@ -2,7 +2,7 @@ import { Alert } from "react-native";
 import { Category, FirebaseDBPath, FirebasePath, LocalPath, LocalText, NeedReloadReason } from "../constants/AppConstants";
 import { ThemeColor } from "../constants/Colors";
 import { FileList, MediaType, PostMetadata } from "../constants/Types";
-import { FirebaseStorage_DownloadAndReadJsonAsync, FirebaseStorage_DownloadAsync } from "../firebase/FirebaseStorage";
+import { FirebaseStorage_DownloadAndReadJsonAsync, FirebaseStorage_DownloadByGetBytesAsync } from "../firebase/FirebaseStorage";
 import { Cheat } from "./Cheat";
 import { DeleteFileAsync, DeleteTempDirAsync, GetFLPFromRLP, IsExistedAsync, ReadTextAsync } from "./FileUtils";
 import { versions } from "./VersionsHandler";
@@ -75,7 +75,7 @@ async function DownloadAndSaveFileListAsync(cat: Category): Promise<FileList | N
         AlertNoInternet();
         return NeedReloadReason.NoInternet;
     }
-
+    
     const result = await FirebaseStorage_DownloadAndReadJsonAsync(GetListFileRLP(cat, false), GetListFileRLP(cat, true));
 
     if (result.error) {
@@ -210,7 +210,7 @@ export async function CheckLocalFileAndGetURIAsync(cat: Category, post: PostMeta
 
     const fbPath = GetMediaFullPath(false, cat, post.id, mediaIdx, post.media[mediaIdx]);
 
-    const error = await FirebaseStorage_DownloadAsync(fbPath, uri, false, progress);
+    const error = await FirebaseStorage_DownloadByGetBytesAsync(fbPath, uri, false, progress);
 
     if (Cheat('IsLog_LoadMedia')) {
         console.log(Category[cat], 'Tried DOWNLOADED media', 'post: ' + post.id, 'media idx: ' + mediaIdx, 'success: ' + (error === null));
@@ -224,13 +224,6 @@ export async function CheckLocalFileAndGetURIAsync(cat: Category, post: PostMeta
 
     return uri;
 }
-
-// export async function IsInternetAvailableAsync(): Promise<boolean> {
-//     const state = await NetInfo.fetch();
-//     console.log(state);
-
-//     return state.isConnected === true && state.isInternetReachable === true;
-// }
 
 export function ToastTheme(theme: ThemeColor, preset: ToastOptions['preset']) {
     return {

@@ -1,10 +1,10 @@
 // https://firebase.google.com/docs/storage/web/download-files
 
-import { getStorage, ref, getDownloadURL, uploadBytes, deleteObject } from "firebase/storage";
+import { getStorage, ref, getDownloadURL, getBytes, uploadBytes, deleteObject } from "firebase/storage";
 import { ErrorObject_Empty } from "../constants/CommonConstants";
 import { ErrorObject_FileNotFound, ErrorObject_NoIdentity, GetTempFileRLP } from "../handle/Utils";
 import { DeleteFileAsync, DownloadFileAsync, DownloadFile_GetJsonAsync, GetFLPFromRLP, IsExistedAsync, WriteTextAsync } from "../handle/FileUtils";
-import { GetBlobFromFLPAsync, TimeOutError } from "../handle/UtilsTS";
+import { ArrayBufferToBase64String, GetBlobFromFLPAsync, TimeOutError } from "../handle/UtilsTS";
 
 var storage = null;
 
@@ -19,7 +19,7 @@ const DefaultGetDownloadURLTimeOut = 10000;
 // FirebaseStorage_GetDownloadURL('data/warm/content/0/33.mp4', (url)=>{ console.log(url); }, (error)=>{ console.error(error); }); 
 export function FirebaseStorage_GetDownloadURL(relativePath, urlCallback, errorCallback) {
     CheckAndInit();
-    let starsRef = ref(storage, relativePath);
+    const starsRef = ref(storage, relativePath);
 
     getDownloadURL(starsRef)
         .then((url) => {
@@ -85,9 +85,27 @@ export async function FirebaseStorage_DeleteAsync(relativePath) {
 
 /**
  * @returns null if success, otherwise error
+ */
+export async function FirebaseStorage_DownloadByGetBytesAsync(relativeFirebasePath, savePath, isRLP) {
+    try {
+        CheckAndInit();
+        const theRef = ref(storage, relativeFirebasePath);
+        const res = await getBytes(theRef)
+        const str = ArrayBufferToBase64String(res);
+
+        await WriteTextAsync(savePath, str, isRLP, 'base64');        
+        
+        return null
+    } catch (error) {
+        return error;
+    }
+}
+
+/**
+ * @returns null if success, otherwise error
  * @MAYBE error could be unknown type OR look like this: {\"code\":\"storage/retry-limit-exceeded\",\"customData\":{\"serverResponse\":null},\"name\":\"FirebaseError\",\"status_\":0,\"_baseMessage\":\"Firebase Storage: Max retry time for operation exceeded, please try again. (storage/retry-limit-exceeded)\"}"
  */
-export async function FirebaseStorage_DownloadAsync(relativeFirebasePath, savePath, isRLP, process = any, getDownloadURLTimeOut = DefaultGetDownloadURLTimeOut) {
+export async function FirebaseStorage_DownloadByGetURLAsync(relativeFirebasePath, savePath, isRLP, process = any, getDownloadURLTimeOut = DefaultGetDownloadURLTimeOut) {
     try {
         // get url
 
@@ -171,6 +189,9 @@ export async function FirebaseStorage_DownloadAndReadJsonAsync(firebaseRelativeP
     // get full URL
 
     var result = await FirebaseStorage_GetDownloadURLAsync(firebaseRelativePath, getDownloadURLTimeOut);
+
+
+    var ressss = await FirebaseStorage_DownloadByGetBytesAsync(firebaseRelativePath, 'hoho.json', true);
 
     if (!result.url) {
         return {
