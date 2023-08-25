@@ -92,7 +92,7 @@ export async function FirebaseStorage_DownloadByGetBytesAsync(relativeFirebasePa
         const theRef = ref(storage, relativeFirebasePath);
         const res = await getBytes(theRef)
         const str = ArrayBufferToBase64String(res);
-
+    
         await WriteTextAsync(savePath, str, isRLP, 'base64');        
         
         return null

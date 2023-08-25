@@ -2,7 +2,7 @@ import { Alert } from "react-native";
 import { Category, FirebaseDBPath, FirebasePath, LocalPath, LocalText, NeedReloadReason } from "../constants/AppConstants";
 import { ThemeColor } from "../constants/Colors";
 import { FileList, MediaType, PostMetadata } from "../constants/Types";
-import { FirebaseStorage_DownloadAndReadJsonAsync, FirebaseStorage_DownloadByGetBytesAsync } from "../firebase/FirebaseStorage";
+import { FirebaseStorage_DownloadAndReadJsonAsync, FirebaseStorage_DownloadByGetURLAsync } from "../firebase/FirebaseStorage";
 import { Cheat } from "./Cheat";
 import { DeleteFileAsync, DeleteTempDirAsync, GetFLPFromRLP, IsExistedAsync, ReadTextAsync } from "./FileUtils";
 import { versions } from "./VersionsHandler";
@@ -210,7 +210,7 @@ export async function CheckLocalFileAndGetURIAsync(cat: Category, post: PostMeta
 
     const fbPath = GetMediaFullPath(false, cat, post.id, mediaIdx, post.media[mediaIdx]);
 
-    const error = await FirebaseStorage_DownloadByGetBytesAsync(fbPath, uri, false, progress);
+    const error = await FirebaseStorage_DownloadByGetURLAsync(fbPath, uri, false, progress);
 
     if (Cheat('IsLog_LoadMedia')) {
         console.log(Category[cat], 'Tried DOWNLOADED media', 'post: ' + post.id, 'media idx: ' + mediaIdx, 'success: ' + (error === null));
