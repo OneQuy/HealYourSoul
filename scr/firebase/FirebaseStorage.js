@@ -190,9 +190,6 @@ export async function FirebaseStorage_DownloadAndReadJsonAsync(firebaseRelativeP
 
     var result = await FirebaseStorage_GetDownloadURLAsync(firebaseRelativePath, getDownloadURLTimeOut);
 
-
-    var ressss = await FirebaseStorage_DownloadByGetBytesAsync(firebaseRelativePath, 'hoho.json', true);
-
     if (!result.url) {
         return {
             json: null,
