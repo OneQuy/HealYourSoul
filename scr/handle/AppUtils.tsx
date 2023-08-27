@@ -190,17 +190,7 @@ export const HandleError = (methodName: string, error: any, themeForToast?: Them
     }
 }
 
-export async function CheckLocalFileAndGetURIAsync(cat: Category, post: PostMetadata, mediaIdx: number, progress: (p: DownloadProgressCallbackResult) => void): Promise<string | NeedReloadReason> {
-    const uri = GetMediaFullPath(true, cat, post.id, mediaIdx, post.media[mediaIdx]);
-
-    if (await IsExistedAsync(uri, false)) {
-        if (Cheat('IsLog_LoadMedia')) {
-            console.log(Category[cat], 'loaded media from LOCAL', 'post: ' + post.id, 'media idx: ' + mediaIdx);
-        }
-
-        return uri;
-    }
-
+async function DownloadMedia(cat: Category, post: PostMetadata, mediaIdx: number, uri: string, progress: (p: DownloadProgressCallbackResult) => void): Promise<string | NeedReloadReason> {
     const isInternet = await IsInternetAvailableAsync();
 
     if (!isInternet) {
@@ -223,6 +213,24 @@ export async function CheckLocalFileAndGetURIAsync(cat: Category, post: PostMeta
     }
 
     return uri;
+}
+
+export async function CheckLocalFileAndGetURIAsync(cat: Category, post: PostMetadata, mediaIdx: number, progress: (p: DownloadProgressCallbackResult) => void): Promise<string | NeedReloadReason> {
+    // check local 
+
+    const uri = GetMediaFullPath(true, cat, post.id, mediaIdx, post.media[mediaIdx]);
+
+    if (await IsExistedAsync(uri, false)) {
+        if (Cheat('IsLog_LoadMedia')) {
+            console.log(Category[cat], 'loaded media from LOCAL', 'post: ' + post.id, 'media idx: ' + mediaIdx);
+        }
+
+        return uri;
+    }
+
+    // need to download
+
+    return await DownloadMedia(cat, post, mediaIdx, uri, progress);
 }
 
 export function ToastTheme(theme: ThemeColor, preset: ToastOptions['preset']) {
