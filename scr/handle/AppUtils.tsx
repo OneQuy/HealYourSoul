@@ -2,7 +2,7 @@ import { Alert } from "react-native";
 import { Category, FirebaseDBPath, FirebasePath, LocalPath, LocalText, NeedReloadReason } from "../constants/AppConstants";
 import { ThemeColor } from "../constants/Colors";
 import { FileList, MediaType, PostMetadata } from "../constants/Types";
-import { FirebaseStorage_DownloadAndReadJsonAsync, FirebaseStorage_DownloadByGetURLAsync } from "../firebase/FirebaseStorage";
+import { FirebaseStorage_DownloadAndReadJsonAsync, FirebaseStorage_DownloadByGetBytesAsync, FirebaseStorage_DownloadByGetURLAsync } from "../firebase/FirebaseStorage";
 import { Cheat } from "./Cheat";
 import { DeleteFileAsync, DeleteTempDirAsync, GetFLPFromRLP, IsExistedAsync, ReadTextAsync } from "./FileUtils";
 import { versions } from "./VersionsHandler";
@@ -75,7 +75,7 @@ async function DownloadAndSaveFileListAsync(cat: Category): Promise<FileList | N
         AlertNoInternet();
         return NeedReloadReason.NoInternet;
     }
-    
+
     const result = await FirebaseStorage_DownloadAndReadJsonAsync(GetListFileRLP(cat, false), GetListFileRLP(cat, true));
 
     if (result.error) {
@@ -188,6 +188,77 @@ export const HandleError = (methodName: string, error: any, themeForToast?: Them
             ...ToastTheme(themeForToast, 'error')
         })
     }
+}
+
+export async function PullAllMedia(cat: Category, fileList: FileList) {
+    const isInternet = await IsInternetAvailableAsync();
+
+    if (!isInternet) {
+        return
+    }
+
+    const startTick = Date.now()
+
+    const startID = fileList.posts[fileList.posts.length - 1].id
+    const endID = fileList.posts[0].id
+
+    let items = [];
+    let existedAndPassed = 0;
+
+    for (let id = startID; id <= endID; id++) {
+        const post = fileList.posts.find(p => p.id === id);
+
+        if (!post)
+            continue
+
+        for (let mediaIdx = 0; mediaIdx < post.media.length; mediaIdx++) {
+            const flp = GetMediaFullPath(true, cat, id, mediaIdx, post.media[mediaIdx])
+
+            if (!await IsExistedAsync(flp, false)) {
+                items.push({
+                    id,
+                    flp,
+                    mediaIdx,
+                    type: post.media[mediaIdx]
+                })
+            }
+            else
+                existedAndPassed++;
+        }
+    }
+
+    if (existedAndPassed > 0)
+        console.log('existed and passed count:', existedAndPassed);
+
+    let resArr;
+
+    if (items.length > 0) {
+        console.log('start pull, total files need to pull', items.length);
+
+        resArr = await Promise.all(
+            items.map(item => {
+                const fbPath = GetMediaFullPath(false, cat, item.id, item.mediaIdx, item.type)
+                return FirebaseStorage_DownloadByGetBytesAsync(fbPath, item.flp, false)
+            })
+        )
+
+        resArr.forEach(res => {
+                if (res === null)
+                    return
+
+                // @ts-ignore
+                console.error(res._baseMessage ?? res);
+            })
+    }
+
+    const sumTime = Date.now() - startTick
+    const totalFile = resArr ? resArr.filter(res => res === null).length : 0
+
+    console.log('done, total file downloaded', totalFile, 'time', sumTime);
+
+    toast({
+        title: 'Pulled all media, files: ' + totalFile +', time:' + sumTime
+    })
 }
 
 async function DownloadMedia(cat: Category, post: PostMetadata, mediaIdx: number, uri: string, progress: (p: DownloadProgressCallbackResult) => void): Promise<string | NeedReloadReason> {

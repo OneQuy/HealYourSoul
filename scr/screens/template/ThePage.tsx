@@ -13,7 +13,7 @@ import { Category, FontSize, LocalText, NeedReloadReason, Opacity, Outline, Scre
 import { ThemeContext } from '../../constants/Colors';
 import { heightPercentageToDP as hp, } from "react-native-responsive-screen";
 import { FileList, MediaType, PostMetadata } from '../../constants/Types';
-import { CheckAndGetFileListAsync, CheckLocalFileAndGetURIAsync, GetAllSavedLocalPostIDsListAsync, ToastTheme } from '../../handle/AppUtils';
+import { CheckAndGetFileListAsync, CheckLocalFileAndGetURIAsync, GetAllSavedLocalPostIDsListAsync, PullAllMedia, ToastTheme } from '../../handle/AppUtils';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { PickRandomElement, RoundNumber, SecondsToHourMinuteSecondString } from '../../handle/Utils';
@@ -334,6 +334,9 @@ const ThePage = ({ category }: ThePageProps) => {
 
         if (typeof res === 'object') {
             fileList.current = res;
+
+            await PullAllMedia(category, res)
+            
             setNeedLoadPost('next');
         }
         else {
