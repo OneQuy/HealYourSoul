@@ -13,7 +13,7 @@ import { Category, FontSize, LocalText, NeedReloadReason, Opacity, Outline, Scre
 import { ThemeContext } from '../../constants/Colors';
 import { heightPercentageToDP as hp, } from "react-native-responsive-screen";
 import { FileList, MediaType, PostMetadata } from '../../constants/Types';
-import { CheckAndGetFileListAsync, CheckLocalFileAndGetURIAsync, GetAllSavedLocalPostIDsListAsync, PullAllMedia, ToastTheme } from '../../handle/AppUtils';
+import { CheckAndGetFileListAsync, CheckLocalFileAndGetURIAsync, GetAllSavedLocalPostIDsListAsync, ToastTheme } from '../../handle/AppUtils';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { PickRandomElement, RoundNumber, SecondsToHourMinuteSecondString } from '../../handle/Utils';
@@ -27,6 +27,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { DownloadProgressCallbackResult } from 'react-native-fs';
 import { NetLord } from '../../handle/NetLord';
 import { SaveToGalleryAsync } from '../../handle/CameraRoll';
+import { Cheat } from '../../handle/Cheat';
 
 const videoNumbSize = 10;
 const videoTouchEffectRadius = 100;
@@ -171,6 +172,9 @@ const ThePage = ({ category }: ThePageProps) => {
     // handles
 
     const loadNextMediaAsync = useCallback(async (isNext: boolean, forPost: PostMetadata, isNextPost: NeedLoadPostType) => {
+        if (!fileList.current)
+            return
+
         setHandling(true);
         setDownloadPercent(0);
 
@@ -185,7 +189,7 @@ const ThePage = ({ category }: ThePageProps) => {
 
         mediaURI.current = ''
 
-        const uriOrReasonToReload = await CheckLocalFileAndGetURIAsync(category, forPost, curMediaIdx.current, (process: DownloadProgressCallbackResult) => {
+        const uriOrReasonToReload = await CheckLocalFileAndGetURIAsync(category, forPost, curMediaIdx.current, fileList.current, (process: DownloadProgressCallbackResult) => {
             const percent = RoundNumber(process.bytesWritten / process.contentLength * 100, 0);
             setDownloadPercent(percent);
         });
@@ -335,8 +339,6 @@ const ThePage = ({ category }: ThePageProps) => {
         if (typeof res === 'object') {
             fileList.current = res;
 
-            await PullAllMedia(category, res)
-            
             setNeedLoadPost('next');
         }
         else {
@@ -388,7 +390,7 @@ const ThePage = ({ category }: ThePageProps) => {
             Alert.alert(LocalText.oops, LocalText.no_media_to_download);
             return;
         }
-        
+
         setHandling(true);
         const error = await SaveToGalleryAsync(mediaURI.current)
         setHandling(false);
@@ -653,7 +655,8 @@ const ThePage = ({ category }: ThePageProps) => {
 
     // main render
 
-    // console.log(Category[category], 'post', post.current?.id, 'RENDER: ' + Date.now());
+    if (Cheat('IsLog_CurrentPost'))
+        console.log(Category[category], 'post', post.current?.id, 'RENDER: ' + Date.now());
 
     return (
         // master view
