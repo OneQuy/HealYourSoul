@@ -60,10 +60,15 @@ async function PullByTypeAsync(cat, fromID, toID) {
 
         for (let mediaIdx = 0; mediaIdx < post.media.length; mediaIdx++) {
             const isImage = post.media[mediaIdx] === 0
-            const path = `${cat}/data/${id}/${mediaIdx}.${isImage ? 'jpg' : 'mp4'}`
+            const localpath = RuntimeDir + `${cat}/${id}-${mediaIdx}.${isImage ? 'jpg' : 'mp4'}`
 
-            if (!fs.existsSync(RuntimeDir + path))
-                arrPaths.push(path)
+            if (!fs.existsSync(localpath)) {
+                arrPaths.push({
+                    localpath,
+                    id,
+                    mediaIdx
+                })
+            }
             else
                 existedandPassed++;
         }
@@ -78,9 +83,10 @@ async function PullByTypeAsync(cat, fromID, toID) {
         console.log('start pull from ID', fromID, 'to', toID, 'total files need to pull', arrPaths.length);
 
         resArr = await Promise.all(
-            arrPaths.map(path => firebaseStorage.DownloadAsync(
-                path.substring(0, path.length - 4),
-                RuntimeDir + path))
+            arrPaths.map(item => {
+                const fbpath = `${cat}/data/${item.id}/${item.mediaIdx}`
+
+                return firebaseStorage.DownloadAsync(fbpath, item.localpath)})
         )
 
         resArr.forEach(res => {
