@@ -65,3 +65,6 @@ yarn-error.log
 # testing
 /coverage
 config.js
+
+# warm editor
+editor/runtime_dir/
