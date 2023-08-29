@@ -1,0 +1,5 @@
+pull all:
+node app.js cat=draw
+
+pull from ID to ID:
+node app.js startid=5 cat=quote endid=7
