@@ -3,17 +3,30 @@ function IsParamExist(key) {
 }
 
 function GetParam(key, asStringOrNumber) {
-    const p = process.argv.find(param => param.toLowerCase().startsWith(key.toLowerCase()))
+    let value
+    key = key.toLowerCase()
 
-    if (!p)
+    for (let i = 0; i < process.argv.length; i++) {
+        const param = process.argv[i]
+        const paramLower = param.toLowerCase()
+
+        if (paramLower.startsWith(key + '=')) {
+            value = param.substring(key.length + 1)
+            break
+        }
+        else if (key === paramLower) {
+            value = ''
+            break
+        }
+    }
+
+    if (value === undefined) // not found
         return undefined;
 
-    const res = p.substring(key.length + 1)
-
-    if (asStringOrNumber === undefined || asStringOrNumber === true)
-        return res
-    else
-        return Number.parseFloat(res)
+    if (asStringOrNumber === undefined || asStringOrNumber === true) // return as string
+        return value
+    else // return as number
+        return Number.parseFloat(value)
 }
 
 function GetParamExcludesDefaults(excludeKey) {

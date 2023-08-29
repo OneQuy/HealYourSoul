@@ -3,14 +3,7 @@ const firebaseStorage = require('./common/FirebaseStorage_NodeJS');
 const { RuntimeDir } = require('./Constant');
 const fs = require('fs')
 
-/**
- * 
- * @param {*} cat quote, real, draw
- * @param {*} fromID (undefined for first post)
- * @param {*} toID (underfined for last post)
- */
-async function PullByTypeAsync(cat, fromID, toID) {
-    const startTick = Date.now()
+async function PullFileListAsync(cat) {
     firebase.FirebaseInit()
 
     const listRes = await firebaseStorage.DownloadTextAsync(`${cat}/list.json`)
@@ -21,7 +14,30 @@ async function PullByTypeAsync(cat, fromID, toID) {
         return
     }
 
-    const listJson = JSON.parse(listRes.text);
+    return JSON.parse(listRes.text)
+}
+
+
+async function PullAllAsync() {
+    await Promise.all([
+        await PullByTypeAsync('quote'),
+        await PullByTypeAsync('draw'),
+        await PullByTypeAsync('real'),
+    ])
+}
+
+/**
+ * 
+ * @param {*} cat quote, real, draw
+ * @param {*} fromID (undefined for first post)
+ * @param {*} toID (underfined for last post)
+ */
+async function PullByTypeAsync(cat, fromID, toID) {
+    console.log(cat);
+    const startTick = Date.now()
+    firebase.FirebaseInit()
+    listJson = await PullFileListAsync(cat)
+
     const minID = listJson.posts[listJson.posts.length - 1].id
     const maxID = listJson.posts[0].id
 
@@ -63,7 +79,7 @@ async function PullByTypeAsync(cat, fromID, toID) {
 
         resArr = await Promise.all(
             arrPaths.map(path => firebaseStorage.DownloadAsync(
-                path.substring(0, path.length - 4), 
+                path.substring(0, path.length - 4),
                 RuntimeDir + path))
         )
 
@@ -76,8 +92,9 @@ async function PullByTypeAsync(cat, fromID, toID) {
     }
 
     console.log('done, total file downloaded', resArr ? resArr.filter(res => res === null).length : 0, 'time', Date.now() - startTick);
+    console.log('_________________________')
 }
 
 module.exports = {
-    PullByTypeAsync
+    PullAllAsync
 }
