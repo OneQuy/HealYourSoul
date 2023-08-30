@@ -12,33 +12,33 @@ function GetFirebasePath(category, id, idx) {
 
 const GetMediaURIs = () => {
     const dir = process.platform === 'win32' ? 'C:\\Users\\Admin\\Downloads\\' : '/Users/onequy/Downloads/'
-    
+
+    const files = fs.readdirSync(dir);
+
     const res = []
 
-    for (let i = 0; i < 100; i++) {
-        let flp = `${dir}${i}.jpg`
-
-        if (fs.existsSync(flp)) {
-            res.push(flp)
-            continue
-        }
-
-        flp = `${dir}${i}.jpeg`
-
-        if (fs.existsSync(flp)) {
-            res.push(flp)
-            continue
-        }
-
-        flp = `${dir}${i}.mp4`
-
-        if (fs.existsSync(flp)) {
-            res.push(flp)
-            continue
-        }
-
+    if (files.length <= 0)
         return res
+
+    for (let i = 0; i < files.length; i++) {
+        const flp = dir + files[i]
+        const ext = GetFileExtensionByFilepath(flp)
+        let type
+
+        try {
+            type = GetMediaTypeByFileExtension(ext)
+        }
+        catch {
+            type = -1
+        }
+
+        if (type === -1)
+            continue
+
+        res.push(flp)
     }
+
+    return res
 }
 
 const UriArrToMediaTypeArr = (uris) => {
@@ -62,7 +62,7 @@ function GetMediaTypeByFileExtension(extension) {
         throw new Error(extension + ' extention is not able to regconize');
 }
 
-async function UploadPostAsync(category, title, author, url) {
+async function UploadPostAsync(category, title, author, url, notDeleteFilesAfterPush) {
     const start = Date.now()
 
     const mediaURIs = GetMediaURIs()
@@ -143,15 +143,17 @@ async function UploadPostAsync(category, title, author, url) {
     const error = await FirebaseDatabase_SetValueAsync(`/app/versions/${category}`, fileList.version);
 
     if (!error) {
-        console.log('[SUCCESS]')
         console.log('FileList & DB version: ' + fileList.version + ', Post ID: ' + (latestID + 1), '\ntime: ' + (Date.now() - start));
+        console.log('[SUCCESS]')
     }
     else
         console.log('Failed increase DB version. Uploaded medias and list.json of post ID: ' + (latestID + 1), '' + error);
 
-    mediaURIs.forEach(element => {
-        fs.unlinkSync(element)
-    });
+    if (!notDeleteFilesAfterPush) {
+        mediaURIs.forEach(element => {
+            fs.unlinkSync(element)
+        });
+    }
 
     process.exit()
 }
