@@ -11,8 +11,10 @@ import { ColorNameToHex, ToCanPrint } from "./UtilsTS";
 import { AppLog } from "./AppLog";
 import RNFS, { DownloadProgressCallbackResult, ReadDirItem } from "react-native-fs";
 import { IsInternetAvailableAsync } from "./NetLord";
+import { MaxPostsDownloadOnce } from "./LoadAppData";
 
-const MaxPostsDownloadOnce = 10
+//todo
+// const MaxPostsDownloadOnce = 10
 
 /**
  * cheat clear whole folder data
@@ -194,7 +196,8 @@ export const HandleError = (methodName: string, error: any, themeForToast?: Them
 
 async function CheckAndPullBunchMediaAsync(cat: Category, fileList: FileList) {
     const isInternet = await IsInternetAvailableAsync();
-
+    console.log('MaxPostsDownloadOnce', MaxPostsDownloadOnce);
+    
     if (!isInternet) {
         if (Cheat('IsLog_DownloadBunchMedia'))
             console.log('[download bunch media] no internet so can not pull!!!')
@@ -213,7 +216,9 @@ async function CheckAndPullBunchMediaAsync(cat: Category, fileList: FileList) {
         const id = post.id;
         let addedToPullList = false;
 
-        for (let mediaIdx = 0; mediaIdx < post.media.length; mediaIdx++) {
+        //todo
+        // for (let mediaIdx = 0; mediaIdx < post.media.length; mediaIdx++) {
+        for (let mediaIdx = 0; mediaIdx < 1; mediaIdx++) {
             const flp = GetMediaFullPath(true, cat, id, mediaIdx, post.media[mediaIdx])
 
             if (!await IsExistedAsync(flp, false)) {

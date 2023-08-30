@@ -3,6 +3,10 @@ const firebaseStorage = require('./common/FirebaseStorage_NodeJS');
 const { RuntimeDir } = require('./Constant');
 const fs = require('fs')
 
+const GetFirebasePath = (cat, id, mediaIdx) => {
+    return `${cat}/data/${id}/${mediaIdx}`
+}
+
 async function PullFileListAsync(cat) {
     firebase.FirebaseInit()
 
@@ -102,5 +106,7 @@ async function PullByTypeAsync(cat, fromID, toID) {
 }
 
 module.exports = {
-    PullAllAsync
+    PullAllAsync,
+    PullFileListAsync,
+    GetFirebasePath,
 }

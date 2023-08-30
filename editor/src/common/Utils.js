@@ -42,8 +42,28 @@ function GetParamExcludesDefaults(excludeKey) {
    }
 }
 
+function ArrayBufferToBuffer(arrayBuffer) {
+    const buffer = Buffer.alloc(arrayBuffer.byteLength);
+    const view = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < buffer.length; ++i) {
+        buffer[i] = view[i];
+    }
+    return buffer;
+}
+
+function GetFileExtensionByFilepath(filepath) {
+    var dotIdx = filepath.lastIndexOf('.');
+
+    if (dotIdx == -1)
+        return '';
+
+    return filepath.substring(dotIdx + 1, filepath.length);
+}
+
 module.exports = {
     GetParam,
     IsParamExist,
     GetParamExcludesDefaults,
+    ArrayBufferToBuffer,
+    GetFileExtensionByFilepath
 }

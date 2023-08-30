@@ -1,6 +1,7 @@
 const firebaseStorage = require('firebase/storage')
 const fs = require('fs');
 const { CheckAndMkDirOfFilepathjAsync } = require('./FileUtils');
+const { ArrayBufferToBuffer } = require('./Utils');
 
 const TimeOutError = '[time_out]'
 
@@ -10,16 +11,13 @@ function CheckAndInit() {
     if (storage)
         return;
 
-    storage = firebaseStorage.getStorage();
-}
-
-function ArrayBufferToBuffer(arrayBuffer) {
-    const buffer = Buffer.alloc(arrayBuffer.byteLength);
-    const view = new Uint8Array(arrayBuffer);
-    for (let i = 0; i < buffer.length; ++i) {
-        buffer[i] = view[i];
+    try {
+        storage = firebaseStorage.getStorage();
     }
-    return buffer;
+    catch (error) {
+        console.error('Did you init firebase?');
+        console.error(error);
+    }
 }
 
 async function GetDownloadURLAsync(fbRelativePath, getDownloadURLTimeOut = DefaultGetDownloadURLTimeOut) {
@@ -113,8 +111,51 @@ async function DownloadTextAsync(firebasePath) {
     }
 }
 
+/**
+ * @param {*} filepath can be flp or rlp
+ * @param {*} contentType video/mp4 | image/jpeg | application/json | text/plain (https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types)
+ * @returns null if success, otherwise error
+ */
+async function UploadAsync(firebasePath, filepath, contentType = 'application/octet-stream') {
+    try {
+        if (!fs.existsSync(filepath))
+            throw 'file not exist to upload: ' + filepath
+
+        CheckAndInit();
+        let theRef = firebaseStorage.ref(storage, firebasePath)
+
+        const data = fs.readFileSync(filepath, { encoding: 'base64' });
+
+        await firebaseStorage.uploadString(theRef, data, 'base64', { contentType })
+
+        return null
+    }
+    catch (error) {
+        return error;
+    }
+}
+
+/**
+ * @returns null if success, otherwise error
+ */
+async function UploadTextAsync(firebasePath, text) {
+    try {
+        CheckAndInit();
+        let theRef = firebaseStorage.ref(storage, firebasePath)
+
+        await firebaseStorage.uploadString(theRef, text, 'raw', { contentType: 'text/plain' })
+
+        return null
+    }
+    catch (error) {
+        return error;
+    }
+}
+
 module.exports = {
     GetDownloadURLAsync,
     DownloadTextAsync,
-    DownloadAsync
+    DownloadAsync,
+    UploadAsync,
+    UploadTextAsync
 }
