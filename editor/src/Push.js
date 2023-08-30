@@ -11,7 +11,8 @@ function GetFirebasePath(category, id, idx) {
 }
 
 const GetMediaURIs = () => {
-    const dir = '/Users/onequy/Downloads/'
+    const dir = process.platform === 'win32' ? 'C:\\Users\\Admin\\Downloads\\' : '/Users/onequy/Downloads/'
+    
     const res = []
 
     for (let i = 0; i < 100; i++) {
