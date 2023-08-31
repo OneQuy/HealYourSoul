@@ -136,6 +136,24 @@ async function UploadAsync(firebasePath, filepath, contentType = 'application/oc
 }
 
 /**
+ * @param {*} contentType video/mp4 | image/jpeg | application/json | text/plain (https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types)
+ * @returns null if success, otherwise error
+ */
+async function UploadFromFileUrlAsync(firebasePath, fromFileUrl, contentType = 'application/octet-stream') {
+    try {
+        CheckAndInit();
+        let theRef = firebaseStorage.ref(storage, firebasePath)
+        const res = await fetch(fromFileUrl)
+        const data = await res.arrayBuffer()
+        await firebaseStorage.uploadBytes(theRef, data, { contentType })
+        return null
+    }
+    catch (error) {
+        return error;
+    }
+}
+
+/**
  * @returns null if success, otherwise error
  */
 async function UploadTextAsync(firebasePath, text) {
@@ -157,5 +175,6 @@ module.exports = {
     DownloadTextAsync,
     DownloadAsync,
     UploadAsync,
-    UploadTextAsync
+    UploadTextAsync,
+    UploadFromFileUrlAsync
 }

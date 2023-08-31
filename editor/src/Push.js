@@ -53,18 +53,18 @@ const GetMediaURIs = () => {
             type = GetMediaTypeByFileExtension(ext)
         }
         catch {
-            if (ext !== '' && 
-                ext !== 'DS_Store' && 
-                ext !== 'localized' && 
-                ext !== 'txt' && 
-                ext !== 'rar' && 
-                ext !== 'exe' && 
-                ext !== 'dmg' && 
-                ext !== 'zip' && 
-                ext !== 'pdf' && 
-                ext !== 'json' && 
-                ext !== 'xls' && 
-                ext !== 'docs' && 
+            if (ext !== '' &&
+                ext !== 'DS_Store' &&
+                ext !== 'localized' &&
+                ext !== 'txt' &&
+                ext !== 'rar' &&
+                ext !== 'exe' &&
+                ext !== 'dmg' &&
+                ext !== 'zip' &&
+                ext !== 'pdf' &&
+                ext !== 'json' &&
+                ext !== 'xls' &&
+                ext !== 'docs' &&
                 ext !== 'ini')
                 LogRed('not supported file type: ' + files[i]);
 
@@ -101,17 +101,25 @@ function GetMediaTypeByFileExtension(extension) {
         throw new Error(extension + ' extention is not able to regconize');
 }
 
-async function UploadPostAsync(category, title, author, url, notDeleteFilesAfterPush, smartAuthor) {
+async function UploadPostAsync(category, title, author, authorUrl, notDeleteFilesAfterPush, smartAuthor, fromImgURL, fromVideoURL) {
     const start = Date.now()
+    const isFromURL = fromImgURL || fromVideoURL
 
-    const mediaURIs = GetMediaURIs()
+    let mediaURIs
 
-    if (mediaURIs.length === 0) {
-        LogRed('no media to upload');
-        return
+    if (isFromURL) {
+        console.log('start upload from url')
     }
-    else
-        console.log(mediaURIs);
+    else {
+        mediaURIs = GetMediaURIs()
+
+        if (mediaURIs.length === 0) {
+            LogRed('no media to upload');
+            return
+        }
+        else
+            console.log(mediaURIs);
+    }
 
     firebase.FirebaseInit()
 
@@ -125,15 +133,20 @@ async function UploadPostAsync(category, title, author, url, notDeleteFilesAfter
     if (!title)
         title = ''
 
-    if (!url)
-        url = smartAuthorRes ? smartAuthorRes.url : ''
+    if (!authorUrl)
+        authorUrl = smartAuthorRes ? smartAuthorRes.url : ''
 
-    const mediaTypeArr = UriArrToMediaTypeArr(mediaURIs)
+    let mediaTypeArr
+
+    if (isFromURL)
+        mediaTypeArr = fromImgURL ? [0] : [1]
+    else
+        mediaTypeArr = UriArrToMediaTypeArr(mediaURIs)
 
     const newPost = {
         id: latestID + 1,
         author,
-        url,
+        url: authorUrl,
         title,
         media: mediaTypeArr
     }
@@ -143,44 +156,58 @@ async function UploadPostAsync(category, title, author, url, notDeleteFilesAfter
     fileList.posts.unshift(newPost);
     fileList.version++;
 
-    for (let index = 0; index < mediaURIs.length; index++) {
+    if (isFromURL) {
+        const mime = fromImgURL ? 'image/jpeg' : 'video/mp4'
+        const fbpath = GetFirebasePath(category, latestID + 1, 0)
+        const error = await firebaseStorage.UploadFromFileUrlAsync(fbpath, fromImgURL ?? fromVideoURL, mime)
 
-        const fbpath = GetFirebasePath(category, latestID + 1, index);
-        const flp = mediaURIs[index];
-        const mime = mediaTypeArr[index] === 1 ? 'video/mp4' : 'image/jpeg'
-
-        console.log('start index ' + index, flp);
-
-        const uploadRes = await firebaseStorage.UploadAsync(fbpath, flp, mime);
-
-        if ((!uploadRes))
-            console.log('uploaded: ' + fbpath, `(${index + 1}\\${mediaURIs.length})`);
+        if ((!error))
+            console.log('uploaded: ' + fbpath);
         else {
-            LogRed('NEED TO ROLL BACK MANUALLY!! upload file failed: ' + fbpath, 'error: ' + uploadRes);
+            LogRed('NEED TO ROLL BACK MANUALLY!! upload file failed: ' + fbpath, 'error: ' + error);
             return
+        }
+    }
+    else { // from local files
+        for (let index = 0; index < mediaURIs.length; index++) {
 
-            // // delete all uploaded files
+            const fbpath = GetFirebasePath(category, latestID + 1, index);
+            const flp = mediaURIs[index];
+            const mime = mediaTypeArr[index] === 1 ? 'video/mp4' : 'image/jpeg'
 
-            // for (let i = 0; i <= index; i++) {
-            //     fbpath = GetFirebasePath(category, latestID + 1, i);
-            //     await FirebaseStorage_DeleteAsync(fbpath);
-            //     setProcessText('deleted: ' + fbpath);
-            // }
+            console.log('start index ' + index, flp);
 
-            // clearAll();
-            // setProcessText('deleted all uploaded');
-            // return;
+            const uploadRes = await firebaseStorage.UploadAsync(fbpath, flp, mime);
+
+            if ((!uploadRes))
+                console.log('uploaded: ' + fbpath, `(${index + 1}\\${mediaURIs.length})`);
+            else {
+                LogRed('NEED TO ROLL BACK MANUALLY!! upload file failed: ' + fbpath, 'error: ' + uploadRes);
+                return
+
+                // // delete all uploaded files
+
+                // for (let i = 0; i <= index; i++) {
+                //     fbpath = GetFirebasePath(category, latestID + 1, i);
+                //     await FirebaseStorage_DeleteAsync(fbpath);
+                //     setProcessText('deleted: ' + fbpath);
+                // }
+
+                // clearAll();
+                // setProcessText('deleted all uploaded');
+                // return;
+            }
         }
     }
 
-    var res = await firebaseStorage.UploadTextAsync(`${category}/list.json`, JSON.stringify(fileList, null, 1));
+    let error = await firebaseStorage.UploadTextAsync(`${category}/list.json`, JSON.stringify(fileList, null, 1));
 
-    if (res) {
-        LogRed('Failed upload list.json. Uploaded medias of Post ID: ' + (latestID + 1), res);
+    if (error) {
+        LogRed('Failed upload list.json. Uploaded medias of Post ID: ' + (latestID + 1), error);
         return;
     }
 
-    const error = await FirebaseDatabase_SetValueAsync(`/app/versions/${category}`, fileList.version);
+    error = await FirebaseDatabase_SetValueAsync(`/app/versions/${category}`, fileList.version);
 
     if (!error) {
         console.log('FileList & DB version: ' + fileList.version + ', Post ID: ' + (latestID + 1), '\ntime: ' + (Date.now() - start));
@@ -189,7 +216,7 @@ async function UploadPostAsync(category, title, author, url, notDeleteFilesAfter
     else
         LogRed('Failed increase DB version. Uploaded medias and list.json of post ID: ' + (latestID + 1), '' + error);
 
-    if (!notDeleteFilesAfterPush) {
+    if (!notDeleteFilesAfterPush && !isFromURL) {
         mediaURIs.forEach(element => {
             fs.unlinkSync(element)
         });
