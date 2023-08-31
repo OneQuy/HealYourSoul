@@ -5,7 +5,7 @@ const firebase = require('./common/Firebase_NodeJS')
 const firebaseStorage = require('./common/FirebaseStorage_NodeJS');
 const fs = require('fs');
 const { FirebaseDatabase_SetValueAsync } = require("./common/FirebaseDatabase_NodeJS");
-const { LogRed } = require("./Utils_NodeJS");
+const { LogRed, LogGreen } = require("./Utils_NodeJS");
 
 function GetFirebasePath(category, id, idx) {
     return `${category}/data/${id}/${idx}`
@@ -30,7 +30,7 @@ const GetMediaURIs = () => {
             type = GetMediaTypeByFileExtension(ext)
         }
         catch {
-            if (ext !== '' && ext !== 'DS_Store' && ext !== 'localized')
+            if (ext !== '' && ext !== 'DS_Store' && ext !== 'localized' && ext !== 'ini')
                 LogRed('not supported file type: ' + files[i]);
 
             type = -1
@@ -72,7 +72,7 @@ async function UploadPostAsync(category, title, author, url, notDeleteFilesAfter
     const mediaURIs = GetMediaURIs()
 
     if (mediaURIs.length === 0) {
-        console.error('no media to upload');
+        LogRed('no media to upload');
         return
     }
     else
@@ -120,7 +120,7 @@ async function UploadPostAsync(category, title, author, url, notDeleteFilesAfter
         if ((!uploadRes))
             console.log('uploaded: ' + fbpath, `(${index + 1}\\${mediaURIs.length})`);
         else {
-            console.error('NEED TO ROLL BACK MANUALLY!! upload file failed: ' + fbpath, 'error: ' + uploadRes);
+            LogRed('NEED TO ROLL BACK MANUALLY!! upload file failed: ' + fbpath, 'error: ' + uploadRes);
             return
 
             // // delete all uploaded files
@@ -140,7 +140,7 @@ async function UploadPostAsync(category, title, author, url, notDeleteFilesAfter
     var res = await firebaseStorage.UploadTextAsync(`${category}/list.json`, JSON.stringify(fileList, null, 1));
 
     if (res) {
-        console.log('Failed upload list.json. Uploaded medias of Post ID: ' + (latestID + 1), res);
+        LogRed('Failed upload list.json. Uploaded medias of Post ID: ' + (latestID + 1), res);
         return;
     }
 
@@ -148,10 +148,10 @@ async function UploadPostAsync(category, title, author, url, notDeleteFilesAfter
 
     if (!error) {
         console.log('FileList & DB version: ' + fileList.version + ', Post ID: ' + (latestID + 1), '\ntime: ' + (Date.now() - start));
-        console.log('[SUCCESS]')
+        LogGreen('[SUCCESS]')
     }
     else
-        console.log('Failed increase DB version. Uploaded medias and list.json of post ID: ' + (latestID + 1), '' + error);
+        LogRed('Failed increase DB version. Uploaded medias and list.json of post ID: ' + (latestID + 1), '' + error);
 
     if (!notDeleteFilesAfterPush) {
         mediaURIs.forEach(element => {

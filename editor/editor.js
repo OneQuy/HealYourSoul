@@ -1,5 +1,6 @@
 const { PullAllAsync } = require("./src/PullData");
 const { UploadPostAsync } = require("./src/Push");
+const { LogRed } = require("./src/Utils_NodeJS");
 const { IsParamExist, GetParam, } = require("./src/common/Utils");
 
 async function JustDoIt() {
@@ -15,7 +16,7 @@ async function JustDoIt() {
     else if (IsParamExist('real'))
       cat = 'real'
     else {
-      console.log('no specify the cat to upload');
+      LogRed('no specify the cat to upload');
       return
     }
 
@@ -27,7 +28,7 @@ async function JustDoIt() {
     await UploadPostAsync(cat, tittle, author, link, notDel)
   }
   else
-    console.log('no command to execute!');
+    LogRed('no command to execute!');
 }
 
 JustDoIt();
