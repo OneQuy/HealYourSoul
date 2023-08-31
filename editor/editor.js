@@ -23,9 +23,10 @@ async function JustDoIt() {
     const author = GetParam('a')
     const link = GetParam('l')
     const tittle = GetParam('t')
+    const smartAuthor = GetParam('sa')
     const notDel = IsParamExist('nd')
 
-    await UploadPostAsync(cat, tittle, author, link, notDel)
+    await UploadPostAsync(cat, tittle, author, link, notDel, smartAuthor)
   }
   else
     LogRed('no command to execute!');

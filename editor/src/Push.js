@@ -11,6 +11,29 @@ function GetFirebasePath(category, id, idx) {
     return `${category}/data/${id}/${idx}`
 }
 
+const SmartAuthor = (hint) => {
+    if (!hint)
+        return undefined
+
+    const creditsPath = process.platform === 'darwin' ? '/Users/onequy/Downloads/credits.txt' : 'C:\\Users\\Admin\\Downloads\\credits.txt'
+    const text = fs.readFileSync(creditsPath, 'utf-8')
+    const lines = text.split('\n')
+
+    for (let index = 0; index < lines.length; index++) {
+        const element = lines[index];
+        const arr = element.split(',')
+
+        if (arr[0].toLowerCase().includes(hint.toLowerCase())) {
+            return {
+                author: arr[0],
+                url: arr[1]
+            }
+        }
+    }
+
+    return undefined
+}
+
 const GetMediaURIs = () => {
     const dir = process.platform === 'win32' ? 'C:\\Users\\Admin\\Downloads\\' : '/Users/onequy/Downloads/'
 
@@ -30,7 +53,19 @@ const GetMediaURIs = () => {
             type = GetMediaTypeByFileExtension(ext)
         }
         catch {
-            if (ext !== '' && ext !== 'DS_Store' && ext !== 'localized' && ext !== 'ini')
+            if (ext !== '' && 
+                ext !== 'DS_Store' && 
+                ext !== 'localized' && 
+                ext !== 'txt' && 
+                ext !== 'rar' && 
+                ext !== 'exe' && 
+                ext !== 'dmg' && 
+                ext !== 'zip' && 
+                ext !== 'pdf' && 
+                ext !== 'json' && 
+                ext !== 'xls' && 
+                ext !== 'docs' && 
+                ext !== 'ini')
                 LogRed('not supported file type: ' + files[i]);
 
             type = -1
@@ -66,7 +101,7 @@ function GetMediaTypeByFileExtension(extension) {
         throw new Error(extension + ' extention is not able to regconize');
 }
 
-async function UploadPostAsync(category, title, author, url, notDeleteFilesAfterPush) {
+async function UploadPostAsync(category, title, author, url, notDeleteFilesAfterPush, smartAuthor) {
     const start = Date.now()
 
     const mediaURIs = GetMediaURIs()
@@ -82,15 +117,16 @@ async function UploadPostAsync(category, title, author, url, notDeleteFilesAfter
 
     const fileList = await PullFileListAsync(category)
     const latestID = fileList.posts.length > 0 ? fileList.posts[0].id : -1;
+    const smartAuthorRes = SmartAuthor(smartAuthor)
 
     if (!author)
-        author = ''
+        author = smartAuthorRes ? smartAuthorRes.author : ''
 
     if (!title)
         title = ''
 
     if (!url)
-        url = ''
+        url = smartAuthorRes ? smartAuthorRes.url : ''
 
     const mediaTypeArr = UriArrToMediaTypeArr(mediaURIs)
 
