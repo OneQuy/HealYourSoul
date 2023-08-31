@@ -5,6 +5,7 @@ const firebase = require('./common/Firebase_NodeJS')
 const firebaseStorage = require('./common/FirebaseStorage_NodeJS');
 const fs = require('fs');
 const { FirebaseDatabase_SetValueAsync } = require("./common/FirebaseDatabase_NodeJS");
+const { LogRed } = require("./Utils_NodeJS");
 
 function GetFirebasePath(category, id, idx) {
     return `${category}/data/${id}/${idx}`
@@ -29,6 +30,9 @@ const GetMediaURIs = () => {
             type = GetMediaTypeByFileExtension(ext)
         }
         catch {
+            if (ext !== '' && ext !== 'DS_Store' && ext !== 'localized')
+                LogRed('not supported file type: ' + files[i]);
+
             type = -1
         }
 
