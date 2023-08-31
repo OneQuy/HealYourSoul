@@ -144,14 +144,11 @@ const GetMediaFullPath = (localOrFb: boolean, cat: Category, postID: number, med
             path += '.mp4';
         else
             path += '.jpg';
-    }
 
-    if (localOrFb) {
         return GetFLPFromRLP(LocalPath.MasterDirName + '/' + path, true)
     }
-    else {
-        return path;
-    }
+    else
+        return path
 }
 
 export const GetAllSavedLocalPostIDsListAsync = async (cat: Category) => {
@@ -197,7 +194,7 @@ export const HandleError = (methodName: string, error: any, themeForToast?: Them
 async function CheckAndPullBunchMediaAsync(cat: Category, fileList: FileList) {
     const isInternet = await IsInternetAvailableAsync();
     console.log('MaxPostsDownloadOnce', MaxPostsDownloadOnce);
-    
+
     if (!isInternet) {
         if (Cheat('IsLog_DownloadBunchMedia'))
             console.log('[download bunch media] no internet so can not pull!!!')
