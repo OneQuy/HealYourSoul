@@ -1,6 +1,6 @@
 const { PullFileListAsync } = require("./PullData")
 const { GetFileExtensionByFilepath } = require("./common/Utils")
-
+const clipboard = require('copy-paste');
 const firebase = require('./common/Firebase_NodeJS')
 const firebaseStorage = require('./common/FirebaseStorage_NodeJS');
 const fs = require('fs');
@@ -103,12 +103,21 @@ function GetMediaTypeByFileExtension(extension) {
 
 async function UploadPostAsync(category, title, author, authorUrl, notDeleteFilesAfterPush, smartAuthor, fromImgURL, fromVideoURL, onlyOverrideLatestMedia) {
     const start = Date.now()
-    const isFromURL = fromImgURL || fromVideoURL
+    const isFromURL = fromImgURL !== undefined || fromVideoURL !== undefined
 
     let mediaURIs
 
     if (isFromURL) {
-        console.log('start upload from url', fromImgURL ? 'image' : 'video')
+        if (fromImgURL === '') {
+            fromImgURL = clipboard.paste()
+            console.log('start upload from url', 'image', fromImgURL)
+        }
+        else if (fromVideoURL === '') {
+            fromVideoURL = clipboard.paste()
+            console.log('start upload from url', 'video', fromVideoURL)
+        }
+        else
+            console.log('start upload from url', fromImgURL ? 'image' : 'video')
     }
     else {
         mediaURIs = GetMediaURIs()
