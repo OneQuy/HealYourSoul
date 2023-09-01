@@ -2,6 +2,7 @@ const firebaseStorage = require('firebase/storage')
 const fs = require('fs');
 const { CheckAndMkDirOfFilepathjAsync } = require('./FileUtils');
 const { ArrayBufferToBuffer } = require('./Utils');
+const { LogRed } = require('../Utils_NodeJS');
 
 const TimeOutError = '[time_out]'
 
@@ -15,7 +16,7 @@ function CheckAndInit() {
         storage = firebaseStorage.getStorage();
     }
     catch (error) {
-        console.error('Did you init firebase?');
+        LogRed('Did you init firebase?');
         console.error(error);
     }
 }

@@ -1,4 +1,4 @@
-const { getDatabase, ref, onValue, set, get, remove } = require('firebase/database')
+const { getDatabase, ref, set } = require('firebase/database')
 
 var db = null;
 

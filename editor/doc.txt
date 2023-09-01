@@ -21,4 +21,9 @@ node editor.js push draw
 
 node editor.js push draw t="Have fun together" a=loffyllama l="www.google.com"
 
-add param nd to not delete file after push
+param:
+nd: to not delete file after push
+sa=aslam
+wi="www.image.jpg"
+wv="www.video.mp4"
+ol: onlyOverrideLatestMedia

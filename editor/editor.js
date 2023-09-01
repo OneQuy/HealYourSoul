@@ -27,8 +27,9 @@ async function JustDoIt() {
     const fromVideoURL = GetParam('wv')
     const smartAuthor = GetParam('sa')
     const notDel = IsParamExist('nd')
+    const onlyOverrideLatestMedia = IsParamExist('ol')
 
-    await UploadPostAsync(cat, tittle, author, link, notDel, smartAuthor, fromImgURL, fromVideoURL)
+    await UploadPostAsync(cat, tittle, author, link, notDel, smartAuthor, fromImgURL, fromVideoURL, onlyOverrideLatestMedia)
   }
   else
     LogRed('no command to execute!');

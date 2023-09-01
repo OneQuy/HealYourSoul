@@ -101,14 +101,14 @@ function GetMediaTypeByFileExtension(extension) {
         throw new Error(extension + ' extention is not able to regconize');
 }
 
-async function UploadPostAsync(category, title, author, authorUrl, notDeleteFilesAfterPush, smartAuthor, fromImgURL, fromVideoURL) {
+async function UploadPostAsync(category, title, author, authorUrl, notDeleteFilesAfterPush, smartAuthor, fromImgURL, fromVideoURL, onlyOverrideLatestMedia) {
     const start = Date.now()
     const isFromURL = fromImgURL || fromVideoURL
 
     let mediaURIs
 
     if (isFromURL) {
-        console.log('start upload from url')
+        console.log('start upload from url', fromImgURL ? 'image' : 'video')
     }
     else {
         mediaURIs = GetMediaURIs()
@@ -125,6 +125,7 @@ async function UploadPostAsync(category, title, author, authorUrl, notDeleteFile
 
     const fileList = await PullFileListAsync(category)
     const latestID = fileList.posts.length > 0 ? fileList.posts[0].id : -1;
+    const newPostID = onlyOverrideLatestMedia === true ? latestID : latestID + 1
     const smartAuthorRes = SmartAuthor(smartAuthor)
 
     if (!author)
@@ -144,21 +145,26 @@ async function UploadPostAsync(category, title, author, authorUrl, notDeleteFile
         mediaTypeArr = UriArrToMediaTypeArr(mediaURIs)
 
     const newPost = {
-        id: latestID + 1,
+        id: newPostID,
         author,
         url: authorUrl,
         title,
         media: mediaTypeArr
     }
 
-    console.log(newPost);
+    if (onlyOverrideLatestMedia === true)
+        console.log('override latest media mode, id', newPostID)
+    else
+        console.log(newPost);
 
     fileList.posts.unshift(newPost);
     fileList.version++;
 
+    // upload medias
+
     if (isFromURL) {
         const mime = fromImgURL ? 'image/jpeg' : 'video/mp4'
-        const fbpath = GetFirebasePath(category, latestID + 1, 0)
+        const fbpath = GetFirebasePath(category, newPostID, 0)
         const error = await firebaseStorage.UploadFromFileUrlAsync(fbpath, fromImgURL ?? fromVideoURL, mime)
 
         if ((!error))
@@ -171,7 +177,7 @@ async function UploadPostAsync(category, title, author, authorUrl, notDeleteFile
     else { // from local files
         for (let index = 0; index < mediaURIs.length; index++) {
 
-            const fbpath = GetFirebasePath(category, latestID + 1, index);
+            const fbpath = GetFirebasePath(category, newPostID, index);
             const flp = mediaURIs[index];
             const mime = mediaTypeArr[index] === 1 ? 'video/mp4' : 'image/jpeg'
 
@@ -188,7 +194,7 @@ async function UploadPostAsync(category, title, author, authorUrl, notDeleteFile
                 // // delete all uploaded files
 
                 // for (let i = 0; i <= index; i++) {
-                //     fbpath = GetFirebasePath(category, latestID + 1, i);
+                //     fbpath = GetFirebasePath(category, newPostID, i);
                 //     await FirebaseStorage_DeleteAsync(fbpath);
                 //     setProcessText('deleted: ' + fbpath);
                 // }
@@ -200,27 +206,40 @@ async function UploadPostAsync(category, title, author, authorUrl, notDeleteFile
         }
     }
 
-    let error = await firebaseStorage.UploadTextAsync(`${category}/list.json`, JSON.stringify(fileList, null, 1));
-
-    if (error) {
-        LogRed('Failed upload list.json. Uploaded medias of Post ID: ' + (latestID + 1), error);
-        return;
-    }
-
-    error = await FirebaseDatabase_SetValueAsync(`/app/versions/${category}`, fileList.version);
-
-    if (!error) {
-        console.log('FileList & DB version: ' + fileList.version + ', Post ID: ' + (latestID + 1), '\ntime: ' + (Date.now() - start));
-        LogGreen('[SUCCESS]')
-    }
-    else
-        LogRed('Failed increase DB version. Uploaded medias and list.json of post ID: ' + (latestID + 1), '' + error);
+    // delete files
 
     if (!notDeleteFilesAfterPush && !isFromURL) {
         mediaURIs.forEach(element => {
             fs.unlinkSync(element)
         });
     }
+
+    if (onlyOverrideLatestMedia === true) {
+        LogGreen('[SUCCESS]')
+        return
+    }
+
+    // update list.json
+
+    let error = await firebaseStorage.UploadTextAsync(`${category}/list.json`, JSON.stringify(fileList, null, 1));
+
+    if (error) {
+        LogRed('Failed upload list.json. Uploaded medias of Post ID: ' + newPostID, error);
+        return;
+    }
+
+    // update version
+
+    error = await FirebaseDatabase_SetValueAsync(`/app/versions/${category}`, fileList.version);
+
+    if (!error) {
+        console.log('FileList & DB version: ' + fileList.version + ', Post ID: ' + newPostID, '\ntime: ' + (Date.now() - start));
+        LogGreen('[SUCCESS]')
+    }
+    else
+        LogRed('Failed increase DB version. Uploaded medias and list.json of post ID: ' + newPostID, '' + error);
+
+    // exit
 
     process.exit()
 }
