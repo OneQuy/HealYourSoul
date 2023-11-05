@@ -11,7 +11,7 @@ import { ColorNameToHex, ToCanPrint } from "./UtilsTS";
 import { AppLog } from "./AppLog";
 import RNFS, { DownloadProgressCallbackResult, ReadDirItem } from "react-native-fs";
 import { IsInternetAvailableAsync } from "./NetLord";
-import { MaxPostsDownloadOnce } from "./LoadAppData";
+// import { MaxPostsDownloadOnce } from "./LoadAppData";
 
 //todo
 // const MaxPostsDownloadOnce = 10
@@ -191,92 +191,92 @@ export const HandleError = (methodName: string, error: any, themeForToast?: Them
     }
 }
 
-async function CheckAndPullBunchMediaAsync(cat: Category, fileList: FileList) {
-    const isInternet = await IsInternetAvailableAsync();
-    console.log('MaxPostsDownloadOnce', MaxPostsDownloadOnce);
+// async function CheckAndPullBunchMediaAsync(cat: Category, fileList: FileList) {
+//     const isInternet = await IsInternetAvailableAsync();
+//     console.log('MaxPostsDownloadOnce', MaxPostsDownloadOnce);
 
-    if (!isInternet) {
-        if (Cheat('IsLog_DownloadBunchMedia'))
-            console.log('[download bunch media] no internet so can not pull!!!')
+//     if (!isInternet) {
+//         if (Cheat('IsLog_DownloadBunchMedia'))
+//             console.log('[download bunch media] no internet so can not pull!!!')
 
-        return
-    }
+//         return
+//     }
 
-    const startTick = Date.now()
+//     const startTick = Date.now()
 
-    let mediaToPullArr = [];
-    let existedAndPassedCount = 0;
-    let postToPullCount = 0
+//     let mediaToPullArr = [];
+//     let existedAndPassedCount = 0;
+//     let postToPullCount = 0
 
-    for (let idx = 0; idx <= fileList.posts.length; idx++) {
-        const post = fileList.posts[idx]
-        const id = post.id;
-        let addedToPullList = false;
+//     for (let idx = 0; idx <= fileList.posts.length; idx++) {
+//         const post = fileList.posts[idx]
+//         const id = post.id;
+//         let addedToPullList = false;
 
-        //todo
-        // for (let mediaIdx = 0; mediaIdx < post.media.length; mediaIdx++) {
-        for (let mediaIdx = 0; mediaIdx < 1; mediaIdx++) {
-            const flp = GetMediaFullPath(true, cat, id, mediaIdx, post.media[mediaIdx])
+//         //todo
+//         // for (let mediaIdx = 0; mediaIdx < post.media.length; mediaIdx++) {
+//         for (let mediaIdx = 0; mediaIdx < 1; mediaIdx++) {
+//             const flp = GetMediaFullPath(true, cat, id, mediaIdx, post.media[mediaIdx])
 
-            if (!await IsExistedAsync(flp, false)) {
-                addedToPullList = true
+//             if (!await IsExistedAsync(flp, false)) {
+//                 addedToPullList = true
 
-                mediaToPullArr.push({
-                    id,
-                    flp,
-                    mediaIdx,
-                    type: post.media[mediaIdx]
-                })
-            }
-            else
-                existedAndPassedCount++;
-        }
+//                 mediaToPullArr.push({
+//                     id,
+//                     flp,
+//                     mediaIdx,
+//                     type: post.media[mediaIdx]
+//                 })
+//             }
+//             else
+//                 existedAndPassedCount++;
+//         }
 
-        if (addedToPullList)
-            postToPullCount++
+//         if (addedToPullList)
+//             postToPullCount++
 
-        if (postToPullCount >= MaxPostsDownloadOnce)
-            break
-    }
+//         if (postToPullCount >= MaxPostsDownloadOnce)
+//             break
+//     }
 
-    if (existedAndPassedCount > 0 && Cheat('IsLog_DownloadBunchMedia'))
-        console.log('[download bunch media] existed and passed count:', existedAndPassedCount);
+//     if (existedAndPassedCount > 0 && Cheat('IsLog_DownloadBunchMedia'))
+//         console.log('[download bunch media] existed and passed count:', existedAndPassedCount);
 
-    let resArr;
+//     let resArr;
 
-    if (mediaToPullArr.length > 0) {
+//     if (mediaToPullArr.length > 0) {
 
-        if (Cheat('IsLog_DownloadBunchMedia')) {
-            console.log('[download bunch media] start pull, total files need to pull', mediaToPullArr.length, ', list id:');
-            console.log(mediaToPullArr.map(item => item.id));
-        }
+//         if (Cheat('IsLog_DownloadBunchMedia')) {
+//             console.log('[download bunch media] start pull, total files need to pull', mediaToPullArr.length, ', list id:');
+//             console.log(mediaToPullArr.map(item => item.id));
+//         }
 
-        resArr = await Promise.all(
-            mediaToPullArr.map(item => {
-                const fbPath = GetMediaFullPath(false, cat, item.id, item.mediaIdx, item.type)
-                return FirebaseStorage_DownloadByGetBytesAsync(fbPath, item.flp, false)
-            })
-        )
+//         resArr = await Promise.all(
+//             mediaToPullArr.map(item => {
+//                 const fbPath = GetMediaFullPath(false, cat, item.id, item.mediaIdx, item.type)
+//                 return FirebaseStorage_DownloadByGetBytesAsync(fbPath, item.flp, false)
+//             })
+//         )
 
-        resArr.forEach(res => {
-            if (res === null)
-                return
+//         resArr.forEach(res => {
+//             if (res === null)
+//                 return
 
-            // @ts-ignore
-            console.error('[download bunch media]', res._baseMessage ?? res);
-        })
-    }
+//             // @ts-ignore
+//             console.error('[download bunch media]', res._baseMessage ?? res);
+//         })
+//     }
 
-    const sumTime = Date.now() - startTick
-    const totalFile = resArr ? resArr.filter(res => res === null).length : 0
+//     const sumTime = Date.now() - startTick
+//     const totalFile = resArr ? resArr.filter(res => res === null).length : 0
 
-    if (Cheat('IsLog_DownloadBunchMedia'))
-        console.log('[download bunch media] done!!! total file downloaded', totalFile, 'time', sumTime);
+//     if (Cheat('IsLog_DownloadBunchMedia'))
+//         console.log('[download bunch media] done!!! total file downloaded', totalFile, 'time', sumTime);
 
-    toast({
-        title: 'Pulled all media, files: ' + totalFile + ', time:' + sumTime
-    })
-}
+//     toast({
+//         title: 'Pulled all media, files: ' + totalFile + ', time:' + sumTime
+//     })
+// }
 
 async function DownloadMedia(cat: Category, post: PostMetadata, mediaIdx: number, uri: string, progress: (p: DownloadProgressCallbackResult) => void): Promise<string | NeedReloadReason> {
     const isInternet = await IsInternetAvailableAsync();
@@ -316,21 +316,21 @@ export async function CheckLocalFileAndGetURIAsync(cat: Category, post: PostMeta
         return uri;
     }
 
-    // need to download, download a bunch first
+    // // need to download, download a bunch first
 
-    await CheckAndPullBunchMediaAsync(cat, fileList)
+    // await CheckAndPullBunchMediaAsync(cat, fileList)
 
-    // check local again
+    // // check local again
 
-    if (await IsExistedAsync(uri, false)) {
-        if (Cheat('IsLog_LoadMedia')) {
-            console.log(Category[cat], 'loaded media from LOCAL', 'post: ' + post.id, 'media idx: ' + mediaIdx);
-        }
+    // if (await IsExistedAsync(uri, false)) {
+    //     if (Cheat('IsLog_LoadMedia')) {
+    //         console.log(Category[cat], 'loaded media from LOCAL', 'post: ' + post.id, 'media idx: ' + mediaIdx);
+    //     }
 
-        return uri;
-    }
+    //     return uri;
+    // }
 
-    // check dl for sure
+    // dl for sure
 
     return await DownloadMedia(cat, post, mediaIdx, uri, progress);
 }

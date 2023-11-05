@@ -5,11 +5,11 @@ import { HandleVersionsFileAsync } from "./VersionsHandler";
 import { DrawerParamList } from "../navigation/Navigator";
 import { ThemeColor } from "../constants/Colors";
 import { NetLord } from "./NetLord";
-import Clipboard from "@react-native-clipboard/clipboard";
+// import Clipboard from "@react-native-clipboard/clipboard";
 import { toast } from "@baronha/ting";
 
-//todo
-export var MaxPostsDownloadOnce: number = 10
+// //todo
+// export var MaxPostsDownloadOnce: number = 10
 
 export type LoadAppDataResult = {
     categoryScreenToOpenFirst: keyof DrawerParamList | null
@@ -35,18 +35,6 @@ export async function LoadAppData(theme: ThemeColor): Promise<LoadAppDataResult>
     // load screen to open
 
     const categoryScreenToOpenFirst = await AsyncStorage.getItem('categoryScreenToOpenFirst');
-
-    // get param
-
-    const param = await Clipboard.getString()
-
-    const parseNum = Number.parseInt(param)
-    
-    if (Number.isInteger(parseNum)) {
-        MaxPostsDownloadOnce = parseNum
-
-        toast({ title: 'parse num ' + MaxPostsDownloadOnce})
-    }
 
     // return
 
