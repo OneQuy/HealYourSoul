@@ -11,10 +11,6 @@ import { ColorNameToHex, ToCanPrint } from "./UtilsTS";
 import { AppLog } from "./AppLog";
 import RNFS, { DownloadProgressCallbackResult, ReadDirItem } from "react-native-fs";
 import { IsInternetAvailableAsync } from "./NetLord";
-// import { MaxPostsDownloadOnce } from "./LoadAppData";
-
-//todo
-// const MaxPostsDownloadOnce = 10
 
 /**
  * cheat clear whole folder data
@@ -191,6 +187,84 @@ export const HandleError = (methodName: string, error: any, themeForToast?: Them
     }
 }
 
+async function DownloadMedia(cat: Category, post: PostMetadata, mediaIdx: number, uri: string, progress: (p: DownloadProgressCallbackResult) => void): Promise<string | NeedReloadReason> {
+    const isInternet = await IsInternetAvailableAsync();
+
+    if (!isInternet) {
+        AlertNoInternet();
+        return NeedReloadReason.NoInternet;
+    }
+
+    const fbPath = GetMediaFullPath(false, cat, post.id, mediaIdx, post.media[mediaIdx]);
+
+    const error = await FirebaseStorage_DownloadByGetURLAsync(fbPath, uri, false, progress);
+
+    if (Cheat('IsLog_LoadMedia')) {
+        console.log(Category[cat], 'Tried DOWNLOADED media', 'post: ' + post.id, 'media idx: ' + mediaIdx, 'success: ' + (error === null));
+    }
+
+    if (error) { // error
+        const e = `Cat: ${Category[cat]}, PostID: ${post.id}, Idx: ${mediaIdx}, ` + (error.code ?? ToCanPrint(error));
+        HandleError('DownloadMedia', e)
+        return NeedReloadReason.FailToGetContent;
+    }
+
+    return uri;
+}
+
+export async function CheckLocalFileAndGetURIAsync(cat: Category, post: PostMetadata, mediaIdx: number, fileList: FileList, progress: (p: DownloadProgressCallbackResult) => void): Promise<string | NeedReloadReason> {
+    // check local 
+
+    const uri = GetMediaFullPath(true, cat, post.id, mediaIdx, post.media[mediaIdx]);
+
+    if (await IsExistedAsync(uri, false)) {
+        if (Cheat('IsLog_LoadMedia')) {
+            console.log(Category[cat], 'loaded media from LOCAL', 'post: ' + post.id, 'media idx: ' + mediaIdx);
+        }
+
+        return uri;
+    }
+
+    // // need to download, download a bunch first
+
+    // await CheckAndPullBunchMediaAsync(cat, fileList)
+
+    // // check local again
+
+    // if (await IsExistedAsync(uri, false)) {
+    //     if (Cheat('IsLog_LoadMedia')) {
+    //         console.log(Category[cat], 'loaded media from LOCAL', 'post: ' + post.id, 'media idx: ' + mediaIdx);
+    //     }
+
+    //     return uri;
+    // }
+
+    // dl for sure
+
+    return await DownloadMedia(cat, post, mediaIdx, uri, progress);
+}
+
+export function ToastTheme(theme: ThemeColor, preset: ToastOptions['preset']) {
+    return {
+        backgroundColor: preset === 'error' ? ColorNameToHex('tomato') : theme.primary,
+        titleColor: preset === 'error' ? ColorNameToHex('white') : theme.counterPrimary,
+        messageColor: preset === 'error' ? ColorNameToHex('white') : theme.counterPrimary,
+        preset
+    }
+}
+
+export const AlertNoInternet = () => {
+    Alert.alert(
+        LocalText.popup_title_need_internet,
+        LocalText.popup_content_need_internet,
+    );
+}
+
+export const Track = (event: string, data?: string) => {
+    // todo
+    // Track('error', JSON.stringify(result.error));
+}
+
 // async function CheckAndPullBunchMediaAsync(cat: Category, fileList: FileList) {
 //     const isInternet = await IsInternetAvailableAsync();
 //     console.log('MaxPostsDownloadOnce', MaxPostsDownloadOnce);
@@ -277,81 +351,3 @@ export const HandleError = (methodName: string, error: any, themeForToast?: Them
 //         title: 'Pulled all media, files: ' + totalFile + ', time:' + sumTime
 //     })
 // }
-
-async function DownloadMedia(cat: Category, post: PostMetadata, mediaIdx: number, uri: string, progress: (p: DownloadProgressCallbackResult) => void): Promise<string | NeedReloadReason> {
-    const isInternet = await IsInternetAvailableAsync();
-
-    if (!isInternet) {
-        AlertNoInternet();
-        return NeedReloadReason.NoInternet;
-    }
-
-    const fbPath = GetMediaFullPath(false, cat, post.id, mediaIdx, post.media[mediaIdx]);
-
-    const error = await FirebaseStorage_DownloadByGetURLAsync(fbPath, uri, false, progress);
-
-    if (Cheat('IsLog_LoadMedia')) {
-        console.log(Category[cat], 'Tried DOWNLOADED media', 'post: ' + post.id, 'media idx: ' + mediaIdx, 'success: ' + (error === null));
-    }
-
-    if (error) { // error
-        const e = `Cat: ${Category[cat]}, PostID: ${post.id}, Idx: ${mediaIdx}, ` + (error.code ?? ToCanPrint(error));
-        HandleError('DownloadMedia', e)
-        return NeedReloadReason.FailToGetContent;
-    }
-
-    return uri;
-}
-
-export async function CheckLocalFileAndGetURIAsync(cat: Category, post: PostMetadata, mediaIdx: number, fileList: FileList, progress: (p: DownloadProgressCallbackResult) => void): Promise<string | NeedReloadReason> {
-    // check local 
-
-    const uri = GetMediaFullPath(true, cat, post.id, mediaIdx, post.media[mediaIdx]);
-
-    if (await IsExistedAsync(uri, false)) {
-        if (Cheat('IsLog_LoadMedia')) {
-            console.log(Category[cat], 'loaded media from LOCAL', 'post: ' + post.id, 'media idx: ' + mediaIdx);
-        }
-
-        return uri;
-    }
-
-    // // need to download, download a bunch first
-
-    // await CheckAndPullBunchMediaAsync(cat, fileList)
-
-    // // check local again
-
-    // if (await IsExistedAsync(uri, false)) {
-    //     if (Cheat('IsLog_LoadMedia')) {
-    //         console.log(Category[cat], 'loaded media from LOCAL', 'post: ' + post.id, 'media idx: ' + mediaIdx);
-    //     }
-
-    //     return uri;
-    // }
-
-    // dl for sure
-
-    return await DownloadMedia(cat, post, mediaIdx, uri, progress);
-}
-
-export function ToastTheme(theme: ThemeColor, preset: ToastOptions['preset']) {
-    return {
-        backgroundColor: preset === 'error' ? ColorNameToHex('tomato') : theme.primary,
-        titleColor: preset === 'error' ? ColorNameToHex('white') : theme.counterPrimary,
-        messageColor: preset === 'error' ? ColorNameToHex('white') : theme.counterPrimary,
-        preset
-    }
-}
-
-export const AlertNoInternet = () => {
-    Alert.alert(
-        LocalText.popup_title_need_internet,
-        LocalText.popup_content_need_internet,
-    );
-}
-
-export const Track = (event: string, data?: string) => {
-    // todo
-    // Track('error', JSON.stringify(result.error));
-}
