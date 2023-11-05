@@ -819,7 +819,7 @@ const ThePage = ({ category }: ThePageProps) => {
 
             {/* menu part */}
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: Outline.Horizontal, gap: Outline.GapHorizontal, marginBottom: Outline.GapVertical, }}>
-                {/* download media */}
+                {/* download media
                 <TouchableOpacity onPress={onPressDownloadMedia} style={{ borderRadius: Outline.BorderRadius, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
                     <MaterialCommunityIcons name={'download'} color={theme.counterPrimary} size={Size.IconSmaller} />
                 </TouchableOpacity>
@@ -828,7 +828,7 @@ const ThePage = ({ category }: ThePageProps) => {
                 </TouchableOpacity>
                 <TouchableOpacity style={{ borderRadius: Outline.BorderRadius, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
                     <MaterialCommunityIcons name={'dots-horizontal'} color={theme.counterPrimary} size={Size.IconSmaller} />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </View>
         </View>
     )
