@@ -166,7 +166,7 @@ const ThePage = ({ category }: ThePageProps) => {
     const hasCredit: boolean = post.current !== null && post.current.author != null && post.current.author.length > 0;
 
     const isFavorited: boolean = useMemo(() => {
-        return post.current !== null && favoritedIDs.includes(post.current.id);
+        return post.current !== null && favoritedIDs && favoritedIDs.includes(post.current.id);
     }, [favoritedIDs, post.current?.id])
 
     // handles
@@ -233,8 +233,8 @@ const ThePage = ({ category }: ThePageProps) => {
                     foundPost = fileList.current?.posts.find(post => post.id === offlineID);
             }
 
-            if (!foundPost) // default
-                foundPost = fileList.current?.posts.find(i => !seenIDs.includes(i.id));
+            if (!foundPost) // default => get not seen post
+                foundPost = fileList.current?.posts.find(i => !seenIDs || !seenIDs.includes(i.id));
 
             if (!foundPost) {
                 foundPost = PickRandomElement(fileList.current?.posts, post.current);
