@@ -67,4 +67,4 @@ yarn-error.log
 config.js
 
 # warm editor
-editor/runtime_dir/
+runtime_dir/

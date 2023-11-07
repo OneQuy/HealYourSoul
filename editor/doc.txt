@@ -5,13 +5,13 @@ draw, real, quote
 download:
 
 simple:
-node editor.js pull
+node editor pull
 
 pull all of type:
-node editor.js cat=draw
+node editor cat=draw
 
 pull from ID to ID:
-node editor.js startid=5 cat=quote endid=7
+node editor startid=5 cat=quote endid=7
 
 =======================
 
