@@ -1,6 +1,22 @@
 apply plugin: "com.android.application"
 apply plugin: "com.facebook.react"
 
+import groovy.json.JsonSlurper
+
+def getNpmVersion() {
+    def inputFile = new File("../package.json")
+    def packageJson = new JsonSlurper().parseText(inputFile.text)
+    return packageJson["version"]
+}
+
+def getGitVersion() {
+    def process = "git rev-list HEAD --first-parent --count".execute()
+    return process.text.toInteger()
+}
+
+def packageVer = getNpmVersion()
+def gitCount = getGitVersion()
+
 /**
  * This is the configuration block to customize your React Native Android app.
  * By default you don't need to apply any configuration, just uncomment the lines you need.
@@ -78,8 +94,8 @@ android {
         applicationId "com.healyoursoul"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode gitCount
+        versionName packageVer
     }
     signingConfigs {
         debug {
