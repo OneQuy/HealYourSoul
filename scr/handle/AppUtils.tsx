@@ -38,8 +38,8 @@ export const GetListFileRLP = (cat: Category, localOrFb: boolean) => {
     if (!localOrFb) {
         if (cat === Category.Draw)
             return FirebasePath.ListFile_Draw;
-        else if (cat === Category.Real)
-            return FirebasePath.ListFile_Real;
+        else if (cat === Category.Meme)
+            return FirebasePath.ListFile_Meme;
         else if (cat === Category.Quote)
             return FirebasePath.ListFile_Quote;
         else
@@ -48,8 +48,8 @@ export const GetListFileRLP = (cat: Category, localOrFb: boolean) => {
     else {
         if (cat === Category.Draw)
             return LocalPath.ListFile_Draw;
-        else if (cat === Category.Real)
-            return LocalPath.ListFile_Real;
+        else if (cat === Category.Meme)
+            return LocalPath.ListFile_Meme;
         else if (cat === Category.Quote)
             return LocalPath.ListFile_Quote;
         else
@@ -60,8 +60,8 @@ export const GetListFileRLP = (cat: Category, localOrFb: boolean) => {
 export const GetDBVersionPath = (cat: Category) => {
     if (cat === Category.Draw)
         return FirebaseDBPath.Version_Draw;
-    else if (cat === Category.Real)
-        return FirebaseDBPath.Version_Real;
+    else if (cat === Category.Meme)
+        return FirebaseDBPath.Version_Meme;
     else if (cat === Category.Quote)
         return FirebaseDBPath.Version_Quote;
     else
@@ -105,7 +105,7 @@ export async function CheckAndGetFileListAsync(cat: Category): Promise<FileList 
         needDownload = true;
     else if (cat === Category.Quote && localVersion < versions.quote)
         needDownload = true;
-    else if (cat === Category.Real && localVersion < versions.real)
+    else if (cat === Category.Meme && localVersion < versions.meme)
         needDownload = true;
 
     if (!needDownload && localFileList !== null) {
@@ -128,8 +128,8 @@ const GetMediaFullPath = (localOrFb: boolean, cat: Category, postID: number, med
 
     if (cat === Category.Draw)
         path = `draw/data/${postID}/${mediaIdx}`;
-    else if (cat === Category.Real)
-        path = `real/data/${postID}/${mediaIdx}`;
+    else if (cat === Category.Meme)
+        path = `meme/data/${postID}/${mediaIdx}`;
     else if (cat === Category.Quote)
         path = `quote/data/${postID}/${mediaIdx}`;
     else
@@ -152,8 +152,8 @@ export const GetAllSavedLocalPostIDsListAsync = async (cat: Category) => {
 
     if (cat === Category.Draw)
         path = `draw/data`;
-    else if (cat === Category.Real)
-        path = `real/data`;
+    else if (cat === Category.Meme)
+        path = `meme/data`;
     else if (cat === Category.Quote)
         path = `quote/data`;
     else

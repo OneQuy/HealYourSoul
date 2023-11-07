@@ -17,7 +17,7 @@ import { CheckAndGetFileListAsync, CheckLocalFileAndGetURIAsync, GetAllSavedLoca
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { PickRandomElement, RoundNumber, SecondsToHourMinuteSecondString } from '../../handle/Utils';
-import { addDrawFavoritedID, addDrawSeenID, addQuoteFavoritedID, addQuoteSeenID, addRealFavoritedID, addRealSeenID, removeDrawFavoritedID, removeQuoteFavoritedID, removeRealFavoritedID } from '../../redux/UserDataSlice';
+import { addDrawFavoritedID, addDrawSeenID, addQuoteFavoritedID, addQuoteSeenID, addMemeFavoritedID, addMemeSeenID, removeDrawFavoritedID, removeQuoteFavoritedID, removeMemeFavoritedID } from '../../redux/UserDataSlice';
 import { setMutedVideo } from '../../redux/MiscSlice';
 import { ColorNameToRgb, HexToRgb, ToCanPrint } from '../../handle/UtilsTS';
 import Clipboard from '@react-native-clipboard/clipboard';
@@ -61,8 +61,8 @@ const ThePage = ({ category }: ThePageProps) => {
     const seenIDs = useAppSelector((state: RootState) => {
         if (category === Category.Draw)
             return state.userData.drawSeenIDs;
-        else if (category === Category.Real)
-            return state.userData.realSeenIDs;
+        else if (category === Category.Meme)
+            return state.userData.memeSeenIDs;
         else if (category === Category.Quote)
             return state.userData.quoteSeenIDs;
         else
@@ -72,8 +72,8 @@ const ThePage = ({ category }: ThePageProps) => {
     const favoritedIDs = useAppSelector((state: RootState) => {
         if (category === Category.Draw)
             return state.userData.drawFavoritedIDs;
-        else if (category === Category.Real)
-            return state.userData.realFavoritedIDs;
+        else if (category === Category.Meme)
+            return state.userData.memeFavoritedIDs;
         else if (category === Category.Quote)
             return state.userData.quoteFavoritedIDs;
         else
@@ -423,11 +423,11 @@ const ThePage = ({ category }: ThePageProps) => {
             else
                 dispatch(addDrawFavoritedID(post.current.id));
         }
-        else if (category === Category.Real) {
+        else if (category === Category.Meme) {
             if (isFavorited)
-                dispatch(removeRealFavoritedID(post.current.id));
+                dispatch(removeMemeFavoritedID(post.current.id));
             else
-                dispatch(addRealFavoritedID(post.current.id));
+                dispatch(addMemeFavoritedID(post.current.id));
         }
         else
             throw new Error('NI cat: ' + category);
@@ -549,8 +549,8 @@ const ThePage = ({ category }: ThePageProps) => {
         }
 
         if (post.current) {
-            if (category === Category.Real)
-                dispatch(addRealSeenID(post.current.id));
+            if (category === Category.Meme)
+                dispatch(addMemeSeenID(post.current.id));
             else if (category === Category.Draw)
                 dispatch(addDrawSeenID(post.current.id));
             else if (category === Category.Quote)

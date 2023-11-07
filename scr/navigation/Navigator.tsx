@@ -5,7 +5,7 @@ import { createDrawerNavigator, DrawerContentComponentProps, DrawerContentScroll
 import { NavigationContainer } from '@react-navigation/native';
 import { ScreenName } from '../constants/AppConstants';
 import ComicScreen from '../screens/comic/ComicScreen';
-import RealScreen from '../screens/real/RealScreen';
+import MemeScreen from '../screens/meme/MemeScreen';
 import QuoteScreen from '../screens/quote/QuoteScreen';
 import { ThemeType, themes } from '../constants/Colors';
 import { RootState, useAppDispatch, useAppSelector } from '../redux/Store';
@@ -13,7 +13,7 @@ import { setTheme } from '../redux/MiscSlice';
 
 export type DrawerParamList = {
   [ScreenName.Comic]: undefined,
-  [ScreenName.RealMedia]: undefined,
+  [ScreenName.Meme]: undefined,
   [ScreenName.Quote]: undefined,
 }
 
@@ -31,7 +31,7 @@ const Navigator = ({ initialRouteName }: MainNavigatorProps) => {
         drawerContent={(props) => <CustomDrawerContent {...props} />}
       >
         <Drawer.Screen name={ScreenName.Comic} component={ComicScreen} />
-        <Drawer.Screen name={ScreenName.RealMedia} component={RealScreen} />
+        <Drawer.Screen name={ScreenName.Meme} component={MemeScreen} />
         <Drawer.Screen name={ScreenName.Quote} component={QuoteScreen} />
       </Drawer.Navigator>
     </NavigationContainer>

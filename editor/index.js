@@ -13,8 +13,8 @@ async function JustDoIt() {
       cat = 'quote'
     else if (IsParamExist('draw'))
       cat = 'draw'
-    else if (IsParamExist('real'))
-      cat = 'real'
+    else if (IsParamExist('meme'))
+      cat = 'meme'
     else {
       LogRed('no specify the cat to upload');
       return

@@ -4,8 +4,8 @@ export type UserDataState = {
     drawSeenIDs: number[],
     drawFavoritedIDs: number[],
 
-    realSeenIDs: number[],
-    realFavoritedIDs: number[],
+    memeSeenIDs: number[],
+    memeFavoritedIDs: number[],
 
     quoteSeenIDs: number[],
     quoteFavoritedIDs: number[],
@@ -15,8 +15,8 @@ const initialState: UserDataState = {
     drawSeenIDs: [],
     drawFavoritedIDs: [],
 
-    realSeenIDs: [],
-    realFavoritedIDs: [],
+    memeSeenIDs: [],
+    memeFavoritedIDs: [],
 
     quoteSeenIDs: [],
     quoteFavoritedIDs: [],
@@ -42,18 +42,18 @@ const slice = createSlice({
             [action.payload, ...state.drawFavoritedIDs] = state.drawFavoritedIDs;
         },
 
-        addRealSeenID(state, action: PayloadAction<number>) {
-            if (!state.realSeenIDs.includes(action.payload))
-                state.realSeenIDs.push(action.payload);
+        addMemeSeenID(state, action: PayloadAction<number>) {
+            if (!state.memeSeenIDs.includes(action.payload))
+                state.memeSeenIDs.push(action.payload);
         },
 
-        addRealFavoritedID(state, action: PayloadAction<number>) {
-            if (!state.realFavoritedIDs.includes(action.payload))
-                state.realFavoritedIDs.push(action.payload);
+        addMemeFavoritedID(state, action: PayloadAction<number>) {
+            if (!state.memeFavoritedIDs.includes(action.payload))
+                state.memeFavoritedIDs.push(action.payload);
         },
 
-        removeRealFavoritedID(state, action: PayloadAction<number>) {
-            [action.payload, ...state.realFavoritedIDs] = state.realFavoritedIDs;
+        removeMemeFavoritedID(state, action: PayloadAction<number>) {
+            [action.payload, ...state.memeFavoritedIDs] = state.memeFavoritedIDs;
         },
 
         addQuoteSeenID(state, action: PayloadAction<number>) {
@@ -79,9 +79,9 @@ export const {
     addDrawFavoritedID,
     removeDrawFavoritedID,
 
-    addRealSeenID,
-    addRealFavoritedID,
-    removeRealFavoritedID,
+    addMemeSeenID,
+    addMemeFavoritedID,
+    removeMemeFavoritedID,
 
     addQuoteSeenID,
     addQuoteFavoritedID,

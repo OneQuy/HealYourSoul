@@ -3,8 +3,8 @@ import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-nat
 // screen names
 
 export enum ScreenName {
-  Comic = 'Comics',
-  RealMedia = 'Real Media',
+  Comic = 'Warm',
+  Meme = 'Meme',
   Quote = 'Quotes',
 }
 
@@ -47,19 +47,19 @@ export enum FontSize {
 export enum LocalPath {
   MasterDirName = 'master_dir',
   ListFile_Draw = LocalPath.MasterDirName + '/draw/list.json',
-  ListFile_Real = LocalPath.MasterDirName + '/real/list.json',
+  ListFile_Meme = LocalPath.MasterDirName + '/meme/list.json',
   ListFile_Quote = LocalPath.MasterDirName + '/quote/list.json'
 }
 
 export enum FirebasePath {
   ListFile_Draw = 'draw/list.json',
-  ListFile_Real = 'real/list.json',
+  ListFile_Meme = 'meme/list.json',
   ListFile_Quote = 'quote/list.json',
 }
 
 export enum FirebaseDBPath {
   Version_Draw = 'app/versions/draw',
-  Version_Real = 'app/versions/real',
+  Version_Meme = 'app/versions/meme',
   Version_Quote = 'app/versions/quote'
 }
 
@@ -67,7 +67,7 @@ export enum FirebaseDBPath {
 
 export enum Category {
   Draw = 0,
-  Real = 1,
+  Meme = 1,
   Quote = 2
 }
 

@@ -26,13 +26,13 @@ async function PullAllAsync() {
     await Promise.all([
         await PullByTypeAsync('quote'),
         await PullByTypeAsync('draw'),
-        await PullByTypeAsync('real'),
+        await PullByTypeAsync('meme'),
     ])
 }
 
 /**
  * 
- * @param {*} cat quote, real, draw
+ * @param {*} cat quote, meme, draw
  * @param {*} fromID (undefined for first post)
  * @param {*} toID (underfined for last post)
  */
