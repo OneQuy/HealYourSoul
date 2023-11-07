@@ -1,13 +1,16 @@
 {
   "name": "gooday",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "incver": "node editor/incver",
+    "builda": "node editor/incver && cd android && ./gradlew assembleRelease",
+    "store": "cd android && ./gradlew bundlerelease"
   },
   "dependencies": {
     "@baronha/ting": "^1.1.0",
