@@ -17,11 +17,17 @@ node editor startid=5 cat=quote endid=7
 
 upload:
 
-node editor.js push draw
+node editor push draw
 
-node editor.js push draw t="Have fun together" a=loffyllama l="www.google.com"
+node editor push draw t="Have fun together" a=loffyllama l="www.google.com"
 
-param:
+(image link from clipboard)
+node editor push meme wi
+
+(video link from clipboard)
+node editor push meme wv
+
+=====param:
 nd: to not delete file after push
 sa=aslam
 wi="www.image.jpg"
