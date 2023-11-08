@@ -15,6 +15,12 @@ async function JustDoIt() {
       cat = 'draw'
     else if (IsParamExist('meme'))
       cat = 'meme'
+    else if (IsParamExist('catdog'))
+      cat = 'catdog'
+    else if (IsParamExist('love'))
+      cat = 'love'
+    else if (IsParamExist('satisfying'))
+      cat = 'satisfying'
     else {
       LogRed('no specify the cat to upload');
       return
