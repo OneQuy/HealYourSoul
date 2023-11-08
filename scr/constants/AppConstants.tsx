@@ -8,7 +8,8 @@ export enum ScreenName {
   Quote = 'Quotes',
   CatDog = 'Meow. Doggo. Animals',
   Love = 'Love',
-  Satisfying  = 'Satisfying'
+  Satisfying  = 'Satisfying',
+  NSFW = 'NSFW'
 }
 
 // dir / file
@@ -21,6 +22,7 @@ export enum LocalPath {
   ListFile_CatDog = LocalPath.MasterDirName + '/catdog/list.json',
   ListFile_Love = LocalPath.MasterDirName + '/love/list.json',
   ListFile_Satisfying = LocalPath.MasterDirName + '/satisfying/list.json',
+  ListFile_NSFW = LocalPath.MasterDirName + '/nsfw/list.json',
 }
 
 export enum FirebasePath {
@@ -30,6 +32,7 @@ export enum FirebasePath {
   ListFile_CatDog = 'catdog/list.json',
   ListFile_Love = 'love/list.json',
   ListFile_Satisfying = 'satisfying/list.json',
+  ListFile_NSFW = 'nsfw/list.json',
 }
 
 export enum FirebaseDBPath {
@@ -39,6 +42,7 @@ export enum FirebaseDBPath {
   Version_CatDog = 'app/versions/catdog',
   Version_Love = 'app/versions/love',
   Version_Satisfying = 'app/versions/satisfying',
+  Version_NSFW = 'app/versions/nsfw',
 }
 
 // category
@@ -50,6 +54,7 @@ export enum Category {
   CatDog = 3,
   Love = 4,
   Satisfying = 5,
+  NSFW = 6,
 }
 
 // margin / padding
