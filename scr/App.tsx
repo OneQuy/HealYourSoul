@@ -50,7 +50,7 @@ const AppRender = () => {
     <ThemeContext.Provider value={theme} >
       <View style={CommonStyles.flex_1}>
         {
-          handled && false  ? <Navigator initialRouteName={result.categoryScreenToOpenFirst} /> : <SplashScreen />
+          handled && result  ? <Navigator initialRouteName={result.categoryScreenToOpenFirst} /> : <SplashScreen />
         }
       </View>
     </ThemeContext.Provider>);
