@@ -15,6 +15,7 @@ export type Versions = {
     catdog: number,
     love: number,
     satisfying: number,
+    nsfw: number,
 }
 
 export var versions: Versions;

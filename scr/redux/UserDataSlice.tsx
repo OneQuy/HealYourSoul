@@ -18,6 +18,9 @@ export type UserDataState = {
 
     catdogSeenIDs: number[],
     catdogFavoritedIDs: number[],
+    
+    nsfwSeenIDs: number[],
+    nsfwFavoritedIDs: number[],
 }
 
 const initialState: UserDataState = {
@@ -38,6 +41,9 @@ const initialState: UserDataState = {
 
     catdogSeenIDs: [],
     catdogFavoritedIDs: [],
+
+    nsfwSeenIDs: [],
+    nsfwFavoritedIDs: [],
 }
 
 const slice = createSlice({
@@ -110,6 +116,22 @@ const slice = createSlice({
             [action.payload, ...state.loveFavoritedIDs] = state.loveFavoritedIDs;
         },
         
+        // nsfw
+
+        addNSFWSeenID(state, action: PayloadAction<number>) {
+            if (!state.nsfwSeenIDs.includes(action.payload))
+                state.nsfwSeenIDs.push(action.payload);
+        },
+
+        addNSFWFavoritedID(state, action: PayloadAction<number>) {
+            if (!state.nsfwFavoritedIDs.includes(action.payload))
+                state.nsfwFavoritedIDs.push(action.payload);
+        },
+
+        removeNSFWFavoritedID(state, action: PayloadAction<number>) {
+            [action.payload, ...state.nsfwFavoritedIDs] = state.nsfwFavoritedIDs;
+        },
+        
         // catdog
 
         addCatDogSeenID(state, action: PayloadAction<number>) {
@@ -167,6 +189,10 @@ export const {
     addLoveSeenID,
     addLoveFavoritedID,
     removeLoveFavoritedID,
+   
+    addNSFWSeenID,
+    addNSFWFavoritedID,
+    removeNSFWFavoritedID,
    
     addSatisfyingSeenID,
     addSatisfyingFavoritedID,

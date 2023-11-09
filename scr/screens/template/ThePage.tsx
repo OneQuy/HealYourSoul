@@ -17,7 +17,7 @@ import { CheckAndGetFileListAsync, CheckLocalFileAndGetURIAsync, GetAllSavedLoca
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { PickRandomElement, RoundNumber, SecondsToHourMinuteSecondString } from '../../handle/Utils';
-import { addDrawFavoritedID, addDrawSeenID, addQuoteFavoritedID, addQuoteSeenID, addMemeFavoritedID, addMemeSeenID, removeDrawFavoritedID, removeQuoteFavoritedID, removeMemeFavoritedID, removeLoveFavoritedID, addLoveFavoritedID, removeSatisfyingFavoritedID, addSatisfyingFavoritedID, removeCatDogFavoritedID, addCatDogFavoritedID, addLoveSeenID, addSatisfyingSeenID, addCatDogSeenID } from '../../redux/UserDataSlice';
+import { addDrawFavoritedID, addDrawSeenID, addQuoteFavoritedID, addQuoteSeenID, addMemeFavoritedID, addMemeSeenID, removeDrawFavoritedID, removeQuoteFavoritedID, removeMemeFavoritedID, removeLoveFavoritedID, addLoveFavoritedID, removeSatisfyingFavoritedID, addSatisfyingFavoritedID, removeCatDogFavoritedID, addCatDogFavoritedID, addLoveSeenID, addSatisfyingSeenID, addCatDogSeenID, removeNSFWFavoritedID, addNSFWFavoritedID, addNSFWSeenID } from '../../redux/UserDataSlice';
 import { setMutedVideo } from '../../redux/MiscSlice';
 import { ColorNameToRgb, HexToRgb, ToCanPrint } from '../../handle/UtilsTS';
 import Clipboard from '@react-native-clipboard/clipboard';
@@ -71,6 +71,8 @@ const ThePage = ({ category }: ThePageProps) => {
             return state.userData.loveSeenIDs;
         else if (category === Category.CatDog)
             return state.userData.catdogSeenIDs;
+        else if (category === Category.NSFW)
+            return state.userData.nsfwSeenIDs;
         else
             throw new Error('not implement cat: ' + category);
     });
@@ -88,6 +90,8 @@ const ThePage = ({ category }: ThePageProps) => {
             return state.userData.catdogFavoritedIDs;
         else if (category === Category.Satisfying)
             return state.userData.satisfyingFavoritedIDs;
+        else if (category === Category.NSFW)
+            return state.userData.nsfwFavoritedIDs;
         else
             throw new Error('NI cat: ' + category);
     });
@@ -459,6 +463,12 @@ const ThePage = ({ category }: ThePageProps) => {
             else
                 dispatch(addCatDogFavoritedID(post.current.id));
         }
+        else if (category === Category.NSFW) {
+            if (isFavorited)
+                dispatch(removeNSFWFavoritedID(post.current.id));
+            else
+                dispatch(addNSFWFavoritedID(post.current.id));
+        }
         else
             throw new Error('NI cat: ' + category);
     }, [isFavorited]);
@@ -591,6 +601,8 @@ const ThePage = ({ category }: ThePageProps) => {
                 dispatch(addSatisfyingSeenID(post.current.id));
             else if (category === Category.CatDog)
                 dispatch(addCatDogSeenID(post.current.id));
+            else if (category === Category.NSFW)
+                dispatch(addNSFWSeenID(post.current.id));
             else
                 throw new Error('NI cat: ' + category);
         }

@@ -21,6 +21,8 @@ async function JustDoIt() {
       cat = 'love'
     else if (IsParamExist('satisfying'))
       cat = 'satisfying'
+    else if (IsParamExist('nsfw'))
+      cat = 'nsfw'
     else {
       LogRed('no specify the cat to upload');
       return
