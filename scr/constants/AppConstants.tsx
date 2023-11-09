@@ -1,3 +1,4 @@
+import { TextProps } from "react-native";
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-native-responsive-screen";
 
 // screen names
@@ -89,6 +90,12 @@ export enum FontSize {
   Big = wp('7%'),
   Normal = wp('5%'),
   Small = wp('3%'),
+}
+
+// font weight
+
+export enum FontWeight {
+  Bold = 'bold'
 }
 
 // need reload reason
