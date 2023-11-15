@@ -15,3 +15,7 @@ export type FileList = {
     version: number,
     posts: PostMetadata[]
 }
+
+export type AppConfig = {
+    ios_review_limit_version: string,
+}

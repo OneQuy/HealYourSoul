@@ -5,6 +5,7 @@ import { HandleVersionsFileAsync } from "./VersionsHandler";
 import { DrawerParamList } from "../navigation/Navigator";
 import { ThemeColor } from "../constants/Colors";
 import { NetLord } from "./NetLord";
+import { HandleAppConfigAsync } from "./AppConfigHandler";
 // import Clipboard from "@react-native-clipboard/clipboard";
 // import { toast } from "@baronha/ting";
 
@@ -28,6 +29,10 @@ export async function LoadAppData(theme: ThemeColor): Promise<LoadAppDataResult>
 
     await NetLord.InitAsync();
     
+    // handle: app config (must be first after init NetLord)
+
+    await HandleAppConfigAsync(theme) 
+
     // handle: versions file
 
     await HandleVersionsFileAsync(theme);

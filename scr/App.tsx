@@ -18,7 +18,7 @@ import { clearAllUserData } from './redux/UserDataSlice'
 //   )
 // }
 
-const App = () => {  
+const App = () => {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
@@ -31,7 +31,7 @@ const App = () => {
 const AppRender = () => {
   const themeType = useAppSelector((state: RootState) => state.misc.themeType);
   const theme = GetColors(themeType);
-  const {handled, result} = useAsyncHandle(async () => LoadAppData(theme));
+  const { handled, result } = useAsyncHandle(async () => LoadAppData(theme));
   const dispatch = useAppDispatch();
 
   // init once
@@ -45,12 +45,14 @@ const AppRender = () => {
       console.log('ClearAllUserData');
     }
   }, []);
-  
+
   return (
     <ThemeContext.Provider value={theme} >
       <View style={CommonStyles.flex_1}>
         {
-          handled && result  ? <Navigator initialRouteName={result.categoryScreenToOpenFirst} /> : <SplashScreen />
+          handled && result ?
+            <Navigator initialRouteName={result.categoryScreenToOpenFirst} /> :
+            <SplashScreen />
         }
       </View>
     </ThemeContext.Provider>);

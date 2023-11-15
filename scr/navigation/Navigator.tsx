@@ -41,7 +41,7 @@ const Navigator = ({ initialRouteName }: MainNavigatorProps) => {
         <Drawer.Screen name={ScreenName.Meme} component={MemeScreen} />
         <Drawer.Screen name={ScreenName.Comic} component={ComicScreen} />
         <Drawer.Screen name={ScreenName.CatDog} component={CatDogScreen} />
-        <Drawer.Screen name={ScreenName.NSFW} component={NSFWScreen} />
+        {/* <Drawer.Screen name={ScreenName.NSFW} component={NSFWScreen} /> */}
         <Drawer.Screen name={ScreenName.Quote} component={QuoteScreen} />
         <Drawer.Screen name={ScreenName.Satisfying} component={SatisfyingScreen} />
         <Drawer.Screen name={ScreenName.Love} component={LoveScreen} />

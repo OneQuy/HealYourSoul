@@ -1,8 +1,6 @@
-import { toast } from "@baronha/ting";
 import { FirebaseDatabase_GetValueAsync } from "../firebase/FirebaseDatabase";
-import { HandleError, ToastTheme } from "./AppUtils";
+import { HandleError } from "./AppUtils";
 import { Cheat } from "./Cheat";
-import { LocalText } from "../constants/AppConstants";
 import { ThemeColor } from "../constants/Colors";
 import { IsInternetAvailableAsync } from "./NetLord";
 
@@ -26,11 +24,6 @@ export async function HandleVersionsFileAsync(theme: ThemeColor) {
     const isInternet = await IsInternetAvailableAsync();
 
     if (!isInternet) {
-        toast({
-            title: LocalText.offline_mode,            
-            ...ToastTheme(theme, 'none')
-        })
-
         return;
     }
 
