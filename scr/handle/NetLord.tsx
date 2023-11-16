@@ -89,11 +89,19 @@ const myHeaders = new Headers();
 myHeaders.append('pragma', 'no-cache');
 myHeaders.append('cache-control', 'no-cache');
 
+var alterFetchUrl: string | undefined = undefined
+
+export function SetNetLordFetchUrl(url: string) {
+    alterFetchUrl = url
+}
+
 export async function IsInternetAvailableAsync(): Promise<boolean> {
     // const start = Date.now();
 
+    const url = alterFetchUrl ? alterFetchUrl : FetchURL
+    
     const res = await Promise.any([
-        fetch(FetchURL, { headers: myHeaders }),
+        fetch(url, { headers: myHeaders }),
         new Promise(resolve => setTimeout(resolve, ThresholdFetchTime, TimeOutError))
     ]);
 

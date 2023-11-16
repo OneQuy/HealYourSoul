@@ -1,7 +1,7 @@
 import { FirebaseDatabase_GetValueAsync } from "../firebase/FirebaseDatabase";
 import { HandleError, ToastTheme } from "./AppUtils";
 import { ThemeColor, } from "../constants/Colors";
-import { IsInternetAvailableAsync } from "./NetLord";
+import { IsInternetAvailableAsync, SetNetLordFetchUrl } from "./NetLord";
 import { AppConfig } from "../constants/Types";
 import { toast } from "@baronha/ting";
 import { LocalText } from "../constants/AppConstants";
@@ -36,4 +36,9 @@ export async function HandleAppConfigAsync(theme: ThemeColor) {
     // success
 
     appConfig = result.value as AppConfig
+
+    // handle others
+
+    if (appConfig.net_url)
+        SetNetLordFetchUrl(appConfig.net_url)
 }
