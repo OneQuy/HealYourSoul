@@ -29,9 +29,18 @@ type MainNavigatorProps = {
   initialRouteName: keyof DrawerParamList | null
 }
 
+type ScreenNamePair = [keyof DrawerParamList, any]
+
 const Drawer = createDrawerNavigator<DrawerParamList>();
 
-// const 
+const Screens: ScreenNamePair[] = [
+  [ScreenName.Meme, MemeScreen],
+  [ScreenName.Comic, ComicScreen],
+  [ScreenName.CatDog, CatDogScreen],
+  [ScreenName.Quote, QuoteScreen],
+  [ScreenName.Satisfying, SatisfyingScreen],
+  [ScreenName.Love, LoveScreen],
+]
 
 const Navigator = ({ initialRouteName }: MainNavigatorProps) => {
   return (
@@ -40,13 +49,11 @@ const Navigator = ({ initialRouteName }: MainNavigatorProps) => {
         initialRouteName={!initialRouteName ? ScreenName.Comic : initialRouteName}
         drawerContent={(props) => <CustomDrawerContent {...props} />}
       >
-        <Drawer.Screen name={ScreenName.Meme} component={MemeScreen} />
-        <Drawer.Screen name={ScreenName.Comic} component={ComicScreen} />
-        <Drawer.Screen name={ScreenName.CatDog} component={CatDogScreen} />
-        {/* <Drawer.Screen name={ScreenName.NSFW} component={NSFWScreen} /> */}
-        <Drawer.Screen name={ScreenName.Quote} component={QuoteScreen} />
-        <Drawer.Screen name={ScreenName.Satisfying} component={SatisfyingScreen} />
-        <Drawer.Screen name={ScreenName.Love} component={LoveScreen} />
+        {
+          Screens.map(([screenName, screen]) => {
+            return <Drawer.Screen key={screenName} name={screenName} component={screen} />
+          })
+        }
       </Drawer.Navigator>
     </NavigationContainer>
   )
@@ -62,16 +69,16 @@ function CustomDrawerContent(props: DrawerContentComponentProps) {
       <DrawerContentScrollView {...props}>
         <DrawerItemList {...props} />
       </DrawerContentScrollView>
-      <View style={{marginLeft: 20, marginBottom: 20}}>
+      <View style={{ marginLeft: 20, marginBottom: 20 }}>
         {/* theme setting */}
         <View style={{ flexDirection: 'row', gap: 20 }}>
-          <Text style={{fontWeight: '500'}}>Theme</Text>
+          <Text style={{ fontWeight: '500' }}>Theme</Text>
           {
-            themeValues.current.map((theme, index) => 
-              <TouchableOpacity 
-              onPress={() => dispatch(setTheme(theme as ThemeType))} 
-              key={index} 
-              style={{borderWidth: currentTheme === theme ? 1 : 0, width: 20, height: 20, borderRadius: 10, backgroundColor: themes[theme as ThemeType].primary }} />)
+            themeValues.current.map((theme, index) =>
+              <TouchableOpacity
+                onPress={() => dispatch(setTheme(theme as ThemeType))}
+                key={index}
+                style={{ borderWidth: currentTheme === theme ? 1 : 0, width: 20, height: 20, borderRadius: 10, backgroundColor: themes[theme as ThemeType].primary }} />)
           }
         </View>
       </View>
