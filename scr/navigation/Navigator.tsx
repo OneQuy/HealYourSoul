@@ -31,6 +31,8 @@ type MainNavigatorProps = {
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
 
+// const 
+
 const Navigator = ({ initialRouteName }: MainNavigatorProps) => {
   return (
     <NavigationContainer>
