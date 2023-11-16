@@ -1,16 +1,23 @@
-import { Alert } from "react-native";
+import { Alert, Platform } from "react-native";
 import { Category, FirebaseDBPath, FirebasePath, LocalPath, LocalText, NeedReloadReason } from "../constants/AppConstants";
 import { ThemeColor } from "../constants/Colors";
 import { FileList, MediaType, PostMetadata } from "../constants/Types";
-import { FirebaseStorage_DownloadAndReadJsonAsync, FirebaseStorage_DownloadByGetBytesAsync, FirebaseStorage_DownloadByGetURLAsync } from "../firebase/FirebaseStorage";
+import { FirebaseStorage_DownloadAndReadJsonAsync, FirebaseStorage_DownloadByGetURLAsync } from "../firebase/FirebaseStorage";
 import { Cheat } from "./Cheat";
 import { DeleteFileAsync, DeleteTempDirAsync, GetFLPFromRLP, IsExistedAsync, ReadTextAsync } from "./FileUtils";
 import { versions } from "./VersionsHandler";
 import { ToastOptions, toast } from "@baronha/ting";
-import { ColorNameToHex, ToCanPrint } from "./UtilsTS";
+import { ColorNameToHex, ToCanPrint, VersionToNumber } from "./UtilsTS";
 import { AppLog } from "./AppLog";
 import RNFS, { DownloadProgressCallbackResult, ReadDirItem } from "react-native-fs";
 import { IsInternetAvailableAsync } from "./NetLord";
+import { GetAppConfig } from "./AppConfigHandler";
+
+const today = new Date()
+const todayString = 'd' + today.getDate() + '_m' + (today.getMonth() + 1) + '_' + today.getFullYear()
+
+const version = require('../../package.json')['version']
+const versionToNum = VersionToNumber(version)
 
 /**
  * cheat clear whole folder data
@@ -306,6 +313,20 @@ export const AlertNoInternet = () => {
         LocalText.popup_title_need_internet,
         LocalText.popup_content_need_internet,
     );
+}
+
+export const Is_IOS_And_OfflineOrLowerReviewVersion = () => {
+    if (Platform.OS === 'android')
+        return false
+
+    const appConfig = GetAppConfig()
+
+    if (!appConfig)
+        return true
+
+    const iosReviewVersion = VersionToNumber(appConfig.ios_review_limit_version)
+
+    return versionToNum <= iosReviewVersion
 }
 
 export const Track = (event: string, data?: string) => {

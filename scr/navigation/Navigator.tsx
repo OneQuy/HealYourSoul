@@ -10,6 +10,8 @@ import CatDogScreen from '../screens/catdog/CatDogScreen';
 import SatisfyingScreen from '../screens/satisfying/SatisfyingScreen';
 import LoveScreen from '../screens/love/LoveScreen';
 import { CustomDrawerContent } from './CustomDrawer';
+import NSFWScreen from '../screens/nsfw/NSFWScreen';
+import { Is_IOS_And_OfflineOrLowerReviewVersion } from '../handle/AppUtils';
 
 export type DrawerParamList = {
   [ScreenName.Comic]: undefined,
@@ -29,9 +31,10 @@ type ScreenNamePair = [keyof DrawerParamList, any]
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
 
-const Screens: ScreenNamePair[] = [
+const ScreenList: ScreenNamePair[] = [
   [ScreenName.Meme, MemeScreen],
   [ScreenName.Comic, ComicScreen],
+  [ScreenName.NSFW, NSFWScreen],
   [ScreenName.CatDog, CatDogScreen],
   [ScreenName.Quote, QuoteScreen],
   [ScreenName.Satisfying, SatisfyingScreen],
@@ -39,6 +42,11 @@ const Screens: ScreenNamePair[] = [
 ]
 
 const Navigator = ({ initialRouteName }: MainNavigatorProps) => {
+  let screenList = ScreenList
+
+  if (Is_IOS_And_OfflineOrLowerReviewVersion())
+    screenList = screenList.filter(i => i[0] !== ScreenName.NSFW)
+
   return (
     <NavigationContainer>
       <Drawer.Navigator
@@ -46,7 +54,7 @@ const Navigator = ({ initialRouteName }: MainNavigatorProps) => {
         drawerContent={(props) => <CustomDrawerContent {...props} />}
       >
         {
-          Screens.map(([screenName, screen]) => {
+          screenList.map(([screenName, screen]) => {
             return <Drawer.Screen key={screenName} name={screenName} component={screen} />
           })
         }
