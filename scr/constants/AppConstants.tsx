@@ -66,6 +66,8 @@ export enum Outline {
   VerticalMini = hp('0.7%'),
 
   GapVertical = hp('1%'),
+  GapVertical_2 = hp('2%'),
+  
   GapHorizontal = wp('1%'),
 
   BorderRadius = 8,
@@ -123,6 +125,19 @@ export const LocalText = {
   saved: 'Saved!',
   no_media_to_download: 'No media to download!',
   oops: 'Oooops',
+  
+  ad_free: 'Ad-free',
+  no_ad_anymore: 'No ads during your subscription time',
+  
+  support_me: 'Support app',
+  support_me_info: 'Support me to pay the cost of the app server',
+  
+  give_coffee: 'Give me a cup of coffee!',
+  give_coffee_info: 'I really appreciate it. Thank you!',
+  
+  one_month: '1 Month',
+  six_month: '6 Months',
+  twelve_month: '12 Months',
 
 
   // popup
