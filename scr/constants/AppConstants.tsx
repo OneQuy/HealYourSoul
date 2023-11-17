@@ -87,18 +87,26 @@ export enum Opacity {
  Primary = 0.8,
 }
 
+// border radius
+
+export enum BorderRadius {
+ BR = wp('4%'),
+}
+
 // font size
 
 export enum FontSize {
   Big = wp('7%'),
   Normal = wp('5%'),
+  Small_L = wp('4%'),
   Small = wp('3%'),
 }
 
 // font weight
 
 export enum FontWeight {
-  Bold = 'bold'
+  Bold = 'bold',
+  B600 = '600'
 }
 
 // need reload reason
@@ -126,6 +134,10 @@ export const LocalText = {
   no_media_to_download: 'No media to download!',
   oops: 'Oooops',
   
+  premium_benefit: 'Why I need Premium?',
+  select_premium: 'Select a subscription that suits to you:',
+  thank_you_premium: 'Any subscription always supports me a lot. Thank you so much!',
+
   ad_free: 'Ad-free',
   no_ad_anymore: 'No ads during your subscription time',
   
