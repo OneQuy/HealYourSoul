@@ -10,7 +10,8 @@ export enum ScreenName {
   CatDog = 'Meow. Doggo. Animals',
   Love = 'Love',
   Satisfying  = 'Satisfying',
-  NSFW = 'NSFW'
+  NSFW = 'NSFW',
+  IAPPage = 'Buy Premium'
 }
 
 // dir / file

@@ -12,6 +12,7 @@ import LoveScreen from '../screens/love/LoveScreen';
 import { CustomDrawerContent } from './CustomDrawer';
 import NSFWScreen from '../screens/nsfw/NSFWScreen';
 import { Is_IOS_And_OfflineOrLowerReviewVersion } from '../handle/AppUtils';
+import IAPPage from '../screens/IAP/IAPPage';
 
 export type DrawerParamList = {
   [ScreenName.Comic]: undefined,
@@ -21,6 +22,7 @@ export type DrawerParamList = {
   [ScreenName.Love]: undefined,
   [ScreenName.Satisfying]: undefined,
   [ScreenName.NSFW]: undefined,
+  [ScreenName.IAPPage]: undefined,
 }
 
 type MainNavigatorProps = {
@@ -39,6 +41,7 @@ const ScreenList: ScreenNamePair[] = [
   [ScreenName.Quote, QuoteScreen],
   [ScreenName.Satisfying, SatisfyingScreen],
   [ScreenName.Love, LoveScreen],
+  [ScreenName.IAPPage, IAPPage]
 ]
 
 const Navigator = ({ initialRouteName }: MainNavigatorProps) => {
