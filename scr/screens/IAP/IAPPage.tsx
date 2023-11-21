@@ -8,19 +8,19 @@ const ids = [
   {
     id: 'gooday_month_1',
     month: 1,
-    imgUrl: 'https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA1L3Y5MDQtbnVubnktMDE2XzIuanBn.jpg',
-    price: '$0.99', 
+    imgUrl: require('../../../assets/images/btn_bg_1.jpeg'),
+    price: '$0.99',
   },
   {
     id: 'gooday_month_6',
     month: 6,
-    imgUrl: 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D',
+    imgUrl: require('../../../assets/images/btn_bg_2.jpeg'),
     price: '$3.99',
   },
   {
     id: 'gooday_month_12',
     month: 12,
-    imgUrl: 'https://media.istockphoto.com/id/1407642855/vector/vector-abstract-colorful-flowing-background-design-element-for-presentation-website-template.jpg?s=612x612&w=0&k=20&c=DuNMrUjoB7OOYdqcLb1GbrEzZARi2mV8D6BhE9v_bOM=',
+    imgUrl: require('../../../assets/images/btn_bg_3.jpeg'),
     price: '$7.99',
   },
 ]
@@ -65,14 +65,14 @@ const IAPPage = () => {
       {
         ids.map(({ id, month, imgUrl, price }) => {
           const date = new Date(Date.now() + month * 31 * 24 * 3600 * 1000)
-          
+
           return (
             <View key={id} style={{ gap: Outline.VerticalMini }}>
               <TouchableOpacity style={{ borderRadius: BorderRadius.BR, overflow: 'hidden' }}>
-                <ImageBackground 
+                <ImageBackground
                   // source={bg} 
                   resizeMode='cover'
-                  source={{uri: imgUrl}}
+                  source={imgUrl}
                   style={{ alignItems: 'center', padding: Outline.GapVertical_2, justifyContent: 'center', }}>
                   <Text style={{ color: 'black', fontSize: FontSize.Normal, fontWeight: FontWeight.B600 }}>{month} month{month > 1 ? 's' : ''}</Text>
                   <Text style={{ color: 'black', fontSize: FontSize.Normal }}>{price}</Text>
