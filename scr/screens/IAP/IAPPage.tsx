@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Image, ImageBackground, Alert } from 'react-native'
+import { View, Text, ScrollView, Image, ImageBackground, Alert, Platform } from 'react-native'
 import React, { useEffect } from 'react'
 import { BorderRadius, FontSize, FontWeight, LocalText, Outline } from '../../constants/AppConstants'
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-native-responsive-screen";
@@ -48,11 +48,14 @@ const reasonItems = [
 
 const IAPPage = () => {
   const onPressed_Buy = (id: string) => {
-    // Purchase(id)
-
-    Alert.alert(
-      'Clicked package ID: ' + id,
-      'After IAP review, buy popup will go here.')
+    if (Platform.OS === 'android') {
+      Purchase(id)
+    }
+    else {
+      Alert.alert(
+        'Clicked package ID: ' + id,
+        'After IAP review, buy popup will go here.')
+    }
   }
 
   useEffect(() => {
