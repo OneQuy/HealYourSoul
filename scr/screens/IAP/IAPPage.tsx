@@ -1,8 +1,9 @@
-import { View, Text, ScrollView, Image, ImageBackground } from 'react-native'
-import React from 'react'
+import { View, Text, ScrollView, Image, ImageBackground, Alert } from 'react-native'
+import React, { useEffect } from 'react'
 import { BorderRadius, FontSize, FontWeight, LocalText, Outline } from '../../constants/AppConstants'
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-native-responsive-screen";
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { InitIAP, Purchase } from '../../handle/IAP';
 
 const ids = [
   {
@@ -46,6 +47,18 @@ const reasonItems = [
 ]
 
 const IAPPage = () => {
+  const onPressed_Buy = (id: string) => {
+    // Purchase(id)
+
+    Alert.alert(
+      'Clicked package ID: ' + id,
+      'After IAP review, buy popup will go here.')
+  }
+
+  useEffect(() => {
+    InitIAP()
+  }, [])
+
   return (
     <ScrollView contentContainerStyle={{ backgroundColor: 'white', padding: Outline.Horizontal, gap: Outline.GapVertical_2 }}>
       <Text style={{ color: 'black', fontSize: FontSize.Normal, }}>{LocalText.premium_benefit}</Text>
@@ -68,7 +81,7 @@ const IAPPage = () => {
 
           return (
             <View key={id} style={{ gap: Outline.VerticalMini }}>
-              <TouchableOpacity style={{ borderRadius: BorderRadius.BR, overflow: 'hidden' }}>
+              <TouchableOpacity onPress={() => onPressed_Buy(id)} style={{ borderRadius: BorderRadius.BR, overflow: 'hidden' }}>
                 <ImageBackground
                   // source={bg} 
                   resizeMode='cover'

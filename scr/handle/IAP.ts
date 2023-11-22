@@ -13,6 +13,7 @@ import {
     flushFailedPurchasesCachedAsPendingAndroid,
     SubscriptionPurchase,
     finishTransaction,
+    requestPurchase,
 } from 'react-native-iap';
 
 var purchaseUpdateSubscription = null;
@@ -62,7 +63,17 @@ export const InitIAP = () => {
     })
 }
 
-
+export const Purchase = async (sku: string) => {
+    try {
+      await requestPurchase({
+        sku,
+        andDangerouslyFinishTransactionAutomaticallyIOS: false,
+      });
+    } catch (err) {
+    // @ts-ignore
+      console.log('hihihi', err.code, err.message);
+    }
+  };
 
 // componentWillUnmount() {
 //     if (this.purchaseUpdateSubscription) {
