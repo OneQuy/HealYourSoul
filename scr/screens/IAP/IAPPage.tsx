@@ -17,13 +17,13 @@ const ids = [
     id: 'gooday_month_6',
     month: 6,
     imgUrl: require('../../../assets/images/btn_bg_2.jpeg'),
-    price: '$3.99',
+    price: '$5.99',
   },
   {
     id: 'gooday_month_12',
     month: 12,
     imgUrl: require('../../../assets/images/btn_bg_3.jpeg'),
-    price: '$7.99',
+    price: '$11.99',
   },
 ]
 
