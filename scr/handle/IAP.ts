@@ -67,6 +67,7 @@ export const PurchaseAsync = async (sku: string) => {
     try {
         return await requestPurchase({
             sku,
+            skus: [sku],
             andDangerouslyFinishTransactionAutomaticallyIOS: false,
         });
     } catch (err) {
