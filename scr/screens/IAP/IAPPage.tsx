@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import { BorderRadius, FontSize, FontWeight, LocalText, Outline } from '../../constants/AppConstants'
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-native-responsive-screen";
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { InitIAP, PurchaseAsync } from '../../handle/IAP';
+import { GetProductsAsync, InitIAP, PurchaseAsync } from '../../handle/IAP';
 import { ToCanPrint } from '../../handle/UtilsTS';
 
 const ids = [
@@ -49,12 +49,15 @@ const reasonItems = [
 
 const IAPPage = () => {
   const onPressed_Buy = async (id: string) => {
+    const items = await GetProductsAsync(ids.map(i => i.id))
+
+
     if (Platform.OS === 'android') {
       const res = await PurchaseAsync(id)
 
       Alert.alert(
         'Clicked package ID: ' + id,
-        'Result:\n\n' + ToCanPrint(res))
+        'Result:\n\n' + ToCanPrint(res) + '\n\n' + ToCanPrint(items))
     }
     else {
       Alert.alert(

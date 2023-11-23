@@ -14,6 +14,7 @@ import {
     SubscriptionPurchase,
     finishTransaction,
     requestPurchase,
+    getProducts,
 } from 'react-native-iap';
 
 var purchaseUpdateSubscription = null;
@@ -61,6 +62,10 @@ export const InitIAP = () => {
                 );
             });
     })
+}
+
+export const GetProductsAsync = async (skus: string[]) => {
+    return await getProducts({ skus})
 }
 
 export const PurchaseAsync = async (sku: string) => {
