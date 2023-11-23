@@ -33,10 +33,10 @@ export const InitIAP = () => {
                 purchaseUpdateSubscription = purchaseUpdatedListener(
                     (purchase: SubscriptionPurchase | ProductPurchase) => {
                         const receipt = purchase.transactionReceipt;
-                        
+
                         console.log('purchaseUpdatedListener', purchase);
                         console.log('receipt', receipt);
-                       
+
                         if (!receipt)
                             return
 
@@ -48,7 +48,7 @@ export const InitIAP = () => {
 
                         // If consumable (can be purchased again)
                         finishTransaction({ purchase, isConsumable: true });
-                        
+
                         // // If not consumable
                         // await finishTransaction({ purchase, isConsumable: false });
                     },
@@ -63,17 +63,18 @@ export const InitIAP = () => {
     })
 }
 
-export const Purchase = async (sku: string) => {
+export const PurchaseAsync = async (sku: string) => {
     try {
-      await requestPurchase({
-        sku,
-        andDangerouslyFinishTransactionAutomaticallyIOS: false,
-      });
+        return await requestPurchase({
+            sku,
+            andDangerouslyFinishTransactionAutomaticallyIOS: false,
+        });
     } catch (err) {
-    // @ts-ignore
-      console.log('hihihi', err.code, err.message);
+        // @ts-ignore
+        //   console.log('hihihi', err.code, err.message);
+        return err
     }
-  };
+};
 
 // componentWillUnmount() {
 //     if (this.purchaseUpdateSubscription) {
