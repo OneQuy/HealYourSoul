@@ -51,19 +51,11 @@ const IAPPage = () => {
   const onPressed_Buy = async (id: string) => {
     const items = await GetProductsAsync(ids.map(i => i.id))
 
+    const res = await PurchaseAsync(id)
 
-    if (Platform.OS === 'android') {
-      const res = await PurchaseAsync(id)
-
-      Alert.alert(
-        'Clicked package ID: ' + id,
-        'Result:\n\n' + ToCanPrint(res) + '\n\n' + ToCanPrint(items))
-    }
-    else {
-      Alert.alert(
-        'Clicked package ID: ' + id,
-        'After IAP review, buy popup will go here.')
-    }
+    Alert.alert(
+      'Clicked package ID: ' + id,
+      'Result:\n\n' + ToCanPrint(res) + '\n\n' + ToCanPrint(items))
   }
 
   useEffect(() => {
