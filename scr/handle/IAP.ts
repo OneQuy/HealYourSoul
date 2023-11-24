@@ -25,10 +25,11 @@ export const InitIAP = () => {
         // we make sure that "ghost" pending payment are removed
         // (ghost = failed pending payment that are still marked as pending in Google's native Vending module cache)
         flushFailedPurchasesCachedAsPendingAndroid()
-            .catch(() => {
+            .catch((reason) => {
                 // exception can happen here if:
                 // - there are pending purchases that are still pending (we can't consume a pending purchase)
                 // in any case, you might not want to do anything special with the error
+                console.error('IAP flushFailedPurchasesCachedAsPendingAndroid error: ' + reason);
             })
             .then(() => {
                 purchaseUpdateSubscription = purchaseUpdatedListener(
