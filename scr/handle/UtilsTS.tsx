@@ -7,6 +7,7 @@ file / dir
 convert
 check type
 string utils
+array utils
 time
 other utils
 */
@@ -320,6 +321,18 @@ export const IsNumType = (o: any) => {
     return typeof o === 'number' && !Number.isNaN(o)
 }
 
+// array utils ---------------------------
+
+export function ArrayRemove<T>(arr: T[], value: T): boolean {
+    const idx = arr.indexOf(value)
+
+    if (idx < 0)
+        return false
+
+    arr.splice(idx, 1)
+    return true
+}
+
 // string utils ---------------------------
 
 /**
@@ -456,6 +469,20 @@ export const IsPointInRect = ( // main
         return true
     else
         return false
+}
+
+export const ToCanPrintError = (erroObj: any) => {
+    const err: string = erroObj?.code
+    const msg: string = erroObj?.message
+
+    if (!err && !msg)
+        return ToCanPrint(erroObj)
+    else if (err && msg)
+        return err + ' - ' + msg
+    else if (err)
+        return err
+    else
+        return msg
 }
 
 export const ToCanPrint = (something: any) => {
