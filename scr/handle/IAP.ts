@@ -33,11 +33,11 @@ const onSuccessListeners: SuccessCallback[] = []
 const onErrorListeners: ErrorCallback[] = []
 
 var isInited = false
+var initedProducts: IAPProduct[]
 
 export var fetchedProducts: Product[] = []
 
 /**
- * note: should pass callbacks when init
  * @returns unsubscribe method () => void if success, otherwise undefined (can not init)
  */
 export const InitIAPAsync = async (
@@ -54,6 +54,7 @@ export const InitIAPAsync = async (
     }
 
     isInited = true
+    initedProducts = products
 
     // (only android) we make sure that "ghost" pending payment are removed
     // (ghost = failed pending payment that are still marked as pending in Google's native Vending module cache)
@@ -163,16 +164,16 @@ export const FetchListroductsAsync = async (skus: string[]) => {
 }
 
 /**
- * call FetchListroductsAsync() first
- * @returns undefined if success, otherwise error
+ * @returns undefined if success, otherwise Error
  */
 export const PurchaseAsync = async (sku: string) => {
     try {
         if (!isInited)
             throw new Error('IAP not inited yet')
 
-        // if (Platform.OS === 'android' && fetchedProducts.length <= 0)
-        //     throw new Error('not called FetchListroductsAsync() yet')
+        if (Platform.OS === 'android' && fetchedProducts.length <= 0) { // need to fetch on android
+            await FetchListroductsAsync(initedProducts.map(i => i.sku))
+        }
 
         await requestPurchase({
             sku,
