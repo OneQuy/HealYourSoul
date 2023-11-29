@@ -1,29 +1,37 @@
 import { View, Text, ScrollView, Image, ImageBackground, Alert, Platform } from 'react-native'
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { BorderRadius, FontSize, FontWeight, LocalText, Outline } from '../../constants/AppConstants'
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-native-responsive-screen";
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { GetProductsAsync, InitIAP, PurchaseAsync } from '../../handle/IAP';
-import { ToCanPrint } from '../../handle/UtilsTS';
+import { GetIAPLocalPriceAsync, FetchListroductsAsync, IAPProduct, InitIAPAsync, PurchaseAsync } from '../../handle/IAP';
+import { ToCanPrint, ToCanPrintError } from '../../handle/UtilsTS';
+import { Product } from 'react-native-iap';
+import { IsInternetAvailableAsync, NetLord } from '../../handle/NetLord';
 
 const ids = [
   {
-    id: 'gooday_month_1',
     month: 1,
     imgUrl: require('../../../assets/images/btn_bg_1.jpeg'),
-    price: '$0.99',
+    product: {
+      sku: 'gooday_month_1',
+      isConsumable: true,
+    } as IAPProduct
   },
   {
-    id: 'gooday_month_6',
     month: 6,
     imgUrl: require('../../../assets/images/btn_bg_2.jpeg'),
-    price: '$5.99',
+    product: {
+      sku: 'gooday_month_6',
+      isConsumable: true,
+    } as IAPProduct
   },
   {
-    id: 'gooday_month_12',
     month: 12,
     imgUrl: require('../../../assets/images/btn_bg_3.jpeg'),
-    price: '$11.99',
+    product: {
+      sku: 'gooday_month_12',
+      isConsumable: true,
+    } as IAPProduct
   },
 ]
 
@@ -48,18 +56,59 @@ const reasonItems = [
 ]
 
 const IAPPage = () => {
-  const onPressed_Buy = async (id: string) => {
-    const items = await GetProductsAsync(ids.map(i => i.id))
+  const [fetchedProducts, setFetchedProducts] = useState<Product[]>([])
 
+  const onPressed_Buy = async (id: string) => {
     const res = await PurchaseAsync(id)
 
     Alert.alert(
       'Clicked package ID: ' + id,
-      'Result:\n\n' + ToCanPrint(res) + '\n\n' + ToCanPrint(items))
+      'Result:\n\n' + ToCanPrintError(res))
   }
 
+  const fetchLocalPriceAsync = useCallback(async () => {
+    const isInternet = await IsInternetAvailableAsync();
+    let needRepeat = false
+    
+    if (isInternet) {
+      const items = await FetchListroductsAsync(ids.map(i => i.product.sku))
+
+      if (items.length > 0)
+        setFetchedProducts(items)
+      else
+        needRepeat = true
+    }
+    else
+      needRepeat = true
+
+    if (needRepeat) {
+      setTimeout(fetchLocalPriceAsync, 1000);
+    }
+  }, [])
+
   useEffect(() => {
-    InitIAP()
+    let resInitIAP: Awaited<ReturnType<typeof InitIAPAsync>>
+
+    const hanldeAsync = async () => {
+      resInitIAP = await InitIAPAsync(
+        ids.map(i => i.product),
+        (id) => { },
+        (error) => { })
+
+      if (resInitIAP === undefined) {
+        console.error('IAP init fail')
+        return
+      }
+
+      fetchLocalPriceAsync()
+    }
+
+    hanldeAsync()
+
+    return () => {
+      if (resInitIAP)
+        resInitIAP()
+    }
   }, [])
 
   return (
@@ -79,14 +128,16 @@ const IAPPage = () => {
       }
       <Text style={{ marginTop: Outline.GapVertical_2, color: 'black', fontSize: FontSize.Normal, }}>{LocalText.select_premium}</Text>
       {
-        ids.map(({ id, month, imgUrl, price }) => {
+        ids.map(({ month, imgUrl, product }) => {
           const date = new Date(Date.now() + month * 31 * 24 * 3600 * 1000)
+          const { sku } = product
+          const productFetched = fetchedProducts.find(i => i.productId === sku)
+          const price = productFetched ? productFetched.localizedPrice : '...'
 
           return (
-            <View key={id} style={{ gap: Outline.VerticalMini }}>
-              <TouchableOpacity onPress={() => onPressed_Buy(id)} style={{ borderRadius: BorderRadius.BR, overflow: 'hidden' }}>
+            <View key={sku} style={{ gap: Outline.VerticalMini }}>
+              <TouchableOpacity onPress={() => onPressed_Buy(sku)} style={{ borderRadius: BorderRadius.BR, overflow: 'hidden' }}>
                 <ImageBackground
-                  // source={bg} 
                   resizeMode='cover'
                   source={imgUrl}
                   style={{ alignItems: 'center', padding: Outline.GapVertical_2, justifyContent: 'center', }}>
