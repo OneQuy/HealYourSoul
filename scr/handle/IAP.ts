@@ -1,5 +1,8 @@
 /**
  * SETUP
+ * 1. Like this: https://github.com/OneQuy/HealYourSoul/commit/614b9d3a2ae4e6c2928569d94ab32633ce3c7d14
+ * 2. Add IAP in XCode
+ * DOC
  * https://react-native-iap.dooboolab.com/docs/get-started
  */
 
@@ -17,6 +20,7 @@ import {
     requestPurchase,
     getProducts,
     Product,
+    ErrorCode,
 } from 'react-native-iap';
 import { ArrayRemove } from './UtilsTS';
 
@@ -164,7 +168,9 @@ export const FetchListroductsAsync = async (skus: string[]) => {
 }
 
 /**
- * @returns undefined if success, otherwise Error
+ * @returns undefined if success
+ * @returns null if user cancelled
+ * @returns otherwise Error
  */
 export const PurchaseAsync = async (sku: string) => {
     try {
@@ -183,7 +189,12 @@ export const PurchaseAsync = async (sku: string) => {
 
         return undefined
     } catch (err) {
-        return err
+        const errIAP = err as PurchaseError
+
+        if (errIAP && errIAP.code === ErrorCode.E_USER_CANCELLED)
+            return null
+        else
+            return err
     }
 }
 
