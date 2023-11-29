@@ -151,7 +151,6 @@ export const FetchListroductsAsync = async (skus: string[]) => {
     if (!isInited)
         throw new Error('IAP not inited yet')
 
-    console.log('fetch local price', fetchedProducts);
     fetchedProducts = await getProducts({ skus })
 
     return fetchedProducts
