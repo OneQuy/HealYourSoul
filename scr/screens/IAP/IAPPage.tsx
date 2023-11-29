@@ -5,7 +5,7 @@ import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-nat
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { GetIAPLocalPriceAsync, FetchListroductsAsync, IAPProduct, InitIAPAsync, PurchaseAsync } from '../../handle/IAP';
 import { ToCanPrint, ToCanPrintError } from '../../handle/UtilsTS';
-import { Product } from 'react-native-iap';
+import { Product, PurchaseError } from 'react-native-iap';
 import { IsInternetAvailableAsync, NetLord } from '../../handle/NetLord';
 
 const ids = [
@@ -90,10 +90,7 @@ const IAPPage = () => {
     let resInitIAP: Awaited<ReturnType<typeof InitIAPAsync>>
 
     const hanldeAsync = async () => {
-      resInitIAP = await InitIAPAsync(
-        ids.map(i => i.product),
-        (id) => { },
-        (error) => { })
+      resInitIAP = await InitIAPAsync(ids.map(i => i.product))
 
       if (resInitIAP === undefined) {
         console.error('IAP init fail')
@@ -129,7 +126,7 @@ const IAPPage = () => {
       <Text style={{ marginTop: Outline.GapVertical_2, color: 'black', fontSize: FontSize.Normal, }}>{LocalText.select_premium}</Text>
       {
         ids.map(({ month, imgUrl, product }) => {
-          const date = new Date(Date.now() + month * 31 * 24 * 3600 * 1000)
+          // const date = new Date(Date.now() + month * 31 * 24 * 3600 * 1000)
           const { sku } = product
           const productFetched = fetchedProducts.find(i => i.productId === sku)
           const price = productFetched ? productFetched.localizedPrice : '...'

@@ -42,8 +42,8 @@ export var fetchedProducts: Product[] = []
  */
 export const InitIAPAsync = async (
     products: IAPProduct[],
-    onSucess: SuccessCallback,
-    onError: ErrorCallback): Promise<(() => void) | undefined> => {
+    onSucess?: SuccessCallback,
+    onError?: ErrorCallback): Promise<(() => void) | undefined> => {
     if (isInited)
         throw new Error('IAP already inited')
 
@@ -69,8 +69,11 @@ export const InitIAPAsync = async (
         }
     }
 
-    RegisterOnSuccessPurchase(onSucess)
-    RegisterOnErrorPurchase(onError)
+    if (onSucess)
+        RegisterOnSuccessPurchase(onSucess)
+
+    if (onError)
+        RegisterOnErrorPurchase(onError)
 
     const updateListener = purchaseUpdatedListener(
         (purchase: SubscriptionPurchase | ProductPurchase) => {
@@ -118,8 +121,11 @@ export const InitIAPAsync = async (
         updateListener.remove()
         errorListener.remove()
 
-        UnregisterOnSuccessPurchase(onSucess)
-        UnregisterOnErrorPurchase(onError)
+        if (onSucess)
+            UnregisterOnSuccessPurchase(onSucess)
+
+        if (onError)
+            UnregisterOnErrorPurchase(onError)
     }
 }
 
