@@ -12,8 +12,9 @@ const IAPPage_Subscribed = ({ subscribedData } : { subscribedData: SubscribedDat
     
     const expiredDate = new Date(subscribedData.tick)
     expiredDate.setMonth(subDate.getMonth() + monthNum)
+    expiredDate.setDate(expiredDate.getDate() + 1)
 
-    const dayLeft = (expiredDate.valueOf() - Date.now()) / 1000 / 3600 / 24
+    const dayLeft = Math.ceil((expiredDate.valueOf() - Date.now()) / 1000 / 3600 / 24)
 
     return (
         <ImageBackground source={{ uri: imgBg }} style={{ flex: 1, gap: Outline.GapVertical, padding: Outline.Horizontal, backgroundColor: 'white' }}>

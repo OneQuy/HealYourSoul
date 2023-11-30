@@ -77,6 +77,8 @@ const IAPPage = () => {
 
       setSubscribedData_Store(JSON.stringify(data))
       setSubscribedData_State(data)
+
+      Alert.alert('Awesome!', 'Your purchased is successful! Thank you so much for this support!')
     }
     else if (res === null) { } // user cancelled
     else { // fail
