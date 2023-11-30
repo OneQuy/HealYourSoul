@@ -48,8 +48,10 @@ export const InitIAPAsync = async (
     products: IAPProduct[],
     onSucess?: SuccessCallback,
     onError?: ErrorCallback): Promise<(() => void) | undefined> => {
-    if (isInited)
-        throw new Error('IAP already inited')
+    if (isInited) {
+        console.warn('IAP already inited')
+        return undefined
+    }
 
     const canIAP = await initConnection()
 

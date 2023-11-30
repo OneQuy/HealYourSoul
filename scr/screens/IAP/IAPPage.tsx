@@ -1,12 +1,15 @@
-import { View, Text, ScrollView, Image, ImageBackground, Alert, Platform } from 'react-native'
+import { View, Text, ScrollView, Image, ImageBackground, Alert } from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { BorderRadius, FontSize, FontWeight, LocalText, Outline } from '../../constants/AppConstants'
-import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-native-responsive-screen";
+import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { GetIAPLocalPriceAsync, FetchListroductsAsync, IAPProduct, InitIAPAsync, PurchaseAsync } from '../../handle/IAP';
-import { ToCanPrint, ToCanPrintError } from '../../handle/UtilsTS';
-import { Product, PurchaseError } from 'react-native-iap';
-import { IsInternetAvailableAsync, NetLord } from '../../handle/NetLord';
+import { FetchListroductsAsync, IAPProduct, InitIAPAsync, PurchaseAsync } from '../../handle/IAP';
+import { ToCanPrintError } from '../../handle/UtilsTS';
+import { Product } from 'react-native-iap';
+import { IsInternetAvailableAsync } from '../../handle/NetLord';
+import IAPPage_Subscribed from './IAPPage_Subscribed';
+import AsyncStorage, { useAsyncStorage } from '@react-native-async-storage/async-storage';
+import { SubscribedData } from '../../constants/Types';
 
 const ids = [
   {
@@ -55,21 +58,39 @@ const reasonItems = [
   }
 ]
 
+export const StorageKey = 'premiumID'
+
 const IAPPage = () => {
   const [fetchedProducts, setFetchedProducts] = useState<Product[]>([])
+  const [subscribedData, setSubscribedData_State] = useState<SubscribedData | undefined>(undefined)
+  const { getItem: getSubscribedDataAsync, setItem: setSubscribedData_Store } = useAsyncStorage(StorageKey)
 
   const onPressed_Buy = async (id: string) => {
     const res = await PurchaseAsync(id)
+    // const res = undefined
 
-    Alert.alert(
-      'Clicked package ID: ' + id,
-      'Result:\n\n' + ToCanPrintError(res))
+    if (res === undefined) { // success
+      const data: SubscribedData = {
+        id,
+        tick: Date.now(),
+      }
+
+      setSubscribedData_Store(JSON.stringify(data))
+      setSubscribedData_State(data)
+    }
+    else if (res === null) { } // user cancelled
+    else { // fail
+
+      Alert.alert(
+        'Clicked package ID: ' + id,
+        'Result:\n\n' + ToCanPrintError(res))
+    }
   }
 
   const fetchLocalPriceAsync = useCallback(async () => {
     const isInternet = await IsInternetAvailableAsync();
     let needRepeat = false
-    
+
     if (isInternet) {
       const items = await FetchListroductsAsync(ids.map(i => i.product.sku))
 
@@ -87,15 +108,34 @@ const IAPPage = () => {
   }, [])
 
   useEffect(() => {
-    let resInitIAP: Awaited<ReturnType<typeof InitIAPAsync>>
+    let resInitIAP: Awaited<ReturnType<typeof InitIAPAsync>> = undefined
 
     const hanldeAsync = async () => {
+      // await AsyncStorage.clear()
+
+      // check premium
+
+      const premiumTxt = await getSubscribedDataAsync()
+
+      if (premiumTxt) {
+        const subData = JSON.parse(premiumTxt) as SubscribedData
+
+        if (subData) {
+          setSubscribedData_State(subData)
+          return
+        }
+      }
+
+      // init IAP
+
       resInitIAP = await InitIAPAsync(ids.map(i => i.product))
 
       if (resInitIAP === undefined) {
         console.error('IAP init fail')
         return
       }
+
+      // fetch local price
 
       fetchLocalPriceAsync()
     }
@@ -107,6 +147,10 @@ const IAPPage = () => {
         resInitIAP()
     }
   }, [])
+
+  if (subscribedData) {
+    return <IAPPage_Subscribed />
+  }
 
   return (
     <ScrollView contentContainerStyle={{ backgroundColor: 'white', padding: Outline.Horizontal, gap: Outline.GapVertical_2 }}>

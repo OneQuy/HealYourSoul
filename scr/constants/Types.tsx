@@ -20,3 +20,8 @@ export type AppConfig = {
     ios_review_limit_version: string,
     net_url: string,
 }
+
+export type SubscribedData = {
+    id: string,
+    tick: number,
+}
