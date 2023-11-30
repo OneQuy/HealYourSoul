@@ -80,10 +80,9 @@ const IAPPage = () => {
     }
     else if (res === null) { } // user cancelled
     else { // fail
-
       Alert.alert(
-        'Clicked package ID: ' + id,
-        'Result:\n\n' + ToCanPrintError(res))
+        'Error',
+        'An error occured when processing purchase. Please try again!\n' + id + '\n' + ToCanPrintError(res))
     }
   }
 
@@ -149,7 +148,7 @@ const IAPPage = () => {
   }, [])
 
   if (subscribedData) {
-    return <IAPPage_Subscribed />
+    return <IAPPage_Subscribed subscribedData={subscribedData} />
   }
 
   return (
