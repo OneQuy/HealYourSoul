@@ -1,4 +1,3 @@
-import { TextProps } from "react-native";
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-native-responsive-screen";
 
 // screen names
@@ -11,7 +10,7 @@ export enum ScreenName {
   Love = 'Love',
   Satisfying  = 'Satisfying',
   NSFW = 'NSFW',
-  IAPPage = 'Buy Premium'
+  IAPPage = 'Premium'
 }
 
 // dir / file
