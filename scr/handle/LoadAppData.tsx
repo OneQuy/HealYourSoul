@@ -21,7 +21,7 @@ export async function LoadAppData(theme: ThemeColor): Promise<LoadAppDataResult>
 
     FirebaseInit();
 
-    // cheat clear all data
+    // cheat clear all local file
 
     await CheckAndClearAllLocalFileBeforeLoadApp();
   
