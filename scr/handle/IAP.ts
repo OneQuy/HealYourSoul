@@ -21,6 +21,7 @@ import {
     getProducts,
     Product,
     ErrorCode,
+    getAvailablePurchases,
 } from 'react-native-iap';
 import { ArrayRemove } from './UtilsTS';
 
@@ -215,3 +216,32 @@ export const RegisterOnErrorPurchase = (calback: ErrorCallback) => {
 export const UnregisterOnErrorPurchase = (calback: ErrorCallback) => {
     ArrayRemove(onErrorListeners, calback)
 }
+
+/**
+ * @returns array if success (can be empty []), or error
+ */
+export const RestorePurchaseAsync = async () => {
+    try {
+        if (!isInited)
+            throw new Error('IAP not inited yet')
+
+        const purchases = await getAvailablePurchases();
+
+        for (let i = 0; i < purchases.length; i++) {
+            const purchase = purchases[i]
+            const product = initedProducts.find(i => i.sku === purchase.productId)
+
+            if (!product)
+                continue
+
+            if (!product.isConsumable)
+                continue
+
+            await finishTransaction({ purchase });
+        }
+
+        return purchases
+    } catch (error) {
+        return error
+    }
+};
