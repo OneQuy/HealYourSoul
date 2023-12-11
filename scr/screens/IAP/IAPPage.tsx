@@ -8,8 +8,9 @@ import { ToCanPrintError } from '../../handle/UtilsTS';
 import { Product } from 'react-native-iap';
 import { IsInternetAvailableAsync } from '../../handle/NetLord';
 import IAPPage_Subscribed from './IAPPage_Subscribed';
-import AsyncStorage, { useAsyncStorage } from '@react-native-async-storage/async-storage';
 import { SubscribedData } from '../../constants/Types';
+import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
+import { setSubscribe } from '../../redux/MiscSlice';
 
 const ids = [
   {
@@ -58,25 +59,17 @@ const reasonItems = [
   }
 ]
 
-export const StorageKey = 'premiumID'
-
 const IAPPage = () => {
   const [fetchedProducts, setFetchedProducts] = useState<Product[]>([])
-  const [subscribedData, setSubscribedData_State] = useState<SubscribedData | undefined>(undefined)
-  const { getItem: getSubscribedDataAsync, setItem: setSubscribedData_Store } = useAsyncStorage(StorageKey)
+  const subscribedData = useAppSelector((state: RootState) => state.misc.subscribedData);
+  const dispatch = useAppDispatch();
 
   const onPressed_Buy = async (id: string) => {
     const res = await PurchaseAsync(id)
     // const res = undefined
 
     if (res === undefined) { // success
-      const data: SubscribedData = {
-        id,
-        tick: Date.now(),
-      }
-
-      setSubscribedData_Store(JSON.stringify(data))
-      setSubscribedData_State(data)
+      dispatch(setSubscribe(id))
 
       Alert.alert('Awesome!', 'Your purchased is successful! Thank you so much for this support!')
     }
@@ -112,20 +105,8 @@ const IAPPage = () => {
     let resInitIAP: Awaited<ReturnType<typeof InitIAPAsync>> = undefined
 
     const hanldeAsync = async () => {
-      // await AsyncStorage.clear()
-
-      // check premium
-
-      const premiumTxt = await getSubscribedDataAsync()
-
-      if (premiumTxt) {
-        const subData = JSON.parse(premiumTxt) as SubscribedData
-
-        if (subData) {
-          setSubscribedData_State(subData)
-          return
-        }
-      }
+      if (subscribedData)
+        return
 
       // init IAP
 
@@ -147,7 +128,7 @@ const IAPPage = () => {
       if (resInitIAP)
         resInitIAP()
     }
-  }, [])
+  }, [subscribedData])
 
   if (subscribedData) {
     return <IAPPage_Subscribed subscribedData={subscribedData} />
