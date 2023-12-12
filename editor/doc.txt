@@ -17,6 +17,8 @@ node editor startid=5 cat=quote endid=7
 
 upload:
 
+cd  E:\react-native\Heal\HealYourSoul\
+
 node editor push draw
 
 node editor push draw t="Have fun together" a=loffyllama l="www.google.com"
