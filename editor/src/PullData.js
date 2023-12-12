@@ -27,12 +27,16 @@ async function PullAllAsync() {
         await PullByTypeAsync('quote'),
         await PullByTypeAsync('draw'),
         await PullByTypeAsync('meme'),
+        await PullByTypeAsync('love'),
+        await PullByTypeAsync('catdog'),
+        await PullByTypeAsync('satisfying'),
+        await PullByTypeAsync('nsfw'),
     ])
 }
 
 /**
  * 
- * @param {*} cat quote, meme, draw
+ * @param {*} cat quote, meme, draw, catdog, love, satisfying, nsfw
  * @param {*} fromID (undefined for first post)
  * @param {*} toID (underfined for last post)
  */

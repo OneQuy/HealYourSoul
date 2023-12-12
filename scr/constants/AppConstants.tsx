@@ -1,3 +1,4 @@
+import { TextProps } from "react-native";
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-native-responsive-screen";
 
 // screen names
@@ -6,6 +7,55 @@ export enum ScreenName {
   Comic = 'Warm',
   Meme = 'Meme',
   Quote = 'Quotes',
+  CatDog = 'Meow. Doggo. Animals',
+  Love = 'Love',
+  Satisfying  = 'Satisfying',
+  NSFW = 'NSFW'
+}
+
+// dir / file
+
+export enum LocalPath {
+  MasterDirName = 'master_dir',
+  ListFile_Draw = LocalPath.MasterDirName + '/draw/list.json',
+  ListFile_Meme = LocalPath.MasterDirName + '/meme/list.json',
+  ListFile_Quote = LocalPath.MasterDirName + '/quote/list.json',
+  ListFile_CatDog = LocalPath.MasterDirName + '/catdog/list.json',
+  ListFile_Love = LocalPath.MasterDirName + '/love/list.json',
+  ListFile_Satisfying = LocalPath.MasterDirName + '/satisfying/list.json',
+  ListFile_NSFW = LocalPath.MasterDirName + '/nsfw/list.json',
+}
+
+export enum FirebasePath {
+  ListFile_Draw = 'draw/list.json',
+  ListFile_Meme = 'meme/list.json',
+  ListFile_Quote = 'quote/list.json',
+  ListFile_CatDog = 'catdog/list.json',
+  ListFile_Love = 'love/list.json',
+  ListFile_Satisfying = 'satisfying/list.json',
+  ListFile_NSFW = 'nsfw/list.json',
+}
+
+export enum FirebaseDBPath {
+  Version_Draw = 'app/versions/draw',
+  Version_Meme = 'app/versions/meme',
+  Version_Quote = 'app/versions/quote',
+  Version_CatDog = 'app/versions/catdog',
+  Version_Love = 'app/versions/love',
+  Version_Satisfying = 'app/versions/satisfying',
+  Version_NSFW = 'app/versions/nsfw',
+}
+
+// category
+
+export enum Category {
+  Draw = 0,
+  Meme = 1,
+  Quote = 2,
+  CatDog = 3,
+  Love = 4,
+  Satisfying = 5,
+  NSFW = 6,
 }
 
 // margin / padding
@@ -42,33 +92,10 @@ export enum FontSize {
   Small = wp('3%'),
 }
 
-// dir / file
+// font weight
 
-export enum LocalPath {
-  MasterDirName = 'master_dir',
-  ListFile_Draw = LocalPath.MasterDirName + '/draw/list.json',
-  ListFile_Meme = LocalPath.MasterDirName + '/meme/list.json',
-  ListFile_Quote = LocalPath.MasterDirName + '/quote/list.json'
-}
-
-export enum FirebasePath {
-  ListFile_Draw = 'draw/list.json',
-  ListFile_Meme = 'meme/list.json',
-  ListFile_Quote = 'quote/list.json',
-}
-
-export enum FirebaseDBPath {
-  Version_Draw = 'app/versions/draw',
-  Version_Meme = 'app/versions/meme',
-  Version_Quote = 'app/versions/quote'
-}
-
-// category
-
-export enum Category {
-  Draw = 0,
-  Meme = 1,
-  Quote = 2
+export enum FontWeight {
+  Bold = 'bold'
 }
 
 // need reload reason

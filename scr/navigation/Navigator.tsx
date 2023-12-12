@@ -10,11 +10,19 @@ import QuoteScreen from '../screens/quote/QuoteScreen';
 import { ThemeType, themes } from '../constants/Colors';
 import { RootState, useAppDispatch, useAppSelector } from '../redux/Store';
 import { setTheme } from '../redux/MiscSlice';
+import CatDogScreen from '../screens/catdog/CatDogScreen';
+import SatisfyingScreen from '../screens/satisfying/SatisfyingScreen';
+import LoveScreen from '../screens/love/LoveScreen';
+import NSFWScreen from '../screens/nsfw/NSFWScreen';
 
 export type DrawerParamList = {
   [ScreenName.Comic]: undefined,
   [ScreenName.Meme]: undefined,
   [ScreenName.Quote]: undefined,
+  [ScreenName.CatDog]: undefined,
+  [ScreenName.Love]: undefined,
+  [ScreenName.Satisfying]: undefined,
+  [ScreenName.NSFW]: undefined,
 }
 
 type MainNavigatorProps = {
@@ -30,9 +38,13 @@ const Navigator = ({ initialRouteName }: MainNavigatorProps) => {
         initialRouteName={!initialRouteName ? ScreenName.Comic : initialRouteName}
         drawerContent={(props) => <CustomDrawerContent {...props} />}
       >
-        <Drawer.Screen name={ScreenName.Comic} component={ComicScreen} />
         <Drawer.Screen name={ScreenName.Meme} component={MemeScreen} />
+        <Drawer.Screen name={ScreenName.Comic} component={ComicScreen} />
+        <Drawer.Screen name={ScreenName.CatDog} component={CatDogScreen} />
+        <Drawer.Screen name={ScreenName.NSFW} component={NSFWScreen} />
         <Drawer.Screen name={ScreenName.Quote} component={QuoteScreen} />
+        <Drawer.Screen name={ScreenName.Satisfying} component={SatisfyingScreen} />
+        <Drawer.Screen name={ScreenName.Love} component={LoveScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
   )

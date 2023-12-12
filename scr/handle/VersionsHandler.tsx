@@ -11,7 +11,11 @@ const FirebaseDBAppVersionsPath = 'app/versions';
 export type Versions = {
     draw: number,
     quote: number,
-    meme: number
+    meme: number,
+    catdog: number,
+    love: number,
+    satisfying: number,
+    nsfw: number,
 }
 
 export var versions: Versions;

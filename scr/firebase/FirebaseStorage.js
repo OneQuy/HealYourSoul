@@ -1,10 +1,9 @@
 // https://firebase.google.com/docs/storage/web/download-files
 
-import { getStorage, ref, getDownloadURL, getBytes, uploadBytes, deleteObject } from "firebase/storage";
-import { ErrorObject_Empty } from "../constants/CommonConstants";
-import { ErrorObject_FileNotFound, ErrorObject_NoIdentity, GetTempFileRLP } from "../handle/Utils";
-import { DeleteFileAsync, DownloadFileAsync, DownloadFile_GetJsonAsync, GetFLPFromRLP, IsExistedAsync, WriteTextAsync } from "../handle/FileUtils";
-import { ArrayBufferToBase64String, GetBlobFromFLPAsync, TimeOutError } from "../handle/UtilsTS";
+import { getStorage, ref, getDownloadURL, getBytes, deleteObject, uploadBytesResumable } from "firebase/storage";
+import { ErrorObject_FileNotFound, GetTempFileRLP } from "../handle/Utils"
+import { DeleteFileAsync, DownloadFileAsync, DownloadFile_GetJsonAsync, GetFLPFromRLP, IsExistedAsync, WriteTextAsync } from "../handle/FileUtils"
+import { ArrayBufferToBase64String, GetBlobFromFLPAsync, TimeOutError } from "../handle/UtilsTS"
 
 var storage = null;
 
@@ -92,9 +91,9 @@ export async function FirebaseStorage_DownloadByGetBytesAsync(relativeFirebasePa
         const theRef = ref(storage, relativeFirebasePath);
         const res = await getBytes(theRef)
         const str = ArrayBufferToBase64String(res);
-    
-        await WriteTextAsync(savePath, str, isRLP, 'base64');        
-        
+
+        await WriteTextAsync(savePath, str, isRLP, 'base64');
+
         return null
     } catch (error) {
         return error;
@@ -126,7 +125,7 @@ export async function FirebaseStorage_DownloadByGetURLAsync(relativeFirebasePath
 }
 
 /**
- * @returns ErrorObject_Empty if success, ErrorObject_NoIdentity(error) if fail
+ * @returns null if success, error if fail
  */
 export async function FirebaseStorage_UploadAsync(relativeFirebasePath, fileFLP) // main 
 {
@@ -137,18 +136,21 @@ export async function FirebaseStorage_UploadAsync(relativeFirebasePath, fileFLP)
             return ErrorObject_FileNotFound("Local file not found: " + fileFLP);
         }
 
-        // let respone = await fetch(fileFLP); // this way get error: Network request failed
-        // let blob = await respone.blob();
-
         CheckAndInit();
         const theRef = ref(storage, relativeFirebasePath);
-        const blob = await GetBlobFromFLPAsync(fileFLP);
-        await uploadBytes(theRef, blob);
 
-        return ErrorObject_Empty;
+        const blob = await GetBlobFromFLPAsync(fileFLP);
+
+        // const res = await fetch(fileFLP)
+        // const blob = await res.blob()
+
+        const a = uploadBytesResumable(theRef, blob)
+        await a.then()
+
+        return null;
     }
     catch (error) {
-        return ErrorObject_NoIdentity(error);
+        return error
     }
 }
 

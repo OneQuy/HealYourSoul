@@ -42,6 +42,14 @@ export const GetListFileRLP = (cat: Category, localOrFb: boolean) => {
             return FirebasePath.ListFile_Meme;
         else if (cat === Category.Quote)
             return FirebasePath.ListFile_Quote;
+        else if (cat === Category.Love)
+            return FirebasePath.ListFile_Love;
+        else if (cat === Category.CatDog)
+            return FirebasePath.ListFile_CatDog;
+        else if (cat === Category.Satisfying)
+            return FirebasePath.ListFile_Satisfying;
+        else if (cat === Category.NSFW)
+            return FirebasePath.ListFile_NSFW;
         else
             throw new Error('GetListFileRLP: ' + cat);
     }
@@ -52,6 +60,14 @@ export const GetListFileRLP = (cat: Category, localOrFb: boolean) => {
             return LocalPath.ListFile_Meme;
         else if (cat === Category.Quote)
             return LocalPath.ListFile_Quote;
+        else if (cat === Category.Satisfying)
+            return LocalPath.ListFile_Satisfying;
+        else if (cat === Category.Love)
+            return LocalPath.ListFile_Love;
+        else if (cat === Category.CatDog)
+            return LocalPath.ListFile_CatDog;
+        else if (cat === Category.NSFW)
+            return LocalPath.ListFile_NSFW;
         else
             throw new Error('GetListFileRLP: ' + cat);
     }
@@ -64,6 +80,14 @@ export const GetDBVersionPath = (cat: Category) => {
         return FirebaseDBPath.Version_Meme;
     else if (cat === Category.Quote)
         return FirebaseDBPath.Version_Quote;
+    else if (cat === Category.CatDog)
+        return FirebaseDBPath.Version_CatDog;
+    else if (cat === Category.Love)
+        return FirebaseDBPath.Version_Love;
+    else if (cat === Category.Satisfying)
+        return FirebaseDBPath.Version_Satisfying;
+    else if (cat === Category.NSFW)
+        return FirebaseDBPath.Version_NSFW;
     else
         throw new Error('GetDBPath: ' + cat);
 }
@@ -107,6 +131,14 @@ export async function CheckAndGetFileListAsync(cat: Category): Promise<FileList 
         needDownload = true;
     else if (cat === Category.Meme && localVersion < versions.meme)
         needDownload = true;
+    else if (cat === Category.Love && localVersion < versions.love)
+        needDownload = true;
+    else if (cat === Category.CatDog && localVersion < versions.catdog)
+        needDownload = true;
+    else if (cat === Category.Satisfying && localVersion < versions.satisfying)
+        needDownload = true;
+    else if (cat === Category.NSFW && localVersion < versions.nsfw)
+        needDownload = true;
 
     if (!needDownload && localFileList !== null) {
         if (Cheat('IsLog_LoadFileList')) {
@@ -132,6 +164,14 @@ const GetMediaFullPath = (localOrFb: boolean, cat: Category, postID: number, med
         path = `meme/data/${postID}/${mediaIdx}`;
     else if (cat === Category.Quote)
         path = `quote/data/${postID}/${mediaIdx}`;
+    else if (cat === Category.Love)
+        path = `love/data/${postID}/${mediaIdx}`;
+    else if (cat === Category.CatDog)
+        path = `catdog/data/${postID}/${mediaIdx}`;
+    else if (cat === Category.Satisfying)
+        path = `satisfying/data/${postID}/${mediaIdx}`;
+    else if (cat === Category.NSFW)
+        path = `nsfw/data/${postID}/${mediaIdx}`;
     else
         throw new Error('GetDataFullPath: ' + cat);
 
@@ -156,6 +196,14 @@ export const GetAllSavedLocalPostIDsListAsync = async (cat: Category) => {
         path = `meme/data`;
     else if (cat === Category.Quote)
         path = `quote/data`;
+    else if (cat === Category.Love)
+        path = `love/data`;
+    else if (cat === Category.Satisfying)
+        path = `satisfying/data`;
+    else if (cat === Category.CatDog)
+        path = `catdog/data`;
+    else if (cat === Category.NSFW)
+        path = `nsfw/data`;
     else
         throw new Error('GetDataFullPath: ' + cat);
 

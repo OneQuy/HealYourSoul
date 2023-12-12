@@ -17,7 +17,7 @@ import { CheckAndGetFileListAsync, CheckLocalFileAndGetURIAsync, GetAllSavedLoca
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { PickRandomElement, RoundNumber, SecondsToHourMinuteSecondString } from '../../handle/Utils';
-import { addDrawFavoritedID, addDrawSeenID, addQuoteFavoritedID, addQuoteSeenID, addMemeFavoritedID, addMemeSeenID, removeDrawFavoritedID, removeQuoteFavoritedID, removeMemeFavoritedID } from '../../redux/UserDataSlice';
+import { addDrawFavoritedID, addDrawSeenID, addQuoteFavoritedID, addQuoteSeenID, addMemeFavoritedID, addMemeSeenID, removeDrawFavoritedID, removeQuoteFavoritedID, removeMemeFavoritedID, removeLoveFavoritedID, addLoveFavoritedID, removeSatisfyingFavoritedID, addSatisfyingFavoritedID, removeCatDogFavoritedID, addCatDogFavoritedID, addLoveSeenID, addSatisfyingSeenID, addCatDogSeenID, removeNSFWFavoritedID, addNSFWFavoritedID, addNSFWSeenID } from '../../redux/UserDataSlice';
 import { setMutedVideo } from '../../redux/MiscSlice';
 import { ColorNameToRgb, HexToRgb, ToCanPrint } from '../../handle/UtilsTS';
 import Clipboard from '@react-native-clipboard/clipboard';
@@ -65,6 +65,14 @@ const ThePage = ({ category }: ThePageProps) => {
             return state.userData.memeSeenIDs;
         else if (category === Category.Quote)
             return state.userData.quoteSeenIDs;
+        else if (category === Category.Satisfying)
+            return state.userData.satisfyingSeenIDs;
+        else if (category === Category.Love)
+            return state.userData.loveSeenIDs;
+        else if (category === Category.CatDog)
+            return state.userData.catdogSeenIDs;
+        else if (category === Category.NSFW)
+            return state.userData.nsfwSeenIDs;
         else
             throw new Error('not implement cat: ' + category);
     });
@@ -76,6 +84,14 @@ const ThePage = ({ category }: ThePageProps) => {
             return state.userData.memeFavoritedIDs;
         else if (category === Category.Quote)
             return state.userData.quoteFavoritedIDs;
+        else if (category === Category.Love)
+            return state.userData.loveFavoritedIDs;
+        else if (category === Category.CatDog)
+            return state.userData.catdogFavoritedIDs;
+        else if (category === Category.Satisfying)
+            return state.userData.satisfyingFavoritedIDs;
+        else if (category === Category.NSFW)
+            return state.userData.nsfwFavoritedIDs;
         else
             throw new Error('NI cat: ' + category);
     });
@@ -166,7 +182,7 @@ const ThePage = ({ category }: ThePageProps) => {
     const hasCredit: boolean = post.current !== null && post.current.author != null && post.current.author.length > 0;
 
     const isFavorited: boolean = useMemo(() => {
-        return post.current !== null && favoritedIDs.includes(post.current.id);
+        return post.current !== null && favoritedIDs && favoritedIDs.includes(post.current.id);
     }, [favoritedIDs, post.current?.id])
 
     // handles
@@ -233,8 +249,8 @@ const ThePage = ({ category }: ThePageProps) => {
                     foundPost = fileList.current?.posts.find(post => post.id === offlineID);
             }
 
-            if (!foundPost) // default
-                foundPost = fileList.current?.posts.find(i => !seenIDs.includes(i.id));
+            if (!foundPost) // default => get not seen post
+                foundPost = fileList.current?.posts.find(i => !seenIDs || !seenIDs.includes(i.id));
 
             if (!foundPost) {
                 foundPost = PickRandomElement(fileList.current?.posts, post.current);
@@ -429,6 +445,30 @@ const ThePage = ({ category }: ThePageProps) => {
             else
                 dispatch(addMemeFavoritedID(post.current.id));
         }
+        else if (category === Category.Love) {
+            if (isFavorited)
+                dispatch(removeLoveFavoritedID(post.current.id));
+            else
+                dispatch(addLoveFavoritedID(post.current.id));
+        }
+        else if (category === Category.Satisfying) {
+            if (isFavorited)
+                dispatch(removeSatisfyingFavoritedID(post.current.id));
+            else
+                dispatch(addSatisfyingFavoritedID(post.current.id));
+        }
+        else if (category === Category.CatDog) {
+            if (isFavorited)
+                dispatch(removeCatDogFavoritedID(post.current.id));
+            else
+                dispatch(addCatDogFavoritedID(post.current.id));
+        }
+        else if (category === Category.NSFW) {
+            if (isFavorited)
+                dispatch(removeNSFWFavoritedID(post.current.id));
+            else
+                dispatch(addNSFWFavoritedID(post.current.id));
+        }
         else
             throw new Error('NI cat: ' + category);
     }, [isFavorited]);
@@ -555,6 +595,14 @@ const ThePage = ({ category }: ThePageProps) => {
                 dispatch(addDrawSeenID(post.current.id));
             else if (category === Category.Quote)
                 dispatch(addQuoteSeenID(post.current.id));
+            else if (category === Category.Love)
+                dispatch(addLoveSeenID(post.current.id));
+            else if (category === Category.Satisfying)
+                dispatch(addSatisfyingSeenID(post.current.id));
+            else if (category === Category.CatDog)
+                dispatch(addCatDogSeenID(post.current.id));
+            else if (category === Category.NSFW)
+                dispatch(addNSFWSeenID(post.current.id));
             else
                 throw new Error('NI cat: ' + category);
         }
