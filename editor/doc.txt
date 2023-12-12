@@ -1,4 +1,4 @@
-draw, meme, quote
+draw, meme, quote, catdog, satisfying, nsfw
 
 ======================
 
@@ -38,3 +38,4 @@ ol: onlyOverrideLatestMedia
 l: link
 a: author
 t: tittle
+sa: smartAuthor
