@@ -1,4 +1,4 @@
-draw, meme, quote, love, catdog, satisfying, nsfw
+draw, meme, quote
 
 ======================
 
@@ -21,7 +21,7 @@ cd  E:\react-native\Heal\HealYourSoul\
 
 node editor push draw
 
-node editor push draw t="Have fun together" a=loffyllama l="www.google.com"
+node editor push draw t="Have fun together" a=loffyllama l="www.google.com" 
 
 (image link from clipboard)
 node editor push meme wi
@@ -35,3 +35,6 @@ sa=aslam
 wi="www.image.jpg"
 wv="www.video.mp4"
 ol: onlyOverrideLatestMedia
+l: link
+a: author
+t: tittle
