@@ -7,7 +7,7 @@ export const CuteScreen = () => {
 }
 
 export const ArtScreen = () => {
-  return <ThePage category={Category.Cute} />;
+  return <ThePage category={Category.Art} />;
 }
 
 export const SarcasmScreen = () => {
