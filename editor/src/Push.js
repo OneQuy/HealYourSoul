@@ -102,6 +102,8 @@ function GetMediaTypeByFileExtension(extension) {
 }
 
 async function UploadPostAsync(category, title, author, authorUrl, notDeleteFilesAfterPush, smartAuthor, fromImgURL, fromVideoURL, onlyOverrideLatestMedia) {
+    console.log(category)
+
     const start = Date.now()
     const isFromURL = fromImgURL !== undefined || fromVideoURL !== undefined
 
