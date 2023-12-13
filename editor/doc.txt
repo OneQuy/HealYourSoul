@@ -1,4 +1,4 @@
-draw, meme, quote, catdog, satisfying, nsfw
+draw, meme, quote, catdog, satisfying, nsfw, sarcasm, art, cute
 
 ======================
 

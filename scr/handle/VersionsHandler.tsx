@@ -14,6 +14,9 @@ export type Versions = {
     love: number,
     satisfying: number,
     nsfw: number,
+    cute: number,
+    art: number,
+    sarcasm: number,
 }
 
 export var versions: Versions;

@@ -21,6 +21,15 @@ export type UserDataState = {
     
     nsfwSeenIDs: number[],
     nsfwFavoritedIDs: number[],
+
+    cuteSeenIDs: number[],
+    cuteFavoritedIDs: number[],
+
+    sarcasmSeenIDs: number[],
+    sarcasmFavoritedIDs: number[],
+    
+    artSeenIDs: number[],
+    artFavoritedIDs: number[],
 }
 
 const initialState: UserDataState = {
@@ -44,6 +53,15 @@ const initialState: UserDataState = {
 
     nsfwSeenIDs: [],
     nsfwFavoritedIDs: [],
+
+    artSeenIDs: [],
+    artFavoritedIDs: [],
+
+    cuteSeenIDs: [],
+    cuteFavoritedIDs: [],
+
+    sarcasmSeenIDs: [],
+    sarcasmFavoritedIDs: [],
 }
 
 const slice = createSlice({
@@ -147,6 +165,54 @@ const slice = createSlice({
         removeCatDogFavoritedID(state, action: PayloadAction<number>) {
             [action.payload, ...state.catdogFavoritedIDs] = state.catdogFavoritedIDs;
         },
+       
+        // art
+
+        addArtSeenID(state, action: PayloadAction<number>) {
+            if (!state.artSeenIDs.includes(action.payload))
+                state.artSeenIDs.push(action.payload);
+        },
+
+        addArtFavoritedID(state, action: PayloadAction<number>) {
+            if (!state.artFavoritedIDs.includes(action.payload))
+                state.artFavoritedIDs.push(action.payload);
+        },
+
+        removeArtFavoritedID(state, action: PayloadAction<number>) {
+            [action.payload, ...state.artFavoritedIDs] = state.artFavoritedIDs;
+        },
+        
+        // cute
+
+        addCuteSeenID(state, action: PayloadAction<number>) {
+            if (!state.cuteSeenIDs.includes(action.payload))
+                state.cuteSeenIDs.push(action.payload);
+        },
+
+        addCuteFavoritedID(state, action: PayloadAction<number>) {
+            if (!state.cuteFavoritedIDs.includes(action.payload))
+                state.cuteFavoritedIDs.push(action.payload);
+        },
+
+        removeCuteFavoritedID(state, action: PayloadAction<number>) {
+            [action.payload, ...state.cuteFavoritedIDs] = state.cuteFavoritedIDs;
+        },
+        
+        // sarcasm
+
+        addSarcasmSeenID(state, action: PayloadAction<number>) {
+            if (!state.sarcasmSeenIDs.includes(action.payload))
+                state.sarcasmSeenIDs.push(action.payload);
+        },
+
+        addSarcasmFavoritedID(state, action: PayloadAction<number>) {
+            if (!state.sarcasmFavoritedIDs.includes(action.payload))
+                state.sarcasmFavoritedIDs.push(action.payload);
+        },
+
+        removeSarcasmFavoritedID(state, action: PayloadAction<number>) {
+            [action.payload, ...state.sarcasmFavoritedIDs] = state.sarcasmFavoritedIDs;
+        },
 
          // satisfying
 
@@ -197,6 +263,18 @@ export const {
     addSatisfyingSeenID,
     addSatisfyingFavoritedID,
     removeSatisfyingFavoritedID,
+   
+    addCuteSeenID,
+    addCuteFavoritedID,
+    removeCuteFavoritedID,
+   
+    addArtSeenID,
+    addArtFavoritedID,
+    removeArtFavoritedID,
+   
+    addSarcasmSeenID,
+    addSarcasmFavoritedID,
+    removeSarcasmFavoritedID,
 } = slice.actions;
 
 export default slice.reducer;

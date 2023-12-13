@@ -17,7 +17,7 @@ import { CheckAndGetFileListAsync, CheckLocalFileAndGetURIAsync, GetAllSavedLoca
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { PickRandomElement, RoundNumber, SecondsToHourMinuteSecondString } from '../../handle/Utils';
-import { addDrawFavoritedID, addDrawSeenID, addQuoteFavoritedID, addQuoteSeenID, addMemeFavoritedID, addMemeSeenID, removeDrawFavoritedID, removeQuoteFavoritedID, removeMemeFavoritedID, removeLoveFavoritedID, addLoveFavoritedID, removeSatisfyingFavoritedID, addSatisfyingFavoritedID, removeCatDogFavoritedID, addCatDogFavoritedID, addLoveSeenID, addSatisfyingSeenID, addCatDogSeenID, removeNSFWFavoritedID, addNSFWFavoritedID, addNSFWSeenID } from '../../redux/UserDataSlice';
+import { addDrawFavoritedID, addDrawSeenID, addQuoteFavoritedID, addQuoteSeenID, addMemeFavoritedID, addMemeSeenID, removeDrawFavoritedID, removeQuoteFavoritedID, removeMemeFavoritedID, removeLoveFavoritedID, addLoveFavoritedID, removeSatisfyingFavoritedID, addSatisfyingFavoritedID, removeCatDogFavoritedID, addCatDogFavoritedID, addLoveSeenID, addSatisfyingSeenID, addCatDogSeenID, removeNSFWFavoritedID, addNSFWFavoritedID, addNSFWSeenID, removeCuteFavoritedID, addCuteFavoritedID, removeArtFavoritedID, addArtFavoritedID, removeSarcasmFavoritedID, addSarcasmFavoritedID, addCuteSeenID, addArtSeenID, addSarcasmSeenID } from '../../redux/UserDataSlice';
 import { setMutedVideo } from '../../redux/MiscSlice';
 import { ColorNameToRgb, HexToRgb, ToCanPrint } from '../../handle/UtilsTS';
 import Clipboard from '@react-native-clipboard/clipboard';
@@ -73,6 +73,12 @@ const ThePage = ({ category }: ThePageProps) => {
             return state.userData.catdogSeenIDs;
         else if (category === Category.NSFW)
             return state.userData.nsfwSeenIDs;
+        else if (category === Category.Cute)
+            return state.userData.cuteSeenIDs;
+        else if (category === Category.Art)
+            return state.userData.artSeenIDs;
+        else if (category === Category.Sarcasm)
+            return state.userData.sarcasmSeenIDs;
         else
             throw new Error('not implement cat: ' + category);
     });
@@ -92,6 +98,12 @@ const ThePage = ({ category }: ThePageProps) => {
             return state.userData.satisfyingFavoritedIDs;
         else if (category === Category.NSFW)
             return state.userData.nsfwFavoritedIDs;
+        else if (category === Category.Cute)
+            return state.userData.cuteFavoritedIDs;
+        else if (category === Category.Sarcasm)
+            return state.userData.sarcasmFavoritedIDs;
+        else if (category === Category.Art)
+            return state.userData.artFavoritedIDs;
         else
             throw new Error('NI cat: ' + category);
     });
@@ -469,6 +481,24 @@ const ThePage = ({ category }: ThePageProps) => {
             else
                 dispatch(addNSFWFavoritedID(post.current.id));
         }
+        else if (category === Category.Cute) {
+            if (isFavorited)
+                dispatch(removeCuteFavoritedID(post.current.id));
+            else
+                dispatch(addCuteFavoritedID(post.current.id));
+        }
+        else if (category === Category.Art) {
+            if (isFavorited)
+                dispatch(removeArtFavoritedID(post.current.id));
+            else
+                dispatch(addArtFavoritedID(post.current.id));
+        }
+        else if (category === Category.Sarcasm) {
+            if (isFavorited)
+                dispatch(removeSarcasmFavoritedID(post.current.id));
+            else
+                dispatch(addSarcasmFavoritedID(post.current.id));
+        }
         else
             throw new Error('NI cat: ' + category);
     }, [isFavorited]);
@@ -603,6 +633,12 @@ const ThePage = ({ category }: ThePageProps) => {
                 dispatch(addCatDogSeenID(post.current.id));
             else if (category === Category.NSFW)
                 dispatch(addNSFWSeenID(post.current.id));
+            else if (category === Category.Cute)
+                dispatch(addCuteSeenID(post.current.id));
+            else if (category === Category.Art)
+                dispatch(addArtSeenID(post.current.id));
+            else if (category === Category.Sarcasm)
+                dispatch(addSarcasmSeenID(post.current.id));
             else
                 throw new Error('NI cat: ' + category);
         }

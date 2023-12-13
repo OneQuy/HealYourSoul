@@ -13,6 +13,7 @@ import { CustomDrawerContent } from './CustomDrawer';
 import NSFWScreen from '../screens/nsfw/NSFWScreen';
 import { Is_IOS_And_OfflineOrLowerReviewVersion } from '../handle/AppUtils';
 import IAPPage from '../screens/IAP/IAPPage';
+import { ArtScreen, CuteScreen, SarcasmScreen } from '../screens/other_thepage_screens/Index';
 
 export type DrawerParamList = {
   [ScreenName.Comic]: undefined,
@@ -22,6 +23,9 @@ export type DrawerParamList = {
   [ScreenName.Love]: undefined,
   [ScreenName.Satisfying]: undefined,
   [ScreenName.NSFW]: undefined,
+  [ScreenName.Cute]: undefined,
+  [ScreenName.Art]: undefined,
+  [ScreenName.Sarcasm]: undefined,
   [ScreenName.IAPPage]: undefined,
 }
 
@@ -41,6 +45,9 @@ const ScreenList: ScreenNamePair[] = [
   [ScreenName.Quote, QuoteScreen],
   [ScreenName.Satisfying, SatisfyingScreen],
   [ScreenName.Love, LoveScreen],
+  [ScreenName.Sarcasm, SarcasmScreen],
+  [ScreenName.Cute, CuteScreen],
+  [ScreenName.Art, ArtScreen],
   [ScreenName.IAPPage, IAPPage]
 ]
 

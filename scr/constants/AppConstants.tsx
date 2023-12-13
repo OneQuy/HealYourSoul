@@ -10,6 +10,9 @@ export enum ScreenName {
   Love = 'Love',
   Satisfying  = 'Satisfying',
   NSFW = 'NSFW',
+  Art = 'Art',
+  Cute = 'Cute',
+  Sarcasm = 'Sarcasm',
   IAPPage = 'Premium'
 }
 
@@ -24,6 +27,9 @@ export enum LocalPath {
   ListFile_Love = LocalPath.MasterDirName + '/love/list.json',
   ListFile_Satisfying = LocalPath.MasterDirName + '/satisfying/list.json',
   ListFile_NSFW = LocalPath.MasterDirName + '/nsfw/list.json',
+  ListFile_Cute = LocalPath.MasterDirName + '/cute/list.json',
+  ListFile_Art = LocalPath.MasterDirName + '/art/list.json',
+  ListFile_Sarcasm = LocalPath.MasterDirName + '/sarcasm/list.json',
 }
 
 export enum FirebasePath {
@@ -34,6 +40,9 @@ export enum FirebasePath {
   ListFile_Love = 'love/list.json',
   ListFile_Satisfying = 'satisfying/list.json',
   ListFile_NSFW = 'nsfw/list.json',
+  ListFile_Art = 'art/list.json',
+  ListFile_Cute = 'cute/list.json',
+  ListFile_Sarcasm = 'sarcasm/list.json',
 }
 
 export enum FirebaseDBPath {
@@ -44,6 +53,9 @@ export enum FirebaseDBPath {
   Version_Love = 'app/versions/love',
   Version_Satisfying = 'app/versions/satisfying',
   Version_NSFW = 'app/versions/nsfw',
+  Version_Cute = 'app/versions/cute',
+  Version_Art = 'app/versions/art',
+  Version_Sarcasm = 'app/versions/sarcasm',
 }
 
 // category
@@ -56,6 +68,9 @@ export enum Category {
   Love = 4,
   Satisfying = 5,
   NSFW = 6,
+  Cute = 7,
+  Sarcasm = 8,
+  Art = 9,
 }
 
 // margin / padding
