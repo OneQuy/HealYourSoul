@@ -164,7 +164,13 @@ export const LocalText = {
   one_month: '1 Month',
   six_month: '6 Months',
   twelve_month: '12 Months',
-
+  
+  you_subscribed: 'You subscribed:',
+  subscribed_date: 'Subscribed date:',
+  subscribed_exp_date: 'Expired date:',
+  day_left: 'Day(s) left:',
+  
+  thank_you: 'Your subscription means the world to me! It really makes my day. Thank you for supporting my app.',
 
   // popup
 
