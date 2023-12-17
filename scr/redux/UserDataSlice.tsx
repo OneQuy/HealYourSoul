@@ -1,6 +1,9 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
+import { SubscribedData } from "../constants/Types";
 
 export type UserDataState = {
+    subscribedData: SubscribedData | undefined,
+
     drawSeenIDs: number[],
     drawFavoritedIDs: number[],
 
@@ -33,6 +36,8 @@ export type UserDataState = {
 }
 
 const initialState: UserDataState = {
+    subscribedData:  undefined,
+
     drawSeenIDs: [],
     drawFavoritedIDs: [],
 
@@ -69,6 +74,13 @@ const slice = createSlice({
     initialState,
     reducers: {
         clearAllUserData: () => initialState,
+
+        setSubscribe: (state, action: PayloadAction<string>) => {
+            state.subscribedData = {
+                id: action.payload,
+                tick: Date.now(),
+            } as SubscribedData
+        },
 
         // draw
 
@@ -234,6 +246,8 @@ const slice = createSlice({
 
 export const {
     clearAllUserData,
+
+    setSubscribe,
 
     addDrawSeenID,
     addDrawFavoritedID,

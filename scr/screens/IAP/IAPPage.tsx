@@ -8,9 +8,8 @@ import { ToCanPrintError } from '../../handle/UtilsTS';
 import { Product } from 'react-native-iap';
 import { IsInternetAvailableAsync } from '../../handle/NetLord';
 import IAPPage_Subscribed from './IAPPage_Subscribed';
-import { SubscribedData } from '../../constants/Types';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
-import { setSubscribe } from '../../redux/MiscSlice';
+import { setSubscribe } from '../../redux/UserDataSlice';
 
 const ids = [
   {
@@ -61,7 +60,7 @@ const reasonItems = [
 
 const IAPPage = () => {
   const [fetchedProducts, setFetchedProducts] = useState<Product[]>([])
-  const subscribedData = useAppSelector((state: RootState) => state.misc.subscribedData);
+  const subscribedData = useAppSelector((state: RootState) => state.userData.subscribedData);
   const dispatch = useAppDispatch();
 
   const onPressed_Buy = async (id: string) => {
