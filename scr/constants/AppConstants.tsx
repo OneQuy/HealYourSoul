@@ -148,18 +148,19 @@ export const LocalText = {
   no_media_to_download: 'No media to download!',
   oops: 'Oooops',
   
-  premium_benefit: 'Why I need Premium?',
-  select_premium: 'Select a subscription that suits to you:',
+  premium_benefit: 'I created this app to spread fun, useful, and positive things to everyone. Whether you are happy, sad, or feeling something else, I hope from the bottom of my heart that you will feel even better. Everything will be okay. Please subscribe if you want to:',
+  subscribe_for: 'Subscribe for',
+  warning_premium: 'These subscriptions are not renewable. If you dont want to subcribe anymore, it will be canceled on the end of the period automatically.',
   thank_you_premium: 'Any subscription always supports me a lot. Thank you so much!',
 
   ad_free: 'Ad-free',
-  no_ad_anymore: 'No ads during your subscription time',
+  no_ad_anymore: 'No ad during your subscription time.',
   
   support_me: 'Support app',
-  support_me_info: 'Support me to pay the cost of the app server',
+  support_me_info: "Support me in covering the cost of the data server every month.",
   
   give_coffee: 'Give me a cup of coffee!',
-  give_coffee_info: 'I really appreciate it. Thank you!',
+  give_coffee_info: "It will be a great motivation for me to improve the app every day.",
   
   one_month: '1 Month',
   six_month: '6 Months',

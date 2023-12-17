@@ -135,7 +135,7 @@ const IAPPage = () => {
 
   return (
     <ScrollView contentContainerStyle={{ backgroundColor: 'white', padding: Outline.Horizontal, gap: Outline.GapVertical_2 }}>
-      <Text style={{ color: 'black', fontSize: FontSize.Normal, }}>{LocalText.premium_benefit}</Text>
+      <Text style={{ color: 'black', fontSize: FontSize.Small_L, }}>{LocalText.premium_benefit}</Text>
       {
         reasonItems.map(({ icon, title, content }) => {
           return (
@@ -148,7 +148,6 @@ const IAPPage = () => {
             </View>)
         })
       }
-      <Text style={{ marginTop: Outline.GapVertical_2, color: 'black', fontSize: FontSize.Normal, }}>{LocalText.select_premium}</Text>
       {
         ids.map(({ month, imgUrl, product }) => {
           // const date = new Date(Date.now() + month * 31 * 24 * 3600 * 1000)
@@ -168,10 +167,11 @@ const IAPPage = () => {
                 </ImageBackground>
               </TouchableOpacity>
               {/* <Text style={{ color: 'black', fontSize: FontSize.Small_L, }}>Subscribe for {month} months. From today to {date.toLocaleDateString()}</Text> */}
-              <Text style={{ color: 'black', fontSize: FontSize.Small_L, }}>Subscribe for {month} months.</Text>
+              <Text style={{ color: 'black', fontSize: FontSize.Small_L, }}>{LocalText.subscribe_for} {month}-month.</Text>
             </View>)
         })
       }
+      <Text style={{ color: 'black', fontSize: FontSize.Normal, }}>{LocalText.warning_premium}</Text>
       <Text style={{ color: 'black', fontSize: FontSize.Normal, }}>{LocalText.thank_you_premium}</Text>
     </ScrollView>
   )
