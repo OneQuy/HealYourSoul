@@ -120,7 +120,8 @@ export enum FontSize {
 
 export enum FontWeight {
   Bold = 'bold',
-  B600 = '600'
+  B600 = '600',
+  B500 = '500'
 }
 
 // need reload reason
@@ -148,7 +149,7 @@ export const LocalText = {
   no_media_to_download: 'No media to download!',
   oops: 'Oooops',
   
-  premium_benefit: 'I created this app to spread fun, useful, and positive things to everyone. Whether you are happy, sad, or feeling something else, I hope from the bottom of my heart that you will feel even better. Everything will be okay. Please subscribe if you want to:',
+  premium_benefit: 'Hi there, I am Minh Quy, an indie developer from Vietnam. I created this app to spread fun, useful, and positive things to everyone. Whether you are happy, sad, or feeling something else, I hope from the bottom of my heart that you will feel even better. Everything will be okay. The app is always free. But I would be really happy if you subscribe and want to:',
   subscribe_for: 'Subscribe for',
   warning_premium: 'These subscriptions are not renewable. If you dont want to subcribe anymore, it will be canceled on the end of the period automatically.',
   thank_you_premium: 'Any subscription always supports me a lot. Thank you so much!',

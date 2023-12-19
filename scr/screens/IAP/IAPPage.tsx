@@ -135,14 +135,14 @@ const IAPPage = () => {
 
   return (
     <ScrollView contentContainerStyle={{ backgroundColor: 'white', padding: Outline.Horizontal, gap: Outline.GapVertical_2 }}>
-      <Text style={{ color: 'black', fontSize: FontSize.Small_L, }}>{LocalText.premium_benefit}</Text>
+      <Text style={{ padding: 10, backgroundColor: 'lightpink', color: 'black', fontSize: FontSize.Small_L, }}>{LocalText.premium_benefit}</Text>
       {
         reasonItems.map(({ icon, title, content }) => {
           return (
             <View key={title} style={{ flexDirection: 'row', gap: Outline.Horizontal }}>
               <Image source={icon} resizeMode='contain' style={{ width: wp('13%'), height: wp('13%') }} />
               <View style={{ flex: 1, justifyContent: 'center', gap: Outline.GapVertical }}>
-                <Text style={{ color: 'black', fontSize: FontSize.Normal, fontWeight: FontWeight.B600 }}>{title}</Text>
+                <Text style={{ color: 'black', fontSize: FontSize.Normal, fontWeight: FontWeight.B500 }}>{title}</Text>
                 <Text style={{ color: 'black', fontSize: FontSize.Small_L, }}>{content}</Text>
               </View>
             </View>)
@@ -167,12 +167,12 @@ const IAPPage = () => {
                 </ImageBackground>
               </TouchableOpacity>
               {/* <Text style={{ color: 'black', fontSize: FontSize.Small_L, }}>Subscribe for {month} months. From today to {date.toLocaleDateString()}</Text> */}
-              <Text style={{ color: 'black', fontSize: FontSize.Small_L, }}>{LocalText.subscribe_for} {month}-month.</Text>
+              <Text style={{ color: 'black', fontSize: FontSize.Small, }}>{LocalText.subscribe_for} {month}-month.</Text>
             </View>)
         })
       }
-      <Text style={{ color: 'black', fontSize: FontSize.Normal, }}>{LocalText.warning_premium}</Text>
-      <Text style={{ color: 'black', fontSize: FontSize.Normal, }}>{LocalText.thank_you_premium}</Text>
+      <Text style={{ color: 'black', fontSize: FontSize.Small_L, }}>{LocalText.warning_premium}</Text>
+      <Text style={{ color: 'black', fontSize: FontSize.Small_L, }}>{LocalText.thank_you_premium}</Text>
     </ScrollView>
   )
 }
