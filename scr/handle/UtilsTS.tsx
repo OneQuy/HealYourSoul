@@ -9,6 +9,7 @@ check type
 string utils
 array utils
 time
+number
 other utils
 */
 
@@ -467,8 +468,18 @@ export const GetHourMinSecFromMs = (ms: number): [number, number, number] => {
     const min = Math.floor(sec / 60)
 
     sec = Math.floor(sec - min * 60)
-
+   
     return [hour, min, sec]
+}
+
+// number ---------------------------
+
+const Clamp01 = (value: number) => {
+    return Clamp(value, 0, 1)
+}
+
+const Clamp = (value: number, min: number, max: number) => {
+    return Math.max(min, Math.min(max, value))
 }
 
 // other utils ---------------------------
