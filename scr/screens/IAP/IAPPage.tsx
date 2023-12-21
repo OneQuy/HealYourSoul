@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Image, ImageBackground, Alert } from 'react-native'
+import { View, Text, ScrollView, Image, ImageBackground, Alert, StyleSheet } from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { BorderRadius, FontSize, FontWeight, LocalText, Outline } from '../../constants/AppConstants'
 import { widthPercentageToDP as wp } from "react-native-responsive-screen";
@@ -10,6 +10,7 @@ import { IsInternetAvailableAsync } from '../../handle/NetLord';
 import IAPPage_Subscribed from './IAPPage_Subscribed';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { setSubscribe } from '../../redux/UserDataSlice';
+import { GetExpiredDateAndDaysLeft } from '../../handle/AppUtils';
 
 const ids = [
   {
@@ -150,10 +151,10 @@ const IAPPage = () => {
       }
       {
         ids.map(({ month, imgUrl, product }) => {
-          // const date = new Date(Date.now() + month * 31 * 24 * 3600 * 1000)
           const { sku } = product
           const productFetched = fetchedProducts.find(i => i.productId === sku)
           const price = productFetched ? productFetched.localizedPrice : '...'
+          const [expiredDate, dayLeft] = GetExpiredDateAndDaysLeft(Date.now(), month)
 
           return (
             <View key={sku} style={{ gap: Outline.VerticalMini }}>
@@ -166,11 +167,11 @@ const IAPPage = () => {
                   <Text style={{ color: 'black', fontSize: FontSize.Normal }}>{price}</Text>
                 </ImageBackground>
               </TouchableOpacity>
-              {/* <Text style={{ color: 'black', fontSize: FontSize.Small_L, }}>Subscribe for {month} months. From today to {date.toLocaleDateString()}</Text> */}
-              <Text style={{ color: 'black', fontSize: FontSize.Small, }}>{LocalText.subscribe_for} {month}-month.</Text>
+              <Text style={{ color: 'black', fontSize: FontSize.Small, }}>{LocalText.subscribe_for} {month}-month ({LocalText.today} {'->'} {expiredDate.toLocaleDateString()})</Text>
             </View>)
         })
       }
+      <View style={{ backgroundColor: 'black', width: '100%', height: StyleSheet.hairlineWidth }} />
       <Text style={{ color: 'black', fontSize: FontSize.Small_L, }}>{LocalText.warning_premium}</Text>
       <Text style={{ color: 'black', fontSize: FontSize.Small_L, }}>{LocalText.thank_you_premium}</Text>
     </ScrollView>

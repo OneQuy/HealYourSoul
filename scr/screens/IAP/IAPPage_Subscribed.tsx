@@ -3,18 +3,13 @@ import React, { } from 'react'
 import { FontSize, FontWeight, LocalText, Outline } from '../../constants/AppConstants'
 import { SubscribedData } from '../../constants/Types'
 import { SplitNumberInText } from '../../handle/UtilsTS'
+import { GetExpiredDateAndDaysLeft } from '../../handle/AppUtils'
 
 const imgBg = require('../../../assets/images/subscribed-bg.jpg')
 
 const IAPPage_Subscribed = ({ subscribedData }: { subscribedData: SubscribedData }) => {
     const monthNum = SplitNumberInText(subscribedData.id)
-    const subDate = new Date(subscribedData.tick)
-
-    const expiredDate = new Date(subscribedData.tick)
-    expiredDate.setMonth(subDate.getMonth() + monthNum)
-    expiredDate.setDate(expiredDate.getDate() + 1)
-
-    const dayLeft = Math.ceil((expiredDate.valueOf() - Date.now()) / 1000 / 3600 / 24)
+    const [expiredDate, dayLeft] = GetExpiredDateAndDaysLeft(subscribedData.tick, monthNum)
 
     return (
         <ImageBackground source={imgBg} style={{ flex: 1, padding: Outline.Horizontal, justifyContent: 'space-between' }}>
