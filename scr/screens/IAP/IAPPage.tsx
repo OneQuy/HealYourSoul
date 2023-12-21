@@ -4,7 +4,7 @@ import { BorderRadius, FontSize, FontWeight, LocalText, Outline } from '../../co
 import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { FetchListroductsAsync, IAPProduct, InitIAPAsync, PurchaseAsync } from '../../handle/IAP';
-import { ToCanPrintError } from '../../handle/UtilsTS';
+import { SafeDateString, ToCanPrintError } from '../../handle/UtilsTS';
 import { Product } from 'react-native-iap';
 import { IsInternetAvailableAsync } from '../../handle/NetLord';
 import IAPPage_Subscribed from './IAPPage_Subscribed';
@@ -154,7 +154,7 @@ const IAPPage = () => {
           const { sku } = product
           const productFetched = fetchedProducts.find(i => i.productId === sku)
           const price = productFetched ? productFetched.localizedPrice : '...'
-          const [expiredDate, dayLeft] = GetExpiredDateAndDaysLeft(Date.now(), month)
+          const [expiredDate, _] = GetExpiredDateAndDaysLeft(Date.now(), month, true)
 
           return (
             <View key={sku} style={{ gap: Outline.VerticalMini }}>
@@ -167,7 +167,7 @@ const IAPPage = () => {
                   <Text style={{ color: 'black', fontSize: FontSize.Normal }}>{price}</Text>
                 </ImageBackground>
               </TouchableOpacity>
-              <Text style={{ color: 'black', fontSize: FontSize.Small, }}>{LocalText.subscribe_for} {month}-month ({LocalText.today} {'->'} {expiredDate.toLocaleDateString()})</Text>
+              <Text style={{ color: 'black', fontSize: FontSize.Small, }}>{LocalText.subscribe_for} {month}-month ({LocalText.today} {'->'} {SafeDateString(expiredDate, '/')})</Text>
             </View>)
         })
       }

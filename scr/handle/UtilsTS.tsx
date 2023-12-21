@@ -441,6 +441,22 @@ export const ExtractAllNumbersInText = (text: string): number[] => {
     return floats
 }
 
+// time ---------------------------
+
+export const SafeDateString = (date: Date, join: string = '-'): string => {
+    const arr = [date.getDate(), MonthName(date.getMonth(), false), date.getFullYear()]
+    return arr.join(join)
+}
+
+export const MonthName = (monthIndex: number, fullNameOr3Char: boolean): string => {
+    if (monthIndex < 0 || monthIndex > 11)
+        throw new Error('monthIndex out of months')
+
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
+    return monthNames[monthIndex].substring(0, fullNameOr3Char ? 100 : 3)
+}
+
 export const GetHourMinSecFromMs = (ms: number): [number, number, number] => {
     let sec = ms / 1000
 
@@ -451,7 +467,7 @@ export const GetHourMinSecFromMs = (ms: number): [number, number, number] => {
     const min = Math.floor(sec / 60)
 
     sec = Math.floor(sec - min * 60)
-   
+
     return [hour, min, sec]
 }
 
