@@ -2,13 +2,14 @@ import { View, Text, ImageBackground, Linking } from 'react-native'
 import React, { } from 'react'
 import { FontSize, FontWeight, LocalText, Outline } from '../../constants/AppConstants'
 import { SubscribedData } from '../../constants/Types'
-import { SplitNumberInText } from '../../handle/UtilsTS'
+import { SafeDateString, SplitNumberInText } from '../../handle/UtilsTS'
 import { GetExpiredDateAndDaysLeft } from '../../handle/AppUtils'
 
 const imgBg = require('../../../assets/images/subscribed-bg.jpg')
 
 const IAPPage_Subscribed = ({ subscribedData }: { subscribedData: SubscribedData }) => {
     const monthNum = SplitNumberInText(subscribedData.id)
+    const subDate = new Date(subscribedData.tick)
     const [expiredDate, dayLeft] = GetExpiredDateAndDaysLeft(subscribedData.tick, monthNum)
 
     return (
@@ -22,11 +23,11 @@ const IAPPage_Subscribed = ({ subscribedData }: { subscribedData: SubscribedData
                 </View>
                 <View style={{ flexDirection: 'row', }}>
                     <Text style={{ color: 'black', fontSize: FontSize.Normal }}>{LocalText.subscribed_date} </Text>
-                    <Text style={{ color: 'black', fontWeight: FontWeight.Bold, fontSize: FontSize.Normal }}>{subDate.toLocaleDateString()}</Text>
+                    <Text style={{ color: 'black', fontWeight: FontWeight.Bold, fontSize: FontSize.Normal }}>{SafeDateString(subDate, '/')}</Text>
                 </View>
                 <View style={{ flexDirection: 'row', }}>
                     <Text style={{ color: 'black', fontSize: FontSize.Normal }}>{LocalText.subscribed_exp_date} </Text>
-                    <Text style={{ color: 'black', fontWeight: FontWeight.Bold, fontSize: FontSize.Normal }}>{expiredDate.toLocaleDateString()}</Text>
+                    <Text style={{ color: 'black', fontWeight: FontWeight.Bold, fontSize: FontSize.Normal }}>{SafeDateString(expiredDate, '/')}</Text>
                 </View>
                 <View style={{ flexDirection: 'row', }}>
                     <Text style={{ color: 'black', fontSize: FontSize.Normal }}>{LocalText.day_left} </Text>
