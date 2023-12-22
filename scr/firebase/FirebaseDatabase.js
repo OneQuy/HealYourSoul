@@ -78,7 +78,12 @@ export async function FirebaseDatabase_GetValueAsync(relativePath) {
  *      value: value or null if has no data,
  *      error: error or null if success }
  */
-export async function FirebaseDatabase_IncreaseNumberAsync(relativePath, startValue = -1, incNum = 1, callback = undefined) {
+export async function FirebaseDatabase_IncreaseNumberAsync(
+    relativePath, 
+    startValue = -1, 
+    incNum = 1, 
+    callback = undefined,
+    minValue = Number.NEGATIVE_INFINITY) {
     CheckAndInit();
 
     try {
@@ -95,6 +100,8 @@ export async function FirebaseDatabase_IncreaseNumberAsync(relativePath, startVa
         // set
 
         value += incNum;
+        value = Math.max(minValue, value)
+
         let error = await FirebaseDatabase_SetValueAsync(relativePath, value);
 
         if (error) {

@@ -43,7 +43,7 @@ export const LikePostAsync = async (isLikeOrDislike: boolean, cat: Category, pos
     }
 
     const path = FillPathPattern(LikePath, cat, postID)
-    const res = await FirebaseDatabase_IncreaseNumberAsync(path, 0, isLikeOrDislike ? 1 : -1)
+    const res = await FirebaseDatabase_IncreaseNumberAsync(path, 0, isLikeOrDislike ? 1 : -1, undefined, 0)
 
     if (res.error) {
         OnLogError('set like error, cat ' + cat + ', id ' + postID + ', ' + ToCanPrint(res.error))

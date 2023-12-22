@@ -198,7 +198,7 @@ const ThePage = ({ category }: ThePageProps) => {
     const isFavorited: boolean = useMemo(() => {
         return post.current !== null && favoritedIDs && favoritedIDs.includes(post.current.id);
     }, [favoritedIDs, post.current?.id])
-
+    
     // handles
 
 
