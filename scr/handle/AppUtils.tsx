@@ -41,7 +41,7 @@ export async function CheckAndClearAllLocalFileBeforeLoadApp() {
         console.log('COMPLETELY DELETED Temp Dir!');
 }
 
-export const GetExpiredDateAndDaysLeft = (startDayTick: number, month: number, endIsValidOrExpired: boolean = false) : [Date, number] => {
+export const GetExpiredDateAndDaysLeft = (startDayTick: number, month: number, endIsValidOrExpired: boolean = false): [Date, number] => {
     const subDate = new Date(startDayTick)
 
     const expiredDate = new Date(startDayTick)
@@ -51,6 +51,16 @@ export const GetExpiredDateAndDaysLeft = (startDayTick: number, month: number, e
     const dayLeft = Math.ceil((expiredDate.valueOf() - Date.now()) / 1000 / 3600 / 24)
 
     return [expiredDate, dayLeft]
+}
+
+export const OnLogError = (log: string) => {
+    console.error(log)
+}
+
+export const FillPathPattern = async (pattern: string, cat: Category, postID: number) => {
+    return pattern.
+        replace('@id', postID.toString()).
+        replace('@cat', cat.toString())
 }
 
 export const GetListFileRLP = (cat: Category, localOrFb: boolean) => {
