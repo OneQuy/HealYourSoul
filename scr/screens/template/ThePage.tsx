@@ -201,6 +201,14 @@ const ThePage = ({ category }: ThePageProps) => {
 
     // handles
 
+
+    const onBeginLoadNextOrPreviousPostAsync = useCallback(async () => {
+        if (!post.current)
+            return
+
+        GetPostLikeCountAsync(category, post.current.id, (likes) => setLikeCount(likes))
+    }, [])
+
     const loadNextMediaAsync = useCallback(async (isNext: boolean, forPost: PostMetadata, isNextPost: NeedLoadPostType) => {
         if (!fileList.current)
             return
@@ -244,10 +252,6 @@ const ThePage = ({ category }: ThePageProps) => {
             // update offline ids
 
             addPostIDToOfflineList(forPost.id);
-
-            // callback load post done
-
-            onDidLoadNextOrPreviousPostAsync()
         } else { // fail
             reasonToReload.current = uriOrReasonToReload;
         }
@@ -287,18 +291,15 @@ const ThePage = ({ category }: ThePageProps) => {
         if (!foundPost)
             throw new Error('cant find post');
 
+        // start load post
+
         post.current = foundPost;
-        await loadNextMediaAsync(true, foundPost, isNext ? 'next' : 'previous');
-    }, [seenIDs, loadNextMediaAsync]);
+        loadNextMediaAsync(true, foundPost, isNext ? 'next' : 'previous');
 
+        // load likes
 
-    const onDidLoadNextOrPreviousPostAsync = useCallback(async () => {
-        if (!post.current)
-            return
-
-        const likes = await GetPostLikeCountAsync(category, post.current.id)
-        setLikeCount(likes)
-    }, [])
+        onBeginLoadNextOrPreviousPostAsync()
+    }, [seenIDs, loadNextMediaAsync, onBeginLoadNextOrPreviousPostAsync]);
 
     const onVideoLoaded = useCallback((e: any) => {
         videoWholeDuration.current = e.duration;

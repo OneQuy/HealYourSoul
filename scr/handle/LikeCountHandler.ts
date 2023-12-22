@@ -10,22 +10,28 @@ const LikePath = 'user_data/post/@cat/@id/like';
  * 
  * @returns likes or NaN if error
  */
-export const GetPostLikeCountAsync = async (cat: Category, postID: number): Promise<number> => {
+export const GetPostLikeCountAsync = async (cat: Category, postID: number, callback: (curValue: number) => void): Promise<number> => {
     if (!NetLord.IsAvailableLastestCheck())
+    {
+        callback(Number.NaN)
         return Number.NaN
+    }
 
     const path = FillPathPattern(LikePath, cat, postID)
     const res = await FirebaseDatabase_GetValueAsync(path)
 
     if (res.error) {
         OnLogError('get like error, cat ' + cat + ', id ' + postID + ', ' + ToCanPrint(res.error))
+        callback(Number.NaN)
         return Number.NaN
     }
 
     if (IsNumType(res.value) && res.value >= 0) {
+        callback(res.value)
         return res.value
     }
     else {
+        callback(0)
         return 0
     }
 }
