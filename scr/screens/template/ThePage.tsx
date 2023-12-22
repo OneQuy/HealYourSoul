@@ -28,6 +28,7 @@ import { DownloadProgressCallbackResult } from 'react-native-fs';
 import { NetLord } from '../../handle/NetLord';
 import { SaveToGalleryAsync } from '../../handle/CameraRoll';
 import { Cheat } from '../../handle/Cheat';
+import { GetPostLikeCountAsync, LikePostAsync } from '../../handle/LikeCountHandler';
 
 const videoNumbSize = 10;
 const videoTouchEffectRadius = 100;
@@ -184,6 +185,7 @@ const ThePage = ({ category }: ThePageProps) => {
     const mediaURI = useRef('');
     const post = useRef<PostMetadata | null>(null);
     const curMediaIdx = useRef<number>(0);
+    const [likeCount, setLikeCount] = useState<number>(Number.NaN);
 
     // calculations
 
@@ -242,6 +244,10 @@ const ThePage = ({ category }: ThePageProps) => {
             // update offline ids
 
             addPostIDToOfflineList(forPost.id);
+
+            // callback load post done
+
+            onDidLoadNextOrPreviousPostAsync()
         } else { // fail
             reasonToReload.current = uriOrReasonToReload;
         }
@@ -284,6 +290,15 @@ const ThePage = ({ category }: ThePageProps) => {
         post.current = foundPost;
         await loadNextMediaAsync(true, foundPost, isNext ? 'next' : 'previous');
     }, [seenIDs, loadNextMediaAsync]);
+
+
+    const onDidLoadNextOrPreviousPostAsync = useCallback(async () => {
+        if (!post.current)
+            return
+
+        const likes = await GetPostLikeCountAsync(category, post.current.id)
+        setLikeCount(likes)
+    }, [])
 
     const onVideoLoaded = useCallback((e: any) => {
         videoWholeDuration.current = e.duration;
@@ -436,7 +451,7 @@ const ThePage = ({ category }: ThePageProps) => {
         }
     }, []);
 
-    const onPressFavorite = useCallback(() => {
+    const onPressFavorite = useCallback(async () => {
         if (!post.current)
             return;
 
@@ -501,6 +516,8 @@ const ThePage = ({ category }: ThePageProps) => {
         }
         else
             throw new Error('NI cat: ' + category);
+
+        LikePostAsync(!isFavorited, category, post.current.id, (likes) => setLikeCount(likes))
     }, [isFavorited]);
 
     const onPressNextMedia = useCallback(async (isNext: boolean) => {
@@ -887,8 +904,12 @@ const ThePage = ({ category }: ThePageProps) => {
 
             {/* navi part */}
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: Outline.Horizontal, gap: Outline.GapHorizontal }}>
-                <TouchableOpacity onPress={onPressFavorite} style={{ borderRadius: Outline.BorderRadius, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
+                <TouchableOpacity onPress={onPressFavorite} style={{ flexDirection: 'row', gap: Outline.GapHorizontal, borderRadius: Outline.BorderRadius, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
                     <MaterialCommunityIcons name={!isFavorited ? "cards-heart-outline" : 'cards-heart'} color={theme.counterPrimary} size={Size.IconSmaller} />
+                    {
+                        Number.isNaN(likeCount) ? undefined :
+                            <Text style={{ fontSize: FontSize.Normal }}>{likeCount}</Text>
+                    }
                 </TouchableOpacity>
                 {
                     !activePreviousPostButton ? undefined :

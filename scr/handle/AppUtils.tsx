@@ -57,10 +57,8 @@ export const OnLogError = (log: string) => {
     console.error(log)
 }
 
-export const FillPathPattern = async (pattern: string, cat: Category, postID: number) => {
-    return pattern.
-        replace('@id', postID.toString()).
-        replace('@cat', cat.toString())
+export const FillPathPattern = (pattern: string, cat: Category, postID: number) => {
+    return pattern.replace('@id', postID.toString()).replace('@cat', Category[cat])
 }
 
 export const GetListFileRLP = (cat: Category, localOrFb: boolean) => {

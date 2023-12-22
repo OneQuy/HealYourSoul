@@ -10,7 +10,7 @@ const LikePath = 'user_data/post/@cat/@id/like';
  * 
  * @returns likes or NaN if error
  */
-const GetPostLikeCountAsync = async (cat: Category, postID: number): Promise<number> => {
+export const GetPostLikeCountAsync = async (cat: Category, postID: number): Promise<number> => {
     if (!NetLord.IsAvailableLastestCheck())
         return Number.NaN
 
@@ -30,8 +30,9 @@ const GetPostLikeCountAsync = async (cat: Category, postID: number): Promise<num
     }
 }
 
-const LikePostAsync = async (isLikeOrDislike: boolean, cat: Category, postID: number): Promise<number> => {
+export const LikePostAsync = async (isLikeOrDislike: boolean, cat: Category, postID: number, callback: (curValue: number) => void): Promise<number> => {
     if (!NetLord.IsAvailableLastestCheck()) {
+        callback(Number.NaN)
         return Number.NaN
     }
 
@@ -40,13 +41,16 @@ const LikePostAsync = async (isLikeOrDislike: boolean, cat: Category, postID: nu
 
     if (res.error) {
         OnLogError('set like error, cat ' + cat + ', id ' + postID + ', ' + ToCanPrint(res.error))
+        callback(Number.NaN)
         return Number.NaN
     }
 
     if (IsNumType(res.value) && res.value >= 0) {
+        callback(res.value)
         return res.value
     }
     else {
+        callback(0)
         return 0
     }
 }

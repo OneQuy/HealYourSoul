@@ -4,7 +4,7 @@ import { getDatabase, ref, onValue, set, get, remove } from 'firebase/database';
 
 var db = null;
 
-function CheckAndInit() {    
+function CheckAndInit() {
     if (!db)
         db = getDatabase();
 }
@@ -12,12 +12,12 @@ function CheckAndInit() {
 // Usage: FirebaseDatabase_SetValue('hichic/hoho', valueObject, () => { console.log('done!'); });
 export function FirebaseDatabase_SetValue(relativePath, valueObject, callback) {
     CheckAndInit();
-    const reference = ref(db, relativePath);    
-    
-    set(reference, valueObject).then(function() {
-            if (callback)
-                callback();
-        });
+    const reference = ref(db, relativePath);
+
+    set(reference, valueObject).then(function () {
+        if (callback)
+            callback();
+    });
 }
 
 /**
@@ -25,15 +25,13 @@ export function FirebaseDatabase_SetValue(relativePath, valueObject, callback) {
  */
 export async function FirebaseDatabase_SetValueAsync(relativePath, valueObject) {
     CheckAndInit();
-    
-    try
-    {
-        const reference = ref(db, relativePath);        
+
+    try {
+        const reference = ref(db, relativePath);
         await set(reference, valueObject);
         return null;
     }
-    catch (err)
-    {
+    catch (err) {
         return err;
     }
 }
@@ -59,8 +57,7 @@ export function FirebaseDatabase_OnValue(relativePath, callback) {
 export async function FirebaseDatabase_GetValueAsync(relativePath) {
     CheckAndInit();
 
-    try
-    {
+    try {
         const reference = ref(db, relativePath);
         var snapshot = await get(reference);
         return {
@@ -68,8 +65,7 @@ export async function FirebaseDatabase_GetValueAsync(relativePath) {
             error: null
         }
     }
-    catch (err)
-    {
+    catch (err) {
         return {
             value: null,
             error: err
@@ -82,65 +78,74 @@ export async function FirebaseDatabase_GetValueAsync(relativePath) {
  *      value: value or null if has no data,
  *      error: error or null if success }
  */
-export async function FirebaseDatabase_IncreaseNumberAsync(relativePath, startValue = -1, incNum = 1) {
+export async function FirebaseDatabase_IncreaseNumberAsync(relativePath, startValue = -1, incNum = 1, callback = undefined) {
     CheckAndInit();
 
-    try
-    {
+    try {
         // get
 
         const reference = ref(db, relativePath);
-        var snapshot = await get(reference);        
+        var snapshot = await get(reference);
         let value = snapshot.val();
-        
-        if (value == null)
-        {
+
+        if (value == null) {
             value = startValue
         }
 
         // set
-        
+
         value += incNum;
         let error = await FirebaseDatabase_SetValueAsync(relativePath, value);
 
-        if (error)
-        {
-            return {
+        if (error) {
+            const res = {
                 value: null,
-                error:  error
+                error: error
             }
+
+            if (typeof callback === 'function')
+                callback(res)
+
+            return res
         }
 
         // return
 
-        return {
+        const res = {
             value: value,
             error: null
         }
+
+        if (typeof callback === 'function')
+            callback(res)
+
+        return res
     }
-    catch (err)
-    {
-        return {
+    catch (err) {
+        const res = {
             value: null,
             error: err
         }
+
+        if (typeof callback === 'function')
+            callback(res)
+
+        return res
     }
 }
 
 /**
  * @returns null if SUCCESS, otherwise error.
  */
- export async function FirebaseDatabase_RemoveAsync(relativePath) {
+export async function FirebaseDatabase_RemoveAsync(relativePath) {
     CheckAndInit();
-    
-    try
-    {
-        const reference = ref(db, relativePath);        
+
+    try {
+        const reference = ref(db, relativePath);
         await remove(reference);
         return null;
     }
-    catch (err)
-    {
+    catch (err) {
         return err;
     }
 }
