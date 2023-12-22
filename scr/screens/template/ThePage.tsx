@@ -909,7 +909,7 @@ const ThePage = ({ category }: ThePageProps) => {
                     <MaterialCommunityIcons name={!isFavorited ? "cards-heart-outline" : 'cards-heart'} color={theme.counterPrimary} size={Size.IconSmaller} />
                     {
                         Number.isNaN(likeCount) ? undefined :
-                            <Text style={{ fontSize: FontSize.Normal }}>{likeCount}</Text>
+                            <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{likeCount}</Text>
                     }
                 </TouchableOpacity>
                 {
