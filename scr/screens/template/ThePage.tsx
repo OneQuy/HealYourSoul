@@ -9,7 +9,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import { View, Text, Image, TouchableOpacity, ActivityIndicator, Alert, PanResponder, LayoutChangeEvent, GestureResponderEvent, Animated, } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
-import { Category, FontSize, LocalText, NeedReloadReason, Opacity, Outline, Size } from '../../constants/AppConstants';
+import { BorderRadius, Category, FontSize, LocalText, NeedReloadReason, Opacity, Outline, Size } from '../../constants/AppConstants';
 import { ThemeContext } from '../../constants/Colors';
 import { heightPercentageToDP as hp, } from "react-native-responsive-screen";
 import { FileList, MediaType, PostMetadata } from '../../constants/Types';
@@ -823,7 +823,7 @@ const ThePage = ({ category }: ThePageProps) => {
                             {/* media navigation buttons */}
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', flex: 1, alignItems: 'center' }} >
                                 {/* previous media btn */}
-                                <TouchableOpacity onPress={() => onPressNextMedia(false)} disabled={!showPreviousMediaButton} style={{ paddingVertical: hp('2%'), opacity: showPreviousMediaButton ? Opacity.Primary : 0, borderTopRightRadius: Outline.BorderRadius, borderBottomRightRadius: Outline.BorderRadius, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
+                                <TouchableOpacity onPress={() => onPressNextMedia(false)} disabled={!showPreviousMediaButton} style={{ paddingVertical: hp('2%'), opacity: showPreviousMediaButton ? Opacity.Primary : 0, borderTopRightRadius: BorderRadius.BR8, borderBottomRightRadius: BorderRadius.BR8, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
                                     <MaterialIcons name="keyboard-arrow-left" color={theme.counterPrimary} size={Size.IconSmaller} />
                                 </TouchableOpacity>
                                 {/* center view & big play video btn */}
@@ -835,7 +835,7 @@ const ThePage = ({ category }: ThePageProps) => {
                                     <Animated.View pointerEvents={'none'} style={[videoTouchEffectTranslate.getLayout(), { transform: [{ scale: videoTouchEffectZoomAV },], width: videoTouchEffectRadius, height: videoTouchEffectRadius, borderRadius: videoTouchEffectRadius / 2, backgroundColor: ColorNameToRgb('white', 0.3) }]} />
                                 </View>
                                 {/* next media btn */}
-                                <TouchableOpacity onPress={() => onPressNextMedia(true)} disabled={!showNextMediaButton} style={{ paddingVertical: hp('2%'), opacity: showNextMediaButton ? Opacity.Primary : 0, borderTopLeftRadius: Outline.BorderRadius, borderBottomLeftRadius: Outline.BorderRadius, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
+                                <TouchableOpacity onPress={() => onPressNextMedia(true)} disabled={!showNextMediaButton} style={{ paddingVertical: hp('2%'), opacity: showNextMediaButton ? Opacity.Primary : 0, borderTopLeftRadius: BorderRadius.BR8, borderBottomLeftRadius: BorderRadius.BR8, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
                                     <MaterialIcons name="keyboard-arrow-right" color={theme.counterPrimary} size={Size.IconSmaller} />
                                 </TouchableOpacity>
                             </View>
@@ -905,7 +905,7 @@ const ThePage = ({ category }: ThePageProps) => {
 
             {/* navi part */}
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: Outline.Horizontal, gap: Outline.GapHorizontal }}>
-                <TouchableOpacity onPress={onPressFavorite} style={{ flexDirection: 'row', gap: Outline.GapHorizontal, borderRadius: Outline.BorderRadius, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
+                <TouchableOpacity onPress={onPressFavorite} style={{ flexDirection: 'row', gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
                     <MaterialCommunityIcons name={!isFavorited ? "cards-heart-outline" : 'cards-heart'} color={theme.counterPrimary} size={Size.IconSmaller} />
                     {
                         Number.isNaN(likeCount) ? undefined :
@@ -914,11 +914,11 @@ const ThePage = ({ category }: ThePageProps) => {
                 </TouchableOpacity>
                 {
                     !activePreviousPostButton ? undefined :
-                        <TouchableOpacity onPress={() => onPressNextPost(false)} style={{ borderRadius: Outline.BorderRadius, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
+                        <TouchableOpacity onPress={() => onPressNextPost(false)} style={{ borderRadius: BorderRadius.BR8, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
                             <MaterialIcons name="keyboard-arrow-left" color={theme.counterPrimary} size={Size.Icon} />
                         </TouchableOpacity>
                 }
-                <TouchableOpacity onPress={() => onPressNextPost(true)} style={{ borderRadius: Outline.BorderRadius, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
+                <TouchableOpacity onPress={() => onPressNextPost(true)} style={{ borderRadius: BorderRadius.BR8, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
                     <MaterialIcons name="keyboard-arrow-right" color={theme.counterPrimary} size={Size.Icon} />
                 </TouchableOpacity>
             </View>
@@ -926,13 +926,13 @@ const ThePage = ({ category }: ThePageProps) => {
             {/* menu part */}
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: Outline.Horizontal, gap: Outline.GapHorizontal, marginBottom: Outline.GapVertical, }}>
                 {/* download media
-                <TouchableOpacity onPress={onPressDownloadMedia} style={{ borderRadius: Outline.BorderRadius, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
+                <TouchableOpacity onPress={onPressDownloadMedia} style={{ borderRadius: BorderRadius.BR8, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
                     <MaterialCommunityIcons name={'download'} color={theme.counterPrimary} size={Size.IconSmaller} />
                 </TouchableOpacity>
-                <TouchableOpacity style={{ borderRadius: Outline.BorderRadius, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
+                <TouchableOpacity style={{ borderRadius: BorderRadius.BR8, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
                     <MaterialIcons name="share" color={theme.counterPrimary} size={Size.IconSmaller} />
                 </TouchableOpacity>
-                <TouchableOpacity style={{ borderRadius: Outline.BorderRadius, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
+                <TouchableOpacity style={{ borderRadius: BorderRadius.BR8, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
                     <MaterialCommunityIcons name={'dots-horizontal'} color={theme.counterPrimary} size={Size.IconSmaller} />
                 </TouchableOpacity> */}
             </View>

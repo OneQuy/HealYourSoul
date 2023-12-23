@@ -84,8 +84,6 @@ export enum Outline {
   GapVertical_2 = hp('2%'),
   
   GapHorizontal = wp('1%'),
-
-  BorderRadius = 8,
 }
 
 // size
@@ -105,6 +103,7 @@ export enum Opacity {
 // border radius
 
 export enum BorderRadius {
+ BR8 = 8,
  BR = wp('4%'),
 }
 
