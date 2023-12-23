@@ -198,7 +198,7 @@ const ThePage = ({ category }: ThePageProps) => {
     const isFavorited: boolean = useMemo(() => {
         return post.current !== null && favoritedIDs && favoritedIDs.includes(post.current.id);
     }, [favoritedIDs, post.current?.id])
-    
+
     // handles
 
 
@@ -739,7 +739,7 @@ const ThePage = ({ category }: ThePageProps) => {
     useEffect(() => {
         navigation.setOptions({
             headerRight: !handling ? undefined : () => (
-                <ActivityIndicator style={{ marginRight: Outline.Horizontal }} />
+                <ActivityIndicator color={theme.counterPrimary} style={{ marginRight: Outline.Horizontal }} />
             )
         });
     }, [handling]);
@@ -788,9 +788,9 @@ const ThePage = ({ category }: ThePageProps) => {
                             reasonToReload.current !== NeedReloadReason.None ?
                                 // need to reload
                                 <TouchableOpacity onPress={onPressReloadAsync} style={{ flex: 1, justifyContent: 'center', alignItems: 'center', gap: Outline.GapVertical }} >
-                                    <MaterialCommunityIcons name={'file-image-outline'} color={theme.primary} size={100} />
-                                    <Text style={{ fontSize: FontSize.Big, color: theme.counterPrimary }}>{reasonToReload.current === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
-                                    <Text style={{ fontSize: FontSize.Normal, color: theme.counterPrimary }}>{LocalText.tap_to_retry}</Text>
+                                    <MaterialCommunityIcons name={reasonToReload.current === NeedReloadReason.NoInternet ? 'access-point-network-off' : 'heart-broken'} color={theme.primary} size={Size.IconBig} />
+                                    <Text style={{ fontSize: FontSize.Normal, color: theme.counterPrimary }}>{reasonToReload.current === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
+                                    <Text style={{ fontSize: FontSize.Small_L, color: theme.counterPrimary }}>{LocalText.tap_to_retry}</Text>
                                 </TouchableOpacity> :
                                 // loading
                                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', gap: Outline.GapVertical }} >
