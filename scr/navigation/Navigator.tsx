@@ -14,6 +14,7 @@ import NSFWScreen from '../screens/nsfw/NSFWScreen';
 import { Is_IOS_And_OfflineOrLowerReviewVersion } from '../handle/AppUtils';
 import IAPPage from '../screens/IAP/IAPPage';
 import { ArtScreen, CuteScreen, SarcasmScreen } from '../screens/other_thepage_screens/Index';
+import NinjaFactScreen from '../screens/ninja_fact/NinjaFactScreen';
 
 export type DrawerParamList = {
   [ScreenName.Comic]: undefined,
@@ -26,6 +27,7 @@ export type DrawerParamList = {
   [ScreenName.Cute]: undefined,
   [ScreenName.Art]: undefined,
   [ScreenName.Sarcasm]: undefined,
+  [ScreenName.ShortFact]: undefined,
   [ScreenName.IAPPage]: undefined,
 }
 
@@ -48,7 +50,8 @@ const ScreenList: ScreenNamePair[] = [
   [ScreenName.Sarcasm, SarcasmScreen],
   [ScreenName.Cute, CuteScreen],
   [ScreenName.Art, ArtScreen],
-  [ScreenName.IAPPage, IAPPage]
+  [ScreenName.IAPPage, IAPPage],
+  [ScreenName.ShortFact, NinjaFactScreen],
 ]
 
 const Navigator = ({ initialRouteName }: MainNavigatorProps) => {

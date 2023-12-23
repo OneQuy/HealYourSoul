@@ -68,3 +68,4 @@ config.js
 
 # warm editor
 runtime_dir/
+keys.ts

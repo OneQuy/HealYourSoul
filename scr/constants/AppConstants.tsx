@@ -13,7 +13,8 @@ export enum ScreenName {
   Art = 'Art',
   Cute = 'Cute',
   Sarcasm = 'Sarcasm',
-  IAPPage = 'Premium'
+  IAPPage = 'Premium',
+  ShortFact = 'Short Fact', // ninja fact
 }
 
 // dir / file

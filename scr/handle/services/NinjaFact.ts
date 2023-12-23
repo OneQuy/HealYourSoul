@@ -1,19 +1,29 @@
 import axios from 'axios';
+import { NINJA_FACT_KEY } from '../../../keys';
 
 const options = {
     method: 'GET',
     url: 'https://facts-by-api-ninjas.p.rapidapi.com/v1/facts',
     headers: {
-        'X-RapidAPI-Key': '693dd75456msh921c376e306158cp12c5dbjsn32ff82c9294a',
+        'X-RapidAPI-Key': NINJA_FACT_KEY,
         'X-RapidAPI-Host': 'facts-by-api-ninjas.p.rapidapi.com'
     }
 };
 
-export const GetFactAsync = async () => {
+export const GetNinjaFactAsync = async () : Promise<string | undefined> => {
     try {
         const response = await axios.request(options);
-        console.log(response.data);
+        
+        if (response.status !== 200)
+            return undefined
+
+        const txt = response.data[0].fact
+        
+        if (typeof txt === 'string')
+            return txt
+        else
+            return undefined
     } catch (error) {
-        console.error(error);
+        return undefined
     }
 }
