@@ -54,10 +54,6 @@ export const GetExpiredDateAndDaysLeft = (startDayTick: number, month: number, e
     return [expiredDate, dayLeft]
 }
 
-export const OnLogError = (log: string) => {
-    console.error(log)
-}
-
 export const FillPathPattern = (pattern: string, cat: Category, postID: number) => {
     return pattern.replace('@id', postID.toString()).replace('@cat', Category[cat])
 }
@@ -294,11 +290,14 @@ export const CopyAndToast = (s: string, theme: ThemeColor) => {
     toast(options);
 }
 
-export const HandleError = (methodName: string, error: any, themeForToast?: ThemeColor) => {
+export const HandleError = (methodName: string, error: any, themeForToast?: ThemeColor, keepSilentForUser?: boolean) => {
     const err = methodName + ' - ' + error;
 
     Track('error', err);
     AppLog.Log(err);
+
+    if (keepSilentForUser === true)
+        return
 
     if (!themeForToast)
         Alert.alert(LocalText.error, LocalText.cant_get_content + '\n\nError: ' + err)
