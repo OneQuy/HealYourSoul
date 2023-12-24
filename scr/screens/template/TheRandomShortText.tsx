@@ -1,8 +1,7 @@
 import { View, Text, TouchableOpacity, ActivityIndicator, Share as RNShare, ShareContent, ShareOptions, Alert, StyleSheet } from 'react-native'
 import React, { LegacyRef, useCallback, useContext, useEffect, useRef, useState } from 'react'
-import { useAppDispatch } from '../../redux/Store'
 import { ThemeContext } from '../../constants/Colors'
-import { BorderRadius, FontSize, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
+import { BorderRadius, Category, FontSize, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
 import Share from 'react-native-share';
 
 // @ts-ignore
@@ -14,12 +13,14 @@ import { NetLord } from '../../handle/NetLord'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Cheat } from '../../handle/Cheat'
-import { PickRandomElement } from '../../handle/Utils'
+import { DelayAsync, PickRandomElement } from '../../handle/Utils'
 import { CopyAndToast } from '../../handle/AppUtils'
 import ViewShot from 'react-native-view-shot'
 import { CommonStyles } from '../../constants/CommonConstants'
+import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
 
 interface TheRandomShortTextProps {
+    category: Category,
     getTextAsync: () => Promise<string | undefined>
 }
 
@@ -32,6 +33,7 @@ const FakeTextContents = [
 ]
 
 const TheRandomShortText = ({
+    category,
     getTextAsync,
 }: TheRandomShortTextProps) => {
     const navigation = useNavigation();
@@ -48,13 +50,19 @@ const TheRandomShortText = ({
         let text: string | undefined
 
         if (__DEV__ && !Cheat('ForceRealApiTextContent'))
+        {
+            await DelayAsync(500)
             text = PickRandomElement(FakeTextContents)
+        }
         else
             text = await getTextAsync()
 
         setText(text)
 
-        if (!text) { // fail
+        if (text) { // success
+            SetStreakAsync(Category[category], true)
+        }
+        else { // fail
             if (NetLord.IsAvailableLastestCheck())
                 reasonToReload.current = NeedReloadReason.FailToGetContent
             else
@@ -106,6 +114,7 @@ const TheRandomShortText = ({
     // on init once (for load first post)
 
     useEffect(() => {
+        SetStreakAsync(Category[category])
         onPressRandom()
     }, [])
 

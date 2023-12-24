@@ -29,8 +29,8 @@ export type SubscribedData = {
 }
 
 export type Streak = {
-    cat: Category,
-    totalSeenCount: number,
+    id: string,
+    uniquePostSeen: number,
     bestStreak: number,
     currentStreak: number,
     lastDateTick: number,
