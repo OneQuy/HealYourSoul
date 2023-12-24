@@ -40,7 +40,10 @@ type ThePageProps = {
 
 type NeedLoadPostType = 'next' | 'previous' | 'none';
 
-var globalCurrentCategory: Category;
+/**
+ * used for refreshing content when back to online 
+ */
+var globalCurrentCategory: Category
 
 const ThePage = ({ category }: ThePageProps) => {
     // general state

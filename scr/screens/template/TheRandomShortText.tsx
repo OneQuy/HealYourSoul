@@ -10,6 +10,8 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { NetLord } from '../../handle/NetLord'
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 interface TheRandomShortTextProps {
     getTextAsync: () => Promise<string | undefined>
@@ -18,6 +20,7 @@ interface TheRandomShortTextProps {
 const TheRandomShortText = ({
     getTextAsync,
 }: TheRandomShortTextProps) => {
+    const navigation = useNavigation();
     const [text, setText] = useState<string | undefined>('undefined')
     const reasonToReload = useRef<NeedReloadReason>(NeedReloadReason.None);
     const theme = useContext(ThemeContext);
@@ -39,9 +42,21 @@ const TheRandomShortText = ({
         setHandling(false)
     }, [])
 
+    // on init once (for load first post)
+
     useEffect(() => {
         onPressRandom()
     }, [])
+
+    // save last visit category screen
+
+    useFocusEffect(
+        useCallback(() => {
+            const state = navigation.getState();
+            const screenName = state.routeNames[state.index];
+            AsyncStorage.setItem('categoryScreenToOpenFirst', screenName);
+        }, [])
+    );
 
     return (
         <View style={{ padding: Outline.Horizontal, backgroundColor: theme.background, flex: 1, gap: Outline.GapVertical, }}>
