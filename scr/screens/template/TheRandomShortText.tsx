@@ -1,8 +1,9 @@
-import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native'
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
+import { View, Text, TouchableOpacity, ActivityIndicator, Share as RNShare, ShareContent, ShareOptions, Alert } from 'react-native'
+import React, { LegacyRef, useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { useAppDispatch } from '../../redux/Store'
 import { ThemeContext } from '../../constants/Colors'
 import { BorderRadius, FontSize, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
+import Share from 'react-native-share';
 
 // @ts-ignore
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -15,6 +16,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Cheat } from '../../handle/Cheat'
 import { PickRandomElement } from '../../handle/Utils'
 import { CopyAndToast } from '../../handle/AppUtils'
+import ViewShot from 'react-native-view-shot'
 
 interface TheRandomShortTextProps {
     getTextAsync: () => Promise<string | undefined>
@@ -36,6 +38,7 @@ const TheRandomShortText = ({
     const reasonToReload = useRef<NeedReloadReason>(NeedReloadReason.None);
     const theme = useContext(ThemeContext);
     const [handling, setHandling] = useState(false);
+    const ref = useRef<LegacyRef<ViewShot> | undefined>();
 
     const onPressRandom = useCallback(async () => {
         reasonToReload.current = NeedReloadReason.None
@@ -67,6 +70,38 @@ const TheRandomShortText = ({
         CopyAndToast(text, theme)
     }, [text, theme])
 
+    const onPressShareText = useCallback(() => {
+        if (!text)
+            return
+
+        RNShare.share({
+            title: LocalText.fact_of_the_day,
+            message: text,
+        } as ShareContent,
+            {
+                tintColor: theme.primary,
+            } as ShareOptions)
+    }, [text, theme])
+
+    const onPressShareImage = useCallback(() => {
+        if (!text)
+            return
+
+        // @ts-ignore
+        ref.current.capture().then(async (uri: string) => {
+            Share
+                .open({
+                    url: uri,
+                })
+                .then((res) => {
+
+                })
+                .catch((err) => {
+                    Alert.alert('Fail', '' + err)
+                });
+        })
+    }, [text, theme])
+
     // on init once (for load first post)
 
     useEffect(() => {
@@ -84,8 +119,9 @@ const TheRandomShortText = ({
     );
 
     return (
-        <View style={{ padding: Outline.Horizontal, backgroundColor: theme.background, flex: 1, gap: Outline.GapVertical, }}>
-            <View style={{ flex: 1 }}>
+        <View pointerEvents={handling ? 'none' : 'auto'} style={{ padding: Outline.Horizontal, backgroundColor: theme.background, flex: 1, gap: Outline.GapVertical, }}>
+            {/* @ts-ignore */}
+            <ViewShot style={{ flex: 1 }} ref={ref} options={{ fileName: "Your-File-Name", format: "jpg", quality: 1 }}>
                 {
                     handling ?
                         // true ?
@@ -106,7 +142,7 @@ const TheRandomShortText = ({
                             }
                         </View>
                 }
-            </View>
+            </ViewShot>
             <View>
                 <TouchableOpacity onPress={onPressRandom} style={{ flexDirection: 'row', justifyContent: 'center', gap: Outline.GapHorizontal, alignItems: 'center', borderRadius: BorderRadius.BR8, padding: Outline.GapVertical_2, backgroundColor: theme.primary, width: '100%' }}>
                     <MaterialCommunityIcons name={'dice-5-outline'} color={theme.counterPrimary} size={Size.Icon} />
@@ -119,12 +155,12 @@ const TheRandomShortText = ({
                     <Text style={{ color: theme.text, fontSize: FontSize.Small_L }}>Copy</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={{ gap: Outline.GapHorizontal, justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', borderRadius: BorderRadius.BR8, }}>
+                <TouchableOpacity onPress={onPressShareText} style={{ gap: Outline.GapHorizontal, justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', borderRadius: BorderRadius.BR8, }}>
                     <MaterialIcons name={'share'} color={theme.counterPrimary} size={Size.IconSmaller} />
                     <Text style={{ color: theme.text, fontSize: FontSize.Small_L }}>Share</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={{ gap: Outline.GapHorizontal, justifyContent: 'center', flexDirection: 'row', flex: 1.5, alignItems: 'center', borderRadius: BorderRadius.BR8, }}>
+                <TouchableOpacity onPress={onPressShareImage} style={{ gap: Outline.GapHorizontal, justifyContent: 'center', flexDirection: 'row', flex: 1.5, alignItems: 'center', borderRadius: BorderRadius.BR8, }}>
                     <MaterialCommunityIcons name={'share'} color={theme.counterPrimary} size={Size.IconSmaller} />
                     <Text style={{ color: theme.text, fontSize: FontSize.Small_L }}>Share Image</Text>
                 </TouchableOpacity>
