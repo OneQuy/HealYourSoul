@@ -1,3 +1,5 @@
+import { Category } from "./AppConstants"
+
 export enum MediaType {
     Image = 0,
     Video = 1
@@ -24,4 +26,12 @@ export type AppConfig = {
 export type SubscribedData = {
     id: string,
     tick: number,
+}
+
+export type Streak = {
+    cat: Category,
+    totalSeenCount: number,
+    bestStreak: number,
+    currentStreak: number,
+    lastDateTick: number,
 }

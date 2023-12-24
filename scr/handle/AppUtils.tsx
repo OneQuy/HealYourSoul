@@ -14,8 +14,8 @@ import { IsInternetAvailableAsync } from "./NetLord";
 import { GetAppConfig } from "./AppConfigHandler";
 import Clipboard from "@react-native-clipboard/clipboard";
 
-const today = new Date()
-const todayString = 'd' + today.getDate() + '_m' + (today.getMonth() + 1) + '_' + today.getFullYear()
+// const today = new Date()
+// const todayString = 'd' + today.getDate() + '_m' + (today.getMonth() + 1) + '_' + today.getFullYear()
 
 const version = require('../../package.json')['version']
 const versionToNum = VersionToNumber(version)

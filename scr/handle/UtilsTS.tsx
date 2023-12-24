@@ -444,6 +444,27 @@ export const ExtractAllNumbersInText = (text: string): number[] => {
 
 // time ---------------------------
 
+export const IsToday = (date: Date): boolean => {
+    return IsSameDateMonthYear(date, new Date())
+}
+
+export const IsYesterday = (date: Date, today: Date = new Date()): boolean => {
+    const cloneDate = new Date(date)
+    cloneDate.setDate(cloneDate.getDate() + 1)
+    
+    return IsSameDateMonthYear(cloneDate, today)
+}
+
+export const IsSameDateMonthYear = (a: Date, b: Date): boolean => {
+    if (a.getDate() === b.getDate() &&
+        a.getMonth() === b.getMonth() &&
+        a.getFullYear() === b.getFullYear()) {
+        return true
+    }
+    else 
+        return false
+}
+
 export const SafeDateString = (date: Date, join: string = '-'): string => {
     const arr = [date.getDate(), MonthName(date.getMonth(), false), date.getFullYear()]
     return arr.join(join)
