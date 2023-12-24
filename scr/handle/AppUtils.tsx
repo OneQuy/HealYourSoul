@@ -12,6 +12,7 @@ import { AppLog } from "./AppLog";
 import RNFS, { DownloadProgressCallbackResult, ReadDirItem } from "react-native-fs";
 import { IsInternetAvailableAsync } from "./NetLord";
 import { GetAppConfig } from "./AppConfigHandler";
+import Clipboard from "@react-native-clipboard/clipboard";
 
 const today = new Date()
 const todayString = 'd' + today.getDate() + '_m' + (today.getMonth() + 1) + '_' + today.getFullYear()
@@ -280,6 +281,17 @@ export const GetAllSavedLocalPostIDsListAsync = async (cat: Category) => {
     {
         return undefined;
     }
+}
+
+export const CopyAndToast = (s: string, theme: ThemeColor) => {
+    Clipboard.setString(s);
+
+    const options: ToastOptions = {
+        title: LocalText.copied,
+        ...ToastTheme(theme, 'done')
+    };
+
+    toast(options);
 }
 
 export const HandleError = (methodName: string, error: any, themeForToast?: ThemeColor) => {

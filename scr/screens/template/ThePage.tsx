@@ -13,7 +13,7 @@ import { BorderRadius, Category, FontSize, LocalText, NeedReloadReason, Opacity,
 import { ThemeContext } from '../../constants/Colors';
 import { heightPercentageToDP as hp, } from "react-native-responsive-screen";
 import { FileList, MediaType, PostMetadata } from '../../constants/Types';
-import { CheckAndGetFileListAsync, CheckLocalFileAndGetURIAsync, GetAllSavedLocalPostIDsListAsync, ToastTheme } from '../../handle/AppUtils';
+import { CheckAndGetFileListAsync, CheckLocalFileAndGetURIAsync, CopyAndToast, GetAllSavedLocalPostIDsListAsync, ToastTheme } from '../../handle/AppUtils';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { PickRandomElement, RoundNumber, SecondsToHourMinuteSecondString } from '../../handle/Utils';
@@ -535,14 +535,7 @@ const ThePage = ({ category }: ThePageProps) => {
         if (!s)
             return;
 
-        Clipboard.setString(s);
-
-        const options: ToastOptions = {
-            title: LocalText.copied,
-            ...ToastTheme(theme, 'done')
-        };
-
-        toast(options);
+        CopyAndToast(s, theme)
     }, [theme]);
 
     const onPressToggleMutedVideo = useCallback(() => {
