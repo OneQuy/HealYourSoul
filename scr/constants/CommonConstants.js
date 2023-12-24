@@ -50,4 +50,17 @@ export const CommonStyles = StyleSheet.create({
         justifyContent: 'center', 
         alignItems: 'center',             
     },
+   
+    flex1_justifyContentCenter_AlignItemsCenter:
+    {
+        flex: 1,
+        justifyContent: 'center', 
+        alignItems: 'center',             
+    },
+    
+    row_width100Percent:
+    {
+        flexDirection: 'row',
+        width: '100%',
+    },
 });
