@@ -2,7 +2,7 @@
 // install: npm install firebase
 
 import { initializeApp } from 'firebase/app';
-import { firebaseConfig } from '../../config';
+import { firebaseConfig } from '../../keys';
 
 // Get these info when creating WEB app on firebase console:
 // - Go to Console
