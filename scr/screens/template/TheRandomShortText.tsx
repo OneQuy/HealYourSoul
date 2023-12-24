@@ -146,23 +146,23 @@ const TheRandomShortText = ({
             <View>
                 <TouchableOpacity onPress={onPressRandom} style={{ flexDirection: 'row', justifyContent: 'center', gap: Outline.GapHorizontal, alignItems: 'center', borderRadius: BorderRadius.BR8, padding: Outline.GapVertical_2, backgroundColor: theme.primary, width: '100%' }}>
                     <MaterialCommunityIcons name={'dice-5-outline'} color={theme.counterPrimary} size={Size.Icon} />
-                    <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>Random</Text>
+                    <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{LocalText.random}</Text>
                 </TouchableOpacity>
             </View>
             <View style={{ flexDirection: 'row', width: '100%', gap: Outline.GapHorizontal }}>
                 <TouchableOpacity onPress={onPressCopy} style={{ gap: Outline.GapHorizontal, justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', borderRadius: BorderRadius.BR8 }}>
                     <MaterialIcons name={'content-copy'} color={theme.counterPrimary} size={Size.IconSmaller} />
-                    <Text style={{ color: theme.text, fontSize: FontSize.Small_L }}>Copy</Text>
+                    <Text style={{ color: theme.text, fontSize: FontSize.Small_L }}>{LocalText.copy}</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={onPressShareText} style={{ gap: Outline.GapHorizontal, justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', borderRadius: BorderRadius.BR8, }}>
                     <MaterialIcons name={'share'} color={theme.counterPrimary} size={Size.IconSmaller} />
-                    <Text style={{ color: theme.text, fontSize: FontSize.Small_L }}>Share</Text>
+                    <Text style={{ color: theme.text, fontSize: FontSize.Small_L }}>{LocalText.share}</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={onPressShareImage} style={{ gap: Outline.GapHorizontal, justifyContent: 'center', flexDirection: 'row', flex: 1.5, alignItems: 'center', borderRadius: BorderRadius.BR8, }}>
                     <MaterialCommunityIcons name={'share'} color={theme.counterPrimary} size={Size.IconSmaller} />
-                    <Text style={{ color: theme.text, fontSize: FontSize.Small_L }}>Share Image</Text>
+                    <Text style={{ color: theme.text, fontSize: FontSize.Small_L }}>{LocalText.share_image}</Text>
                 </TouchableOpacity>
 
             </View>
