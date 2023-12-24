@@ -14,6 +14,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Cheat } from '../../handle/Cheat'
 import { PickRandomElement } from '../../handle/Utils'
+import { CopyAndToast } from '../../handle/AppUtils'
 
 interface TheRandomShortTextProps {
     getTextAsync: () => Promise<string | undefined>
@@ -42,7 +43,7 @@ const TheRandomShortText = ({
 
         let text: string | undefined
 
-        if (__DEV__ && Cheat('FakeTextContent'))
+        if (__DEV__ && !Cheat('ForceRealApiTextContent'))
             text = PickRandomElement(FakeTextContents)
         else
             text = await getTextAsync()
@@ -58,6 +59,13 @@ const TheRandomShortText = ({
 
         setHandling(false)
     }, [])
+
+    const onPressCopy = useCallback(() => {
+        if (!text)
+            return
+
+        CopyAndToast(text, theme)
+    }, [text, theme])
 
     // on init once (for load first post)
 
@@ -106,7 +114,7 @@ const TheRandomShortText = ({
                 </TouchableOpacity>
             </View>
             <View style={{ flexDirection: 'row', width: '100%', gap: Outline.GapHorizontal }}>
-                <TouchableOpacity style={{ gap: Outline.GapHorizontal, justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', borderRadius: BorderRadius.BR8 }}>
+                <TouchableOpacity onPress={onPressCopy} style={{ gap: Outline.GapHorizontal, justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', borderRadius: BorderRadius.BR8 }}>
                     <MaterialIcons name={'content-copy'} color={theme.counterPrimary} size={Size.IconSmaller} />
                     <Text style={{ color: theme.text, fontSize: FontSize.Small_L }}>Copy</Text>
                 </TouchableOpacity>
