@@ -3,6 +3,7 @@ import React, { LegacyRef, useCallback, useContext, useEffect, useRef, useState 
 import { ThemeContext } from '../../constants/Colors'
 import { BorderRadius, Category, FontSize, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
 import Share from 'react-native-share';
+import RNFS, { DownloadProgressCallbackResult } from "react-native-fs";
 
 // @ts-ignore
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -20,6 +21,8 @@ import { CommonStyles } from '../../constants/CommonConstants'
 import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
 import { Streak } from '../../constants/Types';
 import StreakPopup from '../components/StreakPopup';
+import { DownloadImageAsync } from '../../handle/UtilsTS';
+import { DownloadFileAsync } from '../../handle/FileUtils';
 
 interface TheRandomImageProps {
     category: Category,
@@ -66,13 +69,18 @@ const TheRandomImage = ({
         }
     }, [streakData])
 
-    const onPressShareImage = useCallback(() => {
+    const onPressSaveToPhoto = useCallback(async () => {
+    }, [])
+
+    const onPressShareImage = useCallback(async () => {
         if (!imageUri)
             return
 
+        const res = await DownloadFileAsync(imageUri, 'data/image.jpg', true)
+
         Share
             .open({
-                url: imageUri,
+                url: RNFS.DocumentDirectoryPath + '/data/image.jpg',
             })
             .catch((err) => {
                 Alert.alert('Fail', '' + err)
@@ -132,11 +140,14 @@ const TheRandomImage = ({
                 </TouchableOpacity>
             </View>
             <View style={[{ gap: Outline.GapHorizontal }, CommonStyles.row_width100Percent]}>
+                <TouchableOpacity onPress={onPressSaveToPhoto} style={[styleSheet.subBtnTO, { flex: 1.5, gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }]}>
+                    <MaterialCommunityIcons name={'share'} color={theme.counterPrimary} size={Size.IconSmaller} />
+                    <Text style={{ color: theme.text, fontSize: FontSize.Small_L }}>{LocalText.save}</Text>
+                </TouchableOpacity>
                 <TouchableOpacity onPress={onPressShareImage} style={[styleSheet.subBtnTO, { flex: 1.5, gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }]}>
                     <MaterialCommunityIcons name={'share'} color={theme.counterPrimary} size={Size.IconSmaller} />
-                    <Text style={{ color: theme.text, fontSize: FontSize.Small_L }}>{LocalText.share_image}</Text>
+                    <Text style={{ color: theme.text, fontSize: FontSize.Small_L }}>{LocalText.share}</Text>
                 </TouchableOpacity>
-
             </View>
             {
                 streakData ? <StreakPopup streak={streakData} /> : undefined

@@ -154,6 +154,7 @@ export const LocalText = {
   share_image: 'Share Image',
   random: 'Random',
   saved: 'Saved!',
+  save: 'Save',
   no_media_to_download: 'No media to download!',
   oops: 'Oooops',
   fact_of_the_day: 'Fact of the day',

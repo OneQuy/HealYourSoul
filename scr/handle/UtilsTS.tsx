@@ -207,6 +207,16 @@ export function GetFileExtensionByFilepath(filepath: string): string {
 }
 
 
+export async function DownloadImageAsync(url: string): Promise<string | undefined> {
+    const data = await fetch(url)
+
+    const blobl = await data.blob()
+    
+    console.log(blobl)
+    
+    return undefined
+}
+
 export function GetBlobFromFLPAsync(flp: string): Promise<Blob> {
     return new Promise((resolve, reject) => {
         if (!flp) {
