@@ -41,8 +41,6 @@ const TheRandomImage = ({
         reasonToReload.current = NeedReloadReason.None
         setHandling(true)
 
-        // let text: string | undefined
-
         const uri = await getImageAsync()
 
         if (uri) { // success
@@ -114,8 +112,7 @@ const TheRandomImage = ({
 
     return (
         <View pointerEvents={handling ? 'none' : 'auto'} style={[styleSheet.masterView, { backgroundColor: theme.background }]}>
-            {/* @ts-ignore */}
-            <View style={CommonStyles.flex_1} options={{ fileName: "Your-File-Name", format: "jpg", quality: 1 }}>
+            <View style={CommonStyles.flex_1} >
                 {
                     handling ?
                         // true ?
