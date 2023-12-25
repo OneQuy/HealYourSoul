@@ -15,14 +15,16 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Cheat } from '../../handle/Cheat'
 import { DelayAsync, PickRandomElement } from '../../handle/Utils'
-import { CopyAndToast, SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
+import { CopyAndToast, SaveCurrentScreenForLoadNextTime, ToastTheme } from '../../handle/AppUtils'
 import ViewShot from 'react-native-view-shot'
 import { CommonStyles } from '../../constants/CommonConstants'
 import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
 import { Streak } from '../../constants/Types';
 import StreakPopup from '../components/StreakPopup';
-import { DownloadImageAsync } from '../../handle/UtilsTS';
+import { DownloadImageAsync, ToCanPrint } from '../../handle/UtilsTS';
 import { DownloadFileAsync } from '../../handle/FileUtils';
+import { SaveToGalleryAsync } from '../../handle/CameraRoll';
+import { ToastOptions, toast } from '@baronha/ting';
 
 interface TheRandomImageProps {
     category: Category,
@@ -70,7 +72,24 @@ const TheRandomImage = ({
     }, [streakData])
 
     const onPressSaveToPhoto = useCallback(async () => {
-    }, [])
+        if (!imageUri) {
+           return
+        }
+
+        const error = await SaveToGalleryAsync(imageUri)
+
+        if (error !== null) { // error
+            Alert.alert(LocalText.error, ToCanPrint(error));
+        }
+        else { // success
+            const options: ToastOptions = {
+                title: LocalText.saved,
+                ...ToastTheme(theme, 'done')
+            };
+
+            toast(options);
+        }
+    }, [theme, imageUri])
 
     const onPressShareImage = useCallback(async () => {
         if (!imageUri)
