@@ -14,8 +14,8 @@ export enum ScreenName {
   Cute = 'Cute',
   Sarcasm = 'Sarcasm',
   IAPPage = 'Premium',
-  ShortFact = 'Short Fact', // ninja fact
-  Picture = 'Picture', // unsplash
+  ShortFact = 'Random Fact', // ninja fact
+  Picture = 'Random Picture', // unsplash
 }
 
 // dir / file
