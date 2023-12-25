@@ -10,7 +10,7 @@ const StreakPopup = ({ streak }: StreakPopupProps) => {
     const theme = useContext(ThemeContext);
 
     return (
-        <View style={[{ backgroundColor: theme.background }, style.masterView]}>
+        <View style={[{ backgroundColor: 'gold', }, style.masterView]}>
             <Text>Unique post count: {streak.uniquePostSeen}</Text>
             <Text>Current streak: {streak.currentStreak}</Text>
             <Text>Best streak: {streak.bestStreak}</Text>
