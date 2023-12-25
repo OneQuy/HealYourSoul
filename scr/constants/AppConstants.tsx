@@ -16,6 +16,7 @@ export enum ScreenName {
   IAPPage = 'Premium',
   ShortFact = 'Random Fact', // ninja fact
   Picture = 'Random Picture', // unsplash
+  Joke = 'Random Joke', // ninja joke
 }
 
 // dir / file
@@ -74,7 +75,8 @@ export enum Category {
   Sarcasm = 8,
   Art = 9,
   NinjaFact = 10,
-  Picture,
+  Picture = 11,
+  NinjaJoke = 12,
 }
 
 // margin / padding
