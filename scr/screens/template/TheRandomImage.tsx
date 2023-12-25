@@ -22,7 +22,7 @@ import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
 import { Streak } from '../../constants/Types';
 import StreakPopup from '../components/StreakPopup';
 import { DownloadImageAsync, ToCanPrint } from '../../handle/UtilsTS';
-import { DownloadFileAsync } from '../../handle/FileUtils';
+import { DownloadFileAsync, GetFLPFromRLP } from '../../handle/FileUtils';
 import { SaveToGalleryAsync } from '../../handle/CameraRoll';
 import { ToastOptions, toast } from '@baronha/ting';
 
@@ -73,10 +73,18 @@ const TheRandomImage = ({
 
     const onPressSaveToPhoto = useCallback(async () => {
         if (!imageUri) {
-           return
+            return
         }
 
-        const error = await SaveToGalleryAsync(imageUri)
+        const flp = RNFS.DocumentDirectoryPath + '/' + TempDirName + '/image.jpg'
+        const res = await DownloadFileAsync(imageUri, flp, false)
+
+        if (res) {
+            Alert.alert('Fail', ToCanPrint(res))
+            return
+        }
+
+        const error = await SaveToGalleryAsync(flp)
 
         if (error !== null) { // error
             Alert.alert(LocalText.error, ToCanPrint(error));
@@ -95,7 +103,7 @@ const TheRandomImage = ({
         if (!imageUri)
             return
 
-        const flp = RNFS.DocumentDirectoryPath + '/' + TempDirName + '/image.jpg'
+        const flp = GetFLPFromRLP(TempDirName + '/image.jpg', true)
         const res = await DownloadFileAsync(imageUri, flp, false)
 
         if (res) {
