@@ -9,7 +9,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import { View, Text, Image, TouchableOpacity, ActivityIndicator, Alert, PanResponder, LayoutChangeEvent, GestureResponderEvent, Animated, StyleSheet, } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
-import { BorderRadius, Category, FontSize, LocalText, NeedReloadReason, Opacity, Outline, Size } from '../../constants/AppConstants';
+import { BorderRadius, Category, FontSize, Icon, LocalText, NeedReloadReason, Opacity, Outline, Size } from '../../constants/AppConstants';
 import { ThemeContext } from '../../constants/Colors';
 import { heightPercentageToDP as hp, } from "react-native-responsive-screen";
 import { FileList, MediaType, PostMetadata, Streak } from '../../constants/Types';
@@ -848,7 +848,7 @@ const ThePage = ({ category }: ThePageProps) => {
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', flex: 1, alignItems: 'center' }} >
                                 {/* previous media btn */}
                                 <TouchableOpacity onPress={() => onPressNextMedia(false)} disabled={!showPreviousMediaButton} style={{ paddingVertical: hp('2%'), opacity: showPreviousMediaButton ? Opacity.Primary : 0, borderTopRightRadius: BorderRadius.BR8, borderBottomRightRadius: BorderRadius.BR8, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
-                                    <MaterialIcons name="keyboard-arrow-left" color={theme.counterPrimary} size={Size.IconSmaller} />
+                                    <MaterialIcons name={Icon.ArrowLeft} color={theme.counterPrimary} size={Size.IconSmaller} />
                                 </TouchableOpacity>
                                 {/* center view & big play video btn */}
                                 <View
@@ -860,7 +860,7 @@ const ThePage = ({ category }: ThePageProps) => {
                                 </View>
                                 {/* next media btn */}
                                 <TouchableOpacity onPress={() => onPressNextMedia(true)} disabled={!showNextMediaButton} style={{ paddingVertical: hp('2%'), opacity: showNextMediaButton ? Opacity.Primary : 0, borderTopLeftRadius: BorderRadius.BR8, borderBottomLeftRadius: BorderRadius.BR8, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
-                                    <MaterialIcons name="keyboard-arrow-right" color={theme.counterPrimary} size={Size.IconSmaller} />
+                                    <MaterialIcons name={Icon.ArrowRight} color={theme.counterPrimary} size={Size.IconSmaller} />
                                 </TouchableOpacity>
                             </View>
                             {/* video controller */}
@@ -869,7 +869,7 @@ const ThePage = ({ category }: ThePageProps) => {
                                     <View style={{ backgroundColor: HexToRgb(theme.primary, 0.5), marginHorizontal: Outline.Horizontal, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }} >
                                         {/* play btn */}
                                         <TouchableOpacity style={{}} onPress={onPressPlayVideo} >
-                                            <MaterialIcons name={videoIsPlaying ? 'pause' : 'play-arrow'} color={theme.counterPrimary} size={Size.Icon} />
+                                            <MaterialIcons name={videoIsPlaying ? Icon.Pause : Icon.Play} color={theme.counterPrimary} size={Size.Icon} />
                                         </TouchableOpacity>
                                         {/* video bar */}
                                         <View
@@ -897,7 +897,7 @@ const ThePage = ({ category }: ThePageProps) => {
                                         <Text style={{ marginRight: Outline.Horizontal, color: theme.counterPrimary }}>{SecondsToHourMinuteSecondString(videoTimeRemain, true)}</Text>
                                         {/* muted btn */}
                                         <TouchableOpacity style={{}} onPress={onPressToggleMutedVideo} >
-                                            <MaterialIcons name={isMutedVideo ? 'volume-off' : 'volume-up'} color={theme.counterPrimary} size={Size.Icon} />
+                                            <MaterialIcons name={isMutedVideo ? Icon.VolumeOff : Icon.VolumeUp} color={theme.counterPrimary} size={Size.Icon} />
                                         </TouchableOpacity>
                                     </View>
                             }
@@ -911,7 +911,7 @@ const ThePage = ({ category }: ThePageProps) => {
                 {
                     !hasCredit ? undefined :
                         <TouchableOpacity onPress={() => onPressCopy(post.current?.author)} style={{ marginLeft: Outline.Horizontal, justifyContent: 'center', alignItems: 'center' }} >
-                            <MaterialIcons name={'content-copy'} color={theme.counterPrimary} size={Size.IconSmaller} />
+                            <MaterialIcons name={Icon.Copy} color={theme.counterPrimary} size={Size.IconSmaller} />
                         </TouchableOpacity>
                 }
             </View>
@@ -922,7 +922,7 @@ const ThePage = ({ category }: ThePageProps) => {
                     <View style={{ paddingHorizontal: Outline.Horizontal, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
                         <Text numberOfLines={1} style={{ flex: 1, fontSize: FontSize.Small, color: theme.text }}>{post.current.url}</Text>
                         <TouchableOpacity onPress={() => onPressCopy(post.current?.url)} style={{ marginLeft: Outline.Horizontal, justifyContent: 'center', alignItems: 'center' }} >
-                            <MaterialIcons name={'content-copy'} color={theme.counterPrimary} size={Size.IconSmaller} />
+                            <MaterialIcons name={Icon.Copy} color={theme.counterPrimary} size={Size.IconSmaller} />
                         </TouchableOpacity>
                     </View>
             }
@@ -939,11 +939,11 @@ const ThePage = ({ category }: ThePageProps) => {
                 {
                     !activePreviousPostButton ? undefined :
                         <TouchableOpacity onPress={() => onPressNextPost(false)} style={{ borderRadius: BorderRadius.BR8, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
-                            <MaterialIcons name="keyboard-arrow-left" color={theme.counterPrimary} size={Size.Icon} />
+                            <MaterialIcons name={Icon.ArrowLeft} color={theme.counterPrimary} size={Size.Icon} />
                         </TouchableOpacity>
                 }
                 <TouchableOpacity onPress={() => onPressNextPost(true)} style={{ borderRadius: BorderRadius.BR8, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
-                    <MaterialIcons name="keyboard-arrow-right" color={theme.counterPrimary} size={Size.Icon} />
+                    <MaterialIcons name={Icon.ArrowRight} color={theme.counterPrimary} size={Size.Icon} />
                 </TouchableOpacity>
             </View>
 

@@ -138,6 +138,21 @@ export enum NeedReloadReason {
 
 // texts
 
+export enum Icon {
+  Share = 'share',
+  ThreeDots = 'dots-horizontal',
+  NoInternet = 'access-point-network-off',
+  HeartBroken = 'heart-broken',
+  Dice = 'dice-5-outline',
+  ArrowLeft = 'keyboard-arrow-left',
+  ArrowRight = 'keyboard-arrow-right',
+  Pause = 'pause',
+  Play = 'play-arrow',
+  VolumeOff = 'volume-off',
+  VolumeUp = 'volume-up',
+  Copy = 'content-copy',
+}
+
 export const LocalText = {
   offline_mode: "Offline mode",
   you_are_offline: "You are offline",
