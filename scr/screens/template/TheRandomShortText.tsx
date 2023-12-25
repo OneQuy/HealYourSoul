@@ -19,6 +19,7 @@ import { CommonStyles } from '../../constants/CommonConstants'
 import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
 import { Streak } from '../../constants/Types';
 import StreakPopup from '../components/StreakPopup';
+import { ToCanPrint } from '../../handle/UtilsTS';
 
 interface TheRandomShortTextProps {
     category: Category,
@@ -79,7 +80,7 @@ const TheRandomShortText = ({
 
         CopyAndToast(text, theme)
     }, [text, theme])
-   
+
     const onPressHeaderOption = useCallback(async () => {
         if (streakData)
             setStreakData(undefined)
@@ -112,11 +113,11 @@ const TheRandomShortText = ({
                 .open({
                     url: uri,
                 })
-                .then((res) => {
-
-                })
                 .catch((err) => {
-                    Alert.alert('Fail', '' + err)
+                    const error = ToCanPrint(err)
+
+                    if (!error.includes('User did not share'))
+                        Alert.alert('Fail', error)
                 });
         })
     }, [text, theme])

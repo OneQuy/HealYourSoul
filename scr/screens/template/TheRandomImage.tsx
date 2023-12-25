@@ -14,7 +14,7 @@ import { NetLord } from '../../handle/NetLord'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Cheat } from '../../handle/Cheat'
-import { DelayAsync, PickRandomElement } from '../../handle/Utils'
+import { DelayAsync, PickRandomElement, TempDirName } from '../../handle/Utils'
 import { CopyAndToast, SaveCurrentScreenForLoadNextTime, ToastTheme } from '../../handle/AppUtils'
 import ViewShot from 'react-native-view-shot'
 import { CommonStyles } from '../../constants/CommonConstants'
@@ -95,14 +95,23 @@ const TheRandomImage = ({
         if (!imageUri)
             return
 
-        const res = await DownloadFileAsync(imageUri, 'data/image.jpg', true)
+        const flp = RNFS.DocumentDirectoryPath + '/' + TempDirName + '/image.jpg'
+        const res = await DownloadFileAsync(imageUri, flp, false)
+
+        if (res) {
+            Alert.alert('Fail', ToCanPrint(res))
+            return
+        }
 
         Share
             .open({
-                url: RNFS.DocumentDirectoryPath + '/data/image.jpg',
+                url: flp,
             })
             .catch((err) => {
-                Alert.alert('Fail', '' + err)
+                const error = ToCanPrint(err)
+
+                if (!error.includes('User did not share'))
+                    Alert.alert('Fail', error)
             });
     }, [imageUri])
 
