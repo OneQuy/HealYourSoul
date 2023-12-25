@@ -18,6 +18,8 @@ import { CopyAndToast } from '../../handle/AppUtils'
 import ViewShot from 'react-native-view-shot'
 import { CommonStyles } from '../../constants/CommonConstants'
 import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
+import { Streak } from '../../constants/Types';
+import StreakPopup from '../components/StreakPopup';
 
 interface TheRandomShortTextProps {
     category: Category,
@@ -41,7 +43,8 @@ const TheRandomShortText = ({
     const reasonToReload = useRef<NeedReloadReason>(NeedReloadReason.None);
     const theme = useContext(ThemeContext);
     const [handling, setHandling] = useState(false);
-    const ref = useRef<LegacyRef<ViewShot> | undefined>();
+    const [streakData, setStreakData] = useState<Streak | undefined>(undefined);
+    const viewShotRef = useRef<LegacyRef<ViewShot> | undefined>();
 
     const onPressRandom = useCallback(async () => {
         reasonToReload.current = NeedReloadReason.None
@@ -49,8 +52,7 @@ const TheRandomShortText = ({
 
         let text: string | undefined
 
-        if (__DEV__ && !Cheat('ForceRealApiTextContent'))
-        {
+        if (__DEV__ && !Cheat('ForceRealApiTextContent')) {
             await DelayAsync(500)
             text = PickRandomElement(FakeTextContents)
         }
@@ -78,6 +80,15 @@ const TheRandomShortText = ({
 
         CopyAndToast(text, theme)
     }, [text, theme])
+   
+    const onPressHeaderOption = useCallback(async () => {
+        if (streakData)
+            setStreakData(undefined)
+        else {
+            const streak = await GetStreakAsync(Category[category])
+            setStreakData(streak)
+        }
+    }, [streakData])
 
     const onPressShareText = useCallback(() => {
         if (!text)
@@ -97,7 +108,7 @@ const TheRandomShortText = ({
             return
 
         // @ts-ignore
-        ref.current.capture().then(async (uri: string) => {
+        viewShotRef.current.capture().then(async (uri: string) => {
             Share
                 .open({
                     url: uri,
@@ -118,6 +129,17 @@ const TheRandomShortText = ({
         onPressRandom()
     }, [])
 
+    // on change theme
+
+    useEffect(() => {
+        navigation.setOptions({
+            headerRight: () =>
+                <TouchableOpacity onPress={onPressHeaderOption} style={styleSheet.headerOptionTO}>
+                    <MaterialCommunityIcons name={'dots-horizontal'} color={theme.counterPrimary} size={Size.Icon} />
+                </TouchableOpacity>
+        });
+    }, [theme, onPressHeaderOption])
+
     // save last visit category screen
 
     useFocusEffect(
@@ -131,7 +153,7 @@ const TheRandomShortText = ({
     return (
         <View pointerEvents={handling ? 'none' : 'auto'} style={[styleSheet.masterView, { backgroundColor: theme.background }]}>
             {/* @ts-ignore */}
-            <ViewShot style={CommonStyles.flex_1} ref={ref} options={{ fileName: "Your-File-Name", format: "jpg", quality: 1 }}>
+            <ViewShot style={CommonStyles.flex_1} ref={viewShotRef} options={{ fileName: "Your-File-Name", format: "jpg", quality: 1 }}>
                 {
                     handling ?
                         // true ?
@@ -176,6 +198,9 @@ const TheRandomShortText = ({
                 </TouchableOpacity>
 
             </View>
+            {
+                streakData ? <StreakPopup streak={streakData} /> : undefined
+            }
         </View>
     )
 }
@@ -184,6 +209,7 @@ export default TheRandomShortText
 
 const styleSheet = StyleSheet.create({
     masterView: { padding: Outline.Horizontal, flex: 1, gap: Outline.GapVertical, },
-    randomTO: { flexDirection: 'row', justifyContent: 'center',  alignItems: 'center', width: '100%' },
-    subBtnTO: { justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center',  }
+    randomTO: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: '100%' },
+    subBtnTO: { justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', },
+    headerOptionTO: { marginRight: 15 }
 })
