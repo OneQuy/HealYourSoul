@@ -7,12 +7,12 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { View, Text, Image, TouchableOpacity, ActivityIndicator, Alert, PanResponder, LayoutChangeEvent, GestureResponderEvent, Animated, } from 'react-native'
+import { View, Text, Image, TouchableOpacity, ActivityIndicator, Alert, PanResponder, LayoutChangeEvent, GestureResponderEvent, Animated, StyleSheet, } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { BorderRadius, Category, FontSize, LocalText, NeedReloadReason, Opacity, Outline, Size } from '../../constants/AppConstants';
 import { ThemeContext } from '../../constants/Colors';
 import { heightPercentageToDP as hp, } from "react-native-responsive-screen";
-import { FileList, MediaType, PostMetadata } from '../../constants/Types';
+import { FileList, MediaType, PostMetadata, Streak } from '../../constants/Types';
 import { CheckAndGetFileListAsync, CheckLocalFileAndGetURIAsync, CopyAndToast, GetAllSavedLocalPostIDsListAsync, ToastTheme } from '../../handle/AppUtils';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
@@ -29,6 +29,8 @@ import { NetLord } from '../../handle/NetLord';
 import { SaveToGalleryAsync } from '../../handle/CameraRoll';
 import { Cheat } from '../../handle/Cheat';
 import { GetPostLikeCountAsync, LikePostAsync } from '../../handle/LikeCountHandler';
+import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
+import StreakPopup from '../components/StreakPopup';
 
 const videoNumbSize = 10;
 const videoTouchEffectRadius = 100;
@@ -61,6 +63,7 @@ const ThePage = ({ category }: ThePageProps) => {
     const previousPostIDs = useRef<number[]>([]);
     const bigViewStartTouchNERef = useRef<GestureResponderEvent['nativeEvent'] | null>(null);
     const allSavedLocalPostIdsRef = useRef<number[] | undefined>(undefined);
+    const [streakData, setStreakData] = useState<Streak | undefined>(undefined);
 
     const seenIDs = useAppSelector((state: RootState) => {
         if (category === Category.Draw)
@@ -455,6 +458,16 @@ const ThePage = ({ category }: ThePageProps) => {
         }
     }, []);
 
+
+    const onPressHeaderOption = useCallback(async () => {
+        if (streakData)
+            setStreakData(undefined)
+        else {
+            const streak = await GetStreakAsync(Category[category])
+            setStreakData(streak)
+        }
+    }, [streakData])
+
     const onPressFavorite = useCallback(async () => {
         if (!post.current)
             return;
@@ -690,6 +703,10 @@ const ThePage = ({ category }: ThePageProps) => {
             // start load
 
             onPressReloadAsync();
+
+            // set streak
+
+            SetStreakAsync(Category[category])
         }
 
         Init();
@@ -730,16 +747,23 @@ const ThePage = ({ category }: ThePageProps) => {
         }
     }, [drawerStatus]);
 
-    // handling indicator
+    // header btn, handling indicator
 
     useEffect(() => {
         navigation.setOptions({
-            headerRight: !handling ? undefined : () => (
-                <ActivityIndicator color={theme.counterPrimary} style={{ marginRight: Outline.Horizontal }} />
-            )
+            headerRight: !handling ?
+                () => (
+                    <TouchableOpacity onPress={onPressHeaderOption} style={style.headerOptionTO}>
+                        <MaterialCommunityIcons name={'dots-horizontal'} color={theme.counterPrimary} size={Size.Icon} />
+                    </TouchableOpacity>
+                )
+                :
+                () => (
+                    <ActivityIndicator color={theme.counterPrimary} style={style.headerOptionTO} />
+                )
         });
-    }, [handling]);
-
+    }, [handling, theme, onPressHeaderOption]);
+    
     // load post
 
     useEffect(() => {
@@ -750,6 +774,12 @@ const ThePage = ({ category }: ThePageProps) => {
         setNeedLoadPost('none');
         loadNextPostAsync(isNext);
     }, [needLoadPost]);
+    
+    // set streak
+
+    useEffect(() => {
+        SetStreakAsync(Category[category], seenIDs.length)
+    }, [seenIDs]);
 
     // main render
 
@@ -932,8 +962,18 @@ const ThePage = ({ category }: ThePageProps) => {
                     <MaterialCommunityIcons name={'dots-horizontal'} color={theme.counterPrimary} size={Size.IconSmaller} />
                 </TouchableOpacity> */}
             </View>
+
+            {/* streak */}
+            {
+                streakData ? <StreakPopup streak={streakData} /> : undefined
+            }
         </View>
     )
 }
 
 export default ThePage;
+
+
+const style = StyleSheet.create({
+    headerOptionTO: { marginRight: 15 }
+})

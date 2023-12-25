@@ -62,7 +62,7 @@ const TheRandomShortText = ({
         setText(text)
 
         if (text) { // success
-            SetStreakAsync(Category[category], true)
+            SetStreakAsync(Category[category], -1)
         }
         else { // fail
             if (NetLord.IsAvailableLastestCheck())

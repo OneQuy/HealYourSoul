@@ -8,8 +8,9 @@ var data: Streak[] | undefined = undefined
 
 /**
  * enter screen is counted streak
+ * @param countUniquePost. countUniquePost = 0 for not set, < 0 for 1++, > 0 for inc this
  */
-export async function SetStreakAsync(id: string, countUniquePost: boolean = false) {
+export async function SetStreakAsync(id: string, countUniquePost: number = 0) {
     // check load data
 
     if (data === undefined) {
@@ -39,8 +40,10 @@ export async function SetStreakAsync(id: string, countUniquePost: boolean = fals
 
     // inc count
 
-    if (countUniquePost)
+    if (countUniquePost < 0)
         item.uniquePostSeen++
+    else if (countUniquePost > 0)
+        item.uniquePostSeen = countUniquePost
 
     // set streak
 
