@@ -41,7 +41,7 @@ export const GetRandomUnsplashPictureAsync = async (): Promise<string | undefine
         h = Math.ceil(h)
         w = Math.ceil(w)
 
-        const data = await fetch(`https://picsum.photos/${w}/${h}`)
+        const data = await fetch(`https://picsum.photos/${w}/${h}.jpg`)
 
         // console.log(data);
 

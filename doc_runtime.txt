@@ -2,13 +2,4 @@ general code for screens:
 
 // save last visit category screen
 
-useFocusEffect(
-    useCallback(() => {
-
-        const state = navigation.getState();
-        const screenName = state.routeNames[state.index];
-        AsyncStorage.setItem('categoryScreenToOpenFirst', screenName);
-    }, [])
-)
-
-=====================
+useFocusEffect(useCallback(() => SaveCurrentScreenForLoadNextTime(navigation), []))

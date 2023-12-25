@@ -13,7 +13,7 @@ import { BorderRadius, Category, FontSize, LocalText, NeedReloadReason, Opacity,
 import { ThemeContext } from '../../constants/Colors';
 import { heightPercentageToDP as hp, } from "react-native-responsive-screen";
 import { FileList, MediaType, PostMetadata, Streak } from '../../constants/Types';
-import { CheckAndGetFileListAsync, CheckLocalFileAndGetURIAsync, CopyAndToast, GetAllSavedLocalPostIDsListAsync, ToastTheme } from '../../handle/AppUtils';
+import { CheckAndGetFileListAsync, CheckLocalFileAndGetURIAsync, CopyAndToast, GetAllSavedLocalPostIDsListAsync, SaveCurrentScreenForLoadNextTime, ToastTheme } from '../../handle/AppUtils';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { PickRandomElement, RoundNumber, SecondsToHourMinuteSecondString } from '../../handle/Utils';
@@ -722,9 +722,7 @@ const ThePage = ({ category }: ThePageProps) => {
         useCallback(() => {
             // save last visit category screen
 
-            const state = navigation.getState();
-            const screenName = state.routeNames[state.index];
-            AsyncStorage.setItem('categoryScreenToOpenFirst', screenName);
+            SaveCurrentScreenForLoadNextTime(navigation)
 
             // update global cat
 

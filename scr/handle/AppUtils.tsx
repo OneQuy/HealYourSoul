@@ -13,6 +13,8 @@ import RNFS, { DownloadProgressCallbackResult, ReadDirItem } from "react-native-
 import { IsInternetAvailableAsync } from "./NetLord";
 import { GetAppConfig } from "./AppConfigHandler";
 import Clipboard from "@react-native-clipboard/clipboard";
+import { NavigationProp } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // const today = new Date()
 // const todayString = 'd' + today.getDate() + '_m' + (today.getMonth() + 1) + '_' + today.getFullYear()
@@ -394,6 +396,12 @@ export const Is_IOS_And_OfflineOrLowerReviewVersion = () => {
     const iosReviewVersion = VersionToNumber(appConfig.ios_review_limit_version)
 
     return versionToNum <= iosReviewVersion
+}
+
+export const SaveCurrentScreenForLoadNextTime = (navigation: NavigationProp<ReactNavigation.RootParamList>) => {
+    const state = navigation.getState();
+    const screenName = state.routeNames[state.index];
+    AsyncStorage.setItem('categoryScreenToOpenFirst', screenName);
 }
 
 export const Track = (event: string, data?: string) => {

@@ -14,7 +14,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Cheat } from '../../handle/Cheat'
 import { DelayAsync, PickRandomElement } from '../../handle/Utils'
-import { CopyAndToast } from '../../handle/AppUtils'
+import { CopyAndToast, SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
 import ViewShot from 'react-native-view-shot'
 import { CommonStyles } from '../../constants/CommonConstants'
 import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
@@ -142,13 +142,7 @@ const TheRandomShortText = ({
 
     // save last visit category screen
 
-    useFocusEffect(
-        useCallback(() => {
-            const state = navigation.getState();
-            const screenName = state.routeNames[state.index];
-            AsyncStorage.setItem('categoryScreenToOpenFirst', screenName);
-        }, [])
-    );
+    useFocusEffect(useCallback(() => SaveCurrentScreenForLoadNextTime(navigation), []))
 
     return (
         <View pointerEvents={handling ? 'none' : 'auto'} style={[styleSheet.masterView, { backgroundColor: theme.background }]}>
