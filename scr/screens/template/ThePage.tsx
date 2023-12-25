@@ -20,10 +20,8 @@ import { PickRandomElement, RoundNumber, SecondsToHourMinuteSecondString } from 
 import { addDrawFavoritedID, addDrawSeenID, addQuoteFavoritedID, addQuoteSeenID, addMemeFavoritedID, addMemeSeenID, removeDrawFavoritedID, removeQuoteFavoritedID, removeMemeFavoritedID, removeLoveFavoritedID, addLoveFavoritedID, removeSatisfyingFavoritedID, addSatisfyingFavoritedID, removeCatDogFavoritedID, addCatDogFavoritedID, addLoveSeenID, addSatisfyingSeenID, addCatDogSeenID, removeNSFWFavoritedID, addNSFWFavoritedID, addNSFWSeenID, removeCuteFavoritedID, addCuteFavoritedID, removeArtFavoritedID, addArtFavoritedID, removeSarcasmFavoritedID, addSarcasmFavoritedID, addCuteSeenID, addArtSeenID, addSarcasmSeenID } from '../../redux/UserDataSlice';
 import { setMutedVideo } from '../../redux/MiscSlice';
 import { ColorNameToRgb, HexToRgb, ToCanPrint } from '../../handle/UtilsTS';
-import Clipboard from '@react-native-clipboard/clipboard';
 import { ToastOptions, toast } from '@baronha/ting';
 import { useDrawerStatus } from '@react-navigation/drawer';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { DownloadProgressCallbackResult } from 'react-native-fs';
 import { NetLord } from '../../handle/NetLord';
 import { SaveToGalleryAsync } from '../../handle/CameraRoll';
