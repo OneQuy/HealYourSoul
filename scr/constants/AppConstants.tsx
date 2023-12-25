@@ -139,11 +139,18 @@ export enum NeedReloadReason {
 // texts
 
 export enum Icon {
-  Share = 'share',
+  // MaterialCommunityIcons
+
+  ShareText = 'share',
+  ShareImage = 'share-variant',
   ThreeDots = 'dots-horizontal',
   NoInternet = 'access-point-network-off',
   HeartBroken = 'heart-broken',
   Dice = 'dice-5-outline',
+  Download = 'download',
+
+  // MaterialIcons
+
   ArrowLeft = 'keyboard-arrow-left',
   ArrowRight = 'keyboard-arrow-right',
   Pause = 'pause',
