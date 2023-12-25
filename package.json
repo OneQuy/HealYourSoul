@@ -37,8 +37,7 @@
     "react-native-video": "^5.2.1",
     "react-native-view-shot": "^3.8.0",
     "react-redux": "^8.1.1",
-    "redux-persist": "^6.0.0",
-    "unsplash-js": "^7.0.19"
+    "redux-persist": "^6.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

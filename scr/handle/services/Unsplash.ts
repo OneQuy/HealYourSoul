@@ -1,28 +1,18 @@
-import axios from 'axios';
-import { NINJA_FACT_KEY } from '../../../keys';
+// https://unsplash.com/documentation#get-a-random-photo
 
-const options = {
-    method: 'GET',
-    url: 'https://facts-by-api-ninjas.p.rapidapi.com/v1/facts',
-    headers: {
-        'X-RapidAPI-Key': NINJA_FACT_KEY,
-        'X-RapidAPI-Host': 'facts-by-api-ninjas.p.rapidapi.com'
-    }
-};
+import { UNSPLASH_KEY } from '../../../keys'
 
-export const GetRandomUnsplashPictureAsync = async () : Promise<string | undefined> => {
+export const GetRandomUnsplashPictureAsync = async (): Promise<string | undefined> => {
     try {
-        const response = await axios.request(options);
+        const data = await fetch(`https://api.unsplash.com/photos/random?client_id=${UNSPLASH_KEY}`)
+        console.log(data.headers);
         
-        if (response.status !== 200)
+        if (data.status !== 200)
             return undefined
 
-        const txt = response.data[0].fact
-        
-        if (typeof txt === 'string')
-            return txt
-        else
-            return undefined
+        const dataJ = await data.json();
+    
+        return dataJ.urls.regular
     } catch (error) {
         return undefined
     }

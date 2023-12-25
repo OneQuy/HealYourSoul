@@ -74,6 +74,7 @@ export enum Category {
   Sarcasm = 8,
   Art = 9,
   NinjaFact = 10,
+  Picture,
 }
 
 // margin / padding

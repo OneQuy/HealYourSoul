@@ -6,7 +6,7 @@ import { GetRandomUnsplashPictureAsync } from '../../handle/services/Unsplash';
 
 const PictureScreen = () => {
     return <TheRandomImage
-        category={Category.NSFW}
+        category={Category.Picture}
         getImageAsync={GetRandomUnsplashPictureAsync}
     />;
 }

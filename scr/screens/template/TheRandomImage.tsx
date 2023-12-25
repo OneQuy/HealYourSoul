@@ -31,40 +31,34 @@ const TheRandomImage = ({
     getImageAsync,
 }: TheRandomImageProps) => {
     const navigation = useNavigation();
-    const [imageUri, setImageUri] = useState<string | undefined>('undefined')
+    const [imageUri, setImageUri] = useState<string | undefined>(undefined)
     const reasonToReload = useRef<NeedReloadReason>(NeedReloadReason.None);
     const theme = useContext(ThemeContext);
     const [handling, setHandling] = useState(false);
     const [streakData, setStreakData] = useState<Streak | undefined>(undefined);
 
     const onPressRandom = useCallback(async () => {
-        // reasonToReload.current = NeedReloadReason.None
-        // setHandling(true)
+        reasonToReload.current = NeedReloadReason.None
+        setHandling(true)
 
         // let text: string | undefined
 
-        // if (__DEV__ && !Cheat('ForceRealApiTextContent')) {
-        //     await DelayAsync(500)
-        //     text = PickRandomElement(FakeTextContents)
-        // }
-        // else
-        //     text = await getTextAsync()
+        const uri = await getImageAsync()
 
-        // setText(text)
+        if (uri) { // success
+            SetStreakAsync(Category[category], -1)
+        }
+        else { // fail
+            if (NetLord.IsAvailableLastestCheck())
+                reasonToReload.current = NeedReloadReason.FailToGetContent
+            else
+                reasonToReload.current = NeedReloadReason.NoInternet
+        }
 
-        // if (text) { // success
-        //     SetStreakAsync(Category[category], -1)
-        // }
-        // else { // fail
-        //     if (NetLord.IsAvailableLastestCheck())
-        //         reasonToReload.current = NeedReloadReason.FailToGetContent
-        //     else
-        //         reasonToReload.current = NeedReloadReason.NoInternet
-        // }
-
-        // setHandling(false)
+        setImageUri(uri)
+        setHandling(false)
     }, [])
-   
+
     const onPressHeaderOption = useCallback(async () => {
         if (streakData)
             setStreakData(undefined)
@@ -78,7 +72,7 @@ const TheRandomImage = ({
         if (!imageUri)
             return
 
-            Share
+        Share
             .open({
                 url: imageUri,
             })
@@ -121,7 +115,7 @@ const TheRandomImage = ({
     return (
         <View pointerEvents={handling ? 'none' : 'auto'} style={[styleSheet.masterView, { backgroundColor: theme.background }]}>
             {/* @ts-ignore */}
-            <ViewShot style={CommonStyles.flex_1} ref={viewShotRef} options={{ fileName: "Your-File-Name", format: "jpg", quality: 1 }}>
+            <View style={CommonStyles.flex_1} options={{ fileName: "Your-File-Name", format: "jpg", quality: 1 }}>
                 {
                     handling ?
                         // true ?
@@ -138,11 +132,11 @@ const TheRandomImage = ({
                                         <Text style={{ fontSize: FontSize.Small_L, color: theme.counterPrimary }}>{LocalText.tap_to_retry}</Text>
                                     </TouchableOpacity>
                                     :
-                                    <Image source={{ uri: imageUri }} style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}  />
+                                    <Image resizeMode='contain' source={{ uri: imageUri }} style={styleSheet.image} />
                             }
                         </View>
                 }
-            </ViewShot>
+            </View>
             <View>
                 <TouchableOpacity onPress={onPressRandom} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, padding: Outline.GapVertical_2, backgroundColor: theme.primary, }, styleSheet.randomTO]}>
                     <MaterialCommunityIcons name={'dice-5-outline'} color={theme.counterPrimary} size={Size.Icon} />
@@ -169,5 +163,6 @@ const styleSheet = StyleSheet.create({
     masterView: { padding: Outline.Horizontal, flex: 1, gap: Outline.GapVertical, },
     randomTO: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: '100%' },
     subBtnTO: { justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', },
-    headerOptionTO: { marginRight: 15 }
+    headerOptionTO: { marginRight: 15 },
+    image: { width: '100%', height: '100%' }
 })
