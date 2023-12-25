@@ -1,8 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Streak } from "../constants/Types";
 import { IsToday, IsYesterday } from "./UtilsTS";
+import { StorageKey_Streak } from "../constants/AppConstants";
 
-const KeyData = 'streak'
 
 var data: Streak[] | undefined = undefined
 
@@ -14,7 +14,7 @@ export async function SetStreakAsync(id: string, countUniquePost: number = 0) {
     // check load data
 
     if (data === undefined) {
-        var s = await AsyncStorage.getItem(KeyData)
+        var s = await AsyncStorage.getItem(StorageKey_Streak)
 
         if (s)
             data = JSON.parse(s) as Streak[]
@@ -65,13 +65,13 @@ export async function SetStreakAsync(id: string, countUniquePost: number = 0) {
 
     // save
 
-    AsyncStorage.setItem(KeyData, JSON.stringify(data))
+    AsyncStorage.setItem(StorageKey_Streak, JSON.stringify(data))
     // console.log(JSON.stringify(data, null, 1));
 }
 
 export async function GetStreakAsync(id: string) {
     if (data === undefined) {
-        var s = await AsyncStorage.getItem(KeyData)
+        var s = await AsyncStorage.getItem(StorageKey_Streak)
 
         if (s)
             data = JSON.parse(s) as Streak[]

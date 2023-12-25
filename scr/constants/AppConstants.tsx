@@ -187,3 +187,5 @@ export const LocalText = {
   popup_title_need_internet: 'No Internet',
   popup_content_need_internet: 'Please check your network and try again.',
 }
+
+export const StorageKey_Streak = 'streak'
