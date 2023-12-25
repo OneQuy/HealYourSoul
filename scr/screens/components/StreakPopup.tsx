@@ -11,6 +11,7 @@ const StreakPopup = ({ streak }: StreakPopupProps) => {
 
     return (
         <View style={[{ backgroundColor: 'gold', }, style.masterView]}>
+            <Text>ID: {streak.id}</Text>
             <Text>Unique post count: {streak.uniquePostSeen}</Text>
             <Text>Current streak: {streak.currentStreak}</Text>
             <Text>Best streak: {streak.bestStreak}</Text>
