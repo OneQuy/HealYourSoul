@@ -9,10 +9,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { NetLord } from '../../handle/NetLord'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
-import { Cheat } from '../../handle/Cheat'
-import { DelayAsync, PickRandomElement } from '../../handle/Utils'
 import { CopyAndToast, SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
 import ViewShot from 'react-native-view-shot'
 import { CommonStyles } from '../../constants/CommonConstants'
@@ -20,6 +17,7 @@ import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
 import { Streak, Trivia } from '../../constants/Types';
 import StreakPopup from '../components/StreakPopup';
 import { ToCanPrint } from '../../handle/UtilsTS';
+import { NetLord } from '../../handle/NetLord';
 
 interface TheTriviaProps {
     category: Category,
@@ -39,7 +37,7 @@ const TheTrivia = ({
     getTriviaAsync,
 }: TheTriviaProps) => {
     const navigation = useNavigation();
-    const [text, setText] = useState<string | undefined>('undefined')
+    const [trivia, setTrivia] = useState<Trivia | undefined>(undefined)
     const reasonToReload = useRef<NeedReloadReason>(NeedReloadReason.None);
     const theme = useContext(ThemeContext);
     const [handling, setHandling] = useState(false);
@@ -47,39 +45,32 @@ const TheTrivia = ({
     const viewShotRef = useRef<LegacyRef<ViewShot> | undefined>();
 
     const onPressRandom = useCallback(async () => {
-        // reasonToReload.current = NeedReloadReason.None
-        // setHandling(true)
+        reasonToReload.current = NeedReloadReason.None
+        setHandling(true)
 
-        // let text: string | undefined
+        let res: Trivia | undefined = await getTriviaAsync()
 
-        // if (__DEV__ && !Cheat('ForceRealApiTextContent')) {
-        //     await DelayAsync(500)
-        //     text = PickRandomElement(FakeTextContents)
-        // }
-        // else
-        //     text = await getTextAsync()
+        setTrivia(res)
 
-        // setText(text)
+        if (res) { // success
+            SetStreakAsync(Category[category], -1)
+        }
+        else { // fail
+            if (NetLord.IsAvailableLastestCheck())
+                reasonToReload.current = NeedReloadReason.FailToGetContent
+            else
+                reasonToReload.current = NeedReloadReason.NoInternet
+        }
 
-        // if (text) { // success
-        //     SetStreakAsync(Category[category], -1)
-        // }
-        // else { // fail
-        //     if (NetLord.IsAvailableLastestCheck())
-        //         reasonToReload.current = NeedReloadReason.FailToGetContent
-        //     else
-        //         reasonToReload.current = NeedReloadReason.NoInternet
-        // }
-
-        // setHandling(false)
+        setHandling(false)
     }, [])
 
     const onPressCopy = useCallback(() => {
-        if (!text)
-            return
+        // if (!text)
+        //     return
 
-        CopyAndToast(text, theme)
-    }, [text, theme])
+        // CopyAndToast(text, theme)
+    }, [trivia, theme])
 
     const onPressHeaderOption = useCallback(async () => {
         if (streakData)
@@ -91,36 +82,36 @@ const TheTrivia = ({
     }, [streakData])
 
     const onPressShareText = useCallback(() => {
-        if (!text)
-            return
+        // if (!text)
+        //     return
 
-        RNShare.share({
-            title: LocalText.fact_of_the_day,
-            message: text,
-        } as ShareContent,
-            {
-                tintColor: theme.primary,
-            } as ShareOptions)
-    }, [text, theme])
+        // RNShare.share({
+        //     title: LocalText.fact_of_the_day,
+        //     message: text,
+        // } as ShareContent,
+        //     {
+        //         tintColor: theme.primary,
+        //     } as ShareOptions)
+    }, [trivia, theme])
 
     const onPressShareImage = useCallback(() => {
-        if (!text)
-            return
+        // if (!text)
+        //     return
 
-        // @ts-ignore
-        viewShotRef.current.capture().then(async (uri: string) => {
-            Share
-                .open({
-                    url: uri,
-                })
-                .catch((err) => {
-                    const error = ToCanPrint(err)
+        // // @ts-ignore
+        // viewShotRef.current.capture().then(async (uri: string) => {
+        //     Share
+        //         .open({
+        //             url: uri,
+        //         })
+        //         .catch((err) => {
+        //             const error = ToCanPrint(err)
 
-                    if (!error.includes('User did not share'))
-                        Alert.alert('Fail', error)
-                });
-        })
-    }, [text, theme])
+        //             if (!error.includes('User did not share'))
+        //                 Alert.alert('Fail', error)
+        //         });
+        // })
+    }, [trivia, theme])
 
     // on init once (for load first post)
 
@@ -165,7 +156,16 @@ const TheTrivia = ({
                                             <Text style={{ fontSize: FontSize.Small_L, color: theme.counterPrimary }}>{LocalText.tap_to_retry}</Text>
                                         </TouchableOpacity>
                                         :
-                                        <Text style={{ color: theme.text, fontSize: FontSize.Big }}>{text}</Text>
+                                        <View style={{ gap: Outline.GapVertical }}>
+                                            <Text style={{ color: theme.text, fontSize: FontSize.Big }}>{trivia?.question}</Text>
+                                            {
+                                                trivia?.incorrectAnswer.concat(trivia?.answer).map((answer: string) => {
+                                                    return <TouchableOpacity style={{  borderWidth: StyleSheet.hairlineWidth * 2, padding: Outline.GapVertical, borderRadius: BorderRadius.BR8 }} key={answer}>
+                                                        <Text>{answer}</Text>
+                                                    </TouchableOpacity>
+                                                })
+                                            }
+                                        </View>
                                 }
                             </View>
                     }

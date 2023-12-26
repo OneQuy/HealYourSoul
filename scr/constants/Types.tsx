@@ -32,6 +32,8 @@ export type Trivia = {
     question: string,
     answer: string,
     incorrectAnswer: string[],
+    difficulty: string,
+    category: string,
 }
 
 export type Streak = {
