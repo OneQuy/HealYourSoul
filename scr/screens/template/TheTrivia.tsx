@@ -181,20 +181,30 @@ const TheTrivia = ({
                                         </TouchableOpacity>
                                         :
                                         <View style={{ gap: Outline.GapVertical }}>
-                                            <Text style={{ color: theme.text, fontSize: FontSize.Big,  marginBottom: Outline.Horizontal }}>{trivia?.question}</Text>
+                                            <Text style={{ color: theme.text, fontSize: FontSize.Big, marginBottom: Outline.Horizontal }}>{trivia?.question}</Text>
                                             {
                                                 allAnswer?.map((answer: string) => {
                                                     let bgColor: string | undefined = undefined
+                                                    let icon = ''
 
                                                     if (userChosenAnswer !== undefined) { // user did pick answer
-                                                        if (answer === trivia?.answer)
+                                                        if (answer === trivia?.answer) {
                                                             bgColor = 'green'
-                                                        else if (answer === userChosenAnswer)
+                                                            icon = Icon.Check
+                                                        }
+                                                        else if (answer === userChosenAnswer) {
                                                             bgColor = 'red'
+                                                            icon = Icon.X
+                                                        }
                                                     }
 
-                                                    return <TouchableOpacity onPress={() => onPressAnwser(answer)} style={[styleSheet.answerTO, { backgroundColor: bgColor }, { padding: Outline.GapVertical, borderRadius: BorderRadius.BR8 }]} key={answer}>
-                                                        <Text style={{ fontSize: FontSize.Small_L, color: bgColor ? 'white' : theme.text }}>{answer}</Text>
+                                                    return <TouchableOpacity onPress={() => onPressAnwser(answer)} style={[styleSheet.answerTO, { backgroundColor: bgColor }, { gap: Outline.GapHorizontal, padding: Outline.GapVertical, borderRadius: BorderRadius.BR8 }]} key={answer}>
+                                                        {
+                                                            icon === '' ?
+                                                                undefined :
+                                                                <MaterialCommunityIcons name={icon} color={'white'} size={Size.Icon} />
+                                                        }
+                                                        <Text style={{ verticalAlign: 'middle', textAlign: 'center', fontSize: FontSize.Small_L, color: bgColor ? 'white' : theme.text }}>{answer}</Text>
                                                     </TouchableOpacity>
                                                 })
                                             }
@@ -241,5 +251,5 @@ const styleSheet = StyleSheet.create({
     randomTO: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: '100%' },
     subBtnTO: { justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', },
     headerOptionTO: { marginRight: 15 },
-    answerTO: { alignItems: 'center', borderWidth: StyleSheet.hairlineWidth * 2, }
+    answerTO: { flexDirection: 'row', justifyContent: 'center', borderWidth: StyleSheet.hairlineWidth * 2, }
 })

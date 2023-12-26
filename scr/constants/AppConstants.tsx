@@ -152,6 +152,8 @@ export enum Icon {
   HeartBroken = 'heart-broken',
   Dice = 'dice-5-outline',
   Download = 'download',
+  X = 'close-thick',
+  Check = 'check-bold',
 
   // MaterialIcons
 
