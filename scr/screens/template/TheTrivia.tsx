@@ -181,7 +181,7 @@ const TheTrivia = ({
                                         </TouchableOpacity>
                                         :
                                         <View style={{ gap: Outline.GapVertical }}>
-                                            <Text style={{ color: theme.text, fontSize: FontSize.Big }}>{trivia?.question}</Text>
+                                            <Text style={{ color: theme.text, fontSize: FontSize.Big,  marginBottom: Outline.Horizontal }}>{trivia?.question}</Text>
                                             {
                                                 allAnswer?.map((answer: string) => {
                                                     let bgColor: string | undefined = undefined
