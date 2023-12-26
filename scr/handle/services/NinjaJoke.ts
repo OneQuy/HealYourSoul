@@ -1,11 +1,11 @@
 import axios from 'axios'
-import { NINJA_FACT_KEY } from '../../../keys';
+import { NINJA_JOKE_KEY } from '../../../keys';
 
 const options = {
     method: 'GET',
     url: 'https://dad-jokes-by-api-ninjas.p.rapidapi.com/v1/dadjokes',
     headers: {
-        'X-RapidAPI-Key': NINJA_FACT_KEY ,
+        'X-RapidAPI-Key': NINJA_JOKE_KEY ,
         'X-RapidAPI-Host': 'dad-jokes-by-api-ninjas.p.rapidapi.com'
     }
 };
