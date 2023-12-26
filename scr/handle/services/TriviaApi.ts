@@ -33,8 +33,6 @@ export const GetTriviaAsync = async (): Promise<Trivia | undefined> => {
             question: atob(data.question),
             answer: atob(data.correct_answer),
             incorrectAnswer: data.incorrect_answers.map((i: string) => atob(i)),
-            category: atob(data.category),
-            difficulty: atob(data.difficulty),
         } as Trivia
     } catch (error) {
         console.error(error);

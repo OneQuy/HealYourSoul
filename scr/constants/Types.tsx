@@ -31,9 +31,7 @@ export type SubscribedData = {
 export type Trivia = {
     question: string,
     answer: string,
-    incorrectAnswer: string[],
-    difficulty: string,
-    category: string,
+    incorrectAnswer: string[]
 }
 
 export type Streak = {
