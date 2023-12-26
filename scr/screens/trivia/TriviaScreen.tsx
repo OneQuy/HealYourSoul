@@ -5,7 +5,7 @@ import { GetTriviaAsync } from '../../handle/services/TriviaApi';
 
 const TheTriviaScreen = () => {
   return <TheTrivia
-    category={Category.NinjaFact}
+    category={Category.Trivia}
     getTriviaAsync={GetTriviaAsync}
   />;
 }
