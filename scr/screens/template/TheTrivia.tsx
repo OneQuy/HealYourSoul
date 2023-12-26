@@ -46,9 +46,6 @@ const TheTrivia = ({
 
         if (res) { // success
             SetStreakAsync(Category[category], -1)
-
-            // console.log(res.question, decodeHTMLEntities(res.question));
-            
         }
         else { // fail
             if (NetLord.IsAvailableLastestCheck())
