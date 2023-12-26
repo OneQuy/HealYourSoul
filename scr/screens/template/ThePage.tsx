@@ -774,7 +774,7 @@ const ThePage = ({ category }: ThePageProps) => {
     // set streak
 
     useEffect(() => {
-        SetStreakAsync(Category[category], seenIDs.length)
+        SetStreakAsync(Category[category], seenIDs && typeof seenIDs.length === 'number' ? seenIDs.length : 0)
     }, [seenIDs]);
 
     // main render
