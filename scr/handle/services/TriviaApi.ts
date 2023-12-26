@@ -1,23 +1,29 @@
+// https://opentdb.com/api_config.php
+
 import { Trivia } from "../../constants/Types";
+import { atob } from "../UtilsTS";
 
 export const GetTriviaAsync = async (): Promise<Trivia | undefined> => {
     try {
-        const res = await fetch('https://opentdb.com/api.php?amount=1')
+        const res = await fetch('https://opentdb.com/api.php?amount=1&encode=base64')
 
-        if (res.status !== 200)
+        if (res.status !== 200) {
+            console.log(res);
+            
             return undefined
+        }
 
         const json = await res.json()
         const data = json.results[0]
 
-        // console.log(data);
-        
+        // console.log(data.question)
+
         return {
-            question: data.question,
-            answer: data.correct_answer,
-            incorrectAnswer: data.incorrect_answers,
-            category: data.category,
-            difficulty: data.difficulty,
+            question: atob(data.question),
+            answer: atob(data.correct_answer),
+            incorrectAnswer: data.incorrect_answers.map((i: string) => atob(i)),
+            category:  atob(data.category),
+            difficulty: atob(data.difficulty),
         } as Trivia
     } catch (error) {
         console.error(error);

@@ -14,6 +14,7 @@ other utils
 */
 
 import { Alert, Platform, AlertButton, PermissionsAndroid } from "react-native";
+import { Buffer as TheBuffer } from 'buffer'
 
 // const -------------------------
 
@@ -206,7 +207,6 @@ export function GetFileExtensionByFilepath(filepath: string): string {
     return filepath.substring(dotIdx + 1, filepath.length);
 }
 
-
 export async function DownloadImageAsync(url: string): Promise<string | undefined> {
     const data = await fetch(url)
 
@@ -345,6 +345,13 @@ export function ArrayRemove<T>(arr: T[], value: T): boolean {
 }
 
 // string utils ---------------------------
+
+/**
+ * base64 string to string
+ */
+export const atob = (text: string) => {
+    return TheBuffer.from(text, 'base64').toString()
+}
 
 /**
  * @param version 0.1.1

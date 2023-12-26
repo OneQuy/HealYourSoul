@@ -24,14 +24,6 @@ interface TheTriviaProps {
     getTriviaAsync: () => Promise<Trivia | undefined>
 }
 
-const FakeTextContents = [
-    'Winter hazards such as wind, cold, snow, or whiteout conditions can turn an outing into a tragedy. Have a plan and a back-up plan in case parking is limited or conditions are unsafe. Weather can change quickly!',
-    'This is the closest I can get for web support with available APIs. Since Safari does not support captureStream, I wont be able to read the FPS yet',
-    'Strategy games are an irresistibly fun way to improve our decision-making skills, but what makes these type of games so alluring?',
-    'This group will pump again soon.',
-    'Profitable trades are being shared here',
-]
-
 const TheTrivia = ({
     category,
     getTriviaAsync,
@@ -54,6 +46,9 @@ const TheTrivia = ({
 
         if (res) { // success
             SetStreakAsync(Category[category], -1)
+
+            // console.log(res.question, decodeHTMLEntities(res.question));
+            
         }
         else { // fail
             if (NetLord.IsAvailableLastestCheck())
@@ -160,8 +155,8 @@ const TheTrivia = ({
                                             <Text style={{ color: theme.text, fontSize: FontSize.Big }}>{trivia?.question}</Text>
                                             {
                                                 trivia?.incorrectAnswer.concat(trivia?.answer).map((answer: string) => {
-                                                    return <TouchableOpacity style={{  borderWidth: StyleSheet.hairlineWidth * 2, padding: Outline.GapVertical, borderRadius: BorderRadius.BR8 }} key={answer}>
-                                                        <Text>{answer}</Text>
+                                                    return <TouchableOpacity style={[styleSheet.answerTO, { padding: Outline.GapVertical, borderRadius: BorderRadius.BR8 }]} key={answer}>
+                                                        <Text style={{ fontSize: FontSize.Small_L }}>{answer}</Text>
                                                     </TouchableOpacity>
                                                 })
                                             }
@@ -207,5 +202,6 @@ const styleSheet = StyleSheet.create({
     masterView: { padding: Outline.Horizontal, flex: 1, gap: Outline.GapVertical, },
     randomTO: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: '100%' },
     subBtnTO: { justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', },
-    headerOptionTO: { marginRight: 15 }
+    headerOptionTO: { marginRight: 15 },
+    answerTO: { alignItems: 'center', borderWidth: StyleSheet.hairlineWidth * 2, }
 })
