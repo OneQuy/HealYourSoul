@@ -17,6 +17,7 @@ export enum ScreenName {
   ShortFact = 'Random Fact', // ninja fact
   Picture = 'Random Picture', // unsplash
   Joke = 'Random Joke', // ninja joke
+  Trivia = 'Trivia', // ninja joke
 }
 
 // dir / file
@@ -77,6 +78,7 @@ export enum Category {
   NinjaFact = 10,
   Picture = 11,
   NinjaJoke = 12,
+  Trivia = 13,
 }
 
 // margin / padding

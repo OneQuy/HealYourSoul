@@ -28,6 +28,12 @@ export type SubscribedData = {
     tick: number,
 }
 
+export type Trivia = {
+    question: string,
+    answer: string,
+    incorrectAnswer: string[],
+}
+
 export type Streak = {
     id: string,
     uniquePostSeen: number,
