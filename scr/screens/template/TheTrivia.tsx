@@ -10,7 +10,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
-import { CopyAndToast, SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
+import { CopyAndToast, SaveCurrentScreenForLoadNextTime, ToastTheme } from '../../handle/AppUtils'
 import ViewShot from 'react-native-view-shot'
 import { CommonStyles } from '../../constants/CommonConstants'
 import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
@@ -18,11 +18,20 @@ import { Streak, Trivia } from '../../constants/Types';
 import StreakPopup from '../components/StreakPopup';
 import { ToCanPrint } from '../../handle/UtilsTS';
 import { NetLord } from '../../handle/NetLord';
+import { ToastOptions, toast } from '@baronha/ting';
+import { PickRandomElement } from '../../handle/Utils';
 
 interface TheTriviaProps {
     category: Category,
     getTriviaAsync: () => Promise<Trivia | undefined>
 }
+
+const CorrectToasts = [
+    LocalText.you_are_awesome,
+    LocalText.great,
+    LocalText.you_rock,
+    LocalText.cool,
+]
 
 const TheTrivia = ({
     category,
@@ -30,24 +39,33 @@ const TheTrivia = ({
 }: TheTriviaProps) => {
     const navigation = useNavigation();
     const [trivia, setTrivia] = useState<Trivia | undefined>(undefined)
+    const [allAnswer, setAllAnswer] = useState<string[] | undefined>(undefined)
     const reasonToReload = useRef<NeedReloadReason>(NeedReloadReason.None);
     const theme = useContext(ThemeContext);
     const [handling, setHandling] = useState(false);
     const [streakData, setStreakData] = useState<Streak | undefined>(undefined);
+    const [userChosenAnswer, setUserChosenAnswer] = useState<string | undefined>(undefined);
     const viewShotRef = useRef<LegacyRef<ViewShot> | undefined>();
 
     const onPressRandom = useCallback(async () => {
         reasonToReload.current = NeedReloadReason.None
         setHandling(true)
+        setUserChosenAnswer(undefined)
 
         let res: Trivia | undefined = await getTriviaAsync()
 
         setTrivia(res)
 
         if (res) { // success
+            const arr = res.incorrectAnswer.concat(res.answer)
+            arr.sort()
+            setAllAnswer(arr)
+
             SetStreakAsync(Category[category], -1)
         }
         else { // fail
+            setAllAnswer(undefined)
+
             if (NetLord.IsAvailableLastestCheck())
                 reasonToReload.current = NeedReloadReason.FailToGetContent
             else
@@ -85,6 +103,22 @@ const TheTrivia = ({
         //         tintColor: theme.primary,
         //     } as ShareOptions)
     }, [trivia, theme])
+
+    const onPressAnwser = useCallback((answer: string) => {
+        if (userChosenAnswer) // already pick answer
+            return
+
+        setUserChosenAnswer(answer)
+
+        if (answer === trivia?.answer) { // correct
+            const options: ToastOptions = {
+                title: PickRandomElement(CorrectToasts),
+                ...ToastTheme(theme, 'done')
+            };
+
+            toast(options);
+        }
+    }, [trivia, userChosenAnswer, theme])
 
     const onPressShareImage = useCallback(() => {
         // if (!text)
@@ -151,9 +185,18 @@ const TheTrivia = ({
                                         <View style={{ gap: Outline.GapVertical }}>
                                             <Text style={{ color: theme.text, fontSize: FontSize.Big }}>{trivia?.question}</Text>
                                             {
-                                                trivia?.incorrectAnswer.concat(trivia?.answer).map((answer: string) => {
-                                                    return <TouchableOpacity style={[styleSheet.answerTO, { padding: Outline.GapVertical, borderRadius: BorderRadius.BR8 }]} key={answer}>
-                                                        <Text style={{ fontSize: FontSize.Small_L }}>{answer}</Text>
+                                                allAnswer?.map((answer: string) => {
+                                                    let bgColor: string | undefined = undefined
+
+                                                    if (userChosenAnswer !== undefined) { // user did pick answer
+                                                        if (answer === trivia?.answer)
+                                                            bgColor = 'green'
+                                                        else if (answer === userChosenAnswer)
+                                                            bgColor = 'red'
+                                                    }
+
+                                                    return <TouchableOpacity onPress={() => onPressAnwser(answer)} style={[styleSheet.answerTO, { backgroundColor: bgColor }, { padding: Outline.GapVertical, borderRadius: BorderRadius.BR8 }]} key={answer}>
+                                                        <Text style={{ fontSize: FontSize.Small_L, color: bgColor ? 'white' : theme.text }}>{answer}</Text>
                                                     </TouchableOpacity>
                                                 })
                                             }

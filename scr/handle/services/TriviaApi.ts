@@ -8,7 +8,7 @@ export const GetTriviaAsync = async (): Promise<Trivia | undefined> => {
         const res = await fetch('https://opentdb.com/api.php?amount=1&encode=base64')
 
         if (res.status !== 200) {
-            console.log(res);
+            // console.log(res);
             
             return undefined
         }
