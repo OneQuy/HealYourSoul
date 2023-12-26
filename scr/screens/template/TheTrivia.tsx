@@ -1,8 +1,7 @@
-import { View, Text, TouchableOpacity, ActivityIndicator, Share as RNShare, ShareContent, ShareOptions, Alert, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet } from 'react-native'
 import React, { LegacyRef, useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { BorderRadius, Category, FontSize, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
-import Share from 'react-native-share';
 
 // @ts-ignore
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -10,13 +9,12 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
-import { CopyAndToast, SaveCurrentScreenForLoadNextTime, ToastTheme } from '../../handle/AppUtils'
+import { SaveCurrentScreenForLoadNextTime, ToastTheme } from '../../handle/AppUtils'
 import ViewShot from 'react-native-view-shot'
 import { CommonStyles } from '../../constants/CommonConstants'
 import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
 import { Streak, Trivia } from '../../constants/Types';
 import StreakPopup from '../components/StreakPopup';
-import { ToCanPrint } from '../../handle/UtilsTS';
 import { NetLord } from '../../handle/NetLord';
 import { ToastOptions, toast } from '@baronha/ting';
 import { PickRandomElement } from '../../handle/Utils';
