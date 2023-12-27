@@ -18,6 +18,7 @@ import NinjaFactScreen from '../screens/ninja_fact/NinjaFactScreen';
 import PictureScreen from '../screens/picture/PictureScreen';
 import NinjaJokeScreen from '../screens/ninja_fact/NinjaJokeScreen';
 import TheTriviaScreen from '../screens/trivia/TriviaScreen';
+import ReminderScreen from '../screens/reminder/ReminderScreen';
 
 export type DrawerParamList = {
   [ScreenName.Comic]: undefined,
@@ -34,6 +35,7 @@ export type DrawerParamList = {
   [ScreenName.ShortFact]: undefined,
   [ScreenName.Joke]: undefined,
   [ScreenName.Picture]: undefined,
+  [ScreenName.Reminder]: undefined,
   [ScreenName.IAPPage]: undefined,
 }
 
@@ -60,6 +62,7 @@ const ScreenList: ScreenNamePair[] = [
   [ScreenName.ShortFact, NinjaFactScreen],
   [ScreenName.Joke, NinjaJokeScreen],
   [ScreenName.Picture, PictureScreen],
+  [ScreenName.Reminder, ReminderScreen],
   [ScreenName.IAPPage, IAPPage],
 ]
 
