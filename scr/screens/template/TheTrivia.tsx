@@ -1,16 +1,14 @@
 import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet } from 'react-native'
-import React, { LegacyRef, useCallback, useContext, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
 
 // @ts-ignore
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { SaveCurrentScreenForLoadNextTime, ToastTheme } from '../../handle/AppUtils'
-import ViewShot from 'react-native-view-shot'
 import { CommonStyles } from '../../constants/CommonConstants'
 import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
 import { Streak, Trivia, TriviaAnswerType, TriviaDifficulty } from '../../constants/Types';
@@ -21,7 +19,7 @@ import { PickRandomElement } from '../../handle/Utils';
 
 interface TheTriviaProps {
     category: Category,
-    getTriviaAsync: (difficulty: TriviaDifficulty, answerType: TriviaAnswerType ) => Promise<Trivia | undefined>
+    getTriviaAsync: (difficulty: TriviaDifficulty, answerType: TriviaAnswerType) => Promise<Trivia | undefined>
 }
 
 const CorrectToasts = [
@@ -49,12 +47,11 @@ const TheTrivia = ({
     const [userChosenAnswer, setUserChosenAnswer] = useState<string | undefined>(undefined);
     const [difficulty, setDifficulty] = useState<TriviaDifficulty>('all');
     const [type, setType] = useState<TriviaAnswerType>('all');
-    const viewShotRef = useRef<LegacyRef<ViewShot> | undefined>();
 
     const onPressDifficulty = useCallback(async (diff: TriviaDifficulty) => {
         setDifficulty(diff)
     }, [])
-    
+
     const onPressAnswerType = useCallback(async (type: TriviaAnswerType) => {
         setType(type)
     }, [])
@@ -87,13 +84,7 @@ const TheTrivia = ({
         setHandling(false)
     }, [difficulty, type])
 
-    const onPressCopy = useCallback(() => {
-        // if (!text)
-        //     return
-
-        // CopyAndToast(text, theme)
-    }, [trivia, theme])
-
+   
     const onPressHeaderOption = useCallback(async () => {
         if (streakData)
             setStreakData(undefined)
@@ -102,19 +93,6 @@ const TheTrivia = ({
             setStreakData(streak)
         }
     }, [streakData])
-
-    const onPressShareText = useCallback(() => {
-        // if (!text)
-        //     return
-
-        // RNShare.share({
-        //     title: LocalText.fact_of_the_day,
-        //     message: text,
-        // } as ShareContent,
-        //     {
-        //         tintColor: theme.primary,
-        //     } as ShareOptions)
-    }, [trivia, theme])
 
     const onPressAnwser = useCallback((answer: string) => {
         if (userChosenAnswer) // already pick answer
@@ -131,25 +109,6 @@ const TheTrivia = ({
             toast(options);
         }
     }, [trivia, userChosenAnswer, theme])
-
-    const onPressShareImage = useCallback(() => {
-        // if (!text)
-        //     return
-
-        // // @ts-ignore
-        // viewShotRef.current.capture().then(async (uri: string) => {
-        //     Share
-        //         .open({
-        //             url: uri,
-        //         })
-        //         .catch((err) => {
-        //             const error = ToCanPrint(err)
-
-        //             if (!error.includes('User did not share'))
-        //                 Alert.alert('Fail', error)
-        //         });
-        // })
-    }, [trivia, theme])
 
     // on init once (for load first post)
 
@@ -191,59 +150,56 @@ const TheTrivia = ({
                     </TouchableOpacity>)
                 }
             </View>
-            {/* @ts-ignore */}
-            <ViewShot style={CommonStyles.flex_1} ref={viewShotRef} options={{ fileName: "Your-File-Name", format: "jpg", quality: 1 }}>
-                <View style={CommonStyles.flex_1} >
-                    {
-                        handling ?
-                            // true ?
-                            <View style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
-                                <ActivityIndicator color={theme.counterPrimary} style={{ marginRight: Outline.Horizontal }} />
-                            </View> :
-                            <View style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
-                                {
-                                    reasonToReload.current !== NeedReloadReason.None ?
-                                        // true ?
-                                        <TouchableOpacity onPress={onPressRandom} style={[{ gap: Outline.GapVertical }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]} >
-                                            <MaterialCommunityIcons name={reasonToReload.current === NeedReloadReason.NoInternet ? Icon.NoInternet : Icon.HeartBroken} color={theme.primary} size={Size.IconBig} />
-                                            <Text style={{ fontSize: FontSize.Normal, color: theme.counterPrimary }}>{reasonToReload.current === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
-                                            <Text style={{ fontSize: FontSize.Small_L, color: theme.counterPrimary }}>{LocalText.tap_to_retry}</Text>
-                                        </TouchableOpacity>
-                                        :
-                                        <View style={{ gap: Outline.GapVertical }}>
-                                            <Text style={{ color: theme.text, fontSize: FontSize.Big, marginBottom: Outline.Horizontal }}>{trivia?.question}</Text>
-                                            {
-                                                allAnswer?.map((answer: string) => {
-                                                    let bgColor: string | undefined = undefined
-                                                    let icon = ''
+            <View style={CommonStyles.flex_1} >
+                {
+                    handling ?
+                        // true ?
+                        <View style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
+                            <ActivityIndicator color={theme.counterPrimary} style={{ marginRight: Outline.Horizontal }} />
+                        </View> :
+                        <View style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
+                            {
+                                reasonToReload.current !== NeedReloadReason.None ?
+                                    // true ?
+                                    <TouchableOpacity onPress={onPressRandom} style={[{ gap: Outline.GapVertical }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]} >
+                                        <MaterialCommunityIcons name={reasonToReload.current === NeedReloadReason.NoInternet ? Icon.NoInternet : Icon.HeartBroken} color={theme.primary} size={Size.IconBig} />
+                                        <Text style={{ fontSize: FontSize.Normal, color: theme.counterPrimary }}>{reasonToReload.current === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
+                                        <Text style={{ fontSize: FontSize.Small_L, color: theme.counterPrimary }}>{LocalText.tap_to_retry}</Text>
+                                    </TouchableOpacity>
+                                    :
+                                    <View style={{ gap: Outline.GapVertical }}>
+                                        <Text style={{ color: theme.text, fontSize: FontSize.Big, marginBottom: Outline.Horizontal }}>{trivia?.question}</Text>
+                                        {
+                                            allAnswer?.map((answer: string) => {
+                                                let bgColor: string | undefined = undefined
+                                                let icon = ''
 
-                                                    if (userChosenAnswer !== undefined) { // user did pick answer
-                                                        if (answer === trivia?.answer) {
-                                                            bgColor = 'green'
-                                                            icon = Icon.Check
-                                                        }
-                                                        else if (answer === userChosenAnswer) {
-                                                            bgColor = 'red'
-                                                            icon = Icon.X
-                                                        }
+                                                if (userChosenAnswer !== undefined) { // user did pick answer
+                                                    if (answer === trivia?.answer) {
+                                                        bgColor = 'green'
+                                                        icon = Icon.Check
                                                     }
+                                                    else if (answer === userChosenAnswer) {
+                                                        bgColor = 'red'
+                                                        icon = Icon.X
+                                                    }
+                                                }
 
-                                                    return <TouchableOpacity onPress={() => onPressAnwser(answer)} style={[styleSheet.answerTO, { backgroundColor: bgColor }, { gap: Outline.GapHorizontal, padding: Outline.GapVertical, borderRadius: BorderRadius.BR8 }]} key={answer}>
-                                                        {
-                                                            icon === '' ?
-                                                                undefined :
-                                                                <MaterialCommunityIcons name={icon} color={'white'} size={Size.Icon} />
-                                                        }
-                                                        <Text style={{ verticalAlign: 'middle', textAlign: 'center', fontSize: FontSize.Small_L, color: bgColor ? 'white' : theme.text }}>{answer}</Text>
-                                                    </TouchableOpacity>
-                                                })
-                                            }
-                                        </View>
-                                }
-                            </View>
-                    }
-                </View>
-            </ViewShot>
+                                                return <TouchableOpacity onPress={() => onPressAnwser(answer)} style={[styleSheet.answerTO, { backgroundColor: bgColor }, { gap: Outline.GapHorizontal, padding: Outline.GapVertical, borderRadius: BorderRadius.BR8 }]} key={answer}>
+                                                    {
+                                                        icon === '' ?
+                                                            undefined :
+                                                            <MaterialCommunityIcons name={icon} color={'white'} size={Size.Icon} />
+                                                    }
+                                                    <Text style={{ verticalAlign: 'middle', textAlign: 'center', fontSize: FontSize.Small_L, color: bgColor ? 'white' : theme.text }}>{answer}</Text>
+                                                </TouchableOpacity>
+                                            })
+                                        }
+                                    </View>
+                            }
+                        </View>
+                }
+            </View>
             <View>
                 <TouchableOpacity onPress={onPressRandom} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, padding: Outline.GapVertical_2, backgroundColor: theme.primary, }, styleSheet.randomTO]}>
                     <MaterialCommunityIcons name={Icon.Dice} color={theme.counterPrimary} size={Size.Icon} />
