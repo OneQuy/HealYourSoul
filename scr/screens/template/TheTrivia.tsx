@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet } from 'react-native'
 import React, { LegacyRef, useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
-import { BorderRadius, Category, FontSize, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
+import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
 
 // @ts-ignore
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -13,7 +13,7 @@ import { SaveCurrentScreenForLoadNextTime, ToastTheme } from '../../handle/AppUt
 import ViewShot from 'react-native-view-shot'
 import { CommonStyles } from '../../constants/CommonConstants'
 import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
-import { Streak, Trivia } from '../../constants/Types';
+import { Streak, Trivia, TriviaAnswerType, TriviaDifficulty } from '../../constants/Types';
 import StreakPopup from '../components/StreakPopup';
 import { NetLord } from '../../handle/NetLord';
 import { ToastOptions, toast } from '@baronha/ting';
@@ -31,6 +31,10 @@ const CorrectToasts = [
     LocalText.cool,
 ]
 
+const Difficulties: TriviaDifficulty[] = ['all', 'easy', 'medium', 'hard']
+
+const AnswerTypes: TriviaAnswerType[] = ['all', 'multi', 'truefalse']
+
 const TheTrivia = ({
     category,
     getTriviaAsync,
@@ -43,7 +47,17 @@ const TheTrivia = ({
     const [handling, setHandling] = useState(false);
     const [streakData, setStreakData] = useState<Streak | undefined>(undefined);
     const [userChosenAnswer, setUserChosenAnswer] = useState<string | undefined>(undefined);
+    const [difficulty, setDifficulty] = useState<TriviaDifficulty>('all');
+    const [type, setType] = useState<TriviaAnswerType>('all');
     const viewShotRef = useRef<LegacyRef<ViewShot> | undefined>();
+
+    const onPressDifficulty = useCallback(async (diff: TriviaDifficulty) => {
+        setDifficulty(diff)
+    }, [])
+    
+    const onPressAnswerType = useCallback(async (type: TriviaAnswerType) => {
+        setType(type)
+    }, [])
 
     const onPressRandom = useCallback(async () => {
         reasonToReload.current = NeedReloadReason.None
@@ -161,6 +175,22 @@ const TheTrivia = ({
 
     return (
         <View pointerEvents={handling ? 'none' : 'auto'} style={[styleSheet.masterView, { backgroundColor: theme.background }]}>
+            <View style={{ flexDirection: 'row', gap: Outline.GapHorizontal }}>
+                <Text style={{ fontWeight: FontWeight.B500, padding: Outline.VerticalMini, color: theme.text, fontSize: FontSize.Small }}>{LocalText.difficulty}: </Text>
+                {
+                    Difficulties.map((diff: TriviaDifficulty) => <TouchableOpacity key={diff} onPress={() => setDifficulty(diff)} style={{ borderWidth: diff === difficulty ? 1 : 0, borderColor: theme.text, padding: Outline.VerticalMini, borderRadius: BorderRadius.BR8 }}>
+                        <Text style={{ color: theme.text, fontSize: FontSize.Small }}>{diff}</Text>
+                    </TouchableOpacity>)
+                }
+            </View>
+            <View style={{ flexDirection: 'row', gap: Outline.GapHorizontal }}>
+                <Text style={{ fontWeight: FontWeight.B500, padding: Outline.VerticalMini, color: theme.text, fontSize: FontSize.Small }}>{LocalText.answer_type}: </Text>
+                {
+                    AnswerTypes.map((diff: TriviaAnswerType) => <TouchableOpacity key={diff} onPress={() => setType(diff)} style={{ borderWidth: diff === type ? 1 : 0, borderColor: theme.text, padding: Outline.VerticalMini, borderRadius: BorderRadius.BR8 }}>
+                        <Text style={{ color: theme.text, fontSize: FontSize.Small }}>{diff}</Text>
+                    </TouchableOpacity>)
+                }
+            </View>
             {/* @ts-ignore */}
             <ViewShot style={CommonStyles.flex_1} ref={viewShotRef} options={{ fileName: "Your-File-Name", format: "jpg", quality: 1 }}>
                 <View style={CommonStyles.flex_1} >

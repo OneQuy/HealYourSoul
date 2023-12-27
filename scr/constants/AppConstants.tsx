@@ -216,6 +216,16 @@ export const LocalText = {
   day_left: 'Day(s) left:',
   
   thank_you: 'Your subscription means the world to me! It really makes my day. Thank you for supporting my app.',
+  
+  difficulty: 'Difficulty',
+  all: 'All',
+  hard: 'Hard',
+  medium: 'Medium',
+  easy: 'Easy',
+  
+  answer_type: 'Answers type:',
+  multi_choice: 'Multi-choice',
+  true_false: 'True/False',
 
   // popup
 

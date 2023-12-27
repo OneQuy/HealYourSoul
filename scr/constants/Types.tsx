@@ -28,6 +28,10 @@ export type SubscribedData = {
     tick: number,
 }
 
+export type TriviaDifficulty = 'hard' | 'medium' | 'easy' | 'all'
+
+export type TriviaAnswerType = 'multi' | 'truefalse' | 'all'
+
 export type Trivia = {
     question: string,
     answer: string,
