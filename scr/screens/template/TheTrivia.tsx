@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet } from 'react-native'
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
-import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
+import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size, StorageKey_TriviaAnswerType, StorageKey_TriviaDifficulty } from '../../constants/AppConstants'
 
 // @ts-ignore
 
@@ -16,6 +16,7 @@ import StreakPopup from '../components/StreakPopup';
 import { NetLord } from '../../handle/NetLord';
 import { ToastOptions, toast } from '@baronha/ting';
 import { PickRandomElement } from '../../handle/Utils';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface TheTriviaProps {
     category: Category,
@@ -50,10 +51,12 @@ const TheTrivia = ({
 
     const onPressDifficulty = useCallback(async (diff: TriviaDifficulty) => {
         setDifficulty(diff)
+        AsyncStorage.setItem(StorageKey_TriviaDifficulty, diff)
     }, [])
 
     const onPressAnswerType = useCallback(async (type: TriviaAnswerType) => {
         setType(type)
+        AsyncStorage.setItem(StorageKey_TriviaAnswerType, type)
     }, [])
 
     const onPressRandom = useCallback(async () => {
@@ -61,7 +64,13 @@ const TheTrivia = ({
         setHandling(true)
         setUserChosenAnswer(undefined)
 
-        let res: Trivia | undefined = await getTriviaAsync(difficulty, type)
+        const diff = await AsyncStorage.getItem(StorageKey_TriviaDifficulty)
+        const thediff: TriviaDifficulty = diff ? diff as TriviaDifficulty : 'all'
+
+        const typee = await AsyncStorage.getItem(StorageKey_TriviaAnswerType)
+        const thetype: TriviaAnswerType = typee ? typee as TriviaAnswerType : 'all'
+
+        let res: Trivia | undefined = await getTriviaAsync(thediff, thetype)
 
         setTrivia(res)
 
@@ -82,9 +91,9 @@ const TheTrivia = ({
         }
 
         setHandling(false)
-    }, [difficulty, type])
+    }, [])
 
-   
+
     const onPressHeaderOption = useCallback(async () => {
         if (streakData)
             setStreakData(undefined)
@@ -113,8 +122,20 @@ const TheTrivia = ({
     // on init once (for load first post)
 
     useEffect(() => {
-        SetStreakAsync(Category[category])
-        onPressRandom()
+        const handle = async () => {
+            SetStreakAsync(Category[category])
+            onPressRandom()
+
+            const diff = await AsyncStorage.getItem(StorageKey_TriviaDifficulty)
+            const thediff: TriviaDifficulty = diff ? diff as TriviaDifficulty : 'all'
+            setDifficulty(thediff)
+
+            const typee = await AsyncStorage.getItem(StorageKey_TriviaAnswerType)
+            const thetype: TriviaAnswerType = typee ? typee as TriviaAnswerType : 'all'
+            setType(thetype)
+        }
+
+        handle()
     }, [])
 
     // on change theme

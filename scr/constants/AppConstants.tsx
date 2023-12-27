@@ -233,4 +233,9 @@ export const LocalText = {
   popup_content_need_internet: 'Please check your network and try again.',
 }
 
+// storage
+
 export const StorageKey_Streak = 'streak'
+
+export const StorageKey_TriviaDifficulty = 'trivia_diff'
+export const StorageKey_TriviaAnswerType = 'trivia_type'
