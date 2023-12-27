@@ -30,11 +30,11 @@ export const GetRandomUnsplashPictureAsync = async (): Promise<string | undefine
         const ratio = 1 + Math.random() * (18 / 9 - 1)
 
         if (isLandscape) {
-            w = screen.width * screen.scale - 500 + Math.ceil(Math.random() * 500)
+            w = screen.width * screen.scale
             h = w / ratio
         }
         else {
-            h = screen.height * screen.scale - 500 + Math.ceil(Math.random() * 500)
+            h = screen.height * screen.scale
             w = h / ratio
         }
 
