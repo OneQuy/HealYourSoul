@@ -21,7 +21,7 @@ import { PickRandomElement } from '../../handle/Utils';
 
 interface TheTriviaProps {
     category: Category,
-    getTriviaAsync: () => Promise<Trivia | undefined>
+    getTriviaAsync: (difficulty: TriviaDifficulty, answerType: TriviaAnswerType ) => Promise<Trivia | undefined>
 }
 
 const CorrectToasts = [
@@ -64,7 +64,7 @@ const TheTrivia = ({
         setHandling(true)
         setUserChosenAnswer(undefined)
 
-        let res: Trivia | undefined = await getTriviaAsync()
+        let res: Trivia | undefined = await getTriviaAsync(difficulty, type)
 
         setTrivia(res)
 
@@ -85,7 +85,7 @@ const TheTrivia = ({
         }
 
         setHandling(false)
-    }, [])
+    }, [difficulty, type])
 
     const onPressCopy = useCallback(() => {
         // if (!text)
@@ -178,7 +178,7 @@ const TheTrivia = ({
             <View style={{ flexDirection: 'row', gap: Outline.GapHorizontal }}>
                 <Text style={{ fontWeight: FontWeight.B500, padding: Outline.VerticalMini, color: theme.text, fontSize: FontSize.Small }}>{LocalText.difficulty}: </Text>
                 {
-                    Difficulties.map((diff: TriviaDifficulty) => <TouchableOpacity key={diff} onPress={() => setDifficulty(diff)} style={{ borderWidth: diff === difficulty ? 1 : 0, borderColor: theme.text, padding: Outline.VerticalMini, borderRadius: BorderRadius.BR8 }}>
+                    Difficulties.map((diff: TriviaDifficulty) => <TouchableOpacity key={diff} onPress={() => onPressDifficulty(diff)} style={{ borderWidth: diff === difficulty ? 1 : 0, borderColor: theme.text, padding: Outline.VerticalMini, borderRadius: BorderRadius.BR8 }}>
                         <Text style={{ color: theme.text, fontSize: FontSize.Small }}>{diff}</Text>
                     </TouchableOpacity>)
                 }
@@ -186,8 +186,8 @@ const TheTrivia = ({
             <View style={{ flexDirection: 'row', gap: Outline.GapHorizontal }}>
                 <Text style={{ fontWeight: FontWeight.B500, padding: Outline.VerticalMini, color: theme.text, fontSize: FontSize.Small }}>{LocalText.answer_type}: </Text>
                 {
-                    AnswerTypes.map((diff: TriviaAnswerType) => <TouchableOpacity key={diff} onPress={() => setType(diff)} style={{ borderWidth: diff === type ? 1 : 0, borderColor: theme.text, padding: Outline.VerticalMini, borderRadius: BorderRadius.BR8 }}>
-                        <Text style={{ color: theme.text, fontSize: FontSize.Small }}>{diff}</Text>
+                    AnswerTypes.map((itype: TriviaAnswerType) => <TouchableOpacity key={itype} onPress={() => onPressAnswerType(itype)} style={{ borderWidth: itype === type ? 1 : 0, borderColor: theme.text, padding: Outline.VerticalMini, borderRadius: BorderRadius.BR8 }}>
+                        <Text style={{ color: theme.text, fontSize: FontSize.Small }}>{itype}</Text>
                     </TouchableOpacity>)
                 }
             </View>
