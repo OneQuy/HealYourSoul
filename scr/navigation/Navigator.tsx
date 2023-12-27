@@ -35,7 +35,7 @@ export type DrawerParamList = {
   [ScreenName.ShortFact]: undefined,
   [ScreenName.Joke]: undefined,
   [ScreenName.Picture]: undefined,
-  [ScreenName.Reminder]: undefined,
+  // [ScreenName.Reminder]: undefined,
   [ScreenName.IAPPage]: undefined,
 }
 
@@ -62,7 +62,7 @@ const ScreenList: ScreenNamePair[] = [
   [ScreenName.ShortFact, NinjaFactScreen],
   [ScreenName.Joke, NinjaJokeScreen],
   [ScreenName.Picture, PictureScreen],
-  [ScreenName.Reminder, ReminderScreen],
+  // [ScreenName.Reminder, ReminderScreen],
   [ScreenName.IAPPage, IAPPage],
 ]
 
