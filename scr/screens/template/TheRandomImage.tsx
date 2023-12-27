@@ -1,27 +1,23 @@
-import { View, Text, TouchableOpacity, ActivityIndicator, Share as RNShare, ShareContent, ShareOptions, Alert, StyleSheet, Image } from 'react-native'
-import React, { LegacyRef, useCallback, useContext, useEffect, useRef, useState } from 'react'
+import { View, Text, TouchableOpacity, ActivityIndicator, Alert, StyleSheet, Image } from 'react-native'
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { BorderRadius, Category, FontSize, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
 import Share from 'react-native-share';
-import RNFS, { DownloadProgressCallbackResult } from "react-native-fs";
+import RNFS from "react-native-fs";
 
 // @ts-ignore
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { NetLord } from '../../handle/NetLord'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { Cheat } from '../../handle/Cheat'
-import { DelayAsync, PickRandomElement, TempDirName } from '../../handle/Utils'
-import { CopyAndToast, SaveCurrentScreenForLoadNextTime, ToastTheme } from '../../handle/AppUtils'
-import ViewShot from 'react-native-view-shot'
+import { TempDirName } from '../../handle/Utils'
+import { SaveCurrentScreenForLoadNextTime, ToastTheme } from '../../handle/AppUtils'
 import { CommonStyles } from '../../constants/CommonConstants'
 import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
 import { Streak } from '../../constants/Types';
 import StreakPopup from '../components/StreakPopup';
-import { DownloadImageAsync, ToCanPrint } from '../../handle/UtilsTS';
+import { ToCanPrint } from '../../handle/UtilsTS';
 import { DownloadFileAsync, GetFLPFromRLP } from '../../handle/FileUtils';
 import { SaveToGalleryAsync } from '../../handle/CameraRoll';
 import { ToastOptions, toast } from '@baronha/ting';
