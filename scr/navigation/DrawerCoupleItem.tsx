@@ -3,6 +3,7 @@ import React from 'react'
 import { RandomColor, ToCanPrint } from '../handle/UtilsTS'
 import { DrawerContentComponentProps } from '@react-navigation/drawer'
 import DrawerSingleItem from './DrawerSingleItem'
+import { Outline } from '../constants/AppConstants'
 
 type Props = {
     couple: DrawerContentComponentProps['state']['routes'],
@@ -14,7 +15,7 @@ const DrawerCoupleItem = ({
     masterProps,
 }: Props) => {
     return (
-        <View style={[style.masterView, { backgroundColor: RandomColor() }]}>
+        <View style={[style.masterView, { gap: Outline.GapHorizontal, padding: Outline.GapHorizontal }]}>
             {
                 couple.map((route, idx) => <DrawerSingleItem
                     masterProps={masterProps}
