@@ -22,7 +22,7 @@ export const TimeOutError = '[time_out]';
 
 // color ------------------------
 
-const colorNameToHexDefines = {
+export const colorNameToHexDefines = {
     "aliceblue": "#f0f8ff",
     "antiquewhite": "#faebd7",
     "aqua": "#00ffff",
@@ -169,6 +169,13 @@ const colorNameToHexDefines = {
 
 export type ColorName = keyof typeof colorNameToHexDefines;
 
+export function RandomColor(): string {
+    const arr = Object.values(colorNameToHexDefines)
+    const idx = Math.floor(Math.random() * arr.length)
+
+    return arr[idx]
+}
+
 export function ColorNameToHex(name: ColorName): string {
     return colorNameToHexDefines[name];
 }
@@ -205,16 +212,6 @@ export function GetFileExtensionByFilepath(filepath: string): string {
         return '';
 
     return filepath.substring(dotIdx + 1, filepath.length);
-}
-
-export async function DownloadImageAsync(url: string): Promise<string | undefined> {
-    const data = await fetch(url)
-
-    const blobl = await data.blob()
-    
-    console.log(blobl)
-    
-    return undefined
 }
 
 export function GetBlobFromFLPAsync(flp: string): Promise<Blob> {

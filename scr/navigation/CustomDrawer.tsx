@@ -41,5 +41,5 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
         </View>
       </View>
     </View>
-  );
-}  
+  )
+}
