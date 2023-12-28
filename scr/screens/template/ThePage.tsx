@@ -29,6 +29,7 @@ import { Cheat } from '../../handle/Cheat';
 import { GetPostLikeCountAsync, LikePostAsync } from '../../handle/LikeCountHandler';
 import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
 import StreakPopup from '../components/StreakPopup';
+import { CommonStyles } from '../../constants/CommonConstants';
 
 const videoNumbSize = 10;
 const videoTouchEffectRadius = 100;
@@ -784,7 +785,7 @@ const ThePage = ({ category }: ThePageProps) => {
 
     return (
         // master view
-        <View style={{ pointerEvents: handling ? 'none' : 'auto', backgroundColor: theme.background, flex: 1, gap: Outline.GapVertical, }}>
+        <View style={{ pointerEvents: handling ? 'none' : 'auto', backgroundColor: theme.background, flex: 1, gap: Outline.GapVertical, paddingBottom: Outline.GapVertical }}>
             {/* net state */}
             {
                 isInternetAvailable ? null :
@@ -946,17 +947,15 @@ const ThePage = ({ category }: ThePageProps) => {
             </View>
 
             {/* menu part */}
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: Outline.Horizontal, gap: Outline.GapHorizontal, marginBottom: Outline.GapVertical, }}>
-                {/* download media
-                <TouchableOpacity onPress={onPressDownloadMedia} style={{ borderRadius: BorderRadius.BR8, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
+            <View style={[{ gap: Outline.GapHorizontal }, CommonStyles.row_width100Percent]}>
+                <TouchableOpacity onPress={onPressDownloadMedia} style={[style.subBtnTO, { flex: 1.5, gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }]}>
                     <MaterialCommunityIcons name={Icon.Download} color={theme.counterPrimary} size={Size.IconSmaller} />
+                    <Text style={{ color: theme.text, fontSize: FontSize.Small_L }}>{LocalText.save}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={{ borderRadius: BorderRadius.BR8, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
-                    <MaterialIcons name="share" color={theme.counterPrimary} size={Size.IconSmaller} />
+                <TouchableOpacity onPress={undefined} style={[style.subBtnTO, { flex: 1.5, gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }]}>
+                    <MaterialCommunityIcons name={Icon.ShareImage} color={theme.counterPrimary} size={Size.IconSmaller} />
+                    <Text style={{ color: theme.text, fontSize: FontSize.Small_L }}>{LocalText.share}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={{ borderRadius: BorderRadius.BR8, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
-                    <MaterialCommunityIcons name={'dots-horizontal'} color={theme.counterPrimary} size={Size.IconSmaller} />
-                </TouchableOpacity> */}
             </View>
 
             {/* streak */}
@@ -971,5 +970,6 @@ export default ThePage;
 
 
 const style = StyleSheet.create({
-    headerOptionTO: { marginRight: 15 }
+    headerOptionTO: { marginRight: 15 },
+    subBtnTO: { justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', },
 })
