@@ -1,8 +1,17 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import { RandomColor } from '../handle/UtilsTS'
+import { RandomColor, ToCanPrint } from '../handle/UtilsTS'
+import { DrawerContentComponentProps } from '@react-navigation/drawer'
 
-const DrawerCoupleItem = () => {
+type Props = {
+    couple: DrawerContentComponentProps['state']['routes'],
+}
+
+const DrawerCoupleItem = ({ 
+    couple,
+}: Props) => {
+    console.log(ToCanPrint(couple));
+    
     return (
         <View style={{ backgroundColor: RandomColor(), height: 50, width: '100%' }}>
 
