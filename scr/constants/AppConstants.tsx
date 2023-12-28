@@ -5,7 +5,7 @@ import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-nat
 export enum ScreenName {
   Comic = 'Warm',
   Meme = 'Meme',
-  Quote = 'Quotes',
+  Quote = 'Motivative',
   CatDog = 'Meow. Doggo. Animals',
   Love = 'Love',
   Satisfying  = 'Satisfying',
@@ -17,8 +17,9 @@ export enum ScreenName {
   ShortFact = 'Random Fact', // ninja fact
   Picture = 'Random Picture', // unsplash
   Joke = 'Random Joke', // ninja joke
+  QuoteText = 'Random Quote',
   Trivia = 'Trivia',
-  Reminder = 'Reminder',
+  // Reminder = 'Reminder',
 }
 
 // dir / file
@@ -80,7 +81,8 @@ export enum Category {
   Picture = 11,
   NinjaJoke = 12,
   Trivia = 13,
-  Reminder = 14,
+  Quotetext = 14,
+  // Reminder = 14,
 }
 
 // margin / padding

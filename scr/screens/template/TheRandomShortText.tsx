@@ -52,11 +52,11 @@ const TheRandomShortText = ({
 
         let text: string | undefined
 
-        if (__DEV__ && !Cheat('ForceRealApiTextContent')) {
-            await DelayAsync(500)
-            text = PickRandomElement(FakeTextContents)
-        }
-        else
+        // if (__DEV__ && !Cheat('ForceRealApiTextContent')) {
+        //     await DelayAsync(500)
+        //     text = PickRandomElement(FakeTextContents)
+        // }
+        // else
             text = await getTextAsync()
 
         setText(text)
