@@ -6,15 +6,18 @@ import DrawerSingleItem from './DrawerSingleItem'
 
 type Props = {
     couple: DrawerContentComponentProps['state']['routes'],
+    masterProps: DrawerContentComponentProps,
 }
 
 const DrawerCoupleItem = ({
     couple,
+    masterProps,
 }: Props) => {
     return (
         <View style={[style.masterView, { backgroundColor: RandomColor() }]}>
             {
                 couple.map((route, idx) => <DrawerSingleItem
+                    masterProps={masterProps}
                     route={route}
                     key={idx} />)
             }

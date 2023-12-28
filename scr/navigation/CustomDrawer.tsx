@@ -34,6 +34,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
         {
           routeCoupleArr.map((couple, idx) => {
             return <DrawerCoupleItem
+              masterProps={props}
               couple={couple}
               key={idx} />
           })
