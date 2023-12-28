@@ -30,6 +30,7 @@ import { GetPostLikeCountAsync, LikePostAsync } from '../../handle/LikeCountHand
 import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
 import StreakPopup from '../components/StreakPopup';
 import { CommonStyles } from '../../constants/CommonConstants';
+import Share from 'react-native-share';
 
 const videoNumbSize = 10;
 const videoTouchEffectRadius = 100;
@@ -433,6 +434,22 @@ const ThePage = ({ category }: ThePageProps) => {
     }, []);
 
     // button handles
+
+    const onPressShareImage = useCallback(async () => {
+        if (!mediaURI.current)
+            return
+
+        Share
+            .open({
+                url: mediaURI.current,
+            })
+            .catch((err) => {
+                const error = ToCanPrint(err)
+
+                if (!error.includes('User did not share'))
+                    Alert.alert('Fail', error)
+            });
+    }, [])
 
     const onPressDownloadMedia = useCallback(async () => {
         if (!mediaURI.current) {
@@ -952,7 +969,7 @@ const ThePage = ({ category }: ThePageProps) => {
                     <MaterialCommunityIcons name={Icon.Download} color={theme.counterPrimary} size={Size.IconSmaller} />
                     <Text style={{ color: theme.text, fontSize: FontSize.Small_L }}>{LocalText.save}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={undefined} style={[style.subBtnTO, { flex: 1.5, gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }]}>
+                <TouchableOpacity onPress={onPressShareImage} style={[style.subBtnTO, { flex: 1.5, gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }]}>
                     <MaterialCommunityIcons name={Icon.ShareImage} color={theme.counterPrimary} size={Size.IconSmaller} />
                     <Text style={{ color: theme.text, fontSize: FontSize.Small_L }}>{LocalText.share}</Text>
                 </TouchableOpacity>
