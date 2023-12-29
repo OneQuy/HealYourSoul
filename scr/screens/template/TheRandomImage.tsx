@@ -21,6 +21,7 @@ import { ToCanPrint } from '../../handle/UtilsTS';
 import { DownloadFileAsync, GetFLPFromRLP } from '../../handle/FileUtils';
 import { SaveToGalleryAsync } from '../../handle/CameraRoll';
 import { ToastOptions, toast } from '@baronha/ting';
+import SubRedditSelector from '../components/SubRedditSelector';
 
 interface TheRandomImageProps {
     category: Category,
@@ -37,6 +38,7 @@ const TheRandomImage = ({
     const theme = useContext(ThemeContext);
     const [handling, setHandling] = useState(false);
     const [streakData, setStreakData] = useState<Streak | undefined>(undefined);
+    const [isShowSubredditSelector, setIsShowSubredditSelector] = useState(true)
 
     const onPressRandom = useCallback(async () => {
         reasonToReload.current = NeedReloadReason.None
@@ -165,13 +167,13 @@ const TheRandomImage = ({
                         </View>
                 }
             </View>
-            <View>
+            <View style={{ marginHorizontal: Outline.GapVertical_2}}>
                 <TouchableOpacity onPress={onPressRandom} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, padding: Outline.GapVertical_2, backgroundColor: theme.primary, }, styleSheet.randomTO]}>
                     <MaterialCommunityIcons name={Icon.Dice} color={theme.counterPrimary} size={Size.Icon} />
                     <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{LocalText.random}</Text>
                 </TouchableOpacity>
             </View>
-            <View style={[{ gap: Outline.GapHorizontal }, CommonStyles.row_width100Percent]}>
+            <View style={[{ marginBottom: Outline.GapVertical, gap: Outline.GapHorizontal }, CommonStyles.row_width100Percent]}>
                 <TouchableOpacity onPress={onPressSaveToPhoto} style={[styleSheet.subBtnTO, { flex: 1.5, gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }]}>
                     <MaterialCommunityIcons name={Icon.Download} color={theme.counterPrimary} size={Size.IconSmaller} />
                     <Text style={{ color: theme.text, fontSize: FontSize.Small_L }}>{LocalText.save}</Text>
@@ -182,6 +184,9 @@ const TheRandomImage = ({
                 </TouchableOpacity>
             </View>
             {
+                // isShowSubredditSelector ? <SubRedditSelector /> : undefined
+            }
+            {
                 streakData ? <StreakPopup streak={streakData} /> : undefined
             }
         </View>
@@ -191,7 +196,7 @@ const TheRandomImage = ({
 export default TheRandomImage
 
 const styleSheet = StyleSheet.create({
-    masterView: { padding: Outline.Horizontal, flex: 1, gap: Outline.GapVertical, },
+    masterView: {  flex: 1, gap: Outline.GapVertical, },
     randomTO: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: '100%' },
     subBtnTO: { justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', },
     headerOptionTO: { marginRight: 15 },

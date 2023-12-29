@@ -10,6 +10,7 @@ export const GetRedditMemeAsync = async (): Promise<string | undefined> => {
             return undefined
 
         const json = await data.json()
+console.log(json.url);
 
         return json.url
     } catch (error) {
