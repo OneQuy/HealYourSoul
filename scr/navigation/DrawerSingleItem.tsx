@@ -2,7 +2,7 @@ import { Text, StyleSheet, TouchableOpacity, View } from 'react-native'
 import React, { useContext, useMemo } from 'react'
 import { DrawerContentComponentProps } from '@react-navigation/drawer'
 import { CommonActions, DrawerActions } from '@react-navigation/native'
-import { BorderRadius, FontWeight, Icon, Outline, ScreenName, Size } from '../constants/AppConstants'
+import { BorderRadius, Icon, Outline, ScreenName, Size } from '../constants/AppConstants'
 import { CommonStyles } from '../constants/CommonConstants'
 
 // @ts-ignore

@@ -15,7 +15,7 @@ const DrawerCoupleItem = ({
     masterProps,
 }: Props) => {
     return (
-        <View style={[style.masterView, { gap: Outline.GapHorizontal, padding: Outline.GapHorizontal }]}>
+        <View style={[style.masterView, { gap: Outline.GapVertical, padding: Outline.GapHorizontal }]}>
             {
                 couple.map((route, idx) => <DrawerSingleItem
                     masterProps={masterProps}
