@@ -1,12 +1,13 @@
 import { Text, StyleSheet, TouchableOpacity, View } from 'react-native'
-import React, { useMemo } from 'react'
+import React, { useContext, useMemo } from 'react'
 import { DrawerContentComponentProps } from '@react-navigation/drawer'
 import { CommonActions, DrawerActions } from '@react-navigation/native'
-import { BorderRadius, Icon, Outline, ScreenName, Size } from '../constants/AppConstants'
+import { BorderRadius, FontWeight, Icon, Outline, ScreenName, Size } from '../constants/AppConstants'
 import { CommonStyles } from '../constants/CommonConstants'
 
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { ThemeContext } from '../constants/Colors'
 
 type Props = {
     route: DrawerContentComponentProps['state']['routes'][number],
@@ -20,6 +21,7 @@ const DrawerSingleItem = ({
     const focusingRoute = masterProps.state.routes[masterProps.state.index];
     const isFocused = route === focusingRoute
     const navigation = masterProps.navigation
+    const theme = useContext(ThemeContext)
 
     const icon = useMemo(() => {
         if (route.name === ScreenName.Meme)
@@ -74,11 +76,11 @@ const DrawerSingleItem = ({
     }
 
     return (
-        <TouchableOpacity onPress={onPress} style={[style.masterTO, CommonStyles.justifyContentCenter_AlignItemsCenter, { borderRadius: BorderRadius.BR8 }]}>
-            <View style={[style.iconView, { paddingLeft: Outline.GapVertical, borderBottomLeftRadius: BorderRadius.BR8, borderTopLeftRadius: BorderRadius.BR8 }]}>
-                <MaterialCommunityIcons name={icon} color={'black'} size={Size.IconSmaller} />
+        <TouchableOpacity onPress={onPress} style={[style.masterTO, CommonStyles.justifyContentCenter_AlignItemsCenter, { paddingHorizontal: Outline.GapVertical, backgroundColor: isFocused ? theme.primary : undefined, borderRadius: BorderRadius.BR8, borderColor: theme.text }]}>
+            <View style={[style.iconView, { marginRight: Outline.GapVertical, }]}>
+                <MaterialCommunityIcons name={icon} color={theme.text} size={Size.IconSmaller} />
             </View>
-            <Text style={[{ flex: 1, textAlign: 'center', color: isFocused ? 'red' : 'black' }]}>{route.name}</Text>
+            <Text style={[style.labelText, { color: theme.text, }]}>{route.name}</Text>
         </TouchableOpacity>
     )
 }
@@ -86,6 +88,7 @@ const DrawerSingleItem = ({
 export default DrawerSingleItem
 
 const style = StyleSheet.create({
-    masterTO: { flexDirection: 'row', flex: 1, borderWidth: StyleSheet.hairlineWidth, overflow: 'hidden' },
-    iconView: { height: '100%', justifyContent: 'center', }
+    masterTO: { flexDirection: 'row', flex: 1, borderWidth: StyleSheet.hairlineWidth, },
+    iconView: { height: '100%', justifyContent: 'center', },
+    labelText: { flex: 1, textAlign: 'center', }
 })
