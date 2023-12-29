@@ -1,4 +1,4 @@
-import { useMemo, useRef } from "react";
+import { useCallback, useMemo, useRef } from "react";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/Store";
 import { ThemeType, themes } from "../constants/Colors";
 import { DrawerContentComponentProps, DrawerContentScrollView, } from '@react-navigation/drawer';
@@ -28,18 +28,24 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
     return arr
   }, [])
 
+  const renderScreenButtons = useCallback(() => {
+    return <DrawerContentScrollView {...props}>
+      {
+        routeCoupleArr.map((couple, idx) => {
+          return <DrawerCoupleItem
+            masterProps={props}
+            couple={couple}
+            key={idx} />
+        })
+      }
+    </DrawerContentScrollView>
+  }, [props])
+
   return (
     <View style={{ flex: 1 }}>
-      <DrawerContentScrollView {...props}>
-        {
-          routeCoupleArr.map((couple, idx) => {
-            return <DrawerCoupleItem
-              masterProps={props}
-              couple={couple}
-              key={idx} />
-          })
-        }
-      </DrawerContentScrollView>
+      {
+        renderScreenButtons()
+      }
       <View style={{ marginLeft: 20, marginBottom: 20 }}>
         {/* theme setting */}
         <View style={{ flexDirection: 'row', gap: 20 }}>
