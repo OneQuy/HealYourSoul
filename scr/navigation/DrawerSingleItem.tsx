@@ -25,6 +25,11 @@ const thumbs = [
     [ScreenName.Sarcasm, require('../../assets/images/category_icon/sarcasm.jpg')],
     [ScreenName.Satisfying, require('../../assets/images/category_icon/satisfying.jpg')],
     [ScreenName.Comic, require('../../assets/images/category_icon/warm.jpg')],
+    [ScreenName.Trivia, require('../../assets/images/category_icon/trivia.png')],
+    [ScreenName.QuoteText, require('../../assets/images/category_icon/quote.png')],
+    [ScreenName.Picture, require('../../assets/images/category_icon/picture.jpg')],
+    [ScreenName.Joke, require('../../assets/images/category_icon/joke.jpg')],
+    [ScreenName.CatDog, require('../../assets/images/category_icon/cat.jpg')],
     [ScreenName.Cute, require('../../assets/images/category_icon/wholesome.jpeg')],
 ]
 
