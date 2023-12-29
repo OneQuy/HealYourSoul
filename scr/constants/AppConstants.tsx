@@ -5,6 +5,7 @@ import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-nat
 export enum ScreenName {
   Comic = 'Warm',
   Meme = 'Meme',
+  RedditMeme = 'Reddit Meme',
   Quote = 'Motivative',
   CatDog = 'Cat. Dog. Animal',
   Love = 'Love',
@@ -82,6 +83,7 @@ export enum Category {
   NinjaJoke = 12,
   Trivia = 13,
   Quotetext = 14,
+  RedditMeme = 15,
   // Reminder = 14,
 }
 

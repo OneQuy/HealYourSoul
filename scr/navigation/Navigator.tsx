@@ -13,7 +13,7 @@ import { CustomDrawerContent } from './CustomDrawer';
 import NSFWScreen from '../screens/nsfw/NSFWScreen';
 import { Is_IOS_And_OfflineOrLowerReviewVersion } from '../handle/AppUtils';
 import IAPPage from '../screens/IAP/IAPPage';
-import { ArtScreen, CuteScreen, QuoteTextScreen, SarcasmScreen } from '../screens/other_thepage_screens/Index';
+import { ArtScreen, CuteScreen, QuoteTextScreen, RedditMemeScreen, SarcasmScreen } from '../screens/other_thepage_screens/Index';
 import NinjaFactScreen from '../screens/ninja_fact/NinjaFactScreen';
 import PictureScreen from '../screens/picture/PictureScreen';
 import NinjaJokeScreen from '../screens/ninja_fact/NinjaJokeScreen';
@@ -23,6 +23,7 @@ import ReminderScreen from '../screens/reminder/ReminderScreen';
 export type DrawerParamList = {
   [ScreenName.Comic]: undefined,
   [ScreenName.Meme]: undefined,
+  [ScreenName.RedditMeme]: undefined,
   [ScreenName.Quote]: undefined,
   [ScreenName.CatDog]: undefined,
   [ScreenName.Love]: undefined,
@@ -50,6 +51,7 @@ const Drawer = createDrawerNavigator<DrawerParamList>();
 
 const ScreenList: ScreenNamePair[] = [
   [ScreenName.Meme, MemeScreen],
+  [ScreenName.RedditMeme, RedditMemeScreen],
   [ScreenName.Comic, ComicScreen],
   [ScreenName.NSFW, NSFWScreen],
   [ScreenName.CatDog, CatDogScreen],
