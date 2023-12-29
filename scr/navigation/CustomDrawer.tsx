@@ -2,16 +2,18 @@
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { useCallback, useMemo, useRef } from "react";
+import { useCallback, useContext, useMemo, useRef } from "react";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/Store";
-import { ThemeType, themes } from "../constants/Colors";
+import { ThemeContext, ThemeType, themes } from "../constants/Colors";
 import { DrawerContentComponentProps, DrawerContentScrollView, } from '@react-navigation/drawer';
-import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, ImageBackground, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { setTheme } from "../redux/MiscSlice";
 import DrawerCoupleItem from "./DrawerCoupleItem";
 import { BorderRadius, FontSize, FontWeight, Outline, ScreenName, Size } from "../constants/AppConstants";
 import { CommonStyles } from "../constants/CommonConstants";
 import useDrawerMenuItemUtils from '../hooks/useDrawerMenuItemUtils';
+import { logoScr } from '../screens/others/SplashScreen';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const primiumBG = require('../../assets/images/btn_bg_1.jpeg')
 
@@ -20,6 +22,8 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
   const dispatch = useAppDispatch();
   const currentTheme = useAppSelector((state: RootState) => state.misc.themeType);
   const [_, onPressPremium] = useDrawerMenuItemUtils(ScreenName.IAPPage, props)
+  const safeAreaInsets = useSafeAreaInsets()
+  const theme = useContext(ThemeContext);
 
   const routeCoupleArr = useMemo(() => {
     const routes = props.state.routes.filter(r => r.name !== ScreenName.IAPPage)
@@ -39,7 +43,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
   }, [])
 
   const renderCategoryButtons = useCallback(() => {
-    return <DrawerContentScrollView {...props}>
+    return <ScrollView>
       {
         routeCoupleArr.map((couple, idx) => {
           return <DrawerCoupleItem
@@ -48,11 +52,16 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
             key={idx} />
         })
       }
-    </DrawerContentScrollView>
+    </ScrollView>
   }, [props])
 
   return (
     <View style={{ flex: 1 }}>
+      {/* logo & app name */}
+      <View style={[style.topMasterView, CommonStyles.justifyContentCenter_AlignItemsCenter, { marginTop: safeAreaInsets.top }]}>
+        <Image source={logoScr} resizeMode='contain' style={[style.logoImg]} />
+        <Text style={[style.appNameText, { color: theme.text }]}>Gooday</Text>
+      </View>
       {
         renderCategoryButtons()
       }
@@ -82,6 +91,9 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
 }
 
 const style = StyleSheet.create({
+  topMasterView: { flexDirection: 'row', gap: Outline.GapVertical, marginBottom: Outline.GapVertical, },
+  logoImg: { width: Size.IconBig, height: Size.IconBig },
+  appNameText: { fontSize: FontSize.Normal, fontWeight: FontWeight.Bold },
   bottomMasterView: { marginLeft: Outline.Horizontal, marginBottom: Outline.Horizontal, gap: Outline.GapVertical_2 },
   premiumIB: { flexDirection: 'row', gap: Outline.GapHorizontal, padding: Outline.GapVertical_2, marginRight: Outline.Horizontal, borderRadius: BorderRadius.BR8, overflow: 'hidden', },
   premiumText: { color: 'black', fontSize: FontSize.Small_L, fontWeight: FontWeight.B500 },

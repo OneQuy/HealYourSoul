@@ -3,7 +3,7 @@ import React, { useContext } from 'react'
 import { FontSize, FontWeight, Outline } from '../../constants/AppConstants';
 import { ThemeContext } from '../../constants/Colors';
 
-const logoScr = require('../../../assets/images/logo.png');
+export const logoScr = require('../../../assets/images/logo.png');
 
 const SplashScreen = () => {
     const theme = useContext(ThemeContext);
