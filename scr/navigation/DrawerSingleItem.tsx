@@ -16,7 +16,16 @@ type Props = {
 }
 
 const thumbs = [
-    [ScreenName.CatDog, ['https://preview.redd.it/wy925k0hmvk51.png?auto=webp&s=82a042d28b9ac65e3f3daac30c7cc2dc6490c7eb']],
+    [ScreenName.Meme, require('../../assets/images/category_icon/meme.jpg')],
+    [ScreenName.Art, require('../../assets/images/category_icon/art.webp')],
+    [ScreenName.ShortFact, require('../../assets/images/category_icon/fact.jpeg')],
+    [ScreenName.Love, require('../../assets/images/category_icon/love.jpg')],
+    [ScreenName.Quote, require('../../assets/images/category_icon/motivation.jpg')],
+    [ScreenName.NSFW, require('../../assets/images/category_icon/nsfw.jpg')],
+    [ScreenName.Sarcasm, require('../../assets/images/category_icon/sarcasm.jpg')],
+    [ScreenName.Satisfying, require('../../assets/images/category_icon/satisfying.jpg')],
+    [ScreenName.Comic, require('../../assets/images/category_icon/warm.jpg')],
+    [ScreenName.Cute, require('../../assets/images/category_icon/wholesome.jpeg')],
 ]
 
 const DrawerSingleItem = ({
@@ -48,7 +57,7 @@ const DrawerSingleItem = ({
 
     return (
         <TouchableOpacity onPress={onPress} style={[style.masterTO, CommonStyles.justifyContentCenter_AlignItemsCenter, { borderRadius: BorderRadius.BR8 }]}>
-            <Image source={{ uri: thumb ? thumb[1][0] : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8TWqUEI-LLgLVwKkSWdNqE5wFSLHAfs6jpQ&usqp=CAU' }} style={[style.iconView, { backgroundColor: RandomColor(), paddingHorizontal: Outline.GapHorizontal, borderBottomLeftRadius: BorderRadius.BR8, borderTopLeftRadius: BorderRadius.BR8 }]} />
+            <Image source={thumb ? thumb[1] : thumbs[0][1]} resizeMode='stretch' style={[style.iconView, { backgroundColor: RandomColor(), paddingHorizontal: Outline.GapHorizontal, borderBottomLeftRadius: BorderRadius.BR8, borderTopLeftRadius: BorderRadius.BR8 }]} />
             <Text style={[{ flex: 1, textAlign: 'center', color: isFocused ? 'red' : 'black' }]}>{route.name}</Text>
         </TouchableOpacity>
     )
