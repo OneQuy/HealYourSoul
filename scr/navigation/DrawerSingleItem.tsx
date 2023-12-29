@@ -72,7 +72,7 @@ export default DrawerSingleItem
 
 const style = StyleSheet.create({
     masterTO: { flexDirection: 'row', flex: 1, borderWidth: StyleSheet.hairlineWidth, overflow: 'hidden' },
-    iconView: { height: '100%', justifyContent: 'center', width: '25%' }
+    iconView: { height: '100%', justifyContent: 'center', width: '30%' }
 })
 
 {/* <View style={[style.iconView, { backgroundColor: RandomColor(), paddingHorizontal: Outline.GapHorizontal, borderBottomLeftRadius: BorderRadius.BR8, borderTopLeftRadius: BorderRadius.BR8 }]}>
