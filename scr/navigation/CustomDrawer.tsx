@@ -9,8 +9,9 @@ import { DrawerContentComponentProps, DrawerContentScrollView, } from '@react-na
 import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { setTheme } from "../redux/MiscSlice";
 import DrawerCoupleItem from "./DrawerCoupleItem";
-import { BorderRadius, FontSize, FontWeight, Outline, Size } from "../constants/AppConstants";
+import { BorderRadius, FontSize, FontWeight, Outline, ScreenName, Size } from "../constants/AppConstants";
 import { CommonStyles } from "../constants/CommonConstants";
+import useDrawerMenuItemUtils from '../hooks/useDrawerMenuItemUtils';
 
 const primiumBG = require('../../assets/images/btn_bg_1.jpeg')
 
@@ -18,9 +19,10 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
   const themeValues = useRef(Object.keys(themes));
   const dispatch = useAppDispatch();
   const currentTheme = useAppSelector((state: RootState) => state.misc.themeType);
+  const [_, onPressPremium] = useDrawerMenuItemUtils(ScreenName.IAPPage, props)
 
   const routeCoupleArr = useMemo(() => {
-    const routes = props.state.routes
+    const routes = props.state.routes.filter(r => r.name !== ScreenName.IAPPage)
 
     const arr: (typeof routes[number])[][] = []
 
@@ -56,7 +58,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
       }
       <View style={[style.bottomMasterView]}>
         {/* premium btn */}
-        <TouchableOpacity>
+        <TouchableOpacity onPress={onPressPremium}>
           <ImageBackground resizeMode="cover" source={primiumBG} style={[style.premiumIB, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
             <MaterialCommunityIcons name={'star'} color={'black'} size={Size.Icon} />
             <Text style={[style.premiumText]}>Donate / Support</Text>
