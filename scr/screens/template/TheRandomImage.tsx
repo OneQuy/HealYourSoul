@@ -21,7 +21,6 @@ import { ToCanPrint } from '../../handle/UtilsTS';
 import { DownloadFileAsync, GetFLPFromRLP } from '../../handle/FileUtils';
 import { SaveToGalleryAsync } from '../../handle/CameraRoll';
 import { ToastOptions, toast } from '@baronha/ting';
-import SubRedditSelector from '../components/SubRedditSelector';
 
 interface TheRandomImageProps {
     category: Category,
@@ -38,7 +37,6 @@ const TheRandomImage = ({
     const theme = useContext(ThemeContext);
     const [handling, setHandling] = useState(false);
     const [streakData, setStreakData] = useState<Streak | undefined>(undefined);
-    const [isShowSubredditSelector, setIsShowSubredditSelector] = useState(true)
 
     const onPressRandom = useCallback(async () => {
         reasonToReload.current = NeedReloadReason.None
@@ -183,9 +181,6 @@ const TheRandomImage = ({
                     <Text style={{ color: theme.text, fontSize: FontSize.Small_L }}>{LocalText.share}</Text>
                 </TouchableOpacity>
             </View>
-            {
-                // isShowSubredditSelector ? <SubRedditSelector /> : undefined
-            }
             {
                 streakData ? <StreakPopup streak={streakData} /> : undefined
             }
