@@ -25,7 +25,7 @@ const DrawerSingleItem = ({
 
     const icon = useMemo(() => {
         if (route.name === ScreenName.Meme)
-            return 'alpha-m-box'
+            return 'emoticon-poop'
         else if (route.name === ScreenName.Comic)
             return 'fire'
         else if (route.name === ScreenName.CatDog)
