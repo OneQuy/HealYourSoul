@@ -1,5 +1,5 @@
 import { Text, StyleSheet, TouchableOpacity, View } from 'react-native'
-import React, { useContext, useMemo } from 'react'
+import React, { useCallback, useContext, useMemo } from 'react'
 import { DrawerContentComponentProps } from '@react-navigation/drawer'
 import { CommonActions, DrawerActions } from '@react-navigation/native'
 import { BorderRadius, Icon, Outline, ScreenName, Size } from '../constants/AppConstants'
@@ -58,12 +58,12 @@ const DrawerSingleItem = ({
             return Icon.HeartBroken
     }, [])
 
-    const onPress = () => {
+    const onPress = useCallback(() => {
         const event = navigation.emit({
             type: 'drawerItemPress',
             target: route.key,
             canPreventDefault: true,
-        });
+        })
 
         if (!event.defaultPrevented) {
             navigation.dispatch({
@@ -71,9 +71,9 @@ const DrawerSingleItem = ({
                     ? DrawerActions.closeDrawer()
                     : CommonActions.navigate({ name: route.name, merge: true })),
                 target: masterProps.state.key,
-            });
+            })
         }
-    }
+    }, [])
 
     return (
         <TouchableOpacity onPress={onPress} style={[style.masterTO, CommonStyles.justifyContentCenter_AlignItemsCenter, { paddingHorizontal: Outline.GapVertical, backgroundColor: isFocused ? theme.primary : undefined, borderRadius: BorderRadius.BR8, borderColor: theme.text }]}>
