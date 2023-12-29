@@ -1,13 +1,12 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
+import { Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
 import { DrawerContentComponentProps } from '@react-navigation/drawer'
 import { CommonActions, DrawerActions } from '@react-navigation/native'
-import { BorderRadius, Icon, Outline, ScreenName, Size } from '../constants/AppConstants'
+import { BorderRadius, Outline, ScreenName } from '../constants/AppConstants'
 import { CommonStyles } from '../constants/CommonConstants'
 import { RandomColor } from '../handle/UtilsTS'
 
 // @ts-ignore
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 type Props = {
