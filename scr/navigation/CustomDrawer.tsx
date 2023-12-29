@@ -2,9 +2,9 @@
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { useCallback, useContext, useMemo, useRef } from "react";
+import { useCallback, useMemo, useRef } from "react";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/Store";
-import { ThemeContext, ThemeType, themes } from "../constants/Colors";
+import { ThemeType, themes } from "../constants/Colors";
 import { DrawerContentComponentProps, DrawerContentScrollView, } from '@react-navigation/drawer';
 import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { setTheme } from "../redux/MiscSlice";
