@@ -8,6 +8,7 @@ import { CommonStyles } from '../constants/CommonConstants'
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { ThemeContext } from '../constants/Colors'
+import useDrawerMenuItemUtils from '../hooks/useDrawerMenuItemUtils'
 
 type Props = {
     route: DrawerContentComponentProps['state']['routes'][number],
@@ -18,11 +19,9 @@ const DrawerSingleItem = ({
     route,
     masterProps,
 }: Props) => {
-    const focusingRoute = masterProps.state.routes[masterProps.state.index];
-    const isFocused = route === focusingRoute
-    const navigation = masterProps.navigation
-    const theme = useContext(ThemeContext)
-
+    const theme = useContext(ThemeContext);
+    const [isFocused, onPress] = useDrawerMenuItemUtils(route.name, masterProps)
+    
     const icon = useMemo(() => {
         if (route.name === ScreenName.Meme)
             return 'emoticon-poop'
@@ -56,23 +55,6 @@ const DrawerSingleItem = ({
             return 'comment-quote'
         else
             return Icon.HeartBroken
-    }, [])
-
-    const onPress = useCallback(() => {
-        const event = navigation.emit({
-            type: 'drawerItemPress',
-            target: route.key,
-            canPreventDefault: true,
-        })
-
-        if (!event.defaultPrevented) {
-            navigation.dispatch({
-                ...(isFocused
-                    ? DrawerActions.closeDrawer()
-                    : CommonActions.navigate({ name: route.name, merge: true })),
-                target: masterProps.state.key,
-            })
-        }
     }, [])
 
     return (
