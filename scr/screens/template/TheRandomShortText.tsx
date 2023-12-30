@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, ActivityIndicator, Share as RNShare, ShareContent, ShareOptions, Alert, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity, ActivityIndicator, Share as RNShare, ShareContent, ShareOptions, Alert, StyleSheet, TouchableWithoutFeedback } from 'react-native'
 import React, { LegacyRef, useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { BorderRadius, Category, FontSize, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
@@ -57,7 +57,7 @@ const TheRandomShortText = ({
         //     text = PickRandomElement(FakeTextContents)
         // }
         // else
-            text = await getTextAsync()
+        text = await getTextAsync()
 
         setText(text)
 
@@ -165,7 +165,9 @@ const TheRandomShortText = ({
                                             <Text style={{ fontSize: FontSize.Small_L, color: theme.counterPrimary }}>{LocalText.tap_to_retry}</Text>
                                         </TouchableOpacity>
                                         :
-                                        <Text style={{ color: theme.text, fontSize: FontSize.Big }}>{text}</Text>
+                                        <TouchableWithoutFeedback onPress={onPressRandom}>
+                                            <Text selectable style={{ color: theme.text, fontSize: FontSize.Big }}>{text}</Text>
+                                         </TouchableWithoutFeedback>
                                 }
                             </View>
                     }
