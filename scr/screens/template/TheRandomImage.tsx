@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, ActivityIndicator, Alert, StyleSheet, Image } from 'react-native'
+import { View, Text, TouchableOpacity, ActivityIndicator, Alert, StyleSheet, Image, TouchableWithoutFeedback } from 'react-native'
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { BorderRadius, Category, FontSize, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
@@ -160,12 +160,14 @@ const TheRandomImage = ({
                                         <Text style={{ fontSize: FontSize.Small_L, color: theme.counterPrimary }}>{LocalText.tap_to_retry}</Text>
                                     </TouchableOpacity>
                                     :
-                                    <Image resizeMode='contain' source={{ uri: imageUri }} style={styleSheet.image} />
+                                    <TouchableWithoutFeedback onPress={onPressRandom}>
+                                        <Image resizeMode='contain' source={{ uri: imageUri }} style={styleSheet.image} />
+                                    </TouchableWithoutFeedback>
                             }
                         </View>
                 }
             </View>
-            <View style={{ marginHorizontal: Outline.GapVertical_2}}>
+            <View style={{ marginHorizontal: Outline.GapVertical_2 }}>
                 <TouchableOpacity onPress={onPressRandom} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, padding: Outline.GapVertical_2, backgroundColor: theme.primary, }, styleSheet.randomTO]}>
                     <MaterialCommunityIcons name={Icon.Dice} color={theme.counterPrimary} size={Size.Icon} />
                     <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{LocalText.random}</Text>
@@ -191,7 +193,7 @@ const TheRandomImage = ({
 export default TheRandomImage
 
 const styleSheet = StyleSheet.create({
-    masterView: {  flex: 1, gap: Outline.GapVertical, },
+    masterView: { flex: 1, gap: Outline.GapVertical, },
     randomTO: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: '100%' },
     subBtnTO: { justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', },
     headerOptionTO: { marginRight: 15 },
