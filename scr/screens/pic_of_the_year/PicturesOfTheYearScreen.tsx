@@ -1,9 +1,9 @@
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { View, Text, TouchableOpacity, ActivityIndicator, Alert, StyleSheet, Image, TouchableWithoutFeedback } from 'react-native'
+import { View, Text, TouchableOpacity, ActivityIndicator, Alert, StyleSheet, Image, TouchableWithoutFeedback, ScrollView } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
-import { BorderRadius, Category, FontSize, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
+import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
 import Share from 'react-native-share';
 import RNFS from "react-native-fs";
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
@@ -31,22 +31,30 @@ const PicturesOfTheYearScreen = () => {
     const [selectingYear, setSelectingYear] = useState(dataOfYears[dataOfYears.length - 1].year)
     const [selectingPhotoIndex, setSelectingPhotoIndex] = useState(0)
 
-    const selectingPhoto = useMemo(() =>
-    {
+    const selectingPhoto = useMemo(() => {
         const year = dataOfYears.find(y => y.year === selectingYear)
         return year?.list[selectingPhotoIndex]
     }, [selectingPhotoIndex, selectingYear])
 
+    const onPressYear = useCallback(async (year: number) => {
+        setSelectingYear(year)
+        setSelectingPhotoIndex(0)
+    }, [])
+
     const onPressRandom = useCallback(async () => {
-        // reasonToReload.current = NeedReloadReason.None
-        // setHandling(true)
+        reasonToReload.current = NeedReloadReason.None
+        setHandling(true)
 
-        // const year = dataOfYears.find(y => y.year === selectingYear)
+        const year = dataOfYears.find(y => y.year === selectingYear)
 
-        // if (!year)
-        //     return
+        if (!year)
+            return
+        let selectingIdx = selectingPhotoIndex
 
-        // const uri = year.list[selectingPhotoIndex].imageUri
+        if (selectingPhotoIndex < year.list.length - 1)
+            selectingIdx++
+        else
+            selectingIdx = 0
 
         // if (uri) { // success
         //     SetStreakAsync(Category[category], -1)
@@ -58,8 +66,8 @@ const PicturesOfTheYearScreen = () => {
         //         reasonToReload.current = NeedReloadReason.NoInternet
         // }
 
-        // setImageUri(uri)
-        // setHandling(false)
+        setSelectingPhotoIndex(selectingIdx)
+        setHandling(false)
     }, [selectingYear, selectingPhotoIndex])
 
     const onPressHeaderOption = useCallback(async () => {
@@ -154,7 +162,7 @@ const PicturesOfTheYearScreen = () => {
                         <View style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
                             <ActivityIndicator color={theme.counterPrimary} style={{ marginRight: Outline.Horizontal }} />
                         </View> :
-                        <View style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
+                        <View style={CommonStyles.width100PercentHeight100Percent}>
                             {
                                 reasonToReload.current !== NeedReloadReason.None ?
                                     // true ?
@@ -164,9 +172,31 @@ const PicturesOfTheYearScreen = () => {
                                         <Text style={{ fontSize: FontSize.Small_L, color: theme.counterPrimary }}>{LocalText.tap_to_retry}</Text>
                                     </TouchableOpacity>
                                     :
-                                    <TouchableWithoutFeedback onPress={onPressRandom}>
-                                        <Image resizeMode='contain' source={{ uri: selectingPhoto?.imageUri }} style={styleSheet.image} />
-                                    </TouchableWithoutFeedback>
+                                    <View style={[{}, CommonStyles.width100PercentHeight100Percent]}>
+                                        <View>
+                                            <ScrollView horizontal contentContainerStyle={[styleSheet.scrollYear]}>
+                                                {
+                                                    dataOfYears.map((year) => {
+                                                        return <TouchableOpacity onPress={() => onPressYear(year.year)} style={[styleSheet.yearView, { backgroundColor: selectingYear === year.year ? theme.primary : undefined }]} key={year.year}>
+                                                            <Text>{year.year}</Text>
+                                                        </TouchableOpacity>
+                                                    })
+                                                }
+                                            </ScrollView>
+                                        </View>
+                                        <View style={{}}>
+                                            <Text style={styleSheet.rewardText}>{selectingPhoto?.reward + (selectingPhoto?.category ? ' - ' + selectingPhoto?.category : '')}</Text>
+                                        </View>
+                                        <TouchableWithoutFeedback style={{}} onPress={onPressRandom}>
+                                            <Image resizeMode='contain' source={{ uri: selectingPhoto?.imageUri }} style={styleSheet.image} />
+                                        </TouchableWithoutFeedback>
+                                        <View style={{}}>
+                                            <Text style={styleSheet.titleText}>{selectingPhoto?.title}</Text>
+                                        </View>
+                                        <View style={{}}>
+                                            <Text style={styleSheet.authorText}>{selectingPhoto?.author + (selectingPhoto?.country ? ' (' + selectingPhoto?.country + ')' : '')}</Text>
+                                        </View>
+                                    </View>
                             }
                         </View>
                 }
@@ -201,5 +231,10 @@ const styleSheet = StyleSheet.create({
     randomTO: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: '100%' },
     subBtnTO: { justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', },
     headerOptionTO: { marginRight: 15 },
-    image: { width: '100%', height: '100%' }
+    image: { flex: 1 },
+    rewardText: { fontWeight: FontWeight.B600, textAlign: 'center', fontSize: FontSize.Normal },
+    titleText: { fontWeight: FontWeight.B600, textAlign: 'center', fontSize: FontSize.Normal },
+    authorText: { textAlign: 'center', fontSize: FontSize.Small_L },
+    scrollYear: { gap: Outline.Horizontal, paddingLeft: Outline.GapVertical, paddingTop: Outline.GapVertical, },
+    yearView: { padding: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth },
 })
