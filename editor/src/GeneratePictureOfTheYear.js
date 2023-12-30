@@ -5,6 +5,17 @@ const fs = require('fs')
 const filepath = './assets/json/photos_of_the_year.json'
 
 
+const NormalText = (text) => {
+    text = text.replaceAll('&#39;', '\'')
+    text = text.replaceAll('&#34;', '"')
+    text = text.replaceAll('&amp;', '&')
+
+    if (text.includes('&#'))
+        LogRed(text)
+
+    return text
+}
+
 const GetMiddleText = (text) => {
     let idx = text.indexOf('>')
 
@@ -31,7 +42,30 @@ const GetMiddleText = (text) => {
 // desciption
 
 const GenDataPictureOfTheYear = async () => {
-    const res = await fetch('https://www.nature.org/en-us/get-involved/how-to-help/photo-contest/2023-winners/')
+    const arr = []
+
+    for (let year = 2019; year < new Date().getFullYear(); year++) {
+        const list = await GenDataPictureOfTheYear_ByYear(year)
+
+        if (!list || list.length === 0)
+            continue
+
+        arr.push({
+            year,
+            list
+        })
+
+        console.log(year, 'list of ' + list.length);
+    }
+
+    const text = JSON.stringify(arr, null, 1)
+
+    fs.writeFileSync(filepath, text)
+    LogGreen('done')
+}
+
+const GenDataPictureOfTheYear_ByYear = async (year) => {
+    const res = await fetch(`https://www.nature.org/en-us/get-involved/how-to-help/photo-contest/${year}-winners/`)
     const text = await res.text()
     const lines = text.split('\n')
 
@@ -48,7 +82,7 @@ const GenDataPictureOfTheYear = async () => {
 
             currentItem = {}
 
-            const rewardtext = GetMiddleText(line)
+            const rewardtext = NormalText(GetMiddleText(line))
             const arrr = rewardtext.split(', ')
 
             currentItem.reward = arrr[0]
@@ -65,8 +99,11 @@ const GenDataPictureOfTheYear = async () => {
             if (!currentItem)
                 continue
 
-            const t = GetMiddleText(line)
-            const arrr = t.split(', ')
+            const t = NormalText(GetMiddleText(line))
+            let arrr = t.split(', ')
+
+            if (arrr.length < 2)
+                arrr = t.split(' - ')
 
             currentItem.author = arrr[0]
             currentItem.country = arrr.length === 2 ? arrr[1] : undefined
@@ -88,9 +125,9 @@ const GenDataPictureOfTheYear = async () => {
                 LogRed('fail uri: ' + JSON.stringify(currentItem))
                 continue
             }
-            
+
             const url = t.substring(0, idx) + '?wid=1280'
-            
+
             currentItem.imageUri = url
         }
 
@@ -102,8 +139,8 @@ const GenDataPictureOfTheYear = async () => {
             if (!currentItem)
                 continue
 
-            currentItem.title = GetMiddleText(line)
-            currentItem.description = lines[i + 1].trim()
+            currentItem.title = NormalText(GetMiddleText(line))
+            currentItem.description = NormalText(lines[i + 1]).trim()
 
             i++
 
@@ -119,12 +156,11 @@ const GenDataPictureOfTheYear = async () => {
         }
     }
 
-    const t = JSON.stringify(arr, null, 1)
+    return arr
+
+    // const t = JSON.stringify(arr, null, 1)
 
     // console.log(t)
-
-    fs.writeFileSync(filepath, t);
-    LogGreen('done')
 }
 
 
