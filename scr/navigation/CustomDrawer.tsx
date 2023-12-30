@@ -26,10 +26,17 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
   const theme = useContext(ThemeContext);
 
   const routeCoupleArr = useMemo(() => {
-    const routes = props.state.routes.filter(r => r.name !== ScreenName.IAPPage)
+    const routes = props.state.routes.filter(r =>
+      r.name !== ScreenName.IAPPage &&
+      r.name !== ScreenName.Meme)
+
+    const routeMeme = props.state.routes.filter(r =>
+      r.name === ScreenName.Meme)
 
     const arr: (typeof routes[number])[][] = []
 
+    arr.push(routeMeme)
+    
     for (let i = 0; i < routes.length; i += 2) {
       if (i < routes.length - 1)
         arr.push(routes.slice(i, i + 2))
