@@ -21,7 +21,7 @@ const DrawerSingleItem = ({
 }: Props) => {
     const theme = useContext(ThemeContext);
     const [isFocused, onPress] = useDrawerMenuItemUtils(route.name, masterProps)
-    
+
     const icon = useMemo(() => {
         if (route.name === ScreenName.Meme)
             return 'emoticon-poop'
@@ -38,9 +38,9 @@ const DrawerSingleItem = ({
         else if (route.name === ScreenName.Love)
             return 'cards-heart'
         else if (route.name === ScreenName.Sarcasm)
-            return 'assistant'
-        else if (route.name === ScreenName.Cute)
             return 'duck'
+        else if (route.name === ScreenName.Cute)
+            return 'assistant'
         else if (route.name === ScreenName.Art)
             return 'palette'
         else if (route.name === ScreenName.Trivia)
@@ -53,6 +53,8 @@ const DrawerSingleItem = ({
             return 'file-image'
         else if (route.name === ScreenName.QuoteText)
             return 'comment-quote'
+        else if (route.name === ScreenName.AwardPicture)
+            return 'crown'
         else
             return Icon.HeartBroken
     }, [])
