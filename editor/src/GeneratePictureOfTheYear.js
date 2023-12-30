@@ -44,7 +44,7 @@ const GetMiddleText = (text) => {
 const GenDataPictureOfTheYear = async () => {
     const arr = []
 
-    for (let year = 2019; year < new Date().getFullYear(); year++) {
+    for (let year = 2019; year <= new Date().getFullYear(); year++) {
         const list = await GenDataPictureOfTheYear_ByYear(year)
 
         if (!list || list.length === 0)

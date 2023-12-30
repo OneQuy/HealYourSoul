@@ -4,14 +4,16 @@
   "list": [
    {
     "reward": "Grand Prize Winner",
-    "author": "Tyler Schiffman - United States",
+    "author": "Tyler Schiffman",
+    "country": "United States",
     "imageUri": "https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/g/r/Grand_Prize_Tyler_Schiffman.jpg?wid=1280",
     "title": "Burst",
     "description": "California sea lion framed by kelp beds in Monterey Bay, California. Grand Prize Winner for 2019 TNC Global Photo Contest."
    },
    {
     "reward": "People's Choice Winner",
-    "author": "Diyanto Sarira - Indonesia",
+    "author": "Diyanto Sarira",
+    "country": "Indonesia",
     "imageUri": "https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/p/e/Peoples_Choice_Winner_2019.jpg?wid=1280",
     "title": "Wanayo Waterfall",
     "description": "A small waterfall and stream in Wasior, West Papua."
@@ -19,7 +21,8 @@
    {
     "reward": "First Place",
     "category": "Wildlife",
-    "author": "Fernando O’Farrill - Mexico",
+    "author": "Fernando O’Farrill",
+    "country": "Mexico",
     "imageUri": "https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/w/i/Wildlife_1st.jpg?wid=1280",
     "title": "Hope",
     "description": "Polar Bear in Svalbard, Norway June 2019."
@@ -27,7 +30,8 @@
    {
     "reward": "Second Place",
     "category": "Wildlife",
-    "author": "Raymond Hennessy - United States",
+    "author": "Raymond Hennessy",
+    "country": "United States",
     "imageUri": "https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/w/i/Wildlife_2nd.jpg?wid=1280",
     "title": "Singing Silhouette",
     "description": "A Chestnut-sided Warbler sings out."
@@ -35,7 +39,8 @@
    {
     "reward": "Third Place",
     "category": "Wildlife",
-    "author": "Yaron Schmid - United States",
+    "author": "Yaron Schmid",
+    "country": "United States",
     "imageUri": "https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/2019_zebra.jpg?wid=1280",
     "title": "The Grevy's Illusion ",
     "description": "A Grevy's zebra staring at the camera in Lewa, Kenya."
@@ -43,7 +48,8 @@
    {
     "reward": "Honorable Mention",
     "category": "Wildlife",
-    "author": "José David Altamirano González - Costa Rica",
+    "author": "José David Altamirano González",
+    "country": "Costa Rica",
     "imageUri": "https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/h/o/Honorable_Wildlife_1.jpg?wid=1280",
     "title": "Africa Salvaje",
     "description": "Botswana, July 2019"
@@ -51,7 +57,8 @@
    {
     "reward": "Honorable Mention",
     "category": "Wildlife",
-    "author": "Giuseppe Bonali - Italy",
+    "author": "Giuseppe Bonali",
+    "country": "Italy",
     "imageUri": "https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/h/o/Honorable_Wildlife_2.jpg?wid=1280",
     "title": "The Trio",
     "description": "Three damselflies after a storm in Italy."
@@ -59,7 +66,8 @@
    {
     "reward": "Honorable Mention",
     "category": "Wildlife",
-    "author": "Sebastian Di Domenico - Colombia",
+    "author": "Sebastian Di Domenico",
+    "country": "Colombia",
     "imageUri": "https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/h/o/Honorable_Wildlife_3.jpg?wid=1280",
     "title": "Bizarre Looks ",
     "description": "A White-Tipped Sicklebill stand completely still as hummingbirds lower their metabolism during night time to avoid starvation."
@@ -67,7 +75,8 @@
    {
     "reward": "First Place",
     "category": "People in Nature ",
-    "author": "Le Van Vinh - Vietnam",
+    "author": "Le Van Vinh",
+    "country": "Vietnam",
     "imageUri": "https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/p/e/People_1st.jpg?wid=1280",
     "title": "Dance in the Sea",
     "description": "Fisherman in Hon Yen, Phu Yen, Vietnam."
@@ -75,7 +84,8 @@
    {
     "reward": "Second Place",
     "category": "People in Nature",
-    "author": "Fabio Teixeira - Brazil",
+    "author": "Fabio Teixeira",
+    "country": "Brazil",
     "imageUri": "https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/p/e/People_2nd.jpg?wid=1280",
     "title": "Portrait in Guanabara Bay",
     "description": "A young African refugee from the Democratic Republic of Congo floating in the waters of Guanabara Bay, Ramos Beach."
@@ -83,7 +93,8 @@
    {
     "reward": "Third Place",
     "category": "People in Nature",
-    "author": "Apratim Pal - India",
+    "author": "Apratim Pal",
+    "country": "India",
     "imageUri": "https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/p/e/People_3rd.jpg?wid=1280",
     "title": "Bathing Time",
     "description": "Two swimmers enjoy the water. West Bengal, India."
@@ -91,7 +102,8 @@
    {
     "reward": "Honorable Mention",
     "category": "People in Nature",
-    "author": "Giovani Cordioli - Brazil",
+    "author": "Giovani Cordioli",
+    "country": "Brazil",
     "imageUri": "https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/Honorable_People_2.jpg?wid=1280",
     "title": "Cuban Storm",
     "description": "A storm comes over Varadero, Cuba, 2019."
@@ -99,7 +111,8 @@
    {
     "reward": "Honorable Mention",
     "category": "People in Nature",
-    "author": "Anskar Lenzen - Germany",
+    "author": "Anskar Lenzen",
+    "country": "Germany",
     "imageUri": "https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/h/o/Honorable_People_1.jpg?wid=1280",
     "title": "Refreshment",
     "description": "A jump into the iconic lake Eibsee in southern Germany on a hot summer day."
@@ -107,7 +120,8 @@
    {
     "reward": "Honorable Mention",
     "category": "People in Nature",
-    "author": "Ted Somerville - United States",
+    "author": "Ted Somerville",
+    "country": "United States",
     "imageUri": "https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/h/o/Honorable_People_3.jpg?wid=1280",
     "title": "Copacabana Surfer",
     "description": "A surfer enjoying a good wave in Copacabana."
@@ -115,7 +129,8 @@
    {
     "reward": "First Place",
     "category": "Cities and Nature",
-    "author": "Jay Huang - United States",
+    "author": "Jay Huang",
+    "country": "United States",
     "imageUri": "https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/c/i/Cities_1st.jpg?wid=1280",
     "title": "Golden Gate Bridge Alignment",
     "description": "Golden Gate Bridge during a low fog event."
@@ -123,7 +138,8 @@
    {
     "reward": "Second Place",
     "category": "Cities and Nature",
-    "author": "Yevhen Samuchenko - Ukraine",
+    "author": "Yevhen Samuchenko",
+    "country": "Ukraine",
     "imageUri": "https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/c/i/Cities_2nd.jpg?wid=1280",
     "title": "Gold of Svaneti",
     "description": "Mestia, a small city in Georgia, at night."
@@ -139,7 +155,8 @@
    {
     "reward": "Honorable Mention",
     "category": "Cities and Nature",
-    "author": "Tsz Ho Tse - Hong Kong",
+    "author": "Tsz Ho Tse",
+    "country": "Hong Kong",
     "imageUri": "https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/h/o/Honorable_Cities_1.jpg?wid=1280",
     "title": "Morning Hong Kong",
     "description": "The view of the world famous Victoria Harbour under the clouds in the early morning."
@@ -147,7 +164,8 @@
    {
     "reward": "First Place",
     "category": "Water",
-    "author": "Alex Kydd - Australia ",
+    "author": "Alex Kydd",
+    "country": "Australia ",
     "imageUri": "https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/Water_1st.jpg?wid=1280",
     "title": "Big Fish in a Big Ocean",
     "description": "A whale shark swimming in the depths off of Ningaloo Reef, Western Australia."
@@ -155,7 +173,8 @@
    {
     "reward": "Second Place",
     "category": "Water",
-    "author": "Hao Jiang - United States",
+    "author": "Hao Jiang",
+    "country": "United States",
     "imageUri": "https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/w/a/Water_2nd.jpg?wid=1280",
     "title": "To the Lightning",
     "description": "A flock of flamingos fly over the colorful salt lake, the floating foam pattern looks like lightning on the lake."
@@ -172,7 +191,8 @@
    {
     "reward": "Honorable Mention",
     "category": "Water",
-    "author": "Barbara Rot - Slovenia",
+    "author": "Barbara Rot",
+    "country": "Slovenia",
     "imageUri": "https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/h/o/Honorable_Water_1.jpg?wid=1280",
     "title": "Iceberg",
     "description": "Adelie penguin on an iceberg."
@@ -180,7 +200,8 @@
    {
     "reward": "Honorable Mention",
     "category": "Water",
-    "author": "Michael Gallagher - United Kingdom",
+    "author": "Michael Gallagher",
+    "country": "United Kingdom",
     "imageUri": "https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/h/o/Honorable_Water_2.jpg?wid=1280",
     "title": "Gimme Shelter",
     "description": "An anemonefish shelters in the tentacles of a closed up reef anemone."
@@ -188,7 +209,8 @@
    {
     "reward": "First Place",
     "category": "Landscape",
-    "author": "Colin Ronald - Austria",
+    "author": "Colin Ronald",
+    "country": "Austria",
     "imageUri": "https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/l/a/Landscape_1st.jpg?wid=1280",
     "title": "Taking The Plunge",
     "description": "Skier heading down a mountain slope in Slovenia."
@@ -196,7 +218,8 @@
    {
     "reward": "Second Place",
     "category": "Landscape",
-    "author": "Leigh Miller - Australia",
+    "author": "Leigh Miller",
+    "country": "Australia",
     "imageUri": "https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/l/a/Landscape_2.jpg?wid=1280",
     "title": "Pink Lake",
     "description": "Drone photo showing the pink hues of a pink lake called Hutt Lagoon, Western Australia."
@@ -204,7 +227,8 @@
    {
     "reward": "Third Place",
     "category": "Landscape",
-    "author": "Guilherme Gomes de Mesquita - Brazil",
+    "author": "Guilherme Gomes de Mesquita",
+    "country": "Brazil",
     "imageUri": "https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/Landscape_3rd.jpg?wid=1280",
     "title": "On the Brink",
     "description": "Trolltunga, Norway."
@@ -220,7 +244,8 @@
    {
     "reward": "Honorable Mention",
     "category": "Landscape",
-    "author": "Victor Grilo Lima - Brazil",
+    "author": "Victor Grilo Lima",
+    "country": "Brazil",
     "imageUri": "https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/Honorable_Landscape_2.jpg?wid=1280",
     "title": "Piedras Rojas",
     "description": "Sunset at Piedras Rojas in the Atacama Desert in Chile."
@@ -228,7 +253,8 @@
    {
     "reward": "Honorable Mention",
     "category": "Landscape",
-    "author": "Florian LeDoux - France",
+    "author": "Florian LeDoux",
+    "country": "France",
     "imageUri": "https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/h/o/Honorable_Landscape_3.jpg?wid=1280",
     "title": "Tree of Life",
     "description": "Water in quicksand, Iceland."
@@ -236,7 +262,8 @@
    {
     "reward": "Honorable Mention",
     "category": "Landscape",
-    "author": "José David Altamirano González - Costa Rica",
+    "author": "José David Altamirano González",
+    "country": "Costa Rica",
     "imageUri": "https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/h/o/Honorable_Landscape_4.jpg?wid=1280",
     "title": "Furia",
     "description": "Volcán De Fuego"
