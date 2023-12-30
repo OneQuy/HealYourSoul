@@ -19,8 +19,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 // const today = new Date()
 // const todayString = 'd' + today.getDate() + '_m' + (today.getMonth() + 1) + '_' + today.getFullYear()
 
-const version = require('../../package.json')['version']
-const versionToNum = VersionToNumber(version)
+export const versionText = require('../../package.json')['version']
+const versionAsNumber = VersionToNumber(versionText)
 
 /**
  * cheat clear whole folder data
@@ -395,7 +395,7 @@ export const Is_IOS_And_OfflineOrLowerReviewVersion = () => {
 
     const iosReviewVersion = VersionToNumber(appConfig.ios_review_limit_version)
 
-    return versionToNum <= iosReviewVersion
+    return versionAsNumber <= iosReviewVersion
 }
 
 export const SaveCurrentScreenForLoadNextTime = (navigation: NavigationProp<ReactNavigation.RootParamList>) => {

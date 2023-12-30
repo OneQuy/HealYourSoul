@@ -14,6 +14,7 @@ import { CommonStyles } from "../constants/CommonConstants";
 import useDrawerMenuItemUtils from '../hooks/useDrawerMenuItemUtils';
 import { logoScr } from '../screens/others/SplashScreen';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { versionText } from '../handle/AppUtils';
 
 const primiumBG = require('../../assets/images/btn_bg_1.jpeg')
 
@@ -36,7 +37,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
     const arr: (typeof routes[number])[][] = []
 
     arr.push(routeMeme)
-    
+
     for (let i = 0; i < routes.length; i += 2) {
       if (i < routes.length - 1)
         arr.push(routes.slice(i, i + 2))
@@ -92,6 +93,8 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
                 style={{ borderWidth: currentTheme === theme ? 1 : 0, width: 20, height: 20, borderRadius: 10, backgroundColor: themes[theme as ThemeType].primary }} />)
           }
         </View>
+        {/* version */}
+        <Text style={{ color: theme.text }}>Version: {versionText}</Text>
       </View>
     </View>
   )
