@@ -1,6 +1,7 @@
 // https://unsplash.com/documentation#get-a-random-photo
 
 import { Dimensions } from "react-native"
+import { ToCanPrint } from "../UtilsTS"
 
 // import { UNSPLASH_KEY } from '../../../keys'
 
@@ -20,6 +21,7 @@ import { Dimensions } from "react-native"
 // }
 
 const screen = Dimensions.get('screen')
+const minSize = 1000
 
 export const GetRandomUnsplashPictureAsync = async (): Promise<string | undefined> => {
     try {
@@ -32,18 +34,28 @@ export const GetRandomUnsplashPictureAsync = async (): Promise<string | undefine
         if (isLandscape) {
             w = screen.width * screen.scale
             h = w / ratio
+
+            if (h < minSize) {
+                h = minSize
+                w = h * ratio
+            }
         }
         else {
             h = screen.height * screen.scale
             w = h / ratio
+
+            if (w < minSize) {
+                w = minSize
+                h = w * ratio
+            }
         }
 
         h = Math.ceil(h)
         w = Math.ceil(w)
-
+        
         const data = await fetch(`https://picsum.photos/${w}/${h}.jpg`)
 
-        // console.log(data);
+        // console.log(ToCanPrint(data))
 
         if (data.status !== 200)
             return undefined
