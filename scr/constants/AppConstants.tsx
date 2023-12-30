@@ -183,6 +183,8 @@ export const LocalText = {
   no_internet: 'No internet!',
   cant_get_content: 'Cant get the content!',
   you_are_awesome: 'You are awsome!!',
+  donate_me: 'Donate / Support',
+  theme: 'Theme',
   great: 'Great!!',
   you_rock: 'You rock!!',
   cool: 'Cool!',

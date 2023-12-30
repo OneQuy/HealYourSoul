@@ -9,7 +9,7 @@ import { DrawerContentComponentProps, DrawerContentScrollView, } from '@react-na
 import { Image, ImageBackground, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { setTheme } from "../redux/MiscSlice";
 import DrawerCoupleItem from "./DrawerCoupleItem";
-import { BorderRadius, FontSize, FontWeight, Outline, ScreenName, Size } from "../constants/AppConstants";
+import { BorderRadius, FontSize, FontWeight, LocalText, Outline, ScreenName, Size } from "../constants/AppConstants";
 import { CommonStyles } from "../constants/CommonConstants";
 import useDrawerMenuItemUtils from '../hooks/useDrawerMenuItemUtils';
 import { logoScr } from '../screens/others/SplashScreen';
@@ -78,13 +78,13 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
         <TouchableOpacity onPress={onPressPremium}>
           <ImageBackground resizeMode="cover" source={primiumBG} style={[style.premiumIB, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
             <MaterialCommunityIcons name={'star'} color={'black'} size={Size.Icon} />
-            <Text style={[style.premiumText]}>Donate / Support</Text>
+            <Text style={[style.premiumText]}>{LocalText.donate_me}</Text>
           </ImageBackground>
         </TouchableOpacity>
 
         {/* theme setting */}
         <View style={{ flexDirection: 'row', gap: 20 }}>
-          <Text style={{ fontWeight: '500' }}>Theme</Text>
+          <Text style={{ color: theme.text, }}>{LocalText.theme}</Text>
           {
             themeValues.current.map((theme, index) =>
               <TouchableOpacity
@@ -94,7 +94,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
           }
         </View>
         {/* version */}
-        <Text style={{ color: theme.text }}>Version: {versionText}</Text>
+        <Text style={{ color: theme.text, }}>Version: {versionText}</Text>
       </View>
     </View>
   )
