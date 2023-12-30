@@ -45,3 +45,18 @@ export type Streak = {
     currentStreak: number,
     lastDateTick: number,
 }
+
+export type PhotosOfTheYear = {
+    year: number,
+    list: AwardPicture[],
+}
+
+export type AwardPicture = {
+    "reward": string,
+    "category": string,
+    "author": string,
+    "country": string,
+    "imageUri": string,
+    "title": string
+    "description": string,
+}

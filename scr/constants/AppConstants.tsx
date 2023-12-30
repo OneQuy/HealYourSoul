@@ -6,13 +6,13 @@ export enum ScreenName {
   Comic = 'Warm',
   Meme = 'Meme',
   RedditMeme = 'Reddit Meme',
-  Quote = 'Motivative',
+  Quote = 'Motivation',
   CatDog = 'Cat. Dog. Animal',
   Love = 'Love',
   Satisfying  = 'Satisfying',
   NSFW = 'NSFW',
   Art = 'Art',
-  Cute = 'Wholesome',
+  Cute = 'Wholesome. Cute',
   Sarcasm = 'Sarcasm',
   IAPPage = 'Premium',
   ShortFact = 'Random Fact', // ninja fact
@@ -20,6 +20,7 @@ export enum ScreenName {
   Joke = 'Random Joke', // ninja joke
   QuoteText = 'Random Quote',
   Trivia = 'Trivia',
+  AwardPicture = 'Photos of Year',
   // Reminder = 'Reminder',
 }
 
@@ -84,6 +85,7 @@ export enum Category {
   Trivia = 13,
   Quotetext = 14,
   RedditMeme = 15,
+  AwardPicture = 16,
   // Reminder = 14,
 }
 

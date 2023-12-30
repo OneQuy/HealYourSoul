@@ -18,10 +18,11 @@ import NinjaFactScreen from '../screens/ninja_fact/NinjaFactScreen';
 import PictureScreen from '../screens/picture/PictureScreen';
 import NinjaJokeScreen from '../screens/ninja_fact/NinjaJokeScreen';
 import TheTriviaScreen from '../screens/trivia/TriviaScreen';
+import PicturesOfTheYearScreen from '../screens/pic_of_the_year/PicturesOfTheYearScreen';
 
 export type DrawerParamList = {
-  [ScreenName.Comic]: undefined,
   [ScreenName.Meme]: undefined,
+  [ScreenName.Comic]: undefined,
   // [ScreenName.RedditMeme]: undefined,
   [ScreenName.Quote]: undefined,
   [ScreenName.CatDog]: undefined,
@@ -36,6 +37,7 @@ export type DrawerParamList = {
   [ScreenName.Joke]: undefined,
   [ScreenName.Picture]: undefined,
   [ScreenName.QuoteText]: undefined,
+  [ScreenName.AwardPicture]: undefined,
   // [ScreenName.Reminder]: undefined,
   [ScreenName.IAPPage]: undefined,
 }
@@ -63,8 +65,9 @@ const ScreenList: ScreenNamePair[] = [
   [ScreenName.Trivia, TheTriviaScreen],
   [ScreenName.ShortFact, NinjaFactScreen],
   [ScreenName.Joke, NinjaJokeScreen],
-  [ScreenName.Picture, PictureScreen],
   [ScreenName.QuoteText, QuoteTextScreen],
+  [ScreenName.Picture, PictureScreen],
+  [ScreenName.AwardPicture, PicturesOfTheYearScreen],
   // [ScreenName.Reminder, ReminderScreen],
   [ScreenName.IAPPage, IAPPage],
 ]
