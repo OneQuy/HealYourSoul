@@ -1,4 +1,9 @@
-const { LogRed } = require("./Utils_NodeJS")
+const { LogRed, LogGreen } = require("./Utils_NodeJS")
+
+const fs = require('fs')
+
+const filepath = './assets/json/photos_of_the_year.json'
+
 
 const GetMiddleText = (text) => {
     let idx = text.indexOf('>')
@@ -116,8 +121,10 @@ const GenDataPictureOfTheYear = async () => {
 
     const t = JSON.stringify(arr, null, 1)
 
-    console.log(t)
+    // console.log(t)
 
+    fs.writeFileSync(filepath, t);
+    LogGreen('done')
 }
 
 
