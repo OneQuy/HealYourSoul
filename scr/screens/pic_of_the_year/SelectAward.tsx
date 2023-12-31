@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image } from 'react-native'
-import React, { useCallback, useContext, useMemo } from 'react'
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image, FlatListProps } from 'react-native'
+import React, { LegacyRef, useCallback, useContext, useEffect, useMemo, useRef } from 'react'
 import { ThemeContext } from '../../constants/Colors';
 import { CommonStyles } from '../../constants/CommonConstants';
 import { ColorNameToRgb } from '../../handle/UtilsTS';
@@ -9,11 +9,12 @@ import { AwardPicture } from '../../constants/Types';
 
 const SelectAward = ({ year, selectIdx, setIdx }: { year: number, selectIdx: number, setIdx: (idx: number) => void }) => {
     const theme = useContext(ThemeContext);
+    const flatlistRef = useRef()
 
-    const renderItem = useCallback(({ item, index  } : { item: AwardPicture, index: number  }) => {
+    const renderItem = useCallback(({ item, index }: { item: AwardPicture, index: number }) => {
         const isSelecting = index === selectIdx
 
-        return <TouchableOpacity onPress={() => setIdx(index)} style={[{ backgroundColor: isSelecting ? theme.primary : undefined, borderRadius: isSelecting ? BorderRadius.BR8 : 0, borderWidth: isSelecting ? 1 : 0}, styleSheet.itemTO]}>
+        return <TouchableOpacity onPress={() => setIdx(index)} style={[{ backgroundColor: isSelecting ? theme.primary : undefined, borderRadius: isSelecting ? BorderRadius.BR8 : 0, borderWidth: isSelecting ? 1 : 0 }, styleSheet.itemTO]}>
             <Image source={{ uri: item.imageUri }} resizeMode='cover' style={styleSheet.image} />
             <Text style={[styleSheet.text, { color: theme.text }]}>{item?.reward + (item?.category ? ' - ' + item?.category : '')}</Text>
         </TouchableOpacity>
@@ -28,15 +29,28 @@ const SelectAward = ({ year, selectIdx, setIdx }: { year: number, selectIdx: num
         return f
     }, [year, dataOfYears])
 
+    useEffect(() => {
+        // @ts-ignore
+        flatlistRef?.current?.scrollToIndex({
+            animated: true,
+            index: selectIdx,
+        })
+    }, [])
+
     return (
         <View style={[styleSheet.masterView, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
             <View style={[{ backgroundColor: theme.background, }, styleSheet.bgView]}>
                 <Text style={styleSheet.title}>{year + ' ' + LocalText.winners}</Text>
                 <FlatList
+                    // @ts-ignore
+                    ref={flatlistRef}
                     data={curYearData.list}
                     keyExtractor={(item) => item.title + item.author}
                     contentContainerStyle={styleSheet.flatlist}
                     renderItem={renderItem}
+                    getItemLayout={(data, index) => {
+                        return { length: Size.IconBig, offset: Size.IconBig * index + Outline.GapVertical * (index) - Size.IconBig * 3, index }
+                    }}
                 />
             </View>
         </View>
@@ -44,7 +58,6 @@ const SelectAward = ({ year, selectIdx, setIdx }: { year: number, selectIdx: num
 }
 
 export default SelectAward
-
 
 const styleSheet = StyleSheet.create({
     masterView: { backgroundColor: ColorNameToRgb('black', 0.8), width: '100%', height: '100%', position: 'absolute' },
