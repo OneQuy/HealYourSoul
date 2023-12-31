@@ -193,27 +193,28 @@ const PicturesOfTheYearScreen = () => {
             <View style={CommonStyles.flex_1} >
                 {
                     handling ?
-                        // true ?
+                        // loading
                         <View style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
                             <ActivityIndicator color={theme.counterPrimary} style={{ marginRight: Outline.Horizontal }} />
                         </View> :
                         <View style={CommonStyles.width100PercentHeight100Percent}>
                             {
                                 reasonToReload.current !== NeedReloadReason.None ?
-                                    // true ?
+                                    // error
                                     <TouchableOpacity onPress={onPressRandom} style={[{ gap: Outline.GapVertical }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]} >
                                         <MaterialCommunityIcons name={reasonToReload.current === NeedReloadReason.NoInternet ? Icon.NoInternet : Icon.HeartBroken} color={theme.primary} size={Size.IconBig} />
                                         <Text style={{ fontSize: FontSize.Normal, color: theme.counterPrimary }}>{reasonToReload.current === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
                                         <Text style={{ fontSize: FontSize.Small_L, color: theme.counterPrimary }}>{LocalText.tap_to_retry}</Text>
                                     </TouchableOpacity>
                                     :
+                                    // content
                                     <View style={[{ gap: Outline.GapHorizontal }, CommonStyles.width100PercentHeight100Percent]}>
                                         <View>
                                             <ScrollView horizontal contentContainerStyle={[styleSheet.scrollYear]}>
                                                 {
                                                     dataOfYears.map((year) => {
                                                         return <TouchableOpacity onPress={() => onPressYear(year.year)} style={[styleSheet.yearView, { backgroundColor: selectingYear === year.year ? theme.primary : undefined }]} key={year.year}>
-                                                            <Text>{year.year}</Text>
+                                                            <Text style={{ color: theme.text }}>{year.year}</Text>
                                                         </TouchableOpacity>
                                                     })
                                                 }
@@ -224,16 +225,16 @@ const PicturesOfTheYearScreen = () => {
                                             {
                                                 renderIconReward()
                                             }
-                                            <Text style={styleSheet.rewardText}>{selectingPhoto?.reward + (selectingPhoto?.category ? ' - ' + selectingPhoto?.category : '')}</Text>
+                                            <Text style={[{color: theme.text,}, styleSheet.rewardText]}>{selectingPhoto?.reward + (selectingPhoto?.category ? ' - ' + selectingPhoto?.category : '')}</Text>
                                         </View>
                                         <TouchableWithoutFeedback style={{}} onPress={onPressRandom}>
                                             <Image resizeMode='contain' source={{ uri: selectingPhoto?.imageUri }} style={styleSheet.image} />
                                         </TouchableWithoutFeedback>
                                         <View style={{}}>
-                                            <Text style={styleSheet.titleText}>{selectingPhoto?.title}</Text>
+                                            <Text style={[{ color: theme.text }, styleSheet.titleText]}>{selectingPhoto?.title}</Text>
                                         </View>
                                         <View style={{}}>
-                                            <Text style={styleSheet.authorText}>{selectingPhoto?.author + (selectingPhoto?.country ? ' (' + selectingPhoto?.country + ')' : '')}</Text>
+                                            <Text style={[{ color: theme.text }, styleSheet.authorText]}>{selectingPhoto?.author + (selectingPhoto?.country ? ' (' + selectingPhoto?.country + ')' : '')}</Text>
                                         </View>
                                     </View>
                             }
