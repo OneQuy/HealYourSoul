@@ -32,7 +32,6 @@ const PicturesOfTheYearScreen = () => {
     const [streakData, setStreakData] = useState<Streak | undefined>(undefined);
     const [selectingYear, setSelectingYear] = useState(dataOfYears[dataOfYears.length - 1].year)
     const [selectingPhotoIndex, setSelectingPhotoIndex] = useState(0)
-    const [imageSize, setImageSize] = useState<[number, number]>([0, 0])
 
     const selectingPhoto = useMemo(() => {
         const year = dataOfYears.find(y => y.year === selectingYear)
@@ -134,17 +133,6 @@ const PicturesOfTheYearScreen = () => {
         }
     }, [theme, selectingPhoto])
 
-    const onImageLoaded = useCallback((e: NativeSyntheticEvent<ImageLoadEventData>) => {
-        if (!selectingPhoto)
-            return
-
-        Image.getSize(selectingPhoto.imageUri,
-            (w, h) => {
-                setImageSize([w, h])
-            },
-            (error) => setImageSize([0, 0]))
-    }, [selectingPhoto])
-
     const onImageError = useCallback((_: NativeSyntheticEvent<ImageErrorEventData>) => {
         if (NetLord.IsAvailableLastestCheck())
             setReasonToReload(NeedReloadReason.FailToGetContent)
@@ -153,16 +141,11 @@ const PicturesOfTheYearScreen = () => {
     }, [])
 
     const imageStyle = useMemo<StyleProp<ImageStyle>>(() => {
-        if (!selectingPhoto || !selectingPhoto.description || imageSize[0] * imageSize[1] === 0)
+        if (!selectingPhoto || !selectingPhoto.description)
             return { flex: 1 }
 
-        if (imageSize[0] > imageSize[1]) { // landscape
-            return { width: '100%', height: screen.height * 0.4 }
-        }
-        else { // portrait
-            return { width: '100%', height: screen.height * 0.5 }
-        }
-    }, [selectingPhoto, imageSize])
+        return { width: '100%', height: screen.height * 0.5 }
+    }, [selectingPhoto])
 
     const onPressShareImage = useCallback(async () => {
         if (!selectingPhoto)
@@ -247,7 +230,7 @@ const PicturesOfTheYearScreen = () => {
                                 <TouchableWithoutFeedback onPress={onPressNext}>
                                     <Image
                                         style={imageStyle}
-                                        resizeMode='contain' onLoad={onImageLoaded} onError={onImageError} source={{ uri: selectingPhoto?.imageUri }} />
+                                        resizeMode='contain' onError={onImageError} source={{ uri: selectingPhoto?.imageUri }} />
                                 </TouchableWithoutFeedback>
                                 {/* title */}
                                 <Text selectable style={[{ color: theme.text }, styleSheet.titleText]}>{selectingPhoto?.title}</Text>
@@ -256,7 +239,9 @@ const PicturesOfTheYearScreen = () => {
                                 {/* descitpion */}
                                 {
                                     selectingPhoto?.description ?
-                                        <Text selectable style={[{ color: theme.text }, styleSheet.descText]}>{selectingPhoto?.description}</Text>
+                                        <ScrollView contentContainerStyle={styleSheet.descScrollView}>
+                                            <Text selectable style={[{ color: theme.text }, styleSheet.descText]}>{selectingPhoto?.description}</Text>
+                                        </ScrollView>
                                         :
                                         undefined
                                 }
@@ -294,13 +279,13 @@ const styleSheet = StyleSheet.create({
     randomTO: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: '100%' },
     subBtnTO: { justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', },
     headerOptionTO: { marginRight: 15 },
-    // image: { flex: 1 },
     rewardText: { fontWeight: FontWeight.B600, textAlign: 'center', fontSize: FontSize.Normal },
-    titleText: { fontWeight: FontWeight.B600, textAlign: 'center', fontSize: FontSize.Normal },
+    titleText: { fontWeight: FontWeight.B600, textAlign: 'center', fontSize: FontSize.Small_L },
     rewaredPositionText: { fontWeight: FontWeight.B600, textAlign: 'center', fontSize: FontSize.Normal, color: 'white' },
     authorText: { textAlign: 'center', fontSize: FontSize.Small_L },
-    descText: { paddingHorizontal: Outline.GapHorizontal, textAlign: 'center', fontSize: FontSize.Small },
+    descText: { textAlign: 'center', fontSize: FontSize.Small },
     scrollYear: { gap: Outline.Horizontal, paddingLeft: Outline.GapVertical, paddingTop: Outline.GapVertical, },
     yearView: { padding: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth },
     rewardIconView: { padding: Outline.VerticalMini },
+    descScrollView: { paddingHorizontal: Outline.GapVertical },
 })
