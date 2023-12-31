@@ -1,7 +1,7 @@
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { View, Text, TouchableOpacity, ActivityIndicator, Alert, StyleSheet, Image, TouchableWithoutFeedback, ScrollView, NativeSyntheticEvent, ImageErrorEventData, ImageLoadEventData } from 'react-native'
-import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import { View, Text, TouchableOpacity, Alert, StyleSheet, Image, TouchableWithoutFeedback, ScrollView, NativeSyntheticEvent, ImageErrorEventData, ImageLoadEventData, StyleProp, ImageStyle, Dimensions } from 'react-native'
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
 import Share from 'react-native-share';
@@ -13,11 +13,13 @@ import { CommonStyles } from '../../constants/CommonConstants'
 import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
 import { PhotosOfTheYear, Streak } from '../../constants/Types';
 import StreakPopup from '../components/StreakPopup';
-import { ColorNameToRgb, ToCanPrint } from '../../handle/UtilsTS';
+import { ToCanPrint } from '../../handle/UtilsTS';
 import { DownloadFileAsync, GetFLPFromRLP } from '../../handle/FileUtils';
 import { SaveToGalleryAsync } from '../../handle/CameraRoll';
 import { ToastOptions, toast } from '@baronha/ting';
 import { NetLord } from '../../handle/NetLord';
+
+const screen = Dimensions.get('screen')
 
 const category = Category.AwardPicture
 const dataOfYears: PhotosOfTheYear[] = require('../../../assets/json/photos_of_the_year.json')
@@ -30,6 +32,7 @@ const PicturesOfTheYearScreen = () => {
     const [streakData, setStreakData] = useState<Streak | undefined>(undefined);
     const [selectingYear, setSelectingYear] = useState(dataOfYears[dataOfYears.length - 1].year)
     const [selectingPhotoIndex, setSelectingPhotoIndex] = useState(0)
+    const [imageSize, setImageSize] = useState<[number, number]>([0, 0])
 
     const selectingPhoto = useMemo(() => {
         const year = dataOfYears.find(y => y.year === selectingYear)
@@ -131,18 +134,15 @@ const PicturesOfTheYearScreen = () => {
         }
     }, [theme, selectingPhoto])
 
-    const onImageStartLoad = useCallback(() => {
-        // setHandling(true)
-    }, [])
-
     const onImageLoaded = useCallback((e: NativeSyntheticEvent<ImageLoadEventData>) => {
         if (!selectingPhoto)
             return
 
-        Image.getSize(selectingPhoto.imageUri, (w, h) => {
-            console.log(w, h);
-
-        })
+        Image.getSize(selectingPhoto.imageUri,
+            (w, h) => {
+                setImageSize([w, h])
+            },
+            (error) => setImageSize([0, 0]))
     }, [selectingPhoto])
 
     const onImageError = useCallback((_: NativeSyntheticEvent<ImageErrorEventData>) => {
@@ -151,6 +151,18 @@ const PicturesOfTheYearScreen = () => {
         else
             setReasonToReload(NeedReloadReason.NoInternet)
     }, [])
+
+    const imageStyle = useMemo<StyleProp<ImageStyle>>(() => {
+        if (!selectingPhoto || !selectingPhoto.description || imageSize[0] * imageSize[1] === 0)
+            return { flex: 1 }
+
+        if (imageSize[0] > imageSize[1]) { // landscape
+            return { width: '100%', height: screen.height * 0.4 }
+        }
+        else { // portrait
+            return { width: '100%', height: screen.height * 0.5 }
+        }
+    }, [selectingPhoto, imageSize])
 
     const onPressShareImage = useCallback(async () => {
         if (!selectingPhoto)
@@ -233,12 +245,21 @@ const PicturesOfTheYearScreen = () => {
                                 </View>
                                 {/* image */}
                                 <TouchableWithoutFeedback onPress={onPressNext}>
-                                    <Image resizeMode='contain' onLoadStart={onImageStartLoad} onLoad={onImageLoaded} onError={onImageError} source={{ uri: selectingPhoto?.imageUri }} style={styleSheet.image} />
+                                    <Image
+                                        style={imageStyle}
+                                        resizeMode='contain' onLoad={onImageLoaded} onError={onImageError} source={{ uri: selectingPhoto?.imageUri }} />
                                 </TouchableWithoutFeedback>
                                 {/* title */}
                                 <Text selectable style={[{ color: theme.text }, styleSheet.titleText]}>{selectingPhoto?.title}</Text>
                                 {/* author */}
-                                <Text selectable style={[{ color: theme.text }, styleSheet.authorText]}>{selectingPhoto?.author + (selectingPhoto?.country ? ' (' + selectingPhoto?.country + ')' : '')}</Text>
+                                <Text selectable style={[{ color: theme.text }, styleSheet.authorText]}>📷 {selectingPhoto?.author + (selectingPhoto?.country ? ' (' + selectingPhoto?.country + ')' : '')}</Text>
+                                {/* descitpion */}
+                                {
+                                    selectingPhoto?.description ?
+                                        <Text selectable style={[{ color: theme.text }, styleSheet.authorText]}>{selectingPhoto?.description}</Text>
+                                        :
+                                        undefined
+                                }
                             </View>
                     }
                 </View>
@@ -273,7 +294,7 @@ const styleSheet = StyleSheet.create({
     randomTO: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: '100%' },
     subBtnTO: { justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', },
     headerOptionTO: { marginRight: 15 },
-    image: { flex: 1 },
+    // image: { flex: 1 },
     rewardText: { fontWeight: FontWeight.B600, textAlign: 'center', fontSize: FontSize.Normal },
     titleText: { fontWeight: FontWeight.B600, textAlign: 'center', fontSize: FontSize.Normal },
     rewaredPositionText: { fontWeight: FontWeight.B600, textAlign: 'center', fontSize: FontSize.Normal, color: 'white' },
