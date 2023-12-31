@@ -225,17 +225,14 @@ const PicturesOfTheYearScreen = () => {
                                             {
                                                 renderIconReward()
                                             }
-                                            <Text style={[{color: theme.text,}, styleSheet.rewardText]}>{selectingPhoto?.reward + (selectingPhoto?.category ? ' - ' + selectingPhoto?.category : '')}</Text>
+                                            <Text style={[{ color: theme.text, }, styleSheet.rewardText]}>{selectingPhoto?.reward + (selectingPhoto?.category ? ' - ' + selectingPhoto?.category : '')}</Text>
                                         </View>
-                                        <TouchableWithoutFeedback style={{}} onPress={onPressRandom}>
+                                        {/* image */}
+                                        <TouchableWithoutFeedback onPress={onPressRandom}>
                                             <Image resizeMode='contain' source={{ uri: selectingPhoto?.imageUri }} style={styleSheet.image} />
                                         </TouchableWithoutFeedback>
-                                        <View style={{}}>
-                                            <Text style={[{ color: theme.text }, styleSheet.titleText]}>{selectingPhoto?.title}</Text>
-                                        </View>
-                                        <View style={{}}>
-                                            <Text style={[{ color: theme.text }, styleSheet.authorText]}>{selectingPhoto?.author + (selectingPhoto?.country ? ' (' + selectingPhoto?.country + ')' : '')}</Text>
-                                        </View>
+                                        <Text selectable style={[{ color: theme.text }, styleSheet.titleText]}>{selectingPhoto?.title}</Text>
+                                        <Text selectable style={[{ color: theme.text }, styleSheet.authorText]}>{selectingPhoto?.author + (selectingPhoto?.country ? ' (' + selectingPhoto?.country + ')' : '')}</Text>
                                     </View>
                             }
                         </View>
