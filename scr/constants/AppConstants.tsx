@@ -163,6 +163,7 @@ export enum Icon {
   Download = 'download',
   X = 'close-thick',
   Check = 'check-bold',
+  List = 'format-list-bulleted-square',
 
   // MaterialIcons
 

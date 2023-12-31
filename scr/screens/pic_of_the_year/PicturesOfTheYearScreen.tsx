@@ -233,11 +233,14 @@ const PicturesOfTheYearScreen = () => {
                                     </ScrollView>
                                 </View>
                                 {/* reward name */}
-                                <View style={[{ flexDirection: 'row', gap: Outline.GapHorizontal }, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
+                                <View onTouchEnd={() => setIsShowLisShowAwardList(true)} style={[styleSheet.rewardContainerView, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
                                     {
                                         renderIconReward()
                                     }
-                                    <Text onPress={() => setIsShowLisShowAwardList(true)} style={[{ color: theme.text, }, styleSheet.rewardText]}>{selectingPhoto?.reward + (selectingPhoto?.category ? ' - ' + selectingPhoto?.category : '')}</Text>
+                                    <Text style={[{ color: theme.text, }, styleSheet.rewardText]}>{selectingPhoto?.reward + (selectingPhoto?.category ? ' - ' + selectingPhoto?.category : '')}</Text>
+                                    <View style={styleSheet.showListIconView}>
+                                        <MaterialCommunityIcons name={Icon.List} color={theme.counterPrimary} size={Size.Icon} />
+                                    </View>
                                 </View>
                                 {/* image */}
                                 <TouchableWithoutFeedback onPress={() => onPressNext(-1)}>
@@ -295,7 +298,8 @@ const styleSheet = StyleSheet.create({
     randomTO: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: '100%' },
     subBtnTO: { justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', },
     headerOptionTO: { marginRight: 15 },
-    rewardText: { fontWeight: FontWeight.B600, textAlign: 'center', fontSize: FontSize.Normal },
+    rewardText: { flex: 1, fontWeight: FontWeight.B600, textAlign: 'center', fontSize: FontSize.Normal },
+    rewardContainerView: { paddingHorizontal: Outline.GapVertical, flexDirection: 'row', gap: Outline.GapHorizontal },
     titleText: { fontWeight: FontWeight.B600, textAlign: 'center', fontSize: FontSize.Small_L },
     rewaredPositionText: { fontWeight: FontWeight.B600, textAlign: 'center', fontSize: FontSize.Normal, color: 'white' },
     authorText: { textAlign: 'center', fontSize: FontSize.Small_L },
@@ -304,4 +308,5 @@ const styleSheet = StyleSheet.create({
     yearView: { padding: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth },
     rewardIconView: { padding: Outline.VerticalMini },
     descScrollView: { paddingHorizontal: Outline.GapVertical },
+    showListIconView: { padding: Outline.VerticalMini, borderWidth: StyleSheet.hairlineWidth, borderRadius: BorderRadius.BR8 },
 })
