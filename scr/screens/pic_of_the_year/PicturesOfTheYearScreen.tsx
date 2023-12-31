@@ -152,7 +152,7 @@ const PicturesOfTheYearScreen = () => {
         if (!selectingPhoto || !selectingPhoto.description)
             return { flex: 1 }
 
-        return { width: '100%', height: screen.height * 0.5 }
+        return { width: '100%', height: screen.height * 0.4 }
     }, [selectingPhoto])
 
     const onPressShareImage = useCallback(async () => {
