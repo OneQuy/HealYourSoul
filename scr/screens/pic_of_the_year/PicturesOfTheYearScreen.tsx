@@ -1,6 +1,6 @@
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { View, Text, TouchableOpacity, ActivityIndicator, Alert, StyleSheet, Image, TouchableWithoutFeedback, ScrollView } from 'react-native'
+import { View, Text, TouchableOpacity, ActivityIndicator, Alert, StyleSheet, Image, TouchableWithoutFeedback, ScrollView, NativeSyntheticEvent, ImageErrorEventData, ImageLoadEventData } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
@@ -24,9 +24,9 @@ const dataOfYears: PhotosOfTheYear[] = require('../../../assets/json/photos_of_t
 
 const PicturesOfTheYearScreen = () => {
     const navigation = useNavigation();
-    const reasonToReload = useRef<NeedReloadReason>(NeedReloadReason.None);
+    // const reasonToReload = useRef<NeedReloadReason>(NeedReloadReason.None);
     const theme = useContext(ThemeContext);
-    const [handling, setHandling] = useState(false);
+    const [reasonToReload, setReasonToReload] = useState(NeedReloadReason.None);
     const [streakData, setStreakData] = useState<Streak | undefined>(undefined);
     const [selectingYear, setSelectingYear] = useState(dataOfYears[dataOfYears.length - 1].year)
     const [selectingPhotoIndex, setSelectingPhotoIndex] = useState(0)
@@ -76,14 +76,14 @@ const PicturesOfTheYearScreen = () => {
         setSelectingPhotoIndex(0)
     }, [])
 
-    const onPressRandom = useCallback(async () => {
-        reasonToReload.current = NeedReloadReason.None
-        setHandling(true)
+    const onPressNext = useCallback(async () => {
+        setReasonToReload(NeedReloadReason.None)
 
         const year = dataOfYears.find(y => y.year === selectingYear)
 
         if (!year)
             return
+
         let selectingIdx = selectingPhotoIndex
 
         if (selectingPhotoIndex < year.list.length - 1)
@@ -91,18 +91,7 @@ const PicturesOfTheYearScreen = () => {
         else
             selectingIdx = 0
 
-        // if (uri) { // success
-        //     SetStreakAsync(Category[category], -1)
-        // }
-        // else { // fail
-        //     if (NetLord.IsAvailableLastestCheck())
-        //         reasonToReload.current = NeedReloadReason.FailToGetContent
-        //     else
-        //         reasonToReload.current = NeedReloadReason.NoInternet
-        // }
-
         setSelectingPhotoIndex(selectingIdx)
-        setHandling(false)
     }, [selectingYear, selectingPhotoIndex])
 
     const onPressHeaderOption = useCallback(async () => {
@@ -142,6 +131,27 @@ const PicturesOfTheYearScreen = () => {
         }
     }, [theme, selectingPhoto])
 
+    const onImageStartLoad = useCallback(() => {
+        // setHandling(true)
+    }, [])
+
+    const onImageLoaded = useCallback((e: NativeSyntheticEvent<ImageLoadEventData>) => {
+        if (!selectingPhoto)
+            return
+
+        Image.getSize(selectingPhoto.imageUri, (w, h) => {
+            console.log(w, h);
+
+        })
+    }, [selectingPhoto])
+
+    const onImageError = useCallback((_: NativeSyntheticEvent<ImageErrorEventData>) => {
+        if (NetLord.IsAvailableLastestCheck())
+            setReasonToReload(NeedReloadReason.FailToGetContent)
+        else
+            setReasonToReload(NeedReloadReason.NoInternet)
+    }, [])
+
     const onPressShareImage = useCallback(async () => {
         if (!selectingPhoto)
             return
@@ -170,7 +180,7 @@ const PicturesOfTheYearScreen = () => {
 
     useEffect(() => {
         SetStreakAsync(Category[category])
-        onPressRandom()
+        onPressNext()
     }, [])
 
     // on change theme
@@ -189,57 +199,52 @@ const PicturesOfTheYearScreen = () => {
     useFocusEffect(useCallback(() => SaveCurrentScreenForLoadNextTime(navigation), []))
 
     return (
-        <View pointerEvents={handling ? 'none' : 'auto'} style={[styleSheet.masterView, { backgroundColor: theme.background }]}>
+        <View style={[styleSheet.masterView, { backgroundColor: theme.background }]}>
             <View style={CommonStyles.flex_1} >
-                {
-                    handling ?
-                        // loading
-                        <View style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
-                            <ActivityIndicator color={theme.counterPrimary} style={{ marginRight: Outline.Horizontal }} />
-                        </View> :
-                        <View style={CommonStyles.width100PercentHeight100Percent}>
-                            {
-                                reasonToReload.current !== NeedReloadReason.None ?
-                                    // error
-                                    <TouchableOpacity onPress={onPressRandom} style={[{ gap: Outline.GapVertical }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]} >
-                                        <MaterialCommunityIcons name={reasonToReload.current === NeedReloadReason.NoInternet ? Icon.NoInternet : Icon.HeartBroken} color={theme.primary} size={Size.IconBig} />
-                                        <Text style={{ fontSize: FontSize.Normal, color: theme.counterPrimary }}>{reasonToReload.current === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
-                                        <Text style={{ fontSize: FontSize.Small_L, color: theme.counterPrimary }}>{LocalText.tap_to_retry}</Text>
-                                    </TouchableOpacity>
-                                    :
-                                    // content
-                                    <View style={[{ gap: Outline.GapHorizontal }, CommonStyles.width100PercentHeight100Percent]}>
-                                        <View>
-                                            <ScrollView horizontal contentContainerStyle={[styleSheet.scrollYear]}>
-                                                {
-                                                    dataOfYears.map((year) => {
-                                                        return <TouchableOpacity onPress={() => onPressYear(year.year)} style={[styleSheet.yearView, { backgroundColor: selectingYear === year.year ? theme.primary : undefined }]} key={year.year}>
-                                                            <Text style={{ color: theme.text }}>{year.year}</Text>
-                                                        </TouchableOpacity>
-                                                    })
-                                                }
-                                            </ScrollView>
-                                        </View>
-                                        {/* title */}
-                                        <View style={[{ flexDirection: 'row', gap: Outline.GapHorizontal }, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
-                                            {
-                                                renderIconReward()
-                                            }
-                                            <Text style={[{ color: theme.text, }, styleSheet.rewardText]}>{selectingPhoto?.reward + (selectingPhoto?.category ? ' - ' + selectingPhoto?.category : '')}</Text>
-                                        </View>
-                                        {/* image */}
-                                        <TouchableWithoutFeedback onPress={onPressRandom}>
-                                            <Image resizeMode='contain' source={{ uri: selectingPhoto?.imageUri }} style={styleSheet.image} />
-                                        </TouchableWithoutFeedback>
-                                        <Text selectable style={[{ color: theme.text }, styleSheet.titleText]}>{selectingPhoto?.title}</Text>
-                                        <Text selectable style={[{ color: theme.text }, styleSheet.authorText]}>{selectingPhoto?.author + (selectingPhoto?.country ? ' (' + selectingPhoto?.country + ')' : '')}</Text>
-                                    </View>
-                            }
-                        </View>
-                }
+                <View style={CommonStyles.width100PercentHeight100Percent}>
+                    {
+                        reasonToReload !== NeedReloadReason.None ?
+                            // error
+                            <TouchableOpacity onPress={onPressNext} style={[{ gap: Outline.GapVertical }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]} >
+                                <MaterialCommunityIcons name={reasonToReload === NeedReloadReason.NoInternet ? Icon.NoInternet : Icon.HeartBroken} color={theme.primary} size={Size.IconBig} />
+                                <Text style={{ fontSize: FontSize.Normal, color: theme.counterPrimary }}>{reasonToReload === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
+                                <Text style={{ fontSize: FontSize.Small_L, color: theme.counterPrimary }}>{LocalText.tap_to_retry}</Text>
+                            </TouchableOpacity>
+                            :
+                            // content
+                            <View style={[{ gap: Outline.GapHorizontal }, CommonStyles.width100PercentHeight100Percent]}>
+                                <View>
+                                    <ScrollView horizontal contentContainerStyle={[styleSheet.scrollYear]}>
+                                        {
+                                            dataOfYears.map((year) => {
+                                                return <TouchableOpacity onPress={() => onPressYear(year.year)} style={[styleSheet.yearView, { backgroundColor: selectingYear === year.year ? theme.primary : undefined }]} key={year.year}>
+                                                    <Text style={{ color: theme.text }}>{year.year}</Text>
+                                                </TouchableOpacity>
+                                            })
+                                        }
+                                    </ScrollView>
+                                </View>
+                                {/* reward name */}
+                                <View style={[{ flexDirection: 'row', gap: Outline.GapHorizontal }, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
+                                    {
+                                        renderIconReward()
+                                    }
+                                    <Text style={[{ color: theme.text, }, styleSheet.rewardText]}>{selectingPhoto?.reward + (selectingPhoto?.category ? ' - ' + selectingPhoto?.category : '')}</Text>
+                                </View>
+                                {/* image */}
+                                <TouchableWithoutFeedback onPress={onPressNext}>
+                                    <Image resizeMode='contain' onLoadStart={onImageStartLoad} onLoad={onImageLoaded} onError={onImageError} source={{ uri: selectingPhoto?.imageUri }} style={styleSheet.image} />
+                                </TouchableWithoutFeedback>
+                                {/* title */}
+                                <Text selectable style={[{ color: theme.text }, styleSheet.titleText]}>{selectingPhoto?.title}</Text>
+                                {/* author */}
+                                <Text selectable style={[{ color: theme.text }, styleSheet.authorText]}>{selectingPhoto?.author + (selectingPhoto?.country ? ' (' + selectingPhoto?.country + ')' : '')}</Text>
+                            </View>
+                    }
+                </View>
             </View>
             <View style={{ marginHorizontal: Outline.GapVertical_2 }}>
-                <TouchableOpacity onPress={onPressRandom} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, padding: Outline.GapVertical_2, backgroundColor: theme.primary, }, styleSheet.randomTO]}>
+                <TouchableOpacity onPress={onPressNext} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, padding: Outline.GapVertical_2, backgroundColor: theme.primary, }, styleSheet.randomTO]}>
                     <MaterialCommunityIcons name={Icon.Dice} color={theme.counterPrimary} size={Size.Icon} />
                     <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{LocalText.random}</Text>
                 </TouchableOpacity>
