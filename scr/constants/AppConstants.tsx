@@ -164,6 +164,7 @@ export enum Icon {
   X = 'close-thick',
   Check = 'check-bold',
   List = 'format-list-bulleted-square',
+  Right = 'arrow-right',
 
   // MaterialIcons
 
@@ -197,6 +198,7 @@ export const LocalText = {
   share: 'Share',
   share_image: 'Share Image',
   random: 'Random',
+  next: 'Next',
   saved: 'Saved!',
   save: 'Save',
   no_media_to_download: 'No media to download!',
