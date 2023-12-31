@@ -13,7 +13,7 @@ import { CommonStyles } from '../../constants/CommonConstants'
 import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
 import { PhotosOfTheYear, Streak } from '../../constants/Types';
 import StreakPopup from '../components/StreakPopup';
-import { ToCanPrint } from '../../handle/UtilsTS';
+import { ColorNameToRgb, ToCanPrint } from '../../handle/UtilsTS';
 import { DownloadFileAsync, GetFLPFromRLP } from '../../handle/FileUtils';
 import { SaveToGalleryAsync } from '../../handle/CameraRoll';
 import { ToastOptions, toast } from '@baronha/ting';
@@ -35,6 +35,41 @@ const PicturesOfTheYearScreen = () => {
         const year = dataOfYears.find(y => y.year === selectingYear)
         return year?.list[selectingPhotoIndex]
     }, [selectingPhotoIndex, selectingYear])
+
+    const renderIconReward = useCallback(() => {
+
+        if (!selectingPhoto)
+            return undefined
+
+        if (!selectingPhoto.reward.includes('Grand') &&
+            !selectingPhoto.reward.includes('Place'))
+            return undefined
+
+        let positionText = '1'
+        let color = 'gold'
+
+        if (selectingPhoto.reward.includes('First Place')) {
+            positionText = '1'
+            color = 'tomato'
+        }
+        else if (selectingPhoto.reward.includes('Second Place')) {
+            positionText = '2'
+            color = 'yellowgreen'
+        }
+        else if (selectingPhoto.reward.includes('Third Place')) {
+            positionText = '3'
+            color = 'sandybrown'
+        }
+
+        return <View style={[{ backgroundColor: color }, styleSheet.rewardIconView, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
+            {
+                selectingPhoto?.reward.includes('Grand') ?
+                    <MaterialCommunityIcons name={'crown'} color={theme.counterPrimary} size={Size.Icon} />
+                    :
+                    <Text style={[styleSheet.rewaredPositionText]}>{positionText}</Text>
+            }
+        </View>
+    }, [selectingPhoto])
 
     const onPressYear = useCallback(async (year: number) => {
         setSelectingYear(year)
@@ -172,7 +207,7 @@ const PicturesOfTheYearScreen = () => {
                                         <Text style={{ fontSize: FontSize.Small_L, color: theme.counterPrimary }}>{LocalText.tap_to_retry}</Text>
                                     </TouchableOpacity>
                                     :
-                                    <View style={[{}, CommonStyles.width100PercentHeight100Percent]}>
+                                    <View style={[{ gap: Outline.GapHorizontal }, CommonStyles.width100PercentHeight100Percent]}>
                                         <View>
                                             <ScrollView horizontal contentContainerStyle={[styleSheet.scrollYear]}>
                                                 {
@@ -184,7 +219,11 @@ const PicturesOfTheYearScreen = () => {
                                                 }
                                             </ScrollView>
                                         </View>
-                                        <View style={{}}>
+                                        {/* title */}
+                                        <View style={[{ flexDirection: 'row', gap: Outline.GapHorizontal }, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
+                                            {
+                                                renderIconReward()
+                                            }
                                             <Text style={styleSheet.rewardText}>{selectingPhoto?.reward + (selectingPhoto?.category ? ' - ' + selectingPhoto?.category : '')}</Text>
                                         </View>
                                         <TouchableWithoutFeedback style={{}} onPress={onPressRandom}>
@@ -234,7 +273,9 @@ const styleSheet = StyleSheet.create({
     image: { flex: 1 },
     rewardText: { fontWeight: FontWeight.B600, textAlign: 'center', fontSize: FontSize.Normal },
     titleText: { fontWeight: FontWeight.B600, textAlign: 'center', fontSize: FontSize.Normal },
+    rewaredPositionText: { fontWeight: FontWeight.B600, textAlign: 'center', fontSize: FontSize.Normal, color: 'white' },
     authorText: { textAlign: 'center', fontSize: FontSize.Small_L },
     scrollYear: { gap: Outline.Horizontal, paddingLeft: Outline.GapVertical, paddingTop: Outline.GapVertical, },
     yearView: { padding: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth },
+    rewardIconView: { padding: Outline.VerticalMini },
 })

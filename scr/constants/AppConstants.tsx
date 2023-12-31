@@ -106,6 +106,7 @@ export enum Outline {
 export enum Size {
   WP100 = wp('100%'),
   IconBig = 50,
+  IconMedium = 35,
   Icon = 25,
   IconSmaller = 20,
 }
