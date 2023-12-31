@@ -172,8 +172,22 @@ const PicturesOfTheYearScreen = () => {
             return
         }
 
+        let msg = '"' + selectingPhoto.title + '"'
+        
+        msg += '\n'
+        msg += '📷 ' + selectingPhoto?.author + (selectingPhoto?.country ? ' (' + selectingPhoto?.country + ')' : '')
+        
+        msg += '\n\n'
+        msg += "[" + selectingPhoto.reward + (selectingPhoto?.category ? ' - ' + selectingPhoto?.category : '') + "]"
+        
+        msg += '\n\n'
+        msg += selectingPhoto.description
+
+        console.log(msg);
+        
         Share
             .open({
+                message: msg,
                 url: flp,
             })
             .catch((err) => {
@@ -265,8 +279,15 @@ const PicturesOfTheYearScreen = () => {
                     }
                 </View>
             </View>
-            <View style={{ marginHorizontal: Outline.GapVertical_2 }}>
-                <TouchableOpacity onPress={() => onPressNext(-1)} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, padding: Outline.GapVertical_2, backgroundColor: theme.primary, }, styleSheet.randomTO]}>
+            <View style={styleSheet.mainButtonsView}>
+                <TouchableOpacity onPress={undefined} style={{ flexDirection: 'row', gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
+                    <MaterialCommunityIcons name={!true ? "cards-heart-outline" : 'cards-heart'} color={theme.counterPrimary} size={Size.IconSmaller} />
+                    {
+                        Number.isNaN(3) ? undefined :
+                            <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{333}</Text>
+                    }
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => onPressNext(-1)} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, padding: Outline.GapVertical_2, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
                     <MaterialCommunityIcons name={Icon.Right} color={theme.counterPrimary} size={Size.Icon} />
                     <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{LocalText.next}</Text>
                 </TouchableOpacity>
@@ -295,7 +316,8 @@ export default PicturesOfTheYearScreen
 
 const styleSheet = StyleSheet.create({
     masterView: { flex: 1, gap: Outline.GapVertical, },
-    randomTO: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: '100%' },
+    mainButtonsView: { gap: Outline.GapHorizontal, marginHorizontal: Outline.GapVertical_2, flexDirection: 'row' },
+    mainBtnTO: { flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', },
     subBtnTO: { justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', },
     headerOptionTO: { marginRight: 15 },
     rewardText: { flex: 1, fontWeight: FontWeight.B600, textAlign: 'center', fontSize: FontSize.Normal },
