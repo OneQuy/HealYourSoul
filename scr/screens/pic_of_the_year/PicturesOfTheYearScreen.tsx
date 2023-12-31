@@ -27,12 +27,12 @@ export const dataOfYears: PhotosOfTheYear[] = require('../../../assets/json/phot
 
 const PicturesOfTheYearScreen = () => {
     const navigation = useNavigation();
-    // const reasonToReload = useRef<NeedReloadReason>(NeedReloadReason.None);
     const theme = useContext(ThemeContext);
     const [reasonToReload, setReasonToReload] = useState(NeedReloadReason.None);
     const [streakData, setStreakData] = useState<Streak | undefined>(undefined);
     const [selectingYear, setSelectingYear] = useState(dataOfYears[dataOfYears.length - 1].year)
     const [selectingPhotoIndex, setSelectingPhotoIndex] = useState(0)
+    const [isShowAwardList, setIsShowLisShowAwardList] = useState(false)
 
     const selectingPhoto = useMemo(() => {
         const year = dataOfYears.find(y => y.year === selectingYear)
@@ -79,7 +79,7 @@ const PicturesOfTheYearScreen = () => {
         setSelectingPhotoIndex(0)
     }, [])
 
-    const onPressNext = useCallback(async () => {
+    const onPressNext = useCallback(async (idx: number = -1) => {
         setReasonToReload(NeedReloadReason.None)
 
         const year = dataOfYears.find(y => y.year === selectingYear)
@@ -89,13 +89,20 @@ const PicturesOfTheYearScreen = () => {
 
         let selectingIdx = selectingPhotoIndex
 
-        if (selectingPhotoIndex < year.list.length - 1)
-            selectingIdx++
+        if (idx < 0) {
+            if (selectingPhotoIndex < year.list.length - 1)
+                selectingIdx++
+            else
+                selectingIdx = 0
+        }
         else
-            selectingIdx = 0
+            selectingIdx = idx
 
         setSelectingPhotoIndex(selectingIdx)
-    }, [selectingYear, selectingPhotoIndex])
+
+        if (isShowAwardList)
+            setIsShowLisShowAwardList(false)
+    }, [selectingYear, selectingPhotoIndex, isShowAwardList])
 
     const onPressHeaderOption = useCallback(async () => {
         if (streakData)
@@ -201,7 +208,7 @@ const PicturesOfTheYearScreen = () => {
                     {
                         reasonToReload !== NeedReloadReason.None ?
                             // error
-                            <TouchableOpacity onPress={onPressNext} style={[{ gap: Outline.GapVertical }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]} >
+                            <TouchableOpacity onPress={() => onPressNext(-1)} style={[{ gap: Outline.GapVertical }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]} >
                                 <MaterialCommunityIcons name={reasonToReload === NeedReloadReason.NoInternet ? Icon.NoInternet : Icon.HeartBroken} color={theme.primary} size={Size.IconBig} />
                                 <Text style={{ fontSize: FontSize.Normal, color: theme.counterPrimary }}>{reasonToReload === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
                                 <Text style={{ fontSize: FontSize.Small_L, color: theme.counterPrimary }}>{LocalText.tap_to_retry}</Text>
@@ -225,10 +232,10 @@ const PicturesOfTheYearScreen = () => {
                                     {
                                         renderIconReward()
                                     }
-                                    <Text style={[{ color: theme.text, }, styleSheet.rewardText]}>{selectingPhoto?.reward + (selectingPhoto?.category ? ' - ' + selectingPhoto?.category : '')}</Text>
+                                    <Text onPress={() => setIsShowLisShowAwardList(true)} style={[{ color: theme.text, }, styleSheet.rewardText]}>{selectingPhoto?.reward + (selectingPhoto?.category ? ' - ' + selectingPhoto?.category : '')}</Text>
                                 </View>
                                 {/* image */}
-                                <TouchableWithoutFeedback onPress={onPressNext}>
+                                <TouchableWithoutFeedback onPress={() => onPressNext(-1)}>
                                     <Image
                                         style={imageStyle}
                                         resizeMode='contain' onError={onImageError} source={{ uri: selectingPhoto?.imageUri }} />
@@ -251,7 +258,7 @@ const PicturesOfTheYearScreen = () => {
                 </View>
             </View>
             <View style={{ marginHorizontal: Outline.GapVertical_2 }}>
-                <TouchableOpacity onPress={onPressNext} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, padding: Outline.GapVertical_2, backgroundColor: theme.primary, }, styleSheet.randomTO]}>
+                <TouchableOpacity onPress={() => onPressNext(-1)} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, padding: Outline.GapVertical_2, backgroundColor: theme.primary, }, styleSheet.randomTO]}>
                     <MaterialCommunityIcons name={Icon.Dice} color={theme.counterPrimary} size={Size.Icon} />
                     <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{LocalText.random}</Text>
                 </TouchableOpacity>
@@ -267,7 +274,7 @@ const PicturesOfTheYearScreen = () => {
                 </TouchableOpacity>
             </View>
             {
-                true ? <SelectAward year={selectingYear} selectIdx={selectingPhotoIndex} /> : undefined
+                isShowAwardList ? <SelectAward setIdx={onPressNext} year={selectingYear} selectIdx={selectingPhotoIndex} /> : undefined
             }
             {
                 streakData ? <StreakPopup streak={streakData} /> : undefined

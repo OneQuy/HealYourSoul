@@ -7,13 +7,13 @@ import { BorderRadius, FontSize, FontWeight, Icon, LocalText, Outline, Size } fr
 import { dataOfYears } from './PicturesOfTheYearScreen';
 import { AwardPicture } from '../../constants/Types';
 
-const SelectAward = ({ year, selectIdx }: { year: number, selectIdx: number }) => {
+const SelectAward = ({ year, selectIdx, setIdx }: { year: number, selectIdx: number, setIdx: (idx: number) => void }) => {
     const theme = useContext(ThemeContext);
 
     const renderItem = useCallback(({ item, index  } : { item: AwardPicture, index: number  }) => {
         const isSelecting = index === selectIdx
 
-        return <TouchableOpacity style={[{ backgroundColor: isSelecting ? theme.primary : undefined, borderRadius: isSelecting ? BorderRadius.BR8 : 0, borderWidth: isSelecting ? 1 : 0}, styleSheet.itemTO]}>
+        return <TouchableOpacity onPress={() => setIdx(index)} style={[{ backgroundColor: isSelecting ? theme.primary : undefined, borderRadius: isSelecting ? BorderRadius.BR8 : 0, borderWidth: isSelecting ? 1 : 0}, styleSheet.itemTO]}>
             <Image source={{ uri: item.imageUri }} resizeMode='cover' style={styleSheet.image} />
             <Text style={[styleSheet.text, { color: theme.text }]}>{item?.reward + (item?.category ? ' - ' + item?.category : '')}</Text>
         </TouchableOpacity>
