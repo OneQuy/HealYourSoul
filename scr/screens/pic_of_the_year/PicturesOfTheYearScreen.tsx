@@ -152,7 +152,12 @@ const PicturesOfTheYearScreen = () => {
         if (!selectingPhoto || !selectingPhoto.description)
             return { flex: 1 }
 
-        return { width: '100%', height: screen.height * 0.4 }
+        const wordCount = selectingPhoto.description.split(' ').length
+        const estLines = Math.ceil(wordCount / 12)
+
+        // console.log(estLines, wordCount);
+
+        return { width: '100%', height: screen.height * (estLines > 2 ? 0.4 : 0.5) }
     }, [selectingPhoto])
 
     const onPressShareImage = useCallback(async () => {
