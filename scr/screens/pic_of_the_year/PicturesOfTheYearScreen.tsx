@@ -256,7 +256,7 @@ const PicturesOfTheYearScreen = () => {
                                 {/* descitpion */}
                                 {
                                     selectingPhoto?.description ?
-                                        <Text selectable style={[{ color: theme.text }, styleSheet.authorText]}>{selectingPhoto?.description}</Text>
+                                        <Text selectable style={[{ color: theme.text }, styleSheet.descText]}>{selectingPhoto?.description}</Text>
                                         :
                                         undefined
                                 }
@@ -299,6 +299,7 @@ const styleSheet = StyleSheet.create({
     titleText: { fontWeight: FontWeight.B600, textAlign: 'center', fontSize: FontSize.Normal },
     rewaredPositionText: { fontWeight: FontWeight.B600, textAlign: 'center', fontSize: FontSize.Normal, color: 'white' },
     authorText: { textAlign: 'center', fontSize: FontSize.Small_L },
+    descText: { paddingHorizontal: Outline.GapHorizontal, textAlign: 'center', fontSize: FontSize.Small },
     scrollYear: { gap: Outline.Horizontal, paddingLeft: Outline.GapVertical, paddingTop: Outline.GapVertical, },
     yearView: { padding: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth },
     rewardIconView: { padding: Outline.VerticalMini },
