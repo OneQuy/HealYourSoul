@@ -18,11 +18,12 @@ import { DownloadFileAsync, GetFLPFromRLP } from '../../handle/FileUtils';
 import { SaveToGalleryAsync } from '../../handle/CameraRoll';
 import { ToastOptions, toast } from '@baronha/ting';
 import { NetLord } from '../../handle/NetLord';
+import SelectAward from './SelectAward';
 
 const screen = Dimensions.get('screen')
 
 const category = Category.AwardPicture
-const dataOfYears: PhotosOfTheYear[] = require('../../../assets/json/photos_of_the_year.json')
+export const dataOfYears: PhotosOfTheYear[] = require('../../../assets/json/photos_of_the_year.json')
 
 const PicturesOfTheYearScreen = () => {
     const navigation = useNavigation();
@@ -265,6 +266,9 @@ const PicturesOfTheYearScreen = () => {
                     <Text style={{ color: theme.text, fontSize: FontSize.Small_L }}>{LocalText.share}</Text>
                 </TouchableOpacity>
             </View>
+            {
+                true ? <SelectAward year={selectingYear} selectIdx={selectingPhotoIndex} /> : undefined
+            }
             {
                 streakData ? <StreakPopup streak={streakData} /> : undefined
             }
