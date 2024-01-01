@@ -4,6 +4,8 @@ import { SubscribedData } from "../constants/Types";
 export type UserDataState = {
     subscribedData: SubscribedData | undefined,
 
+    awardPictureFavoritedIDs: number[],
+
     drawSeenIDs: number[],
     drawFavoritedIDs: number[],
 
@@ -37,6 +39,8 @@ export type UserDataState = {
 
 const initialState: UserDataState = {
     subscribedData: undefined,
+
+    awardPictureFavoritedIDs: [],
 
     drawSeenIDs: [],
     drawFavoritedIDs: [],
@@ -80,6 +84,17 @@ const slice = createSlice({
                 id: action.payload,
                 tick: Date.now(),
             } as SubscribedData
+        },
+
+        // award picture
+
+        addAwardPictureFavoritedID(state, action: PayloadAction<number>) {
+            if (!state.awardPictureFavoritedIDs.includes(action.payload))
+                state.awardPictureFavoritedIDs.push(action.payload);
+        },
+
+        removeAwardPictureFavoritedID(state, action: PayloadAction<number>) {
+            state.awardPictureFavoritedIDs = state.awardPictureFavoritedIDs.filter(i => i !== action.payload)
         },
 
         // draw
@@ -289,6 +304,9 @@ export const {
     addSarcasmSeenID,
     addSarcasmFavoritedID,
     removeSarcasmFavoritedID,
+    
+    addAwardPictureFavoritedID,
+    removeAwardPictureFavoritedID,
 } = slice.actions;
 
 export default slice.reducer;
