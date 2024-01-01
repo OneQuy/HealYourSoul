@@ -26,13 +26,6 @@ export const QuoteTextScreen = () => {
   />;
 }
 
-export const WikipedianScren = () => {
-  return <TheRandomShortText
-    category={Category.Wikipedia}
-    getTextAsync={GetWikiAsync}
-  />;
-}
-
 export const RedditMemeScreen = () => {
   return <TheRandomImage
       category={Category.RedditMeme}

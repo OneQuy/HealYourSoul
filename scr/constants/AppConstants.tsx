@@ -80,7 +80,6 @@ export enum Category {
   Cute = 7,
   Sarcasm = 8,
   Art = 9,
-  Wikipedia = 10,
   NinjaFact = 10,
   Picture = 11,
   NinjaJoke = 12,
@@ -88,6 +87,7 @@ export enum Category {
   Quotetext = 14,
   RedditMeme = 15,
   AwardPicture = 16,
+  Wikipedia = 17,
   // Reminder = 14,
 }
 

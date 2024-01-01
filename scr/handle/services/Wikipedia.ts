@@ -2,7 +2,7 @@ import { DelayAsync } from "../Utils"
 
 const url = 'https://en.wikipedia.org/api/rest_v1/page/random/summary'
 
-export const GetWikiAsync = async (): Promise<string | undefined> => {
+export const GetWikiAsync = async (): Promise<object | undefined> => {
     try {
         
         let res: Response | undefined
@@ -22,9 +22,7 @@ export const GetWikiAsync = async (): Promise<string | undefined> => {
         }
 
         const json = await res.json()
-        const data = json.title + '\n\n' + json.extract
-
-        return data
+        return json
     } catch (error) {
         console.error(error);
         return undefined
