@@ -233,9 +233,9 @@ const WikipediaScreen = () => {
             </ViewShot>
             {/* main btn */}
             <View style={styleSheet.mainButtonsView}>
-                <TouchableOpacity onPress={() => setShowFull(true)} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
-                    <MaterialCommunityIcons name={Icon.Book} color={theme.counterPrimary} size={Size.Icon} />
-                    <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{LocalText.read_full}</Text>
+                <TouchableOpacity onPress={() => setShowFull(!showFull)} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
+                    <MaterialCommunityIcons name={showFull ? Icon.X : Icon.Book} color={theme.counterPrimary} size={Size.Icon} />
+                    <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{showFull ? '' : LocalText.read_full}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={onPressRandom} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
                     <MaterialCommunityIcons name={Icon.Dice} color={theme.counterPrimary} size={Size.Icon} />
