@@ -113,8 +113,10 @@ export default function useIsFavorited(category: Category, id: number | undefine
     useEffect(() => {
         if (id === undefined)
             setLikeCount(Number.NaN)
-        else
+        else{
+            setLikeCount(Number.NaN)
             GetPostLikeCountAsync(category, id, (likes) => setLikeCount(likes))
+        }
     }, [id])
 
     return [isFavorited, likeCount, onPressFavorite] as const
