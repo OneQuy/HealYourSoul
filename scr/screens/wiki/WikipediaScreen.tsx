@@ -183,7 +183,9 @@ const WikipediaScreen = () => {
                                         </TouchableOpacity>
                                         :
                                         <View style={styleSheet.contentView}>
-                                            <Image resizeMode='contain' source={{ uri: currentThumbUri }} style={styleSheet.image} />
+                                            <View style={CommonStyles.justifyContentCenter_AlignItemsCenter}>
+                                                <Image resizeMode='contain' source={{ uri: currentThumbUri }} style={styleSheet.image} />
+                                            </View>
                                             <Text selectable style={[styleSheet.titleView, { color: theme.text, }]}>{currentTitle}</Text>
                                             <ScrollView contentContainerStyle={styleSheet.contentScrollView}>
                                                 <Text selectable style={[{ color: theme.text, fontSize: FontSize.Normal }]}>{currentContent}</Text>
@@ -232,7 +234,7 @@ const styleSheet = StyleSheet.create({
     subBtnTO: { justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', },
     headerOptionTO: { marginRight: 15 },
     image: { width: heightPercentageToDP(25), height: heightPercentageToDP(25) },
-    contentView: { flex: 1, },
+    contentView: { flex: 1, gap: Outline.GapVertical },
     contentScrollView: { flex: 1, },
-    titleView: {fontSize: FontSize.Big, fontWeight: FontWeight.B500 }
+    titleView: { fontSize: FontSize.Big, fontWeight: FontWeight.B500 }
 })
