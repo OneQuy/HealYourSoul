@@ -121,8 +121,9 @@ const WikipediaScreen = () => {
         if (!currentContent)
             return
 
-        CopyAndToast(currentTitle + '\n\n' + currentContent, theme)
-    }, [currentTitle, currentContent, theme])
+        const message = currentTitle + '\n\n' + currentContent + '\n\nLink: ' + currentLink
+        CopyAndToast(message, theme)
+    }, [currentTitle, currentLink, currentContent, theme])
 
     const onPressHeaderOption = useCallback(async () => {
         if (streakData)
@@ -139,21 +140,24 @@ const WikipediaScreen = () => {
 
         RNShare.share({
             title: LocalText.fact_of_the_day,
-            message: currentTitle + '\n\n' + currentContent,
+            message: currentTitle + '\n\n' + currentContent + '\n\nLink: ' + currentLink,
         } as ShareContent,
             {
                 tintColor: theme.primary,
             } as ShareOptions)
-    }, [currentContent, currentTitle, theme])
+    }, [currentContent, currentTitle, currentLink, theme])
 
     const onPressShareImage = useCallback(() => {
         if (!currentContent)
             return
 
+        const message = currentTitle + '\n\n' + currentContent + '\n\nLink: ' + currentLink
+
         // @ts-ignore
         viewShotRef.current.capture().then(async (uri: string) => {
             Share
                 .open({
+                    message,
                     url: uri,
                 })
                 .catch((err) => {
@@ -163,7 +167,7 @@ const WikipediaScreen = () => {
                         Alert.alert('Fail', error)
                 });
         })
-    }, [data, theme])
+    }, [currentTitle, currentContent, currentLink, theme])
 
     // on init once (for load first post)
 
@@ -275,8 +279,8 @@ const styleSheet = StyleSheet.create({
     mainBtnTO: { paddingVertical: Outline.GapVertical, flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', },
     subBtnTO: { justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', },
     headerOptionTO: { marginRight: 15 },
-    image: { width: heightPercentageToDP(25), height: heightPercentageToDP(25) },
+    image: { width: heightPercentageToDP(40), height: heightPercentageToDP(40) },
     contentView: { flex: 1, gap: Outline.GapVertical },
-    contentScrollView: { flex: 1, },
-    titleView: { fontSize: FontSize.Normal, fontWeight: FontWeight.B500 }
+    contentScrollView: { flex: 1, marginHorizontal: Outline.GapVertical_2 },
+    titleView: { fontSize: FontSize.Normal, fontWeight: FontWeight.B500, marginHorizontal: Outline.GapVertical_2 }
 })
