@@ -17,15 +17,6 @@ const SelectAward = ({ year, selectIdx, setIdx }: { year: number, selectIdx: num
     const theme = useContext(ThemeContext);
     const flatlistRef = useRef()
 
-    const renderItem = useCallback(({ item, index }: { item: AwardPicture, index: number }) => {
-        const isSelecting = index === selectIdx
-
-        return <TouchableOpacity onPress={() => setIdx(index)} style={[{ backgroundColor: isSelecting ? theme.primary : undefined, borderRadius: isSelecting ? BorderRadius.BR8 : 0, borderWidth: isSelecting ? 1 : 0 }, styleSheet.itemTO]}>
-            <Image source={{ uri: item.imageUri }} resizeMode='cover' style={styleSheet.image} />
-            <Text style={[styleSheet.text, { color: theme.text }]}>{item?.reward + (item?.category ? ' - ' + item?.category : '')}</Text>
-        </TouchableOpacity>
-    }, [selectIdx])
-
     const curYearData = useMemo(() => {
         const f = dataOfYears.find(i => i.year === year)
 
@@ -34,6 +25,22 @@ const SelectAward = ({ year, selectIdx, setIdx }: { year: number, selectIdx: num
 
         return f
     }, [year, dataOfYears])
+
+    const renderItem = useCallback(({ item, index }: { item: AwardPicture, index: number }) => {
+        const isSelecting = index === selectIdx
+        const showSeparator = index > 0 &&
+            ((curYearData.list[index].category !== curYearData.list[index - 1].category) ||
+                (curYearData.list[index].category === undefined && curYearData.list[index - 1].category === undefined))
+
+        return <TouchableOpacity onPress={() => setIdx(index)} style={[{ backgroundColor: isSelecting ? theme.primary : undefined, borderRadius: isSelecting ? BorderRadius.BR8 : 0, borderWidth: isSelecting ? 1 : 0 }, styleSheet.itemTO]}>
+            {
+                !showSeparator ? undefined :
+                    <View style={{ position: 'absolute', alignSelf: 'flex-start', top: -listPopupGap / 2, backgroundColor: 'gray', width: '100%', height: StyleSheet.hairlineWidth }} />
+            }
+            <Image source={{ uri: item.imageUri }} resizeMode='cover' style={styleSheet.image} />
+            <Text style={[styleSheet.text, { color: theme.text }]}>{item?.reward + (item?.category ? ' - ' + item?.category : '')}</Text>
+        </TouchableOpacity>
+    }, [selectIdx, theme])
 
     useEffect(() => {
         // @ts-ignore
@@ -48,7 +55,7 @@ const SelectAward = ({ year, selectIdx, setIdx }: { year: number, selectIdx: num
             <View style={[{ backgroundColor: theme.background, }, styleSheet.bgView]}>
                 <View style={[{ flexDirection: 'row' }, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
                     <MaterialCommunityIcons name={Icon.ThreeDots} color={theme.background} size={Size.Icon} />
-                    <Text style={styleSheet.title}>{year + ' ' + LocalText.winners}</Text>
+                    <Text style={[{ color: theme.text, }, styleSheet.title]}>{year + ' ' + LocalText.winners}</Text>
                     <TouchableOpacity onPress={() => setIdx(selectIdx)}>
                         <MaterialCommunityIcons name={Icon.X} color={theme.text} size={Size.Icon} />
                     </TouchableOpacity>
