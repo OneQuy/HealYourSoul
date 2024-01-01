@@ -44,8 +44,6 @@ const PicturesOfTheYearScreen = () => {
     const selectingPhotoID = useMemo(() => {
         return Number.parseInt(selectingYear.toString() + selectingPhotoIndex.toString())
     }, [selectingPhotoIndex, selectingYear])
-
-    console.log(selectingPhotoID);
     
     const [isFavorited, likeCount, onPressFavorite] = useIsFavorited(category, selectingPhotoID)
 
@@ -314,7 +312,7 @@ const PicturesOfTheYearScreen = () => {
                             <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{likeCount}</Text>
                     }
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => onPressNext(-1)} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, padding: Outline.GapVertical_2, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
+                <TouchableOpacity onPress={() => onPressNext(-1)} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
                     <MaterialCommunityIcons name={Icon.Right} color={theme.counterPrimary} size={Size.Icon} />
                     <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{LocalText.next}</Text>
                 </TouchableOpacity>
@@ -344,7 +342,7 @@ export default PicturesOfTheYearScreen
 const styleSheet = StyleSheet.create({
     masterView: { flex: 1, gap: Outline.GapVertical, },
     mainButtonsView: { gap: Outline.GapHorizontal, marginHorizontal: Outline.GapVertical_2, flexDirection: 'row' },
-    mainBtnTO: { flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', },
+    mainBtnTO: { paddingVertical: Outline.GapVertical, flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', },
     subBtnTO: { justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', },
     headerOptionTO: { marginRight: 15 },
     rewardText: { flex: 1, fontWeight: FontWeight.B600, textAlign: 'center', fontSize: FontSize.Normal },
