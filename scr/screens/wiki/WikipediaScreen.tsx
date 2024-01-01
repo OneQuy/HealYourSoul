@@ -19,6 +19,7 @@ import StreakPopup from '../components/StreakPopup';
 import { GetWikiAsync } from '../../handle/services/Wikipedia';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { ScrollView } from 'react-native-gesture-handler';
+import WebView from 'react-native-webview';
 
 const category = Category.Wikipedia
 
@@ -29,6 +30,7 @@ const WikipediaScreen = () => {
     const [handling, setHandling] = useState(false);
     const [streakData, setStreakData] = useState<Streak | undefined>(undefined);
     const [data, setData] = useState<object | undefined>(undefined);
+    const [showFull, setShowFull] = useState(false);
     const viewShotRef = useRef<LegacyRef<ViewShot> | undefined>();
 
     const currentContent = useMemo(() => {
@@ -88,11 +90,12 @@ const WikipediaScreen = () => {
         else
             return undefined
     }, [data])
-    
+
     const onPressRandom = useCallback(async () => {
         reasonToReload.current = NeedReloadReason.None
         setHandling(true)
-
+        setShowFull(false)
+        
         const res = await GetWikiAsync()
 
         setData(res)
@@ -209,18 +212,33 @@ const WikipediaScreen = () => {
                                             <ScrollView contentContainerStyle={styleSheet.contentScrollView}>
                                                 <Text selectable style={[{ color: theme.text, fontSize: FontSize.Small_L }]}>{currentContent}</Text>
                                             </ScrollView>
+                                            {
+                                                !showFull || !currentLink ? undefined :
+                                                    <View style={[{ backgroundColor: 'green' }, CommonStyles.width100Percent_Height100Percent_PositionAbsolute_JustifyContentCenter_AlignItemsCenter]}>
+                                                        <WebView
+                                                            source={{ uri: currentLink }}
+                                                            containerStyle={{ width: '100%', height: '100%' }}
+                                                        />
+                                                    </View>
+                                            }
                                         </View>
                                 }
                             </View>
                     }
                 </View>
             </ViewShot>
-            <View>
-                <TouchableOpacity onPress={onPressRandom} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, padding: Outline.GapVertical_2, backgroundColor: theme.primary, }, styleSheet.randomTO]}>
+            {/* main btn */}
+            <View style={styleSheet.mainButtonsView}>
+                <TouchableOpacity onPress={() => setShowFull(true)} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
+                    <MaterialCommunityIcons name={Icon.Book} color={theme.counterPrimary} size={Size.Icon} />
+                    <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{LocalText.read_full}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={onPressRandom} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
                     <MaterialCommunityIcons name={Icon.Dice} color={theme.counterPrimary} size={Size.Icon} />
                     <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{LocalText.random}</Text>
                 </TouchableOpacity>
             </View>
+            {/* sub btns */}
             <View style={[{ gap: Outline.GapHorizontal }, CommonStyles.row_width100Percent]}>
                 <TouchableOpacity onPress={onPressCopy} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }, styleSheet.subBtnTO]}>
                     <MaterialIcons name={Icon.Copy} color={theme.counterPrimary} size={Size.IconSmaller} />
@@ -248,8 +266,9 @@ const WikipediaScreen = () => {
 export default WikipediaScreen
 
 const styleSheet = StyleSheet.create({
-    masterView: { padding: Outline.Horizontal, flex: 1, gap: Outline.GapVertical, },
-    randomTO: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: '100%' },
+    masterView: { paddingVertical: Outline.Horizontal, flex: 1, gap: Outline.GapVertical, },
+    mainButtonsView: { gap: Outline.GapHorizontal, marginHorizontal: Outline.GapVertical_2, flexDirection: 'row' },
+    mainBtnTO: { paddingVertical: Outline.GapVertical, flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', },
     subBtnTO: { justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', },
     headerOptionTO: { marginRight: 15 },
     image: { width: heightPercentageToDP(25), height: heightPercentageToDP(25) },

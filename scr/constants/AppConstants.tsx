@@ -167,6 +167,7 @@ export enum Icon {
   Check = 'check-bold',
   List = 'format-list-bulleted-square',
   Right = 'arrow-right',
+  Book = 'checkbook',
 
   // MaterialIcons
 
@@ -201,6 +202,7 @@ export const LocalText = {
   share_image: 'Share Image',
   random: 'Random',
   next: 'Next',
+  read_full: 'Read Full',
   saved: 'Saved!',
   save: 'Save',
   no_media_to_download: 'No media to download!',
