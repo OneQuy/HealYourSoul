@@ -1,6 +1,6 @@
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { View, Text, TouchableOpacity, Alert, StyleSheet, TouchableWithoutFeedback, ScrollView, NativeSyntheticEvent, ImageErrorEventData, ImageLoadEventData, StyleProp, ImageStyle, Dimensions, ActivityIndicator, ImageBackground } from 'react-native'
+import { View, Text, TouchableOpacity, Alert, StyleSheet, TouchableWithoutFeedback, ScrollView, NativeSyntheticEvent, ImageErrorEventData, ImageLoadEventData, StyleProp, ImageStyle, Dimensions, ActivityIndicator, ImageBackground, Linking } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
@@ -153,6 +153,10 @@ const PicturesOfTheYearScreen = () => {
         setShowLoadImageIndicator(true)
     }, [])
     
+    const onPressCredit = useCallback(() => {
+        Linking.openURL(`https://www.nature.org/en-us/get-involved/how-to-help/photo-contest/${selectingYear}-winners/`)
+    }, [selectingYear])
+
     const onImageLoad = useCallback((_: NativeSyntheticEvent<ImageLoadEventData>) => {
         setShowLoadImageIndicator(false)
     }, [])
@@ -290,7 +294,7 @@ const PicturesOfTheYearScreen = () => {
                                 {/* title */}
                                 <Text selectable style={[{ color: theme.text }, styleSheet.titleText]}>{selectingPhoto?.title}</Text>
                                 {/* author */}
-                                <Text selectable style={[{ color: theme.text }, styleSheet.authorText]}>📷 {selectingPhoto?.author + (selectingPhoto?.country ? ' (' + selectingPhoto?.country + ')' : '')}</Text>
+                                <Text onPress={onPressCredit} style={[{ color: theme.text }, styleSheet.authorText]}>📷 {selectingPhoto?.author + (selectingPhoto?.country ? ' (' + selectingPhoto?.country + ')' : '')}</Text>
                                 {/* descitpion */}
                                 {
                                     selectingPhoto?.description ?
