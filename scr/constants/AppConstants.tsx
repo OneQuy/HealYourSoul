@@ -168,6 +168,7 @@ export enum Icon {
   List = 'format-list-bulleted-square',
   Right = 'arrow-right',
   Book = 'checkbook',
+  Link = 'link-variant',
 
   // MaterialIcons
 

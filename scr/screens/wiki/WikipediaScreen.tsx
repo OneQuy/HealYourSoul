@@ -1,4 +1,4 @@
-import { Share as RNShare, View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, Image, ShareContent, Alert } from 'react-native'
+import { Share as RNShare, View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, Image, ShareContent, Alert, Linking } from 'react-native'
 import React, { LegacyRef, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
@@ -94,6 +94,13 @@ const WikipediaScreen = () => {
         else
             return undefined
     }, [data])
+
+    const onPressLink = useCallback(async () => {
+        if (!currentLink)
+            return
+
+        Linking.openURL(currentLink)
+    }, [currentLink])
 
     const onPressRandom = useCallback(async () => {
         reasonToReload.current = NeedReloadReason.None
@@ -216,7 +223,10 @@ const WikipediaScreen = () => {
                                             <View style={CommonStyles.justifyContentCenter_AlignItemsCenter}>
                                                 <Image resizeMode='contain' source={{ uri: currentThumbUri }} style={styleSheet.image} />
                                             </View>
-                                            <Text selectable style={[styleSheet.titleView, { color: theme.text, }]}>{currentTitle}</Text>
+                                            <TouchableOpacity onPress={onPressLink} style={styleSheet.titleTO}>
+                                                <Text selectable style={[styleSheet.titleView, { color: theme.text, }]}>{currentTitle}</Text>
+                                                <MaterialCommunityIcons name={Icon.Link} color={theme.text} size={Size.IconSmaller} />
+                                            </TouchableOpacity>
                                             <View style={styleSheet.contentScrollView}>
                                                 <ScrollView >
                                                     <Text selectable adjustsFontSizeToFit style={[{ flexWrap: 'wrap', color: theme.text, fontSize: FontSize.Small_L }]}>{currentContent}</Text>
@@ -284,5 +294,6 @@ const styleSheet = StyleSheet.create({
     image: { width: heightPercentageToDP(30), height: heightPercentageToDP(30) },
     contentView: { flex: 1, gap: Outline.GapVertical },
     contentScrollView: { flex: 1, marginHorizontal: Outline.GapVertical_2 },
-    titleView: { fontSize: FontSize.Normal, fontWeight: FontWeight.B500, marginHorizontal: Outline.GapVertical_2 }
+    titleView: { fontSize: FontSize.Normal, fontWeight: FontWeight.B500 },
+    titleTO: { marginHorizontal: Outline.GapVertical_2, flexDirection: 'row', justifyContent: 'space-between' }
 })
