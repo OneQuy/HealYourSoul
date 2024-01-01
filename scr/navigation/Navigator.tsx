@@ -13,7 +13,7 @@ import { CustomDrawerContent } from './CustomDrawer';
 import NSFWScreen from '../screens/nsfw/NSFWScreen';
 import { Is_IOS_And_OfflineOrLowerReviewVersion } from '../handle/AppUtils';
 import IAPPage from '../screens/IAP/IAPPage';
-import { ArtScreen, CuteScreen, QuoteTextScreen, SarcasmScreen } from '../screens/other_thepage_screens/Index';
+import { ArtScreen, CuteScreen, QuoteTextScreen, SarcasmScreen, WikipedianScren } from '../screens/other_thepage_screens/Index';
 import NinjaFactScreen from '../screens/ninja_fact/NinjaFactScreen';
 import PictureScreen from '../screens/picture/PictureScreen';
 import NinjaJokeScreen from '../screens/ninja_fact/NinjaJokeScreen';
@@ -33,6 +33,7 @@ export type DrawerParamList = {
   [ScreenName.Art]: undefined,
   [ScreenName.Sarcasm]: undefined,
   [ScreenName.Trivia]: undefined,
+  [ScreenName.WikiFact]: undefined,
   [ScreenName.ShortFact]: undefined,
   [ScreenName.Joke]: undefined,
   [ScreenName.Picture]: undefined,
@@ -63,6 +64,7 @@ const ScreenList: ScreenNamePair[] = [
   [ScreenName.Cute, CuteScreen],
   [ScreenName.Art, ArtScreen],
   [ScreenName.Trivia, TheTriviaScreen],
+  [ScreenName.WikiFact, WikipedianScren],
   [ScreenName.ShortFact, NinjaFactScreen],
   [ScreenName.Joke, NinjaJokeScreen],
   [ScreenName.QuoteText, QuoteTextScreen],

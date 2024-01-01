@@ -15,7 +15,8 @@ export enum ScreenName {
   Cute = 'Wholesome. Cute',
   Sarcasm = 'Sarcasm',
   IAPPage = 'Premium',
-  ShortFact = 'Random Fact', // ninja fact
+  WikiFact = 'Wikipedia Summary',
+  ShortFact = 'Fun Fact', // ninja fact
   Picture = 'Random Picture', // unsplash
   Joke = 'Random Joke', // ninja joke
   QuoteText = 'Random Quote',
@@ -79,6 +80,7 @@ export enum Category {
   Cute = 7,
   Sarcasm = 8,
   Art = 9,
+  Wikipedia = 10,
   NinjaFact = 10,
   Picture = 11,
   NinjaJoke = 12,

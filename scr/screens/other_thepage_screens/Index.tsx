@@ -5,6 +5,7 @@ import TheRandomShortText from '../template/TheRandomShortText';
 import { GetQuoteTextAsync } from '../../handle/services/QuoteTextApi';
 import TheRandomImage from '../template/TheRandomImage';
 import { GetRedditMemeAsync } from '../../handle/services/RedditMeme';
+import { GetWikiAsync } from '../../handle/services/Wikipedia';
 
 export const CuteScreen = () => {
   return <ThePage category={Category.Cute} />;
@@ -22,6 +23,13 @@ export const QuoteTextScreen = () => {
   return <TheRandomShortText
     category={Category.Quotetext}
     getTextAsync={GetQuoteTextAsync}
+  />;
+}
+
+export const WikipedianScren = () => {
+  return <TheRandomShortText
+    category={Category.Wikipedia}
+    getTextAsync={GetWikiAsync}
   />;
 }
 
