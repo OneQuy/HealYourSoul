@@ -1,6 +1,6 @@
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { View, Text, TouchableOpacity, Alert, StyleSheet, Image, TouchableWithoutFeedback, ScrollView, NativeSyntheticEvent, ImageErrorEventData, ImageLoadEventData, StyleProp, ImageStyle, Dimensions } from 'react-native'
+import { View, Text, TouchableOpacity, Alert, StyleSheet, Image, TouchableWithoutFeedback, ScrollView, NativeSyntheticEvent, ImageErrorEventData, ImageLoadEventData, StyleProp, ImageStyle, Dimensions, ActivityIndicator, ImageBackground } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
@@ -33,6 +33,7 @@ const PicturesOfTheYearScreen = () => {
     const [selectingYear, setSelectingYear] = useState(dataOfYears[dataOfYears.length - 1].year)
     const [selectingPhotoIndex, setSelectingPhotoIndex] = useState(0)
     const [isShowAwardList, setIsShowLisShowAwardList] = useState(false)
+    const [isShowLoadImageIndicator, setShowLoadImageIndicator] = useState(false)
 
     const selectingPhoto = useMemo(() => {
         const year = dataOfYears.find(y => y.year === selectingYear)
@@ -141,7 +142,17 @@ const PicturesOfTheYearScreen = () => {
         }
     }, [theme, selectingPhoto])
 
+    const onImageStartLoad = useCallback(() => {
+        setShowLoadImageIndicator(true)
+    }, [])
+    
+    const onImageLoad = useCallback((_: NativeSyntheticEvent<ImageLoadEventData>) => {
+        setShowLoadImageIndicator(false)
+    }, [])
+
     const onImageError = useCallback((_: NativeSyntheticEvent<ImageErrorEventData>) => {
+        setShowLoadImageIndicator(false)
+
         if (NetLord.IsAvailableLastestCheck())
             setReasonToReload(NeedReloadReason.FailToGetContent)
         else
@@ -173,18 +184,18 @@ const PicturesOfTheYearScreen = () => {
         }
 
         let msg = '"' + selectingPhoto.title + '"'
-        
+
         msg += '\n'
         msg += '📷 ' + selectingPhoto?.author + (selectingPhoto?.country ? ' (' + selectingPhoto?.country + ')' : '')
-        
+
         msg += '\n\n'
         msg += "[" + selectingPhoto.reward + (selectingPhoto?.category ? ' - ' + selectingPhoto?.category : '') + "]"
-        
+
         msg += '\n\n'
         msg += selectingPhoto.description
 
         console.log(msg);
-        
+
         Share
             .open({
                 message: msg,
@@ -258,9 +269,18 @@ const PicturesOfTheYearScreen = () => {
                                 </View>
                                 {/* image */}
                                 <TouchableWithoutFeedback onPress={() => onPressNext(-1)}>
-                                    <Image
+                                    <ImageBackground
                                         style={imageStyle}
-                                        resizeMode='contain' onError={onImageError} source={{ uri: selectingPhoto?.imageUri }} />
+                                        onLoadStart={onImageStartLoad}
+                                        onLoad={onImageLoad}
+                                        resizeMode='contain' onError={onImageError} source={{ uri: selectingPhoto?.imageUri }} >
+                                        {
+                                            !isShowLoadImageIndicator ? undefined :
+                                                <View style={[{ backgroundColor: theme.background, }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]}>
+                                                    <ActivityIndicator color={theme.counterPrimary} style={{ marginRight: Outline.Horizontal }} />
+                                                </View>
+                                        }
+                                    </ImageBackground>
                                 </TouchableWithoutFeedback>
                                 {/* title */}
                                 <Text selectable style={[{ color: theme.text }, styleSheet.titleText]}>{selectingPhoto?.title}</Text>
