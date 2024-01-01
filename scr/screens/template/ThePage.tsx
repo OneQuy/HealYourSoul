@@ -8,7 +8,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { View, Text, Image, TouchableOpacity, ActivityIndicator, Alert, PanResponder, LayoutChangeEvent, GestureResponderEvent, Animated, StyleSheet, } from 'react-native'
-import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { BorderRadius, Category, FontSize, Icon, LocalText, NeedReloadReason, Opacity, Outline, Size } from '../../constants/AppConstants';
 import { ThemeContext } from '../../constants/Colors';
 import { heightPercentageToDP as hp, } from "react-native-responsive-screen";
@@ -17,7 +17,7 @@ import { CheckAndGetFileListAsync, CheckLocalFileAndGetURIAsync, CopyAndToast, G
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { PickRandomElement, RoundNumber, SecondsToHourMinuteSecondString } from '../../handle/Utils';
-import { addDrawFavoritedID, addDrawSeenID, addQuoteFavoritedID, addQuoteSeenID, addMemeFavoritedID, addMemeSeenID, removeDrawFavoritedID, removeQuoteFavoritedID, removeMemeFavoritedID, removeLoveFavoritedID, addLoveFavoritedID, removeSatisfyingFavoritedID, addSatisfyingFavoritedID, removeCatDogFavoritedID, addCatDogFavoritedID, addLoveSeenID, addSatisfyingSeenID, addCatDogSeenID, removeNSFWFavoritedID, addNSFWFavoritedID, addNSFWSeenID, removeCuteFavoritedID, addCuteFavoritedID, removeArtFavoritedID, addArtFavoritedID, removeSarcasmFavoritedID, addSarcasmFavoritedID, addCuteSeenID, addArtSeenID, addSarcasmSeenID } from '../../redux/UserDataSlice';
+import { addDrawSeenID, addQuoteSeenID, addMemeSeenID, addLoveSeenID, addSatisfyingSeenID, addCatDogSeenID, addNSFWSeenID, addCuteSeenID, addArtSeenID, addSarcasmSeenID } from '../../redux/UserDataSlice';
 import { setMutedVideo } from '../../redux/MiscSlice';
 import { ColorNameToRgb, HexToRgb, ToCanPrint } from '../../handle/UtilsTS';
 import { ToastOptions, toast } from '@baronha/ting';
@@ -26,11 +26,11 @@ import { DownloadProgressCallbackResult } from 'react-native-fs';
 import { NetLord } from '../../handle/NetLord';
 import { SaveToGalleryAsync } from '../../handle/CameraRoll';
 import { Cheat } from '../../handle/Cheat';
-import { GetPostLikeCountAsync, LikePostAsync } from '../../handle/LikeCountHandler';
 import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
 import StreakPopup from '../components/StreakPopup';
 import { CommonStyles } from '../../constants/CommonConstants';
 import Share from 'react-native-share';
+import useIsFavorited from '../../hooks/useIsFavorited';
 
 const videoNumbSize = 10;
 const videoTouchEffectRadius = 100;
@@ -88,31 +88,6 @@ const ThePage = ({ category }: ThePageProps) => {
             return state.userData.sarcasmSeenIDs;
         else
             throw new Error('not implement cat: ' + category);
-    });
-
-    const favoritedIDs = useAppSelector((state: RootState) => {
-        if (category === Category.Draw)
-            return state.userData.drawFavoritedIDs;
-        else if (category === Category.Meme)
-            return state.userData.memeFavoritedIDs;
-        else if (category === Category.Quote)
-            return state.userData.quoteFavoritedIDs;
-        else if (category === Category.Love)
-            return state.userData.loveFavoritedIDs;
-        else if (category === Category.CatDog)
-            return state.userData.catdogFavoritedIDs;
-        else if (category === Category.Satisfying)
-            return state.userData.satisfyingFavoritedIDs;
-        else if (category === Category.NSFW)
-            return state.userData.nsfwFavoritedIDs;
-        else if (category === Category.Cute)
-            return state.userData.cuteFavoritedIDs;
-        else if (category === Category.Sarcasm)
-            return state.userData.sarcasmFavoritedIDs;
-        else if (category === Category.Art)
-            return state.userData.artFavoritedIDs;
-        else
-            throw new Error('NI cat: ' + category);
     });
 
     // video states
@@ -191,7 +166,7 @@ const ThePage = ({ category }: ThePageProps) => {
     const mediaURI = useRef('');
     const post = useRef<PostMetadata | null>(null);
     const curMediaIdx = useRef<number>(0);
-    const [likeCount, setLikeCount] = useState<number>(Number.NaN);
+    const [isFavorited, likeCount, onPressFavorite] = useIsFavorited(category, post.current?.id)
 
     // calculations
 
@@ -201,18 +176,12 @@ const ThePage = ({ category }: ThePageProps) => {
     const activePreviousPostButton: boolean = previousPostIDs.current.length > 0 && post.current !== null && previousPostIDs.current.indexOf(post.current.id) !== 0;
     const hasCredit: boolean = post.current !== null && post.current.author != null && post.current.author.length > 0;
 
-    const isFavorited: boolean = useMemo(() => {
-        return post.current !== null && favoritedIDs && favoritedIDs.includes(post.current.id);
-    }, [favoritedIDs, post.current?.id])
-
     // handles
-
 
     const onBeginLoadNextOrPreviousPostAsync = useCallback(async () => {
         if (!post.current)
             return
 
-        GetPostLikeCountAsync(category, post.current.id, (likes) => setLikeCount(likes))
     }, [])
 
     const loadNextMediaAsync = useCallback(async (isNext: boolean, forPost: PostMetadata, isNextPost: NeedLoadPostType) => {
@@ -483,75 +452,6 @@ const ThePage = ({ category }: ThePageProps) => {
             setStreakData(streak)
         }
     }, [streakData])
-
-    const onPressFavorite = useCallback(async () => {
-        if (!post.current)
-            return;
-
-        if (category === Category.Quote) {
-            if (isFavorited)
-                dispatch(removeQuoteFavoritedID(post.current.id));
-            else
-                dispatch(addQuoteFavoritedID(post.current.id));
-        } else if (category === Category.Draw) {
-            if (isFavorited)
-                dispatch(removeDrawFavoritedID(post.current.id));
-            else
-                dispatch(addDrawFavoritedID(post.current.id));
-        }
-        else if (category === Category.Meme) {
-            if (isFavorited)
-                dispatch(removeMemeFavoritedID(post.current.id));
-            else
-                dispatch(addMemeFavoritedID(post.current.id));
-        }
-        else if (category === Category.Love) {
-            if (isFavorited)
-                dispatch(removeLoveFavoritedID(post.current.id));
-            else
-                dispatch(addLoveFavoritedID(post.current.id));
-        }
-        else if (category === Category.Satisfying) {
-            if (isFavorited)
-                dispatch(removeSatisfyingFavoritedID(post.current.id));
-            else
-                dispatch(addSatisfyingFavoritedID(post.current.id));
-        }
-        else if (category === Category.CatDog) {
-            if (isFavorited)
-                dispatch(removeCatDogFavoritedID(post.current.id));
-            else
-                dispatch(addCatDogFavoritedID(post.current.id));
-        }
-        else if (category === Category.NSFW) {
-            if (isFavorited)
-                dispatch(removeNSFWFavoritedID(post.current.id));
-            else
-                dispatch(addNSFWFavoritedID(post.current.id));
-        }
-        else if (category === Category.Cute) {
-            if (isFavorited)
-                dispatch(removeCuteFavoritedID(post.current.id));
-            else
-                dispatch(addCuteFavoritedID(post.current.id));
-        }
-        else if (category === Category.Art) {
-            if (isFavorited)
-                dispatch(removeArtFavoritedID(post.current.id));
-            else
-                dispatch(addArtFavoritedID(post.current.id));
-        }
-        else if (category === Category.Sarcasm) {
-            if (isFavorited)
-                dispatch(removeSarcasmFavoritedID(post.current.id));
-            else
-                dispatch(addSarcasmFavoritedID(post.current.id));
-        }
-        else
-            throw new Error('NI cat: ' + category);
-
-        LikePostAsync(!isFavorited, category, post.current.id, (likes) => setLikeCount(likes))
-    }, [isFavorited]);
 
     const onPressNextMedia = useCallback(async (isNext: boolean) => {
         if (!post.current)

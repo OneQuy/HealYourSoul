@@ -21,7 +21,7 @@ export type UserDataState = {
 
     catdogSeenIDs: number[],
     catdogFavoritedIDs: number[],
-    
+
     nsfwSeenIDs: number[],
     nsfwFavoritedIDs: number[],
 
@@ -30,13 +30,13 @@ export type UserDataState = {
 
     sarcasmSeenIDs: number[],
     sarcasmFavoritedIDs: number[],
-    
+
     artSeenIDs: number[],
     artFavoritedIDs: number[],
 }
 
 const initialState: UserDataState = {
-    subscribedData:  undefined,
+    subscribedData: undefined,
 
     drawSeenIDs: [],
     drawFavoritedIDs: [],
@@ -95,7 +95,7 @@ const slice = createSlice({
         },
 
         removeDrawFavoritedID(state, action: PayloadAction<number>) {
-            [action.payload, ...state.drawFavoritedIDs] = state.drawFavoritedIDs;
+            state.drawFavoritedIDs = state.drawFavoritedIDs.filter(i => i !== action.payload)
         },
 
         // meme
@@ -111,11 +111,11 @@ const slice = createSlice({
         },
 
         removeMemeFavoritedID(state, action: PayloadAction<number>) {
-            [action.payload, ...state.memeFavoritedIDs] = state.memeFavoritedIDs;
+            state.memeFavoritedIDs = state.memeFavoritedIDs.filter(i => i !== action.payload)
         },
 
         // quote
-        
+
         addQuoteSeenID(state, action: PayloadAction<number>) {
             if (!state.quoteSeenIDs.includes(action.payload))
                 state.quoteSeenIDs.push(action.payload);
@@ -127,9 +127,9 @@ const slice = createSlice({
         },
 
         removeQuoteFavoritedID(state, action: PayloadAction<number>) {
-            [action.payload, ...state.quoteFavoritedIDs] = state.quoteFavoritedIDs;
+            state.quoteFavoritedIDs = state.quoteFavoritedIDs.filter(i => i !== action.payload)
         },
-        
+
         // love
 
         addLoveSeenID(state, action: PayloadAction<number>) {
@@ -143,9 +143,9 @@ const slice = createSlice({
         },
 
         removeLoveFavoritedID(state, action: PayloadAction<number>) {
-            [action.payload, ...state.loveFavoritedIDs] = state.loveFavoritedIDs;
+            state.loveFavoritedIDs = state.loveFavoritedIDs.filter(i => i !== action.payload)
         },
-        
+
         // nsfw
 
         addNSFWSeenID(state, action: PayloadAction<number>) {
@@ -159,9 +159,9 @@ const slice = createSlice({
         },
 
         removeNSFWFavoritedID(state, action: PayloadAction<number>) {
-            [action.payload, ...state.nsfwFavoritedIDs] = state.nsfwFavoritedIDs;
+            state.nsfwFavoritedIDs = state.nsfwFavoritedIDs.filter(i => i !== action.payload)
         },
-        
+
         // catdog
 
         addCatDogSeenID(state, action: PayloadAction<number>) {
@@ -175,9 +175,9 @@ const slice = createSlice({
         },
 
         removeCatDogFavoritedID(state, action: PayloadAction<number>) {
-            [action.payload, ...state.catdogFavoritedIDs] = state.catdogFavoritedIDs;
+            state.catdogFavoritedIDs = state.catdogFavoritedIDs.filter(i => i !== action.payload)
         },
-       
+
         // art
 
         addArtSeenID(state, action: PayloadAction<number>) {
@@ -191,9 +191,9 @@ const slice = createSlice({
         },
 
         removeArtFavoritedID(state, action: PayloadAction<number>) {
-            [action.payload, ...state.artFavoritedIDs] = state.artFavoritedIDs;
+            state.artFavoritedIDs = state.artFavoritedIDs.filter(i => i !== action.payload)
         },
-        
+
         // cute
 
         addCuteSeenID(state, action: PayloadAction<number>) {
@@ -207,9 +207,9 @@ const slice = createSlice({
         },
 
         removeCuteFavoritedID(state, action: PayloadAction<number>) {
-            [action.payload, ...state.cuteFavoritedIDs] = state.cuteFavoritedIDs;
+            state.cuteFavoritedIDs = state.cuteFavoritedIDs.filter(i => i !== action.payload)
         },
-        
+
         // sarcasm
 
         addSarcasmSeenID(state, action: PayloadAction<number>) {
@@ -223,12 +223,12 @@ const slice = createSlice({
         },
 
         removeSarcasmFavoritedID(state, action: PayloadAction<number>) {
-            [action.payload, ...state.sarcasmFavoritedIDs] = state.sarcasmFavoritedIDs;
+            state.sarcasmFavoritedIDs = state.sarcasmFavoritedIDs.filter(i => i !== action.payload)
         },
 
-         // satisfying
+        // satisfying
 
-         addSatisfyingSeenID(state, action: PayloadAction<number>) {
+        addSatisfyingSeenID(state, action: PayloadAction<number>) {
             if (!state.satisfyingSeenIDs.includes(action.payload))
                 state.satisfyingSeenIDs.push(action.payload);
         },
@@ -239,7 +239,7 @@ const slice = createSlice({
         },
 
         removeSatisfyingFavoritedID(state, action: PayloadAction<number>) {
-            [action.payload, ...state.satisfyingFavoritedIDs] = state.satisfyingFavoritedIDs;
+            state.satisfyingFavoritedIDs = state.satisfyingFavoritedIDs.filter(i => i !== action.payload)
         },
     }
 });
@@ -260,32 +260,32 @@ export const {
     addQuoteSeenID,
     addQuoteFavoritedID,
     removeQuoteFavoritedID,
-   
+
 
     addCatDogSeenID,
     addCatDogFavoritedID,
     removeCatDogFavoritedID,
-   
+
     addLoveSeenID,
     addLoveFavoritedID,
     removeLoveFavoritedID,
-   
+
     addNSFWSeenID,
     addNSFWFavoritedID,
     removeNSFWFavoritedID,
-   
+
     addSatisfyingSeenID,
     addSatisfyingFavoritedID,
     removeSatisfyingFavoritedID,
-   
+
     addCuteSeenID,
     addCuteFavoritedID,
     removeCuteFavoritedID,
-   
+
     addArtSeenID,
     addArtFavoritedID,
     removeArtFavoritedID,
-   
+
     addSarcasmSeenID,
     addSarcasmFavoritedID,
     removeSarcasmFavoritedID,
