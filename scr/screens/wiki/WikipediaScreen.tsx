@@ -70,6 +70,25 @@ const WikipediaScreen = () => {
             return undefined
     }, [data])
 
+    const currentLink = useMemo(() => {
+        if (typeof data !== 'object')
+            return undefined
+
+        // @ts-ignore
+        let text = data.content_urls?.mobile?.page
+
+        if (typeof text === 'string')
+            return text
+
+        // @ts-ignore
+        text = data.content_urls?.desktop?.page
+
+        if (typeof text === 'string')
+            return text
+        else
+            return undefined
+    }, [data])
+    
     const onPressRandom = useCallback(async () => {
         reasonToReload.current = NeedReloadReason.None
         setHandling(true)
