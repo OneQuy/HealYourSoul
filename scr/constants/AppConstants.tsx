@@ -15,7 +15,7 @@ export enum ScreenName {
   Cute = 'Wholesome. Cute',
   Sarcasm = 'Sarcasm',
   IAPPage = 'Premium',
-  WikiFact = 'Wikipedia Summary',
+  WikiFact = 'Random Wikipedia',
   ShortFact = 'Fun Fact', // ninja fact
   Picture = 'Random Picture', // unsplash
   Joke = 'Random Joke', // ninja joke

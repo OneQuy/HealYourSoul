@@ -55,6 +55,8 @@ const DrawerSingleItem = ({
             return 'comment-quote'
         else if (route.name === ScreenName.AwardPicture)
             return 'crown'
+        else if (route.name === ScreenName.WikiFact)
+            return 'book-open-variant'
         else
             return Icon.HeartBroken
     }, [])
