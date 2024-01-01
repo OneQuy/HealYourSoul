@@ -24,6 +24,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import WebView from 'react-native-webview';
 import { ShareOptions } from 'react-native-share';
 import { ToCanPrint } from '../../handle/UtilsTS';
+import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading';
 
 const category = Category.Wikipedia
 
@@ -221,7 +222,8 @@ const WikipediaScreen = () => {
                                         :
                                         <View style={styleSheet.contentView}>
                                             <View style={CommonStyles.justifyContentCenter_AlignItemsCenter}>
-                                                <Image resizeMode='contain' source={{ uri: currentThumbUri }} style={styleSheet.image} />
+                                                {/* <Image resizeMode='contain' source={{ uri: currentThumbUri }} style={styleSheet.image} /> */}
+                                                <ImageBackgroundWithLoading resizeMode='contain' source={{ uri: currentThumbUri }} style={styleSheet.image} indicatorProps={{ color: theme.text }} />
                                             </View>
                                             <TouchableOpacity onPress={onPressLink} style={styleSheet.titleTO}>
                                                 <Text selectable style={[styleSheet.titleView, { color: theme.text, }]}>{currentTitle}</Text>
