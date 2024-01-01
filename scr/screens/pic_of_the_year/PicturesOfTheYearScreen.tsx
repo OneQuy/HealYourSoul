@@ -330,5 +330,5 @@ const styleSheet = StyleSheet.create({
     yearView: { padding: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth },
     rewardIconView: { padding: Outline.VerticalMini },
     descScrollView: { paddingHorizontal: Outline.GapVertical },
-    showListIconView: { padding: Outline.VerticalMini, borderWidth: StyleSheet.hairlineWidth, borderRadius: BorderRadius.BR8 },
+    showListIconView: { padding: Outline.GapHorizontal, borderWidth: StyleSheet.hairlineWidth, borderRadius: BorderRadius.BR8 },
 })
