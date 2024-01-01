@@ -89,6 +89,9 @@ const slice = createSlice({
         // award picture
 
         addAwardPictureFavoritedID(state, action: PayloadAction<number>) {
+            if (!state.awardPictureFavoritedIDs)
+                state.awardPictureFavoritedIDs = []
+
             if (!state.awardPictureFavoritedIDs.includes(action.payload))
                 state.awardPictureFavoritedIDs.push(action.payload);
         },
@@ -304,7 +307,7 @@ export const {
     addSarcasmSeenID,
     addSarcasmFavoritedID,
     removeSarcasmFavoritedID,
-    
+
     addAwardPictureFavoritedID,
     removeAwardPictureFavoritedID,
 } = slice.actions;

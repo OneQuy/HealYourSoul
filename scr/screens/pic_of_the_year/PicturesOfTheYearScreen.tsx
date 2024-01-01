@@ -1,6 +1,6 @@
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { View, Text, TouchableOpacity, Alert, StyleSheet, Image, TouchableWithoutFeedback, ScrollView, NativeSyntheticEvent, ImageErrorEventData, ImageLoadEventData, StyleProp, ImageStyle, Dimensions, ActivityIndicator, ImageBackground } from 'react-native'
+import { View, Text, TouchableOpacity, Alert, StyleSheet, TouchableWithoutFeedback, ScrollView, NativeSyntheticEvent, ImageErrorEventData, ImageLoadEventData, StyleProp, ImageStyle, Dimensions, ActivityIndicator, ImageBackground } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
@@ -19,6 +19,7 @@ import { SaveToGalleryAsync } from '../../handle/CameraRoll';
 import { ToastOptions, toast } from '@baronha/ting';
 import { NetLord } from '../../handle/NetLord';
 import SelectAward from './SelectAward';
+import useIsFavorited from '../../hooks/useIsFavorited';
 
 const screen = Dimensions.get('screen')
 
@@ -34,11 +35,19 @@ const PicturesOfTheYearScreen = () => {
     const [selectingPhotoIndex, setSelectingPhotoIndex] = useState(0)
     const [isShowAwardList, setIsShowLisShowAwardList] = useState(false)
     const [isShowLoadImageIndicator, setShowLoadImageIndicator] = useState(false)
-
+    
     const selectingPhoto = useMemo(() => {
         const year = dataOfYears.find(y => y.year === selectingYear)
         return year?.list[selectingPhotoIndex]
     }, [selectingPhotoIndex, selectingYear])
+    
+    const selectingPhotoID = useMemo(() => {
+        return Number.parseInt(selectingYear.toString() + selectingPhotoIndex.toString())
+    }, [selectingPhotoIndex, selectingYear])
+
+    console.log(selectingPhotoID);
+    
+    const [isFavorited, likeCount, onPressFavorite] = useIsFavorited(category, selectingPhotoID)
 
     const renderIconReward = useCallback(() => {
 
@@ -298,11 +307,11 @@ const PicturesOfTheYearScreen = () => {
                 </View>
             </View>
             <View style={styleSheet.mainButtonsView}>
-                <TouchableOpacity onPress={undefined} style={{ flexDirection: 'row', gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
-                    <MaterialCommunityIcons name={!true ? "cards-heart-outline" : 'cards-heart'} color={theme.counterPrimary} size={Size.IconSmaller} />
+                <TouchableOpacity onPress={onPressFavorite} style={{ flexDirection: 'row', gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
+                    <MaterialCommunityIcons name={!isFavorited ? "cards-heart-outline" : 'cards-heart'} color={theme.counterPrimary} size={Size.IconSmaller} />
                     {
-                        Number.isNaN(3) ? undefined :
-                            <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{333}</Text>
+                        Number.isNaN(likeCount) ? undefined :
+                            <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{likeCount}</Text>
                     }
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => onPressNext(-1)} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, padding: Outline.GapVertical_2, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>

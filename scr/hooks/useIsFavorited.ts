@@ -30,8 +30,10 @@ export default function useIsFavorited(category: Category, id: number | undefine
             return state.userData.sarcasmFavoritedIDs;
         else if (category === Category.Art)
             return state.userData.artFavoritedIDs;
+        else if (category === Category.AwardPicture)
+            return state.userData.awardPictureFavoritedIDs;
         else
-            throw new Error('NI cat: ' + category);
+            throw new Error('NI cat: ' + Category[category]);
     })
     
     const isFavorited: boolean = useMemo(() => {
