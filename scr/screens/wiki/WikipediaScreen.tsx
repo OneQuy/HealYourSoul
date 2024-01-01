@@ -217,9 +217,11 @@ const WikipediaScreen = () => {
                                                 <Image resizeMode='contain' source={{ uri: currentThumbUri }} style={styleSheet.image} />
                                             </View>
                                             <Text selectable style={[styleSheet.titleView, { color: theme.text, }]}>{currentTitle}</Text>
-                                            <ScrollView contentContainerStyle={styleSheet.contentScrollView}>
-                                                <Text selectable style={[{ color: theme.text, fontSize: FontSize.Small_L }]}>{currentContent}</Text>
-                                            </ScrollView>
+                                            <View style={styleSheet.contentScrollView}>
+                                                <ScrollView >
+                                                    <Text selectable adjustsFontSizeToFit style={[{ flexWrap: 'wrap', color: theme.text, fontSize: FontSize.Small_L }]}>{currentContent}</Text>
+                                                </ScrollView>
+                                            </View>
                                             {
                                                 !showFull || !currentLink ? undefined :
                                                     <View style={[{ backgroundColor: 'green' }, CommonStyles.width100Percent_Height100Percent_PositionAbsolute_JustifyContentCenter_AlignItemsCenter]}>
@@ -279,7 +281,7 @@ const styleSheet = StyleSheet.create({
     mainBtnTO: { paddingVertical: Outline.GapVertical, flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', },
     subBtnTO: { justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', },
     headerOptionTO: { marginRight: 15 },
-    image: { width: heightPercentageToDP(40), height: heightPercentageToDP(40) },
+    image: { width: heightPercentageToDP(30), height: heightPercentageToDP(30) },
     contentView: { flex: 1, gap: Outline.GapVertical },
     contentScrollView: { flex: 1, marginHorizontal: Outline.GapVertical_2 },
     titleView: { fontSize: FontSize.Normal, fontWeight: FontWeight.B500, marginHorizontal: Outline.GapVertical_2 }
