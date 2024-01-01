@@ -250,6 +250,8 @@ export const LocalText = {
 
 // storage
 
+export const StorageKey_AwardPictureLastSeenIdxOfYear = (year: number) => 'award_picture_last_seen_idx_' + year
+
 export const StorageKey_Streak = 'streak'
 
 export const StorageKey_TriviaDifficulty = 'trivia_diff'

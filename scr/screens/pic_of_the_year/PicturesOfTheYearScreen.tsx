@@ -3,7 +3,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { View, Text, TouchableOpacity, Alert, StyleSheet, TouchableWithoutFeedback, ScrollView, NativeSyntheticEvent, ImageErrorEventData, ImageLoadEventData, StyleProp, ImageStyle, Dimensions, ActivityIndicator, ImageBackground, Linking } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
-import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
+import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size, StorageKey_AwardPictureLastSeenIdxOfYear } from '../../constants/AppConstants'
 import Share from 'react-native-share';
 import RNFS from "react-native-fs";
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
@@ -20,6 +20,7 @@ import { ToastOptions, toast } from '@baronha/ting';
 import { NetLord } from '../../handle/NetLord';
 import SelectAward from './SelectAward';
 import useIsFavorited from '../../hooks/useIsFavorited';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const screen = Dimensions.get('screen')
 
@@ -84,7 +85,7 @@ const PicturesOfTheYearScreen = () => {
 
     const onPressYear = useCallback(async (year: number) => {
         setSelectingYear(year)
-        setSelectingPhotoIndex(0)
+        // setSelectingPhotoIndex(0)
     }, [])
 
     const onPressNext = useCallback(async (idx: number = -1) => {
@@ -95,18 +96,19 @@ const PicturesOfTheYearScreen = () => {
         if (!year)
             return
 
-        let selectingIdx = selectingPhotoIndex
+        let targetIdx = selectingPhotoIndex
 
         if (idx < 0) {
             if (selectingPhotoIndex < year.list.length - 1)
-                selectingIdx++
+                targetIdx++
             else
-                selectingIdx = 0
+                targetIdx = 0
         }
         else
-            selectingIdx = idx
+            targetIdx = idx
 
-        setSelectingPhotoIndex(selectingIdx)
+        setSelectingPhotoIndex(targetIdx)
+        AsyncStorage.setItem(StorageKey_AwardPictureLastSeenIdxOfYear(selectingYear), targetIdx.toString())
 
         if (isShowAwardList)
             setIsShowLisShowAwardList(false)
@@ -218,11 +220,18 @@ const PicturesOfTheYearScreen = () => {
             });
     }, [selectingPhoto])
 
+    // auto select idx when update year
+
+    useEffect(() => {
+        (async () => {
+            setSelectingPhotoIndex(await getLastSeenIdxOfYearAsync(selectingYear))
+        })()
+    }, [selectingYear])
+
     // on init once (for load first post)
 
     useEffect(() => {
         SetStreakAsync(Category[category])
-        onPressNext()
     }, [])
 
     // on change theme
@@ -361,3 +370,8 @@ const styleSheet = StyleSheet.create({
     descScrollView: { paddingHorizontal: Outline.GapVertical },
     showListIconView: { padding: Outline.GapHorizontal, borderWidth: StyleSheet.hairlineWidth, borderRadius: BorderRadius.BR8 },
 })
+
+const getLastSeenIdxOfYearAsync = async (year: number) => {
+    const res = await AsyncStorage.getItem(StorageKey_AwardPictureLastSeenIdxOfYear(year))
+    return res === null ? 0 : Number.parseInt(res)
+}
