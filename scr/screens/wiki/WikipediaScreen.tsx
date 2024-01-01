@@ -207,7 +207,7 @@ const WikipediaScreen = () => {
                                             </View>
                                             <Text selectable style={[styleSheet.titleView, { color: theme.text, }]}>{currentTitle}</Text>
                                             <ScrollView contentContainerStyle={styleSheet.contentScrollView}>
-                                                <Text selectable style={[{ color: theme.text, fontSize: FontSize.Normal }]}>{currentContent}</Text>
+                                                <Text selectable style={[{ color: theme.text, fontSize: FontSize.Small_L }]}>{currentContent}</Text>
                                             </ScrollView>
                                         </View>
                                 }
@@ -255,5 +255,5 @@ const styleSheet = StyleSheet.create({
     image: { width: heightPercentageToDP(25), height: heightPercentageToDP(25) },
     contentView: { flex: 1, gap: Outline.GapVertical },
     contentScrollView: { flex: 1, },
-    titleView: { fontSize: FontSize.Big, fontWeight: FontWeight.B500 }
+    titleView: { fontSize: FontSize.Normal, fontWeight: FontWeight.B500 }
 })
