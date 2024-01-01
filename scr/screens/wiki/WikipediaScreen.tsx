@@ -1,7 +1,9 @@
-import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, Image } from 'react-native'
+import { Share as RNShare, View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, Image, ShareContent, Alert } from 'react-native'
 import React, { LegacyRef, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
+import Share from 'react-native-share';
+
 
 // @ts-ignore
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -10,7 +12,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { NetLord } from '../../handle/NetLord'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
-import { SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
+import { CopyAndToast, SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
 import ViewShot from 'react-native-view-shot'
 import { CommonStyles } from '../../constants/CommonConstants'
 import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
@@ -20,6 +22,8 @@ import { GetWikiAsync } from '../../handle/services/Wikipedia';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { ScrollView } from 'react-native-gesture-handler';
 import WebView from 'react-native-webview';
+import { ShareOptions } from 'react-native-share';
+import { ToCanPrint } from '../../handle/UtilsTS';
 
 const category = Category.Wikipedia
 
@@ -95,7 +99,7 @@ const WikipediaScreen = () => {
         reasonToReload.current = NeedReloadReason.None
         setHandling(true)
         setShowFull(false)
-        
+
         const res = await GetWikiAsync()
 
         setData(res)
@@ -114,11 +118,11 @@ const WikipediaScreen = () => {
     }, [])
 
     const onPressCopy = useCallback(() => {
-        // if (data === undefined)
-        //     return
+        if (!currentContent)
+            return
 
-        // CopyAndToast(data['extract'], theme)
-    }, [data, theme])
+        CopyAndToast(currentTitle + '\n\n' + currentContent, theme)
+    }, [currentTitle, currentContent, theme])
 
     const onPressHeaderOption = useCallback(async () => {
         if (streakData)
@@ -130,35 +134,35 @@ const WikipediaScreen = () => {
     }, [streakData])
 
     const onPressShareText = useCallback(() => {
-        // if (!text)
-        //     return
+        if (!currentContent)
+            return
 
-        // RNShare.share({
-        //     title: LocalText.fact_of_the_day,
-        //     message: text,
-        // } as ShareContent,
-        //     {
-        //         tintColor: theme.primary,
-        //     } as ShareOptions)
-    }, [data, theme])
+        RNShare.share({
+            title: LocalText.fact_of_the_day,
+            message: currentTitle + '\n\n' + currentContent,
+        } as ShareContent,
+            {
+                tintColor: theme.primary,
+            } as ShareOptions)
+    }, [currentContent, currentTitle, theme])
 
     const onPressShareImage = useCallback(() => {
-        // if (!text)
-        //     return
+        if (!currentContent)
+            return
 
-        // // @ts-ignore
-        // viewShotRef.current.capture().then(async (uri: string) => {
-        //     Share
-        //         .open({
-        //             url: uri,
-        //         })
-        //         .catch((err) => {
-        //             const error = ToCanPrint(err)
+        // @ts-ignore
+        viewShotRef.current.capture().then(async (uri: string) => {
+            Share
+                .open({
+                    url: uri,
+                })
+                .catch((err) => {
+                    const error = ToCanPrint(err)
 
-        //             if (!error.includes('User did not share'))
-        //                 Alert.alert('Fail', error)
-        //         });
-        // })
+                    if (!error.includes('User did not share'))
+                        Alert.alert('Fail', error)
+                });
+        })
     }, [data, theme])
 
     // on init once (for load first post)
