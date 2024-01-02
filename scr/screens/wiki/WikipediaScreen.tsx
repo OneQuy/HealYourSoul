@@ -288,12 +288,12 @@ const WikipediaScreen = () => {
 export default WikipediaScreen
 
 const styleSheet = StyleSheet.create({
-    masterView: { paddingVertical: Outline.Horizontal, flex: 1, gap: Outline.GapVertical, },
+    masterView: { paddingBottom: Outline.Horizontal, flex: 1, gap: Outline.GapVertical, },
     mainButtonsView: { gap: Outline.GapHorizontal, marginHorizontal: Outline.GapVertical_2, flexDirection: 'row' },
     mainBtnTO: { paddingVertical: Outline.GapVertical, flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', },
     subBtnTO: { justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', },
     headerOptionTO: { marginRight: 15 },
-    image: { width: heightPercentageToDP(30), height: heightPercentageToDP(30) },
+    image: { width: '100%', height: heightPercentageToDP(30) },
     contentView: { flex: 1, gap: Outline.GapVertical },
     contentScrollView: { flex: 1, marginHorizontal: Outline.GapVertical_2 },
     titleView: { fontSize: FontSize.Normal, fontWeight: FontWeight.B500 },
