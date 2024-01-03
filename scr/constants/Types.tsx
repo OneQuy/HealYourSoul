@@ -21,6 +21,12 @@ export type FileList = {
 export type AppConfig = {
     ios_review_limit_version: string,
     net_url: string,
+    remote_files: RemoteFileConfig[],
+}
+
+export type RemoteFileConfig = {
+    file: string,
+    version: number,
 }
 
 export type SubscribedData = {

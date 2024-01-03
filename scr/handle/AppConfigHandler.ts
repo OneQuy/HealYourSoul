@@ -12,6 +12,22 @@ var appConfig: AppConfig | undefined
 
 export const GetAppConfig = () => appConfig
 
+/**
+ * 
+ * @returns version or NaN if fail to get config
+ */
+export function GetRemoteFileConfigVersion(file: string) {
+    if (!appConfig)
+        return Number.NaN
+
+    const fileconfig = appConfig.remote_files?.find(f => f.file === file)
+
+    if (fileconfig)
+        return fileconfig.version
+    else
+        return Number.NaN
+}
+
 export async function HandleAppConfigAsync(theme: ThemeColor) {
     const isInternet = await IsInternetAvailableAsync()
 
