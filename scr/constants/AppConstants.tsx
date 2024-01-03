@@ -22,6 +22,7 @@ export enum ScreenName {
   QuoteText = 'Random Quote',
   Trivia = 'Trivia',
   AwardPicture = 'Photos of Year',
+  FunWebsite = 'Fun Websites',
   // Reminder = 'Reminder',
 }
 
@@ -88,6 +89,7 @@ export enum Category {
   RedditMeme = 15,
   AwardPicture = 16,
   Wikipedia = 17,
+  FunWebsites = 18,
   // Reminder = 14,
 }
 

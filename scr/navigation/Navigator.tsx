@@ -20,6 +20,7 @@ import NinjaJokeScreen from '../screens/ninja_fact/NinjaJokeScreen';
 import TheTriviaScreen from '../screens/trivia/TriviaScreen';
 import PicturesOfTheYearScreen from '../screens/pic_of_the_year/PicturesOfTheYearScreen';
 import WikipediaScreen from '../screens/wiki/WikipediaScreen';
+import FunWebsitesScreen from '../screens/fun_websites/FunWebsites';
 
 export type DrawerParamList = {
   [ScreenName.Meme]: undefined,
@@ -40,6 +41,7 @@ export type DrawerParamList = {
   [ScreenName.Picture]: undefined,
   [ScreenName.QuoteText]: undefined,
   [ScreenName.AwardPicture]: undefined,
+  [ScreenName.FunWebsite]: undefined,
   // [ScreenName.Reminder]: undefined,
   [ScreenName.IAPPage]: undefined,
 }
@@ -71,6 +73,7 @@ const ScreenList: ScreenNamePair[] = [
   [ScreenName.QuoteText, QuoteTextScreen],
   [ScreenName.Picture, PictureScreen],
   [ScreenName.AwardPicture, PicturesOfTheYearScreen],
+  [ScreenName.FunWebsite, FunWebsitesScreen],
   // [ScreenName.Reminder, ReminderScreen],
   [ScreenName.IAPPage, IAPPage],
 ]
