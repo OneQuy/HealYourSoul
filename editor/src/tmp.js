@@ -1,10 +1,9 @@
 const { LogRed, LogGreen } = require("./Utils_NodeJS")
 
 const fs = require('fs')
+const filepath = './assets/json/tmp.txt'
 
-const filepath = './assets/json/Wiki.text'
-
-const Wiki = async () => {
+const Tmp = async () => {
 
     const res = await fetch('https://en.wikipedia.org/wiki/Special:Random')
 
@@ -14,5 +13,5 @@ const Wiki = async () => {
 
 
 module.exports = {
-    Wiki
+    Tmp
 }
