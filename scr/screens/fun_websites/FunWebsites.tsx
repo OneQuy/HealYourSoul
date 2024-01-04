@@ -46,7 +46,7 @@ const FunWebsitesScreen = () => {
 
     const viewShotRef = useRef<LegacyRef<ViewShot> | undefined>();
 
-    const [funWebsites, errorDownloadJson, _, reUpdateJson] = useCheckAndDownloadRemoteFile<FunWebsite[]>(
+    const [funWebsites, errorDownloadJson, _, reUpdateData] = useCheckAndDownloadRemoteFile<FunWebsite[]>(
         fileURL,
         TempDirName + '/fun_website.json',
         true,
@@ -77,6 +77,8 @@ const FunWebsitesScreen = () => {
     const onPressNext = useCallback(async () => {
         if (!Array.isArray(funWebsites)) {
             setSelectingItem(undefined)
+            reUpdateData()
+            setHandling(true)
             return
         }
 
@@ -96,7 +98,7 @@ const FunWebsitesScreen = () => {
         setShowFull(false)
 
         SetStreakAsync(Category[category], -1)
-    }, [funWebsites])
+    }, [funWebsites, reUpdateData])
 
     const onPressCopy = useCallback(() => {
         // if (!currentContent)
@@ -244,11 +246,11 @@ const FunWebsitesScreen = () => {
             <View style={styleSheet.mainButtonsView}>
                 <TouchableOpacity onPress={() => setShowFull(!showFull)} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
                     <MaterialCommunityIcons name={showFull ? Icon.X : Icon.Book} color={theme.counterPrimary} size={Size.Icon} />
-                    <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{showFull ? '' : LocalText.read_full}</Text>
+                    <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{showFull ? '' : LocalText.go}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={onPressNext} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
                     <MaterialCommunityIcons name={Icon.Dice} color={theme.counterPrimary} size={Size.Icon} />
-                    <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{LocalText.random}</Text>
+                    <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{LocalText.next}</Text>
                 </TouchableOpacity>
             </View>
             {/* sub btns */}

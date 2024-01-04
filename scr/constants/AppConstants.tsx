@@ -206,6 +206,7 @@ export const LocalText = {
   random: 'Random',
   next: 'Next',
   read_full: 'Read Full',
+  go: 'Go!',
   saved: 'Saved!',
   save: 'Save',
   no_media_to_download: 'No media to download!',
