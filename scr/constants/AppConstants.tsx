@@ -258,6 +258,7 @@ export const LocalText = {
 // storage
 
 export const StorageKey_AwardPictureLastSeenIdxOfYear = (year: number) => 'award_picture_last_seen_idx_' + year
+export const StorageKey_LocalFileVersion = (cat: Category) => 'local_file_version_' + cat
 
 export const StorageKey_Streak = 'streak'
 

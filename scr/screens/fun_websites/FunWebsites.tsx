@@ -1,7 +1,7 @@
 import { Share as RNShare, View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, Image, ShareContent, Alert, Linking } from 'react-native'
 import React, { LegacyRef, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
-import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
+import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size, StorageKey_LocalFileVersion, StorageKey_Streak } from '../../constants/AppConstants'
 import Share from 'react-native-share';
 
 
@@ -25,8 +25,13 @@ import WebView from 'react-native-webview';
 import { ShareOptions } from 'react-native-share';
 import { ToCanPrint } from '../../handle/UtilsTS';
 import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading';
+import useCheckAndDownloadRemoteFile from '../../hooks/useCheckAndDownloadRemoteFile';
+import { TempDirName } from '../../handle/Utils';
+import { GetRemoteFileConfigVersion } from '../../handle/AppConfigHandler';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const category = Category.FunWebsites
+const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Ffun_websites.json?alt=media&token=10ecb626-e576-49d4-b124-a9ba148a93a6'
 
 const FunWebsitesScreen = () => {
     const navigation = useNavigation();
@@ -37,6 +42,18 @@ const FunWebsitesScreen = () => {
     const [data, setData] = useState<object | undefined>(undefined);
     const [showFull, setShowFull] = useState(false);
     const viewShotRef = useRef<LegacyRef<ViewShot> | undefined>();
+
+    const [result, error, isDataLatestFromRemoteOrLocal] = useCheckAndDownloadRemoteFile(
+            fileURL,
+            TempDirName + '/fun_website.json',
+            true,
+            GetRemoteFileConfigVersion('fun_websites'),
+            'json',
+            true,
+            async () => AsyncStorage.getItem(StorageKey_LocalFileVersion(category)),
+            async () => AsyncStorage.setItem(StorageKey_LocalFileVersion(category), GetRemoteFileConfigVersion('fun_websites').toString()))
+
+    // console.log('result', typeof result, isDataLatestFromRemoteOrLocal, error)
 
     const currentContent = useMemo(() => {
         if (typeof data !== 'object')

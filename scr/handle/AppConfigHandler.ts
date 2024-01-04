@@ -20,10 +20,11 @@ export function GetRemoteFileConfigVersion(file: string) {
     if (!appConfig)
         return Number.NaN
 
-    const fileconfig = appConfig.remote_files?.find(f => f.file === file)
+    // @ts-ignore
+    const version = appConfig.remote_files[file]
 
-    if (fileconfig)
-        return fileconfig.version
+    if (typeof version === 'number')
+        return version as number
     else
         return Number.NaN
 }
