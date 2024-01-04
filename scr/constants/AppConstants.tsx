@@ -171,6 +171,7 @@ export enum Icon {
   Right = 'arrow-right',
   Book = 'checkbook',
   Link = 'link-variant',
+  Eye = 'eye-outline',
 
   // MaterialIcons
 
