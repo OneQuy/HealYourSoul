@@ -4,9 +4,21 @@ import { DownloadFileAsync, GetFLPFromRLP, IsExistedAsync, ReadTextAsync } from 
 type ReturnType = 'uri' | 'json' | 'text'
 
 /**
- * 
+ * hook runs whenever [remoteVersion] changed
  * @returns result: undefined if error
  * @returns error: undefined if success or error
+ * 
+ * USAGE:
+ * 
+const [result, error, isDataLatestFromRemoteOrLocal, reUpdate] = useCheckAndDownloadRemoteFile(
+        fileURL,
+        TempDirName + '/fun_website.json',
+        true,
+        GetRemoteFileConfigVersion('fun_websites'),
+        'json',
+        true,
+        async () => AsyncStorage.getItem(StorageKey_LocalFileVersion(category)),
+        async () => AsyncStorage.setItem(StorageKey_LocalFileVersion(category), GetRemoteFileConfigVersion('fun_websites').toString()))
  */
 export default function useCheckAndDownloadRemoteFile(
     fileURL: string,
@@ -20,7 +32,8 @@ export default function useCheckAndDownloadRemoteFile(
 ): readonly [
     result: string | object | undefined,
     error: any,
-    isDataLatestFromRemoteOrLocal: boolean] {
+    isDataLatestFromRemoteOrLocal: boolean,
+    reUpdate: () => void] {
     const [result, setResult] = useState<string | object | undefined>(undefined)
     const [error, setError] = useState<any>(undefined)
     const [isDataLatestFromRemoteOrLocal, setIsDataLatestFromRemoteOrLocal] = useState(false)
@@ -40,8 +53,12 @@ export default function useCheckAndDownloadRemoteFile(
         const localVersionS = await localVersionGetterAsync()
         const localVersion = typeof localVersionS === 'string' ? Number.parseInt(localVersionS) : -1
 
-        if (isLog && localVersion !== remoteVersion)
-            console.log('[useCheckAndDownloadRemoteFile] isNeedToDownload cuz diff version')
+        if (isLog) {
+            if (localVersion !== remoteVersion)
+                console.log('[useCheckAndDownloadRemoteFile] isNeedToDownload cuz diff version (' + localPath + ')')
+            else
+                console.log('[useCheckAndDownloadRemoteFile] NOT isNeedToDownload, same version: ' + localVersion + ' (' + localPath + ')')
+        }
 
         return localVersion !== remoteVersion
     }, [remoteVersion])
@@ -54,9 +71,6 @@ export default function useCheckAndDownloadRemoteFile(
         const isNeedToDownload = await isNeedToDownloadAsync()
 
         // 2. download if needed
-
-        if (isLog)
-            console.log('[useCheckAndDownloadRemoteFile] isNeedToDownload: ' + isNeedToDownload)
 
         if (isNeedToDownload) {
             const res = await DownloadFileAsync(fileURL, localPath, isRLP)
@@ -84,7 +98,7 @@ export default function useCheckAndDownloadRemoteFile(
                 setIsDataLatestFromRemoteOrLocal(downloadError === undefined)
 
                 if (isLog)
-                    console.log('[useCheckAndDownloadRemoteFile] result uri sucess: ' + uri)
+                    console.log('[useCheckAndDownloadRemoteFile] uri SUCCESS: ' + uri)
             }
             else {
                 setResult(undefined)
@@ -115,7 +129,7 @@ export default function useCheckAndDownloadRemoteFile(
             setIsDataLatestFromRemoteOrLocal(downloadError === undefined)
 
             if (isLog)
-                console.log('[useCheckAndDownloadRemoteFile] result sucess')
+                console.log('[useCheckAndDownloadRemoteFile] SUCCESS')
         }
         else { // read local fail
             setResult(undefined)
@@ -126,7 +140,7 @@ export default function useCheckAndDownloadRemoteFile(
                 setError(readLocalRes.error)
 
             if (isLog)
-                console.log('[useCheckAndDownloadRemoteFile] result fail')
+                console.log('[useCheckAndDownloadRemoteFile] FAILED')
         }
     }, [isNeedToDownloadAsync])
 
@@ -137,5 +151,6 @@ export default function useCheckAndDownloadRemoteFile(
     return [
         result,
         error,
-        isDataLatestFromRemoteOrLocal]
+        isDataLatestFromRemoteOrLocal,
+        mainHanldeAsync]
 }
