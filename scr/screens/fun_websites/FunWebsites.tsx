@@ -16,7 +16,7 @@ import { CopyAndToast, SaveCurrentScreenForLoadNextTime } from '../../handle/App
 import ViewShot from 'react-native-view-shot'
 import { CommonStyles } from '../../constants/CommonConstants'
 import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
-import { Streak } from '../../constants/Types';
+import { FunWebsite, Streak } from '../../constants/Types';
 import StreakPopup from '../components/StreakPopup';
 import { GetWikiAsync } from '../../handle/services/Wikipedia';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
@@ -29,6 +29,7 @@ import useCheckAndDownloadRemoteFile from '../../hooks/useCheckAndDownloadRemote
 import { TempDirName } from '../../handle/Utils';
 import { GetRemoteFileConfigVersion } from '../../handle/AppConfigHandler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import useIsFavorited from '../../hooks/useIsFavorited';
 
 const category = Category.FunWebsites
 const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Ffun_websites.json?alt=media&token=10ecb626-e576-49d4-b124-a9ba148a93a6'
@@ -39,11 +40,12 @@ const FunWebsitesScreen = () => {
     const theme = useContext(ThemeContext);
     const [handling, setHandling] = useState(false);
     const [streakData, setStreakData] = useState<Streak | undefined>(undefined);
-    const [data, setData] = useState<object | undefined>(undefined);
-    const [showFull, setShowFull] = useState(false);
+    const [showFull, setShowFull] = useState(false)
+    const [selectingPhotoIndex, setSelectingPhotoIndex] = useState(0)
+
     const viewShotRef = useRef<LegacyRef<ViewShot> | undefined>();
 
-    const [result, error, isDataLatestFromRemoteOrLocal] = useCheckAndDownloadRemoteFile(
+    const [funWebsites, errorDownloadJson, isDataLatestFromRemoteOrLocal, reUpdateJson] = useCheckAndDownloadRemoteFile<FunWebsite[]>(
         fileURL,
         TempDirName + '/fun_website.json',
         true,
@@ -53,102 +55,51 @@ const FunWebsitesScreen = () => {
         async () => AsyncStorage.getItem(StorageKey_LocalFileVersion(category)),
         async () => AsyncStorage.setItem(StorageKey_LocalFileVersion(category), GetRemoteFileConfigVersion('fun_websites').toString()))
 
-    // console.log('result', typeof result, isDataLatestFromRemoteOrLocal, error)
-
-    const currentContent = useMemo(() => {
-        if (typeof data !== 'object')
+    const selectingItem = useMemo(() => {
+        if (!Array.isArray(funWebsites))
             return undefined
 
-        // @ts-ignore
-        const text = data.extract
+        return funWebsites[selectingPhotoIndex]
+    }, [funWebsites])
 
-        if (typeof text === 'string')
-            return text
-        else
-            return undefined
-    }, [data])
-
-    const currentTitle = useMemo(() => {
-        if (typeof data !== 'object')
-            return undefined
-
-        // @ts-ignore
-        const text = data.title
-
-        if (typeof text === 'string')
-            return text
-        else
-            return undefined
-    }, [data])
-
-    const currentThumbUri = useMemo(() => {
-        if (typeof data !== 'object')
-            return undefined
-
-        // @ts-ignore
-        const text = data.thumbnail?.source
-
-        if (typeof text === 'string')
-            return text
-        else
-            return undefined
-    }, [data])
-
-    const currentLink = useMemo(() => {
-        if (typeof data !== 'object')
-            return undefined
-
-        // @ts-ignore
-        let text = data.content_urls?.mobile?.page
-
-        if (typeof text === 'string')
-            return text
-
-        // @ts-ignore
-        text = data.content_urls?.desktop?.page
-
-        if (typeof text === 'string')
-            return text
-        else
-            return undefined
-    }, [data])
+    const [isFavorited, likeCount, onPressFavorite] = useIsFavorited(category, selectingItem?.id)
 
     const onPressLink = useCallback(async () => {
-        if (!currentLink)
+        if (!selectingItem)
             return
 
-        Linking.openURL(currentLink)
-    }, [currentLink])
+        Linking.openURL(selectingItem.url)
+    }, [selectingItem])
 
     const onPressRandom = useCallback(async () => {
-        reasonToReload.current = NeedReloadReason.None
-        setHandling(true)
-        setShowFull(false)
+        // reasonToReload.current = NeedReloadReason.None
+        // setHandling(true)
+        // setShowFull(false)
 
-        const res = await GetWikiAsync()
+        // const res = await GetWikiAsync()
 
-        setData(res)
+        // setData(res)
 
-        if (typeof res === 'object') { // success
-            SetStreakAsync(Category[category], -1)
-        }
-        else { // fail
-            if (NetLord.IsAvailableLastestCheck())
-                reasonToReload.current = NeedReloadReason.FailToGetContent
-            else
-                reasonToReload.current = NeedReloadReason.NoInternet
-        }
+        // if (typeof res === 'object') { // success
+        //     SetStreakAsync(Category[category], -1)
+        // }
+        // else { // fail
+        //     if (NetLord.IsAvailableLastestCheck())
+        //         reasonToReload.current = NeedReloadReason.FailToGetContent
+        //     else
+        //         reasonToReload.current = NeedReloadReason.NoInternet
+        // }
 
-        setHandling(false)
-    }, [])
+        // setHandling(false)
+    }, [funWebsites])
 
     const onPressCopy = useCallback(() => {
-        if (!currentContent)
-            return
+        // if (!currentContent)
+        //     return
 
-        const message = currentTitle + '\n\n' + currentContent + '\n\nLink: ' + currentLink
-        CopyAndToast(message, theme)
-    }, [currentTitle, currentLink, currentContent, theme])
+        // const message = currentTitle + '\n\n' + currentContent + '\n\nLink: ' + currentLink
+        // CopyAndToast(message, theme)
+    }, [selectingItem, theme])
 
     const onPressHeaderOption = useCallback(async () => {
         if (streakData)
@@ -160,39 +111,39 @@ const FunWebsitesScreen = () => {
     }, [streakData])
 
     const onPressShareText = useCallback(() => {
-        if (!currentContent)
-            return
+        // if (!currentContent)
+        //     return
 
-        RNShare.share({
-            title: LocalText.fact_of_the_day,
-            message: currentTitle + '\n\n' + currentContent + '\n\nLink: ' + currentLink,
-        } as ShareContent,
-            {
-                tintColor: theme.primary,
-            } as ShareOptions)
-    }, [currentContent, currentTitle, currentLink, theme])
+        // RNShare.share({
+        //     title: LocalText.fact_of_the_day,
+        //     message: currentTitle + '\n\n' + currentContent + '\n\nLink: ' + currentLink,
+        // } as ShareContent,
+        //     {
+        //         tintColor: theme.primary,
+        //     } as ShareOptions)
+    }, [selectingItem, theme])
 
     const onPressShareImage = useCallback(() => {
-        if (!currentContent)
-            return
+        // if (!currentContent)
+        //     return
 
-        const message = currentTitle + '\n\n' + currentContent + '\n\nLink: ' + currentLink
+        // const message = currentTitle + '\n\n' + currentContent + '\n\nLink: ' + currentLink
 
-        // @ts-ignore
-        viewShotRef.current.capture().then(async (uri: string) => {
-            Share
-                .open({
-                    message,
-                    url: uri,
-                })
-                .catch((err) => {
-                    const error = ToCanPrint(err)
+        // // @ts-ignore
+        // viewShotRef.current.capture().then(async (uri: string) => {
+        //     Share
+        //         .open({
+        //             message,
+        //             url: uri,
+        //         })
+        //         .catch((err) => {
+        //             const error = ToCanPrint(err)
 
-                    if (!error.includes('User did not share'))
-                        Alert.alert('Fail', error)
-                });
-        })
-    }, [currentTitle, currentContent, currentLink, theme])
+        //             if (!error.includes('User did not share'))
+        //                 Alert.alert('Fail', error)
+        //         });
+        // })
+    }, [selectingItem, theme])
 
     // on init once (for load first post)
 
@@ -239,23 +190,22 @@ const FunWebsitesScreen = () => {
                                         :
                                         <View style={styleSheet.contentView}>
                                             <View style={CommonStyles.justifyContentCenter_AlignItemsCenter}>
-                                                {/* <Image resizeMode='contain' source={{ uri: currentThumbUri }} style={styleSheet.image} /> */}
-                                                <ImageBackgroundWithLoading resizeMode='contain' source={{ uri: currentThumbUri }} style={styleSheet.image} indicatorProps={{ color: theme.text }} />
+                                                <ImageBackgroundWithLoading resizeMode='contain' source={{ uri: selectingItem?.img }} style={styleSheet.image} indicatorProps={{ color: theme.text }} />
                                             </View>
                                             <TouchableOpacity onPress={onPressLink} style={styleSheet.titleTO}>
-                                                <Text selectable style={[styleSheet.titleView, { color: theme.text, }]}>{currentTitle}</Text>
+                                                <Text selectable style={[styleSheet.titleView, { color: theme.text, }]}>{selectingItem?.url}</Text>
                                                 <MaterialCommunityIcons name={Icon.Link} color={theme.text} size={Size.IconSmaller} />
                                             </TouchableOpacity>
                                             <View style={styleSheet.contentScrollView}>
                                                 <ScrollView >
-                                                    <Text selectable adjustsFontSizeToFit style={[{ flexWrap: 'wrap', color: theme.text, fontSize: FontSize.Small_L }]}>{currentContent}</Text>
+                                                    <Text selectable adjustsFontSizeToFit style={[{ flexWrap: 'wrap', color: theme.text, fontSize: FontSize.Small_L }]}>{selectingItem?.desc}</Text>
                                                 </ScrollView>
                                             </View>
                                             {
-                                                !showFull || !currentLink ? undefined :
+                                                !showFull || !selectingItem?.url ? undefined :
                                                     <View style={[{ backgroundColor: 'green' }, CommonStyles.width100Percent_Height100Percent_PositionAbsolute_JustifyContentCenter_AlignItemsCenter]}>
                                                         <WebView
-                                                            source={{ uri: currentLink }}
+                                                            source={{ uri: selectingItem?.url }}
                                                             containerStyle={{ width: '100%', height: '100%' }}
                                                         />
                                                     </View>
