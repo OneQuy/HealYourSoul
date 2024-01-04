@@ -5,6 +5,8 @@ type ReturnType = 'uri' | 'json' | 'text'
 
 /**
  * hook runs whenever [remoteVersion] changed
+ * 
+ * note: still handling if result === undefined && error === undefined
  * @returns result: undefined if error
  * @returns error: undefined if success or error
  * 

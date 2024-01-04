@@ -1,7 +1,7 @@
 import { Share as RNShare, View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, Image, ShareContent, Alert, Linking } from 'react-native'
 import React, { LegacyRef, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
-import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size, StorageKey_LocalFileVersion, StorageKey_Streak } from '../../constants/AppConstants'
+import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size, StorageKey_LocalFileVersion, StorageKey_SelectingFunWebsiteId, StorageKey_Streak } from '../../constants/AppConstants'
 import Share from 'react-native-share';
 
 
@@ -38,14 +38,15 @@ const FunWebsitesScreen = () => {
     const navigation = useNavigation();
     const reasonToReload = useRef<NeedReloadReason>(NeedReloadReason.None);
     const theme = useContext(ThemeContext);
-    const [handling, setHandling] = useState(false);
-    const [streakData, setStreakData] = useState<Streak | undefined>(undefined);
+    const [handling, setHandling] = useState(true)
+    const [streakData, setStreakData] = useState<Streak | undefined>(undefined)
     const [showFull, setShowFull] = useState(false)
-    const [selectingPhotoIndex, setSelectingPhotoIndex] = useState(0)
+    const [selectingItem, setSelectingItem] = useState<FunWebsite | undefined>(undefined)
+    // const [selectingPhotoIndex, setSelectingPhotoIndex] = useState(0)
 
     const viewShotRef = useRef<LegacyRef<ViewShot> | undefined>();
 
-    const [funWebsites, errorDownloadJson, isDataLatestFromRemoteOrLocal, reUpdateJson] = useCheckAndDownloadRemoteFile<FunWebsite[]>(
+    const [funWebsites, errorDownloadJson, _, reUpdateJson] = useCheckAndDownloadRemoteFile<FunWebsite[]>(
         fileURL,
         TempDirName + '/fun_website.json',
         true,
@@ -55,14 +56,16 @@ const FunWebsitesScreen = () => {
         async () => AsyncStorage.getItem(StorageKey_LocalFileVersion(category)),
         async () => AsyncStorage.setItem(StorageKey_LocalFileVersion(category), GetRemoteFileConfigVersion('fun_websites').toString()))
 
-    const selectingItem = useMemo(() => {
-        if (!Array.isArray(funWebsites))
-            return undefined
-
-        return funWebsites[selectingPhotoIndex]
-    }, [funWebsites])
-
     const [isFavorited, likeCount, onPressFavorite] = useIsFavorited(category, selectingItem?.id)
+
+    const getSelectingIdAsync = useCallback(async () => {
+        const s = await AsyncStorage.getItem(StorageKey_SelectingFunWebsiteId)
+        return typeof s === 'string' ? Number.parseInt(s) : -1
+    }, [])
+
+    const setSelectingIdAsync = useCallback(async (id: number) => {
+        await AsyncStorage.setItem(StorageKey_SelectingFunWebsiteId, id.toString())
+    }, [])
 
     const onPressLink = useCallback(async () => {
         if (!selectingItem)
@@ -71,26 +74,28 @@ const FunWebsitesScreen = () => {
         Linking.openURL(selectingItem.url)
     }, [selectingItem])
 
-    const onPressRandom = useCallback(async () => {
-        // reasonToReload.current = NeedReloadReason.None
-        // setHandling(true)
-        // setShowFull(false)
+    const onPressNext = useCallback(async () => {
+        if (!Array.isArray(funWebsites)) {
+            setSelectingItem(undefined)
+            return
+        }
 
-        // const res = await GetWikiAsync()
+        let id = await getSelectingIdAsync()
+        id++
 
-        // setData(res)
+        let web = funWebsites.find(w => w.id === id)
 
-        // if (typeof res === 'object') { // success
-        //     SetStreakAsync(Category[category], -1)
-        // }
-        // else { // fail
-        //     if (NetLord.IsAvailableLastestCheck())
-        //         reasonToReload.current = NeedReloadReason.FailToGetContent
-        //     else
-        //         reasonToReload.current = NeedReloadReason.NoInternet
-        // }
+        if (!web) {
+            web = funWebsites[0]
+            id = 0
+        }
 
-        // setHandling(false)
+        setSelectingIdAsync(id)
+
+        setSelectingItem(web)
+        setShowFull(false)
+
+        SetStreakAsync(Category[category], -1)
     }, [funWebsites])
 
     const onPressCopy = useCallback(() => {
@@ -145,11 +150,30 @@ const FunWebsitesScreen = () => {
         // })
     }, [selectingItem, theme])
 
-    // on init once (for load first post)
+    // for load data
+
+    useEffect(() => {
+        reasonToReload.current = NeedReloadReason.None
+
+        if (funWebsites) { // downloaded success
+            setHandling(false)
+            onPressNext()
+        }
+        else if (errorDownloadJson) { // download failed
+            setHandling(false)
+
+            if (NetLord.IsAvailableLastestCheck())
+                reasonToReload.current = NeedReloadReason.FailToGetContent
+            else
+                reasonToReload.current = NeedReloadReason.NoInternet
+        }
+    }, [funWebsites, errorDownloadJson])
+
+    // on init once
 
     useEffect(() => {
         SetStreakAsync(Category[category])
-        onPressRandom()
+        // onPressRandom()
     }, [])
 
     // on change theme
@@ -182,7 +206,7 @@ const FunWebsitesScreen = () => {
                                 {
                                     reasonToReload.current !== NeedReloadReason.None ?
                                         // true ?
-                                        <TouchableOpacity onPress={onPressRandom} style={[{ gap: Outline.GapVertical }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]} >
+                                        <TouchableOpacity onPress={onPressNext} style={[{ gap: Outline.GapVertical }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]} >
                                             <MaterialCommunityIcons name={reasonToReload.current === NeedReloadReason.NoInternet ? Icon.NoInternet : Icon.HeartBroken} color={theme.primary} size={Size.IconBig} />
                                             <Text style={{ fontSize: FontSize.Normal, color: theme.counterPrimary }}>{reasonToReload.current === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
                                             <Text style={{ fontSize: FontSize.Small_L, color: theme.counterPrimary }}>{LocalText.tap_to_retry}</Text>
@@ -222,7 +246,7 @@ const FunWebsitesScreen = () => {
                     <MaterialCommunityIcons name={showFull ? Icon.X : Icon.Book} color={theme.counterPrimary} size={Size.Icon} />
                     <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{showFull ? '' : LocalText.read_full}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={onPressRandom} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
+                <TouchableOpacity onPress={onPressNext} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
                     <MaterialCommunityIcons name={Icon.Dice} color={theme.counterPrimary} size={Size.Icon} />
                     <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{LocalText.random}</Text>
                 </TouchableOpacity>

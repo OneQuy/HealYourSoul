@@ -1,5 +1,5 @@
 {
-    "IsClearAllLocalFileBeforeLoadApp": 0,
+    "IsClearAllLocalFileBeforeLoadApp": 1,
     "ClearAllUserData": 0,
     "IsLog_CurrentPost": 0,
     "IsLog_TimeVersion": 0,

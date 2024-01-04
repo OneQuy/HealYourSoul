@@ -261,6 +261,7 @@ export const StorageKey_AwardPictureLastSeenIdxOfYear = (year: number) => 'award
 export const StorageKey_LocalFileVersion = (cat: Category) => 'local_file_version_' + cat
 
 export const StorageKey_Streak = 'streak'
+export const StorageKey_SelectingFunWebsiteId = 'selecting_fun_website_id'
 
 export const StorageKey_TriviaDifficulty = 'trivia_diff'
 export const StorageKey_TriviaAnswerType = 'trivia_type'
