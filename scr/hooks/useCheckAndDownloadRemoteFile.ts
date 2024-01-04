@@ -20,7 +20,7 @@ const [result, error, isDataLatestFromRemoteOrLocal, reUpdate] = useCheckAndDown
         async () => AsyncStorage.getItem(StorageKey_LocalFileVersion(category)),
         async () => AsyncStorage.setItem(StorageKey_LocalFileVersion(category), GetRemoteFileConfigVersion('fun_websites').toString()))
  */
-export default function useCheckAndDownloadRemoteFile(
+export default function useCheckAndDownloadRemoteFile<T extends object>(
     fileURL: string,
     localPath: string,
     isRLP: boolean,
@@ -30,11 +30,11 @@ export default function useCheckAndDownloadRemoteFile(
     localVersionGetterAsync: () => Promise<any>,
     localVersionSetterAsync: () => Promise<void>,
 ): readonly [
-    result: string | object | undefined,
+    result: string | T | undefined,
     error: any,
     isDataLatestFromRemoteOrLocal: boolean,
     reUpdate: () => void] {
-    const [result, setResult] = useState<string | object | undefined>(undefined)
+    const [result, setResult] = useState<string | T | undefined>(undefined)
     const [error, setError] = useState<any>(undefined)
     const [isDataLatestFromRemoteOrLocal, setIsDataLatestFromRemoteOrLocal] = useState(false)
 
@@ -123,7 +123,7 @@ export default function useCheckAndDownloadRemoteFile(
             if (returnType === 'text')
                 setResult(readLocalRes.text)
             else
-                setResult(JSON.parse(readLocalRes.text))
+                setResult(JSON.parse(readLocalRes.text) as T)
 
             setError(undefined)
             setIsDataLatestFromRemoteOrLocal(downloadError === undefined)

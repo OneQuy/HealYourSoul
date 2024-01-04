@@ -24,11 +24,6 @@ export type AppConfig = {
     remote_files: object,
 }
 
-export type RemoteFileConfig = {
-    file: string,
-    version: number,
-}
-
 export type SubscribedData = {
     id: string,
     tick: number,
@@ -50,6 +45,13 @@ export type Streak = {
     bestStreak: number,
     currentStreak: number,
     lastDateTick: number,
+}
+
+export type FunWebsite = {
+    "id": number,
+    "url": string,
+    "desc": string,
+    "img": string,
 }
 
 export type PhotosOfTheYear = {
