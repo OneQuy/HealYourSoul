@@ -44,7 +44,7 @@ export default function useCheckAndDownloadRemoteFile(
             console.log('[useCheckAndDownloadRemoteFile] isNeedToDownload cuz diff version')
 
         return localVersion !== remoteVersion
-    }, [remoteVersion, localVersionGetterAsync, localPath, isRLP])
+    }, [remoteVersion])
 
     const mainHanldeAsync = useCallback(async () => {
         let downloadError = undefined
@@ -128,11 +128,11 @@ export default function useCheckAndDownloadRemoteFile(
             if (isLog)
                 console.log('[useCheckAndDownloadRemoteFile] result fail')
         }
-    }, [fileURL, localPath, isRLP, isNeedToDownloadAsync])
+    }, [isNeedToDownloadAsync])
 
     useEffect(() => {
         mainHanldeAsync()
-    }, [fileURL, localPath])
+    }, [mainHanldeAsync])
 
     return [
         result,

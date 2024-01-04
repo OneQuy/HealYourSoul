@@ -44,14 +44,14 @@ const FunWebsitesScreen = () => {
     const viewShotRef = useRef<LegacyRef<ViewShot> | undefined>();
 
     const [result, error, isDataLatestFromRemoteOrLocal] = useCheckAndDownloadRemoteFile(
-            fileURL,
-            TempDirName + '/fun_website.json',
-            true,
-            GetRemoteFileConfigVersion('fun_websites'),
-            'json',
-            true,
-            async () => AsyncStorage.getItem(StorageKey_LocalFileVersion(category)),
-            async () => AsyncStorage.setItem(StorageKey_LocalFileVersion(category), GetRemoteFileConfigVersion('fun_websites').toString()))
+        fileURL,
+        TempDirName + '/fun_website.json',
+        true,
+        GetRemoteFileConfigVersion('fun_websites'),
+        'json',
+        true,
+        async () => AsyncStorage.getItem(StorageKey_LocalFileVersion(category)),
+        async () => AsyncStorage.setItem(StorageKey_LocalFileVersion(category), GetRemoteFileConfigVersion('fun_websites').toString()))
 
     // console.log('result', typeof result, isDataLatestFromRemoteOrLocal, error)
 
