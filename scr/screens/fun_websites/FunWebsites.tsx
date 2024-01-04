@@ -101,11 +101,11 @@ const FunWebsitesScreen = () => {
     }, [funWebsites, reUpdateData])
 
     const onPressCopy = useCallback(() => {
-        // if (!currentContent)
-        //     return
+        if (!selectingItem)
+            return
 
-        // const message = currentTitle + '\n\n' + currentContent + '\n\nLink: ' + currentLink
-        // CopyAndToast(message, theme)
+        const message = selectingItem.desc + '\n\n' + selectingItem.url
+        CopyAndToast(message, theme)
     }, [selectingItem, theme])
 
     const onPressHeaderOption = useCallback(async () => {
@@ -118,38 +118,39 @@ const FunWebsitesScreen = () => {
     }, [streakData])
 
     const onPressShareText = useCallback(() => {
-        // if (!currentContent)
-        //     return
+        if (!selectingItem)
+            return
 
-        // RNShare.share({
-        //     title: LocalText.fact_of_the_day,
-        //     message: currentTitle + '\n\n' + currentContent + '\n\nLink: ' + currentLink,
-        // } as ShareContent,
-        //     {
-        //         tintColor: theme.primary,
-        //     } as ShareOptions)
+        const message = selectingItem.desc + '\n\n' + selectingItem.url
+
+        RNShare.share({
+            title: LocalText.fact_of_the_day,
+            message,
+        } as ShareContent,
+            {
+                tintColor: theme.primary,
+            } as ShareOptions)
     }, [selectingItem, theme])
 
     const onPressShareImage = useCallback(() => {
-        // if (!currentContent)
-        //     return
+        if (!selectingItem)
+            return
 
-        // const message = currentTitle + '\n\n' + currentContent + '\n\nLink: ' + currentLink
+        const message = selectingItem.desc + '\n\n' + selectingItem.url
+        // @ts-ignore
+        viewShotRef.current.capture().then(async (uri: string) => {
+            Share
+                .open({
+                    message,
+                    url: uri,
+                })
+                .catch((err) => {
+                    const error = ToCanPrint(err)
 
-        // // @ts-ignore
-        // viewShotRef.current.capture().then(async (uri: string) => {
-        //     Share
-        //         .open({
-        //             message,
-        //             url: uri,
-        //         })
-        //         .catch((err) => {
-        //             const error = ToCanPrint(err)
-
-        //             if (!error.includes('User did not share'))
-        //                 Alert.alert('Fail', error)
-        //         });
-        // })
+                    if (!error.includes('User did not share'))
+                        Alert.alert('Fail', error)
+                });
+        })
     }, [selectingItem, theme])
 
     // for load data
@@ -244,6 +245,13 @@ const FunWebsitesScreen = () => {
             </ViewShot>
             {/* main btn */}
             <View style={styleSheet.mainButtonsView}>
+                <TouchableOpacity onPress={onPressFavorite} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
+                    <MaterialCommunityIcons name={!isFavorited ? "cards-heart-outline" : 'cards-heart'} color={theme.counterPrimary} size={Size.IconSmaller} />
+                    {
+                        Number.isNaN(likeCount) ? undefined :
+                            <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{likeCount}</Text>
+                    }
+                </TouchableOpacity>
                 <TouchableOpacity onPress={() => setShowFull(!showFull)} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
                     <MaterialCommunityIcons name={showFull ? Icon.X : Icon.Eye} color={theme.counterPrimary} size={Size.Icon} />
                     <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{showFull ? '' : LocalText.go}</Text>
