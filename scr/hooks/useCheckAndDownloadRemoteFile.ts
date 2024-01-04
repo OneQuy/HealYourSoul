@@ -100,7 +100,7 @@ export default function useCheckAndDownloadRemoteFile<T extends object>(
                 setIsDataLatestFromRemoteOrLocal(downloadError === undefined)
 
                 if (isLog)
-                    console.log('[useCheckAndDownloadRemoteFile] uri SUCCESS: ' + uri)
+                    console.log('[useCheckAndDownloadRemoteFile] SUCCESS ' + (downloadError === undefined ? '(latest data), uri: ' : '(local data), uri: ') + uri)
             }
             else {
                 setResult(undefined)
@@ -131,7 +131,7 @@ export default function useCheckAndDownloadRemoteFile<T extends object>(
             setIsDataLatestFromRemoteOrLocal(downloadError === undefined)
 
             if (isLog)
-                console.log('[useCheckAndDownloadRemoteFile] SUCCESS')
+                console.log('[useCheckAndDownloadRemoteFile] SUCCESS ' + (downloadError === undefined ? '(latest data)' : '(local data)'))
         }
         else { // read local fail
             setResult(undefined)
