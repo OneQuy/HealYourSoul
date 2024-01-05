@@ -62,12 +62,12 @@ const GenDataTopMovies = async () => {
             if (!currentItem)
                 continue
 
-            line = line.replaceAll('<span class="sc-43986a27-8 jHYIIK dli-title-metadata-item">', '')
+            line = line.replaceAll('<span class="sc-43986a27-8 jHYIIK dli-title-metadata-item">', ' ')
             line = line.replaceAll('</span><span class="sc-43986a27-8 jHYIIK dli-title-metadata-item">', ' ')
-            // line = line.replace('</span><span class="sc-43986a27-8 jHYIIK dli-title-metadata-item">', ' ')
-            line = line.replace('</span>', '')
+            line = line.replaceAll('</span>', ' ')
+            line = line.replaceAll('  ', ' ')
 
-            currentItem.info = line
+            currentItem.info = line.trim()
 
             line = lines[i + 1].trim()
             i++
@@ -75,7 +75,7 @@ const GenDataTopMovies = async () => {
             const rate = GetMiddleText(line)
             currentItem.info += ' ' + rate
 
-            log(currentItem.title, rate)
+            // log(currentItem.title, rate)
         }
 
         else if (line.includes('class="ipc-rating-star--voteCoun')) {
@@ -91,7 +91,7 @@ const GenDataTopMovies = async () => {
             if (!currentItem)
                 continue
 
-            currentItem.desc = GetMiddleText(line)
+            currentItem.desc = GetMiddleText(GetMiddleText(line))
 
             if (!currentItem.desc && !line.includes('</div>')) {
                 // LogRed(currentItem.title)
