@@ -104,7 +104,7 @@ const style = StyleSheet.create({
   topMasterView: { flexDirection: 'row', gap: Outline.GapVertical, marginBottom: Outline.GapVertical, },
   logoImg: { width: Size.IconBig, height: Size.IconBig },
   appNameText: { fontSize: FontSize.Normal, fontWeight: FontWeight.Bold },
-  bottomMasterView: { marginLeft: Outline.Horizontal, marginBottom: Outline.Horizontal, gap: Outline.GapVertical_2 },
+  bottomMasterView: { marginLeft: Outline.Horizontal, marginVertical: Outline.Horizontal, gap: Outline.GapVertical_2 },
   premiumIB: { flexDirection: 'row', gap: Outline.GapHorizontal, padding: Outline.GapVertical_2, marginRight: Outline.Horizontal, borderRadius: BorderRadius.BR8, overflow: 'hidden', },
   premiumText: { color: 'black', fontSize: FontSize.Small_L, fontWeight: FontWeight.B500 },
 })
