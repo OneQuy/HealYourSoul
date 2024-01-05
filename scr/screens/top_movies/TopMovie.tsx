@@ -246,8 +246,9 @@ const TopMovieScreen = () => {
                                                     <Text selectable adjustsFontSizeToFit style={[{ flexWrap: 'wrap', color: theme.text, fontSize: FontSize.Small_L }]}>{selectingItem?.desc}</Text>
                                                 </ScrollView>
                                             </View>
-                                            <View style={{ position: 'absolute', }}>
-                                                <Text style={[{ backgroundColor: RGBToRGBAText('gold', 0.2), width: widthPercentageToDP(15), height: widthPercentageToDP(15), color: theme.text, fontSize: FontSize.Normal }]}>#{selectingItem?.rank}</Text>
+                                            <View style={[styleSheet.rankView]}>
+                                                <View style={styleSheet.rankBGView} />
+                                                <Text style={[{ color: theme.text}, styleSheet.rankText]}>#{'\n' + selectingItem?.rank}</Text>
                                             </View>
                                         </View>
                                 }
@@ -314,4 +315,7 @@ const styleSheet = StyleSheet.create({
     titleText: { flex: 1, textAlign: 'center', fontSize: FontSize.Normal },
     titleContainerView: { paddingHorizontal: Outline.GapVertical, flexDirection: 'row', gap: Outline.GapHorizontal },
     showListIconView: { padding: Outline.GapHorizontal, borderWidth: StyleSheet.hairlineWidth, borderRadius: BorderRadius.BR8 },
+    rankView: { position: 'absolute' },
+    rankText: { fontSize: FontSize.Small_L, padding: Outline.GapHorizontal, fontWeight: FontWeight.B600, textAlign: 'center' },
+    rankBGView: { position: 'absolute', left: -widthPercentageToDP(11), top: -heightPercentageToDP(3), width: widthPercentageToDP(30), height: heightPercentageToDP(10), backgroundColor: 'gold', transform: [{ rotateZ: '-45deg' }] },
 })
