@@ -47,6 +47,13 @@ export type Streak = {
     lastDateTick: number,
 }
 
+export type TopMovie = {
+    "rank": number,
+    "title": string,
+    "desc": string,
+    "thumbnailUri": string,
+}
+
 export type FunWebsite = {
     "id": number,
     "url": string,

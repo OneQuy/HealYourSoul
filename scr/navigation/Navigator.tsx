@@ -21,6 +21,7 @@ import TheTriviaScreen from '../screens/trivia/TriviaScreen';
 import PicturesOfTheYearScreen from '../screens/pic_of_the_year/PicturesOfTheYearScreen';
 import WikipediaScreen from '../screens/wiki/WikipediaScreen';
 import FunWebsitesScreen from '../screens/fun_websites/FunWebsites';
+import TopMovieScreen from '../screens/top_movies/TopMovie';
 
 export type DrawerParamList = {
   [ScreenName.Meme]: undefined,
@@ -42,6 +43,7 @@ export type DrawerParamList = {
   [ScreenName.QuoteText]: undefined,
   [ScreenName.AwardPicture]: undefined,
   [ScreenName.FunWebsite]: undefined,
+  // [ScreenName.TopMovie]: undefined,
   // [ScreenName.Reminder]: undefined,
   [ScreenName.IAPPage]: undefined,
 }
@@ -74,6 +76,7 @@ const ScreenList: ScreenNamePair[] = [
   [ScreenName.Picture, PictureScreen],
   [ScreenName.AwardPicture, PicturesOfTheYearScreen],
   [ScreenName.FunWebsite, FunWebsitesScreen],
+  // [ScreenName.TopMovie, TopMovieScreen],
   // [ScreenName.Reminder, ReminderScreen],
   [ScreenName.IAPPage, IAPPage],
 ]
