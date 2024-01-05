@@ -239,13 +239,15 @@ const TopMovieScreen = () => {
                                                 <Text selectable style={[styleSheet.titleView, { color: theme.text, }]}>{selectingItem?.title}</Text>
                                                 <MaterialCommunityIcons name={Icon.Link} color={theme.text} size={Size.IconSmaller} />
                                             </TouchableOpacity>
+                                            <Text selectable style={[styleSheet.infoTextView, { color: theme.text, }]}>{selectingItem?.info}</Text>
+                                            <Text selectable style={[styleSheet.infoTextView, { color: theme.text, }]}>{selectingItem?.rate}</Text>
                                             <View style={styleSheet.contentScrollView}>
                                                 <ScrollView >
                                                     <Text selectable adjustsFontSizeToFit style={[{ flexWrap: 'wrap', color: theme.text, fontSize: FontSize.Small_L }]}>{selectingItem?.desc}</Text>
                                                 </ScrollView>
                                             </View>
                                             <View style={{ position: 'absolute', }}>
-                                                <Text style={[{ backgroundColor: RGBToRGBAText('gold', 0.2), width: widthPercentageToDP(15),height: widthPercentageToDP(15), color: theme.text, fontSize: FontSize.Normal }]}>#{selectingItem?.rank}</Text>
+                                                <Text style={[{ backgroundColor: RGBToRGBAText('gold', 0.2), width: widthPercentageToDP(15), height: widthPercentageToDP(15), color: theme.text, fontSize: FontSize.Normal }]}>#{selectingItem?.rank}</Text>
                                             </View>
                                         </View>
                                 }
@@ -303,10 +305,11 @@ const styleSheet = StyleSheet.create({
     mainBtnTO: { paddingVertical: Outline.GapVertical, flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', },
     subBtnTO: { justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', },
     headerOptionTO: { marginRight: 15 },
-    image: { width: widthPercentageToDP(100), height: heightPercentageToDP(50) },
+    image: { width: widthPercentageToDP(100), height: heightPercentageToDP(45) },
     contentView: { flex: 1, gap: Outline.GapVertical, paddingTop: Outline.GapHorizontal },
     contentScrollView: { flex: 1, marginHorizontal: Outline.GapVertical_2 },
     titleView: { fontSize: FontSize.Normal, fontWeight: FontWeight.B500 },
+    infoTextView: { paddingLeft: Outline.Horizontal, fontSize: FontSize.Small_L, },
     titleTO: { marginHorizontal: Outline.GapVertical_2, flexDirection: 'row', justifyContent: 'space-between' },
     titleText: { flex: 1, textAlign: 'center', fontSize: FontSize.Normal },
     titleContainerView: { paddingHorizontal: Outline.GapVertical, flexDirection: 'row', gap: Outline.GapHorizontal },
