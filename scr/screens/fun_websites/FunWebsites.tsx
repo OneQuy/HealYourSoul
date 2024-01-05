@@ -30,6 +30,7 @@ import { TempDirName } from '../../handle/Utils';
 import { GetRemoteFileConfigVersion } from '../../handle/AppConfigHandler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import useIsFavorited from '../../hooks/useIsFavorited';
+import ListWebsite from './ListWebsite';
 
 const category = Category.FunWebsites
 const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Ffun_websites.json?alt=media&token=10ecb626-e576-49d4-b124-a9ba148a93a6'
@@ -42,8 +43,7 @@ const FunWebsitesScreen = () => {
     const [streakData, setStreakData] = useState<Streak | undefined>(undefined)
     const [showFull, setShowFull] = useState(false)
     const [selectingItem, setSelectingItem] = useState<FunWebsite | undefined>(undefined)
-    // const [selectingPhotoIndex, setSelectingPhotoIndex] = useState(0)
-
+    const [isShowList, setIsShowList] = useState(false)
     const viewShotRef = useRef<LegacyRef<ViewShot> | undefined>();
 
     const [funWebsites, errorDownloadJson, _, reUpdateData] = useCheckAndDownloadRemoteFile<FunWebsite[]>(
@@ -74,8 +74,9 @@ const FunWebsitesScreen = () => {
         Linking.openURL(selectingItem.url)
     }, [selectingItem])
 
-    const onPressNext = useCallback(async () => {
+    const onPressNext = useCallback(async (toId: number = -1) => {
         setSelectingItem(undefined)
+        setIsShowList(false)
 
         if (!Array.isArray(funWebsites)) {
             reUpdateData()
@@ -83,8 +84,12 @@ const FunWebsitesScreen = () => {
             return
         }
 
-        let id = await getSelectingIdAsync()
-        id++
+        let id = toId
+
+        if (id < 0) {
+            id = await getSelectingIdAsync()
+            id++
+        }
 
         let web = funWebsites.find(w => w.id === id)
 
@@ -208,13 +213,19 @@ const FunWebsitesScreen = () => {
                             <View style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
                                 {
                                     reasonToReload.current !== NeedReloadReason.None ?
-                                        <TouchableOpacity onPress={onPressNext} style={[{ gap: Outline.GapVertical }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]} >
+                                        <TouchableOpacity onPress={() => onPressNext()} style={[{ gap: Outline.GapVertical }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]} >
                                             <MaterialCommunityIcons name={reasonToReload.current === NeedReloadReason.NoInternet ? Icon.NoInternet : Icon.HeartBroken} color={theme.primary} size={Size.IconBig} />
                                             <Text style={{ fontSize: FontSize.Normal, color: theme.counterPrimary }}>{reasonToReload.current === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
                                             <Text style={{ fontSize: FontSize.Small_L, color: theme.counterPrimary }}>{LocalText.tap_to_retry}</Text>
                                         </TouchableOpacity>
                                         :
                                         <View style={styleSheet.contentView}>
+                                            <View onTouchEnd={() => setIsShowList(true)} style={[styleSheet.rewardContainerView, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
+                                                <Text style={[{ color: theme.text, }, styleSheet.rewardText]}>{selectingItem?.url}</Text>
+                                                <View style={styleSheet.showListIconView}>
+                                                    <MaterialCommunityIcons name={Icon.List} color={theme.counterPrimary} size={Size.Icon} />
+                                                </View>
+                                            </View>
                                             <ImageBackgroundWithLoading resizeMode='contain' source={{ uri: selectingItem?.img }} style={styleSheet.image} indicatorProps={{ color: theme.text }} />
                                             <TouchableOpacity onPress={onPressLink} style={styleSheet.titleTO}>
                                                 <Text selectable style={[styleSheet.titleView, { color: theme.text, }]}>{selectingItem?.url}</Text>
@@ -253,7 +264,7 @@ const FunWebsitesScreen = () => {
                     <MaterialCommunityIcons name={showFull ? Icon.X : Icon.Eye} color={theme.counterPrimary} size={Size.Icon} />
                     <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{showFull ? '' : LocalText.go}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={onPressNext} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
+                <TouchableOpacity onPress={() => onPressNext()} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
                     <MaterialCommunityIcons name={Icon.Dice} color={theme.counterPrimary} size={Size.Icon} />
                     <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{LocalText.next}</Text>
                 </TouchableOpacity>
@@ -277,6 +288,9 @@ const FunWebsitesScreen = () => {
 
             </View>
             {
+                isShowList && Array.isArray(funWebsites) ? <ListWebsite getSelectingIdAsync={getSelectingIdAsync} setIdx={onPressNext} list={funWebsites} /> : undefined
+            }
+            {
                 streakData ? <StreakPopup streak={streakData} /> : undefined
             }
         </View>
@@ -292,8 +306,11 @@ const styleSheet = StyleSheet.create({
     subBtnTO: { justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', },
     headerOptionTO: { marginRight: 15 },
     image: { width: widthPercentageToDP(100), height: heightPercentageToDP(50) },
-    contentView: { flex: 1, gap: Outline.GapVertical },
+    contentView: { flex: 1, gap: Outline.GapVertical, paddingTop: Outline.GapHorizontal },
     contentScrollView: { flex: 1, marginHorizontal: Outline.GapVertical_2 },
     titleView: { fontSize: FontSize.Normal, fontWeight: FontWeight.B500 },
-    titleTO: { marginHorizontal: Outline.GapVertical_2, flexDirection: 'row', justifyContent: 'space-between' }
+    titleTO: { marginHorizontal: Outline.GapVertical_2, flexDirection: 'row', justifyContent: 'space-between' },
+    rewardText: { flex: 1, fontWeight: FontWeight.B600, textAlign: 'center', fontSize: FontSize.Normal },
+    rewardContainerView: { paddingHorizontal: Outline.GapVertical, flexDirection: 'row', gap: Outline.GapHorizontal },
+    showListIconView: { padding: Outline.GapHorizontal, borderWidth: StyleSheet.hairlineWidth, borderRadius: BorderRadius.BR8 },
 })
