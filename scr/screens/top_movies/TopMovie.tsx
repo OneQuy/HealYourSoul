@@ -301,7 +301,7 @@ const styleSheet = StyleSheet.create({
     mainBtnTO: { paddingVertical: Outline.GapVertical, flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', },
     subBtnTO: { justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', },
     headerOptionTO: { marginRight: 15 },
-    image: { width: widthPercentageToDP(100), height: heightPercentageToDP(45) },
+    image: { width: widthPercentageToDP(100), height: heightPercentageToDP(40) },
     contentView: { flex: 1, gap: Outline.GapVertical, paddingTop: Outline.GapHorizontal },
     contentScrollView: { flex: 1, marginHorizontal: Outline.GapVertical_2 },
     titleView: { marginLeft: Outline.Horizontal, fontSize: FontSize.Normal, fontWeight: FontWeight.B500 },
