@@ -21,6 +21,7 @@ import { ToCanPrint } from '../../handle/UtilsTS';
 import { DownloadFileAsync, GetFLPFromRLP } from '../../handle/FileUtils';
 import { SaveToGalleryAsync } from '../../handle/CameraRoll';
 import { ToastOptions, toast } from '@baronha/ting';
+import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading';
 
 interface TheRandomImageProps {
     category: Category,
@@ -161,7 +162,8 @@ const TheRandomImage = ({
                                     </TouchableOpacity>
                                     :
                                     <TouchableWithoutFeedback onPress={onPressRandom}>
-                                        <Image resizeMode='contain' source={{ uri: imageUri }} style={styleSheet.image} />
+                                        {/* <Image resizeMode='contain' source={{ uri: imageUri }} style={styleSheet.image} /> */}
+                                        <ImageBackgroundWithLoading resizeMode='contain' source={{ uri: imageUri }} style={styleSheet.image} />
                                     </TouchableWithoutFeedback>
                             }
                         </View>
