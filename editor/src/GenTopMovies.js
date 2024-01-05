@@ -131,7 +131,7 @@ const GenDataTopMovies = async () => {
     const t = JSON.stringify(arr, null, 1)
     fs.writeFileSync(filepath, t)
 
-    // console.log(t)
+    console.log('count ' + arr.length)
 
     LogGreen('done')
 }
