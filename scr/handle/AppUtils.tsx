@@ -56,7 +56,7 @@ export const GetExpiredDateAndDaysLeft = (startDayTick: number, month: number, e
     return [expiredDate, dayLeft]
 }
 
-export const FillPathPattern = (pattern: string, cat: Category, postID: number) => {
+export const FillPathPattern = (pattern: string, cat: Category, postID: number | string) => {
     return pattern.replace('@id', postID.toString()).replace('@cat', Category[cat])
 }
 

@@ -4,7 +4,7 @@ import { RootState, useAppDispatch, useAppSelector } from "../redux/Store";
 import { addDrawFavoritedID, addQuoteFavoritedID, addMemeFavoritedID, removeDrawFavoritedID, removeQuoteFavoritedID, removeMemeFavoritedID, removeLoveFavoritedID, addLoveFavoritedID, removeSatisfyingFavoritedID, addSatisfyingFavoritedID, removeCatDogFavoritedID, addCatDogFavoritedID, removeNSFWFavoritedID, addNSFWFavoritedID, removeCuteFavoritedID, addCuteFavoritedID, removeArtFavoritedID, addArtFavoritedID, removeSarcasmFavoritedID, addSarcasmFavoritedID, removeAwardPictureFavoritedID, addAwardPictureFavoritedID, removeFunWebsiteFavoritedID, addFunWebsiteFavoritedID, removeTopMovieFavoritedID, addTopMovieFavoritedID } from '../redux/UserDataSlice'
 import { GetPostLikeCountAsync, LikePostAsync } from "../handle/LikeCountHandler";
 
-export default function useIsFavorited(category: Category, id: number | undefined)
+export default function useIsFavorited(category: Category, id: number | string | undefined)
     : readonly [isFavorited: boolean, likeCount: number, onPressFavorite: () => void] {
     const dispatch = useAppDispatch()    
     const [likeCount, setLikeCount] = useState<number>(Number.NaN);
