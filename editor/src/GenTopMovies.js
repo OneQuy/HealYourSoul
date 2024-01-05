@@ -115,12 +115,16 @@ const GenDataTopMovies = async () => {
             }
 
             if (currentItem.thumbnailUri &&
+                currentItem.desc &&
+                currentItem.rank > 0 &&
+                currentItem.info &&
+                currentItem.rate &&
                 currentItem.title) { // is valid
                 arr.push(currentItem)
                 // break
             }
             else {
-                // LogRed(JSON.stringify( currentItem))
+                LogRed('mising info: ' + JSON.stringify( currentItem))
             }
 
             currentItem = undefined
@@ -131,7 +135,7 @@ const GenDataTopMovies = async () => {
     const t = JSON.stringify(arr, null, 1)
     fs.writeFileSync(filepath, t)
 
-    console.log('count ' + arr.length)
+    console.log('validated all. count ' + arr.length)
 
     LogGreen('done')
 }
