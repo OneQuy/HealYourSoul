@@ -57,6 +57,8 @@ const DrawerSingleItem = ({
             return 'crown'
         else if (route.name === ScreenName.WikiFact)
             return 'book-open-variant'
+        else if (route.name === ScreenName.FunWebsite)
+            return 'web'
         else
             return Icon.HeartBroken
     }, [])
