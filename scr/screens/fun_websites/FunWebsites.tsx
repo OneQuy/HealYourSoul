@@ -58,6 +58,14 @@ const FunWebsitesScreen = () => {
 
     const [isFavorited, likeCount, onPressFavorite] = useIsFavorited(category, selectingItem?.id)
 
+    const shortUrl = useMemo(() => {
+        if (!selectingItem)
+            return ''
+
+        const urlShort = selectingItem.url.replaceAll('https://', '')
+        return urlShort.replaceAll('www.', '')
+    }, [selectingItem])
+
     const getSelectingIdAsync = useCallback(async () => {
         const s = await AsyncStorage.getItem(StorageKey_SelectingFunWebsiteId)
         return typeof s === 'string' ? Number.parseInt(s) : -1
@@ -221,7 +229,7 @@ const FunWebsitesScreen = () => {
                                         :
                                         <View style={styleSheet.contentView}>
                                             <View onTouchEnd={() => setIsShowList(true)} style={[styleSheet.rewardContainerView, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
-                                                <Text style={[{ color: theme.text, }, styleSheet.rewardText]}>{selectingItem?.url}</Text>
+                                                <Text style={[{ color: theme.text, }, styleSheet.rewardText]}>{shortUrl}</Text>
                                                 <View style={styleSheet.showListIconView}>
                                                     <MaterialCommunityIcons name={Icon.List} color={theme.counterPrimary} size={Size.Icon} />
                                                 </View>
