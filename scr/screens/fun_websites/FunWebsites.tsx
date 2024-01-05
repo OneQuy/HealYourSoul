@@ -75,13 +75,14 @@ const FunWebsitesScreen = () => {
     }, [selectingItem])
 
     const onPressNext = useCallback(async () => {
+        setSelectingItem(undefined)
+
         if (!Array.isArray(funWebsites)) {
-            setSelectingItem(undefined)
             reUpdateData()
             setHandling(true)
             return
         }
-
+        
         let id = await getSelectingIdAsync()
         id++
 
@@ -193,7 +194,7 @@ const FunWebsitesScreen = () => {
     // save last visit category screen
 
     useFocusEffect(useCallback(() => SaveCurrentScreenForLoadNextTime(navigation), []))
-
+    
     return (
         <View pointerEvents={handling ? 'none' : 'auto'} style={[styleSheet.masterView, { backgroundColor: theme.background }]}>
             {/* @ts-ignore */}
@@ -217,7 +218,7 @@ const FunWebsitesScreen = () => {
                                         :
                                         <View style={styleSheet.contentView}>
                                             <View style={CommonStyles.justifyContentCenter_AlignItemsCenter}>
-                                                <ImageBackgroundWithLoading resizeMode='contain' source={{ uri: selectingItem?.img }} style={styleSheet.image} indicatorProps={{ color: theme.text }} />
+                                                <ImageBackgroundWithLoading  resizeMode='contain' source={{ uri: selectingItem?.img }} style={styleSheet.image} indicatorProps={{ color: theme.text }} />
                                             </View>
                                             <TouchableOpacity onPress={onPressLink} style={styleSheet.titleTO}>
                                                 <Text selectable style={[styleSheet.titleView, { color: theme.text, }]}>{selectingItem?.url}</Text>

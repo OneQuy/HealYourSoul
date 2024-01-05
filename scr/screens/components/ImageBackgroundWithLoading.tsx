@@ -8,7 +8,7 @@
  */
 
 import { ImageBackground, ActivityIndicator, ActivityIndicatorProps } from 'react-native'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 
 interface Props extends React.ComponentProps<typeof ImageBackground> {
     indicatorProps?: ActivityIndicatorProps
@@ -17,23 +17,29 @@ interface Props extends React.ComponentProps<typeof ImageBackground> {
 const ImageBackgroundWithLoading = (props: Props) => {
     const [showIndicator, setShowIndicator] = useState(true)
 
+    const key = useMemo(() => {
+        return Math.random()
+        // @ts-ignore
+    }, [props.source.uri])
+
     const onStartLoad = useCallback(() => {
         setShowIndicator(true)
     }, [])
-    
+
     const onEndLoad = useCallback(() => {
         setShowIndicator(false)
     }, [])
 
     return (
         <ImageBackground
+            key={key}
             onLoadStart={onStartLoad}
             onLoadEnd={onEndLoad}
             {...props}
             style={[props.style, { justifyContent: 'center', alignItems: 'center' }]} >
             {
                 !showIndicator ? undefined :
-                <ActivityIndicator {...props.indicatorProps} />
+                    <ActivityIndicator {...props.indicatorProps} />
             }
         </ImageBackground>
     )
