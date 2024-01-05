@@ -312,7 +312,7 @@ const styleSheet = StyleSheet.create({
     titleView: { fontSize: FontSize.Normal, fontWeight: FontWeight.B500 },
     infoTextView: { paddingLeft: Outline.Horizontal, fontSize: FontSize.Small_L, },
     titleTO: { marginHorizontal: Outline.GapVertical_2, flexDirection: 'row', justifyContent: 'space-between' },
-    titleText: { flex: 1, textAlign: 'center', fontSize: FontSize.Normal },
+    titleText: { marginLeft: widthPercentageToDP(12), flex: 1, textAlign: 'center', fontSize: FontSize.Normal },
     titleContainerView: { paddingHorizontal: Outline.GapVertical, flexDirection: 'row', gap: Outline.GapHorizontal },
     showListIconView: { padding: Outline.GapHorizontal, borderWidth: StyleSheet.hairlineWidth, borderRadius: BorderRadius.BR8 },
     rankView: { position: 'absolute' },
