@@ -52,7 +52,7 @@ const FunWebsitesScreen = () => {
         true,
         GetRemoteFileConfigVersion('fun_websites'),
         'json',
-        true,
+        false,
         async () => AsyncStorage.getItem(StorageKey_LocalFileVersion(category)),
         async () => AsyncStorage.setItem(StorageKey_LocalFileVersion(category), GetRemoteFileConfigVersion('fun_websites').toString()))
 
@@ -82,7 +82,7 @@ const FunWebsitesScreen = () => {
             setHandling(true)
             return
         }
-        
+
         let id = await getSelectingIdAsync()
         id++
 
@@ -194,7 +194,7 @@ const FunWebsitesScreen = () => {
     // save last visit category screen
 
     useFocusEffect(useCallback(() => SaveCurrentScreenForLoadNextTime(navigation), []))
-    
+
     return (
         <View pointerEvents={handling ? 'none' : 'auto'} style={[styleSheet.masterView, { backgroundColor: theme.background }]}>
             {/* @ts-ignore */}
@@ -217,9 +217,7 @@ const FunWebsitesScreen = () => {
                                         </TouchableOpacity>
                                         :
                                         <View style={styleSheet.contentView}>
-                                            <View style={CommonStyles.justifyContentCenter_AlignItemsCenter}>
-                                                <ImageBackgroundWithLoading  resizeMode='contain' source={{ uri: selectingItem?.img }} style={styleSheet.image} indicatorProps={{ color: theme.text }} />
-                                            </View>
+                                            <ImageBackgroundWithLoading resizeMode='contain' source={{ uri: selectingItem?.img }} style={styleSheet.image} indicatorProps={{ color: theme.text }} />
                                             <TouchableOpacity onPress={onPressLink} style={styleSheet.titleTO}>
                                                 <Text selectable style={[styleSheet.titleView, { color: theme.text, }]}>{selectingItem?.url}</Text>
                                                 <MaterialCommunityIcons name={Icon.Link} color={theme.text} size={Size.IconSmaller} />
@@ -295,7 +293,7 @@ const styleSheet = StyleSheet.create({
     mainBtnTO: { paddingVertical: Outline.GapVertical, flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', },
     subBtnTO: { justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', },
     headerOptionTO: { marginRight: 15 },
-    image: { width: '100%', height: heightPercentageToDP(50) },
+    image: { width: heightPercentageToDP(100), height: heightPercentageToDP(50) },
     contentView: { flex: 1, gap: Outline.GapVertical },
     contentScrollView: { flex: 1, marginHorizontal: Outline.GapVertical_2 },
     titleView: { fontSize: FontSize.Normal, fontWeight: FontWeight.B500 },
