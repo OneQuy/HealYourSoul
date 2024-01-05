@@ -377,23 +377,6 @@ export function GetFirstLetters(inputString: string) {
     return result;
 }
 
-export function StringEachCharToNumber(text: string): number {
-    try {
-        let s = ''
-
-        for (let i = 0; i < text.length; i++) {
-            const num = text.charCodeAt(i)
-            
-            s += num.toString()
-        }
-
-        return Number.parseInt(s)
-    }
-    catch {
-        return NaN
-    }
-}
-
 /**
  * @param wholeTxt 
  * @aa
@@ -539,7 +522,7 @@ export const GetHourMinSecFromMs = (ms: number): [number, number, number] => {
 
 // number ---------------------------
 
-const Clamp01 = (value: number) => {
+export const Clamp01 = (value: number) => {
     return Clamp(value, 0, 1)
 }
 
