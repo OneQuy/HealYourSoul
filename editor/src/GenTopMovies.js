@@ -64,7 +64,9 @@ const GenDataTopMovies = async () => {
 
             line = line.replaceAll('<span class="sc-43986a27-8 jHYIIK dli-title-metadata-item">', ' ')
             line = line.replaceAll('</span><span class="sc-43986a27-8 jHYIIK dli-title-metadata-item">', ' ')
+            line = line.replaceAll('<div class="sc-43986a27-7 dBkaPT dli-title-metadata">', ' ')
             line = line.replaceAll('</span>', ' ')
+            line = line.replaceAll('</div>', ' ')
             line = line.replaceAll('  ', ' ')
 
             currentItem.info = line.trim()
@@ -74,6 +76,7 @@ const GenDataTopMovies = async () => {
 
             const rate = GetMiddleText(line)
             currentItem.info += ' ' + rate
+            currentItem.info = currentItem.info.trim()
 
             // log(currentItem.title, rate)
         }
