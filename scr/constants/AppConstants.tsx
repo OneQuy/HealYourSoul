@@ -217,6 +217,7 @@ export const LocalText = {
   fact_of_the_day: 'Fact of the day',
   winners: 'Winners',
   fun_websites: 'Fun Websites',
+  top_movies: 'Top 250 Movies',
   
   premium_benefit: 'Hi there, I am Minh Quy, an indie developer from Vietnam. I created this app to spread fun, useful, and positive things to everyone. Whether you are happy, sad, or feeling something else, I hope from the bottom of my heart that you will feel even better. Everything will be okay. The app is always free. But I would be really happy if you subscribe and want to:',
   subscribe_for: 'Subscribe for',

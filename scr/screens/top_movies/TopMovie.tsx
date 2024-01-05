@@ -21,7 +21,7 @@ import StreakPopup from '../components/StreakPopup';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 import { ScrollView } from 'react-native-gesture-handler';
 import { ShareOptions } from 'react-native-share';
-import { Clamp, StringEachCharToNumber, ToCanPrint, GetFirstLetters, ExtractAllNumbersInText } from '../../handle/UtilsTS';
+import { Clamp, StringEachCharToNumber, ToCanPrint, GetFirstLetters, ExtractAllNumbersInText, RGBToRGBAText } from '../../handle/UtilsTS';
 import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading';
 import useCheckAndDownloadRemoteFile from '../../hooks/useCheckAndDownloadRemoteFile';
 import { TempDirName } from '../../handle/Utils';
@@ -58,15 +58,15 @@ const TopMovieScreen = () => {
             return undefined
 
         let word = GetFirstLetters(selectingItem.title)
-        
+
         if (word.length < 5)
-        word = word + ExtractAllNumbersInText(selectingItem.info)[0]
-    
-    console.log(word);
+            word = word + ExtractAllNumbersInText(selectingItem.info)[0]
+
+        console.log(word);
         return StringEachCharToNumber(word)
     }, [selectingItem])
     console.log((idNumber));
-    
+
     const [isFavorited, likeCount, onPressFavorite] = useIsFavorited(category, idNumber)
 
     const getSelectingIdxAsync = useCallback(async () => {
@@ -243,6 +243,9 @@ const TopMovieScreen = () => {
                                                 <ScrollView >
                                                     <Text selectable adjustsFontSizeToFit style={[{ flexWrap: 'wrap', color: theme.text, fontSize: FontSize.Small_L }]}>{selectingItem?.desc}</Text>
                                                 </ScrollView>
+                                            </View>
+                                            <View style={{ position: 'absolute', }}>
+                                                <Text style={[{ backgroundColor: RGBToRGBAText('gold', 0.2), width: widthPercentageToDP(15),height: widthPercentageToDP(15), color: theme.text, fontSize: FontSize.Normal }]}>#{selectingItem?.rank}</Text>
                                             </View>
                                         </View>
                                 }
