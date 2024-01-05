@@ -1,8 +1,10 @@
+const { log } = require("console")
 const { LogRed, LogGreen } = require("./Utils_NodeJS")
 
 const fs = require('fs')
 
-const filepath = './assets/json/photos_of_the_year.json'
+const filepath = './assets/json/top_movies.json'
+const source = './editor/top-movies-html.txt'
 
 const GetMiddleText = (text) => {
     let idx = text.indexOf('>')
@@ -21,89 +23,76 @@ const GetMiddleText = (text) => {
     return text.substring(0, idx)
 }
 
+// <a href="/title/
+// srcset="
+// <span class="sc-43986a27-8 jHYIIK cli-title-metadata-item">
+// an class="ipc-rating-star--voteCoun
+// class="ipc-html-content-inner-d
 const GenDataTopMovies = async () => {
-    const res = await fetch(`https://www.nature.org/en-us/get-involved/how-to-help/photo-contest/${year}-winners/`)
-    const text = await res.text()
+    const text = fs.readFileSync(source, 'utf-8')
     const lines = text.split('\n')
 
     const arr = []
     let currentItem = undefined
 
     for (let i = 0; i < lines.length; i++) {
-        const line = lines[i].trim()
+        let line = lines[i].trim()
 
-        if (line.includes('<h3') ||
-            line.includes('<h2')) {
-            // arr.push('\n\n')
-            // arr.push('REWARD: ' + GetMiddleText(line))
-
+        if (line.includes('srcset=')) {
+            i++
+            line = lines[i].trim()
             currentItem = {}
-
-            const rewardtext = NormalText(GetMiddleText(line))
-            const arrr = rewardtext.split(', ')
-
-            currentItem.reward = arrr[0]
-            currentItem.category = arrr.length === 2 ? arrr[1] : undefined
+            currentItem.thumbnailUri = line.replace(',', '')
         }
 
-        else if (line.includes('<p ') &&
-            !line.includes('p class="c-immersive') &&
-            !line.includes('back to') &&
-            !line.includes('<i>')
-        ) {
-            // arr.push('AUTHOR: ' + GetMiddleText(line))
 
+        else if (line.includes('<a href="/title/')) {
             if (!currentItem)
                 continue
 
-            const t = NormalText(GetMiddleText(line))
-            let arrr = t.split(', ')
+            const title  = GetMiddleText(GetMiddleText(line))
+            const dotIdx = title.indexOf('.')
 
-            if (arrr.length < 2)
-                arrr = t.split(' - ')
-
-            currentItem.author = arrr[0]
-            currentItem.country = arrr.length === 2 ? arrr[1] : undefined
+            const rankS = title.substring(0, dotIdx)
+            currentItem.title = title.substring(dotIdx + 2)
+            currentItem.rank = Number.parseInt(rankS)
         }
 
-        else if (line.includes('https://natureconservancy-h.assetsadobe.com/is/image')) {
-            // arr.push(line)
-
+        else if (line.includes('</span><span class="sc-43986a27-8 jHYIIK dli-title-metadata-item">')) {
             if (!currentItem)
                 continue
 
-            if (currentItem.imageUri)
-                continue
+            line = line.replace('<span class="sc-43986a27-8 jHYIIK dli-title-metadata-item">', '')
+            line = line.replace('</span><span class="sc-43986a27-8 jHYIIK dli-title-metadata-item">', ' ')
+            line = line.replace('</span>', '')
 
-            let t = line.substring(line.indexOf('http'))
-            let idx = t.indexOf('?')
+            currentItem.info = line
 
-            if (idx < 0) {
-                LogRed('fail uri: ' + JSON.stringify(currentItem))
-                continue
-            }
-
-            const url = t.substring(0, idx) + '?wid=1280'
-
-            currentItem.imageUri = url
-        }
-
-        else if (line.includes('<strong')) {
-            // arr.push('TITLE: ' + GetMiddleText(line))
-            // arr.push(lines[i + 1])
-            // i++
-
-            if (!currentItem)
-                continue
-
-            currentItem.title = NormalText(GetMiddleText(line))
-            currentItem.description = NormalText(lines[i + 1]).trim()
-
+            line = lines[i + 1].trim()
             i++
 
-            if (currentItem.imageUri &&
-                currentItem.reward) { // is valid
+            currentItem.info += ' ' + GetMiddleText(line)
+        }
+
+        else if (line.includes('class="ipc-rating-star--voteCoun')) {
+            if (!currentItem)
+                continue
+
+                
+            currentItem.rate = line.replaceAll('<span class="ipc-rating-star--voteCount">&nbsp;', ' ')
+            currentItem.rate = currentItem.rate.replaceAll('</span>', '')
+        }
+
+        else if (line.includes('class="ipc-html-content-inner-d')) {
+            if (!currentItem)
+                continue
+
+            currentItem.desc = GetMiddleText(line)
+
+            if (currentItem.thumbnailUri &&
+                currentItem.title) { // is valid
                 arr.push(currentItem)
+                // break
             }
             else {
                 // LogRed(JSON.stringify( currentItem))
@@ -111,16 +100,18 @@ const GenDataTopMovies = async () => {
 
             currentItem = undefined
         }
+
     }
 
-    return arr
-
-    // const t = JSON.stringify(arr, null, 1)
+    const t = JSON.stringify(arr, null, 1)
+    fs.writeFileSync(filepath, t)
 
     // console.log(t)
+
+    LogGreen('done')
 }
 
 
 module.exports = {
-    GenDataPictureOfTheYear
+    GenDataTopMovies
 }

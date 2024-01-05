@@ -1,6 +1,7 @@
 const { PullAllAsync } = require("./src/PullData");
 const { UploadPostAsync } = require("./src/Push");
 const { GenDataPictureOfTheYear } = require("./src/GeneratePictureOfTheYear")
+const { GenDataTopMovies  } = require("./src/GenTopMovies")
 const { Tmp } = require("./src/tmp")
 const { LogRed } = require("./src/Utils_NodeJS");
 const { IsParamExist, GetParam, } = require("./src/common/Utils");
@@ -13,6 +14,9 @@ async function JustDoIt() {
   }
   else if (IsParamExist('award-pic')) {
     GenDataPictureOfTheYear()
+  }
+  else if (IsParamExist('movie')) {
+    GenDataTopMovies()
   }
   else if (IsParamExist('push')) {
     let cat
