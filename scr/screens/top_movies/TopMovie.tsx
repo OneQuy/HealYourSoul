@@ -21,7 +21,7 @@ import StreakPopup from '../components/StreakPopup';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 import { ScrollView } from 'react-native-gesture-handler';
 import { ShareOptions } from 'react-native-share';
-import { Clamp, StringEachCharToNumber, ToCanPrint, GetFirstLetters, ExtractAllNumbersInText, RGBToRGBAText } from '../../handle/UtilsTS';
+import { Clamp, StringEachCharToNumber, ToCanPrint, GetFirstLetters, ExtractAllNumbersInText, RGBToRGBAText, IsChar, IsNumChar } from '../../handle/UtilsTS';
 import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading';
 import useCheckAndDownloadRemoteFile from '../../hooks/useCheckAndDownloadRemoteFile';
 import { TempDirName } from '../../handle/Utils';
@@ -57,15 +57,20 @@ const TopMovieScreen = () => {
         if (!selectingItem)
             return undefined
 
-        let word = GetFirstLetters(selectingItem.title)
+        let id = ''
 
-        if (word.length < 5)
-            word = word + ExtractAllNumbersInText(selectingItem.info)[0]
+        for (let i = 0; i < selectingItem.title.length; i++) {
+            if (IsChar(selectingItem.title[i]) || IsNumChar(selectingItem.title[i]))
+                id += selectingItem.title[i]
+        }
+        
+        const arr = ExtractAllNumbersInText(selectingItem.info)
 
-        console.log(word);
-        return StringEachCharToNumber(word)
+        if (arr && arr.length > 0 && arr[0] > 1000)
+            id += arr[0]
+
+        return id
     }, [selectingItem])
-    console.log((idNumber));
 
     const [isFavorited, likeCount, onPressFavorite] = useIsFavorited(category, idNumber)
 
@@ -248,7 +253,7 @@ const TopMovieScreen = () => {
                                             </View>
                                             <View style={[styleSheet.rankView]}>
                                                 <View style={styleSheet.rankBGView} />
-                                                <Text style={[{ color: theme.text}, styleSheet.rankText]}>#{'\n' + selectingItem?.rank}</Text>
+                                                <Text style={[{ color: theme.text }, styleSheet.rankText]}>#{'\n' + selectingItem?.rank}</Text>
                                             </View>
                                         </View>
                                 }
