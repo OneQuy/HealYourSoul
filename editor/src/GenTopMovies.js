@@ -62,8 +62,9 @@ const GenDataTopMovies = async () => {
             if (!currentItem)
                 continue
 
-            line = line.replace('<span class="sc-43986a27-8 jHYIIK dli-title-metadata-item">', '')
-            line = line.replace('</span><span class="sc-43986a27-8 jHYIIK dli-title-metadata-item">', ' ')
+            line = line.replaceAll('<span class="sc-43986a27-8 jHYIIK dli-title-metadata-item">', '')
+            line = line.replaceAll('</span><span class="sc-43986a27-8 jHYIIK dli-title-metadata-item">', ' ')
+            // line = line.replace('</span><span class="sc-43986a27-8 jHYIIK dli-title-metadata-item">', ' ')
             line = line.replace('</span>', '')
 
             currentItem.info = line
@@ -71,7 +72,10 @@ const GenDataTopMovies = async () => {
             line = lines[i + 1].trim()
             i++
 
-            currentItem.info += ' ' + GetMiddleText(line)
+            const rate = GetMiddleText(line)
+            currentItem.info += ' ' + rate
+
+            log(currentItem.title, rate)
         }
 
         else if (line.includes('class="ipc-rating-star--voteCoun')) {
@@ -89,22 +93,22 @@ const GenDataTopMovies = async () => {
 
             currentItem.desc = GetMiddleText(line)
 
-            if (!currentItem.desc) {
-                LogRed(currentItem.title)
+            if (!currentItem.desc && !line.includes('</div>')) {
+                // LogRed(currentItem.title)
 
                 currentItem.desc = ''
 
                 const maxL = i + 5
-                for (let j = i + 1; j < maxL; j++) {
-                    line = lines[j].trim()
+                for ( i  = i + 1; i < maxL; i++) {
+                    line = lines[i].trim()
 
                     if (line.includes('</div>'))
                         break
 
-                    currentItem.desc += lines[j].trim() + ' '
+                    currentItem.desc += lines[i].trim() + ' '
                 }
 
-                log(currentItem.desc)
+                // log(currentItem.desc)
             }
 
             if (currentItem.thumbnailUri &&
