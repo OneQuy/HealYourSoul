@@ -89,6 +89,24 @@ const GenDataTopMovies = async () => {
 
             currentItem.desc = GetMiddleText(line)
 
+            if (!currentItem.desc) {
+                LogRed(currentItem.title)
+
+                currentItem.desc = ''
+
+                const maxL = i + 5
+                for (let j = i + 1; j < maxL; j++) {
+                    line = lines[j].trim()
+
+                    if (line.includes('</div>'))
+                        break
+
+                    currentItem.desc += lines[j].trim() + ' '
+                }
+
+                log(currentItem.desc)
+            }
+
             if (currentItem.thumbnailUri &&
                 currentItem.title) { // is valid
                 arr.push(currentItem)
