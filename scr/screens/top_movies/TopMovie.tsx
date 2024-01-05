@@ -21,7 +21,7 @@ import StreakPopup from '../components/StreakPopup';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 import { ScrollView } from 'react-native-gesture-handler';
 import { ShareOptions } from 'react-native-share';
-import { Clamp, StringEachCharToNumber, ToCanPrint, GetFirstLetters, ExtractAllNumbersInText, RGBToRGBAText, IsChar, IsNumChar } from '../../handle/UtilsTS';
+import { Clamp, ToCanPrint, GetFirstLetters, ExtractAllNumbersInText, RGBToRGBAText, IsChar, IsNumChar } from '../../handle/UtilsTS';
 import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading';
 import useCheckAndDownloadRemoteFile from '../../hooks/useCheckAndDownloadRemoteFile';
 import { TempDirName } from '../../handle/Utils';
@@ -63,7 +63,7 @@ const TopMovieScreen = () => {
             if (IsChar(selectingItem.title[i]) || IsNumChar(selectingItem.title[i]))
                 id += selectingItem.title[i]
         }
-        
+
         const arr = ExtractAllNumbersInText(selectingItem.info)
 
         if (arr && arr.length > 0 && arr[0] > 1000)
@@ -82,13 +82,6 @@ const TopMovieScreen = () => {
     const setSelectingIdxAsync = useCallback(async (id: number) => {
         await AsyncStorage.setItem(StorageKey_SelectingTopMovieIdx, id.toString())
     }, [])
-
-    const onPressLink = useCallback(async () => {
-        // if (!selectingItem)
-        //     return
-
-        // Linking.openURL(selectingItem.url)
-    }, [selectingItem])
 
     const onPressNext = useCallback(async (toIdx: number = -1) => {
         setSelectingItem(undefined)
@@ -240,10 +233,7 @@ const TopMovieScreen = () => {
                                                 </View>
                                             </View>
                                             <ImageBackgroundWithLoading resizeMode='contain' source={{ uri: selectingItem?.thumbnailUri }} style={styleSheet.image} indicatorProps={{ color: theme.text }} />
-                                            <TouchableOpacity onPress={onPressLink} style={styleSheet.titleTO}>
-                                                <Text selectable style={[styleSheet.titleView, { color: theme.text, }]}>{selectingItem?.title}</Text>
-                                                <MaterialCommunityIcons name={Icon.Link} color={theme.text} size={Size.IconSmaller} />
-                                            </TouchableOpacity>
+                                            <Text selectable style={[styleSheet.titleView, { color: theme.text, }]}>{selectingItem?.title}</Text>
                                             <Text selectable style={[styleSheet.infoTextView, { color: theme.text, }]}>{selectingItem?.info}</Text>
                                             <Text selectable style={[styleSheet.infoTextView, { color: theme.text, }]}>{selectingItem?.rate}</Text>
                                             <View style={styleSheet.contentScrollView}>
@@ -314,7 +304,7 @@ const styleSheet = StyleSheet.create({
     image: { width: widthPercentageToDP(100), height: heightPercentageToDP(45) },
     contentView: { flex: 1, gap: Outline.GapVertical, paddingTop: Outline.GapHorizontal },
     contentScrollView: { flex: 1, marginHorizontal: Outline.GapVertical_2 },
-    titleView: { fontSize: FontSize.Normal, fontWeight: FontWeight.B500 },
+    titleView: { marginLeft: Outline.Horizontal, fontSize: FontSize.Normal, fontWeight: FontWeight.B500 },
     infoTextView: { paddingLeft: Outline.Horizontal, fontSize: FontSize.Small_L, },
     titleTO: { marginHorizontal: Outline.GapVertical_2, flexDirection: 'row', justifyContent: 'space-between' },
     titleText: { marginLeft: widthPercentageToDP(12), flex: 1, textAlign: 'center', fontSize: FontSize.Normal },
