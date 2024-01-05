@@ -82,7 +82,7 @@ const styleSheet = StyleSheet.create({
     masterView: { backgroundColor: ColorNameToRgb('black', 0.8), width: '100%', height: '100%', position: 'absolute' },
     bgView: { gap: Outline.GapVertical, padding: Outline.GapVertical, width: '80%', height: '70%', borderRadius: BorderRadius.BR },
     itemTO: { flexDirection: 'row', alignItems: 'center', gap: Outline.GapHorizontal },
-    image: { width: listPopupIconSize, height: listPopupIconSize, },
+    image: { width: listPopupIconSize, height: listPopupIconSize, borderRadius: BorderRadius.BR8 },
     flatlist: { gap: listPopupGap },
     text: { fontWeight: FontWeight.B500, fontSize: FontSize.Small_L, flex: 1 },
     title: { flex: 1, textAlign: 'center', fontWeight: FontWeight.B600, fontSize: FontSize.Big },
