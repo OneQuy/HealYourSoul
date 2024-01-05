@@ -19,7 +19,7 @@ import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
 import { FunWebsite, Streak } from '../../constants/Types';
 import StreakPopup from '../components/StreakPopup';
 import { GetWikiAsync } from '../../handle/services/Wikipedia';
-import { heightPercentageToDP } from 'react-native-responsive-screen';
+import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 import { ScrollView } from 'react-native-gesture-handler';
 import WebView from 'react-native-webview';
 import { ShareOptions } from 'react-native-share';
@@ -293,7 +293,7 @@ const styleSheet = StyleSheet.create({
     mainBtnTO: { paddingVertical: Outline.GapVertical, flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', },
     subBtnTO: { justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', },
     headerOptionTO: { marginRight: 15 },
-    image: { width: heightPercentageToDP(100), height: heightPercentageToDP(50) },
+    image: { width: widthPercentageToDP(100), height: heightPercentageToDP(50) },
     contentView: { flex: 1, gap: Outline.GapVertical },
     contentScrollView: { flex: 1, marginHorizontal: Outline.GapVertical_2 },
     titleView: { fontSize: FontSize.Normal, fontWeight: FontWeight.B500 },
