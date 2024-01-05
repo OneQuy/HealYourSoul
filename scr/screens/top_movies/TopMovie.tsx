@@ -39,7 +39,6 @@ const TopMovieScreen = () => {
     const theme = useContext(ThemeContext);
     const [handling, setHandling] = useState(true)
     const [streakData, setStreakData] = useState<Streak | undefined>(undefined)
-    const [showFull, setShowFull] = useState(false)
     const [selectingItem, setSelectingItem] = useState<TopMovie | undefined>(undefined)
     const [isShowList, setIsShowList] = useState(false)
     const viewShotRef = useRef<LegacyRef<ViewShot> | undefined>();
@@ -110,7 +109,6 @@ const TopMovieScreen = () => {
         setSelectingIdxAsync(idx)
 
         setSelectingItem(movie)
-        setShowFull(false)
 
         SetStreakAsync(Category[category], -1)
     }, [topMovies, reUpdateData])
@@ -246,15 +244,6 @@ const TopMovieScreen = () => {
                                                     <Text selectable adjustsFontSizeToFit style={[{ flexWrap: 'wrap', color: theme.text, fontSize: FontSize.Small_L }]}>{selectingItem?.desc}</Text>
                                                 </ScrollView>
                                             </View>
-                                            {/* {
-                                                !showFull || !selectingItem?.url ? undefined :
-                                                    <View style={[{ backgroundColor: 'green' }, CommonStyles.width100Percent_Height100Percent_PositionAbsolute_JustifyContentCenter_AlignItemsCenter]}>
-                                                        <WebView
-                                                            source={{ uri: selectingItem?.url }}
-                                                            containerStyle={{ width: '100%', height: '100%' }}
-                                                        />
-                                                    </View>
-                                            } */}
                                         </View>
                                 }
                             </View>
@@ -269,10 +258,6 @@ const TopMovieScreen = () => {
                         Number.isNaN(likeCount) ? undefined :
                             <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{likeCount}</Text>
                     }
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => setShowFull(!showFull)} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
-                    <MaterialCommunityIcons name={showFull ? Icon.X : Icon.Eye} color={theme.counterPrimary} size={Size.Icon} />
-                    <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{showFull ? '' : LocalText.go}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => onPressNext()} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
                     <MaterialCommunityIcons name={Icon.Right} color={theme.counterPrimary} size={Size.Icon} />
