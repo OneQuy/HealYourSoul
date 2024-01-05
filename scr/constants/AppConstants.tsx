@@ -267,6 +267,7 @@ export const StorageKey_LocalFileVersion = (cat: Category) => 'local_file_versio
 
 export const StorageKey_Streak = 'streak'
 export const StorageKey_SelectingFunWebsiteId = 'selecting_fun_website_id'
+export const StorageKey_SelectingTopMovieIdx = 'selecting_movie_idx'
 
 export const StorageKey_TriviaDifficulty = 'trivia_diff'
 export const StorageKey_TriviaAnswerType = 'trivia_type'

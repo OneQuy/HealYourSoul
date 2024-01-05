@@ -52,6 +52,8 @@ export type TopMovie = {
     "title": string,
     "desc": string,
     "thumbnailUri": string,
+    "info": string,
+    "rate": string,
 }
 
 export type FunWebsite = {

@@ -1,38 +1,35 @@
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image } from 'react-native'
-import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native'
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors';
 import { CommonStyles } from '../../constants/CommonConstants';
 import { ColorNameToRgb } from '../../handle/UtilsTS';
 import { BorderRadius, FontSize, FontWeight, Icon, LocalText, Outline, Size } from '../../constants/AppConstants';
-import { FunWebsite } from '../../constants/Types';
+import { TopMovie } from '../../constants/Types';
+import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading';
 
 const listPopupIconSize = Size.IconBig
 const listPopupGap = Outline.GapVertical
 
-const ListMovie = ({ list, setIdx, getSelectingIdAsync }: { list: FunWebsite[], setIdx: (idx: number) => void, getSelectingIdAsync: () => Promise<number> }) => {
+const ListMovie = ({ list, setIdx, getSelectingIdAsync: getSelectingIdxAsync }: { list: TopMovie[], setIdx: (idx: number) => void, getSelectingIdAsync: () => Promise<number> }) => {
     const theme = useContext(ThemeContext);
     const flatlistRef = useRef()
     const [selectIdx, setSelectIdx] = useState(0)
 
-    const renderItem = useCallback(({ item, index }: { item: FunWebsite, index: number }) => {
+    const renderItem = useCallback(({ item, index }: { item: TopMovie, index: number }) => {
         const isSelecting = index === selectIdx
         
-        let urlShort = item.url.replaceAll('https://', '')
-        urlShort = urlShort.replaceAll('www.', '')
-        
-        return <TouchableOpacity onPress={() => setIdx(item.id)} style={[{ backgroundColor: isSelecting ? theme.primary : undefined, borderRadius: isSelecting ? BorderRadius.BR8 : 0, borderWidth: isSelecting ? 1 : 0 }, styleSheet.itemTO]}>
-            <Image source={{ uri: item.img }} resizeMode='cover' style={styleSheet.image} />
-            <Text style={[styleSheet.text, { color: theme.text }]}>{urlShort}</Text>
+        return <TouchableOpacity onPress={() => setIdx(index)} style={[{ backgroundColor: isSelecting ? theme.primary : undefined, borderRadius: isSelecting ? BorderRadius.BR8 : 0, borderWidth: isSelecting ? 1 : 0 }, styleSheet.itemTO]}>
+            <ImageBackgroundWithLoading source={{ uri: item.thumbnailUri }} resizeMode='cover' style={styleSheet.image} />
+            <Text style={[styleSheet.text, { color: theme.text }]}>{item.title}</Text>
         </TouchableOpacity>
     }, [selectIdx, theme])
 
     useEffect(() => {
         (async () => {
-            const id = await getSelectingIdAsync()
-            const idx = list.findIndex(item => item.id === id)
+            const idx = await getSelectingIdxAsync()
 
             setSelectIdx(idx)
 
@@ -58,7 +55,7 @@ const ListMovie = ({ list, setIdx, getSelectingIdAsync }: { list: FunWebsite[], 
                     // @ts-ignore
                     ref={flatlistRef}
                     data={list}
-                    keyExtractor={(item) => item.url}
+                    keyExtractor={(item) => item.thumbnailUri}
                     contentContainerStyle={styleSheet.flatlist}
                     renderItem={renderItem}
                     getItemLayout={(_, index) => {
@@ -76,7 +73,7 @@ const styleSheet = StyleSheet.create({
     masterView: { backgroundColor: ColorNameToRgb('black', 0.8), width: '100%', height: '100%', position: 'absolute' },
     bgView: { gap: Outline.GapVertical, padding: Outline.GapVertical, width: '80%', height: '70%', borderRadius: BorderRadius.BR },
     itemTO: { flexDirection: 'row', alignItems: 'center', gap: Outline.GapHorizontal },
-    image: { width: listPopupIconSize, height: listPopupIconSize,  borderRadius: BorderRadius.BR8 },
+    image: { width: listPopupIconSize, height: listPopupIconSize,  borderRadius: BorderRadius.BR8, overflow: 'hidden' },
     flatlist: { gap: listPopupGap },
     text: { fontSize: FontSize.Small_L, flex: 1 },
     title: { flex: 1, textAlign: 'center', fontWeight: FontWeight.B600, fontSize: FontSize.Big },

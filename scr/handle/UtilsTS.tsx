@@ -364,6 +364,36 @@ export function VersionToNumber(version: string): number {
     }
 }
 
+export function GetFirstLetters(inputString: string) {
+    // Step 1: Split the string into an array of words
+    const wordsArray = inputString.split(' ');
+
+    // Step 2: Iterate through the array and extract the first letter of each word
+    const firstLettersArray = wordsArray.map(word => word.charAt(0));
+
+    // Step 3: Concatenate the extracted letters to form the result
+    const result = firstLettersArray.join('');
+
+    return result;
+}
+
+export function StringEachCharToNumber(text: string): number {
+    try {
+        let s = ''
+
+        for (let i = 0; i < text.length; i++) {
+            const num = text.charCodeAt(i)
+            
+            s += num.toString()
+        }
+
+        return Number.parseInt(s)
+    }
+    catch {
+        return NaN
+    }
+}
+
 /**
  * @param wholeTxt 
  * @aa
@@ -513,7 +543,7 @@ const Clamp01 = (value: number) => {
     return Clamp(value, 0, 1)
 }
 
-const Clamp = (value: number, min: number, max: number) => {
+export const Clamp = (value: number, min: number, max: number) => {
     return Math.max(min, Math.min(max, value))
 }
 

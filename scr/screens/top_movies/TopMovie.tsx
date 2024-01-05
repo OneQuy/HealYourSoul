@@ -1,7 +1,7 @@
-import { Share as RNShare, View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, Image, ShareContent, Alert, Linking } from 'react-native'
+import { Share as RNShare, View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, ShareContent, Alert } from 'react-native'
 import React, { LegacyRef, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
-import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size, StorageKey_LocalFileVersion, StorageKey_SelectingFunWebsiteId, StorageKey_Streak } from '../../constants/AppConstants'
+import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size, StorageKey_LocalFileVersion, StorageKey_SelectingTopMovieIdx } from '../../constants/AppConstants'
 import Share from 'react-native-share';
 
 
@@ -16,24 +16,22 @@ import { CopyAndToast, SaveCurrentScreenForLoadNextTime } from '../../handle/App
 import ViewShot from 'react-native-view-shot'
 import { CommonStyles } from '../../constants/CommonConstants'
 import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
-import { FunWebsite, Streak } from '../../constants/Types';
+import { Streak, TopMovie } from '../../constants/Types';
 import StreakPopup from '../components/StreakPopup';
-import { GetWikiAsync } from '../../handle/services/Wikipedia';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 import { ScrollView } from 'react-native-gesture-handler';
-import WebView from 'react-native-webview';
 import { ShareOptions } from 'react-native-share';
-import { ToCanPrint } from '../../handle/UtilsTS';
+import { Clamp, StringEachCharToNumber, ToCanPrint, GetFirstLetters, ExtractAllNumbersInText } from '../../handle/UtilsTS';
 import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading';
 import useCheckAndDownloadRemoteFile from '../../hooks/useCheckAndDownloadRemoteFile';
 import { TempDirName } from '../../handle/Utils';
 import { GetRemoteFileConfigVersion } from '../../handle/AppConfigHandler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import useIsFavorited from '../../hooks/useIsFavorited';
-import ListWebsite from './ListMovie';
+import ListMovie from './ListMovie';
 
-const category = Category.FunWebsites
-const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Ffun_websites.json?alt=media&token=10ecb626-e576-49d4-b124-a9ba148a93a6'
+const category = Category.TopMovie
+const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Ftop_movies.json?alt=media&token=4203c962-58bb-41c3-a1a0-ab3b1b3359f8'
 
 const TopMovieScreen = () => {
     const navigation = useNavigation();
@@ -42,83 +40,87 @@ const TopMovieScreen = () => {
     const [handling, setHandling] = useState(true)
     const [streakData, setStreakData] = useState<Streak | undefined>(undefined)
     const [showFull, setShowFull] = useState(false)
-    const [selectingItem, setSelectingItem] = useState<FunWebsite | undefined>(undefined)
+    const [selectingItem, setSelectingItem] = useState<TopMovie | undefined>(undefined)
     const [isShowList, setIsShowList] = useState(false)
     const viewShotRef = useRef<LegacyRef<ViewShot> | undefined>();
 
-    const [funWebsites, errorDownloadJson, _, reUpdateData] = useCheckAndDownloadRemoteFile<FunWebsite[]>(
+    const [topMovies, errorDownloadJson, _, reUpdateData] = useCheckAndDownloadRemoteFile<TopMovie[]>(
         fileURL,
-        TempDirName + '/fun_website.json',
+        TempDirName + '/top_movies.json',
         true,
-        GetRemoteFileConfigVersion('fun_websites'),
+        GetRemoteFileConfigVersion('top_movies'),
         'json',
-        false,
+        true,
         async () => AsyncStorage.getItem(StorageKey_LocalFileVersion(category)),
-        async () => AsyncStorage.setItem(StorageKey_LocalFileVersion(category), GetRemoteFileConfigVersion('fun_websites').toString()))
+        async () => AsyncStorage.setItem(StorageKey_LocalFileVersion(category), GetRemoteFileConfigVersion('top_movies').toString()))
 
-    const [isFavorited, likeCount, onPressFavorite] = useIsFavorited(category, selectingItem?.id)
-
-    const shortUrl = useMemo(() => {
+    const idNumber = useMemo(() => {
         if (!selectingItem)
-            return ''
+            return undefined
 
-        const urlShort = selectingItem.url.replaceAll('https://', '')
-        return urlShort.replaceAll('www.', '')
+        let word = GetFirstLetters(selectingItem.title)
+        
+        if (word.length < 5)
+        word = word + ExtractAllNumbersInText(selectingItem.info)[0]
+    
+    console.log(word);
+        return StringEachCharToNumber(word)
     }, [selectingItem])
+    console.log((idNumber));
+    
+    const [isFavorited, likeCount, onPressFavorite] = useIsFavorited(category, idNumber)
 
-    const getSelectingIdAsync = useCallback(async () => {
-        const s = await AsyncStorage.getItem(StorageKey_SelectingFunWebsiteId)
+    const getSelectingIdxAsync = useCallback(async () => {
+        const s = await AsyncStorage.getItem(StorageKey_SelectingTopMovieIdx)
         return typeof s === 'string' ? Number.parseInt(s) : -1
     }, [])
 
-    const setSelectingIdAsync = useCallback(async (id: number) => {
-        await AsyncStorage.setItem(StorageKey_SelectingFunWebsiteId, id.toString())
+    const setSelectingIdxAsync = useCallback(async (id: number) => {
+        await AsyncStorage.setItem(StorageKey_SelectingTopMovieIdx, id.toString())
     }, [])
 
     const onPressLink = useCallback(async () => {
-        if (!selectingItem)
-            return
+        // if (!selectingItem)
+        //     return
 
-        Linking.openURL(selectingItem.url)
+        // Linking.openURL(selectingItem.url)
     }, [selectingItem])
 
-    const onPressNext = useCallback(async (toId: number = -1) => {
+    const onPressNext = useCallback(async (toIdx: number = -1) => {
         setSelectingItem(undefined)
         setIsShowList(false)
 
-        if (!Array.isArray(funWebsites)) {
+        if (!Array.isArray(topMovies)) {
             reUpdateData()
             setHandling(true)
             return
         }
 
-        let id = toId
+        let idx = toIdx
 
-        if (id < 0) {
-            id = await getSelectingIdAsync()
-            id++
+        if (idx < 0) {
+            idx = await getSelectingIdxAsync()
+            idx++
         }
 
-        let web = funWebsites.find(w => w.id === id)
+        idx = Clamp(idx, 0, topMovies.length - 1)
 
-        if (!web) {
-            web = funWebsites[0]
-            id = 0
-        }
+        let movie = topMovies[idx]
 
-        setSelectingIdAsync(id)
+        setSelectingIdxAsync(idx)
 
-        setSelectingItem(web)
+        setSelectingItem(movie)
         setShowFull(false)
 
         SetStreakAsync(Category[category], -1)
-    }, [funWebsites, reUpdateData])
+    }, [topMovies, reUpdateData])
 
     const onPressCopy = useCallback(() => {
         if (!selectingItem)
             return
 
-        const message = selectingItem.desc + '\n\n' + selectingItem.url
+        const message = + selectingItem.title + '\n\n' + selectingItem.desc
+
         CopyAndToast(message, theme)
     }, [selectingItem, theme])
 
@@ -135,7 +137,7 @@ const TopMovieScreen = () => {
         if (!selectingItem)
             return
 
-        const message = selectingItem.desc + '\n\n' + selectingItem.url
+        const message = selectingItem.desc + '\n\n' + selectingItem.title
 
         RNShare.share({
             title: LocalText.fact_of_the_day,
@@ -150,7 +152,7 @@ const TopMovieScreen = () => {
         if (!selectingItem)
             return
 
-        const message = selectingItem.desc + '\n\n' + selectingItem.url
+        const message = selectingItem.desc + '\n\n' + selectingItem.title
         // @ts-ignore
         viewShotRef.current.capture().then(async (uri: string) => {
             Share
@@ -172,7 +174,7 @@ const TopMovieScreen = () => {
     useEffect(() => {
         reasonToReload.current = NeedReloadReason.None
 
-        if (funWebsites) { // downloaded success
+        if (topMovies) { // downloaded success
             setHandling(false)
             onPressNext()
         }
@@ -184,7 +186,7 @@ const TopMovieScreen = () => {
             else
                 reasonToReload.current = NeedReloadReason.NoInternet
         }
-    }, [funWebsites, errorDownloadJson])
+    }, [topMovies, errorDownloadJson])
 
     // on init once
 
@@ -229,14 +231,14 @@ const TopMovieScreen = () => {
                                         :
                                         <View style={styleSheet.contentView}>
                                             <View onTouchEnd={() => setIsShowList(true)} style={[styleSheet.titleContainerView, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
-                                                <Text style={[{ color: theme.text, }, styleSheet.titleText]}>{shortUrl}</Text>
+                                                <Text style={[{ color: theme.text, }, styleSheet.titleText]}>{selectingItem?.title}</Text>
                                                 <View style={styleSheet.showListIconView}>
                                                     <MaterialCommunityIcons name={Icon.List} color={theme.counterPrimary} size={Size.Icon} />
                                                 </View>
                                             </View>
-                                            <ImageBackgroundWithLoading resizeMode='contain' source={{ uri: selectingItem?.img }} style={styleSheet.image} indicatorProps={{ color: theme.text }} />
+                                            <ImageBackgroundWithLoading resizeMode='contain' source={{ uri: selectingItem?.thumbnailUri }} style={styleSheet.image} indicatorProps={{ color: theme.text }} />
                                             <TouchableOpacity onPress={onPressLink} style={styleSheet.titleTO}>
-                                                <Text selectable style={[styleSheet.titleView, { color: theme.text, }]}>{selectingItem?.url}</Text>
+                                                <Text selectable style={[styleSheet.titleView, { color: theme.text, }]}>{selectingItem?.title}</Text>
                                                 <MaterialCommunityIcons name={Icon.Link} color={theme.text} size={Size.IconSmaller} />
                                             </TouchableOpacity>
                                             <View style={styleSheet.contentScrollView}>
@@ -244,7 +246,7 @@ const TopMovieScreen = () => {
                                                     <Text selectable adjustsFontSizeToFit style={[{ flexWrap: 'wrap', color: theme.text, fontSize: FontSize.Small_L }]}>{selectingItem?.desc}</Text>
                                                 </ScrollView>
                                             </View>
-                                            {
+                                            {/* {
                                                 !showFull || !selectingItem?.url ? undefined :
                                                     <View style={[{ backgroundColor: 'green' }, CommonStyles.width100Percent_Height100Percent_PositionAbsolute_JustifyContentCenter_AlignItemsCenter]}>
                                                         <WebView
@@ -252,7 +254,7 @@ const TopMovieScreen = () => {
                                                             containerStyle={{ width: '100%', height: '100%' }}
                                                         />
                                                     </View>
-                                            }
+                                            } */}
                                         </View>
                                 }
                             </View>
@@ -296,7 +298,7 @@ const TopMovieScreen = () => {
 
             </View>
             {
-                isShowList && Array.isArray(funWebsites) ? <ListWebsite getSelectingIdAsync={getSelectingIdAsync} setIdx={onPressNext} list={funWebsites} /> : undefined
+                isShowList && Array.isArray(topMovies) ? <ListMovie getSelectingIdAsync={getSelectingIdxAsync} setIdx={onPressNext} list={topMovies} /> : undefined
             }
             {
                 streakData ? <StreakPopup streak={streakData} /> : undefined

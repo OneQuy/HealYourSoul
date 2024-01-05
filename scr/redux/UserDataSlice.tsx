@@ -7,6 +7,8 @@ export type UserDataState = {
     awardPictureFavoritedIDs: number[],
 
     funWebsiteFavoritesIDs: number[],
+    
+    topMovieFavoritesIDs: number[],
 
     drawSeenIDs: number[],
     drawFavoritedIDs: number[],
@@ -45,6 +47,8 @@ const initialState: UserDataState = {
     awardPictureFavoritedIDs: [],
 
     funWebsiteFavoritesIDs: [],
+    
+    topMovieFavoritesIDs: [],
 
     drawSeenIDs: [],
     drawFavoritedIDs: [],
@@ -104,6 +108,20 @@ const slice = createSlice({
             state.awardPictureFavoritedIDs = state.awardPictureFavoritedIDs.filter(i => i !== action.payload)
         },
 
+        // top movies
+
+        addTopMovieFavoritedID(state, action: PayloadAction<number>) {
+            if (!state.topMovieFavoritesIDs)
+                state.topMovieFavoritesIDs = []
+
+            if (!state.topMovieFavoritesIDs.includes(action.payload))
+                state.topMovieFavoritesIDs.push(action.payload);
+        },
+
+        removeTopMovieFavoritedID(state, action: PayloadAction<number>) {
+            state.topMovieFavoritesIDs = state.topMovieFavoritesIDs.filter(i => i !== action.payload)
+        },
+
         // award picture
 
         addFunWebsiteFavoritedID(state, action: PayloadAction<number>) {
@@ -118,7 +136,7 @@ const slice = createSlice({
             state.funWebsiteFavoritesIDs = state.funWebsiteFavoritesIDs.filter(i => i !== action.payload)
         },
 
-        // draw
+        // draw (warm)
 
         addDrawSeenID(state, action: PayloadAction<number>) {
             if (!state.drawSeenIDs.includes(action.payload))
@@ -331,6 +349,9 @@ export const {
     
     addFunWebsiteFavoritedID,
     removeFunWebsiteFavoritedID,
+
+    addTopMovieFavoritedID,
+    removeTopMovieFavoritedID,
 } = slice.actions;
 
 export default slice.reducer;

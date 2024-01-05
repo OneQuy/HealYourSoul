@@ -43,7 +43,7 @@ export type DrawerParamList = {
   [ScreenName.QuoteText]: undefined,
   [ScreenName.AwardPicture]: undefined,
   [ScreenName.FunWebsite]: undefined,
-  // [ScreenName.TopMovie]: undefined,
+  [ScreenName.TopMovie]: undefined,
   // [ScreenName.Reminder]: undefined,
   [ScreenName.IAPPage]: undefined,
 }
@@ -76,7 +76,7 @@ const ScreenList: ScreenNamePair[] = [
   [ScreenName.Picture, PictureScreen],
   [ScreenName.AwardPicture, PicturesOfTheYearScreen],
   [ScreenName.FunWebsite, FunWebsitesScreen],
-  // [ScreenName.TopMovie, TopMovieScreen],
+  [ScreenName.TopMovie, TopMovieScreen],
   // [ScreenName.Reminder, ReminderScreen],
   [ScreenName.IAPPage, IAPPage],
 ]

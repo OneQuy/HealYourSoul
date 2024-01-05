@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Category } from "../constants/AppConstants";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/Store";
-import { addDrawFavoritedID, addQuoteFavoritedID, addMemeFavoritedID, removeDrawFavoritedID, removeQuoteFavoritedID, removeMemeFavoritedID, removeLoveFavoritedID, addLoveFavoritedID, removeSatisfyingFavoritedID, addSatisfyingFavoritedID, removeCatDogFavoritedID, addCatDogFavoritedID, removeNSFWFavoritedID, addNSFWFavoritedID, removeCuteFavoritedID, addCuteFavoritedID, removeArtFavoritedID, addArtFavoritedID, removeSarcasmFavoritedID, addSarcasmFavoritedID, removeAwardPictureFavoritedID, addAwardPictureFavoritedID, removeFunWebsiteFavoritedID, addFunWebsiteFavoritedID } from '../redux/UserDataSlice'
+import { addDrawFavoritedID, addQuoteFavoritedID, addMemeFavoritedID, removeDrawFavoritedID, removeQuoteFavoritedID, removeMemeFavoritedID, removeLoveFavoritedID, addLoveFavoritedID, removeSatisfyingFavoritedID, addSatisfyingFavoritedID, removeCatDogFavoritedID, addCatDogFavoritedID, removeNSFWFavoritedID, addNSFWFavoritedID, removeCuteFavoritedID, addCuteFavoritedID, removeArtFavoritedID, addArtFavoritedID, removeSarcasmFavoritedID, addSarcasmFavoritedID, removeAwardPictureFavoritedID, addAwardPictureFavoritedID, removeFunWebsiteFavoritedID, addFunWebsiteFavoritedID, removeTopMovieFavoritedID, addTopMovieFavoritedID } from '../redux/UserDataSlice'
 import { GetPostLikeCountAsync, LikePostAsync } from "../handle/LikeCountHandler";
 
 export default function useIsFavorited(category: Category, id: number | undefined)
@@ -34,6 +34,8 @@ export default function useIsFavorited(category: Category, id: number | undefine
             return state.userData.awardPictureFavoritedIDs;
         else if (category === Category.FunWebsites)
             return state.userData.funWebsiteFavoritesIDs;
+        else if (category === Category.TopMovie)
+            return state.userData.topMovieFavoritesIDs;
         else
             throw new Error('NI cat: ' + Category[category]);
     })
@@ -119,6 +121,12 @@ export default function useIsFavorited(category: Category, id: number | undefine
                 dispatch(removeFunWebsiteFavoritedID(id));
             else
                 dispatch(addFunWebsiteFavoritedID(id));
+        }
+        else if (category === Category.TopMovie) {
+            if (isFavorited)
+                dispatch(removeTopMovieFavoritedID(id));
+            else
+                dispatch(addTopMovieFavoritedID(id));
         }
         else
             throw new Error('NI cat: ' + category);
