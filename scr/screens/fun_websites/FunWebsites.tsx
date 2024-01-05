@@ -228,8 +228,8 @@ const FunWebsitesScreen = () => {
                                         </TouchableOpacity>
                                         :
                                         <View style={styleSheet.contentView}>
-                                            <View onTouchEnd={() => setIsShowList(true)} style={[styleSheet.rewardContainerView, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
-                                                <Text style={[{ color: theme.text, }, styleSheet.rewardText]}>{shortUrl}</Text>
+                                            <View onTouchEnd={() => setIsShowList(true)} style={[styleSheet.titleContainerView, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
+                                                <Text style={[{ color: theme.text, }, styleSheet.titleText]}>{shortUrl}</Text>
                                                 <View style={styleSheet.showListIconView}>
                                                     <MaterialCommunityIcons name={Icon.List} color={theme.counterPrimary} size={Size.Icon} />
                                                 </View>
@@ -318,7 +318,7 @@ const styleSheet = StyleSheet.create({
     contentScrollView: { flex: 1, marginHorizontal: Outline.GapVertical_2 },
     titleView: { fontSize: FontSize.Normal, fontWeight: FontWeight.B500 },
     titleTO: { marginHorizontal: Outline.GapVertical_2, flexDirection: 'row', justifyContent: 'space-between' },
-    rewardText: { flex: 1, fontWeight: FontWeight.B600, textAlign: 'center', fontSize: FontSize.Normal },
-    rewardContainerView: { paddingHorizontal: Outline.GapVertical, flexDirection: 'row', gap: Outline.GapHorizontal },
+    titleText: { flex: 1, textAlign: 'center', fontSize: FontSize.Normal },
+    titleContainerView: { paddingHorizontal: Outline.GapVertical, flexDirection: 'row', gap: Outline.GapHorizontal },
     showListIconView: { padding: Outline.GapHorizontal, borderWidth: StyleSheet.hairlineWidth, borderRadius: BorderRadius.BR8 },
 })
