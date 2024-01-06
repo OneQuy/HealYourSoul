@@ -24,7 +24,7 @@ import { ShareOptions } from 'react-native-share';
 import { Clamp, ToCanPrint, GetFirstLetters, ExtractAllNumbersInText, RGBToRGBAText, IsChar, IsNumChar } from '../../handle/UtilsTS';
 import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading';
 import useCheckAndDownloadRemoteFile from '../../hooks/useCheckAndDownloadRemoteFile';
-import { TempDirName } from '../../handle/Utils';
+import { RandomInt, TempDirName } from '../../handle/Utils';
 import { GetRemoteFileConfigVersion } from '../../handle/AppConfigHandler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import useIsFavorited from '../../hooks/useIsFavorited';
@@ -111,6 +111,15 @@ const TopMovieScreen = () => {
 
         SetStreakAsync(Category[category], -1)
     }, [topMovies, reUpdateData])
+
+    const onPressRandom = useCallback(async () => {
+        if (!Array.isArray(topMovies)) {
+            onPressNext()
+            return
+        }
+
+        onPressNext(RandomInt(0, topMovies.length - 1))
+    }, [topMovies, onPressNext])
 
     const onPressHeaderOption = useCallback(async () => {
         if (streakData)
@@ -205,7 +214,6 @@ const TopMovieScreen = () => {
 
     useEffect(() => {
         SetStreakAsync(Category[category])
-        // onPressRandom()
     }, [])
 
     // on change theme
@@ -276,6 +284,10 @@ const TopMovieScreen = () => {
                         Number.isNaN(likeCount) ? undefined :
                             <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{likeCount}</Text>
                     }
+                </TouchableOpacity>
+                <TouchableOpacity onPress={onPressRandom} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
+                    <MaterialCommunityIcons name={Icon.Dice} color={theme.counterPrimary} size={Size.Icon} />
+                    <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{LocalText.random}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => onPressNext()} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
                     <MaterialCommunityIcons name={Icon.Right} color={theme.counterPrimary} size={Size.Icon} />
