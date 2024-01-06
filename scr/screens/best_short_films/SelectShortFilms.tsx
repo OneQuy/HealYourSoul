@@ -46,7 +46,7 @@ const BestShortFilms = ({ list, setIdx, getSelectingIdAsync: getSelectingIdxAsyn
             <View style={[{ backgroundColor: theme.background, }, styleSheet.bgView]}>
                 <View style={[{ flexDirection: 'row' }, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
                     <MaterialCommunityIcons name={Icon.ThreeDots} color={theme.background} size={Size.Icon} />
-                    <Text style={[{ color: theme.text, }, styleSheet.name]}>{LocalText.top_movies}</Text>
+                    <Text style={[{ color: theme.text, }, styleSheet.name]}>{LocalText.best_short_films}</Text>
                     <TouchableOpacity onPress={() => setIdx(selectIdx)}>
                         <MaterialCommunityIcons name={Icon.X} color={theme.text} size={Size.Icon} />
                     </TouchableOpacity>
