@@ -61,6 +61,8 @@ const DrawerSingleItem = ({
             return 'web'
         else if (route.name === ScreenName.TopMovie)
             return 'movie-open'
+        else if (route.name === ScreenName.BestShortFilms)
+            return 'video-vintage'
         else
             return Icon.HeartBroken
     }, [])
