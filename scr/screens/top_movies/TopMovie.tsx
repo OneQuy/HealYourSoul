@@ -147,7 +147,7 @@ const TopMovieScreen = () => {
             selectingItem.title + ': ' +
             selectingItem.desc + '\n' +
             selectingItem.info + '\n' +
-            selectingItem.rate + '\n\n'
+            '★ ' + selectingItem.rate + ' on IMDb'
 
         console.log(message);
 
@@ -173,7 +173,7 @@ const TopMovieScreen = () => {
             selectingItem.title + ': ' +
             selectingItem.desc + '\n' +
             selectingItem.info + '\n' +
-            selectingItem.rate + '\n\n'
+            '★ ' + selectingItem.rate + ' on IMDb'
 
         // @ts-ignore
         viewShotRef.current.capture().then(async (uri: string) => {
@@ -260,7 +260,7 @@ const TopMovieScreen = () => {
                                             <ImageBackgroundWithLoading resizeMode='contain' source={{ uri: selectingItem?.thumbnailUri }} style={styleSheet.image} indicatorProps={{ color: theme.text }} />
                                             <Text selectable style={[styleSheet.titleView, { color: theme.text, }]}>{selectingItem?.title}</Text>
                                             <Text selectable style={[styleSheet.infoTextView, { color: theme.text, }]}>{selectingItem?.info}</Text>
-                                            <Text selectable style={[styleSheet.infoTextView, { color: theme.text, }]}>★ {selectingItem?.rate}</Text>
+                                            <Text selectable style={[styleSheet.infoTextView, { color: theme.text, }]}>★ {selectingItem?.rate} on IMDb</Text>
                                             <View style={styleSheet.contentScrollView}>
                                                 <ScrollView >
                                                     <Text selectable adjustsFontSizeToFit style={[{ flexWrap: 'wrap', color: theme.text, fontSize: FontSize.Small_L }]}>{selectingItem?.desc}</Text>
