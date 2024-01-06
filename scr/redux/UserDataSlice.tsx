@@ -4,6 +4,8 @@ import { SubscribedData } from "../constants/Types";
 export type UserDataState = {
     subscribedData: SubscribedData | undefined,
 
+    shortFilmsFavoritedIDs: (number | string)[],
+
     awardPictureFavoritedIDs: (number | string)[],
 
     funWebsiteFavoritesIDs: (number | string)[],
@@ -43,6 +45,8 @@ export type UserDataState = {
 
 const initialState: UserDataState = {
     subscribedData: undefined,
+
+    shortFilmsFavoritedIDs: [],
 
     awardPictureFavoritedIDs: [],
 
@@ -120,6 +124,20 @@ const slice = createSlice({
 
         removeTopMovieFavoritedID(state, action: PayloadAction<number | string>) {
             state.topMovieFavoritesIDs = state.topMovieFavoritesIDs.filter(i => i !== action.payload)
+        },
+        
+        // short films
+
+        addShortFilmsFavoritedID(state, action: PayloadAction<number | string>) {
+            if (!state.shortFilmsFavoritedIDs)
+                state.shortFilmsFavoritedIDs = []
+
+            if (!state.shortFilmsFavoritedIDs.includes(action.payload))
+                state.shortFilmsFavoritedIDs.push(action.payload);
+        },
+
+        removeShortFilmsFavoritedID(state, action: PayloadAction<number | string>) {
+            state.shortFilmsFavoritedIDs = state.shortFilmsFavoritedIDs.filter(i => i !== action.payload)
         },
 
         // award picture
@@ -352,6 +370,9 @@ export const {
 
     addTopMovieFavoritedID,
     removeTopMovieFavoritedID,
+
+    addShortFilmsFavoritedID,
+    removeShortFilmsFavoritedID
 } = slice.actions;
 
 export default slice.reducer;

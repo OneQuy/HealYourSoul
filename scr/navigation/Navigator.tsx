@@ -22,6 +22,7 @@ import PicturesOfTheYearScreen from '../screens/pic_of_the_year/PicturesOfTheYea
 import WikipediaScreen from '../screens/wiki/WikipediaScreen';
 import FunWebsitesScreen from '../screens/fun_websites/FunWebsites';
 import TopMovieScreen from '../screens/top_movies/TopMovie';
+import BestShortFilmsScreen from '../screens/best_short_films/BestShortFilmsScreen';
 
 export type DrawerParamList = {
   [ScreenName.Meme]: undefined,
@@ -44,6 +45,7 @@ export type DrawerParamList = {
   [ScreenName.AwardPicture]: undefined,
   [ScreenName.FunWebsite]: undefined,
   [ScreenName.TopMovie]: undefined,
+  [ScreenName.BestShortFilms]: undefined,
   // [ScreenName.Reminder]: undefined,
   [ScreenName.IAPPage]: undefined,
 }
@@ -77,6 +79,7 @@ const ScreenList: ScreenNamePair[] = [
   [ScreenName.AwardPicture, PicturesOfTheYearScreen],
   [ScreenName.FunWebsite, FunWebsitesScreen],
   [ScreenName.TopMovie, TopMovieScreen],
+  [ScreenName.BestShortFilms, BestShortFilmsScreen],
   // [ScreenName.Reminder, ReminderScreen],
   [ScreenName.IAPPage, IAPPage],
 ]

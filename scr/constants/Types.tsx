@@ -56,6 +56,14 @@ export type TopMovie = {
     "rate": string,
 }
 
+export type ShortFilm = {
+    "name": string,
+    "desc": string,
+    "img": string,
+    "author": string,
+    "url": string,
+}
+
 export type FunWebsite = {
     "id": number,
     "url": string,

@@ -24,6 +24,7 @@ export enum ScreenName {
   AwardPicture = 'Photos of Year',
   FunWebsite = 'Fun Websites',
   TopMovie = 'Top 250 Movies',
+  BestShortFilms = 'Best Short Films',
   // Reminder = 'Reminder',
 }
 
@@ -92,6 +93,7 @@ export enum Category {
   Wikipedia = 17,
   FunWebsites = 18,
   TopMovie = 19,
+  BestShortFilms = 20,
   // Reminder = 14,
 }
 
@@ -269,6 +271,7 @@ export const StorageKey_LocalFileVersion = (cat: Category) => 'local_file_versio
 export const StorageKey_Streak = 'streak'
 export const StorageKey_SelectingFunWebsiteId = 'selecting_fun_website_id'
 export const StorageKey_SelectingTopMovieIdx = 'selecting_movie_idx'
+export const StorageKey_SelectingShortFilmIdx = 'selecting_short_film_idx'
 
 export const StorageKey_TriviaDifficulty = 'trivia_diff'
 export const StorageKey_TriviaAnswerType = 'trivia_type'
