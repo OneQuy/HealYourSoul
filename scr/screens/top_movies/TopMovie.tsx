@@ -49,7 +49,7 @@ const TopMovieScreen = () => {
         true,
         GetRemoteFileConfigVersion('top_movies'),
         'json',
-        true,
+        false,
         async () => AsyncStorage.getItem(StorageKey_LocalFileVersion(category)),
         async () => AsyncStorage.setItem(StorageKey_LocalFileVersion(category), GetRemoteFileConfigVersion('top_movies').toString()))
 
