@@ -268,7 +268,10 @@ const TopMovieScreen = () => {
                                             </View>
                                             <View style={[styleSheet.rankView]}>
                                                 <View style={styleSheet.rankBGView} />
-                                                <Text style={[{ color: theme.text }, styleSheet.rankText]}>#{'\n' + selectingItem?.rank}</Text>
+                                                {
+                                                    !selectingItem?.rank ? undefined :
+                                                    <Text style={[{ color: theme.text }, styleSheet.rankText]}>#{'\n' + selectingItem.rank}</Text>
+                                                }
                                             </View>
                                         </View>
                                 }
