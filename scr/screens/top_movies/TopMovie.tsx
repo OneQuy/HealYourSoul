@@ -29,6 +29,7 @@ import { GetRemoteFileConfigVersion } from '../../handle/AppConfigHandler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import useIsFavorited from '../../hooks/useIsFavorited';
 import ListMovie from './ListMovie';
+import { DownloadFileAsync, GetFLPFromRLP } from '../../handle/FileUtils';
 
 const category = Category.TopMovie
 const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Ftop_movies.json?alt=media&token=4203c962-58bb-41c3-a1a0-ab3b1b3359f8'
@@ -111,15 +112,6 @@ const TopMovieScreen = () => {
         SetStreakAsync(Category[category], -1)
     }, [topMovies, reUpdateData])
 
-    const onPressCopy = useCallback(() => {
-        if (!selectingItem)
-            return
-
-        const message = + selectingItem.title + '\n\n' + selectingItem.desc
-
-        CopyAndToast(message, theme)
-    }, [selectingItem, theme])
-
     const onPressHeaderOption = useCallback(async () => {
         if (streakData)
             setStreakData(undefined)
@@ -129,26 +121,51 @@ const TopMovieScreen = () => {
         }
     }, [streakData])
 
-    const onPressShareText = useCallback(() => {
+    const onPressShareText = useCallback(async () => {
         if (!selectingItem)
             return
 
-        const message = selectingItem.desc + '\n\n' + selectingItem.title
+        const flp = GetFLPFromRLP(TempDirName + '/image.jpg', true)
+        const res = await DownloadFileAsync(selectingItem.thumbnailUri, flp, false)
 
-        RNShare.share({
-            title: LocalText.fact_of_the_day,
-            message,
-        } as ShareContent,
-            {
-                tintColor: theme.primary,
-            } as ShareOptions)
+        if (res) {
+            Alert.alert('Fail', ToCanPrint(res))
+            return
+        }
+
+        const message =
+            '#' + selectingItem.rank + '. ' +
+            selectingItem.title + ': ' +
+            selectingItem.desc + '\n' +
+            selectingItem.info + '\n' +
+            selectingItem.rate + '\n\n'
+
+        console.log(message);
+
+        Share
+            .open({
+                message,
+                url: flp,
+            })
+            .catch((err) => {
+                const error = ToCanPrint(err)
+
+                if (!error.includes('User did not share'))
+                    Alert.alert('Fail', error)
+            })
     }, [selectingItem, theme])
 
     const onPressShareImage = useCallback(() => {
         if (!selectingItem)
             return
 
-        const message = selectingItem.desc + '\n\n' + selectingItem.title
+        const message =
+            '#' + selectingItem.rank + '. ' +
+            selectingItem.title + ': ' +
+            selectingItem.desc + '\n' +
+            selectingItem.info + '\n' +
+            selectingItem.rate + '\n\n'
+
         // @ts-ignore
         viewShotRef.current.capture().then(async (uri: string) => {
             Share
@@ -267,17 +284,12 @@ const TopMovieScreen = () => {
             </View>
             {/* sub btns */}
             <View style={[{ gap: Outline.GapHorizontal }, CommonStyles.row_width100Percent]}>
-                <TouchableOpacity onPress={onPressCopy} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }, styleSheet.subBtnTO]}>
-                    <MaterialIcons name={Icon.Copy} color={theme.counterPrimary} size={Size.IconSmaller} />
-                    <Text style={{ color: theme.text, fontSize: FontSize.Small_L }}>{LocalText.copy}</Text>
-                </TouchableOpacity>
-
                 <TouchableOpacity onPress={onPressShareText} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }, styleSheet.subBtnTO]}>
                     <MaterialCommunityIcons name={Icon.ShareText} color={theme.counterPrimary} size={Size.IconSmaller} />
                     <Text style={{ color: theme.text, fontSize: FontSize.Small_L }}>{LocalText.share}</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={onPressShareImage} style={[styleSheet.subBtnTO, { flex: 1.5, gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }]}>
+                <TouchableOpacity onPress={onPressShareImage} style={[styleSheet.subBtnTO, { gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }]}>
                     <MaterialCommunityIcons name={Icon.ShareImage} color={theme.counterPrimary} size={Size.IconSmaller} />
                     <Text style={{ color: theme.text, fontSize: FontSize.Small_L }}>{LocalText.share_image}</Text>
                 </TouchableOpacity>
