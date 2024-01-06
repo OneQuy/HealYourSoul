@@ -254,7 +254,7 @@ const BestShortFilmsScreen = () => {
                                             </View>
                                             <ImageBackgroundWithLoading resizeMode='contain' source={{ uri: selectingItem?.img }} style={styleSheet.image} indicatorProps={{ color: theme.text }} />
                                             <Text selectable style={[styleSheet.nameView, { color: theme.text, }]}>{selectingItem?.name}</Text>
-                                            <Text selectable style={[styleSheet.infoTextView, { color: theme.text, }]}>{selectingItem?.author}</Text>
+                                            <Text selectable style={[styleSheet.infoTextView, { color: theme.text, }]}>{LocalText.credit_to + ': ' + selectingItem?.author}</Text>
                                             <View style={styleSheet.contentScrollView}>
                                                 <ScrollView >
                                                     <Text selectable adjustsFontSizeToFit style={[{ flexWrap: 'wrap', color: theme.text, fontSize: FontSize.Small_L }]}>{selectingItem?.desc}</Text>
@@ -262,7 +262,7 @@ const BestShortFilmsScreen = () => {
                                             </View>
                                             {
                                                 !showFull || !selectingItem?.url ? undefined :
-                                                    <View style={[{ backgroundColor: 'green' }, CommonStyles.width100Percent_Height100Percent_PositionAbsolute_JustifyContentCenter_AlignItemsCenter]}>
+                                                    <View style={[ CommonStyles.width100Percent_Height100Percent_PositionAbsolute_JustifyContentCenter_AlignItemsCenter]}>
                                                         <WebView
                                                             source={{ uri: selectingItem.url }}
                                                             containerStyle={{ width: '100%', height: '100%' }}
@@ -332,7 +332,7 @@ const styleSheet = StyleSheet.create({
     contentView: { flex: 1, gap: Outline.GapVertical, paddingTop: Outline.GapHorizontal },
     contentScrollView: { flex: 1, marginHorizontal: Outline.GapVertical_2 },
     nameView: { marginLeft: Outline.Horizontal, fontSize: FontSize.Normal, fontWeight: FontWeight.B500 },
-    infoTextView: { paddingLeft: Outline.Horizontal, fontSize: FontSize.Small_L, },
+    infoTextView: { fontStyle: 'italic', paddingLeft: Outline.Horizontal, fontSize: FontSize.Small_L, },
     nameTO: { marginHorizontal: Outline.GapVertical_2, flexDirection: 'row', justifyContent: 'space-between' },
     nameText: { marginLeft: widthPercentageToDP(12), flex: 1, textAlign: 'center', fontSize: FontSize.Normal },
     nameContainerView: { paddingHorizontal: Outline.GapVertical, flexDirection: 'row', gap: Outline.GapHorizontal },

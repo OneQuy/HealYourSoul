@@ -194,6 +194,7 @@ export const LocalText = {
   retry: "Retry",
   error: "Error",
   credit_to_author: 'Credit to the author.',
+  credit_to: 'Credit to',
   error_toast: 'Something\'s wrong',
   tap_to_retry: 'Tap to retry.',
   no_internet: 'No internet!',
