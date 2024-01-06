@@ -23,7 +23,7 @@ const BestShortFilms = ({ list, setIdx, getSelectingIdAsync: getSelectingIdxAsyn
         
         return <TouchableOpacity onPress={() => setIdx(index)} style={[{ backgroundColor: isSelecting ? theme.primary : undefined, borderRadius: isSelecting ? BorderRadius.BR8 : 0, borderWidth: isSelecting ? 1 : 0 }, styleSheet.itemTO]}>
             <ImageBackgroundWithLoading source={{ uri: item.img }} resizeMode='cover' style={styleSheet.image} />
-            <Text style={[styleSheet.text, { color: theme.text }]}>#{item.name}</Text>
+            <Text style={[styleSheet.text, { color: theme.text }]}>{item.name}</Text>
         </TouchableOpacity>
     }, [selectIdx, theme])
 

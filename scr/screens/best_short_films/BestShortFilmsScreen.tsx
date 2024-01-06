@@ -30,6 +30,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import useIsFavorited from '../../hooks/useIsFavorited';
 import ListMovie from './SelectShortFilms';
 import { DownloadFileAsync, GetFLPFromRLP } from '../../handle/FileUtils';
+import WebView from 'react-native-webview';
 
 const category = Category.BestShortFilms
 const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Fshort_films.json?alt=media&token=537eec8b-f774-4908-a5fa-45f8daf676d8'
@@ -43,6 +44,7 @@ const BestShortFilmsScreen = () => {
     const [selectingItem, setSelectingItem] = useState<ShortFilm | undefined>(undefined)
     const [isShowList, setIsShowList] = useState(false)
     const viewShotRef = useRef<LegacyRef<ViewShot> | undefined>();
+    const [showFull, setShowFull] = useState(false);
 
     const [shortFilms, errorDownloadJson, _, reUpdateData] = useCheckAndDownloadRemoteFile<ShortFilm[]>(
         fileURL,
@@ -82,6 +84,7 @@ const BestShortFilmsScreen = () => {
     const onPressNext = useCallback(async (toIdx: number = -1) => {
         setSelectingItem(undefined)
         setIsShowList(false)
+        setShowFull(false)
 
         if (!Array.isArray(shortFilms)) {
             reUpdateData()
@@ -257,6 +260,15 @@ const BestShortFilmsScreen = () => {
                                                     <Text selectable adjustsFontSizeToFit style={[{ flexWrap: 'wrap', color: theme.text, fontSize: FontSize.Small_L }]}>{selectingItem?.desc}</Text>
                                                 </ScrollView>
                                             </View>
+                                            {
+                                                !showFull || !selectingItem?.url ? undefined :
+                                                    <View style={[{ backgroundColor: 'green' }, CommonStyles.width100Percent_Height100Percent_PositionAbsolute_JustifyContentCenter_AlignItemsCenter]}>
+                                                        <WebView
+                                                            source={{ uri: selectingItem.url }}
+                                                            containerStyle={{ width: '100%', height: '100%' }}
+                                                        />
+                                                    </View>
+                                            }
                                         </View>
                                 }
                             </View>
@@ -274,11 +286,15 @@ const BestShortFilmsScreen = () => {
                 </TouchableOpacity>
                 <TouchableOpacity onPress={onPressRandom} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
                     <MaterialCommunityIcons name={Icon.Dice} color={theme.counterPrimary} size={Size.Icon} />
-                    <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{LocalText.random}</Text>
+                    {/* <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{LocalText.random}</Text> */}
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => setShowFull(!showFull)} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
+                    <MaterialCommunityIcons name={showFull ? Icon.X : Icon.Eye} color={theme.counterPrimary} size={Size.Icon} />
+                    {/* <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{showFull ? '' : LocalText.read_full}</Text> */}
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => onPressNext()} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
                     <MaterialCommunityIcons name={Icon.Right} color={theme.counterPrimary} size={Size.Icon} />
-                    <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{LocalText.next}</Text>
+                    {/* <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{LocalText.next}</Text> */}
                 </TouchableOpacity>
             </View>
             {/* sub btns */}
