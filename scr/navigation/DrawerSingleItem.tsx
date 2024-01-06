@@ -32,7 +32,7 @@ const DrawerSingleItem = ({
         else if (route.name === ScreenName.NSFW)
             return 'emoticon-devil'
         else if (route.name === ScreenName.Quote)
-            return 'format-quote-open'
+            return 'human-handsup'
         else if (route.name === ScreenName.Satisfying)
             return 'head-heart'
         else if (route.name === ScreenName.Love)
@@ -52,13 +52,15 @@ const DrawerSingleItem = ({
         else if (route.name === ScreenName.Picture)
             return 'file-image'
         else if (route.name === ScreenName.QuoteText)
-            return 'comment-quote'
+            return 'format-quote-open'
         else if (route.name === ScreenName.AwardPicture)
             return 'crown'
         else if (route.name === ScreenName.WikiFact)
             return 'book-open-variant'
         else if (route.name === ScreenName.FunWebsite)
             return 'web'
+        else if (route.name === ScreenName.TopMovie)
+            return 'movie-open'
         else
             return Icon.HeartBroken
     }, [])
