@@ -23,7 +23,7 @@ export enum ScreenName {
   Trivia = 'Trivia',
   AwardPicture = 'Photos of Year',
   FunWebsite = 'Fun Websites',
-  TopMovie = 'Top 150 Movies',
+  TopMovie = 'Top 250 Movies',
   // Reminder = 'Reminder',
 }
 
