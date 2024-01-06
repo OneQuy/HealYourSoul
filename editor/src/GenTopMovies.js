@@ -28,6 +28,10 @@ const GetMiddleText = (text) => {
 // <span class="sc-43986a27-8 jHYIIK cli-title-metadata-item">
 // an class="ipc-rating-star--voteCoun
 // class="ipc-html-content-inner-d
+
+var expression = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi;
+var regex = new RegExp(expression);
+
 const GenDataTopMovies = async () => {
     const text = fs.readFileSync(source, 'utf-8')
     const lines = text.split('\n')
@@ -62,12 +66,12 @@ const GenDataTopMovies = async () => {
             if (!currentItem)
                 continue
 
-            line = line.replaceAll('<span class="sc-43986a27-8 jHYIIK dli-title-metadata-item">', ' ')
-            line = line.replaceAll('</span><span class="sc-43986a27-8 jHYIIK dli-title-metadata-item">', ' ')
-            line = line.replaceAll('<div class="sc-43986a27-7 dBkaPT dli-title-metadata">', ' ')
-            line = line.replaceAll('</span>', ' ')
-            line = line.replaceAll('</div>', ' ')
-            line = line.replaceAll('  ', ' ')
+            line = line.replaceAll('<span class="sc-43986a27-8 jHYIIK dli-title-metadata-item">', '*')
+            line = line.replaceAll('</span><span class="sc-43986a27-8 jHYIIK dli-title-metadata-item">', '*')
+            line = line.replaceAll('<div class="sc-43986a27-7 dBkaPT dli-title-metadata">', '*')
+            line = line.replaceAll('</span>', '*')
+            line = line.replaceAll('</div>', '*')
+            
 
             currentItem.info = line.trim()
 
@@ -76,9 +80,13 @@ const GenDataTopMovies = async () => {
 
             const rate = GetMiddleText(line)
             currentItem.info += ' ' + rate
-            currentItem.info = currentItem.info.trim()
 
-            // log(currentItem.title, rate)
+            line  = currentItem.info
+            line = line.replaceAll('**', ' • ')
+            line = line.replaceAll('* ', ' • ')
+            line = line.replaceAll('*', '')
+
+            currentItem.info = line.trim()
         }
 
         else if (line.includes('class="ipc-rating-star--voteCoun')) {
@@ -114,7 +122,7 @@ const GenDataTopMovies = async () => {
                 // log(currentItem.desc)
             }
 
-            if (currentItem.thumbnailUri &&
+            if (currentItem.thumbnailUri && currentItem.thumbnailUri.match(regex) &&
                 currentItem.desc &&
                 currentItem.rank > 0 &&
                 currentItem.info &&
@@ -133,6 +141,8 @@ const GenDataTopMovies = async () => {
     }
 
     const t = JSON.stringify(arr, null, 1)
+
+    // console.log(t);
     fs.writeFileSync(filepath, t)
 
     console.log('validated all. count ' + arr.length)
