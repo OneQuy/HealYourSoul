@@ -6,6 +6,10 @@
 	<false/>
 	<key>NSUserNotificationsUsageDescription</key>
 	<string>This identifier will be used to notify events that you registered to get notification.</string>	
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+	<string>youtube</string>
+	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>

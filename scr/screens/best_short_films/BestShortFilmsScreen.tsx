@@ -1,4 +1,4 @@
-import { Share as RNShare, View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, ShareContent, Alert } from 'react-native'
+import { Share as RNShare, View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, ShareContent, Alert, Linking } from 'react-native'
 import React, { LegacyRef, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size, StorageKey_AwardPictureLastSeenIdxOfYear, StorageKey_LocalFileVersion, StorageKey_SelectingShortFilmIdx } from '../../constants/AppConstants'
@@ -11,7 +11,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { NetLord } from '../../handle/NetLord'
-import { useFocusEffect, useNavigation } from '@react-navigation/native'
+import { Link, useFocusEffect, useNavigation } from '@react-navigation/native'
 import { CopyAndToast, SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
 import ViewShot from 'react-native-view-shot'
 import { CommonStyles } from '../../constants/CommonConstants'
@@ -110,6 +110,28 @@ const BestShortFilmsScreen = () => {
         SetStreakAsync(Category[category], -1)
     }, [shortFilms, reUpdateData])
 
+    const onPressOpenYoutubeApp = useCallback(async () => {
+        if (!selectingItem)
+            return
+
+        let url = selectingItem.url
+        let idx = url.indexOf('=')
+
+        if (idx < 0)
+            idx = url.lastIndexOf('/')
+
+        if (idx < 0)
+            return
+
+        url = 'youtube://' + url.substring(idx + 1)
+        const can = await Linking.canOpenURL(url)
+
+        if (can)
+            Linking.openURL(url)
+
+        console.log(url);
+        
+    }, [selectingItem])
     const onPressRandom = useCallback(async () => {
         if (!Array.isArray(shortFilms)) {
             onPressNext()
@@ -302,6 +324,11 @@ const BestShortFilmsScreen = () => {
                 <TouchableOpacity onPress={onPressShareText} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }, styleSheet.subBtnTO]}>
                     <MaterialCommunityIcons name={Icon.ShareText} color={theme.counterPrimary} size={Size.IconSmaller} />
                     <Text style={{ color: theme.text, fontSize: FontSize.Small_L }}>{LocalText.share}</Text>
+                </TouchableOpacity>
+                
+                <TouchableOpacity onPress={onPressOpenYoutubeApp} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }, styleSheet.subBtnTO]}>
+                    <MaterialCommunityIcons name={Icon.Youtube} color={theme.counterPrimary} size={Size.IconSmaller} />
+                    <Text style={{ color: theme.text, fontSize: FontSize.Small_L }}>{LocalText.open_youtube}</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={onPressShareImage} style={[styleSheet.subBtnTO, { gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }]}>

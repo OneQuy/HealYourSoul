@@ -163,6 +163,7 @@ export enum Icon {
   // MaterialCommunityIcons
 
   ShareText = 'share',
+  Youtube = 'youtube',
   ShareImage = 'share-variant',
   ThreeDots = 'dots-horizontal',
   NoInternet = 'access-point-network-off',
@@ -208,6 +209,7 @@ export const LocalText = {
   copied: 'Copied!',
   copy: 'Copy',
   share: 'Share',
+  open_youtube: 'Open in Youtube',
   share_image: 'Share Image',
   random: 'Random',
   next: 'Next',
