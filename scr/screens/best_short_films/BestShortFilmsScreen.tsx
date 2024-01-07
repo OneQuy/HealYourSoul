@@ -56,21 +56,23 @@ const BestShortFilmsScreen = () => {
         async () => AsyncStorage.getItem(StorageKey_LocalFileVersion(category)),
         async () => AsyncStorage.setItem(StorageKey_LocalFileVersion(category), GetRemoteFileConfigVersion('short_films').toString()))
 
-    const idNumber = useMemo(() => {
+    const idCurrent = useMemo(() => {
         if (!selectingItem)
             return undefined
 
         let id = ''
 
-        for (let i = 0; i < selectingItem.name.length; i++) {
-            if (IsChar(selectingItem.name[i]) || IsNumChar(selectingItem.name[i]))
-                id += selectingItem.name[i]
+        const text = selectingItem.name + (selectingItem.author ?? '')
+
+        for (let i = 0; i < text.length; i++) {
+            if (IsChar(text[i]) || IsNumChar(text[i]))
+                id += text[i]
         }
 
         return id
     }, [selectingItem])
 
-    const [isFavorited, likeCount, onPressFavorite] = useIsFavorited(category, idNumber)
+    const [isFavorited, likeCount, onPressFavorite] = useIsFavorited(category, idCurrent)
 
     const getSelectingIdxAsync = useCallback(async () => {
         const s = await AsyncStorage.getItem(StorageKey_SelectingShortFilmIdx)
