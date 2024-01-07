@@ -25,7 +25,8 @@ export enum ScreenName {
   FunWebsite = 'Fun Websites',
   TopMovie = 'Top 250 Movies',
   BestShortFilms = 'Best Short Films',
-  // Reminder = 'Reminder',
+  RandomMeme = 'Random Meme',
+  // Reminder = 'Reminder', // i wasted so much time
 }
 
 // dir / file
@@ -94,6 +95,7 @@ export enum Category {
   FunWebsites = 18,
   TopMovie = 19,
   BestShortFilms = 20,
+  RandomMeme = 21,
   // Reminder = 14,
 }
 
@@ -274,6 +276,7 @@ export const StorageKey_AwardPictureLastSeenIdxOfYear = (year: number) => 'award
 export const StorageKey_LocalFileVersion = (cat: Category) => 'local_file_version_' + cat
 
 export const StorageKey_Streak = 'streak'
+export const StorageKey_WasteTimeItems = 'waste_time_item'
 export const StorageKey_SelectingFunWebsiteId = 'selecting_fun_website_id'
 export const StorageKey_SelectingTopMovieIdx = 'selecting_movie_idx'
 export const StorageKey_SelectingShortFilmIdx = 'selecting_short_film_idx'

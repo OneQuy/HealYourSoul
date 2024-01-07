@@ -56,6 +56,11 @@ export type TopMovie = {
     "rate": string,
 }
 
+export type WasteTimeItem = {
+    title: string,
+    uri: string,
+}
+
 export type ShortFilm = {
     "name": string,
     "desc": string,
