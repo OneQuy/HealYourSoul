@@ -56,8 +56,8 @@ export type TopMovie = {
     "rate": string,
 }
 
-export type WasteTimeItem = {
-    title: string,
+export type RandomImage = {
+    title?: string,
     uri: string,
 }
 

@@ -15,7 +15,7 @@ import { TempDirName } from '../../handle/Utils'
 import { SaveCurrentScreenForLoadNextTime, ToastTheme } from '../../handle/AppUtils'
 import { CommonStyles } from '../../constants/CommonConstants'
 import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
-import { Streak } from '../../constants/Types';
+import { RandomImage, Streak } from '../../constants/Types';
 import StreakPopup from '../components/StreakPopup';
 import { ToCanPrint } from '../../handle/UtilsTS';
 import { DownloadFileAsync, GetFLPFromRLP } from '../../handle/FileUtils';
@@ -25,7 +25,7 @@ import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading
 
 interface TheRandomImageProps {
     category: Category,
-    getImageAsync: () => Promise<string | undefined>
+    getImageAsync: () => Promise<RandomImage | undefined>
 }
 
 const TheRandomImage = ({
@@ -43,9 +43,9 @@ const TheRandomImage = ({
         reasonToReload.current = NeedReloadReason.None
         setHandling(true)
 
-        const uri = await getImageAsync()
+        const item = await getImageAsync()
 
-        if (uri) { // success
+        if (item) { // success
             SetStreakAsync(Category[category], -1)
         }
         else { // fail
@@ -55,7 +55,7 @@ const TheRandomImage = ({
                 reasonToReload.current = NeedReloadReason.NoInternet
         }
 
-        setImageUri(uri)
+        setImageUri(item?.uri)
         setHandling(false)
     }, [])
 

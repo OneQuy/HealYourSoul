@@ -26,9 +26,9 @@ export const QuoteTextScreen = () => {
   />;
 }
 
-export const RedditMemeScreen = () => {
-  return <TheRandomImage
-      category={Category.RedditMeme}
-      getImageAsync={GetRedditMemeAsync}
-  />;
-}
+// export const RedditMemeScreen = () => {
+//   return <TheRandomImage
+//       category={Category.RedditMeme}
+//       getImageAsync={GetRedditMemeAsync}
+//   />;
+// }

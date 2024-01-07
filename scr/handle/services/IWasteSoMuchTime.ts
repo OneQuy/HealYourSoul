@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import { WasteTimeItem } from "../../constants/Types"
+import { RandomImage } from "../../constants/Types"
 import { RandomInt } from "../Utils"
 import { StorageKey_WasteTimeItems } from "../../constants/AppConstants"
 
@@ -8,13 +8,13 @@ const url = 'https://www.iwastesomuchtime.com/random?pg='
 const titleFind = '<h1 class="blog-post-title"><a href="https://www.iwastesomuchtime.com'
 const imgFind = '<img src="https://www.iwastesomuchtime.com/wp-content/uploads/sites/'
 
-const getItemFromCached = async (): Promise<WasteTimeItem | undefined> => {
+const getItemFromCached = async (): Promise<RandomImage | undefined> => {
     const cachedItemArr = await AsyncStorage.getItem(StorageKey_WasteTimeItems)
 
     if (!cachedItemArr)
         return undefined
 
-    const arr = JSON.parse(cachedItemArr) as WasteTimeItem[]
+    const arr = JSON.parse(cachedItemArr) as RandomImage[]
 
     if (!arr || arr.length <= 0)
         return undefined
@@ -28,8 +28,8 @@ const getItemFromCached = async (): Promise<WasteTimeItem | undefined> => {
     return item
 }
 
-const extract = (text: string) : WasteTimeItem[] => {
-    const arr: WasteTimeItem[] = []
+const extract = (text: string) : RandomImage[] => {
+    const arr: RandomImage[] = []
 
     while (text && text.length > 0) {
         const idxTitle = text.indexOf(titleFind)
@@ -93,7 +93,7 @@ const extract = (text: string) : WasteTimeItem[] => {
     return arr
 }
 
-export const GetIWasteSoMuchTimeAsync = async (): Promise<WasteTimeItem | undefined> => {
+export const GetIWasteSoMuchTimeAsync = async (): Promise<RandomImage | undefined> => {
     try {
         const item = await getItemFromCached()
 

@@ -2,6 +2,7 @@
 
 import { Dimensions } from "react-native"
 import { ToCanPrint } from "../UtilsTS"
+import { RandomImage } from "../../constants/Types"
 
 // import { UNSPLASH_KEY } from '../../../keys'
 
@@ -23,7 +24,7 @@ import { ToCanPrint } from "../UtilsTS"
 const screen = Dimensions.get('screen')
 const minSize = 1000
 
-export const GetRandomUnsplashPictureAsync = async (): Promise<string | undefined> => {
+export const GetRandomUnsplashPictureAsync = async (): Promise<RandomImage | undefined> => {
     try {
         const isLandscape = Math.random() > 0.5
 
@@ -60,7 +61,7 @@ export const GetRandomUnsplashPictureAsync = async (): Promise<string | undefine
         if (data.status !== 200)
             return undefined
 
-        return data.url
+        return { uri: data.url }
     } catch (error) {
         return undefined
     }
