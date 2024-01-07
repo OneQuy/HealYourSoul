@@ -130,7 +130,7 @@ const BestShortFilmsScreen = () => {
             Linking.openURL(url)
 
         console.log(url);
-        
+
     }, [selectingItem])
     const onPressRandom = useCallback(async () => {
         if (!Array.isArray(shortFilms)) {
@@ -163,10 +163,10 @@ const BestShortFilmsScreen = () => {
         }
 
         const message =
-            selectingItem.name + ' (' +
-            selectingItem.author + '): ' +
-            selectingItem.desc + '\n'
-
+            selectingItem.name +
+            (selectingItem.author ? ' (' + selectingItem.author + '): ' : ': ') +
+            selectingItem.desc + '\n\n' +
+            selectingItem.url
 
         console.log(message);
 
@@ -187,10 +187,14 @@ const BestShortFilmsScreen = () => {
         if (!selectingItem)
             return
 
+
         const message =
-            selectingItem.name + ' (' +
-            selectingItem.author + '): ' +
-            selectingItem.desc + '\n'
+            selectingItem.name +
+            (selectingItem.author ? ' (' + selectingItem.author + '): ' : ': ') +
+            selectingItem.desc + '\n\n' +
+            selectingItem.url
+
+        console.log(message);
 
         // @ts-ignore
         viewShotRef.current.capture().then(async (uri: string) => {
@@ -284,7 +288,7 @@ const BestShortFilmsScreen = () => {
                                             </View>
                                             {
                                                 !showFull || !selectingItem?.url ? undefined :
-                                                    <View style={[ CommonStyles.width100Percent_Height100Percent_PositionAbsolute_JustifyContentCenter_AlignItemsCenter]}>
+                                                    <View style={[CommonStyles.width100Percent_Height100Percent_PositionAbsolute_JustifyContentCenter_AlignItemsCenter]}>
                                                         <WebView
                                                             source={{ uri: selectingItem.url }}
                                                             containerStyle={{ width: '100%', height: '100%' }}
@@ -325,7 +329,7 @@ const BestShortFilmsScreen = () => {
                     <MaterialCommunityIcons name={Icon.ShareText} color={theme.counterPrimary} size={Size.IconSmaller} />
                     <Text style={{ color: theme.text, fontSize: FontSize.Small_L }}>{LocalText.share}</Text>
                 </TouchableOpacity>
-                
+
                 <TouchableOpacity onPress={onPressOpenYoutubeApp} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }, styleSheet.subBtnTO]}>
                     <MaterialCommunityIcons name={Icon.Youtube} color={theme.counterPrimary} size={Size.IconSmaller} />
                     <Text style={{ color: theme.text, fontSize: FontSize.Small_L }}>{LocalText.open_youtube}</Text>
