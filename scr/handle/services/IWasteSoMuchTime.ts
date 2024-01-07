@@ -2,6 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 import { RandomImage } from "../../constants/Types"
 import { RandomInt } from "../Utils"
 import { StorageKey_WasteTimeItems } from "../../constants/AppConstants"
+import { HTMLCharConvert } from "../UtilsTS"
 
 const url = 'https://www.iwastesomuchtime.com/random?pg='
 
@@ -23,12 +24,11 @@ const getItemFromCached = async (): Promise<RandomImage | undefined> => {
 
     const subArr = arr.slice(1)
     await AsyncStorage.setItem(StorageKey_WasteTimeItems, JSON.stringify(subArr))
-    console.log('remian', subArr.length);
 
     return item
 }
 
-const extract = (text: string) : RandomImage[] => {
+const extract = (text: string): RandomImage[] => {
     const arr: RandomImage[] = []
 
     while (text && text.length > 0) {
@@ -55,6 +55,9 @@ const extract = (text: string) : RandomImage[] => {
             title += text[i]
         }
 
+        if (title) 
+            title = HTMLCharConvert(title)
+        
         // ==================
 
         const idxImgUrl = text.indexOf(imgFind)
@@ -101,7 +104,7 @@ export const GetIWasteSoMuchTimeAsync = async (): Promise<RandomImage | undefine
             return item
 
         const link = url + RandomInt(1, 1000)
-        console.log('fetchhhhh', link);
+        // console.log('fetchhhhh', link);
 
         const response = await fetch(link)
 

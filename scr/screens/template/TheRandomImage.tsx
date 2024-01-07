@@ -22,6 +22,7 @@ import { DownloadFileAsync, GetFLPFromRLP } from '../../handle/FileUtils';
 import { SaveToGalleryAsync } from '../../handle/CameraRoll';
 import { ToastOptions, toast } from '@baronha/ting';
 import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading';
+import { widthPercentageToDP } from 'react-native-responsive-screen';
 
 interface TheRandomImageProps {
     category: Category,
@@ -33,7 +34,7 @@ const TheRandomImage = ({
     getImageAsync,
 }: TheRandomImageProps) => {
     const navigation = useNavigation();
-    const [imageUri, setImageUri] = useState<string | undefined>(undefined)
+    const [currentItem, setCurrentItem] = useState<RandomImage | undefined>(undefined)
     const reasonToReload = useRef<NeedReloadReason>(NeedReloadReason.None);
     const theme = useContext(ThemeContext);
     const [handling, setHandling] = useState(false);
@@ -55,7 +56,7 @@ const TheRandomImage = ({
                 reasonToReload.current = NeedReloadReason.NoInternet
         }
 
-        setImageUri(item?.uri)
+        setCurrentItem(item)
         setHandling(false)
     }, [])
 
@@ -69,12 +70,12 @@ const TheRandomImage = ({
     }, [streakData])
 
     const onPressSaveToPhoto = useCallback(async () => {
-        if (!imageUri) {
+        if (!currentItem) {
             return
         }
 
         const flp = RNFS.DocumentDirectoryPath + '/' + TempDirName + '/image.jpg'
-        const res = await DownloadFileAsync(imageUri, flp, false)
+        const res = await DownloadFileAsync(currentItem.uri, flp, false)
 
         if (res) {
             Alert.alert('Fail', ToCanPrint(res))
@@ -94,14 +95,14 @@ const TheRandomImage = ({
 
             toast(options);
         }
-    }, [theme, imageUri])
+    }, [theme, currentItem])
 
     const onPressShareImage = useCallback(async () => {
-        if (!imageUri)
+        if (!currentItem)
             return
 
         const flp = GetFLPFromRLP(TempDirName + '/image.jpg', true)
-        const res = await DownloadFileAsync(imageUri, flp, false)
+        const res = await DownloadFileAsync(currentItem.uri, flp, false)
 
         if (res) {
             Alert.alert('Fail', ToCanPrint(res))
@@ -118,7 +119,7 @@ const TheRandomImage = ({
                 if (!error.includes('User did not share'))
                     Alert.alert('Fail', error)
             });
-    }, [imageUri])
+    }, [currentItem])
 
     // on init once (for load first post)
 
@@ -161,10 +162,15 @@ const TheRandomImage = ({
                                         <Text style={{ fontSize: FontSize.Small_L, color: theme.counterPrimary }}>{LocalText.tap_to_retry}</Text>
                                     </TouchableOpacity>
                                     :
-                                    <TouchableWithoutFeedback onPress={onPressRandom}>
-                                        {/* <Image resizeMode='contain' source={{ uri: imageUri }} style={styleSheet.image} /> */}
-                                        <ImageBackgroundWithLoading resizeMode='contain' source={{ uri: imageUri }} style={styleSheet.image} />
-                                    </TouchableWithoutFeedback>
+                                    <View style={styleSheet.contentView}>
+                                        {
+                                            !currentItem?.title ? undefined :
+                                                <Text style={[{ color: theme.text, }, styleSheet.titleText]}>{currentItem.title}</Text>
+                                        }
+                                        <View style={styleSheet.imageTO} onTouchEnd={onPressRandom}>
+                                            <ImageBackgroundWithLoading resizeMode='contain' source={{ uri: currentItem?.uri }} style={styleSheet.image} />
+                                        </View>
+                                    </View>
                             }
                         </View>
                 }
@@ -196,8 +202,11 @@ export default TheRandomImage
 
 const styleSheet = StyleSheet.create({
     masterView: { flex: 1, gap: Outline.GapVertical, },
+    titleText: { textAlign: 'center', fontSize: FontSize.Normal, paddingHorizontal: Outline.Horizontal, },
+    contentView: { width: '100%', height: '100%', gap: Outline.GapVertical, paddingTop: Outline.GapHorizontal },
     randomTO: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: '100%' },
     subBtnTO: { justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', },
     headerOptionTO: { marginRight: 15 },
-    image: { width: '100%', height: '100%' }
+    image: { width: '100%', height: '100%' },
+    imageTO: { flex: 1 },
 })
