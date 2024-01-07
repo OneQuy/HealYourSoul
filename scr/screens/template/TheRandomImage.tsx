@@ -112,6 +112,7 @@ const TheRandomImage = ({
         Share
             .open({
                 url: flp,
+                message: currentItem.title
             })
             .catch((err) => {
                 const error = ToCanPrint(err)
