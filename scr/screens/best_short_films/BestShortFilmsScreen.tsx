@@ -280,7 +280,10 @@ const BestShortFilmsScreen = () => {
                                             </View>
                                             <ImageBackgroundWithLoading resizeMode='contain' source={{ uri: selectingItem?.img }} style={styleSheet.image} indicatorProps={{ color: theme.text }} />
                                             <Text selectable style={[styleSheet.nameView, { color: theme.text, }]}>{selectingItem?.name}</Text>
-                                            <Text selectable style={[styleSheet.infoTextView, { color: theme.text, }]}>{LocalText.credit_to + ': ' + selectingItem?.author}</Text>
+                                            {
+                                                !selectingItem?.author ? undefined :
+                                                    <Text selectable style={[styleSheet.infoTextView, { color: theme.text, }]}>{LocalText.credit_to + ': ' + selectingItem.author}</Text>
+                                            }
                                             <View style={styleSheet.contentScrollView}>
                                                 <ScrollView >
                                                     <Text selectable adjustsFontSizeToFit style={[{ flexWrap: 'wrap', color: theme.text, fontSize: FontSize.Small_L }]}>{selectingItem?.desc}</Text>
