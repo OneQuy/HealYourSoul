@@ -678,7 +678,7 @@ const ThePage = ({ category }: ThePageProps) => {
             headerRight: !handling ?
                 () => (
                     <TouchableOpacity onPress={onPressHeaderOption} style={style.headerOptionTO}>
-                        <MaterialCommunityIcons name={'dots-horizontal'} color={theme.counterPrimary} size={Size.Icon} />
+                        <MaterialCommunityIcons name={Icon.ThreeDots} color={theme.counterPrimary} size={Size.Icon} />
                     </TouchableOpacity>
                 )
                 :
@@ -865,11 +865,11 @@ const ThePage = ({ category }: ThePageProps) => {
                 {
                     !activePreviousPostButton ? undefined :
                         <TouchableOpacity onPress={() => onPressNextPost(false)} style={{ borderRadius: BorderRadius.BR8, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
-                            <MaterialIcons name={Icon.ArrowLeft} color={theme.counterPrimary} size={Size.Icon} />
+                            <MaterialIcons name={Icon.Left} color={theme.counterPrimary} size={Size.Icon} />
                         </TouchableOpacity>
                 }
                 <TouchableOpacity onPress={() => onPressNextPost(true)} style={{ borderRadius: BorderRadius.BR8, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
-                    <MaterialIcons name={Icon.ArrowRight} color={theme.counterPrimary} size={Size.Icon} />
+                    <MaterialIcons name={Icon.Right} color={theme.counterPrimary} size={Size.Icon} />
                 </TouchableOpacity>
             </View>
 
