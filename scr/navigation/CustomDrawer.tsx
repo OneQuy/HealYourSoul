@@ -5,7 +5,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { useCallback, useContext, useMemo, useRef } from "react";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/Store";
 import { ThemeContext, ThemeType, themes } from "../constants/Colors";
-import { DrawerContentComponentProps, DrawerContentScrollView, } from '@react-navigation/drawer';
+import { DrawerContentComponentProps, } from '@react-navigation/drawer';
 import { Image, ImageBackground, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { setTheme } from "../redux/MiscSlice";
 import DrawerCoupleItem from "./DrawerCoupleItem";
@@ -28,15 +28,9 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
 
   const routeCoupleArr = useMemo(() => {
     const routes = props.state.routes.filter(r =>
-      r.name !== ScreenName.IAPPage &&
-      r.name !== ScreenName.Meme)
-
-    const routeMeme = props.state.routes.filter(r =>
-      r.name === ScreenName.Meme)
+      r.name !== ScreenName.IAPPage)
 
     const arr: (typeof routes[number])[][] = []
-
-    arr.push(routeMeme)
 
     for (let i = 0; i < routes.length; i += 2) {
       if (i < routes.length - 1)

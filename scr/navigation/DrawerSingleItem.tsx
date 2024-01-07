@@ -63,6 +63,8 @@ const DrawerSingleItem = ({
             return 'movie-open'
         else if (route.name === ScreenName.BestShortFilms)
             return 'video-vintage'
+        else if (route.name === ScreenName.RandomMeme)
+            return 'emoticon-lol'
         else
             return Icon.HeartBroken
     }, [])
