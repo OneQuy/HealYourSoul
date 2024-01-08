@@ -13,7 +13,7 @@ import { BorderRadius, Category, FontSize, Icon, LocalText, NeedReloadReason, Op
 import { ThemeContext } from '../../constants/Colors';
 import { heightPercentageToDP as hp, } from "react-native-responsive-screen";
 import { FileList, MediaType, PostMetadata, Streak } from '../../constants/Types';
-import { CheckAndGetFileListAsync, CheckLocalFileAndGetURIAsync, CopyAndToast, GetAllSavedLocalPostIDsListAsync, SaveCurrentScreenForLoadNextTime, ToastTheme } from '../../handle/AppUtils';
+import { CheckAndGetFileListAsync, CheckLocalFileAndGetURIAsync, CopyAndToast, GetAllSavedLocalPostIDsListAsync, PreDownloadPosts, SaveCurrentScreenForLoadNextTime, ToastTheme } from '../../handle/AppUtils';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { PickRandomElement, RoundNumber, SecondsToHourMinuteSecondString } from '../../handle/Utils';
@@ -573,7 +573,7 @@ const ThePage = ({ category }: ThePageProps) => {
         }
         else if (isTouch) {
             // load next post when current is image post
-            
+
             if (mediaURI.current && currentMediaIsImage) {
                 onPressNextPost(true)
             }
@@ -687,7 +687,7 @@ const ThePage = ({ category }: ThePageProps) => {
                 )
         });
     }, [handling, theme, onPressHeaderOption]);
-    
+
     // load post
 
     useEffect(() => {
@@ -697,8 +697,14 @@ const ThePage = ({ category }: ThePageProps) => {
         const isNext = needLoadPost === 'next';
         setNeedLoadPost('none');
         loadNextPostAsync(isNext);
+
+        if (post.current && Cheat('IsLog_CurrentPost')) {
+            navigation.setOptions({
+                headerTitle: Category[category] + '. ID: ' + post.current.id.toString()
+            })
+        }
     }, [needLoadPost]);
-    
+
     // set streak
 
     useEffect(() => {
@@ -706,9 +712,6 @@ const ThePage = ({ category }: ThePageProps) => {
     }, [seenIDs]);
 
     // main render
-
-    if (Cheat('IsLog_CurrentPost'))
-        console.log(Category[category], 'post', post.current?.id, 'RENDER: ' + Date.now());
 
     return (
         // master view
