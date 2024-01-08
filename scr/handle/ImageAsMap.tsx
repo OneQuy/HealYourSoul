@@ -30,6 +30,8 @@ type ImageAsMapProps = {
     maxScale?: number,
     initialScale?: number,
     allItems?: MapItem[],
+    minScaleIsContainIfImageRatioOver?: number,
+    notMinScaleCoverModeWhenImageIsLandscape?: boolean,
 
     /**
      * default is [0.5, 0.5] (center of the map)
@@ -57,6 +59,8 @@ const ImageAsMap = ({
     isDrawAllItems,
     throttleInMsToUpdateItems,
     initialPointCenterByMapSizePercent,
+    minScaleIsContainIfImageRatioOver,
+    notMinScaleCoverModeWhenImageIsLandscape,
 }: ImageAsMapProps) => {
     const [mapRealOriginSize, setMapRealOriginSize] = useState<[number, number]>([10, 10])
     const [viewportRealSize, setViewportRealSize] = useState<[number, number]>([0, 0])
@@ -273,6 +277,15 @@ const ImageAsMap = ({
         Image.getSize(e.nativeEvent.source.uri, (w, h) => {
             setMapRealOriginSize([w, h])
 
+            const ratio = Math.max(w, h) / Math.min(w, h)
+            let minScaleIsContainOrCover = typeof minScaleIsContainIfImageRatioOver === 'number' && minScaleIsContainIfImageRatioOver > ratio
+
+            if (notMinScaleCoverModeWhenImageIsLandscape === true && w > h) {
+                minScaleIsContainOrCover = true
+            }
+
+            // console.log(ratio, minScaleIsContainOrCover);
+
             // find min scale
 
             if (viewportRealSize[0] * viewportRealSize[1] <= 0) {
@@ -280,7 +293,21 @@ const ImageAsMap = ({
                 return
             }
 
-            if (w < h) {
+            if (minScaleIsContainOrCover) {
+                if (w > h) {
+                    mapMinScale.current = viewportRealSize[0] / w
+
+                    if (mapMinScale.current * h > viewportRealSize[1])
+                        mapMinScale.current = viewportRealSize[1] / h
+                }
+                else {
+                    mapMinScale.current = viewportRealSize[1] / h
+
+                    if (mapMinScale.current * w > viewportRealSize[0])
+                        mapMinScale.current = viewportRealSize[0] / w
+                }
+            }
+            else if (w < h) {
                 mapMinScale.current = viewportRealSize[0] / w
 
                 if (mapMinScale.current * h < viewportRealSize[1])
@@ -299,7 +326,7 @@ const ImageAsMap = ({
             mapMaxScale.current = Math.max(mapMinScale.current, maxScale || 10)
 
             // other setups
-            
+
             createSetItemsThrottler()
 
             onSetScale(initialScale || mapMinScale.current, false)

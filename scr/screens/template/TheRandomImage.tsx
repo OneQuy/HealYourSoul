@@ -23,6 +23,7 @@ import { SaveToGalleryAsync } from '../../handle/CameraRoll';
 import { ToastOptions, toast } from '@baronha/ting';
 import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading';
 import { widthPercentageToDP } from 'react-native-responsive-screen';
+import ImageAsMap from '../../handle/ImageAsMap';
 
 interface TheRandomImageProps {
     category: Category,
@@ -144,6 +145,8 @@ const TheRandomImage = ({
 
     useFocusEffect(useCallback(() => SaveCurrentScreenForLoadNextTime(navigation), []))
 
+    // console.log(currentItem?.uri);
+
     return (
         <View pointerEvents={handling ? 'none' : 'auto'} style={[styleSheet.masterView, { backgroundColor: theme.background }]}>
             <View style={CommonStyles.flex_1} >
@@ -168,8 +171,15 @@ const TheRandomImage = ({
                                             !currentItem?.title ? undefined :
                                                 <Text style={[{ color: theme.text, }, styleSheet.titleText]}>{currentItem.title}</Text>
                                         }
-                                        <View style={styleSheet.imageTO} onTouchEnd={onPressRandom}>
-                                            <ImageBackgroundWithLoading resizeMode='contain' source={{ uri: currentItem?.uri }} style={styleSheet.image} />
+                                        <View style={styleSheet.imageTO}
+                                        // onTouchEnd={onPressRandom}
+                                        >
+                                            {/* <ImageBackgroundWithLoading resizeMode='contain' source={{ uri: currentItem?.uri }} style={styleSheet.image} /> */}
+                                            <ImageAsMap
+                                                uri={currentItem?.uri}
+                                                minScaleIsContainIfImageRatioOver={3}
+                                                notMinScaleCoverModeWhenImageIsLandscape={true}
+                                            />
                                         </View>
                                     </View>
                             }
