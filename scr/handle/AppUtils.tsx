@@ -15,12 +15,15 @@ import { GetAppConfig } from "./AppConfigHandler";
 import Clipboard from "@react-native-clipboard/clipboard";
 import { NavigationProp } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { CheckDuplicateAndDownloadAsync } from "../firebase/FirebaseStorageDownloadManager";
 
 // const today = new Date()
 // const todayString = 'd' + today.getDate() + '_m' + (today.getMonth() + 1) + '_' + today.getFullYear()
 
 export const versionText = require('../../package.json')['version']
 const versionAsNumber = VersionToNumber(versionText)
+
+const postPredownloadLimit = 10
 
 /**
  * cheat clear whole folder data
@@ -311,6 +314,51 @@ export const HandleError = (methodName: string, error: any, themeForToast?: Them
     }
 }
 
+export async function PreDownloadPosts(
+    cat: Category,
+    seenIDs: (string | number)[],
+    currentPost: PostMetadata | null,
+    fileList: FileList) {
+    if (!currentPost)
+        return
+
+    let count = 0
+
+    for (let ipost = 0; ipost < fileList.posts.length; ipost++) {
+        const post = fileList.posts[ipost]
+        const postID = post.id
+
+        if (seenIDs.includes(postID))
+            continue
+
+        if (Math.abs(currentPost.id - postID) > postPredownloadLimit)
+            break
+
+        // need to predownload
+
+        let postHasDownload = false
+
+        for (let imedia = 0; imedia < post.media.length; imedia++) {
+            const uri = GetMediaFullPath(true, cat, post.id, imedia, post.media[imedia]);
+
+            if (await IsExistedAsync(uri, false)) {
+                continue
+            }
+
+            postHasDownload = true
+            const fbPath = GetMediaFullPath(false, cat, post.id, imedia, post.media[imedia]);
+
+            CheckDuplicateAndDownloadAsync(fbPath, uri, false)
+        }
+
+        if (postHasDownload)
+            count++
+
+        if (count > postPredownloadLimit)
+            break
+    }
+}
+
 async function DownloadMedia(cat: Category, post: PostMetadata, mediaIdx: number, uri: string, progress: (p: DownloadProgressCallbackResult) => void): Promise<string | NeedReloadReason> {
     const isInternet = await IsInternetAvailableAsync();
 
@@ -321,7 +369,8 @@ async function DownloadMedia(cat: Category, post: PostMetadata, mediaIdx: number
 
     const fbPath = GetMediaFullPath(false, cat, post.id, mediaIdx, post.media[mediaIdx]);
 
-    const error = await FirebaseStorage_DownloadByGetURLAsync(fbPath, uri, false, progress);
+    // const error = await FirebaseStorage_DownloadByGetURLAsync(fbPath, uri, false, progress);
+    const error = await CheckDuplicateAndDownloadAsync(fbPath, uri, false, progress)
 
     if (Cheat('IsLog_LoadMedia')) {
         console.log(Category[cat], 'Tried DOWNLOADED media', 'post: ' + post.id, 'media idx: ' + mediaIdx, 'success: ' + (error === null));

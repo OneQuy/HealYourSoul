@@ -274,6 +274,11 @@ const ThePage = ({ category }: ThePageProps) => {
         // load likes
 
         onBeginLoadNextOrPreviousPostAsync()
+
+        // predownload
+
+        if (fileList.current)
+            PreDownloadPosts(category, seenIDs, post.current, fileList.current)
     }, [seenIDs, loadNextMediaAsync, onBeginLoadNextOrPreviousPostAsync]);
 
     const onVideoLoaded = useCallback((e: any) => {
