@@ -34,13 +34,10 @@ export async function CheckDuplicateAndDownloadAsync(
 }
 
 const CheckDuplicateAndDownload = (config: DownloadFileConfig) => {
-    const downloadingFile = downloadingFiles.find(f =>
-        config.firebaseRLP === f.firebaseRLP &&
-        config.localSavePath === f.localSavePath &&
-        config.isRLP === f.isRLP)
+    const downloadingFile = downloadingFiles.find(f => config.firebaseRLP === f.firebaseRLP)
 
     if (downloadingFile) { // is queued & downloading 
-        console.log('is queued & downloading:', downloadingFile.firebaseRLP)
+        // console.log('is queued & downloading:', downloadingFile.firebaseRLP)
 
         if (config.progressCallback)
             downloadingFile.progressCallback = config.progressCallback
@@ -49,7 +46,7 @@ const CheckDuplicateAndDownload = (config: DownloadFileConfig) => {
             downloadingFile.onDone = config.onDone
     }
     else {
-        console.log('push new download:', config.firebaseRLP)
+        // console.log('push new download:', config.firebaseRLP)
 
         downloadingFiles.push(config)
 
@@ -67,7 +64,7 @@ const CheckDuplicateAndDownload = (config: DownloadFileConfig) => {
 
                 const removed = ArrayRemove(downloadingFiles, config)
 
-                console.log('done and removed: ', config.firebaseRLP, ' error: ' + error);
+                // console.log('done and removed: ', config.firebaseRLP, ' error: ' + error);
             })
     }
 }
