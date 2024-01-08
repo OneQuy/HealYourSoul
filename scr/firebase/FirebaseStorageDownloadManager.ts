@@ -62,7 +62,7 @@ const CheckDuplicateAndDownload = (config: DownloadFileConfig) => {
                 if (typeof config.onDone === 'function')
                     config.onDone(error)
 
-                const removed = ArrayRemove(downloadingFiles, config)
+                ArrayRemove(downloadingFiles, config)
 
                 // console.log('done and removed: ', config.firebaseRLP, ' error: ' + error);
             })
