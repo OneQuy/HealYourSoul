@@ -42,8 +42,11 @@ const CheckDuplicateAndDownload = (config: DownloadFileConfig) => {
     if (downloadingFile) { // is queued & downloading 
         console.log('is queued & downloading:', downloadingFile.firebaseRLP)
 
-        downloadingFile.progressCallback = config.progressCallback
-        downloadingFile.onDone = config.onDone
+        if (config.progressCallback)
+            downloadingFile.progressCallback = config.progressCallback
+
+        if (config.onDone)
+            downloadingFile.onDone = config.onDone
     }
     else {
         console.log('push new download:', config.firebaseRLP)
@@ -64,7 +67,7 @@ const CheckDuplicateAndDownload = (config: DownloadFileConfig) => {
 
                 const removed = ArrayRemove(downloadingFiles, config)
 
-                console.log('done and removed: ', removed, ' error: ' + error);
+                console.log('done and removed: ', config.firebaseRLP, ' error: ' + error);
             })
     }
 }
