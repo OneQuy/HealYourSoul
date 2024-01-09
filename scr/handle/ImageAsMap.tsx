@@ -1,5 +1,5 @@
-import { View, Animated, NativeTouchEvent, ViewProps, GestureResponderEvent, Dimensions, LayoutChangeEvent, NativeSyntheticEvent, ImageLoadEventData, Image, ImageBackgroundProps, ImageProps } from 'react-native'
-import React, { ReactNode, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { View, Animated, NativeTouchEvent, ViewProps, GestureResponderEvent, Dimensions, LayoutChangeEvent, NativeSyntheticEvent, ImageLoadEventData, Image, ImageBackgroundProps, ImageProps, ActivityIndicator, ActivityIndicatorProps, StyleSheet } from 'react-native'
+import React, { ReactNode, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { CachedMeassure, CachedMeassureResult } from './PreservedMessure'
 import { Throttle } from './Throttler'
 
@@ -32,6 +32,7 @@ type ImageAsMapProps = {
     allItems?: MapItem[],
     minScaleIsContainIfImageRatioOver?: number,
     notMinScaleCoverModeWhenImageIsLandscape?: boolean,
+    loadingIndicatorProps?: ActivityIndicatorProps,
 
     /**
      * default is [0.5, 0.5] (center of the map)
@@ -61,11 +62,13 @@ const ImageAsMap = ({
     initialPointCenterByMapSizePercent,
     minScaleIsContainIfImageRatioOver,
     notMinScaleCoverModeWhenImageIsLandscape,
+    loadingIndicatorProps,
 }: ImageAsMapProps) => {
     const [mapRealOriginSize, setMapRealOriginSize] = useState<[number, number]>([10, 10])
     const [viewportRealSize, setViewportRealSize] = useState<[number, number]>([0, 0])
     const [currentItems, setCurrentItems] = useState<MapItem[]>([])
     const setCurrentItemsThrottler = useRef(() => { })
+    const [showIndicator, setShowIndicator] = useState(true)
 
     const itemLeftTopAnimatedValueArr = useRef(allItems && isDrawAllItems ? allItems.map(i => new Animated.ValueXY()) : [])
 
@@ -419,8 +422,18 @@ const ImageAsMap = ({
         updatePositionItems()
     }, [allItems])
 
-    // console.log(currentItems.length);
-    // console.log(allItems?.length, itemLeftTopAnimatedValueArr.current.length);
+    // const key = useMemo(() => {
+    //     return Math.random()
+    //     // @ts-ignore
+    // }, [props.source.uri])
+
+    const onStartLoad = useCallback(() => {
+        setShowIndicator(true)
+    }, [])
+
+    const onEndLoad = useCallback(() => {
+        setShowIndicator(false)
+    }, [])
 
     const isDrawItems = allItems && allItems.length > 0 &&
         (isDrawAllItems !== true || allItems.length === itemLeftTopAnimatedValueArr.current.length)
@@ -437,7 +450,9 @@ const ImageAsMap = ({
             style={{ justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%', overflow: 'hidden' }}>
             {/* map */}
             <Animated.Image
+                onLoadStart={onStartLoad}
                 onLoad={onLoadedMap}
+                onLoadEnd={onEndLoad}
                 resizeMode='center'
                 source={img ?? { uri }}
                 style={[
@@ -447,7 +462,7 @@ const ImageAsMap = ({
             {/* items */}
             {
                 !isDrawItems ? undefined :
-                    <View style={{ position: 'absolute', width: '100%', height: '100%', }}>
+                    <View style={style.absolute}>
                         {
                             isDrawAllItems !== true ?
                                 // draw part
@@ -480,10 +495,22 @@ const ImageAsMap = ({
                         }
                     </View>
             }
+            {/* loading indicator */}
+            {
+                !showIndicator ? undefined :
+                    <View pointerEvents='none' style={style.absolute}>
+                        {
+                            <ActivityIndicator {...loadingIndicatorProps} />
+                        }
+                    </View>
+            }
         </View>
     )
 }
 
 export default ImageAsMap
 
+const style = StyleSheet.create({
+    absolute: { position: 'absolute', width: '100%', height: '100%', },
+})
 const getMidPoint = (x1: number, y1: number, x2: number, y2: number): [number, number] => [(x1 + x2) / 2, (y1 + y2) / 2];
