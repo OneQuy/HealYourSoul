@@ -462,7 +462,7 @@ const ImageAsMap = ({
             {/* items */}
             {
                 !isDrawItems ? undefined :
-                    <View style={style.absolute}>
+                    <View style={style.itemsView}>
                         {
                             isDrawAllItems !== true ?
                                 // draw part
@@ -498,7 +498,7 @@ const ImageAsMap = ({
             {/* loading indicator */}
             {
                 !showIndicator ? undefined :
-                    <View pointerEvents='none' style={style.absolute}>
+                    <View pointerEvents='none' style={style.loadingIndicatorView}>
                         {
                             <ActivityIndicator {...loadingIndicatorProps} />
                         }
@@ -511,6 +511,7 @@ const ImageAsMap = ({
 export default ImageAsMap
 
 const style = StyleSheet.create({
-    absolute: { position: 'absolute', width: '100%', height: '100%', },
+    itemsView: { position: 'absolute', width: '100%', height: '100%', },
+    loadingIndicatorView: { justifyContent: 'center', alignItems: 'center', position: 'absolute', width: '100%', height: '100%', },
 })
 const getMidPoint = (x1: number, y1: number, x2: number, y2: number): [number, number] => [(x1 + x2) / 2, (y1 + y2) / 2];

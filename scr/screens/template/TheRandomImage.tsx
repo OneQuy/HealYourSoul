@@ -178,6 +178,7 @@ const TheRandomImage = ({
                                             <ImageAsMap
                                                 uri={currentItem?.uri}
                                                 minScaleIsContainIfImageRatioOver={3}
+                                                loadingIndicatorProps={{ color: theme.text }}
                                                 notMinScaleCoverModeWhenImageIsLandscape={true}
                                             />
                                         </View>
