@@ -733,7 +733,7 @@ const ThePage = ({ category }: ThePageProps) => {
             <View style={{ paddingHorizontal: Outline.Horizontal, paddingTop: 0 }}>
                 {
                     post.current === null || !post.current.title ? null :
-                        <Text style={{ textAlignVertical: 'center', fontSize: FontSize.Normal, color: theme.text }}>{post.current.title}</Text>
+                        <Text numberOfLines={3} style={{ textAlignVertical: 'center', fontSize: FontSize.Normal, color: theme.text }}>{post.current.title}</Text>
                 }
             </View>
 
