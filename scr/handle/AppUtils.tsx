@@ -1,4 +1,4 @@
-import { Alert, Platform } from "react-native";
+import { Alert, Linking, Platform } from "react-native";
 import { Category, FirebaseDBPath, FirebasePath, LocalPath, LocalText, NeedReloadReason } from "../constants/AppConstants";
 import { ThemeColor } from "../constants/Colors";
 import { FileList, MediaType, PostMetadata } from "../constants/Types";
@@ -312,6 +312,14 @@ export const HandleError = (methodName: string, error: any, themeForToast?: Them
             ...ToastTheme(themeForToast, 'error')
         })
     }
+}
+
+export function OpenStore() {
+    const link = Platform.OS === 'android' ?
+        "market://details?id=com.maxdiablo" :
+        "https://apps.apple.com/us/app/d4-tool/id6469034531"
+
+    Linking.openURL(link)
 }
 
 export async function PreDownloadPosts(

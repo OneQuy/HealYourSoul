@@ -14,7 +14,7 @@ import { CommonStyles } from "../constants/CommonConstants";
 import useDrawerMenuItemUtils from '../hooks/useDrawerMenuItemUtils';
 import { logoScr } from '../screens/others/SplashScreen';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { versionText } from '../handle/AppUtils';
+import { OpenStore, versionText } from '../handle/AppUtils';
 
 const primiumBG = require('../../assets/images/btn_bg_1.jpeg')
 
@@ -88,7 +88,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
           }
         </View>
         {/* version */}
-        <Text style={{ color: theme.text, }}>Version: {versionText}</Text>
+        <Text onPress={OpenStore} style={{ color: theme.text, }}>Version: {versionText}</Text>
       </View>
     </View>
   )
