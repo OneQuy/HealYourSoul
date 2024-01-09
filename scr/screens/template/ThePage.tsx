@@ -841,7 +841,7 @@ const ThePage = ({ category }: ThePageProps) => {
 
             {/* credit author */}
             <View style={{ paddingHorizontal: Outline.Horizontal, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
-                <Text numberOfLines={1} style={{ flex: 1, fontSize: FontSize.Normal, color: theme.text }}>{hasCredit ? post.current?.author : LocalText.credit_to_author}</Text>
+                <Text numberOfLines={1} style={{ flex: 1, fontSize: FontSize.Small, color: theme.text }}>{hasCredit ? post.current?.author : LocalText.credit_to_author}</Text>
                 {
                     !hasCredit ? undefined :
                         <TouchableOpacity onPress={() => onPressCopy(post.current?.author)} style={{ marginLeft: Outline.Horizontal, justifyContent: 'center', alignItems: 'center' }} >
