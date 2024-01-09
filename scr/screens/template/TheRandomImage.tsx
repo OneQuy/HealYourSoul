@@ -177,6 +177,7 @@ const TheRandomImage = ({
                                                 minScaleIsContainIfImageRatioOver={3}
                                                 loadingIndicatorProps={{ color: theme.text }}
                                                 notMinScaleCoverModeWhenImageIsLandscape={true}
+                                                initialPointCenterByMapSizePercent={[0.5, 0]}
                                             />
                                         </View>
                                     </View>

@@ -334,7 +334,7 @@ const ImageAsMap = ({
 
             onSetScale(initialScale || mapMinScale.current, false)
 
-            if (initialPointCenterByMapSizePercent && initialPointCenterByMapSizePercent.length === 2) {
+            if (!minScaleIsContainOrCover && initialPointCenterByMapSizePercent && initialPointCenterByMapSizePercent.length === 2) {
                 setCenter(
                     initialPointCenterByMapSizePercent[0],
                     initialPointCenterByMapSizePercent[1],
