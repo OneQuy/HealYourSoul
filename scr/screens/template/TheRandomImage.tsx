@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, ActivityIndicator, Alert, StyleSheet, Image, TouchableWithoutFeedback } from 'react-native'
+import { View, Text, TouchableOpacity, ActivityIndicator, Alert, StyleSheet } from 'react-native'
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { BorderRadius, Category, FontSize, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
@@ -21,8 +21,6 @@ import { ToCanPrint } from '../../handle/UtilsTS';
 import { DownloadFileAsync, GetFLPFromRLP } from '../../handle/FileUtils';
 import { SaveToGalleryAsync } from '../../handle/CameraRoll';
 import { ToastOptions, toast } from '@baronha/ting';
-import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading';
-import { widthPercentageToDP } from 'react-native-responsive-screen';
 import ImageAsMap from '../../handle/ImageAsMap';
 
 interface TheRandomImageProps {
@@ -169,12 +167,11 @@ const TheRandomImage = ({
                                     <View style={styleSheet.contentView}>
                                         {
                                             !currentItem?.title ? undefined :
-                                                <Text style={[{ color: theme.text, }, styleSheet.titleText]}>{currentItem.title}</Text>
+                                                <Text numberOfLines={3} style={[{ color: theme.text, }, styleSheet.titleText]}>{currentItem.title}</Text>
                                         }
                                         <View style={styleSheet.imageTO}
                                         // onTouchEnd={onPressRandom}
                                         >
-                                            {/* <ImageBackgroundWithLoading resizeMode='contain' source={{ uri: currentItem?.uri }} style={styleSheet.image} /> */}
                                             <ImageAsMap
                                                 uri={currentItem?.uri}
                                                 minScaleIsContainIfImageRatioOver={3}
