@@ -21,7 +21,7 @@ import { CheckDuplicateAndDownloadAsync } from "../firebase/FirebaseStorageDownl
 // const todayString = 'd' + today.getDate() + '_m' + (today.getMonth() + 1) + '_' + today.getFullYear()
 
 export const versionText = require('../../package.json')['version']
-const versionAsNumber = VersionToNumber(versionText)
+export const versionAsNumber = VersionToNumber(versionText)
 
 const postPredownloadLimit = 10
 

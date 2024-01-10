@@ -22,6 +22,16 @@ export type AppConfig = {
     ios_review_limit_version: string,
     net_url: string,
     remote_files: object,
+    startup_alert?: {
+        max_version: number,
+        id: string,
+        title: string,
+        content: string,
+        allow_enter_app: boolean,
+        button_link: string,
+        button_link_title: string,
+        show_update_button: boolean,
+    }
 }
 
 export type SubscribedData = {

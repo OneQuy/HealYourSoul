@@ -343,12 +343,18 @@ export function ArrayRemove<T>(arr: T[], value: T): boolean {
 
 // string utils ---------------------------
 
+export function RegexUrl(url: string) {
+    var expression = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi;
+    var regex = new RegExp(expression);
+
+    return url.match(regex)
+}
 
 export function HTMLCharConvert(text: string) {
     var swapCodes = new Array(8211, 8212, 8216, 8217, 8220, 8221, 8226, 8230, 8482, 61558, 8226, 61607, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255, 338, 339, 352, 353, 376, 402);
     var swapStrings = new Array("--", "--", "'", "'", '"', '"', "*", "...", "&trade;", "&bull;", "&bull;", "&bull;", "&iexcl;", "&cent;", "&pound;", "&curren;", "&yen;", "&brvbar;", "&sect;", "&uml;", "&copy;", "&ordf;", "&laquo;", "&not;", "&shy;", "&reg;", "&macr;", "&deg;", "&plusmn;", "&sup2;", "&sup3;", "&acute;", "&micro;", "&para;", "&middot;", "&cedil;", "&sup1;", "&ordm;", "&raquo;", "&frac14;", "&frac12;", "&frac34;", "&iquest;", "&Agrave;", "&Aacute;", "&Acirc;", "&Atilde;", "&Auml;", "&Aring;", "&AElig;", "&Ccedil;", "&Egrave;", "&Eacute;", "&Ecirc;", "&Euml;", "&Igrave;", "&Iacute;", "&Icirc;", "&Iuml;", "&ETH;", "&Ntilde;", "&Ograve;", "&Oacute;", "&Ocirc;", "&Otilde;", "&Ouml;", "&times;", "&Oslash;", "&Ugrave;", "&Uacute;", "&Ucirc;", "&Uuml;", "&Yacute;", "&THORN;", "&szlig;", "&agrave;", "&aacute;", "&acirc;", "&atilde;", "&auml;", "&aring;", "&aelig;", "&ccedil;", "&egrave;", "&eacute;", "&ecirc;", "&euml;", "&igrave;", "&iacute;", "&icirc;", "&iuml;", "&eth;", "&ntilde;", "&ograve;", "&oacute;", "&ocirc;", "&otilde;", "&ouml;", "&divide;", "&oslash;", "&ugrave;", "&uacute;", "&ucirc;", "&uuml;", "&yacute;", "&thorn;", "&yuml;", "&#338;", "&#339;", "&#352;", "&#353;", "&#376;", "&#402;");
 
-    for (let i = 0 ; i < swapCodes.length; i++) {
+    for (let i = 0; i < swapCodes.length; i++) {
         const rep = '&#' + swapCodes[i] + ';'
         const idx = text.indexOf(rep)
 
@@ -496,7 +502,7 @@ export const IsToday = (date: Date): boolean => {
 export const IsYesterday = (date: Date, today: Date = new Date()): boolean => {
     const cloneDate = new Date(date)
     cloneDate.setDate(cloneDate.getDate() + 1)
-    
+
     return IsSameDateMonthYear(cloneDate, today)
 }
 
@@ -506,7 +512,7 @@ export const IsSameDateMonthYear = (a: Date, b: Date): boolean => {
         a.getFullYear() === b.getFullYear()) {
         return true
     }
-    else 
+    else
         return false
 }
 
@@ -534,7 +540,7 @@ export const GetHourMinSecFromMs = (ms: number): [number, number, number] => {
     const min = Math.floor(sec / 60)
 
     sec = Math.floor(sec - min * 60)
-   
+
     return [hour, min, sec]
 }
 

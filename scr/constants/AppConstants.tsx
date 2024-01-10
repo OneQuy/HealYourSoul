@@ -196,6 +196,8 @@ export const LocalText = {
   offline_mode: "Offline mode",
   you_are_offline: "You are offline",
   retry: "Retry",
+  update: "Update",
+  learn_more: "Learn more",
   error: "Error",
   credit_to_author: 'Credit to the author.',
   credit_to: 'Credit to',
@@ -283,3 +285,4 @@ export const StorageKey_SelectingShortFilmIdx = 'selecting_short_film_idx'
 
 export const StorageKey_TriviaDifficulty = 'trivia_diff'
 export const StorageKey_TriviaAnswerType = 'trivia_type'
+export const StorageKey_StartupAlertID = 'startup_alert_id'
