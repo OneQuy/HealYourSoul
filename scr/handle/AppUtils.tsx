@@ -316,8 +316,8 @@ export const HandleError = (methodName: string, error: any, themeForToast?: Them
 
 export function OpenStore() {
     const link = Platform.OS === 'android' ?
-        "market://details?id=com.maxdiablo" :
-        "https://apps.apple.com/us/app/d4-tool/id6469034531"
+        "market://details?id=com.healyoursoul" :
+        "https://apps.apple.com/us/app/gooday-make-your-day/id6471367879"
 
     Linking.openURL(link)
 }
