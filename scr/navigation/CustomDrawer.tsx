@@ -6,7 +6,7 @@ import { useCallback, useContext, useMemo, useRef } from "react";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/Store";
 import { ThemeContext, ThemeType, themes } from "../constants/Colors";
 import { DrawerContentComponentProps, } from '@react-navigation/drawer';
-import { Image, ImageBackground, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, ImageBackground, Linking, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { setTheme } from "../redux/MiscSlice";
 import DrawerCoupleItem from "./DrawerCoupleItem";
 import { BorderRadius, FontSize, FontWeight, LocalText, Outline, ScreenName, Size } from "../constants/AppConstants";
@@ -14,7 +14,9 @@ import { CommonStyles } from "../constants/CommonConstants";
 import useDrawerMenuItemUtils from '../hooks/useDrawerMenuItemUtils';
 import { logoScr } from '../screens/others/SplashScreen';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { OpenStore, versionText } from '../handle/AppUtils';
+import { OpenStore, versionAsNumber, versionText } from '../handle/AppUtils';
+import { GetAppConfig } from '../handle/AppConfigHandler';
+import { RegexUrl } from '../handle/UtilsTS';
 
 const primiumBG = require('../../assets/images/btn_bg_1.jpeg')
 
@@ -25,6 +27,35 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
   const [_, onPressPremium] = useDrawerMenuItemUtils(ScreenName.IAPPage, props)
   const safeAreaInsets = useSafeAreaInsets()
   const theme = useContext(ThemeContext);
+
+  const [notice, onPressNotice, colorNotice] = useMemo(() => {
+    const data = GetAppConfig()?.notice
+
+    if (!data)
+      return [undefined, undefined, undefined]
+
+    const maxVersion = typeof data.max_version === 'number' ? data.max_version : 0
+
+    if (versionAsNumber > maxVersion) {
+      return [undefined, undefined, undefined]
+    }
+
+    if (!data.content || data.content.trim().length <= 0) {
+      return [undefined, undefined, undefined]
+    }
+
+    return [
+      data.content,
+      () => {
+        if (data.is_press_to_open_store)
+          OpenStore()
+        else {
+          if (RegexUrl(data.link))
+            Linking.openURL(data.link)
+        }
+      },
+      data.color && data.color.length > 0 ? data.color : theme.text]
+  }, [GetAppConfig()?.notice, theme])
 
   const routeCoupleArr = useMemo(() => {
     const routes = props.state.routes.filter(r =>
@@ -89,6 +120,11 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
         </View>
         {/* version */}
         <Text onPress={OpenStore} style={{ color: theme.text, }}>Version: {versionText}</Text>
+        {/* notice */}
+        {
+          !notice ? undefined :
+            <Text onPress={onPressNotice} style={{ color: colorNotice, }}>{notice}</Text>
+        }
       </View>
     </View>
   )

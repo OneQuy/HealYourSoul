@@ -22,6 +22,13 @@ export type AppConfig = {
     ios_review_limit_version: string,
     net_url: string,
     remote_files: object,
+    notice?: {
+        max_version: number,
+        content: string,
+        link: string,
+        is_press_to_open_store: boolean,
+        color: string,
+    },
     startup_alert?: {
         max_version: number,
         id: string,
