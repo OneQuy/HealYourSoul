@@ -295,7 +295,7 @@ export const CopyAndToast = (s: string, theme: ThemeColor) => {
     toast(options);
 }
 
-export const HandleError = (methodName: string, error: any, themeForToast?: ThemeColor, keepSilentForUser?: boolean) => {
+export const HandleError = (methodName: string, error: any, keepSilentForUser?: boolean) => {
     const err = methodName + ' - ' + error;
 
     Track('error', err);
@@ -304,14 +304,10 @@ export const HandleError = (methodName: string, error: any, themeForToast?: Them
     if (keepSilentForUser === true)
         return
 
-    if (!themeForToast)
-        Alert.alert(LocalText.error, LocalText.cant_get_content + '\n\nError: ' + err)
-    else {
-        toast({
-            title: LocalText.error_toast,
-            ...ToastTheme(themeForToast, 'error')
-        })
-    }
+    toast({
+        title: LocalText.error_toast,
+        ...ToastTheme_Error()
+    })
 }
 
 export function OpenStore() {
@@ -425,12 +421,21 @@ export async function CheckLocalFileAndGetURIAsync(cat: Category, post: PostMeta
     return await DownloadMedia(cat, post, mediaIdx, uri, progress);
 }
 
-export function ToastTheme(theme: ThemeColor, preset: ToastOptions['preset']) {
+export function ToastTheme(theme: ThemeColor, preset: ToastOptions['preset']): ToastOptions {
     return {
-        backgroundColor: preset === 'error' ? ColorNameToHex('tomato') : theme.primary,
-        titleColor: preset === 'error' ? ColorNameToHex('white') : theme.counterPrimary,
-        messageColor: preset === 'error' ? ColorNameToHex('white') : theme.counterPrimary,
+        backgroundColor: theme.primary,
+        titleColor: theme.counterPrimary,
+        messageColor: theme.counterPrimary,
         preset
+    }
+}
+
+export function ToastTheme_Error(): ToastOptions {
+    return {
+        backgroundColor: ColorNameToHex('tomato'),
+        titleColor: ColorNameToHex('white'),
+        messageColor: ColorNameToHex('white'),
+        preset: 'error'
     }
 }
 

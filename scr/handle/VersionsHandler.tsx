@@ -35,7 +35,7 @@ export async function HandleVersionsFileAsync(theme: ThemeColor) {
     // fail
 
     if (result.error) {
-        HandleError('HandleVersions', result.error, theme)
+        HandleError('HandleVersions', result.error)
         return;
     }
 

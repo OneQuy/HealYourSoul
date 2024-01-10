@@ -1,10 +1,8 @@
 import { FirebaseDatabase_GetValueAsync } from "../firebase/FirebaseDatabase";
-import { HandleError, ToastTheme } from "./AppUtils";
+import { HandleError } from "./AppUtils";
 import { ThemeColor, } from "../constants/Colors";
-import { IsInternetAvailableAsync, SetNetLordFetchUrl } from "./NetLord";
+import { SetNetLordFetchUrl } from "./NetLord";
 import { AppConfig } from "../constants/Types";
-import { toast } from "@baronha/ting";
-import { LocalText } from "../constants/AppConstants";
 
 const FirebaseDBPath = 'app/config';
 
@@ -29,25 +27,14 @@ export function GetRemoteFileConfigVersion(file: string) {
         return Number.NaN
 }
 
-export async function HandleAppConfigAsync(theme: ThemeColor) {
-    const isInternet = await IsInternetAvailableAsync()
-
-    if (!isInternet) {
-        toast({
-            title: LocalText.offline_mode,
-            ...ToastTheme(theme, 'none')
-        })
-
-        return
-    }
-
+export async function HandleAppConfigAsync() : Promise<boolean> {
     const result = await FirebaseDatabase_GetValueAsync(FirebaseDBPath)
 
     // fail
 
     if (result.error) {
-        HandleError('HandleAppConfig', result.error, theme)
-        return
+        HandleError('HandleAppConfig', result.error)
+        return false
     }
 
     // success
@@ -58,4 +45,6 @@ export async function HandleAppConfigAsync(theme: ThemeColor) {
 
     if (appConfig.net_url)
         SetNetLordFetchUrl(appConfig.net_url)
+
+    return true
 }

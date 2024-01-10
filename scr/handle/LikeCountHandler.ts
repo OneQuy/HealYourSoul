@@ -23,7 +23,6 @@ export const GetPostLikeCountAsync = async (cat: Category, postID: number | stri
         HandleError(
             'GetPostLikeCountAsync',
             'cat ' + cat + ', id ' + postID + ', ' + ToCanPrint(res.error),
-            undefined,
             true)
 
         callback(Number.NaN)
@@ -53,7 +52,6 @@ export const LikePostAsync = async (isLikeOrDislike: boolean, cat: Category, pos
         HandleError(
             'LikePostAsync',
             'cat ' + cat + ', id ' + postID + ', ' + ToCanPrint(res.error),
-            undefined,
             true)
 
         callback(Number.NaN)

@@ -1,9 +1,20 @@
 import { AppStateStatus } from "react-native"
 import { RegisterOnChangedState, UnregisterOnChangedState } from "./AppStateMan"
+import { HandleAppConfigAsync } from "./AppConfigHandler"
+
+const checkAndShowWaringAlertAsync = async () => {
+    const success = await HandleAppConfigAsync()
+
+}
+
+const onAppActiveAsync = async () => {
+    checkAndShowWaringAlertAsync()
+}
 
 const onStateChanged = (state: AppStateStatus) => {
-    console.log(state);
-
+    if (state === 'active') {
+        onAppActiveAsync()
+    }
 }
 
 export const RegisterGoodayAppState = (isRegister: boolean) => {
