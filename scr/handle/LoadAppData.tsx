@@ -6,7 +6,7 @@ import { DrawerParamList } from "../navigation/Navigator";
 import { ThemeColor } from "../constants/Colors";
 import { IsInternetAvailableAsync, NetLord } from "./NetLord";
 import { HandleAppConfigAsync } from "./AppConfigHandler";
-import { HandleStartupAlert } from "./StartupAlert";
+import { HandleStartupAlertAsync } from "./StartupAlert";
 import { toast } from "@baronha/ting";
 import { LocalText } from "../constants/AppConstants";
 import { ToastTheme } from "./AppUtils";
@@ -43,7 +43,7 @@ export async function LoadAppData(theme: ThemeColor): Promise<LoadAppDataResult>
 
     // handle alert (must after app config)
 
-    await HandleStartupAlert()
+    await HandleStartupAlertAsync()
 
     // handle: versions file
 

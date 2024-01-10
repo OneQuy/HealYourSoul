@@ -5,9 +5,9 @@ import { LocalText, StorageKey_StartupAlertID } from "../constants/AppConstants"
 import { Alert, AlertButton, Linking } from "react-native"
 import { RegexUrl } from "./UtilsTS"
 
-const isLog = true
+const isLog = false
 
-export const HandleStartupAlert = async () => {
+export const HandleStartupAlertAsync = async () => {
     const config = GetAppConfig()
 
     if (!config) {
