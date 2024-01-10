@@ -7,11 +7,6 @@ import { ThemeColor } from "../constants/Colors";
 import { NetLord } from "./NetLord";
 import { HandleAppConfigAsync } from "./AppConfigHandler";
 import { HandleStartupAlert } from "./StartupAlert";
-// import Clipboard from "@react-native-clipboard/clipboard";
-// import { toast } from "@baronha/ting";
-
-// //todo
-// export var MaxPostsDownloadOnce: number = 10
 
 export type LoadAppDataResult = {
     categoryScreenToOpenFirst: keyof DrawerParamList | null
