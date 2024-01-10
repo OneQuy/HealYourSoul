@@ -11,6 +11,8 @@ import SplashScreen from './screens/others/SplashScreen'
 import { GetColors, ThemeContext } from './constants/Colors'
 import { Cheat } from './handle/Cheat'
 import { clearAllUserData } from './redux/UserDataSlice'
+import { InitAppStateMan } from './handle/AppStateMan'
+import { RegisterGoodayAppState } from './handle/GoodayAppState'
 
 // const App = () => {
 //   return (
@@ -37,12 +39,21 @@ const AppRender = () => {
   // init once
 
   useEffect(() => {
+    // init app state
+
+    InitAppStateMan()
+    RegisterGoodayAppState(true)
+
     // check clear user data
 
     if (Cheat('ClearAllUserData')) {
       dispatch(clearAllUserData());
 
       console.log('ClearAllUserData');
+    }
+
+    return () => {
+      RegisterGoodayAppState(false)
     }
   }, []);
 
