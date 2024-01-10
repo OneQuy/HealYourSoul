@@ -13,6 +13,7 @@
     "store": "cd android && ./gradlew bundlerelease"
   },
   "dependencies": {
+    "@aptabase/react-native": "^0.3.9",
     "@baronha/ting": "^1.1.0",
     "@notifee/react-native": "^7.8.2",
     "@react-native-async-storage/async-storage": "^1.19.0",
