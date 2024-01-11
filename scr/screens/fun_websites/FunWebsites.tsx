@@ -31,6 +31,7 @@ import { GetRemoteFileConfigVersion } from '../../handle/AppConfigHandler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import useIsFavorited from '../../hooks/useIsFavorited';
 import ListWebsite from './ListWebsite';
+import { track_PressNextPost } from '../../handle/tracking/GoodayTracking';
 
 const category = Category.FunWebsites
 const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Ffun_websites.json?alt=media&token=10ecb626-e576-49d4-b124-a9ba148a93a6'
@@ -82,7 +83,9 @@ const FunWebsitesScreen = () => {
         Linking.openURL(selectingItem.url)
     }, [selectingItem])
 
-    const onPressNext = useCallback(async (toId: number = -1) => {
+    const onPressNext = useCallback(async (toId: number = -1, trackingTarget: 'none' | 'menu' | 'next') => {
+        track_PressNextPost(trackingTarget === 'next', category, true)
+
         setSelectingItem(undefined)
         setIsShowList(false)
 
@@ -167,14 +170,14 @@ const FunWebsitesScreen = () => {
         })
     }, [selectingItem, theme])
 
-    // for load data
+    // for load data first time
 
     useEffect(() => {
         reasonToReload.current = NeedReloadReason.None
 
         if (funWebsites) { // downloaded success
             setHandling(false)
-            onPressNext()
+            onPressNext(-1, 'none')
         }
         else if (errorDownloadJson) { // download failed
             setHandling(false)
@@ -190,7 +193,6 @@ const FunWebsitesScreen = () => {
 
     useEffect(() => {
         SetStreakAsync(Category[category])
-        // onPressRandom()
     }, [])
 
     // on change theme
@@ -221,7 +223,7 @@ const FunWebsitesScreen = () => {
                             <View style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
                                 {
                                     reasonToReload.current !== NeedReloadReason.None ?
-                                        <TouchableOpacity onPress={() => onPressNext()} style={[{ gap: Outline.GapVertical }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]} >
+                                        <TouchableOpacity onPress={() => onPressNext(-1, 'none')} style={[{ gap: Outline.GapVertical }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]} >
                                             <MaterialCommunityIcons name={reasonToReload.current === NeedReloadReason.NoInternet ? Icon.NoInternet : Icon.HeartBroken} color={theme.primary} size={Size.IconBig} />
                                             <Text style={{ fontSize: FontSize.Normal, color: theme.counterPrimary }}>{reasonToReload.current === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
                                             <Text style={{ fontSize: FontSize.Small_L, color: theme.counterPrimary }}>{LocalText.tap_to_retry}</Text>
@@ -272,7 +274,7 @@ const FunWebsitesScreen = () => {
                     <MaterialCommunityIcons name={showFull ? Icon.X : Icon.Eye} color={theme.counterPrimary} size={Size.Icon} />
                     <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{showFull ? '' : LocalText.go}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => onPressNext()} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
+                <TouchableOpacity onPress={() => onPressNext(-1, 'next')} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
                     <MaterialCommunityIcons name={Icon.Right} color={theme.counterPrimary} size={Size.Icon} />
                     <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{LocalText.next}</Text>
                 </TouchableOpacity>
@@ -296,7 +298,7 @@ const FunWebsitesScreen = () => {
 
             </View>
             {
-                isShowList && Array.isArray(funWebsites) ? <ListWebsite getSelectingIdAsync={getSelectingIdAsync} setIdx={onPressNext} list={funWebsites} /> : undefined
+                isShowList && Array.isArray(funWebsites) ? <ListWebsite getSelectingIdAsync={getSelectingIdAsync} setIdx={(idx: number) => onPressNext(idx, 'menu')} list={funWebsites} /> : undefined
             }
             {
                 streakData ? <StreakPopup streak={streakData} /> : undefined
