@@ -437,6 +437,17 @@ export function SplitSectionsFromText(wholeTxt: string): string[][] {
     return arrRes
 }
 
+export function FilterOnlyLetterAndNumberFromString(str: string) {
+    let s = ''
+
+    for (let i = 0; i < str.length; i++) {
+        if (IsChar(str[i]) || IsNumChar(str[i]))
+            s += str[i]
+    }
+
+    return s
+}
+
 export function StringReplaceCharAt(str: string, index: number, replacement: string) {
     if (index > str.length - 1)
         return str

@@ -9,6 +9,8 @@ import { CommonStyles } from '../constants/CommonConstants'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { ThemeContext } from '../constants/Colors'
 import useDrawerMenuItemUtils from '../hooks/useDrawerMenuItemUtils'
+import { track_PressDrawerItem } from '../handle/tracking/GoodayTracking'
+import { FilterOnlyLetterAndNumberFromString } from '../handle/UtilsTS'
 
 type Props = {
     route: DrawerContentComponentProps['state']['routes'][number],
@@ -69,8 +71,13 @@ const DrawerSingleItem = ({
             return Icon.HeartBroken
     }, [])
 
+    const onPressButton = useCallback(() => {
+        track_PressDrawerItem(FilterOnlyLetterAndNumberFromString(route.name))
+        onPress()
+    }, [onPress])
+
     return (
-        <TouchableOpacity onPress={onPress} style={[style.masterTO, CommonStyles.justifyContentCenter_AlignItemsCenter, { paddingHorizontal: Outline.GapVertical, backgroundColor: isFocused ? theme.primary : undefined, borderRadius: BorderRadius.BR8, borderColor: theme.text }]}>
+        <TouchableOpacity onPress={onPressButton} style={[style.masterTO, CommonStyles.justifyContentCenter_AlignItemsCenter, { paddingHorizontal: Outline.GapVertical, backgroundColor: isFocused ? theme.primary : undefined, borderRadius: BorderRadius.BR8, borderColor: theme.text }]}>
             <View style={[style.iconView, { marginRight: Outline.GapVertical, }]}>
                 <MaterialCommunityIcons name={icon} color={theme.text} size={Size.IconSmaller} />
             </View>

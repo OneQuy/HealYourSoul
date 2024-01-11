@@ -16,7 +16,8 @@ import { logoScr } from '../screens/others/SplashScreen';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { OpenStore, versionAsNumber, versionText } from '../handle/AppUtils';
 import { GetAppConfig } from '../handle/AppConfigHandler';
-import { RegexUrl } from '../handle/UtilsTS';
+import { FilterOnlyLetterAndNumberFromString, RegexUrl } from '../handle/UtilsTS';
+import { track_PressDrawerItem } from '../handle/tracking/GoodayTracking';
 
 const primiumBG = require('../../assets/images/btn_bg_1.jpeg')
 
@@ -88,6 +89,11 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
     </ScrollView>
   }, [props])
 
+  const onPressPremiumButton = useCallback(() => {
+    track_PressDrawerItem(FilterOnlyLetterAndNumberFromString(ScreenName.IAPPage))
+    onPressPremium()
+  }, [onPressPremium])
+
   return (
     <View style={{ flex: 1 }}>
       {/* logo & app name */}
@@ -100,7 +106,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
       }
       <View style={[style.bottomMasterView]}>
         {/* premium btn */}
-        <TouchableOpacity onPress={onPressPremium}>
+        <TouchableOpacity onPress={onPressPremiumButton}>
           <ImageBackground resizeMode="cover" source={primiumBG} style={[style.premiumIB, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
             <MaterialCommunityIcons name={'star'} color={'black'} size={Size.Icon} />
             <Text style={[style.premiumText]}>{LocalText.donate_me}</Text>

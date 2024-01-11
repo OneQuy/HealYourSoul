@@ -113,3 +113,18 @@ export const track_PressRandom = (shouldTracking: boolean, category: Category, s
         }
     )
 }
+
+export const track_PressDrawerItem = (screen: string) => {
+    const event = 'press_drawer_item'
+
+    MainTrack(event,
+        [
+            `total/${event}/total`,
+            `total/${event}/` + screen,
+
+            `events/${event}/#d/` + screen
+        ],
+        {
+            screen
+        })
+}
