@@ -450,3 +450,7 @@ export const SaveCurrentScreenForLoadNextTime = (navigation: NavigationProp<Reac
     const screenName = state.routeNames[state.index];
     AsyncStorage.setItem('categoryScreenToOpenFirst', screenName);
 }
+
+export const OnUseEffectOnceEnterApp = () => {
+    
+}

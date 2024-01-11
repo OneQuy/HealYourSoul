@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React from 'react'
+import React, { useEffect } from 'react'
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { ScreenName } from '../constants/AppConstants';
@@ -22,6 +22,7 @@ import WikipediaScreen from '../screens/wiki/WikipediaScreen';
 import FunWebsitesScreen from '../screens/fun_websites/FunWebsites';
 import TopMovieScreen from '../screens/top_movies/TopMovie';
 import BestShortFilmsScreen from '../screens/best_short_films/BestShortFilmsScreen';
+import { OnUseEffectOnceEnterApp } from '../handle/AppUtils';
 
 export type DrawerParamList = {
   [ScreenName.Meme]: undefined,
@@ -84,6 +85,8 @@ const ScreenList: ScreenNamePair[] = [
 
 const Navigator = ({ initialRouteName }: MainNavigatorProps) => {
   let screenList = ScreenList
+
+  useEffect(OnUseEffectOnceEnterApp, [])
 
   return (
     <NavigationContainer>
