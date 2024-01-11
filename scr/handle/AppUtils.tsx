@@ -17,8 +17,8 @@ import { NavigationProp } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CheckDuplicateAndDownloadAsync } from "../firebase/FirebaseStorageDownloadManager";
 
-// const today = new Date()
-// const todayString = 'd' + today.getDate() + '_m' + (today.getMonth() + 1) + '_' + today.getFullYear()
+const today = new Date()
+export const todayString = 'd' + today.getDate() + '_m' + (today.getMonth() + 1) + '_' + today.getFullYear()
 
 export const versionText = require('../../package.json')['version']
 export const versionAsNumber = VersionToNumber(versionText)
