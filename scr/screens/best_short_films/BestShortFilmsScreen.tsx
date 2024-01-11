@@ -163,6 +163,13 @@ const BestShortFilmsScreen = () => {
         }
     }, [streakData])
 
+    const onPressInAppWeb = useCallback(() => {
+        if (!showFull)
+            track_SimpleWithCat(category, 'open_inapp_web')
+
+        setShowFull(!showFull)
+    }, [showFull])
+
     const onPressShareText = useCallback(async () => {
         if (!selectingItem)
             return
@@ -332,7 +339,7 @@ const BestShortFilmsScreen = () => {
                     <MaterialCommunityIcons name={Icon.Dice} color={theme.counterPrimary} size={Size.Icon} />
                     {/* <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{LocalText.random}</Text> */}
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => setShowFull(!showFull)} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
+                <TouchableOpacity onPress={onPressInAppWeb} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
                     <MaterialCommunityIcons name={showFull ? Icon.X : Icon.Eye} color={theme.counterPrimary} size={Size.Icon} />
                     {/* <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{showFull ? '' : LocalText.read_full}</Text> */}
                 </TouchableOpacity>
