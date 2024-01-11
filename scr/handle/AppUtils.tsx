@@ -15,6 +15,7 @@ import Clipboard from "@react-native-clipboard/clipboard";
 import { NavigationProp } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CheckDuplicateAndDownloadAsync } from "../firebase/FirebaseStorageDownloadManager";
+import { track_OnUseEffectOnceEnterApp } from "./tracking/GoodayTracking";
 
 const today = new Date()
 export const todayString = 'd' + today.getDate() + '_m' + (today.getMonth() + 1) + '_' + today.getFullYear()
@@ -23,6 +24,8 @@ export const versionText = require('../../package.json')['version']
 export const versionAsNumber = VersionToNumber(versionText)
 
 const postPredownloadLimit = 10
+
+const startFreshlyOpenAppTick = Date.now()
 
 /**
  * cheat clear whole folder data
@@ -452,5 +455,5 @@ export const SaveCurrentScreenForLoadNextTime = (navigation: NavigationProp<Reac
 }
 
 export const OnUseEffectOnceEnterApp = () => {
-    
+    track_OnUseEffectOnceEnterApp(startFreshlyOpenAppTick)
 }

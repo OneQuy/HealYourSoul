@@ -2,6 +2,22 @@ import { Category } from "../../constants/AppConstants"
 import { MainTrack } from "./Tracking"
 
 
+export const track_OnUseEffectOnceEnterApp = (startFreshlyOpenAppTick: number) => {
+    const event = 'freshly_open_app'
+    const elapsedOpenAppTime = Date.now() - startFreshlyOpenAppTick
+    
+    MainTrack(event,
+        [
+            `total/${event}/total`,
+            `total/${event}`,
+            `events/${event}/#d/`,
+        ],
+        {
+            time: elapsedOpenAppTime
+        }
+    )
+}
+
 export const track_PressNextPost = (shouldTracking: boolean, category: Category, isNextOrPrevious: boolean) => {
     if (!shouldTracking)
         return
