@@ -23,7 +23,7 @@ import { SaveToGalleryAsync } from '../../handle/CameraRoll';
 import { ToastOptions, toast } from '@baronha/ting';
 import ImageAsMap from '../../handle/ImageAsMap';
 import { MainTrack } from '../../handle/tracking/Tracking';
-import { track_PressRandom, track_PressSaveMedia } from '../../handle/tracking/GoodayTracking';
+import { track_PressRandom, track_PressSaveMedia, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 
 interface TheRandomImageProps {
     category: Category,
@@ -58,7 +58,7 @@ const TheRandomImage = ({
         }
 
         track_PressRandom(shouldTracking, category, item !== undefined)
-        
+
         setCurrentItem(item)
         setHandling(false)
 
@@ -79,7 +79,7 @@ const TheRandomImage = ({
         }
 
         track_PressSaveMedia(category)
-        
+
         const flp = RNFS.DocumentDirectoryPath + '/' + TempDirName + '/image.jpg'
         const res = await DownloadFileAsync(currentItem.uri, flp, false)
 
@@ -106,6 +106,8 @@ const TheRandomImage = ({
     const onPressShareImage = useCallback(async () => {
         if (!currentItem)
             return
+
+        track_SimpleWithCat(category, 'share')
 
         const flp = GetFLPFromRLP(TempDirName + '/image.jpg', true)
         const res = await DownloadFileAsync(currentItem.uri, flp, false)

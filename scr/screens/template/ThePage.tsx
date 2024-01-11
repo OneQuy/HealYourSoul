@@ -269,8 +269,7 @@ const ThePage = ({ category }: ThePageProps) => {
                 foundPost = fileList.current?.posts.find(p => p.id === previousPostIDs.current[previousPostIDs.current.length - 1]);
         }
 
-        if (!foundPost)
-        {
+        if (!foundPost) {
             HandleError('loadNextPostAsync', 'cant find post')
 
             if (fileList.current?.posts)
@@ -426,6 +425,8 @@ const ThePage = ({ category }: ThePageProps) => {
         if (!mediaURI.current)
             return
 
+        track_SimpleWithCat(category, 'share')
+
         Share
             .open({
                 url: mediaURI.current,
@@ -445,7 +446,7 @@ const ThePage = ({ category }: ThePageProps) => {
         }
 
         track_PressSaveMedia(category)
-        
+
         setHandling(true);
         const error = await SaveToGalleryAsync(mediaURI.current)
         setHandling(false);

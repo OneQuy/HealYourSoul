@@ -94,6 +94,8 @@ const TheRandomShortText = ({
         if (!text)
             return
 
+        track_SimpleWithCat(category, 'share')
+
         RNShare.share({
             title: LocalText.fact_of_the_day,
             message: text,

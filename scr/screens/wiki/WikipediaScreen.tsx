@@ -133,7 +133,7 @@ const WikipediaScreen = () => {
             return
 
         track_SimpleWithCat(category, 'copy')
-        
+
         const message = currentTitle + '\n\n' + currentContent + '\n\nLink: ' + currentLink
         CopyAndToast(message, theme)
     }, [currentTitle, currentLink, currentContent, theme])
@@ -150,6 +150,8 @@ const WikipediaScreen = () => {
     const onPressShareText = useCallback(() => {
         if (!currentContent)
             return
+
+        track_SimpleWithCat(category, 'share')
 
         RNShare.share({
             title: LocalText.fact_of_the_day,

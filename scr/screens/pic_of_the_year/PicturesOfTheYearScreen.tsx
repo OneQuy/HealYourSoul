@@ -21,7 +21,7 @@ import { NetLord } from '../../handle/NetLord';
 import SelectAward from './SelectAward';
 import useIsFavorited from '../../hooks/useIsFavorited';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { track_PressFavorite, track_PressNextPost, track_PressSaveMedia } from '../../handle/tracking/GoodayTracking';
+import { track_PressFavorite, track_PressNextPost, track_PressSaveMedia, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 
 const screen = Dimensions.get('screen')
 
@@ -37,18 +37,18 @@ const PicturesOfTheYearScreen = () => {
     const [selectingPhotoIndex, setSelectingPhotoIndex] = useState(0)
     const [isShowAwardList, setIsShowLisShowAwardList] = useState(false)
     const [isShowLoadImageIndicator, setShowLoadImageIndicator] = useState(false)
-    
+
     const selectingPhoto = useMemo(() => {
         const year = dataOfYears.find(y => y.year === selectingYear)
         return year?.list[selectingPhotoIndex]
     }, [selectingPhotoIndex, selectingYear])
-    
+
     const selectingPhotoID = useMemo(() => {
         return Number.parseInt(selectingYear.toString() + selectingPhotoIndex.toString())
     }, [selectingPhotoIndex, selectingYear])
-    
+
     const [isFavorited, likeCount, onPressFavoriteFromHook] = useIsFavorited(category, selectingPhotoID)
-    
+
     const onPressFavorite = useCallback(() => {
         track_PressFavorite(category, !isFavorited)
         onPressFavoriteFromHook()
@@ -95,7 +95,7 @@ const PicturesOfTheYearScreen = () => {
     }, [])
 
     const onPressNext = useCallback(async (idx: number = -1, trackingTarget: 'none' | 'next' | 'menu') => {
-        if (trackingTarget === 'next') 
+        if (trackingTarget === 'next')
             track_PressNextPost(true, category, true)
 
         setReasonToReload(NeedReloadReason.None)
@@ -138,7 +138,7 @@ const PicturesOfTheYearScreen = () => {
         }
 
         track_PressSaveMedia(category)
-        
+
         const flp = RNFS.DocumentDirectoryPath + '/' + TempDirName + '/image.jpg'
         const res = await DownloadFileAsync(selectingPhoto.imageUri, flp, false)
 
@@ -165,7 +165,7 @@ const PicturesOfTheYearScreen = () => {
     const onImageStartLoad = useCallback(() => {
         setShowLoadImageIndicator(true)
     }, [])
-    
+
     const onPressCredit = useCallback(() => {
         Linking.openURL(`https://www.nature.org/en-us/get-involved/how-to-help/photo-contest/${selectingYear}-winners/`)
     }, [selectingYear])
@@ -196,6 +196,8 @@ const PicturesOfTheYearScreen = () => {
     const onPressShareImage = useCallback(async () => {
         if (!selectingPhoto)
             return
+
+        track_SimpleWithCat(category, 'share')
 
         const flp = GetFLPFromRLP(TempDirName + '/image.jpg', true)
         const res = await DownloadFileAsync(selectingPhoto.imageUri, flp, false)

@@ -145,6 +145,8 @@ const FunWebsitesScreen = () => {
         if (!selectingItem)
             return
 
+        track_SimpleWithCat(category, 'share')
+
         const message = selectingItem.desc + '\n\n' + selectingItem.url
 
         RNShare.share({

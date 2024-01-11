@@ -31,7 +31,7 @@ import useIsFavorited from '../../hooks/useIsFavorited';
 import ListMovie from './SelectShortFilms';
 import { DownloadFileAsync, GetFLPFromRLP } from '../../handle/FileUtils';
 import WebView from 'react-native-webview';
-import { track_PressFavorite, track_PressNextPost, track_PressRandom } from '../../handle/tracking/GoodayTracking';
+import { track_PressFavorite, track_PressNextPost, track_PressRandom, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 
 const category = Category.BestShortFilms
 const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Fshort_films.json?alt=media&token=537eec8b-f774-4908-a5fa-45f8daf676d8'
@@ -166,6 +166,8 @@ const BestShortFilmsScreen = () => {
     const onPressShareText = useCallback(async () => {
         if (!selectingItem)
             return
+
+        track_SimpleWithCat(category, 'share')
 
         const flp = GetFLPFromRLP(TempDirName + '/image.jpg', true)
         const res = await DownloadFileAsync(selectingItem.img, flp, false)
