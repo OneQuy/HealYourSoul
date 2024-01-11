@@ -31,7 +31,7 @@ import useIsFavorited from '../../hooks/useIsFavorited';
 import ListMovie from './SelectShortFilms';
 import { DownloadFileAsync, GetFLPFromRLP } from '../../handle/FileUtils';
 import WebView from 'react-native-webview';
-import { track_PressRandom } from '../../handle/tracking/GoodayTracking';
+import { track_PressNextPost, track_PressRandom } from '../../handle/tracking/GoodayTracking';
 
 const category = Category.BestShortFilms
 const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Fshort_films.json?alt=media&token=537eec8b-f774-4908-a5fa-45f8daf676d8'
@@ -84,7 +84,9 @@ const BestShortFilmsScreen = () => {
         await AsyncStorage.setItem(StorageKey_SelectingShortFilmIdx, id.toString())
     }, [])
 
-    const onPressNext = useCallback(async (toIdx: number = -1) => {
+    const onPressNext = useCallback(async (toIdx: number = -1, trackingTarget: 'none' | 'menu' | 'next') => {
+        track_PressNextPost(trackingTarget === 'next', category, true)
+
         setSelectingItem(undefined)
         setIsShowList(false)
         setShowFull(false)
@@ -140,11 +142,11 @@ const BestShortFilmsScreen = () => {
         track_PressRandom(true, category, undefined)
 
         if (!Array.isArray(shortFilms)) {
-            onPressNext()
+            onPressNext(-1, 'none')
             return
         }
 
-        onPressNext(RandomInt(0, shortFilms.length - 1))
+        onPressNext(RandomInt(0, shortFilms.length - 1), 'none')
     }, [shortFilms, onPressNext])
 
     const onPressHeaderOption = useCallback(async () => {
@@ -218,14 +220,14 @@ const BestShortFilmsScreen = () => {
         })
     }, [selectingItem, theme])
 
-    // for load data
+    // for load data first time
 
     useEffect(() => {
         reasonToReload.current = NeedReloadReason.None
 
         if (shortFilms) { // downloaded success
             setHandling(false)
-            onPressNext()
+            onPressNext(-1, 'none')
         }
         else if (errorDownloadJson) { // download failed
             setHandling(false)
@@ -271,7 +273,7 @@ const BestShortFilmsScreen = () => {
                             <View style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
                                 {
                                     reasonToReload.current !== NeedReloadReason.None ?
-                                        <TouchableOpacity onPress={() => onPressNext()} style={[{ gap: Outline.GapVertical }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]} >
+                                        <TouchableOpacity onPress={() => onPressNext(-1, 'none')} style={[{ gap: Outline.GapVertical }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]} >
                                             <MaterialCommunityIcons name={reasonToReload.current === NeedReloadReason.NoInternet ? Icon.NoInternet : Icon.HeartBroken} color={theme.primary} size={Size.IconBig} />
                                             <Text style={{ fontSize: FontSize.Normal, color: theme.counterPrimary }}>{reasonToReload.current === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
                                             <Text style={{ fontSize: FontSize.Small_L, color: theme.counterPrimary }}>{LocalText.tap_to_retry}</Text>
@@ -327,7 +329,7 @@ const BestShortFilmsScreen = () => {
                     <MaterialCommunityIcons name={showFull ? Icon.X : Icon.Eye} color={theme.counterPrimary} size={Size.Icon} />
                     {/* <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{showFull ? '' : LocalText.read_full}</Text> */}
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => onPressNext()} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
+                <TouchableOpacity onPress={() => onPressNext(-1, 'next')} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
                     <MaterialCommunityIcons name={Icon.Right} color={theme.counterPrimary} size={Size.Icon} />
                     {/* <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{LocalText.next}</Text> */}
                 </TouchableOpacity>
@@ -351,7 +353,7 @@ const BestShortFilmsScreen = () => {
 
             </View>
             {
-                isShowList && Array.isArray(shortFilms) ? <ListMovie getSelectingIdAsync={getSelectingIdxAsync} setIdx={onPressNext} list={shortFilms} /> : undefined
+                isShowList && Array.isArray(shortFilms) ? <ListMovie getSelectingIdAsync={getSelectingIdxAsync} setIdx={(idx: number) => onPressNext(idx, 'menu')} list={shortFilms} /> : undefined
             }
             {
                 streakData ? <StreakPopup streak={streakData} /> : undefined
