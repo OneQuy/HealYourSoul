@@ -14,12 +14,6 @@ import { clearAllUserData } from './redux/UserDataSlice'
 import { InitAppStateMan } from './handle/AppStateMan'
 import { RegisterGoodayAppState } from './handle/GoodayAppState'
 
-// const App = () => {
-//   return (
-//     <UploadScreen />
-//   )
-// }
-
 const App = () => {
   return (
     <Provider store={store}>
