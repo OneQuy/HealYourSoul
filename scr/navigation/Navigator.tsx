@@ -47,7 +47,6 @@ export type DrawerParamList = {
   [ScreenName.FunWebsite]: undefined,
   [ScreenName.TopMovie]: undefined,
   [ScreenName.BestShortFilms]: undefined,
-  // [ScreenName.Reminder]: undefined,
   [ScreenName.IAPPage]: undefined,
 }
 
@@ -62,7 +61,6 @@ const Drawer = createDrawerNavigator<DrawerParamList>();
 const ScreenList: ScreenNamePair[] = [
   [ScreenName.Meme, MemeScreen],
   [ScreenName.RandomMeme, RandomMemeScreen],
-  // [ScreenName.RedditMeme, RedditMemeScreen],
   [ScreenName.Comic, ComicScreen],
   [ScreenName.NSFW, NSFWScreen],
   [ScreenName.CatDog, CatDogScreen],
@@ -82,7 +80,6 @@ const ScreenList: ScreenNamePair[] = [
   [ScreenName.FunWebsite, FunWebsitesScreen],
   [ScreenName.TopMovie, TopMovieScreen],
   [ScreenName.BestShortFilms, BestShortFilmsScreen],
-  // [ScreenName.Reminder, ReminderScreen],
   [ScreenName.IAPPage, IAPPage],
 ]
 
