@@ -1,4 +1,4 @@
-import { Share as RNShare, View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, ShareContent, Alert } from 'react-native'
+import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, Alert } from 'react-native'
 import React, { LegacyRef, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size, StorageKey_LocalFileVersion, StorageKey_SelectingTopMovieIdx } from '../../constants/AppConstants'
@@ -6,13 +6,12 @@ import Share from 'react-native-share';
 
 
 // @ts-ignore
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { NetLord } from '../../handle/NetLord'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
-import { CopyAndToast, SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
+import { SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
 import ViewShot from 'react-native-view-shot'
 import { CommonStyles } from '../../constants/CommonConstants'
 import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
@@ -20,8 +19,7 @@ import { Streak, TopMovie } from '../../constants/Types';
 import StreakPopup from '../components/StreakPopup';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 import { ScrollView } from 'react-native-gesture-handler';
-import { ShareOptions } from 'react-native-share';
-import { Clamp, ToCanPrint, GetFirstLetters, ExtractAllNumbersInText, RGBToRGBAText, IsChar, IsNumChar } from '../../handle/UtilsTS';
+import { Clamp, ToCanPrint, ExtractAllNumbersInText, IsChar, IsNumChar } from '../../handle/UtilsTS';
 import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading';
 import useCheckAndDownloadRemoteFile from '../../hooks/useCheckAndDownloadRemoteFile';
 import { RandomInt, TempDirName } from '../../handle/Utils';

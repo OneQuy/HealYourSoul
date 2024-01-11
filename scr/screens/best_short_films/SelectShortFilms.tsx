@@ -6,9 +6,10 @@ import React, { useCallback, useContext, useEffect, useRef, useState } from 'rea
 import { ThemeContext } from '../../constants/Colors';
 import { CommonStyles } from '../../constants/CommonConstants';
 import { ColorNameToRgb } from '../../handle/UtilsTS';
-import { BorderRadius, FontSize, FontWeight, Icon, LocalText, Outline, Size } from '../../constants/AppConstants';
+import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, Outline, Size } from '../../constants/AppConstants';
 import { ShortFilm } from '../../constants/Types';
 import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading';
+import { track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 
 const listPopupIconSize = Size.IconBig
 const listPopupGap = Outline.GapVertical
@@ -29,6 +30,8 @@ const BestShortFilms = ({ list, setIdx, getSelectingIdAsync: getSelectingIdxAsyn
 
     useEffect(() => {
         (async () => {
+            track_SimpleWithCat(Category.BestShortFilms, 'press_menu_list')
+
             const idx = await getSelectingIdxAsync()
 
             setSelectIdx(idx)
