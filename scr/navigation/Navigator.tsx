@@ -86,15 +86,6 @@ const ScreenList: ScreenNamePair[] = [
 const Navigator = ({ initialRouteName }: MainNavigatorProps) => {
   let screenList = ScreenList
 
-  // check to remove for ios reviewing lol
-
-  if (Is_IOS_And_OfflineOrLowerReviewVersion()) {
-    screenList = screenList.filter(i => i[0] !== ScreenName.NSFW)
-
-    if (initialRouteName === ScreenName.NSFW)
-      initialRouteName = ScreenName.Meme
-  }
-
   return (
     <NavigationContainer>
       <Drawer.Navigator
