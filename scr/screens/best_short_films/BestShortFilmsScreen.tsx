@@ -136,11 +136,14 @@ const BestShortFilmsScreen = () => {
         url = 'youtube://' + url.substring(idx + 1)
         const can = await Linking.canOpenURL(url)
 
-        if (can)
-            Linking.openURL(url)
+        if (!can)
+            return
+
+        Linking.openURL(url)
 
         console.log(url);
 
+        track_SimpleWithCat(category, 'open_ytb_app')
     }, [selectingItem])
 
     const onPressRandom = useCallback(async () => {
