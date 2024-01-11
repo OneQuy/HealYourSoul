@@ -25,7 +25,7 @@ import WebView from 'react-native-webview';
 import { ShareOptions } from 'react-native-share';
 import { ToCanPrint } from '../../handle/UtilsTS';
 import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading';
-import { track_PressRandom } from '../../handle/tracking/GoodayTracking';
+import { track_PressRandom, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 
 const category = Category.Wikipedia
 
@@ -132,6 +132,8 @@ const WikipediaScreen = () => {
         if (!currentContent)
             return
 
+        track_SimpleWithCat(category, 'copy')
+        
         const message = currentTitle + '\n\n' + currentContent + '\n\nLink: ' + currentLink
         CopyAndToast(message, theme)
     }, [currentTitle, currentLink, currentContent, theme])

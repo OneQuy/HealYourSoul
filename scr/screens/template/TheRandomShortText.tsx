@@ -20,7 +20,7 @@ import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
 import { Streak } from '../../constants/Types';
 import StreakPopup from '../components/StreakPopup';
 import { ToCanPrint } from '../../handle/UtilsTS';
-import { track_PressRandom } from '../../handle/tracking/GoodayTracking';
+import { track_PressRandom, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 
 interface TheRandomShortTextProps {
     category: Category,
@@ -75,6 +75,8 @@ const TheRandomShortText = ({
     const onPressCopy = useCallback(() => {
         if (!text)
             return
+
+        track_SimpleWithCat(category, 'copy')
 
         CopyAndToast(text, theme)
     }, [text, theme])
@@ -165,7 +167,7 @@ const TheRandomShortText = ({
                                         :
                                         <TouchableWithoutFeedback onPress={() => onPressRandom(true)}>
                                             <Text selectable style={{ color: theme.text, fontSize: FontSize.Big }}>{text}</Text>
-                                         </TouchableWithoutFeedback>
+                                        </TouchableWithoutFeedback>
                                 }
                             </View>
                     }
