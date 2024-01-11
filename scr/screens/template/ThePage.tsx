@@ -31,7 +31,7 @@ import StreakPopup from '../components/StreakPopup';
 import { CommonStyles } from '../../constants/CommonConstants';
 import Share from 'react-native-share';
 import useIsFavorited from '../../hooks/useIsFavorited';
-import { track_PressFavorite, track_PressNextPost } from '../../handle/tracking/GoodayTracking';
+import { track_PressFavorite, track_PressNextPost, track_PressSaveMedia } from '../../handle/tracking/GoodayTracking';
 
 const videoNumbSize = 10;
 const videoTouchEffectRadius = 100;
@@ -444,6 +444,8 @@ const ThePage = ({ category }: ThePageProps) => {
             return;
         }
 
+        track_PressSaveMedia(category)
+        
         setHandling(true);
         const error = await SaveToGalleryAsync(mediaURI.current)
         setHandling(false);

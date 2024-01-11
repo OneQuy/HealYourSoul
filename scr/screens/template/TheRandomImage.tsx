@@ -23,7 +23,7 @@ import { SaveToGalleryAsync } from '../../handle/CameraRoll';
 import { ToastOptions, toast } from '@baronha/ting';
 import ImageAsMap from '../../handle/ImageAsMap';
 import { MainTrack } from '../../handle/tracking/Tracking';
-import { track_PressRandom } from '../../handle/tracking/GoodayTracking';
+import { track_PressRandom, track_PressSaveMedia } from '../../handle/tracking/GoodayTracking';
 
 interface TheRandomImageProps {
     category: Category,
@@ -78,6 +78,8 @@ const TheRandomImage = ({
             return
         }
 
+        track_PressSaveMedia(category)
+        
         const flp = RNFS.DocumentDirectoryPath + '/' + TempDirName + '/image.jpg'
         const res = await DownloadFileAsync(currentItem.uri, flp, false)
 

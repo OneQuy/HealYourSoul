@@ -97,6 +97,21 @@ export const track_PressNextPost = (shouldTracking: boolean, category: Category,
     )
 }
 
+export const track_PressSaveMedia = (category: Category) => {
+    const event = 'save_media'
+
+    MainTrack(event,
+        [
+            `total/${event}/total`,
+            `total/${event}/` + Category[category],
+            `events/${event}/#d/` + Category[category],
+        ],
+        {
+            cat: Category[category],
+        }
+    )
+}
+
 export const track_PressRandom = (shouldTracking: boolean, category: Category, success: boolean | undefined) => {
     if (!shouldTracking)
         return

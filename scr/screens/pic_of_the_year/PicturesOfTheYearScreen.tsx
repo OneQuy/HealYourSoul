@@ -21,7 +21,7 @@ import { NetLord } from '../../handle/NetLord';
 import SelectAward from './SelectAward';
 import useIsFavorited from '../../hooks/useIsFavorited';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { track_PressFavorite, track_PressNextPost } from '../../handle/tracking/GoodayTracking';
+import { track_PressFavorite, track_PressNextPost, track_PressSaveMedia } from '../../handle/tracking/GoodayTracking';
 
 const screen = Dimensions.get('screen')
 
@@ -137,6 +137,8 @@ const PicturesOfTheYearScreen = () => {
             return
         }
 
+        track_PressSaveMedia(category)
+        
         const flp = RNFS.DocumentDirectoryPath + '/' + TempDirName + '/image.jpg'
         const res = await DownloadFileAsync(selectingPhoto.imageUri, flp, false)
 
