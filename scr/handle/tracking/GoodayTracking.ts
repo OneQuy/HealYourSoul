@@ -8,9 +8,8 @@ export const track_OnUseEffectOnceEnterApp = (startFreshlyOpenAppTick: number) =
     
     MainTrack(event,
         [
-            `total/${event}/total`,
             `total/${event}`,
-            `events/${event}/#d/`,
+            `events/${event}/#d`,
         ],
         {
             time: elapsedOpenAppTime
