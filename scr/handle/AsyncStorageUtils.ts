@@ -73,6 +73,6 @@ export const SetDateAsync = async (key: string, value: number): Promise<void> =>
     await AsyncStorage.setItem(key, value.toString())
 }
 
-export const SetDateAsync_Today = async (key: string): Promise<void> => {
+export const SetDateAsync_Now = async (key: string): Promise<void> => {
     await SetDateAsync(key, Date.now())
 }

@@ -1,18 +1,37 @@
-import { Category } from "../../constants/AppConstants"
+import { Category, StorageKey_FirstTimeInstallTick } from "../../constants/AppConstants"
+import { GetDateAsync, SetDateAsync_Now } from "../AsyncStorageUtils"
 import { MainTrack } from "./Tracking"
 
 /**
  * on first useEffect of the app (freshly open) or first active state of the day
  * , only track once a day
  */
-export const track_FirstOpenOfTheDay = () => {
-    const event = 'first_open_app_of_day'
+export const track_FirstOpenOfTheDayAsync = async () => {
+    // first_open_app_of_day
+
+    let event = 'first_open_app_of_day'
 
     MainTrack(event,
         [
             `total/${event}`,
             `events/${event}/#d`,
         ])
+
+    // newly_install
+
+    const firstTimeInstallTick = await GetDateAsync(StorageKey_FirstTimeInstallTick)
+
+    if (firstTimeInstallTick === undefined) {
+        SetDateAsync_Now(StorageKey_FirstTimeInstallTick)
+
+        let event = 'newly_install'
+
+        MainTrack(event,
+            [
+                `total/${event}`,
+                `events/${event}/#d`,
+            ])
+    }
 }
 
 export const track_AppStateActive = () => {
@@ -25,6 +44,9 @@ export const track_AppStateActive = () => {
         ])
 }
 
+/**
+ * freshly open app
+ */
 export const track_OnUseEffectOnceEnterApp = (startFreshlyOpenAppTick: number) => {
     const event = 'freshly_open_app'
     const elapsedOpenAppTime = Date.now() - startFreshlyOpenAppTick

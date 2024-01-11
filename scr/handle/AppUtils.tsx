@@ -15,8 +15,8 @@ import Clipboard from "@react-native-clipboard/clipboard";
 import { NavigationProp } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CheckDuplicateAndDownloadAsync } from "../firebase/FirebaseStorageDownloadManager";
-import { track_FirstOpenOfTheDay, track_OnUseEffectOnceEnterApp } from "./tracking/GoodayTracking";
-import { GetDateAsync, SetDateAsync, SetDateAsync_Today } from "./AsyncStorageUtils";
+import { track_FirstOpenOfTheDayAsync, track_OnUseEffectOnceEnterApp } from "./tracking/GoodayTracking";
+import { GetDateAsync, SetDateAsync, SetDateAsync_Now } from "./AsyncStorageUtils";
 
 const today = new Date()
 export const todayString = 'd' + today.getDate() + '_m' + (today.getMonth() + 1) + '_' + today.getFullYear()
@@ -464,13 +464,13 @@ export const OnFirstOpenAppOfTheDayAsync = async () => {
     if (lastDateTrack !== undefined && IsToday(lastDateTrack))
         return
 
-    SetDateAsync_Today(StorageKey_LastTimeCheckFirstOpenAppOfTheDay)
+    SetDateAsync_Now(StorageKey_LastTimeCheckFirstOpenAppOfTheDay)
 
     // handles
 
     console.log('---- first open app ------');
     
-    track_FirstOpenOfTheDay()
+    track_FirstOpenOfTheDayAsync()
 }
 
 /**
