@@ -1,10 +1,12 @@
-import { Category, StorageKey_FirstTimeInstallTick } from "../../constants/AppConstants"
-import { GetDateAsync, SetDateAsync_Now } from "../AsyncStorageUtils"
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import { Category, StorageKey_FirstTimeInstallTick, StorageKey_LastInstalledVersion } from "../../constants/AppConstants"
+import { GetDateAsync, GetNumberIntAsync, SetDateAsync_Now, SetNumberAsync } from "../AsyncStorageUtils"
 import { MainTrack } from "./Tracking"
+import { versionAsNumber } from "../AppUtils"
 
 /**
  * on first useEffect of the app (freshly open) or first active state of the day
- * , only track once a day
+ * . ONLY track ONCE a day
  */
 export const track_FirstOpenOfTheDayAsync = async () => {
     // first_open_app_of_day
@@ -47,8 +49,8 @@ export const track_AppStateActive = () => {
 /**
  * freshly open app
  */
-export const track_OnUseEffectOnceEnterApp = (startFreshlyOpenAppTick: number) => {
-    const event = 'freshly_open_app'
+export const track_OnUseEffectOnceEnterAppAsync = async (startFreshlyOpenAppTick: number) => {
+    let event = 'freshly_open_app'
     const elapsedOpenAppTime = Date.now() - startFreshlyOpenAppTick
 
     MainTrack(event,
@@ -60,6 +62,21 @@ export const track_OnUseEffectOnceEnterApp = (startFreshlyOpenAppTick: number) =
             time: elapsedOpenAppTime
         }
     )
+
+    // track update version
+
+    const lastVersion = await GetNumberIntAsync(StorageKey_LastInstalledVersion)
+
+    if (!Number.isNaN(lastVersion) && lastVersion !== versionAsNumber) {
+        SetNumberAsync(StorageKey_LastInstalledVersion, versionAsNumber)
+        event = 'updated_app'
+
+        MainTrack(event,
+            [
+                `total/${event}`,
+                `events/${event}/#d`,
+            ])
+    }
 }
 
 export const track_PressNextPost = (shouldTracking: boolean, category: Category, isNextOrPrevious: boolean) => {

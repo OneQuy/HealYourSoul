@@ -15,7 +15,7 @@ import Clipboard from "@react-native-clipboard/clipboard";
 import { NavigationProp } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CheckDuplicateAndDownloadAsync } from "../firebase/FirebaseStorageDownloadManager";
-import { track_FirstOpenOfTheDayAsync, track_OnUseEffectOnceEnterApp } from "./tracking/GoodayTracking";
+import { track_FirstOpenOfTheDayAsync, track_OnUseEffectOnceEnterAppAsync } from "./tracking/GoodayTracking";
 import { GetDateAsync, SetDateAsync, SetDateAsync_Now } from "./AsyncStorageUtils";
 
 const today = new Date()
@@ -477,6 +477,6 @@ export const OnFirstOpenAppOfTheDayAsync = async () => {
  * freshly open app
  */
 export const OnUseEffectOnceEnterApp = () => {
-    track_OnUseEffectOnceEnterApp(startFreshlyOpenAppTick)
+    track_OnUseEffectOnceEnterAppAsync(startFreshlyOpenAppTick)
     OnFirstOpenAppOfTheDayAsync()
 }
