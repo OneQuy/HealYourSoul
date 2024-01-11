@@ -20,6 +20,7 @@ import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
 import { Streak } from '../../constants/Types';
 import StreakPopup from '../components/StreakPopup';
 import { ToCanPrint } from '../../handle/UtilsTS';
+import { track_PressRandom } from '../../handle/tracking/GoodayTracking';
 
 interface TheRandomShortTextProps {
     category: Category,
@@ -46,17 +47,12 @@ const TheRandomShortText = ({
     const [streakData, setStreakData] = useState<Streak | undefined>(undefined);
     const viewShotRef = useRef<LegacyRef<ViewShot> | undefined>();
 
-    const onPressRandom = useCallback(async () => {
+    const onPressRandom = useCallback(async (shouldTracking: boolean) => {
         reasonToReload.current = NeedReloadReason.None
         setHandling(true)
 
         let text: string | undefined
 
-        // if (__DEV__ && !Cheat('ForceRealApiTextContent')) {
-        //     await DelayAsync(500)
-        //     text = PickRandomElement(FakeTextContents)
-        // }
-        // else
         text = await getTextAsync()
 
         setText(text)
@@ -70,6 +66,8 @@ const TheRandomShortText = ({
             else
                 reasonToReload.current = NeedReloadReason.NoInternet
         }
+
+        track_PressRandom(shouldTracking, category, text !== undefined)
 
         setHandling(false)
     }, [])
@@ -126,7 +124,7 @@ const TheRandomShortText = ({
 
     useEffect(() => {
         SetStreakAsync(Category[category])
-        onPressRandom()
+        onPressRandom(false)
     }, [])
 
     // on change theme
@@ -159,13 +157,13 @@ const TheRandomShortText = ({
                                 {
                                     reasonToReload.current !== NeedReloadReason.None ?
                                         // true ?
-                                        <TouchableOpacity onPress={onPressRandom} style={[{ gap: Outline.GapVertical }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]} >
+                                        <TouchableOpacity onPress={() => onPressRandom(true)} style={[{ gap: Outline.GapVertical }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]} >
                                             <MaterialCommunityIcons name={reasonToReload.current === NeedReloadReason.NoInternet ? Icon.NoInternet : Icon.HeartBroken} color={theme.primary} size={Size.IconBig} />
                                             <Text style={{ fontSize: FontSize.Normal, color: theme.counterPrimary }}>{reasonToReload.current === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
                                             <Text style={{ fontSize: FontSize.Small_L, color: theme.counterPrimary }}>{LocalText.tap_to_retry}</Text>
                                         </TouchableOpacity>
                                         :
-                                        <TouchableWithoutFeedback onPress={onPressRandom}>
+                                        <TouchableWithoutFeedback onPress={() => onPressRandom(true)}>
                                             <Text selectable style={{ color: theme.text, fontSize: FontSize.Big }}>{text}</Text>
                                          </TouchableWithoutFeedback>
                                 }
@@ -174,7 +172,7 @@ const TheRandomShortText = ({
                 </View>
             </ViewShot>
             <View>
-                <TouchableOpacity onPress={onPressRandom} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, padding: Outline.GapVertical_2, backgroundColor: theme.primary, }, styleSheet.randomTO]}>
+                <TouchableOpacity onPress={() => onPressRandom(true)} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, padding: Outline.GapVertical_2, backgroundColor: theme.primary, }, styleSheet.randomTO]}>
                     <MaterialCommunityIcons name={Icon.Dice} color={theme.counterPrimary} size={Size.Icon} />
                     <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{LocalText.random}</Text>
                 </TouchableOpacity>

@@ -22,6 +22,8 @@ import { DownloadFileAsync, GetFLPFromRLP } from '../../handle/FileUtils';
 import { SaveToGalleryAsync } from '../../handle/CameraRoll';
 import { ToastOptions, toast } from '@baronha/ting';
 import ImageAsMap from '../../handle/ImageAsMap';
+import { MainTrack } from '../../handle/tracking/Tracking';
+import { track_PressRandom } from '../../handle/tracking/GoodayTracking';
 
 interface TheRandomImageProps {
     category: Category,
@@ -39,7 +41,7 @@ const TheRandomImage = ({
     const [handling, setHandling] = useState(false);
     const [streakData, setStreakData] = useState<Streak | undefined>(undefined);
 
-    const onPressRandom = useCallback(async () => {
+    const onPressRandom = useCallback(async (shouldTracking: boolean) => {
         reasonToReload.current = NeedReloadReason.None
         setHandling(true)
 
@@ -55,8 +57,11 @@ const TheRandomImage = ({
                 reasonToReload.current = NeedReloadReason.NoInternet
         }
 
+        track_PressRandom(shouldTracking, category, item !== undefined)
+        
         setCurrentItem(item)
         setHandling(false)
+
     }, [])
 
     const onPressHeaderOption = useCallback(async () => {
@@ -125,7 +130,7 @@ const TheRandomImage = ({
 
     useEffect(() => {
         SetStreakAsync(Category[category])
-        onPressRandom()
+        onPressRandom(false)
     }, [])
 
     // on change theme
@@ -158,7 +163,7 @@ const TheRandomImage = ({
                             {
                                 reasonToReload.current !== NeedReloadReason.None ?
                                     // true ?
-                                    <TouchableOpacity onPress={onPressRandom} style={[{ gap: Outline.GapVertical }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]} >
+                                    <TouchableOpacity onPress={() => onPressRandom(true)} style={[{ gap: Outline.GapVertical }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]} >
                                         <MaterialCommunityIcons name={reasonToReload.current === NeedReloadReason.NoInternet ? Icon.NoInternet : Icon.HeartBroken} color={theme.primary} size={Size.IconBig} />
                                         <Text style={{ fontSize: FontSize.Normal, color: theme.counterPrimary }}>{reasonToReload.current === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
                                         <Text style={{ fontSize: FontSize.Small_L, color: theme.counterPrimary }}>{LocalText.tap_to_retry}</Text>
@@ -186,7 +191,7 @@ const TheRandomImage = ({
                 }
             </View>
             <View style={{ marginHorizontal: Outline.GapVertical_2 }}>
-                <TouchableOpacity onPress={onPressRandom} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, padding: Outline.GapVertical_2, backgroundColor: theme.primary, }, styleSheet.randomTO]}>
+                <TouchableOpacity onPress={() => onPressRandom(true)} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, padding: Outline.GapVertical_2, backgroundColor: theme.primary, }, styleSheet.randomTO]}>
                     <MaterialCommunityIcons name={Icon.Dice} color={theme.counterPrimary} size={Size.Icon} />
                     <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{LocalText.random}</Text>
                 </TouchableOpacity>

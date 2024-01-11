@@ -30,6 +30,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import useIsFavorited from '../../hooks/useIsFavorited';
 import ListMovie from './ListMovie';
 import { DownloadFileAsync, GetFLPFromRLP } from '../../handle/FileUtils';
+import { track_PressRandom } from '../../handle/tracking/GoodayTracking';
 
 const category = Category.TopMovie
 const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Ftop_movies.json?alt=media&token=4203c962-58bb-41c3-a1a0-ab3b1b3359f8'
@@ -113,6 +114,8 @@ const TopMovieScreen = () => {
     }, [topMovies, reUpdateData])
 
     const onPressRandom = useCallback(async () => {
+        track_PressRandom(true, category, undefined)
+
         if (!Array.isArray(topMovies)) {
             onPressNext()
             return

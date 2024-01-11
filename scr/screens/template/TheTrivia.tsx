@@ -17,6 +17,7 @@ import { NetLord } from '../../handle/NetLord';
 import { ToastOptions, toast } from '@baronha/ting';
 import { PickRandomElement } from '../../handle/Utils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { track_PressRandom } from '../../handle/tracking/GoodayTracking';
 
 interface TheTriviaProps {
     category: Category,
@@ -59,7 +60,7 @@ const TheTrivia = ({
         AsyncStorage.setItem(StorageKey_TriviaAnswerType, type)
     }, [])
 
-    const onPressRandom = useCallback(async () => {
+    const onPressRandom = useCallback(async (shouldTracking: boolean) => {
         reasonToReload.current = NeedReloadReason.None
         setHandling(true)
         setUserChosenAnswer(undefined)
@@ -89,6 +90,8 @@ const TheTrivia = ({
             else
                 reasonToReload.current = NeedReloadReason.NoInternet
         }
+
+        track_PressRandom(shouldTracking, category, res !== undefined)
 
         setHandling(false)
     }, [])
@@ -124,7 +127,7 @@ const TheTrivia = ({
     useEffect(() => {
         const handle = async () => {
             SetStreakAsync(Category[category])
-            onPressRandom()
+            onPressRandom(false)
 
             const diff = await AsyncStorage.getItem(StorageKey_TriviaDifficulty)
             const thediff: TriviaDifficulty = diff ? diff as TriviaDifficulty : 'all'
@@ -182,14 +185,14 @@ const TheTrivia = ({
                             {
                                 reasonToReload.current !== NeedReloadReason.None ?
                                     // true ?
-                                    <TouchableOpacity onPress={onPressRandom} style={[{ gap: Outline.GapVertical }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]} >
+                                    <TouchableOpacity onPress={() => onPressRandom(true)} style={[{ gap: Outline.GapVertical }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]} >
                                         <MaterialCommunityIcons name={reasonToReload.current === NeedReloadReason.NoInternet ? Icon.NoInternet : Icon.HeartBroken} color={theme.primary} size={Size.IconBig} />
                                         <Text style={{ fontSize: FontSize.Normal, color: theme.counterPrimary }}>{reasonToReload.current === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
                                         <Text style={{ fontSize: FontSize.Small_L, color: theme.counterPrimary }}>{LocalText.tap_to_retry}</Text>
                                     </TouchableOpacity>
                                     :
                                     <View style={{ gap: Outline.GapVertical }}>
-                                        <TouchableOpacity onPress={onPressRandom}>
+                                        <TouchableOpacity onPress={() => onPressRandom(true)}>
                                             <Text selectable style={{ color: theme.text, fontSize: FontSize.Big, marginBottom: Outline.Horizontal }}>{trivia?.question}</Text>
                                         </TouchableOpacity>
                                         {
@@ -224,7 +227,7 @@ const TheTrivia = ({
                 }
             </View>
             <View>
-                <TouchableOpacity onPress={onPressRandom} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, padding: Outline.GapVertical_2, backgroundColor: theme.primary, }, styleSheet.randomTO]}>
+                <TouchableOpacity onPress={() => onPressRandom(true)} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, padding: Outline.GapVertical_2, backgroundColor: theme.primary, }, styleSheet.randomTO]}>
                     <MaterialCommunityIcons name={Icon.Dice} color={theme.counterPrimary} size={Size.Icon} />
                     <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{LocalText.random}</Text>
                 </TouchableOpacity>

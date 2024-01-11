@@ -25,6 +25,7 @@ import WebView from 'react-native-webview';
 import { ShareOptions } from 'react-native-share';
 import { ToCanPrint } from '../../handle/UtilsTS';
 import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading';
+import { track_PressRandom } from '../../handle/tracking/GoodayTracking';
 
 const category = Category.Wikipedia
 
@@ -103,7 +104,7 @@ const WikipediaScreen = () => {
         Linking.openURL(currentLink)
     }, [currentLink])
 
-    const onPressRandom = useCallback(async () => {
+    const onPressRandom = useCallback(async (shouldTracking: boolean) => {
         reasonToReload.current = NeedReloadReason.None
         setHandling(true)
         setShowFull(false)
@@ -121,6 +122,8 @@ const WikipediaScreen = () => {
             else
                 reasonToReload.current = NeedReloadReason.NoInternet
         }
+
+        track_PressRandom(shouldTracking, category, res !== undefined)
 
         setHandling(false)
     }, [])
@@ -181,7 +184,7 @@ const WikipediaScreen = () => {
 
     useEffect(() => {
         SetStreakAsync(Category[category])
-        onPressRandom()
+        onPressRandom(false)
     }, [])
 
     // on change theme
@@ -214,7 +217,7 @@ const WikipediaScreen = () => {
                                 {
                                     reasonToReload.current !== NeedReloadReason.None ?
                                         // true ?
-                                        <TouchableOpacity onPress={onPressRandom} style={[{ gap: Outline.GapVertical }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]} >
+                                        <TouchableOpacity onPress={() => onPressRandom(true)} style={[{ gap: Outline.GapVertical }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]} >
                                             <MaterialCommunityIcons name={reasonToReload.current === NeedReloadReason.NoInternet ? Icon.NoInternet : Icon.HeartBroken} color={theme.primary} size={Size.IconBig} />
                                             <Text style={{ fontSize: FontSize.Normal, color: theme.counterPrimary }}>{reasonToReload.current === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
                                             <Text style={{ fontSize: FontSize.Small_L, color: theme.counterPrimary }}>{LocalText.tap_to_retry}</Text>
@@ -255,7 +258,7 @@ const WikipediaScreen = () => {
                     <MaterialCommunityIcons name={showFull ? Icon.X : Icon.Book} color={theme.counterPrimary} size={Size.Icon} />
                     <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{showFull ? '' : LocalText.read_full}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={onPressRandom} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
+                <TouchableOpacity onPress={() => onPressRandom(true)} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
                     <MaterialCommunityIcons name={Icon.Dice} color={theme.counterPrimary} size={Size.Icon} />
                     <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{LocalText.random}</Text>
                 </TouchableOpacity>
