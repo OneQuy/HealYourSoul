@@ -2,7 +2,7 @@ import { Alert, Linking, Platform } from "react-native";
 import { Category, FirebaseDBPath, FirebasePath, LocalPath, LocalText, NeedReloadReason } from "../constants/AppConstants";
 import { ThemeColor } from "../constants/Colors";
 import { FileList, MediaType, PostMetadata } from "../constants/Types";
-import { FirebaseStorage_DownloadAndReadJsonAsync, FirebaseStorage_DownloadByGetURLAsync } from "../firebase/FirebaseStorage";
+import { FirebaseStorage_DownloadAndReadJsonAsync } from "../firebase/FirebaseStorage";
 import { Cheat } from "./Cheat";
 import { DeleteFileAsync, DeleteTempDirAsync, GetFLPFromRLP, IsExistedAsync, ReadTextAsync } from "./FileUtils";
 import { versions } from "./VersionsHandler";
@@ -11,7 +11,6 @@ import { ColorNameToHex, ToCanPrint, VersionToNumber } from "./UtilsTS";
 import { AppLog } from "./AppLog";
 import RNFS, { DownloadProgressCallbackResult, ReadDirItem } from "react-native-fs";
 import { IsInternetAvailableAsync } from "./NetLord";
-import { GetAppConfig } from "./AppConfigHandler";
 import Clipboard from "@react-native-clipboard/clipboard";
 import { NavigationProp } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -298,7 +297,7 @@ export const CopyAndToast = (s: string, theme: ThemeColor) => {
 export const HandleError = (methodName: string, error: any, keepSilentForUser?: boolean) => {
     const err = methodName + ' - ' + error;
 
-    Track('error', err);
+    // Track('error', err);
     AppLog.Log(err);
 
     if (keepSilentForUser === true)
@@ -450,9 +449,4 @@ export const SaveCurrentScreenForLoadNextTime = (navigation: NavigationProp<Reac
     const state = navigation.getState();
     const screenName = state.routeNames[state.index];
     AsyncStorage.setItem('categoryScreenToOpenFirst', screenName);
-}
-
-export const Track = (event: string, data?: string) => {
-    // todo
-    // Track('error', JSON.stringify(result.error));
 }
