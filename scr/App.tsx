@@ -13,6 +13,7 @@ import { Cheat } from './handle/Cheat'
 import { clearAllUserData } from './redux/UserDataSlice'
 import { InitAppStateMan } from './handle/AppStateMan'
 import { RegisterGoodayAppState } from './handle/GoodayAppState'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const App = () => {
   return (
@@ -42,7 +43,8 @@ const AppRender = () => {
 
     if (Cheat('ClearAllUserData')) {
       dispatch(clearAllUserData());
-
+      AsyncStorage.clear()
+      
       console.log('ClearAllUserData');
     }
 
