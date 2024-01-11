@@ -21,6 +21,7 @@ import { NetLord } from '../../handle/NetLord';
 import SelectAward from './SelectAward';
 import useIsFavorited from '../../hooks/useIsFavorited';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { track_PressNextPost } from '../../handle/tracking/GoodayTracking';
 
 const screen = Dimensions.get('screen')
 
@@ -88,7 +89,10 @@ const PicturesOfTheYearScreen = () => {
         // setSelectingPhotoIndex(0)
     }, [])
 
-    const onPressNext = useCallback(async (idx: number = -1) => {
+    const onPressNext = useCallback(async (idx: number = -1, trackingTarget: 'none' | 'next' | 'menu') => {
+        if (trackingTarget === 'next') 
+            track_PressNextPost(true, category, true)
+
         setReasonToReload(NeedReloadReason.None)
 
         const year = dataOfYears.find(y => y.year === selectingYear)
@@ -228,7 +232,7 @@ const PicturesOfTheYearScreen = () => {
         })()
     }, [selectingYear])
 
-    // on init once (for load first post)
+    // on init once (for streak)
 
     useEffect(() => {
         SetStreakAsync(Category[category])
@@ -256,7 +260,7 @@ const PicturesOfTheYearScreen = () => {
                     {
                         reasonToReload !== NeedReloadReason.None ?
                             // error
-                            <TouchableOpacity onPress={() => onPressNext(-1)} style={[{ gap: Outline.GapVertical }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]} >
+                            <TouchableOpacity onPress={() => onPressNext(-1, 'none')} style={[{ gap: Outline.GapVertical }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]} >
                                 <MaterialCommunityIcons name={reasonToReload === NeedReloadReason.NoInternet ? Icon.NoInternet : Icon.HeartBroken} color={theme.primary} size={Size.IconBig} />
                                 <Text style={{ fontSize: FontSize.Normal, color: theme.counterPrimary }}>{reasonToReload === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
                                 <Text style={{ fontSize: FontSize.Small_L, color: theme.counterPrimary }}>{LocalText.tap_to_retry}</Text>
@@ -286,7 +290,7 @@ const PicturesOfTheYearScreen = () => {
                                     </View>
                                 </View>
                                 {/* image */}
-                                <TouchableWithoutFeedback onPress={() => onPressNext(-1)}>
+                                <TouchableWithoutFeedback onPress={() => onPressNext(-1, 'next')}>
                                     <ImageBackground
                                         style={imageStyle}
                                         onLoadStart={onImageStartLoad}
@@ -325,7 +329,7 @@ const PicturesOfTheYearScreen = () => {
                             <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{likeCount}</Text>
                     }
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => onPressNext(-1)} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
+                <TouchableOpacity onPress={() => onPressNext(-1, 'next')} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
                     <MaterialCommunityIcons name={Icon.Right} color={theme.counterPrimary} size={Size.Icon} />
                     <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{LocalText.next}</Text>
                 </TouchableOpacity>
@@ -341,7 +345,7 @@ const PicturesOfTheYearScreen = () => {
                 </TouchableOpacity>
             </View>
             {
-                isShowAwardList ? <SelectAward setIdx={onPressNext} year={selectingYear} selectIdx={selectingPhotoIndex} /> : undefined
+                isShowAwardList ? <SelectAward setIdx={(idx: number) => onPressNext(idx, 'menu')} year={selectingYear} selectIdx={selectingPhotoIndex} /> : undefined
             }
             {
                 streakData ? <StreakPopup streak={streakData} /> : undefined

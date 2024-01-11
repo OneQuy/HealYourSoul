@@ -13,7 +13,7 @@ import { BorderRadius, Category, FontSize, Icon, LocalText, NeedReloadReason, Op
 import { ThemeContext } from '../../constants/Colors';
 import { heightPercentageToDP as hp, } from "react-native-responsive-screen";
 import { FileList, MediaType, PostMetadata, Streak } from '../../constants/Types';
-import { CheckAndGetFileListAsync, CheckLocalFileAndGetURIAsync, CopyAndToast, GetAllSavedLocalPostIDsListAsync, PreDownloadPosts, SaveCurrentScreenForLoadNextTime, ToastTheme } from '../../handle/AppUtils';
+import { CheckAndGetFileListAsync, CheckLocalFileAndGetURIAsync, CopyAndToast, GetAllSavedLocalPostIDsListAsync, HandleError, PreDownloadPosts, SaveCurrentScreenForLoadNextTime, ToastTheme } from '../../handle/AppUtils';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { PickRandomElement, RoundNumber, SecondsToHourMinuteSecondString } from '../../handle/Utils';
@@ -31,6 +31,7 @@ import StreakPopup from '../components/StreakPopup';
 import { CommonStyles } from '../../constants/CommonConstants';
 import Share from 'react-native-share';
 import useIsFavorited from '../../hooks/useIsFavorited';
+import { track_PressNextPost } from '../../handle/tracking/GoodayTracking';
 
 const videoNumbSize = 10;
 const videoTouchEffectRadius = 100;
@@ -264,7 +265,14 @@ const ThePage = ({ category }: ThePageProps) => {
         }
 
         if (!foundPost)
-            throw new Error('cant find post');
+        {
+            HandleError('loadNextPostAsync', 'cant find post')
+
+            if (fileList.current?.posts)
+                foundPost = PickRandomElement(fileList.current.posts) as PostMetadata
+            else
+                throw new Error('cant find post');
+        }
 
         // start load post
 
@@ -516,7 +524,9 @@ const ThePage = ({ category }: ThePageProps) => {
         }
     }, [checkAndLoadFileListAndStartShowPostAsync]);
 
-    const onPressNextPost = useCallback(async (isNext: boolean) => {
+    const onPressNextPost = useCallback(async (isNext: boolean, shouldTracking: boolean) => {
+        track_PressNextPost(shouldTracking, category, isNext)
+
         if (!fileList.current) {
             onPressReloadAsync();
             return;
@@ -547,7 +557,7 @@ const ThePage = ({ category }: ThePageProps) => {
                 throw new Error('NI cat: ' + category);
         }
 
-        setNeedLoadPost(isNext ? 'next' : 'previous');
+        setNeedLoadPost(isNext ? 'next' : 'previous')
     }, [onPressReloadAsync]);
 
     const onTouchEndBigView = useCallback((e: GestureResponderEvent) => {
@@ -580,7 +590,7 @@ const ThePage = ({ category }: ThePageProps) => {
             // load next post when current is image post
 
             if (mediaURI.current && currentMediaIsImage) {
-                onPressNextPost(true)
+                onPressNextPost(true, true)
             }
         }
 
@@ -609,7 +619,7 @@ const ThePage = ({ category }: ThePageProps) => {
             [
                 {
                     text: 'OK',
-                    onPress: () => onPressNextPost(true)
+                    onPress: () => onPressNextPost(true, false)
                 }
             ]);
     }, [onPressNextPost]);
@@ -872,11 +882,11 @@ const ThePage = ({ category }: ThePageProps) => {
                 </TouchableOpacity>
                 {
                     !activePreviousPostButton ? undefined :
-                        <TouchableOpacity onPress={() => onPressNextPost(false)} style={{ borderRadius: BorderRadius.BR8, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
+                        <TouchableOpacity onPress={() => onPressNextPost(false, true)} style={{ borderRadius: BorderRadius.BR8, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
                             <MaterialIcons name={Icon.Left} color={theme.counterPrimary} size={Size.Icon} />
                         </TouchableOpacity>
                 }
-                <TouchableOpacity onPress={() => onPressNextPost(true)} style={{ borderRadius: BorderRadius.BR8, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
+                <TouchableOpacity onPress={() => onPressNextPost(true, true)} style={{ borderRadius: BorderRadius.BR8, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
                     <MaterialIcons name={Icon.Right} color={theme.counterPrimary} size={Size.Icon} />
                 </TouchableOpacity>
             </View>

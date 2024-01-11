@@ -1,6 +1,25 @@
 import { Category } from "../../constants/AppConstants"
 import { MainTrack } from "./Tracking"
 
+
+export const track_PressNextPost = (shouldTracking: boolean, category: Category, isNextOrPrevious: boolean) => {
+    if (!shouldTracking)
+        return
+
+    const event = isNextOrPrevious ? 'press_next_post' : 'press_previous_post'
+
+    MainTrack(event,
+        [
+            `total/${event}/total`,
+            `total/${event}/` + Category[category],
+            `events/${event}/#d/` + Category[category],
+        ],
+        {
+            cat: Category[category],
+        }
+    )
+}
+
 export const track_PressRandom = (shouldTracking: boolean, category: Category, success: boolean | undefined) => {
     if (!shouldTracking)
         return
