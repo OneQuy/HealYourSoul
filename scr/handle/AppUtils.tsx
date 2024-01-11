@@ -1,5 +1,5 @@
 import { Alert, Linking, Platform } from "react-native";
-import { Category, FirebaseDBPath, FirebasePath, LocalPath, LocalText, NeedReloadReason } from "../constants/AppConstants";
+import { Category, FirebaseDBPath, FirebasePath, LocalPath, LocalText, NeedReloadReason, StorageKey_LastTimeCheckFirstOpenAppOfTheDay } from "../constants/AppConstants";
 import { ThemeColor } from "../constants/Colors";
 import { FileList, MediaType, PostMetadata } from "../constants/Types";
 import { FirebaseStorage_DownloadAndReadJsonAsync } from "../firebase/FirebaseStorage";
@@ -7,7 +7,7 @@ import { Cheat } from "./Cheat";
 import { DeleteFileAsync, DeleteTempDirAsync, GetFLPFromRLP, IsExistedAsync, ReadTextAsync } from "./FileUtils";
 import { versions } from "./VersionsHandler";
 import { ToastOptions, toast } from "@baronha/ting";
-import { ColorNameToHex, ToCanPrint, VersionToNumber } from "./UtilsTS";
+import { ColorNameToHex, IsToday, ToCanPrint, VersionToNumber } from "./UtilsTS";
 import { AppLog } from "./AppLog";
 import RNFS, { DownloadProgressCallbackResult, ReadDirItem } from "react-native-fs";
 import { IsInternetAvailableAsync } from "./NetLord";
@@ -15,7 +15,8 @@ import Clipboard from "@react-native-clipboard/clipboard";
 import { NavigationProp } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CheckDuplicateAndDownloadAsync } from "../firebase/FirebaseStorageDownloadManager";
-import { track_OnUseEffectOnceEnterApp } from "./tracking/GoodayTracking";
+import { track_FirstOpenOfTheDay, track_OnUseEffectOnceEnterApp } from "./tracking/GoodayTracking";
+import { GetDateAsync, SetDateAsync, SetDateAsync_Today } from "./AsyncStorageUtils";
 
 const today = new Date()
 export const todayString = 'd' + today.getDate() + '_m' + (today.getMonth() + 1) + '_' + today.getFullYear()
@@ -454,6 +455,28 @@ export const SaveCurrentScreenForLoadNextTime = (navigation: NavigationProp<Reac
     AsyncStorage.setItem('categoryScreenToOpenFirst', screenName);
 }
 
+/**
+ * on freshly open app or first active of the day
+ */
+export const OnFirstOpenAppOfTheDayAsync = async () => {
+    const lastDateTrack = await GetDateAsync(StorageKey_LastTimeCheckFirstOpenAppOfTheDay)
+
+    if (lastDateTrack !== undefined && IsToday(lastDateTrack))
+        return
+
+    SetDateAsync_Today(StorageKey_LastTimeCheckFirstOpenAppOfTheDay)
+
+    // handles
+
+    console.log('---- first open app ------');
+    
+    track_FirstOpenOfTheDay()
+}
+
+/**
+ * freshly open app
+ */
 export const OnUseEffectOnceEnterApp = () => {
     track_OnUseEffectOnceEnterApp(startFreshlyOpenAppTick)
+    OnFirstOpenAppOfTheDayAsync()
 }

@@ -1,11 +1,25 @@
 import { Category } from "../../constants/AppConstants"
+import { GetDateAsync } from "../AsyncStorageUtils"
 import { MainTrack } from "./Tracking"
 
+/**
+ * on first useEffect of the app (freshly open) or first active state of the day
+ * , only track once a day
+ */
+export const track_FirstOpenOfTheDay = () => {
+    const event = 'first_open_app_of_day'
+
+    MainTrack(event,
+        [
+            `total/${event}`,
+            `events/${event}/#d`,
+        ])
+}
 
 export const track_OnUseEffectOnceEnterApp = (startFreshlyOpenAppTick: number) => {
     const event = 'freshly_open_app'
     const elapsedOpenAppTime = Date.now() - startFreshlyOpenAppTick
-    
+
     MainTrack(event,
         [
             `total/${event}`,
