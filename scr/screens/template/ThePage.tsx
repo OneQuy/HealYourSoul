@@ -31,7 +31,7 @@ import StreakPopup from '../components/StreakPopup';
 import { CommonStyles } from '../../constants/CommonConstants';
 import Share from 'react-native-share';
 import useIsFavorited from '../../hooks/useIsFavorited';
-import { track_PressNextPost } from '../../handle/tracking/GoodayTracking';
+import { track_PressFavorite, track_PressNextPost } from '../../handle/tracking/GoodayTracking';
 
 const videoNumbSize = 10;
 const videoTouchEffectRadius = 100;
@@ -167,7 +167,7 @@ const ThePage = ({ category }: ThePageProps) => {
     const mediaURI = useRef('');
     const post = useRef<PostMetadata | null>(null);
     const curMediaIdx = useRef<number>(0);
-    const [isFavorited, likeCount, onPressFavorite] = useIsFavorited(category, post.current?.id)
+    const [isFavorited, likeCount, onPressFavoriteFromHook] = useIsFavorited(category, post.current?.id)
 
     // calculations
 
@@ -178,6 +178,11 @@ const ThePage = ({ category }: ThePageProps) => {
     const hasCredit: boolean = post.current !== null && post.current.author != null && post.current.author.length > 0;
 
     // handles
+
+    const onPressFavorite = useCallback(async () => {
+        track_PressFavorite(category, !isFavorited)
+        onPressFavoriteFromHook()
+    }, [onPressFavoriteFromHook, isFavorited])
 
     const onBeginLoadNextOrPreviousPostAsync = useCallback(async () => {
         if (!post.current)

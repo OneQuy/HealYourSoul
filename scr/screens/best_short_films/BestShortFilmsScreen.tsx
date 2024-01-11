@@ -31,7 +31,7 @@ import useIsFavorited from '../../hooks/useIsFavorited';
 import ListMovie from './SelectShortFilms';
 import { DownloadFileAsync, GetFLPFromRLP } from '../../handle/FileUtils';
 import WebView from 'react-native-webview';
-import { track_PressNextPost, track_PressRandom } from '../../handle/tracking/GoodayTracking';
+import { track_PressFavorite, track_PressNextPost, track_PressRandom } from '../../handle/tracking/GoodayTracking';
 
 const category = Category.BestShortFilms
 const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Fshort_films.json?alt=media&token=537eec8b-f774-4908-a5fa-45f8daf676d8'
@@ -73,7 +73,12 @@ const BestShortFilmsScreen = () => {
         return id
     }, [selectingItem])
 
-    const [isFavorited, likeCount, onPressFavorite] = useIsFavorited(category, idCurrent)
+    const [isFavorited, likeCount, onPressFavoriteFromHook] = useIsFavorited(category, idCurrent)
+
+    const onPressFavorite = useCallback(async () => {
+        track_PressFavorite(category, !isFavorited)
+        onPressFavoriteFromHook()
+    }, [onPressFavoriteFromHook, isFavorited])
 
     const getSelectingIdxAsync = useCallback(async () => {
         const s = await AsyncStorage.getItem(StorageKey_SelectingShortFilmIdx)
@@ -137,7 +142,7 @@ const BestShortFilmsScreen = () => {
         console.log(url);
 
     }, [selectingItem])
-    
+
     const onPressRandom = useCallback(async () => {
         track_PressRandom(true, category, undefined)
 

@@ -128,3 +128,20 @@ export const track_PressDrawerItem = (screen: string) => {
             screen
         })
 }
+
+export const track_PressFavorite = (category: Category, isFavorited: boolean) => {
+    const event = 'press_favorite'
+
+    MainTrack(event,
+        [
+            `total/${event}/total`,
+            `total/${event}/` + Category[category] + '/' + (isFavorited ? 'like' : 'dislike'),
+
+            `events/${event}/#d/` + Category[category]  + '/' + (isFavorited ? 'like' : 'dislike'),
+        ],
+        {
+            cat: Category[category],
+            isFavorited
+        }
+    )
+}

@@ -21,7 +21,7 @@ import { NetLord } from '../../handle/NetLord';
 import SelectAward from './SelectAward';
 import useIsFavorited from '../../hooks/useIsFavorited';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { track_PressNextPost } from '../../handle/tracking/GoodayTracking';
+import { track_PressFavorite, track_PressNextPost } from '../../handle/tracking/GoodayTracking';
 
 const screen = Dimensions.get('screen')
 
@@ -47,7 +47,12 @@ const PicturesOfTheYearScreen = () => {
         return Number.parseInt(selectingYear.toString() + selectingPhotoIndex.toString())
     }, [selectingPhotoIndex, selectingYear])
     
-    const [isFavorited, likeCount, onPressFavorite] = useIsFavorited(category, selectingPhotoID)
+    const [isFavorited, likeCount, onPressFavoriteFromHook] = useIsFavorited(category, selectingPhotoID)
+    
+    const onPressFavorite = useCallback(() => {
+        track_PressFavorite(category, !isFavorited)
+        onPressFavoriteFromHook()
+    }, [onPressFavoriteFromHook, isFavorited])
 
     const renderIconReward = useCallback(() => {
 
