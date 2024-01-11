@@ -85,21 +85,14 @@ export const track_PressNextPost = (shouldTracking: boolean, category: Category,
 
     const event = isNextOrPrevious ? 'press_next_post' : 'press_previous_post'
 
-    MainTrack(event,
-        [
-            `total/${event}/total`,
-            `total/${event}/` + Category[category],
-            `events/${event}/#d/` + Category[category],
-        ],
-        {
-            cat: Category[category],
-        }
-    )
+    track_SimpleWithCat(category, event)
 }
 
 export const track_PressSaveMedia = (category: Category) => {
-    const event = 'save_media'
+    track_SimpleWithCat(category, 'save_media')
+}
 
+export const track_SimpleWithCat = (category: Category, event: string) => {
     MainTrack(event,
         [
             `total/${event}/total`,
