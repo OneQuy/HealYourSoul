@@ -6,9 +6,10 @@ import React, { useCallback, useContext, useEffect, useRef, useState } from 'rea
 import { ThemeContext } from '../../constants/Colors';
 import { CommonStyles } from '../../constants/CommonConstants';
 import { ColorNameToRgb } from '../../handle/UtilsTS';
-import { BorderRadius, FontSize, FontWeight, Icon, LocalText, Outline, Size } from '../../constants/AppConstants';
+import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, Outline, Size } from '../../constants/AppConstants';
 import { TopMovie } from '../../constants/Types';
 import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading';
+import { track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 
 const listPopupIconSize = Size.IconBig
 const listPopupGap = Outline.GapVertical
@@ -20,7 +21,7 @@ const ListMovie = ({ list, setIdx, getSelectingIdAsync: getSelectingIdxAsync }: 
 
     const renderItem = useCallback(({ item, index }: { item: TopMovie, index: number }) => {
         const isSelecting = index === selectIdx
-        
+
         return <TouchableOpacity onPress={() => setIdx(index)} style={[{ backgroundColor: isSelecting ? theme.primary : undefined, borderRadius: isSelecting ? BorderRadius.BR8 : 0, borderWidth: isSelecting ? 1 : 0 }, styleSheet.itemTO]}>
             <ImageBackgroundWithLoading source={{ uri: item.thumbnailUri }} resizeMode='cover' style={styleSheet.image} />
             <Text style={[styleSheet.text, { color: theme.text }]}>#{item.rank + '. ' + item.title}</Text>
@@ -29,6 +30,8 @@ const ListMovie = ({ list, setIdx, getSelectingIdAsync: getSelectingIdxAsync }: 
 
     useEffect(() => {
         (async () => {
+            track_SimpleWithCat(Category.TopMovie, 'press_menu_list')
+
             const idx = await getSelectingIdxAsync()
 
             setSelectIdx(idx)
@@ -73,7 +76,7 @@ const styleSheet = StyleSheet.create({
     masterView: { backgroundColor: ColorNameToRgb('black', 0.8), width: '100%', height: '100%', position: 'absolute' },
     bgView: { gap: Outline.GapVertical, padding: Outline.GapVertical, width: '80%', height: '70%', borderRadius: BorderRadius.BR },
     itemTO: { flexDirection: 'row', alignItems: 'center', gap: Outline.GapHorizontal },
-    image: { width: listPopupIconSize, height: listPopupIconSize,  borderRadius: BorderRadius.BR8, overflow: 'hidden' },
+    image: { width: listPopupIconSize, height: listPopupIconSize, borderRadius: BorderRadius.BR8, overflow: 'hidden' },
     flatlist: { gap: listPopupGap },
     text: { fontSize: FontSize.Small_L, flex: 1 },
     title: { flex: 1, textAlign: 'center', fontWeight: FontWeight.B600, fontSize: FontSize.Big },

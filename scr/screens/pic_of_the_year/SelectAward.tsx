@@ -6,10 +6,11 @@ import React, { useCallback, useContext, useEffect, useMemo, useRef } from 'reac
 import { ThemeContext } from '../../constants/Colors';
 import { CommonStyles } from '../../constants/CommonConstants';
 import { ColorNameToRgb } from '../../handle/UtilsTS';
-import { BorderRadius, FontSize, FontWeight, Icon, LocalText, Outline, Size } from '../../constants/AppConstants';
+import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, Outline, Size } from '../../constants/AppConstants';
 import { dataOfYears } from './PicturesOfTheYearScreen';
 import { AwardPicture } from '../../constants/Types';
 import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading';
+import { track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 
 const listPopupIconSize = Size.IconBig
 const listPopupGap = Outline.GapVertical
@@ -44,6 +45,8 @@ const SelectAward = ({ year, selectIdx, setIdx }: { year: number, selectIdx: num
     }, [selectIdx, theme])
 
     useEffect(() => {
+        track_SimpleWithCat(Category.AwardPicture, 'press_menu_list')
+
         // @ts-ignore
         flatlistRef?.current?.scrollToIndex({
             animated: true,
