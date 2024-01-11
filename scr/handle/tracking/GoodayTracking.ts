@@ -1,5 +1,4 @@
 import { Category } from "../../constants/AppConstants"
-import { GetDateAsync } from "../AsyncStorageUtils"
 import { MainTrack } from "./Tracking"
 
 /**
