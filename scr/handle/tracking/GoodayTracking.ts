@@ -16,6 +16,16 @@ export const track_FirstOpenOfTheDay = () => {
         ])
 }
 
+export const track_AppStateActive = () => {
+    const event = 'app_state_active'
+
+    MainTrack(event,
+        [
+            `total/${event}`,
+            `events/${event}/#d`,
+        ])
+}
+
 export const track_OnUseEffectOnceEnterApp = (startFreshlyOpenAppTick: number) => {
     const event = 'freshly_open_app'
     const elapsedOpenAppTime = Date.now() - startFreshlyOpenAppTick
