@@ -17,7 +17,7 @@ import { NetLord } from '../../handle/NetLord';
 import { ToastOptions, toast } from '@baronha/ting';
 import { PickRandomElement } from '../../handle/Utils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { track_PressRandom } from '../../handle/tracking/GoodayTracking';
+import { track_PressRandom, track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 
 interface TheTriviaProps {
     category: Category,
@@ -111,8 +111,9 @@ const TheTrivia = ({
             return
 
         setUserChosenAnswer(answer)
+        const isCorrect = answer === trivia?.answer
 
-        if (answer === trivia?.answer) { // correct
+        if (isCorrect) { // correct
             const options: ToastOptions = {
                 title: PickRandomElement(CorrectToasts),
                 ...ToastTheme(theme, 'done')
@@ -120,6 +121,8 @@ const TheTrivia = ({
 
             toast(options);
         }
+
+        track_SimpleWithParam('trivia_correct', isCorrect.toString())
     }, [trivia, userChosenAnswer, theme])
 
     // on init once (for load first post)
