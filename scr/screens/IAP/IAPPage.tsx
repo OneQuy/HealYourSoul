@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Image, ImageBackground, Alert, StyleSheet } from 'react-native'
+import { View, Text, ScrollView, Image, ImageBackground, Alert, StyleSheet, ActivityIndicator } from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { BorderRadius, FontSize, FontWeight, LocalText, Outline } from '../../constants/AppConstants'
 import { widthPercentageToDP as wp } from "react-native-responsive-screen";
@@ -64,12 +64,16 @@ const IAPPage = () => {
   const [fetchedProducts, setFetchedProducts] = useState<Product[]>([])
   const subscribedData = useAppSelector((state: RootState) => state.userData.subscribedData);
   const dispatch = useAppDispatch();
+  const [processingId, setProcessingId] = useState('')
 
   const onPressed_Buy = async (id: string) => {
     track_SimpleWithParam('click_iap', id)
+    setProcessingId(id)
 
     const res = await PurchaseAsync(id)
     // const res = undefined
+
+    setProcessingId('')
 
     if (res === undefined) { // success
       track_SimpleWithParam('iap_resulted', 'successssss')
@@ -173,7 +177,7 @@ const IAPPage = () => {
                   source={imgUrl}
                   style={{ alignItems: 'center', padding: Outline.GapVertical_2, justifyContent: 'center', }}>
                   <Text style={{ color: 'black', fontSize: FontSize.Normal, fontWeight: FontWeight.B600 }}>{month} month{month > 1 ? 's' : ''}</Text>
-                  <Text style={{ color: 'black', fontSize: FontSize.Normal }}>{price}</Text>
+                  <Text style={{ color: 'black', fontSize: FontSize.Normal }}>{price}{processingId === sku ? '  ' : ''}{processingId === sku ? <ActivityIndicator color={'black'} size={'small'} /> : undefined}</Text>
                 </ImageBackground>
               </TouchableOpacity>
               <Text style={{ color: 'black', fontSize: FontSize.Small, }}>{LocalText.subscribe_for} {month}-month ({LocalText.today} {'->'} {SafeDateString(expiredDate, '/')})</Text>
