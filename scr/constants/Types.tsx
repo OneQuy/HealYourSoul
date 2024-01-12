@@ -23,9 +23,13 @@ export type AppConfig = {
     remote_files: object,
     force_dev: boolean,
     latest_version: {
-        version: number,
-        force_update: boolean,
-        release_note: string,
+        version_android: number,
+        force_update_android: boolean,
+        release_note_android: string,
+
+        version_ios: number,
+        force_update_ios: boolean,
+        release_note_ios: string,
     },
     notice?: {
         max_version: number,

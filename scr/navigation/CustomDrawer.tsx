@@ -6,7 +6,7 @@ import { useCallback, useContext, useMemo, useRef } from "react";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/Store";
 import { ThemeContext, ThemeType, themes } from "../constants/Colors";
 import { DrawerContentComponentProps, } from '@react-navigation/drawer';
-import { Image, ImageBackground, Linking, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, ImageBackground, Linking, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { setTheme } from "../redux/MiscSlice";
 import DrawerCoupleItem from "./DrawerCoupleItem";
 import { BorderRadius, FontSize, FontWeight, LocalText, Outline, ScreenName, Size, StorageKey_ForceDev } from "../constants/AppConstants";
@@ -68,7 +68,10 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
     if (!data)
       return false
 
-    return versionAsNumber < data.version
+    if (Platform.OS === 'android')
+      return versionAsNumber < data.version_android
+    else
+      return versionAsNumber < data.version_ios
   }, [GetAppConfig()?.latest_version])
 
   const routeCoupleArr = useMemo(() => {
@@ -152,9 +155,9 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
           <Text style={{ color: theme.text, }}>Version: {versionText}</Text>
           {
             !showUpdateBtn ? undefined :
-            <View style={[style.versionBtnView, {backgroundColor: theme.primary, }]}>
-              <Text style={[style.versionText, { color: theme.text, }]}>{LocalText.update}</Text>
-            </View>
+              <View style={[style.versionBtnView, { backgroundColor: theme.primary, }]}>
+                <Text style={[style.versionText, { color: theme.text, }]}>{LocalText.update}</Text>
+              </View>
           }
         </View>
         {/* notice */}
