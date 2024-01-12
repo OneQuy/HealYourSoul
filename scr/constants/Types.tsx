@@ -21,6 +21,7 @@ export type FileList = {
 export type AppConfig = {
     net_url: string,
     remote_files: object,
+    force_dev: boolean,
     notice?: {
         max_version: number,
         content: string,

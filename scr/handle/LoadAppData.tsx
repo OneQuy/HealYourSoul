@@ -10,6 +10,7 @@ import { HandleStartupAlertAsync } from "./StartupAlert";
 import { toast } from "@baronha/ting";
 import { LocalText } from "../constants/AppConstants";
 import { ToastTheme } from "./AppUtils";
+import { InitTrackingAsync } from "./tracking/Tracking";
 
 export type LoadAppDataResult = {
     categoryScreenToOpenFirst: keyof DrawerParamList | null
@@ -41,6 +42,10 @@ export async function LoadAppData(theme: ThemeColor): Promise<LoadAppDataResult>
     else
         await HandleAppConfigAsync()
 
+    // init tracking
+
+    InitTrackingAsync()
+    
     // handle alert (must after app config)
 
     await HandleStartupAlertAsync()
