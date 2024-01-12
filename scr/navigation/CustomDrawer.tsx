@@ -148,12 +148,12 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
           }
         </View>
         {/* version */}
-        <View onTouchEnd={OpenStore} style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <View onTouchEnd={OpenStore} style={style.versionContainerView}>
           <Text style={{ color: theme.text, }}>Version: {versionText}</Text>
           {
-            !showUpdateBtn ? undefined :
-            <View style={{ marginLeft: Outline.GapVertical, borderRadius: BorderRadius.BR8, padding: Outline.VerticalMini, backgroundColor: theme.primary, }}>
-              <Text style={[{ fontWeight: FontWeight.B500 }, { color: theme.text, }]}>{LocalText.update}</Text>
+            !true ? undefined :
+            <View style={[style.versionBtnView, {backgroundColor: theme.primary, }]}>
+              <Text style={[style.versionText, { color: theme.text, }]}>{LocalText.update}</Text>
             </View>
           }
         </View>
@@ -174,4 +174,7 @@ const style = StyleSheet.create({
   bottomMasterView: { marginLeft: Outline.Horizontal, marginVertical: Outline.Horizontal, gap: Outline.GapVertical_2 },
   premiumIB: { flexDirection: 'row', gap: Outline.GapHorizontal, padding: Outline.GapVertical_2, marginRight: Outline.Horizontal, borderRadius: BorderRadius.BR8, overflow: 'hidden', },
   premiumText: { color: 'black', fontSize: FontSize.Small_L, fontWeight: FontWeight.B500 },
+  versionContainerView: { flexDirection: 'row', alignItems: 'center' },
+  versionBtnView: { marginLeft: Outline.GapVertical, borderRadius: BorderRadius.BR8, padding: Outline.VerticalMini },
+  versionText: { fontWeight: FontWeight.B500 },
 })
