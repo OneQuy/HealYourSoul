@@ -11,6 +11,7 @@ import IAPPage_Subscribed from './IAPPage_Subscribed';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { setSubscribe } from '../../redux/UserDataSlice';
 import { GetExpiredDateAndDaysLeft } from '../../handle/AppUtils';
+import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 
 const ids = [
   {
@@ -65,6 +66,8 @@ const IAPPage = () => {
   const dispatch = useAppDispatch();
 
   const onPressed_Buy = async (id: string) => {
+    track_SimpleWithParam('click_iap', id)
+
     const res = await PurchaseAsync(id)
     // const res = undefined
 

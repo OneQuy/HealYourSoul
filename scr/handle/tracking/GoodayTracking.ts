@@ -105,18 +105,19 @@ export const track_SimpleWithCat = (category: Category, event: string) => {
     )
 }
 
-
-export const track_PressYearOfAwardPicture = (year: string) => {
-    const event = 'select_year_award_pic'
-
+export const track_SimpleWithParam = (event: string, value: string) => {
     MainTrack(event,
         [
-            `total/${event}/` + year,
+            `total/${event}/` + value,
         ],
         {
-            year,
+            value,
         }
     )
+}
+
+export const track_PressYearOfAwardPicture = (year: string) => {
+    track_SimpleWithParam('select_year_award_pic', year)
 }
 
 export const track_PressRandom = (shouldTracking: boolean, category: Category, success: boolean | undefined) => {
