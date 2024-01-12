@@ -212,6 +212,7 @@ const BestShortFilmsScreen = () => {
         if (!selectingItem)
             return
 
+        track_SimpleWithCat(category, 'share_as_image')
 
         const message =
             selectingItem.name +

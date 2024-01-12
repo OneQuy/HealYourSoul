@@ -169,6 +169,8 @@ const FunWebsitesScreen = () => {
         if (!selectingItem)
             return
 
+        track_SimpleWithCat(category, 'share_as_image')
+
         const message = selectingItem.desc + '\n\n' + selectingItem.url
         // @ts-ignore
         viewShotRef.current.capture().then(async (uri: string) => {

@@ -178,6 +178,8 @@ const TopMovieScreen = () => {
         if (!selectingItem)
             return
 
+        track_SimpleWithCat(category, 'share_as_image')
+
         const message =
             '#' + selectingItem.rank + '. ' +
             selectingItem.title + ': ' +

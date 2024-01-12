@@ -109,6 +109,8 @@ const TheRandomShortText = ({
         if (!text)
             return
 
+        track_SimpleWithCat(category, 'share_as_image')
+
         // @ts-ignore
         viewShotRef.current.capture().then(async (uri: string) => {
             Share

@@ -166,6 +166,8 @@ const WikipediaScreen = () => {
         if (!currentContent)
             return
 
+        track_SimpleWithCat(category, 'share_as_image')
+        
         const message = currentTitle + '\n\n' + currentContent + '\n\nLink: ' + currentLink
 
         // @ts-ignore
