@@ -72,12 +72,18 @@ const IAPPage = () => {
     // const res = undefined
 
     if (res === undefined) { // success
+      track_SimpleWithParam('iap_resulted', 'successssss')
+
       dispatch(setSubscribe(id))
 
       Alert.alert('Awesome!', 'Your purchased is successful! Thank you so much for this support!')
     }
-    else if (res === null) { } // user cancelled
+    else if (res === null) { // user cancelled
+      track_SimpleWithParam('iap_resulted', 'canceled')
+    }
     else { // fail
+      track_SimpleWithParam('iap_resulted', 'failed')
+
       Alert.alert(
         'Error',
         'An error occured when processing purchase. Please try again!\n' + id + '\n' + ToCanPrintError(res))
