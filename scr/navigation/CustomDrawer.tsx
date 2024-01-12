@@ -151,7 +151,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
         <View onTouchEnd={OpenStore} style={style.versionContainerView}>
           <Text style={{ color: theme.text, }}>Version: {versionText}</Text>
           {
-            !true ? undefined :
+            !showUpdateBtn ? undefined :
             <View style={[style.versionBtnView, {backgroundColor: theme.primary, }]}>
               <Text style={[style.versionText, { color: theme.text, }]}>{LocalText.update}</Text>
             </View>
