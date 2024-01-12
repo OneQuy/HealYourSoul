@@ -1,11 +1,19 @@
 import Aptabase, { trackEvent } from "@aptabase/react-native";
-import { FirebaseDatabase_IncreaseNumberAsync } from "../../firebase/FirebaseDatabase";
+import { FirebaseDatabase_IncreaseNumberAsync, FirebaseDatabase_SetValueAsync } from "../../firebase/FirebaseDatabase";
 import { todayString } from "../AppUtils";
 import { APTA_KEY } from "../../../keys";
 
 Aptabase.init(APTA_KEY);
 
 const isDev = () => __DEV__
+
+const prefixFbTrackPath = () => isDev() ? 'tracking/dev/' : 'tracking/production/'
+
+export const TrackErrorOnFirebase = (error: string) => {
+    const path = prefixFbTrackPath() + 'errors/' + Date.now()
+    FirebaseDatabase_SetValueAsync(path, error)
+    console.log('track error: ', path, ', ' + error);
+}
 
 export const MainTrack = (
     eventName: string,
@@ -26,10 +34,9 @@ export const MainTrack = (
 
     // track firebase
 
-    const prefixFbTrackPath = isDev() ? 'tracking/dev/' : 'tracking/production/'
 
     for (let i = 0; i < fbPaths.length; i++) {
-        let path = prefixFbTrackPath + fbPaths[i]
+        let path = prefixFbTrackPath() + fbPaths[i]
         path = path.replaceAll('#d', todayString)
         console.log('fb path', path);
 

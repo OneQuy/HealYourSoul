@@ -15,7 +15,7 @@ import Clipboard from "@react-native-clipboard/clipboard";
 import { NavigationProp } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CheckDuplicateAndDownloadAsync } from "../firebase/FirebaseStorageDownloadManager";
-import { track_FirstOpenOfTheDayAsync, track_OnUseEffectOnceEnterAppAsync } from "./tracking/GoodayTracking";
+import { track_FirstOpenOfTheDayAsync, track_HandleError, track_OnUseEffectOnceEnterAppAsync } from "./tracking/GoodayTracking";
 import { GetDateAsync, SetDateAsync, SetDateAsync_Now } from "./AsyncStorageUtils";
 
 const today = new Date()
@@ -301,7 +301,7 @@ export const CopyAndToast = (s: string, theme: ThemeColor) => {
 export const HandleError = (methodName: string, error: any, keepSilentForUser?: boolean) => {
     const err = methodName + ' - ' + error;
 
-    // Track('error', err);
+    track_HandleError(methodName, error)
     AppLog.Log(err);
 
     if (keepSilentForUser === true)

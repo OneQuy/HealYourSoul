@@ -1,7 +1,8 @@
 import { Category, StorageKey_FirstTimeInstallTick, StorageKey_LastInstalledVersion } from "../../constants/AppConstants"
 import { GetDateAsync, GetNumberIntAsync, SetDateAsync_Now, SetNumberAsync } from "../AsyncStorageUtils"
-import { MainTrack } from "./Tracking"
+import { MainTrack, TrackErrorOnFirebase } from "./Tracking"
 import { versionAsNumber } from "../AppUtils"
+import { ToCanPrint } from "../UtilsTS"
 
 /**
  * on first useEffect of the app (freshly open) or first active state of the day
@@ -159,11 +160,18 @@ export const track_PressFavorite = (category: Category, isFavorited: boolean) =>
             `total/${event}/total`,
             `total/${event}/` + Category[category] + '/' + (isFavorited ? 'like' : 'dislike'),
 
-            `events/${event}/#d/` + Category[category]  + '/' + (isFavorited ? 'like' : 'dislike'),
+            `events/${event}/#d/` + Category[category] + '/' + (isFavorited ? 'like' : 'dislike'),
         ],
         {
             cat: Category[category],
             isFavorited
         }
     )
+}
+
+export const track_HandleError = (methodName: string, error: any) => {
+    track_SimpleWithParam('error', methodName)
+
+    const s = ToCanPrint(error)
+    TrackErrorOnFirebase(s)
 }
