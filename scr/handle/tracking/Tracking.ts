@@ -11,7 +11,7 @@ var isDev = true
 
 var inited = false
 
-const IsDev = () => isDev
+export const IsDev = () => isDev
 
 const prefixFbTrackPath = () => IsDev() ? 'tracking/dev/' : 'tracking/production/'
 

@@ -9,7 +9,7 @@ import { DrawerContentComponentProps, } from '@react-navigation/drawer';
 import { Image, ImageBackground, Linking, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { setTheme } from "../redux/MiscSlice";
 import DrawerCoupleItem from "./DrawerCoupleItem";
-import { BorderRadius, FontSize, FontWeight, LocalText, Outline, ScreenName, Size } from "../constants/AppConstants";
+import { BorderRadius, FontSize, FontWeight, LocalText, Outline, ScreenName, Size, StorageKey_ForceDev } from "../constants/AppConstants";
 import { CommonStyles } from "../constants/CommonConstants";
 import useDrawerMenuItemUtils from '../hooks/useDrawerMenuItemUtils';
 import { logoScr } from '../screens/others/SplashScreen';
@@ -18,11 +18,15 @@ import { OpenStore, versionAsNumber, versionText } from '../handle/AppUtils';
 import { GetAppConfig } from '../handle/AppConfigHandler';
 import { FilterOnlyLetterAndNumberFromString, RegexUrl } from '../handle/UtilsTS';
 import { track_PressDrawerItem } from '../handle/tracking/GoodayTracking';
+import { SetBooleanAsync } from '../handle/AsyncStorageUtils';
+import { toast } from '@baronha/ting';
+import { IsDev } from '../handle/tracking/Tracking';
 
 const primiumBG = require('../../assets/images/btn_bg_1.jpeg')
 
 export function CustomDrawerContent(props: DrawerContentComponentProps) {
   const themeValues = useRef(Object.keys(themes));
+  const pressLogoCountRef = useRef(0)
   const dispatch = useAppDispatch();
   const currentTheme = useAppSelector((state: RootState) => state.misc.themeType);
   const [_, onPressPremium] = useDrawerMenuItemUtils(ScreenName.IAPPage, props)
@@ -76,6 +80,16 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
     return arr
   }, [])
 
+  const onPressLogo = useCallback(() => {
+    pressLogoCountRef.current++
+
+    if (pressLogoCountRef.current < 20)
+      return
+
+    pressLogoCountRef.current = 0
+    SetBooleanAsync(StorageKey_ForceDev, true)
+    toast({ message: 'FORCE DEV' })
+  }, [])
   const renderCategoryButtons = useCallback(() => {
     return <ScrollView>
       {
@@ -97,7 +111,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
   return (
     <View style={{ flex: 1 }}>
       {/* logo & app name */}
-      <View style={[style.topMasterView, CommonStyles.justifyContentCenter_AlignItemsCenter, { marginTop: safeAreaInsets.top }]}>
+      <View onTouchEnd={IsDev() ? onPressLogo : undefined} style={[style.topMasterView, CommonStyles.justifyContentCenter_AlignItemsCenter, { marginTop: safeAreaInsets.top }]}>
         <Image source={logoScr} resizeMode='contain' style={[style.logoImg]} />
         <Text style={[style.appNameText, { color: theme.text }]}>Gooday</Text>
       </View>
