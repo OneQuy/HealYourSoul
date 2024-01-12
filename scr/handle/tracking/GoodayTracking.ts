@@ -1,4 +1,3 @@
-import AsyncStorage from "@react-native-async-storage/async-storage"
 import { Category, StorageKey_FirstTimeInstallTick, StorageKey_LastInstalledVersion } from "../../constants/AppConstants"
 import { GetDateAsync, GetNumberIntAsync, SetDateAsync_Now, SetNumberAsync } from "../AsyncStorageUtils"
 import { MainTrack } from "./Tracking"
