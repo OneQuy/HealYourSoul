@@ -205,6 +205,7 @@ export const LocalText = {
   tap_to_retry: 'Tap to retry.',
   no_internet: 'No internet!',
   cant_get_content: 'Cant get the content!',
+  thank_iap: 'Your purchase is successful! Thank you so much for this support!',
   you_are_awesome: 'You are awsome!!',
   donate_me: 'Donate / Support',
   theme: 'Theme',

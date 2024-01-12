@@ -76,7 +76,7 @@ const IAPPage = () => {
 
       dispatch(setSubscribe(id))
 
-      Alert.alert('Awesome!', 'Your purchased is successful! Thank you so much for this support!')
+      Alert.alert(LocalText.you_are_awesome, LocalText.thank_iap)
     }
     else if (res === null) { // user cancelled
       track_SimpleWithParam('iap_resulted', 'canceled')
