@@ -21,7 +21,7 @@ import { NetLord } from '../../handle/NetLord';
 import SelectAward from './SelectAward';
 import useIsFavorited from '../../hooks/useIsFavorited';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { track_PressFavorite, track_PressNextPost, track_PressSaveMedia, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
+import { track_PressFavorite, track_PressNextPost, track_PressSaveMedia, track_PressYearOfAwardPicture, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 
 const screen = Dimensions.get('screen')
 
@@ -90,8 +90,8 @@ const PicturesOfTheYearScreen = () => {
     }, [selectingPhoto])
 
     const onPressYear = useCallback(async (year: number) => {
+        track_PressYearOfAwardPicture(year.toString())
         setSelectingYear(year)
-        // setSelectingPhotoIndex(0)
     }, [])
 
     const onPressNext = useCallback(async (idx: number = -1, trackingTarget: 'none' | 'next' | 'menu') => {
