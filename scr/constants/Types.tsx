@@ -22,6 +22,11 @@ export type AppConfig = {
     net_url: string,
     remote_files: object,
     force_dev: boolean,
+    latest_version: {
+        version: number,
+        force_update: boolean,
+        release_note: string,
+    },
     notice?: {
         max_version: number,
         content: string,

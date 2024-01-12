@@ -62,6 +62,15 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
       data.color && data.color.length > 0 ? data.color : theme.text]
   }, [GetAppConfig()?.notice, theme])
 
+  const showUpdateBtn = useMemo(() => {
+    const data = GetAppConfig()?.latest_version
+
+    if (!data)
+      return false
+
+    return versionAsNumber < data.version
+  }, [GetAppConfig()?.latest_version])
+
   const routeCoupleArr = useMemo(() => {
     const routes = props.state.routes.filter(r =>
       r.name !== ScreenName.IAPPage)
@@ -139,7 +148,15 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
           }
         </View>
         {/* version */}
-        <Text onPress={OpenStore} style={{ color: theme.text, }}>Version: {versionText}</Text>
+        <View onTouchEnd={OpenStore} style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Text style={{ color: theme.text, }}>Version: {versionText}</Text>
+          {
+            !showUpdateBtn ? undefined :
+            <View style={{ marginLeft: Outline.GapVertical, borderRadius: BorderRadius.BR8, padding: Outline.VerticalMini, backgroundColor: theme.primary, }}>
+              <Text style={[{ fontWeight: FontWeight.B500 }, { color: theme.text, }]}>{LocalText.update}</Text>
+            </View>
+          }
+        </View>
         {/* notice */}
         {
           !notice ? undefined :
