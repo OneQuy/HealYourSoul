@@ -172,6 +172,6 @@ export const track_PressFavorite = (category: Category, isFavorited: boolean) =>
 export const track_HandleError = (methodName: string, error: any) => {
     track_SimpleWithParam('error', methodName)
 
-    const s = ToCanPrint(error)
+    const s = '' + ToCanPrint(error)
     TrackErrorOnFirebase(s)
 }
