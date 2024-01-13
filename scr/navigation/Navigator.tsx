@@ -86,8 +86,6 @@ const ScreenList: ScreenNamePair[] = [
 ]
 
 const Navigator = ({ initialRouteName }: MainNavigatorProps) => {
-  let screenList = ScreenList
-
   useEffect(() => {
     // init app state
 
@@ -110,7 +108,7 @@ const Navigator = ({ initialRouteName }: MainNavigatorProps) => {
         drawerContent={(props) => <CustomDrawerContent {...props} />}
       >
         {
-          screenList.map(([screenName, screen]) => {
+          ScreenList.map(([screenName, screen]) => {
             return <Drawer.Screen key={screenName} name={screenName} component={screen} />
           })
         }
