@@ -1,3 +1,5 @@
+// @ts-ignore
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -9,7 +11,7 @@ import { DrawerContentComponentProps, } from '@react-navigation/drawer';
 import { Image, ImageBackground, Linking, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { setTheme } from "../redux/MiscSlice";
 import DrawerCoupleItem from "./DrawerCoupleItem";
-import { BorderRadius, FontSize, FontWeight, LocalText, Outline, ScreenName, Size, StorageKey_ForceDev } from "../constants/AppConstants";
+import { BorderRadius, FontSize, FontWeight, Icon, LocalText, Outline, ScreenName, Size, StorageKey_ForceDev } from "../constants/AppConstants";
 import { CommonStyles } from "../constants/CommonConstants";
 import useDrawerMenuItemUtils from '../hooks/useDrawerMenuItemUtils';
 import { logoScr } from '../screens/others/SplashScreen';
@@ -134,22 +136,23 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
         {/* premium btn */}
         <TouchableOpacity onPress={onPressPremiumButton}>
           <ImageBackground resizeMode="cover" source={primiumBG} style={[style.premiumIB, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
-            <MaterialCommunityIcons name={'star'} color={'black'} size={Size.Icon} />
+            <MaterialCommunityIcons name={Icon.Coffee} color={'black'} size={Size.Icon} />
             <Text style={[style.premiumText]}>{LocalText.donate_me}</Text>
           </ImageBackground>
         </TouchableOpacity>
 
-        {/* theme setting */}
-        <View style={{ flexDirection: 'row', gap: 20 }}>
-          <Text style={{ color: theme.text, }}>{LocalText.theme}</Text>
-          {
-            themeValues.current.map((theme, index) =>
-              <TouchableOpacity
-                onPress={() => dispatch(setTheme(theme as ThemeType))}
-                key={index}
-                style={{ borderWidth: currentTheme === theme ? 1 : 0, width: 20, height: 20, borderRadius: 10, backgroundColor: themes[theme as ThemeType].primary }} />)
-          }
+        {/* setting & rating */}
+        <View style={style.settingContainer}>
+          <TouchableOpacity style={[style.settingBtnView, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]}>
+            <MaterialIcons name={Icon.Setting} color={theme.counterPrimary} size={Size.IconTiny} />
+            <Text style={[{ color: theme.text }, style.settingBtnText]}>{LocalText.setting}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[style.settingBtnView, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]}>
+            <MaterialIcons name={Icon.Star} color={theme.counterPrimary} size={Size.IconTiny} />
+            <Text style={[{ color: theme.text }, style.settingBtnText]}>{LocalText.rate_me}</Text>
+          </TouchableOpacity>
         </View>
+
         {/* version */}
         <View onTouchEnd={OpenStore} style={style.versionContainerView}>
           <Text style={{ color: theme.text, }}>Version: v{versionAsNumber}</Text>
@@ -174,10 +177,26 @@ const style = StyleSheet.create({
   topMasterView: { flexDirection: 'row', gap: Outline.GapVertical, marginBottom: Outline.GapVertical, },
   logoImg: { width: Size.IconBig, height: Size.IconBig },
   appNameText: { fontSize: FontSize.Normal, fontWeight: FontWeight.Bold },
-  bottomMasterView: { marginLeft: Outline.Horizontal, marginVertical: Outline.Horizontal, gap: Outline.GapVertical_2 },
+  bottomMasterView: { marginLeft: Outline.Horizontal, marginVertical: Outline.Horizontal, gap: Outline.GapVertical },
   premiumIB: { flexDirection: 'row', gap: Outline.GapHorizontal, padding: Outline.GapVertical_2, marginRight: Outline.Horizontal, borderRadius: BorderRadius.BR8, overflow: 'hidden', },
   premiumText: { color: 'black', fontSize: FontSize.Small_L, fontWeight: FontWeight.B500 },
   versionContainerView: { flexDirection: 'row', alignItems: 'center' },
   versionBtnView: { marginLeft: Outline.GapVertical, borderRadius: BorderRadius.BR8, padding: Outline.VerticalMini },
   versionText: { fontWeight: FontWeight.B500 },
+  settingBtnText: { fontSize: FontSize.Small },
+  settingBtnView: { padding: Outline.VerticalMini, borderWidth: StyleSheet.hairlineWidth, borderRadius: BorderRadius.BR8, flexDirection: 'row', gap: Outline.GapHorizontal },
+  settingContainer: { flexDirection: 'row', gap: Outline.GapHorizontal, marginRight: Outline.Horizontal },
 })
+
+
+//  {/* theme setting */}
+//  <View style={{ flexDirection: 'row', gap: 20 }}>
+//  <Text style={{ color: theme.text, }}>{LocalText.theme}</Text>
+//  {
+//    themeValues.current.map((theme, index) =>
+//      <TouchableOpacity
+//        onPress={() => dispatch(setTheme(theme as ThemeType))}
+//        key={index}
+//        style={{ borderWidth: currentTheme === theme ? 1 : 0, width: 20, height: 20, borderRadius: 10, backgroundColor: themes[theme as ThemeType].primary }} />)
+//  }
+// </View>

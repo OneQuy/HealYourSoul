@@ -119,6 +119,7 @@ export enum Size {
   IconMedium = 35,
   Icon = 25,
   IconSmaller = 20,
+  IconTiny = 15,
 }
 
 // opacity
@@ -180,6 +181,8 @@ export enum Icon {
   Book = 'checkbook',
   Link = 'link-variant',
   Eye = 'eye-outline',
+  Star = 'star',
+  Coffee = 'coffee',
 
   // MaterialIcons
 
@@ -190,6 +193,7 @@ export enum Icon {
   VolumeOff = 'volume-off',
   VolumeUp = 'volume-up',
   Copy = 'content-copy',
+  Setting = 'settings',
 }
 
 export const LocalText = {
@@ -225,6 +229,8 @@ export const LocalText = {
   read_full: 'Read Full',
   go: 'Go!',
   saved: 'Saved!',
+  setting: 'Setting',
+  rate_me: 'Rate me',
   save: 'Save',
   no_media_to_download: 'No media to download!',
   oops: 'Oooops',
