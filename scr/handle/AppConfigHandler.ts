@@ -3,6 +3,8 @@ import { HandleError } from "./AppUtils";
 import { ThemeColor, } from "../constants/Colors";
 import { SetNetLordFetchUrl } from "./NetLord";
 import { AppConfig } from "../constants/Types";
+import { SetDateAsync_Now } from "./AsyncStorageUtils";
+import { StorageKey_LastTimeCheckAndReloadAppConfig } from "../constants/AppConstants";
 
 const FirebaseDBPath = 'app/config';
 
@@ -27,7 +29,7 @@ export function GetRemoteFileConfigVersion(file: string) {
         return Number.NaN
 }
 
-export async function HandleAppConfigAsync() : Promise<boolean> {
+export async function HandleAppConfigAsync(): Promise<boolean> {
     const result = await FirebaseDatabase_GetValueAsync(FirebaseDBPath)
 
     // fail
@@ -38,6 +40,8 @@ export async function HandleAppConfigAsync() : Promise<boolean> {
     }
 
     // success
+
+    SetDateAsync_Now(StorageKey_LastTimeCheckAndReloadAppConfig)
 
     appConfig = result.value as AppConfig
 
