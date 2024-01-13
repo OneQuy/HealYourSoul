@@ -1,9 +1,7 @@
-import AsyncStorage from "@react-native-async-storage/async-storage"
 import { GetAppConfig } from "./AppConfigHandler"
 import { OpenStore, versionAsNumber } from "./AppUtils"
-import { LocalText, StorageKey_LastAskForUpdateApp, StorageKey_StartupAlertID } from "../constants/AppConstants"
-import { Alert, AlertButton, Linking, Platform } from "react-native"
-import { RegexUrl } from "./UtilsTS"
+import { LocalText, StorageKey_LastAskForUpdateApp } from "../constants/AppConstants"
+import { Alert, AlertButton, Platform } from "react-native"
 import { GetDateAsync_IsValueExistedAndIsToday, SetDateAsync_Now } from "./AsyncStorageUtils"
 
 const isLog = true
