@@ -364,6 +364,8 @@ export function HTMLCharConvert(text: string) {
         text = text.replaceAll(rep, swapStrings[i])
     }
 
+    text = text.replaceAll('&#039;', '\'')
+
     return text
 }
 
