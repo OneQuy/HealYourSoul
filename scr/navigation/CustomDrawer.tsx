@@ -69,9 +69,9 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
       return false
 
     if (Platform.OS === 'android')
-      return versionAsNumber < data.version_android
+      return versionAsNumber < data.android.version
     else
-      return versionAsNumber < data.version_ios
+      return versionAsNumber < data.ios.version
   }, [GetAppConfig()?.latest_version])
 
   const routeCoupleArr = useMemo(() => {
@@ -152,7 +152,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
         </View>
         {/* version */}
         <View onTouchEnd={OpenStore} style={style.versionContainerView}>
-          <Text style={{ color: theme.text, }}>Version: {versionText}</Text>
+          <Text style={{ color: theme.text, }}>Version: v{versionAsNumber}</Text>
           {
             !showUpdateBtn ? undefined :
               <View style={[style.versionBtnView, { backgroundColor: theme.primary, }]}>

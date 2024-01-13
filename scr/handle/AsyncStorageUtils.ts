@@ -69,10 +69,33 @@ export const GetDateAsync = async (key: string): Promise<Date | undefined> => {
     }
 }
 
+export const GetDateAsync_IsValueExistedAndIsToday = async (key: string): Promise<boolean> => {
+    const d = await GetDateAsync(key)
+
+    if (d === undefined)
+        return false
+
+    return IsToday(d)
+}
+
 export const SetDateAsync = async (key: string, value: number): Promise<void> => {
     await AsyncStorage.setItem(key, value.toString())
 }
 
 export const SetDateAsync_Now = async (key: string): Promise<void> => {
     await SetDateAsync(key, Date.now())
+}
+
+const IsToday = (date: Date): boolean => {
+    return IsSameDateMonthYear(date, new Date())
+}
+
+const IsSameDateMonthYear = (a: Date, b: Date): boolean => {
+    if (a.getDate() === b.getDate() &&
+        a.getMonth() === b.getMonth() &&
+        a.getFullYear() === b.getFullYear()) {
+        return true
+    }
+    else
+        return false
 }

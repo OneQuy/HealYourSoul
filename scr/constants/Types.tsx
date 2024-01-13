@@ -18,18 +18,19 @@ export type FileList = {
     posts: PostMetadata[]
 }
 
+export type LatestVersionConfig = {
+    version: number,
+    force_update: boolean,
+    release_note: string,
+}
+
 export type AppConfig = {
     net_url: string,
     remote_files: object,
     force_dev: boolean,
     latest_version: {
-        version_android: number,
-        force_update_android: boolean,
-        release_note_android: string,
-
-        version_ios: number,
-        force_update_ios: boolean,
-        release_note_ios: string,
+        android: LatestVersionConfig,
+        ios: LatestVersionConfig,
     },
     notice?: {
         max_version: number,

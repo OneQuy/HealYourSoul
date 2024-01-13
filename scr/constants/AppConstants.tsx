@@ -197,6 +197,8 @@ export const LocalText = {
   you_are_offline: "You are offline",
   retry: "Retry",
   update: "Update",
+  update_title: "New version is available!",
+  update_content: "Please update the app to the latest version for the best experience.",
   learn_more: "Learn more",
   error: "Error",
   credit_to_author: 'Credit to the author.',
@@ -214,6 +216,7 @@ export const LocalText = {
   cool: 'Cool!',
   copied: 'Copied!',
   copy: 'Copy',
+  later: 'Later',
   share: 'Share',
   open_youtube: 'Open in Youtube',
   share_image: 'Share Image',
@@ -291,4 +294,5 @@ export const StorageKey_LastTimeCheckShowWarningAlert = 'lasttime_warning_alert'
 export const StorageKey_LastTimeCheckFirstOpenAppOfTheDay = 'lasttime_check_first_open_app_day'
 export const StorageKey_FirstTimeInstallTick = 'first_time_install'
 export const StorageKey_LastInstalledVersion = 'last_version'
+export const StorageKey_LastAskForUpdateApp = 'ask_for_update_app'
 export const StorageKey_ForceDev = 'force_dev'

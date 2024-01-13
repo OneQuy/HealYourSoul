@@ -1,5 +1,6 @@
-general code for screens:
+alert priority:
 
-// save last visit category screen
+1. await HandleStartupAlertAsync()
+2. update app
 
-useFocusEffect(useCallback(() => SaveCurrentScreenForLoadNextTime(navigation), []))
+=========================
