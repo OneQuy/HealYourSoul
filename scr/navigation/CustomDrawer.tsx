@@ -8,7 +8,7 @@ import { useCallback, useContext, useMemo, useRef } from "react";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/Store";
 import { ThemeContext, ThemeType, themes } from "../constants/Colors";
 import { DrawerContentComponentProps, } from '@react-navigation/drawer';
-import { Image, ImageBackground, Linking, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Image, ImageBackground, Linking, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { setTheme } from "../redux/MiscSlice";
 import DrawerCoupleItem from "./DrawerCoupleItem";
 import { BorderRadius, FontSize, FontWeight, Icon, LocalText, Outline, ScreenName, Size, StorageKey_ForceDev } from "../constants/AppConstants";
@@ -18,11 +18,12 @@ import { logoScr } from '../screens/others/SplashScreen';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { OpenStore, versionAsNumber, versionText } from '../handle/AppUtils';
 import { GetAppConfig } from '../handle/AppConfigHandler';
-import { FilterOnlyLetterAndNumberFromString, RegexUrl } from '../handle/UtilsTS';
+import { FilterOnlyLetterAndNumberFromString, RegexUrl, ToCanPrint } from '../handle/UtilsTS';
 import { track_PressDrawerItem } from '../handle/tracking/GoodayTracking';
 import { SetBooleanAsync } from '../handle/AsyncStorageUtils';
 import { toast } from '@baronha/ting';
 import { IsDev } from '../handle/tracking/Tracking';
+import { CheckAndShowInAppReviewAsync } from '../handle/InAppReview';
 
 const primiumBG = require('../../assets/images/btn_bg_1.jpeg')
 
@@ -94,6 +95,19 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
     return arr
   }, [])
 
+  const onPressRateMe = useCallback(async () => {
+    const res = await CheckAndShowInAppReviewAsync()
+
+    if (res === true) // success
+      return
+
+    // fail
+
+    Alert.alert(
+      'Something wrong',
+      'The app cant open the review popup for now. Thank you for considering to rate us!\n\n' + ToCanPrint(res))
+  }, [])
+
   const onPressLogo = useCallback(() => {
     pressLogoCountRef.current++
 
@@ -147,7 +161,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
             <MaterialIcons name={Icon.Setting} color={theme.counterPrimary} size={Size.IconTiny} />
             <Text style={[{ color: theme.text }, style.settingBtnText]}>{LocalText.setting}</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[style.settingBtnView, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]}>
+          <TouchableOpacity onPress={onPressRateMe} style={[style.settingBtnView, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]}>
             <MaterialIcons name={Icon.Star} color={theme.counterPrimary} size={Size.IconTiny} />
             <Text style={[{ color: theme.text }, style.settingBtnText]}>{LocalText.rate_me}</Text>
           </TouchableOpacity>

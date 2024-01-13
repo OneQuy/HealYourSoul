@@ -8,7 +8,7 @@ import InAppReview from 'react-native-in-app-review';
  * @returns false if service is not available or not launched native UI unsuccessfully
  * @returns error if something else error
  */
-const CheckAndShowInAppReviewAsync = async (): Promise<any> => {
+export const CheckAndShowInAppReviewAsync = async (): Promise<any> => {
     try {
         if (InAppReview.isAvailable())
             return false
