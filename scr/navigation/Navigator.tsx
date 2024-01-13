@@ -23,6 +23,8 @@ import FunWebsitesScreen from '../screens/fun_websites/FunWebsites';
 import TopMovieScreen from '../screens/top_movies/TopMovie';
 import BestShortFilmsScreen from '../screens/best_short_films/BestShortFilmsScreen';
 import { OnUseEffectOnceEnterApp } from '../handle/AppUtils';
+import { InitAppStateMan } from '../handle/AppStateMan';
+import { RegisterGoodayAppState } from '../handle/GoodayAppState';
 
 export type DrawerParamList = {
   [ScreenName.Meme]: undefined,
@@ -86,7 +88,20 @@ const ScreenList: ScreenNamePair[] = [
 const Navigator = ({ initialRouteName }: MainNavigatorProps) => {
   let screenList = ScreenList
 
-  useEffect(OnUseEffectOnceEnterApp, [])
+  useEffect(() => {
+    // init app state
+
+    InitAppStateMan()
+    RegisterGoodayAppState(true)
+
+    // once enter app
+
+    OnUseEffectOnceEnterApp()
+
+    return () => {
+      RegisterGoodayAppState(false)
+    }
+  }, [])
 
   return (
     <NavigationContainer>

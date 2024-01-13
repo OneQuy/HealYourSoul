@@ -11,8 +11,6 @@ import SplashScreen from './screens/others/SplashScreen'
 import { GetColors, ThemeContext } from './constants/Colors'
 import { Cheat } from './handle/Cheat'
 import { clearAllUserData } from './redux/UserDataSlice'
-import { InitAppStateMan } from './handle/AppStateMan'
-import { RegisterGoodayAppState } from './handle/GoodayAppState'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const App = () => {
@@ -34,11 +32,6 @@ const AppRender = () => {
   // init once
 
   useEffect(() => {
-    // init app state
-
-    InitAppStateMan()
-    RegisterGoodayAppState(true)
-
     // check clear user data
 
     if (Cheat('ClearAllUserData')) {
@@ -46,10 +39,6 @@ const AppRender = () => {
       AsyncStorage.clear()
       
       console.log('ClearAllUserData');
-    }
-
-    return () => {
-      RegisterGoodayAppState(false)
     }
   }, []);
 
