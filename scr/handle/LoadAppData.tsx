@@ -49,11 +49,11 @@ export async function LoadAppData(theme: ThemeColor): Promise<LoadAppDataResult>
     
     // handle alert (must after app config)
 
-    await HandleStartupAlertAsync()
+    await HandleStartupAlertAsync() // alert_priority 1 (doc)
     
     // handle alert update
 
-    await HandldAlertUpdateAppAsync()
+    await HandldAlertUpdateAppAsync() // alert_priority 2 (doc)
 
     // handle: versions file
 

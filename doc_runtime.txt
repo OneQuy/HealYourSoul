@@ -1,6 +1,6 @@
 alert priority:
 
-1. await HandleStartupAlertAsync()
-2. update app
+1. await HandleStartupAlertAsync() // alert_priority 1
+2. update app // alert_priority 2
 
 =========================

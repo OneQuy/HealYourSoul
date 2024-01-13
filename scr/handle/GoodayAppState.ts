@@ -5,7 +5,7 @@ import { HandleStartupAlertAsync } from "./StartupAlert"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { StorageKey_LastTimeCheckShowWarningAlert } from "../constants/AppConstants"
 import { IsToday } from "./UtilsTS"
-import { OnFirstOpenAppOfTheDayAsync } from "./AppUtils"
+import { CheckAndTriggerFirstOpenAppOfTheDayAsync } from "./AppUtils"
 import { track_AppStateActive } from "./tracking/GoodayTracking"
 
 const checkAndShowWaringAlertAsync = async () => {
@@ -38,7 +38,7 @@ const onActiveAsync = async () => {
 
     // first Open App Of The Day
 
-    OnFirstOpenAppOfTheDayAsync()
+    CheckAndTriggerFirstOpenAppOfTheDayAsync()
 
     // track app state active
 

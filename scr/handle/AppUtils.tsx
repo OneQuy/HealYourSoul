@@ -458,7 +458,7 @@ export const SaveCurrentScreenForLoadNextTime = (navigation: NavigationProp<Reac
 /**
  * on freshly open app or first active of the day
  */
-export const OnFirstOpenAppOfTheDayAsync = async () => {
+export const CheckAndTriggerFirstOpenAppOfTheDayAsync = async () => {
     const lastDateTrack = await GetDateAsync(StorageKey_LastTimeCheckFirstOpenAppOfTheDay)
 
     if (lastDateTrack !== undefined && IsToday(lastDateTrack))
@@ -478,5 +478,5 @@ export const OnFirstOpenAppOfTheDayAsync = async () => {
  */
 export const OnUseEffectOnceEnterApp = () => {
     track_OnUseEffectOnceEnterAppAsync(startFreshlyOpenAppTick)
-    OnFirstOpenAppOfTheDayAsync()
+    CheckAndTriggerFirstOpenAppOfTheDayAsync()
 }
