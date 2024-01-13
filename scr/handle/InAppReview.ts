@@ -5,7 +5,7 @@
 import InAppReview from 'react-native-in-app-review';
 
 /**
- * @returns true if launched native UI success or launched successfully before
+ * @returns true: on iOS if launched native UI success. on Android if launched native UI success or launched successfully before
  * @returns false if not launched native UI unsuccessfully
  * @returns error if service is not available or other error
  */

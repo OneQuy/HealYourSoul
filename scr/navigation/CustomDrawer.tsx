@@ -6,21 +6,20 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import { useCallback, useContext, useMemo, useRef } from "react";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/Store";
-import { ThemeContext, ThemeType, themes } from "../constants/Colors";
+import { ThemeContext, themes } from "../constants/Colors";
 import { DrawerContentComponentProps, } from '@react-navigation/drawer';
 import { Alert, Image, ImageBackground, Linking, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { setTheme } from "../redux/MiscSlice";
 import DrawerCoupleItem from "./DrawerCoupleItem";
-import { BorderRadius, FontSize, FontWeight, Icon, LocalText, Outline, ScreenName, Size, StorageKey_ForceDev } from "../constants/AppConstants";
+import { BorderRadius, FontSize, FontWeight, Icon, LocalText, Outline, ScreenName, Size, StorageKey_ForceDev, StorageKey_Rated } from "../constants/AppConstants";
 import { CommonStyles } from "../constants/CommonConstants";
 import useDrawerMenuItemUtils from '../hooks/useDrawerMenuItemUtils';
 import { logoScr } from '../screens/others/SplashScreen';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { OpenStore, versionAsNumber, versionText } from '../handle/AppUtils';
+import { OpenStore, versionAsNumber } from '../handle/AppUtils';
 import { GetAppConfig } from '../handle/AppConfigHandler';
 import { FilterOnlyLetterAndNumberFromString, RegexUrl, ToCanPrint } from '../handle/UtilsTS';
-import { track_PressDrawerItem } from '../handle/tracking/GoodayTracking';
-import { SetBooleanAsync } from '../handle/AsyncStorageUtils';
+import { track_PressDrawerItem, track_SimpleWithParam } from '../handle/tracking/GoodayTracking';
+import { GetBooleanAsync, SetBooleanAsync } from '../handle/AsyncStorageUtils';
 import { toast } from '@baronha/ting';
 import { IsDev } from '../handle/tracking/Tracking';
 import { CheckAndShowInAppReviewAsync } from '../handle/InAppReview';
@@ -28,10 +27,7 @@ import { CheckAndShowInAppReviewAsync } from '../handle/InAppReview';
 const primiumBG = require('../../assets/images/btn_bg_1.jpeg')
 
 export function CustomDrawerContent(props: DrawerContentComponentProps) {
-  const themeValues = useRef(Object.keys(themes));
   const pressLogoCountRef = useRef(0)
-  const dispatch = useAppDispatch();
-  const currentTheme = useAppSelector((state: RootState) => state.misc.themeType);
   const [_, onPressPremium] = useDrawerMenuItemUtils(ScreenName.IAPPage, props)
   const safeAreaInsets = useSafeAreaInsets()
   const theme = useContext(ThemeContext);
@@ -98,16 +94,26 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
   const onPressRateMe = useCallback(async () => {
     const res = await CheckAndShowInAppReviewAsync()
 
+    track_SimpleWithParam('rated', res === true ? 'true' : 'false')
+
+    console.log('rated result: ' + ToCanPrint(res));
+
     if (res === true) // success
-      return
+    {
+      if (Platform.OS === 'ios')
+        return
+
+      const ratedBefore = await GetBooleanAsync(StorageKey_Rated)
+
+      if (!ratedBefore) {
+        SetBooleanAsync(StorageKey_Rated, true)
+        return
+      }
+    }
 
     // fail
 
-    // OpenStore()
-
-    Alert.alert(
-      'Something wrong',
-      'The app cant open the review popup for now. Thank you for considering to rate us!\n\n' + ToCanPrint(res))
+    OpenStore()
   }, [])
 
   const onPressLogo = useCallback(() => {
@@ -204,6 +210,10 @@ const style = StyleSheet.create({
   settingContainer: { flexDirection: 'row', gap: Outline.GapHorizontal, marginRight: Outline.Horizontal },
 })
 
+// const themeValues = useRef(Object.keys(themes));
+//   const pressLogoCountRef = useRef(0)
+//   const dispatch = useAppDispatch();
+//   const currentTheme = useAppSelector((state: RootState) => state.misc.themeType);
 
 //  {/* theme setting */}
 //  <View style={{ flexDirection: 'row', gap: 20 }}>
