@@ -2,23 +2,27 @@ import { AppStateStatus } from "react-native"
 import { RegisterOnChangedState, UnregisterOnChangedState } from "./AppStateMan"
 import { HandleAppConfigAsync } from "./AppConfigHandler"
 import { HandleStartupAlertAsync } from "./StartupAlert"
-import AsyncStorage from "@react-native-async-storage/async-storage"
-import { StorageKey_LastTimeCheckShowWarningAlert } from "../constants/AppConstants"
-import { IsToday } from "./UtilsTS"
 import { CheckAndTriggerFirstOpenAppOfTheDayAsync } from "./AppUtils"
 import { track_AppStateActive } from "./tracking/GoodayTracking"
+import { StorageKey_LastTimeCheckAndReloadAppConfig } from "../constants/AppConstants"
+import { GetDateAsync_IsValueExistedAndIsToday, SetDateAsync_Now } from "./AsyncStorageUtils"
+import { NetLord } from "./NetLord"
+import { HandldAlertUpdateAppAsync } from "./HandleAlertUpdateApp"
 
-const checkAndShowWaringAlertAsync = async () => {
-    const lastTimeCheckS = await AsyncStorage.getItem(StorageKey_LastTimeCheckShowWarningAlert)
+/** only reload if app re-active after a period 1 day */
+const checkAndReloadAppConfigAsync = async () => {
+    if (await GetDateAsync_IsValueExistedAndIsToday(StorageKey_LastTimeCheckAndReloadAppConfig))
+    {
+        console.log('[checkAndReloadAppConfigAsync] no check cuz checked today');
+        return
+    }
 
-    if (lastTimeCheckS && typeof lastTimeCheckS === 'string') {
-        const tick = Number.parseInt(lastTimeCheckS)
-        const date = new Date(tick)
+    // need to reload!
 
-        if (IsToday(date)) {
-            // console.log('same day no check');
-            return
-        }
+    if (!NetLord.IsAvailableLastestCheck())
+    {
+        console.log('[checkAndReloadAppConfigAsync] no check cuz no network');
+        return
     }
 
     const success = await HandleAppConfigAsync()
@@ -26,15 +30,25 @@ const checkAndShowWaringAlertAsync = async () => {
     if (!success)
         return
 
-    AsyncStorage.setItem(StorageKey_LastTimeCheckShowWarningAlert, Date.now().toString())
+    SetDateAsync_Now(StorageKey_LastTimeCheckAndReloadAppConfig)
+    
+    await onAppConfigReloadedAsync()
+}
 
-    HandleStartupAlertAsync()
+const onAppConfigReloadedAsync = async () => {
+    // startup alert
+
+    await HandleStartupAlertAsync() // alert_priority 1 (doc)
+    
+    // handle alert update
+
+    await HandldAlertUpdateAppAsync() // alert_priority 2 (doc)
 }
 
 const onActiveAsync = async () => {
     // check to show warning alert
 
-    checkAndShowWaringAlertAsync()
+    checkAndReloadAppConfigAsync()
 
     // first Open App Of The Day
 
