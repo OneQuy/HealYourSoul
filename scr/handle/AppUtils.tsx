@@ -468,7 +468,7 @@ export const CheckAndTriggerFirstOpenAppOfTheDayAsync = async () => {
 
     // handles
 
-    console.log('---- first open app ------');
+    console.log('---- handle first open app of the day ------');
     
     track_FirstOpenOfTheDayAsync()
 }
