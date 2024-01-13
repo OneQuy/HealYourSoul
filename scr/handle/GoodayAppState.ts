@@ -31,7 +31,7 @@ const checkAndShowWaringAlertAsync = async () => {
     HandleStartupAlertAsync()
 }
 
-const onAppActiveAsync = async () => {
+const onActiveAsync = async () => {
     // check to show warning alert
 
     checkAndShowWaringAlertAsync()
@@ -47,7 +47,7 @@ const onAppActiveAsync = async () => {
 
 const onStateChanged = (state: AppStateStatus) => {
     if (state === 'active') {
-        onAppActiveAsync()
+        onActiveAsync()
     }
 }
 
