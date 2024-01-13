@@ -4,7 +4,7 @@ import { LocalText, StorageKey_LastAskForUpdateApp } from "../constants/AppConst
 import { Alert, AlertButton, Platform } from "react-native"
 import { GetDateAsync_IsValueExistedAndIsToday, SetDateAsync_Now } from "./AsyncStorageUtils"
 
-const isLog = true
+const isLog = false
 
 export const HandldAlertUpdateAppAsync = async () => {
     const config = GetAppConfig()
