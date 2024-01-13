@@ -86,10 +86,15 @@ export const HandleStartupAlertAsync = async () => {
         }
 
         if (arrBtn.length < 2 && data.allow_enter_app) {
-            arrBtn.push({
-                text: 'OK',
+            const subBtn = {
+                text: data.ok_title && data.ok_title.length > 0 ? data.ok_title : 'Later',
                 onPress: () => resolve(true)
-            })
+            }
+
+            if (hasUpdateBtn)
+                arrBtn.unshift(subBtn)
+            else
+                arrBtn.push(subBtn)
         }
 
         Alert.alert(

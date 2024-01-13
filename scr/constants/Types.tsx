@@ -48,6 +48,7 @@ export type AppConfig = {
         button_link: string,
         button_link_title: string,
         show_update_button: boolean,
+        ok_title: string,
     }
 }
 
