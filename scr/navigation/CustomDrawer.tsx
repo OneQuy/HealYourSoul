@@ -103,9 +103,11 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
 
     // fail
 
-    Alert.alert(
-      'Something wrong',
-      'The app cant open the review popup for now. Thank you for considering to rate us!\n\n' + ToCanPrint(res))
+    OpenStore()
+
+    // Alert.alert(
+    //   'Something wrong',
+    //   'The app cant open the review popup for now. Thank you for considering to rate us!\n\n' + ToCanPrint(res))
   }, [])
 
   const onPressLogo = useCallback(() => {
@@ -141,7 +143,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
       {/* logo & app name */}
       <View onTouchEnd={IsDev() ? onPressLogo : undefined} style={[style.topMasterView, CommonStyles.justifyContentCenter_AlignItemsCenter, { marginTop: safeAreaInsets.top }]}>
         <Image source={logoScr} resizeMode='contain' style={[style.logoImg]} />
-        <Text style={[style.appNameText, { color: theme.text }]}>Gooday</Text>
+        <Text style={[style.appNameText, { color: theme.text }]}>Gooday{IsDev() ? '.' : ''}</Text>
       </View>
       {
         renderCategoryButtons()
