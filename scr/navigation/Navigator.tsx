@@ -104,7 +104,7 @@ const Navigator = ({ initialRouteName }: MainNavigatorProps) => {
   return (
     <NavigationContainer>
       <Drawer.Navigator
-        initialRouteName={!initialRouteName ? ScreenName.Comic : initialRouteName}
+        initialRouteName={!initialRouteName ? ScreenName.Meme : initialRouteName}
         drawerContent={(props) => <CustomDrawerContent {...props} />}
       >
         {

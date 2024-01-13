@@ -3,7 +3,7 @@ import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-nat
 // screen names
 
 export enum ScreenName {
-  Comic = 'Warm',
+  Comic = 'Warm', // draw
   Meme = 'Meme',
   RedditMeme = 'Reddit Meme',
   Quote = 'Motivation',
