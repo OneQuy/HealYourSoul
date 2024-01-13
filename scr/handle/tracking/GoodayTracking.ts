@@ -33,6 +33,8 @@ export const track_FirstOpenOfTheDayAsync = async () => {
                 `total/${event}`,
                 `events/${event}/#d`,
             ])
+
+        track_SimpleWithParam('versions', 'v' + versionAsNumber)
     }
 }
 
@@ -76,6 +78,8 @@ export const track_OnUseEffectOnceEnterAppAsync = async (startFreshlyOpenAppTick
                 `total/${event}`,
                 `events/${event}/#d`,
             ])
+
+        track_SimpleWithParam('versions', 'v' + versionAsNumber)
     }
 }
 
