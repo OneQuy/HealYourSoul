@@ -103,11 +103,11 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
 
     // fail
 
-    OpenStore()
+    // OpenStore()
 
-    // Alert.alert(
-    //   'Something wrong',
-    //   'The app cant open the review popup for now. Thank you for considering to rate us!\n\n' + ToCanPrint(res))
+    Alert.alert(
+      'Something wrong',
+      'The app cant open the review popup for now. Thank you for considering to rate us!\n\n' + ToCanPrint(res))
   }, [])
 
   const onPressLogo = useCallback(() => {

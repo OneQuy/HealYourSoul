@@ -5,13 +5,13 @@ import InAppReview from 'react-native-in-app-review';
 
 /**
  * @returns true if launched native UI success
- * @returns false if service is not available or not launched native UI unsuccessfully
- * @returns error if something else error
+ * @returns false if not launched native UI unsuccessfully
+ * @returns error if service is not available or other error
  */
 export const CheckAndShowInAppReviewAsync = async (): Promise<any> => {
     try {
-        if (InAppReview.isAvailable())
-            return false
+        if (!InAppReview.isAvailable())
+            return new Error('InAppReview not available on this device.')
 
         const hasFlowFinishedSuccessfully = await InAppReview.RequestInAppReview()
 
