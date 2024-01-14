@@ -26,6 +26,7 @@ import { ShareOptions } from 'react-native-share';
 import { ToCanPrint } from '../../handle/UtilsTS';
 import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading';
 import { track_PressRandom, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
+import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 
 const category = Category.Wikipedia
 
@@ -193,6 +194,14 @@ const WikipediaScreen = () => {
         })
     }, [currentTitle, currentContent, currentLink, theme])
 
+    const onSwiped = useCallback((result: SwipeResult) => {
+        if (result.primaryDirectionIsHorizontalOrVertical && !result.primaryDirectionIsPositive) {
+            onPressRandom(false)
+        }
+    }, [])
+
+    const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(undefined, undefined, onSwiped)
+
     // on init once (for load first post)
 
     useEffect(() => {
@@ -236,9 +245,8 @@ const WikipediaScreen = () => {
                                             <Text style={{ fontSize: FontSize.Small_L, color: theme.counterPrimary }}>{LocalText.tap_to_retry}</Text>
                                         </TouchableOpacity>
                                         :
-                                        <View style={styleSheet.contentView}>
+                                        <View onTouchStart={onBigViewStartTouch} onTouchEnd={onBigViewEndTouch} style={styleSheet.contentView}>
                                             <View style={CommonStyles.justifyContentCenter_AlignItemsCenter}>
-                                                {/* <Image resizeMode='contain' source={{ uri: currentThumbUri }} style={styleSheet.image} /> */}
                                                 <ImageBackgroundWithLoading resizeMode='contain' source={{ uri: currentThumbUri }} style={styleSheet.image} indicatorProps={{ color: theme.text }} />
                                             </View>
                                             <TouchableOpacity onPress={onPressLink} style={styleSheet.titleTO}>
