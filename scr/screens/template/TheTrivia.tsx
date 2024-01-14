@@ -18,6 +18,7 @@ import { ToastOptions, toast } from '@baronha/ting';
 import { PickRandomElement } from '../../handle/Utils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { track_PressRandom, track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
+import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 
 interface TheTriviaProps {
     category: Category,
@@ -125,6 +126,14 @@ const TheTrivia = ({
         track_SimpleWithParam('trivia_correct', isCorrect.toString())
     }, [trivia, userChosenAnswer, theme])
 
+    const onSwiped = useCallback((result: SwipeResult) => {
+        if (result.primaryDirectionIsHorizontalOrVertical && !result.primaryDirectionIsPositive) {
+            onPressRandom(false)
+        }
+    }, [])
+
+    const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(undefined, undefined, onSwiped)
+
     // on init once (for load first post)
 
     useEffect(() => {
@@ -194,8 +203,10 @@ const TheTrivia = ({
                                         <Text style={{ fontSize: FontSize.Small_L, color: theme.counterPrimary }}>{LocalText.tap_to_retry}</Text>
                                     </TouchableOpacity>
                                     :
-                                    <View style={{ gap: Outline.GapVertical }}>
-                                        <TouchableOpacity onPress={() => onPressRandom(true)}>
+                                    <View onTouchStart={onBigViewStartTouch} onTouchEnd={onBigViewEndTouch} style={{ gap: Outline.GapVertical }}>
+                                        <TouchableOpacity
+                                        // onPress={() => onPressRandom(true)}
+                                        >
                                             <Text selectable style={{ color: theme.text, fontSize: FontSize.Big, marginBottom: Outline.Horizontal }}>{trivia?.question}</Text>
                                         </TouchableOpacity>
                                         {
