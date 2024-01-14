@@ -4,6 +4,14 @@ import { GestureResponderEvent } from "react-native";
 const maxLimitMsForOneTap = 300
 const touchDistanceThreshold = 5;
 
+/**
+    * USAGE:
+    * ```js
+    * const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(onTapCounted, onLongPressed)
+    * 
+    * <View onTouchStart={onBigViewStartTouch} onTouchEnd={onBigViewEndTouch} />
+    * ```
+ */
 export const useSimpleGesture = (
     onTapCounted?: (count: number) => void,
     onLongPressed?: () => void,

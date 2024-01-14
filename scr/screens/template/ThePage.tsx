@@ -576,8 +576,7 @@ const ThePage = ({ category }: ThePageProps) => {
     }, [onPressNextPost]);
 
     const onLongPressed = useCallback(() => {
-        console.log('long presee');
-        
+        console.log('long pressed');
     }, [])
 
     const onTapCounted = useCallback((count: number) => {
