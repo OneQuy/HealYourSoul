@@ -204,6 +204,7 @@ export const LocalText = {
   update_title: "New version is available!",
   update_content: "Please update the app to the latest version for the best experience.",
   learn_more: "Learn more",
+  enable_all: "Enable all",
   error: "Error",
   credit_to_author: 'Credit to the author.',
   credit_to: 'Credit to',

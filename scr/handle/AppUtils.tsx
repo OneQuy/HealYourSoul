@@ -1,5 +1,5 @@
 import { Alert, Linking, Platform } from "react-native";
-import { Category, FirebaseDBPath, FirebasePath, LocalPath, LocalText, NeedReloadReason, ScreenName, StorageKey_LastTimeCheckFirstOpenAppOfTheDay } from "../constants/AppConstants";
+import { Category, FirebaseDBPath, FirebasePath, Icon, LocalPath, LocalText, NeedReloadReason, ScreenName, StorageKey_LastTimeCheckFirstOpenAppOfTheDay } from "../constants/AppConstants";
 import { ThemeColor } from "../constants/Colors";
 import { FileList, MediaType, PostMetadata } from "../constants/Types";
 import { FirebaseStorage_DownloadAndReadJsonAsync } from "../firebase/FirebaseStorage";
@@ -447,6 +447,53 @@ export const AlertNoInternet = () => {
         LocalText.popup_title_need_internet,
         LocalText.popup_content_need_internet,
     );
+}
+
+export const GetIconOfScreen = (screen: ScreenName) => {
+    if (screen === ScreenName.Meme)
+        return 'emoticon-poop'
+    else if (screen === ScreenName.Comic)
+        return 'fire'
+    else if (screen === ScreenName.CatDog)
+        return 'dog-side'
+    else if (screen === ScreenName.NSFW)
+        return 'emoticon-devil'
+    else if (screen === ScreenName.Quote)
+        return 'human-handsup'
+    else if (screen === ScreenName.Satisfying)
+        return 'head-heart'
+    else if (screen === ScreenName.Love)
+        return 'cards-heart'
+    else if (screen === ScreenName.Sarcasm)
+        return 'duck'
+    else if (screen === ScreenName.Cute)
+        return 'assistant'
+    else if (screen === ScreenName.Art)
+        return 'palette'
+    else if (screen === ScreenName.Trivia)
+        return 'message-question'
+    else if (screen === ScreenName.ShortFact)
+        return 'newspaper-variant'
+    else if (screen === ScreenName.Joke)
+        return 'dolphin'
+    else if (screen === ScreenName.Picture)
+        return 'file-image'
+    else if (screen === ScreenName.QuoteText)
+        return 'format-quote-open'
+    else if (screen === ScreenName.AwardPicture)
+        return 'crown'
+    else if (screen === ScreenName.WikiFact)
+        return 'book-open-variant'
+    else if (screen === ScreenName.FunWebsite)
+        return 'web'
+    else if (screen === ScreenName.TopMovie)
+        return 'movie-open'
+    else if (screen === ScreenName.BestShortFilms)
+        return 'video-vintage'
+    else if (screen === ScreenName.RandomMeme)
+        return 'emoticon-lol'
+    else
+        return Icon.HeartBroken
 }
 
 export const IsContentScreen = (screen: ScreenName) => {

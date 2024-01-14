@@ -11,6 +11,7 @@ import { ThemeContext } from '../constants/Colors'
 import useDrawerMenuItemUtils from '../hooks/useDrawerMenuItemUtils'
 import { track_PressDrawerItem } from '../handle/tracking/GoodayTracking'
 import { FilterOnlyLetterAndNumberFromString } from '../handle/UtilsTS'
+import { GetIconOfScreen } from '../handle/AppUtils'
 
 type Props = {
     route: DrawerContentComponentProps['state']['routes'][number],
@@ -24,52 +25,7 @@ const DrawerSingleItem = ({
     const theme = useContext(ThemeContext);
     const [isFocused, onPress] = useDrawerMenuItemUtils(route.name, masterProps)
 
-    const icon = useMemo(() => {
-        if (route.name === ScreenName.Meme)
-            return 'emoticon-poop'
-        else if (route.name === ScreenName.Comic)
-            return 'fire'
-        else if (route.name === ScreenName.CatDog)
-            return 'dog-side'
-        else if (route.name === ScreenName.NSFW)
-            return 'emoticon-devil'
-        else if (route.name === ScreenName.Quote)
-            return 'human-handsup'
-        else if (route.name === ScreenName.Satisfying)
-            return 'head-heart'
-        else if (route.name === ScreenName.Love)
-            return 'cards-heart'
-        else if (route.name === ScreenName.Sarcasm)
-            return 'duck'
-        else if (route.name === ScreenName.Cute)
-            return 'assistant'
-        else if (route.name === ScreenName.Art)
-            return 'palette'
-        else if (route.name === ScreenName.Trivia)
-            return 'message-question'
-        else if (route.name === ScreenName.ShortFact)
-            return 'newspaper-variant'
-        else if (route.name === ScreenName.Joke)
-            return 'dolphin'
-        else if (route.name === ScreenName.Picture)
-            return 'file-image'
-        else if (route.name === ScreenName.QuoteText)
-            return 'format-quote-open'
-        else if (route.name === ScreenName.AwardPicture)
-            return 'crown'
-        else if (route.name === ScreenName.WikiFact)
-            return 'book-open-variant'
-        else if (route.name === ScreenName.FunWebsite)
-            return 'web'
-        else if (route.name === ScreenName.TopMovie)
-            return 'movie-open'
-        else if (route.name === ScreenName.BestShortFilms)
-            return 'video-vintage'
-        else if (route.name === ScreenName.RandomMeme)
-            return 'emoticon-lol'
-        else
-            return Icon.HeartBroken
-    }, [])
+    const icon = useMemo(() => GetIconOfScreen(route.name as ScreenName), [])
 
     const onPressButton = useCallback(() => {
         track_PressDrawerItem(FilterOnlyLetterAndNumberFromString(route.name))
