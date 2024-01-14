@@ -580,7 +580,7 @@ const ThePage = ({ category }: ThePageProps) => {
             return
 
         onPressNextPost(!result.primaryDirectionIsPositive, true)
-    }, [])
+    }, [onPressNextPost])
 
     const onLongPressed = useCallback(() => {
         console.log('long pressed');

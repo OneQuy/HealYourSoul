@@ -24,6 +24,7 @@ import { ToastOptions, toast } from '@baronha/ting';
 import ImageAsMap from '../../handle/ImageAsMap';
 import { MainTrack } from '../../handle/tracking/Tracking';
 import { track_PressRandom, track_PressSaveMedia, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
+import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 
 interface TheRandomImageProps {
     category: Category,
@@ -130,6 +131,14 @@ const TheRandomImage = ({
             });
     }, [currentItem])
 
+    const onSwiped = useCallback((result: SwipeResult) => {
+        if (result.primaryDirectionIsHorizontalOrVertical && !result.primaryDirectionIsPositive) {
+            onPressRandom(false)
+        }
+    }, [])
+
+    const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(undefined, undefined, onSwiped)
+
     // on init once (for load first post)
 
     useEffect(() => {
@@ -178,7 +187,7 @@ const TheRandomImage = ({
                                             !currentItem?.title ? undefined :
                                                 <Text numberOfLines={3} style={[{ color: theme.text, }, styleSheet.titleText]}>{currentItem.title}</Text>
                                         }
-                                        <View style={styleSheet.imageTO}
+                                        <View onTouchStart={onBigViewStartTouch} onTouchEnd={onBigViewEndTouch} style={styleSheet.imageTO}
                                         // onTouchEnd={onPressRandom}
                                         >
                                             <ImageAsMap
