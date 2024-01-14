@@ -29,6 +29,7 @@ const primiumBG = require('../../assets/images/btn_bg_1.jpeg')
 export function CustomDrawerContent(props: DrawerContentComponentProps) {
   const pressLogoCountRef = useRef(0)
   const [_, onPressPremium] = useDrawerMenuItemUtils(ScreenName.IAPPage, props)
+  const [__, onPressSetting] = useDrawerMenuItemUtils(ScreenName.Setting, props)
   const safeAreaInsets = useSafeAreaInsets()
   const theme = useContext(ThemeContext);
 
@@ -75,7 +76,8 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
 
   const routeCoupleArr = useMemo(() => {
     const routes = props.state.routes.filter(r =>
-      r.name !== ScreenName.IAPPage)
+      r.name !== ScreenName.IAPPage && 
+      r.name !== ScreenName.Setting)
 
     const arr: (typeof routes[number])[][] = []
 
@@ -144,6 +146,11 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
     onPressPremium()
   }, [onPressPremium])
 
+  const onPressSettingButton = useCallback(() => {
+    track_PressDrawerItem(FilterOnlyLetterAndNumberFromString(ScreenName.Setting))
+    onPressSetting()
+  }, [onPressSetting])
+
   return (
     <View style={{ flex: 1 }}>
       {/* logo & app name */}
@@ -165,7 +172,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
 
         {/* setting & rating */}
         <View style={style.settingContainer}>
-          <TouchableOpacity style={[style.settingBtnView, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]}>
+          <TouchableOpacity onPress={onPressSettingButton} style={[style.settingBtnView, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]}>
             <MaterialIcons name={Icon.Setting} color={theme.counterPrimary} size={Size.IconTiny} />
             <Text style={[{ color: theme.text }, style.settingBtnText]}>{LocalText.setting}</Text>
           </TouchableOpacity>

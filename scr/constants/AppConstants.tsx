@@ -26,7 +26,7 @@ export enum ScreenName {
   TopMovie = 'Top 250 Movies',
   BestShortFilms = 'Best Short Films',
   RandomMeme = 'Random Meme',
-  // Reminder = 'Reminder', // i wasted so much time
+  Setting = 'Setting',
 }
 
 // dir / file

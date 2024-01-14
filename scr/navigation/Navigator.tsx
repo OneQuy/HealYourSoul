@@ -25,12 +25,12 @@ import BestShortFilmsScreen from '../screens/best_short_films/BestShortFilmsScre
 import { OnUseEffectOnceEnterApp } from '../handle/AppUtils';
 import { InitAppStateMan } from '../handle/AppStateMan';
 import { RegisterGoodayAppState } from '../handle/GoodayAppState';
+import SettingScreen from '../screens/setting/SettingScreen';
 
 export type DrawerParamList = {
   [ScreenName.Meme]: undefined,
   [ScreenName.RandomMeme]: undefined,
   [ScreenName.Comic]: undefined,
-  // [ScreenName.RedditMeme]: undefined,
   [ScreenName.Quote]: undefined,
   [ScreenName.CatDog]: undefined,
   [ScreenName.Love]: undefined,
@@ -50,6 +50,7 @@ export type DrawerParamList = {
   [ScreenName.TopMovie]: undefined,
   [ScreenName.BestShortFilms]: undefined,
   [ScreenName.IAPPage]: undefined,
+  [ScreenName.Setting]: undefined,
 }
 
 type MainNavigatorProps = {
@@ -83,6 +84,7 @@ const ScreenList: ScreenNamePair[] = [
   [ScreenName.TopMovie, TopMovieScreen],
   [ScreenName.BestShortFilms, BestShortFilmsScreen],
   [ScreenName.IAPPage, IAPPage],
+  [ScreenName.Setting, SettingScreen],
 ]
 
 const Navigator = ({ initialRouteName }: MainNavigatorProps) => {
