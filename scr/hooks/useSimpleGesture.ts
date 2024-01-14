@@ -7,13 +7,15 @@ const touchDistanceThreshold = 5;
 /**
     * USAGE:
     * ```js
+    * const onTapCounted = useCallback((count: number, lastTapEvent: GestureResponderEvent['nativeEvent']) => {}, [])
+    *
     * const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(onTapCounted, onLongPressed)
     * 
     * <View onTouchStart={onBigViewStartTouch} onTouchEnd={onBigViewEndTouch} />
     * ```
  */
 export const useSimpleGesture = (
-    onTapCounted?: (count: number) => void,
+    onTapCounted?: (count: number, lastTapNativeEvent: GestureResponderEvent['nativeEvent']) => void,
     onLongPressed?: () => void,
 ): [
         (e: GestureResponderEvent) => void,
@@ -28,14 +30,14 @@ export const useSimpleGesture = (
         startTouchNativeEventRef.current = e.nativeEvent;
     }, []);
 
-    const triggerTapCounted = useCallback(() => {
+    const triggerTapCounted = useCallback((e: GestureResponderEvent['nativeEvent']) => {
         if (typeof onTapCounted !== 'function')
             return
 
-        onTapCounted(tapCountRef.current)
+        onTapCounted(tapCountRef.current, e)
     }, [])
 
-    const handleCountTap = useCallback(() => {
+    const handleCountTap = useCallback((e: GestureResponderEvent['nativeEvent']) => {
         const now = Date.now()
         const howLongFromLastTap = now - lastTapTickRef.current
         lastTapTickRef.current = now
@@ -50,12 +52,14 @@ export const useSimpleGesture = (
         if (tapTimeOutCallbackRef.current)
             clearTimeout(tapTimeOutCallbackRef.current)
 
-        tapTimeOutCallbackRef.current = setTimeout(triggerTapCounted, maxLimitMsForOneTap);
+        tapTimeOutCallbackRef.current = setTimeout(() => triggerTapCounted(e), maxLimitMsForOneTap);
     }, [triggerTapCounted])
 
     const onTouchEnd = useCallback((e: GestureResponderEvent) => {
-        if (!startTouchNativeEventRef.current)
-            return;
+        if (!startTouchNativeEventRef.current) { 
+            console.error('startTouchNativeEventRef.current is null')
+            return
+        }
 
         const distanceFromStart = Math.sqrt(
             Math.pow(e.nativeEvent.locationX - startTouchNativeEventRef.current.locationX, 2) +
@@ -68,7 +72,7 @@ export const useSimpleGesture = (
         const isTap = !isLongPressed && isTouchOrMove; // tap = quick touch
 
         if (isTap)
-            handleCountTap()
+            handleCountTap({...e.nativeEvent})
         else if (isLongPressed && typeof onLongPressed === 'function')
             onLongPressed()
     }, [handleCountTap, onLongPressed])

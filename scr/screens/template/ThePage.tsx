@@ -579,7 +579,7 @@ const ThePage = ({ category }: ThePageProps) => {
         console.log('long pressed');
     }, [])
 
-    const onTapCounted = useCallback((count: number) => {
+    const onTapCounted = useCallback((count: number, lastTapEvent: GestureResponderEvent['nativeEvent']) => {
         console.log('tapped', count);
 
         if (count === 1) {
@@ -592,25 +592,25 @@ const ThePage = ({ category }: ThePageProps) => {
 
             //     // handle touch effect for video
 
-            //     if (!videoRef.current || !isTouchOrMove || isLongPressed)
-            //     return;
+            if (!videoRef.current)
+                return
 
-            // videoTouchEffectTranslate.setValue({ x: e.nativeEvent.locationX - videoTouchEffectRadius / 2, y: e.nativeEvent.locationY - videoTouchEffectRadius / 2 })
+            videoTouchEffectTranslate.setValue({ x: lastTapEvent.locationX - videoTouchEffectRadius / 2, y: lastTapEvent.locationY - videoTouchEffectRadius / 2 })
 
-            // videoTouchEffectZoomAV.setValue(0);
+            videoTouchEffectZoomAV.setValue(0);
 
-            // Animated.timing(
-            //     videoTouchEffectZoomAV,
-            //     {
-            //         toValue: 1,
-            //         duration: 300,
-            //         useNativeDriver: false,
-            //     }).start(() => videoTouchEffectZoomAV.setValue(0));
+            Animated.timing(
+                videoTouchEffectZoomAV,
+                {
+                    toValue: 1,
+                    duration: 300,
+                    useNativeDriver: false,
+                }).start(() => videoTouchEffectZoomAV.setValue(0));
 
-            // onPressPlayVideo();
+            onPressPlayVideo();
         }
     }, [onPressPlayVideo, currentMediaIsImage, onPressNextPost])
-    
+
     const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(onTapCounted, onLongPressed)
 
     // init once 
