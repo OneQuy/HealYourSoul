@@ -32,7 +32,7 @@ import { CommonStyles } from '../../constants/CommonConstants';
 import Share from 'react-native-share';
 import useIsFavorited from '../../hooks/useIsFavorited';
 import { track_PressFavorite, track_PressNextPost, track_PressSaveMedia, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
-import { useSimpleGesture } from '../../hooks/useSimpleGesture';
+import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 
 const videoNumbSize = 10;
 const videoTouchEffectRadius = 100;
@@ -575,6 +575,13 @@ const ThePage = ({ category }: ThePageProps) => {
             ]);
     }, [onPressNextPost]);
 
+    const onSwiped = useCallback((result: SwipeResult) => {
+        if (!result.primaryDirectionIsHorizontalOrVertical)
+            return
+
+        onPressNextPost(!result.primaryDirectionIsPositive, true)
+    }, [])
+
     const onLongPressed = useCallback(() => {
         console.log('long pressed');
     }, [])
@@ -614,7 +621,7 @@ const ThePage = ({ category }: ThePageProps) => {
         }
     }, [onPressFavorite, onPressPlayVideo])
 
-    const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(onTapCounted, onLongPressed)
+    const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(onTapCounted, onLongPressed, onSwiped)
 
     // init once 
 
