@@ -10,6 +10,8 @@ import { widthPercentageToDP } from 'react-native-responsive-screen';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { enableAllScreen, toggleDisableScreen } from '../../redux/UserDataSlice';
 import { GetIconOfScreen, IsContentScreen } from '../../handle/AppUtils';
+import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
+import { FilterOnlyLetterAndNumberFromString } from '../../handle/UtilsTS';
 
 const RemoveScreenView = () => {
   const theme = useContext(ThemeContext)
@@ -34,10 +36,16 @@ const RemoveScreenView = () => {
     })
   }, [theme])
 
+  const onPressEnableAll = useCallback(() => {
+    track_SimpleWithParam('toggle_screen', 'enable_all')
+    dispatch(enableAllScreen())
+  }, [])
+
   const renderButton = useCallback(({ item }: { item: ScreenName }) => {
     const isVisible = !disableScreens || !disableScreens.includes(item)
 
     const onPress = () => {
+      track_SimpleWithParam('toggle_screen', (isVisible ? 'disable_' : 'enable_') + FilterOnlyLetterAndNumberFromString(item))
       dispatch(toggleDisableScreen(item))
     }
 
@@ -58,7 +66,7 @@ const RemoveScreenView = () => {
         renderItem={renderButton}
         contentContainerStyle={style.flatList}
       />
-      <TouchableOpacity onPress={() => dispatch(enableAllScreen())} style={[style.enableAllTO, ]}>
+      <TouchableOpacity onPress={onPressEnableAll} style={[style.enableAllTO,]}>
         <Text style={style.enableAllButtonText}>{LocalText.enable_all}</Text>
       </TouchableOpacity>
     </View>
