@@ -32,7 +32,7 @@ import { CommonStyles } from '../../constants/CommonConstants';
 import Share from 'react-native-share';
 import useIsFavorited from '../../hooks/useIsFavorited';
 import { track_PressFavorite, track_PressNextPost, track_PressSaveMedia, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
-import { useSimpleGesture } from '../../hooks/useSimpleTapAndSwipe';
+import { useSimpleGesture } from '../../hooks/useSimpleGesture';
 
 const videoNumbSize = 10;
 const videoTouchEffectRadius = 100;
