@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, Alert } from 'react-native'
+import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, Alert, GestureResponderEvent } from 'react-native'
 import React, { LegacyRef, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size, StorageKey_LocalFileVersion, StorageKey_SelectingTopMovieIdx } from '../../constants/AppConstants'
@@ -29,6 +29,7 @@ import useIsFavorited from '../../hooks/useIsFavorited';
 import ListMovie from './ListMovie';
 import { DownloadFileAsync, GetFLPFromRLP } from '../../handle/FileUtils';
 import { track_PressFavorite, track_PressNextPost, track_PressRandom, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
+import { useSimpleGesture } from '../../hooks/useSimpleGesture';
 
 const category = Category.TopMovie
 const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Ftop_movies.json?alt=media&token=4203c962-58bb-41c3-a1a0-ab3b1b3359f8'
@@ -203,6 +204,18 @@ const TopMovieScreen = () => {
         })
     }, [selectingItem, theme])
 
+    const onLongPressed = useCallback(() => {
+        console.log('long pressed');
+    }, [])
+
+    const onTapCounted = useCallback((count: number, _: GestureResponderEvent['nativeEvent']) => {
+        if (count === 2) {
+            onPressFavorite()
+        }
+    }, [onPressFavorite])
+
+    const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(onTapCounted, onLongPressed)
+
     // for load data first time
 
     useEffect(() => {
@@ -262,7 +275,7 @@ const TopMovieScreen = () => {
                                             <Text style={{ fontSize: FontSize.Small_L, color: theme.counterPrimary }}>{LocalText.tap_to_retry}</Text>
                                         </TouchableOpacity>
                                         :
-                                        <View style={styleSheet.contentView}>
+                                        <View onTouchStart={onBigViewStartTouch} onTouchEnd={onBigViewEndTouch} style={styleSheet.contentView}>
                                             <View onTouchEnd={() => setIsShowList(true)} style={[styleSheet.titleContainerView, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
                                                 <Text style={[{ color: theme.text, }, styleSheet.titleText]}>{selectingItem?.title}</Text>
                                                 <View style={styleSheet.showListIconView}>
