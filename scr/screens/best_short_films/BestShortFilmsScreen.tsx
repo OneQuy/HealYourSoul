@@ -1,4 +1,4 @@
-import { Share as RNShare, View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, ShareContent, Alert, Linking } from 'react-native'
+import { Share as RNShare, View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, ShareContent, Alert, Linking, GestureResponderEvent } from 'react-native'
 import React, { LegacyRef, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size, StorageKey_AwardPictureLastSeenIdxOfYear, StorageKey_LocalFileVersion, StorageKey_SelectingShortFilmIdx } from '../../constants/AppConstants'
@@ -32,6 +32,7 @@ import ListMovie from './SelectShortFilms';
 import { DownloadFileAsync, GetFLPFromRLP } from '../../handle/FileUtils';
 import WebView from 'react-native-webview';
 import { track_PressFavorite, track_PressNextPost, track_PressRandom, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
+import { useSimpleGesture } from '../../hooks/useSimpleGesture';
 
 const category = Category.BestShortFilms
 const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Fshort_films.json?alt=media&token=537eec8b-f774-4908-a5fa-45f8daf676d8'
@@ -238,6 +239,18 @@ const BestShortFilmsScreen = () => {
         })
     }, [selectingItem, theme])
 
+    const onLongPressed = useCallback(() => {
+        console.log('long pressed');
+    }, [])
+
+    const onTapCounted = useCallback((count: number, _: GestureResponderEvent['nativeEvent']) => {
+        if (count === 2) {
+            onPressFavorite()
+        }
+    }, [onPressFavorite])
+
+    const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(onTapCounted, onLongPressed)
+
     // for load data first time
 
     useEffect(() => {
@@ -297,7 +310,7 @@ const BestShortFilmsScreen = () => {
                                             <Text style={{ fontSize: FontSize.Small_L, color: theme.counterPrimary }}>{LocalText.tap_to_retry}</Text>
                                         </TouchableOpacity>
                                         :
-                                        <View style={styleSheet.contentView}>
+                                        <View onTouchStart={onBigViewStartTouch} onTouchEnd={onBigViewEndTouch} style={styleSheet.contentView}>
                                             <View onTouchEnd={() => setIsShowList(true)} style={[styleSheet.nameContainerView, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
                                                 <Text style={[{ color: theme.text, }, styleSheet.nameText]}>{selectingItem?.name}</Text>
                                                 <View style={styleSheet.showListIconView}>
