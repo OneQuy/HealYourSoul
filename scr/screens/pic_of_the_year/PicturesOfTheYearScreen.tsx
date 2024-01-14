@@ -22,7 +22,7 @@ import SelectAward from './SelectAward';
 import useIsFavorited from '../../hooks/useIsFavorited';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { track_PressFavorite, track_PressNextPost, track_PressSaveMedia, track_PressYearOfAwardPicture, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
-import { useSimpleGesture } from '../../hooks/useSimpleGesture';
+import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 
 const screen = Dimensions.get('screen')
 
@@ -234,6 +234,12 @@ const PicturesOfTheYearScreen = () => {
             });
     }, [selectingPhoto])
 
+    const onSwiped = useCallback((result: SwipeResult) => {
+        if (result.primaryDirectionIsHorizontalOrVertical && !result.primaryDirectionIsPositive) {
+            onPressNext(-1, 'next')
+        }
+    }, [onPressNext])
+
     const onLongPressed = useCallback(() => {
         console.log('long pressed');
     }, [])
@@ -244,7 +250,7 @@ const PicturesOfTheYearScreen = () => {
         }
     }, [onPressFavorite])
 
-    const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(onTapCounted, onLongPressed)
+    const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(onTapCounted, onLongPressed, onSwiped)
 
     // auto select idx when update year
 
@@ -313,7 +319,7 @@ const PicturesOfTheYearScreen = () => {
                                 </View>
                                 {/* image */}
                                 <TouchableWithoutFeedback onPressIn={onBigViewStartTouch} onPressOut={onBigViewEndTouch}
-                                    // onPress={() => onPressNext(-1, 'next')}
+                                // onPress={() => onPressNext(-1, 'next')}
                                 >
                                     <ImageBackground
                                         style={imageStyle}
