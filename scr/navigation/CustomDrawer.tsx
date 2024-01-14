@@ -5,10 +5,10 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { useCallback, useContext, useMemo, useRef } from "react";
-import { RootState, useAppDispatch, useAppSelector } from "../redux/Store";
-import { ThemeContext, themes } from "../constants/Colors";
+import { RootState, useAppSelector } from "../redux/Store";
+import { ThemeContext } from "../constants/Colors";
 import { DrawerContentComponentProps, } from '@react-navigation/drawer';
-import { Alert, Image, ImageBackground, Linking, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, ImageBackground, Linking, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import DrawerCoupleItem from "./DrawerCoupleItem";
 import { BorderRadius, FontSize, FontWeight, Icon, LocalText, Outline, ScreenName, Size, StorageKey_ForceDev, StorageKey_Rated } from "../constants/AppConstants";
 import { CommonStyles } from "../constants/CommonConstants";
@@ -23,14 +23,13 @@ import { GetBooleanAsync, SetBooleanAsync } from '../handle/AsyncStorageUtils';
 import { toast } from '@baronha/ting';
 import { IsDev } from '../handle/tracking/Tracking';
 import { CheckAndShowInAppReviewAsync } from '../handle/InAppReview';
-import { Screen } from 'react-native-screens';
 
 const primiumBG = require('../../assets/images/btn_bg_1.jpeg')
 
 export function CustomDrawerContent(props: DrawerContentComponentProps) {
   const pressLogoCountRef = useRef(0)
   const [_, onPressPremium] = useDrawerMenuItemUtils(ScreenName.IAPPage, props)
-  const [__, onPressSetting] = useDrawerMenuItemUtils(ScreenName.Setting, props)
+  const [isFocusSetting, onPressSetting] = useDrawerMenuItemUtils(ScreenName.Setting, props)
   const safeAreaInsets = useSafeAreaInsets()
   const theme = useContext(ThemeContext);
   const disableScreens = useAppSelector((state: RootState) => state.userData.disableScreens)
@@ -177,7 +176,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
 
         {/* setting & rating */}
         <View style={style.settingContainer}>
-          <TouchableOpacity onPress={onPressSettingButton} style={[style.settingBtnView, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]}>
+          <TouchableOpacity onPress={onPressSettingButton} style={[style.settingBtnView, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter, {backgroundColor: isFocusSetting ? theme.primary : undefined}]}>
             <MaterialIcons name={Icon.Setting} color={theme.counterPrimary} size={Size.IconTiny} />
             <Text style={[{ color: theme.text }, style.settingBtnText]}>{LocalText.setting}</Text>
           </TouchableOpacity>
