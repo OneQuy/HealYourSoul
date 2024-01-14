@@ -32,11 +32,11 @@ import { CommonStyles } from '../../constants/CommonConstants';
 import Share from 'react-native-share';
 import useIsFavorited from '../../hooks/useIsFavorited';
 import { track_PressFavorite, track_PressNextPost, track_PressSaveMedia, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
+import { useSimpleGesture } from '../../hooks/useSimpleTapAndSwipe';
 
 const videoNumbSize = 10;
 const videoTouchEffectRadius = 100;
 
-const maxLimitMsForOneTap = 300
 const touchDistanceThreshold = 5;
 
 type ThePageProps = {
@@ -64,10 +64,6 @@ const ThePage = ({ category }: ThePageProps) => {
     const reasonToReload = useRef<NeedReloadReason>(NeedReloadReason.None);
     const fileList = useRef<FileList | null>(null);
     const previousPostIDs = useRef<number[]>([]);
-    const bigViewStartTouchNERef = useRef<GestureResponderEvent['nativeEvent'] | null>(null);
-    const bigViewTapTimeOutCallback = useRef<NodeJS.Timeout | undefined>(undefined)
-    const bigViewTapCount = useRef(0)
-    const bigViewLastTapTick = useRef(0)
     const allSavedLocalPostIdsRef = useRef<number[] | undefined>(undefined);
     const [streakData, setStreakData] = useState<Streak | undefined>(undefined);
 
@@ -469,7 +465,6 @@ const ThePage = ({ category }: ThePageProps) => {
         }
     }, []);
 
-
     const onPressHeaderOption = useCallback(async () => {
         if (streakData)
             setStreakData(undefined)
@@ -503,10 +498,6 @@ const ThePage = ({ category }: ThePageProps) => {
 
         if (videoIsCompleted.current)
             videoRef.current.seek(0);
-    }, []);
-
-    const onTouchStartBigView = useCallback((e: GestureResponderEvent) => {
-        bigViewStartTouchNERef.current = e.nativeEvent;
     }, []);
 
     const onPressReloadAsync = useCallback(async () => {
@@ -574,11 +565,24 @@ const ThePage = ({ category }: ThePageProps) => {
         setNeedLoadPost(isNext ? 'next' : 'previous')
     }, [onPressReloadAsync]);
 
-    const tapCounted = useCallback(() => {
-        const count = bigViewTapCount.current
+    const onPlayVideoError = useCallback((error: any) => {
+        Alert.alert('Video load failed', 'Can not play this video (Post ID: ' + post.current?.id + '). Let\'s go to the next post!\n\nError: ' + JSON.stringify(error),
+            [
+                {
+                    text: 'OK',
+                    onPress: () => onPressNextPost(true, false)
+                }
+            ]);
+    }, [onPressNextPost]);
 
-        console.log('tapped', count);
+    const onLongPressed = useCallback(() => {
+        console.log('long presee');
         
+    }, [])
+
+    const onTapCounted = useCallback((count: number) => {
+        console.log('tapped', count);
+
         if (count === 1) {
             // // load next post when current is image post
 
@@ -607,65 +611,8 @@ const ThePage = ({ category }: ThePageProps) => {
             // onPressPlayVideo();
         }
     }, [onPressPlayVideo, currentMediaIsImage, onPressNextPost])
-
-    const handleCountTap = useCallback(() => {
-        const now = Date.now()
-        const howLongFromLastTap = now - bigViewLastTapTick.current
-        bigViewLastTapTick.current = now
-
-        if (howLongFromLastTap > maxLimitMsForOneTap) { // count as a new tap
-            bigViewTapCount.current = 1
-        }
-        else { // count as a continous tap
-            bigViewTapCount.current++
-        }
-
-        if (bigViewTapTimeOutCallback.current)
-            clearTimeout(bigViewTapTimeOutCallback.current)
-
-        bigViewTapTimeOutCallback.current = setTimeout(tapCounted, maxLimitMsForOneTap);
-    }, [tapCounted])
-
-    const onTouchEndBigView = useCallback((e: GestureResponderEvent) => {
-        if (!bigViewStartTouchNERef.current)
-            return;
-
-        // determine what kind of touch in this image / video
-
-        const distanceFromStart = Math.sqrt(
-            Math.pow(e.nativeEvent.locationX - bigViewStartTouchNERef.current.locationX, 2) +
-            Math.pow(e.nativeEvent.locationY - bigViewStartTouchNERef.current.locationY, 2));
-
-        const isTouchOrMove = distanceFromStart < touchDistanceThreshold // is touch or move
-
-        const howLongFromStartTouch = e.nativeEvent.timestamp - bigViewStartTouchNERef.current.timestamp;
-        const isLongPressed = howLongFromStartTouch > maxLimitMsForOneTap && isTouchOrMove;
-        const isTap = !isLongPressed && isTouchOrMove; // tap = quick touch
-
-        if (isTap)
-            handleCountTap()
-        else if (isLongPressed) {
-
-            // tmp show toast
-
-            const options: ToastOptions = {
-                title: 'Long Pressed',
-                ...ToastTheme(theme, 'done')
-            };
-
-            toast(options);
-        }
-    }, [handleCountTap])
-
-    const onPlayVideoError = useCallback((error: any) => {
-        Alert.alert('Video load failed', 'Can not play this video (Post ID: ' + post.current?.id + '). Let\'s go to the next post!\n\nError: ' + JSON.stringify(error),
-            [
-                {
-                    text: 'OK',
-                    onPress: () => onPressNextPost(true, false)
-                }
-            ]);
-    }, [onPressNextPost]);
+    
+    const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(onTapCounted, onLongPressed)
 
     // init once 
 
@@ -839,8 +786,8 @@ const ThePage = ({ category }: ThePageProps) => {
                                 </TouchableOpacity>
                                 {/* center view & big play video btn */}
                                 <View
-                                    onTouchStart={onTouchStartBigView}
-                                    onTouchEnd={onTouchEndBigView}
+                                    onTouchStart={onBigViewStartTouch}
+                                    onTouchEnd={onBigViewEndTouch}
                                     style={{ flex: 1, height: '100%' }} >
                                     {/* effect touch */}
                                     <Animated.View pointerEvents={'none'} style={[videoTouchEffectTranslate.getLayout(), { transform: [{ scale: videoTouchEffectZoomAV },], width: videoTouchEffectRadius, height: videoTouchEffectRadius, borderRadius: videoTouchEffectRadius / 2, backgroundColor: ColorNameToRgb('white', 0.3) }]} />
