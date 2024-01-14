@@ -4,6 +4,19 @@ import { GestureResponderEvent } from "react-native";
 const maxLimitMsForOneTap = 300
 const touchDistanceThreshold = 5;
 
+export type SwipeResult = {
+    isLeftToRight: boolean,
+    isTopToBottom: boolean
+
+    distanceX: number,
+    distanceY: number
+
+    primaryDirectionIsHorizontalOrVertical: boolean,
+    primaryDirectionIsPositive: boolean,
+
+    duration: number
+}
+
 /**
     * USAGE:
     * ```js
@@ -21,6 +34,7 @@ const touchDistanceThreshold = 5;
 export const useSimpleGesture = (
     onTapCounted?: (count: number, lastTapNativeEvent: GestureResponderEvent['nativeEvent']) => void,
     onLongPressed?: () => void,
+    onSwiped?: (result: SwipeResult) => void,
 ): [
         (e: GestureResponderEvent) => void,
         (e: GestureResponderEvent) => void,
@@ -60,26 +74,52 @@ export const useSimpleGesture = (
     }, [triggerTapCounted])
 
     const onTouchEnd = useCallback((e: GestureResponderEvent) => {
-        if (!startTouchNativeEventRef.current) { 
+        if (!startTouchNativeEventRef.current) {
             console.error('startTouchNativeEventRef.current is null')
             return
         }
 
-        const distanceFromStart = Math.sqrt(
-            Math.pow(e.nativeEvent.locationX - startTouchNativeEventRef.current.locationX, 2) +
-            Math.pow(e.nativeEvent.locationY - startTouchNativeEventRef.current.locationY, 2));
+        const distanceX = e.nativeEvent.locationX - startTouchNativeEventRef.current.locationX
+        const distanceY = e.nativeEvent.locationY - startTouchNativeEventRef.current.locationY
+
+        const distanceFromStart = Math.sqrt(Math.pow(distanceX, 2) + Math.pow(distanceY, 2))
 
         const isTouchOrMove = distanceFromStart < touchDistanceThreshold // is touch or move
-
         const howLongFromStartTouch = e.nativeEvent.timestamp - startTouchNativeEventRef.current.timestamp;
+
+        // is move
+
+        if (!isTouchOrMove) {
+            if (typeof onSwiped === 'function') {
+                const isLeftToRight = distanceX > 0
+                const isTopToBottom = distanceY > 0
+                const primaryDirectionIsHorizontalOrVertical = Math.abs(distanceX) > Math.abs(distanceY)
+                const primaryDirectionIsPositive = primaryDirectionIsHorizontalOrVertical ? isLeftToRight : isTopToBottom
+
+                onSwiped({
+                    isLeftToRight,
+                    isTopToBottom,
+                    distanceX,
+                    distanceY,
+                    primaryDirectionIsHorizontalOrVertical,
+                    primaryDirectionIsPositive,
+                    duration: howLongFromStartTouch,
+                } as SwipeResult)
+            }
+
+            return
+        }
+
+        // is not move
+
         const isLongPressed = howLongFromStartTouch > maxLimitMsForOneTap && isTouchOrMove;
         const isTap = !isLongPressed && isTouchOrMove; // tap = quick touch
 
         if (isTap)
-            handleCountTap({...e.nativeEvent})
+            handleCountTap({ ...e.nativeEvent })
         else if (isLongPressed && typeof onLongPressed === 'function')
             onLongPressed()
-    }, [handleCountTap, onLongPressed])
+    }, [handleCountTap, onLongPressed, onSwiped])
 
-    return [onTouchStart, onTouchEnd]
+    return [onTouchStart, onTouchEnd] as const
 }
