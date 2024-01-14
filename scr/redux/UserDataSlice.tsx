@@ -103,6 +103,10 @@ const slice = createSlice({
             } as SubscribedData
         },
 
+        enableAllScreen(state) {
+            state.disableScreens = []
+        },
+
         toggleDisableScreen(state, action: PayloadAction<ScreenName>) {
             if (!state.disableScreens)
                 state.disableScreens = []
@@ -334,6 +338,7 @@ const slice = createSlice({
 export const {
     clearAllUserData,
 
+    enableAllScreen,
     toggleDisableScreen,
 
     setSubscribe,

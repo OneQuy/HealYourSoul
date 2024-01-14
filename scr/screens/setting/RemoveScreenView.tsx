@@ -8,7 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import { BorderRadius, FontSize, Icon, LocalText, Outline, ScreenName, Size } from '../../constants/AppConstants';
 import { widthPercentageToDP } from 'react-native-responsive-screen';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
-import { toggleDisableScreen } from '../../redux/UserDataSlice';
+import { enableAllScreen, toggleDisableScreen } from '../../redux/UserDataSlice';
 import { GetIconOfScreen, IsContentScreen } from '../../handle/AppUtils';
 
 const RemoveScreenView = () => {
@@ -58,7 +58,7 @@ const RemoveScreenView = () => {
         renderItem={renderButton}
         contentContainerStyle={style.flatList}
       />
-      <TouchableOpacity onPress={undefined} style={[style.enableAllTO, ]}>
+      <TouchableOpacity onPress={() => dispatch(enableAllScreen())} style={[style.enableAllTO, ]}>
         <Text style={style.enableAllButtonText}>{LocalText.enable_all}</Text>
       </TouchableOpacity>
     </View>
