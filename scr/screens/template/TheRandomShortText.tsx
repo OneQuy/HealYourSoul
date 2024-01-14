@@ -21,6 +21,7 @@ import { Streak } from '../../constants/Types';
 import StreakPopup from '../components/StreakPopup';
 import { ToCanPrint } from '../../handle/UtilsTS';
 import { track_PressRandom, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
+import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 
 interface TheRandomShortTextProps {
     category: Category,
@@ -126,6 +127,14 @@ const TheRandomShortText = ({
         })
     }, [text, theme])
 
+    const onSwiped = useCallback((result: SwipeResult) => {
+        if (result.primaryDirectionIsHorizontalOrVertical && !result.primaryDirectionIsPositive) {
+            onPressRandom(true)
+        }
+    }, [])
+
+    const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(undefined, undefined, onSwiped)
+
     // on init once (for load first post)
 
     useEffect(() => {
@@ -159,11 +168,11 @@ const TheRandomShortText = ({
                             <View style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
                                 <ActivityIndicator color={theme.counterPrimary} style={{ marginRight: Outline.Horizontal }} />
                             </View> :
-                            <View style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
+                            <View onTouchStart={onBigViewStartTouch} onTouchEnd={onBigViewEndTouch} style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
                                 {
                                     reasonToReload.current !== NeedReloadReason.None ?
                                         // true ?
-                                        <TouchableOpacity onPress={() => onPressRandom(true)} style={[{ gap: Outline.GapVertical }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]} >
+                                        <TouchableOpacity onPress={() => onPressRandom(false)} style={[{ gap: Outline.GapVertical }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]} >
                                             <MaterialCommunityIcons name={reasonToReload.current === NeedReloadReason.NoInternet ? Icon.NoInternet : Icon.HeartBroken} color={theme.primary} size={Size.IconBig} />
                                             <Text style={{ fontSize: FontSize.Normal, color: theme.counterPrimary }}>{reasonToReload.current === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
                                             <Text style={{ fontSize: FontSize.Small_L, color: theme.counterPrimary }}>{LocalText.tap_to_retry}</Text>
