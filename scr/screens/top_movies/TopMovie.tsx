@@ -29,7 +29,7 @@ import useIsFavorited from '../../hooks/useIsFavorited';
 import ListMovie from './ListMovie';
 import { DownloadFileAsync, GetFLPFromRLP } from '../../handle/FileUtils';
 import { track_PressFavorite, track_PressNextPost, track_PressRandom, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
-import { useSimpleGesture } from '../../hooks/useSimpleGesture';
+import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 
 const category = Category.TopMovie
 const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Ftop_movies.json?alt=media&token=4203c962-58bb-41c3-a1a0-ab3b1b3359f8'
@@ -214,7 +214,13 @@ const TopMovieScreen = () => {
         }
     }, [onPressFavorite])
 
-    const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(onTapCounted, onLongPressed)
+    const onSwiped = useCallback((result: SwipeResult) => {
+        if (result.primaryDirectionIsHorizontalOrVertical && !result.primaryDirectionIsPositive) {
+            onPressNext(-1, 'next')
+        }
+    }, [onPressNext])
+
+    const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(onTapCounted, onLongPressed, onSwiped)
 
     // for load data first time
 
