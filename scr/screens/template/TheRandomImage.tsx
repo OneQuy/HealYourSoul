@@ -6,8 +6,6 @@ import Share from 'react-native-share';
 import RNFS from "react-native-fs";
 
 // @ts-ignore
-
-// @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { NetLord } from '../../handle/NetLord'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'

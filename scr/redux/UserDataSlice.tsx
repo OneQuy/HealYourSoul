@@ -1,7 +1,10 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { SubscribedData } from "../constants/Types";
+import { ScreenName } from "../constants/AppConstants";
 
 export type UserDataState = {
+    disableScreens: ScreenName[],
+
     subscribedData: SubscribedData | undefined,
 
     shortFilmsFavoritedIDs: (number | string)[],
@@ -9,7 +12,7 @@ export type UserDataState = {
     awardPictureFavoritedIDs: (number | string)[],
 
     funWebsiteFavoritesIDs: (number | string)[],
-    
+
     topMovieFavoritesIDs: (number | string)[],
 
     drawSeenIDs: (number | string)[],
@@ -44,6 +47,8 @@ export type UserDataState = {
 }
 
 const initialState: UserDataState = {
+    disableScreens: [],
+
     subscribedData: undefined,
 
     shortFilmsFavoritedIDs: [],
@@ -51,7 +56,7 @@ const initialState: UserDataState = {
     awardPictureFavoritedIDs: [],
 
     funWebsiteFavoritesIDs: [],
-    
+
     topMovieFavoritesIDs: [],
 
     drawSeenIDs: [],
@@ -98,6 +103,16 @@ const slice = createSlice({
             } as SubscribedData
         },
 
+        toggleDisableScreen(state, action: PayloadAction<ScreenName>) {
+            if (!state.disableScreens)
+                state.disableScreens = []
+
+            if (state.disableScreens.includes(action.payload))
+                state.disableScreens = state.disableScreens.filter(screen => screen !== action.payload)
+            else
+                state.disableScreens.push(action.payload)
+        },
+
         // award picture
 
         addAwardPictureFavoritedID(state, action: PayloadAction<number | string>) {
@@ -125,7 +140,7 @@ const slice = createSlice({
         removeTopMovieFavoritedID(state, action: PayloadAction<number | string>) {
             state.topMovieFavoritesIDs = state.topMovieFavoritesIDs.filter(i => i !== action.payload)
         },
-        
+
         // short films
 
         addShortFilmsFavoritedID(state, action: PayloadAction<number | string>) {
@@ -319,6 +334,8 @@ const slice = createSlice({
 export const {
     clearAllUserData,
 
+    toggleDisableScreen,
+
     setSubscribe,
 
     addDrawSeenID,
@@ -364,7 +381,7 @@ export const {
 
     addAwardPictureFavoritedID,
     removeAwardPictureFavoritedID,
-    
+
     addFunWebsiteFavoritedID,
     removeFunWebsiteFavoritedID,
 
