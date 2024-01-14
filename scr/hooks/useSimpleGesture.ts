@@ -12,6 +12,10 @@ const touchDistanceThreshold = 5;
     * const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(onTapCounted, onLongPressed)
     * 
     * <View onTouchStart={onBigViewStartTouch} onTouchEnd={onBigViewEndTouch} />
+    * 
+    * Or
+    * 
+    * onPressIn={onBigViewStartTouch} onPressOut={onBigViewEndTouch}
     * ```
  */
 export const useSimpleGesture = (
