@@ -1,18 +1,14 @@
-import { Share as RNShare, View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, ShareContent, Alert, Linking, GestureResponderEvent } from 'react-native'
-import React, { LegacyRef, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
-import { ThemeContext } from '../../constants/Colors'
-import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size, StorageKey_AwardPictureLastSeenIdxOfYear, StorageKey_LocalFileVersion, StorageKey_SelectingShortFilmIdx } from '../../constants/AppConstants'
-import Share from 'react-native-share';
-
-
-// @ts-ignore
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
+import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, Alert, Linking, GestureResponderEvent } from 'react-native'
+import React, { LegacyRef, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import { ThemeContext } from '../../constants/Colors'
+import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size, StorageKey_LocalFileVersion, StorageKey_SelectingShortFilmIdx } from '../../constants/AppConstants'
+import Share from 'react-native-share';
 import { NetLord } from '../../handle/NetLord'
-import { Link, useFocusEffect, useNavigation } from '@react-navigation/native'
-import { CopyAndToast, SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
+import { SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
 import ViewShot from 'react-native-view-shot'
 import { CommonStyles } from '../../constants/CommonConstants'
 import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
@@ -20,8 +16,7 @@ import { Streak, ShortFilm } from '../../constants/Types';
 import StreakPopup from '../components/StreakPopup';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 import { ScrollView } from 'react-native-gesture-handler';
-import { ShareOptions } from 'react-native-share';
-import { Clamp, ToCanPrint, GetFirstLetters, ExtractAllNumbersInText, RGBToRGBAText, IsChar, IsNumChar } from '../../handle/UtilsTS';
+import { ToCanPrint, IsChar, IsNumChar } from '../../handle/UtilsTS';
 import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading';
 import useCheckAndDownloadRemoteFile from '../../hooks/useCheckAndDownloadRemoteFile';
 import { RandomInt, TempDirName } from '../../handle/Utils';
@@ -110,7 +105,8 @@ const BestShortFilmsScreen = () => {
             idx++
         }
 
-        idx = Clamp(idx, 0, shortFilms.length - 1)
+        if (idx >= shortFilms.length)
+            idx = 0
 
         let movie = shortFilms[idx]
 
