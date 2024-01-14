@@ -35,7 +35,7 @@ export const useSimpleGesture = (
             return
 
         onTapCounted(tapCountRef.current, e)
-    }, [])
+    }, [onTapCounted])
 
     const handleCountTap = useCallback((e: GestureResponderEvent['nativeEvent']) => {
         const now = Date.now()

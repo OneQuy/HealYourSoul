@@ -590,7 +590,7 @@ const ThePage = ({ category }: ThePageProps) => {
             // }
 
 
-            //     // handle touch effect for video
+            // handle touch effect for video
 
             if (!videoRef.current)
                 return
@@ -609,7 +609,10 @@ const ThePage = ({ category }: ThePageProps) => {
 
             onPressPlayVideo();
         }
-    }, [onPressPlayVideo, currentMediaIsImage, onPressNextPost])
+        else if (count === 2) {
+            onPressFavorite()
+        }
+    }, [onPressFavorite, onPressPlayVideo])
 
     const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(onTapCounted, onLongPressed)
 
