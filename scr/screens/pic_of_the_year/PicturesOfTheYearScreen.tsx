@@ -1,6 +1,6 @@
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { View, Text, TouchableOpacity, Alert, StyleSheet, TouchableWithoutFeedback, ScrollView, NativeSyntheticEvent, ImageErrorEventData, ImageLoadEventData, StyleProp, ImageStyle, Dimensions, ActivityIndicator, ImageBackground, Linking } from 'react-native'
+import { View, Text, TouchableOpacity, Alert, StyleSheet, TouchableWithoutFeedback, ScrollView, NativeSyntheticEvent, ImageErrorEventData, ImageLoadEventData, StyleProp, ImageStyle, Dimensions, ActivityIndicator, ImageBackground, Linking, GestureResponderEvent } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size, StorageKey_AwardPictureLastSeenIdxOfYear } from '../../constants/AppConstants'
@@ -22,6 +22,7 @@ import SelectAward from './SelectAward';
 import useIsFavorited from '../../hooks/useIsFavorited';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { track_PressFavorite, track_PressNextPost, track_PressSaveMedia, track_PressYearOfAwardPicture, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
+import { useSimpleGesture } from '../../hooks/useSimpleGesture';
 
 const screen = Dimensions.get('screen')
 
@@ -233,6 +234,18 @@ const PicturesOfTheYearScreen = () => {
             });
     }, [selectingPhoto])
 
+    const onLongPressed = useCallback(() => {
+        console.log('long pressed');
+    }, [])
+
+    const onTapCounted = useCallback((count: number, _: GestureResponderEvent['nativeEvent']) => {
+        if (count === 2) {
+            onPressFavorite()
+        }
+    }, [onPressFavorite])
+
+    const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(onTapCounted, onLongPressed)
+
     // auto select idx when update year
 
     useEffect(() => {
@@ -299,7 +312,9 @@ const PicturesOfTheYearScreen = () => {
                                     </View>
                                 </View>
                                 {/* image */}
-                                <TouchableWithoutFeedback onPress={() => onPressNext(-1, 'next')}>
+                                <TouchableWithoutFeedback onPressIn={onBigViewStartTouch} onPressOut={onBigViewEndTouch}
+                                    // onPress={() => onPressNext(-1, 'next')}
+                                >
                                     <ImageBackground
                                         style={imageStyle}
                                         onLoadStart={onImageStartLoad}
