@@ -1,4 +1,4 @@
-import { Share as RNShare, View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, Image, ShareContent, Alert, Linking } from 'react-native'
+import { Share as RNShare, View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, Image, ShareContent, Alert, Linking, GestureResponderEvent } from 'react-native'
 import React, { LegacyRef, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size, StorageKey_LocalFileVersion, StorageKey_SelectingFunWebsiteId, StorageKey_Streak } from '../../constants/AppConstants'
@@ -32,6 +32,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import useIsFavorited from '../../hooks/useIsFavorited';
 import ListWebsite from './ListWebsite';
 import { track_PressFavorite, track_PressNextPost, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
+import { useSimpleGesture } from '../../hooks/useSimpleGesture';
 
 const category = Category.FunWebsites
 const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Ffun_websites.json?alt=media&token=10ecb626-e576-49d4-b124-a9ba148a93a6'
@@ -188,6 +189,18 @@ const FunWebsitesScreen = () => {
         })
     }, [selectingItem, theme])
 
+    const onLongPressed = useCallback(() => {
+        console.log('long pressed');
+    }, [])
+
+    const onTapCounted = useCallback((count: number, _: GestureResponderEvent['nativeEvent']) => {
+        if (count === 2) {
+            onPressFavorite()
+        }
+    }, [onPressFavorite])
+
+    const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(onTapCounted, onLongPressed)
+
     // for load data first time
 
     useEffect(() => {
@@ -247,7 +260,7 @@ const FunWebsitesScreen = () => {
                                             <Text style={{ fontSize: FontSize.Small_L, color: theme.counterPrimary }}>{LocalText.tap_to_retry}</Text>
                                         </TouchableOpacity>
                                         :
-                                        <View style={styleSheet.contentView}>
+                                        <View onTouchStart={onBigViewStartTouch} onTouchEnd={onBigViewEndTouch} style={styleSheet.contentView}>
                                             <View onTouchEnd={() => setIsShowList(true)} style={[styleSheet.titleContainerView, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
                                                 <Text style={[{ color: theme.text, }, styleSheet.titleText]}>{shortUrl}</Text>
                                                 <View style={styleSheet.showListIconView}>
