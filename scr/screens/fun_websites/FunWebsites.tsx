@@ -32,7 +32,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import useIsFavorited from '../../hooks/useIsFavorited';
 import ListWebsite from './ListWebsite';
 import { track_PressFavorite, track_PressNextPost, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
-import { useSimpleGesture } from '../../hooks/useSimpleGesture';
+import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 
 const category = Category.FunWebsites
 const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Ffun_websites.json?alt=media&token=10ecb626-e576-49d4-b124-a9ba148a93a6'
@@ -189,6 +189,12 @@ const FunWebsitesScreen = () => {
         })
     }, [selectingItem, theme])
 
+    const onSwiped = useCallback((result: SwipeResult) => {
+        if (result.primaryDirectionIsHorizontalOrVertical && !result.primaryDirectionIsPositive) {
+            onPressNext(-1, 'next')
+        }
+    }, [])
+
     const onLongPressed = useCallback(() => {
         console.log('long pressed');
     }, [])
@@ -199,7 +205,7 @@ const FunWebsitesScreen = () => {
         }
     }, [onPressFavorite])
 
-    const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(onTapCounted, onLongPressed)
+    const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(onTapCounted, onLongPressed, onSwiped)
 
     // for load data first time
 

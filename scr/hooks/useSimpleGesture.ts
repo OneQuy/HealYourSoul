@@ -2,6 +2,7 @@ import { useCallback, useRef } from "react";
 import { GestureResponderEvent } from "react-native";
 
 const maxLimitMsForOneTap = 300
+const maxLimitMsForSwipe = 500
 const touchDistanceThreshold = 5;
 
 export type SwipeResult = {
@@ -90,7 +91,7 @@ export const useSimpleGesture = (
         // is move
 
         if (!isTouchOrMove) {
-            if (typeof onSwiped === 'function') {
+            if (typeof onSwiped === 'function' && howLongFromStartTouch < maxLimitMsForSwipe) {
                 const isLeftToRight = distanceX > 0
                 const isTopToBottom = distanceY > 0
                 const primaryDirectionIsHorizontalOrVertical = Math.abs(distanceX) > Math.abs(distanceY)
