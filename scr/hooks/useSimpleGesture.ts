@@ -49,8 +49,6 @@ export const useSimpleGesture = (
         if (!startTouchNativeEventRef.current)
             return;
 
-        // determine what kind of touch in this image / video
-
         const distanceFromStart = Math.sqrt(
             Math.pow(e.nativeEvent.locationX - startTouchNativeEventRef.current.locationX, 2) +
             Math.pow(e.nativeEvent.locationY - startTouchNativeEventRef.current.locationY, 2));
