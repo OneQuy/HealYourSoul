@@ -1,5 +1,5 @@
 import { Alert, Linking, Platform } from "react-native";
-import { Category, FirebaseDBPath, FirebasePath, LocalPath, LocalText, NeedReloadReason, StorageKey_LastTimeCheckFirstOpenAppOfTheDay } from "../constants/AppConstants";
+import { Category, FirebaseDBPath, FirebasePath, LocalPath, LocalText, NeedReloadReason, ScreenName, StorageKey_LastTimeCheckFirstOpenAppOfTheDay } from "../constants/AppConstants";
 import { ThemeColor } from "../constants/Colors";
 import { FileList, MediaType, PostMetadata } from "../constants/Types";
 import { FirebaseStorage_DownloadAndReadJsonAsync } from "../firebase/FirebaseStorage";
@@ -449,6 +449,15 @@ export const AlertNoInternet = () => {
     );
 }
 
+export const IsContentScreen = (screen: ScreenName) => {
+    const notContentScreen: ScreenName[] = [
+        ScreenName.IAPPage,
+        ScreenName.Setting
+    ]
+
+    return !notContentScreen.includes(screen)
+}
+
 export const SaveCurrentScreenForLoadNextTime = (navigation: NavigationProp<ReactNavigation.RootParamList>) => {
     const state = navigation.getState();
     const screenName = state.routeNames[state.index];
@@ -469,7 +478,7 @@ export const CheckAndTriggerFirstOpenAppOfTheDayAsync = async () => {
     // handles
 
     console.log('---- handle first open app of the day ------');
-    
+
     track_FirstOpenOfTheDayAsync()
 }
 

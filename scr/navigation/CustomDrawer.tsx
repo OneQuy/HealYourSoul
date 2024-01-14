@@ -15,7 +15,7 @@ import { CommonStyles } from "../constants/CommonConstants";
 import useDrawerMenuItemUtils from '../hooks/useDrawerMenuItemUtils';
 import { logoScr } from '../screens/others/SplashScreen';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { OpenStore, versionAsNumber } from '../handle/AppUtils';
+import { IsContentScreen, OpenStore, versionAsNumber } from '../handle/AppUtils';
 import { GetAppConfig } from '../handle/AppConfigHandler';
 import { FilterOnlyLetterAndNumberFromString, RegexUrl, ToCanPrint } from '../handle/UtilsTS';
 import { track_PressDrawerItem, track_SimpleWithParam } from '../handle/tracking/GoodayTracking';
@@ -23,6 +23,7 @@ import { GetBooleanAsync, SetBooleanAsync } from '../handle/AsyncStorageUtils';
 import { toast } from '@baronha/ting';
 import { IsDev } from '../handle/tracking/Tracking';
 import { CheckAndShowInAppReviewAsync } from '../handle/InAppReview';
+import { Screen } from 'react-native-screens';
 
 const primiumBG = require('../../assets/images/btn_bg_1.jpeg')
 
@@ -32,6 +33,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
   const [__, onPressSetting] = useDrawerMenuItemUtils(ScreenName.Setting, props)
   const safeAreaInsets = useSafeAreaInsets()
   const theme = useContext(ThemeContext);
+  const disableScreens = useAppSelector((state: RootState) => state.userData.disableScreens)
 
   const [notice, onPressNotice, colorNotice] = useMemo(() => {
     const data = GetAppConfig()?.notice
@@ -75,9 +77,12 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
   }, [GetAppConfig()?.latest_version])
 
   const routeCoupleArr = useMemo(() => {
-    const routes = props.state.routes.filter(r =>
-      r.name !== ScreenName.IAPPage && 
-      r.name !== ScreenName.Setting)
+    const routes = props.state.routes.filter(screen => {
+      const name = screen.name as ScreenName
+      
+      return IsContentScreen(name) &&
+        (!disableScreens || !disableScreens.includes(name))
+    })
 
     const arr: (typeof routes[number])[][] = []
 
@@ -91,7 +96,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
     }
 
     return arr
-  }, [])
+  }, [disableScreens])
 
   const onPressRateMe = useCallback(async () => {
     const res = await CheckAndShowInAppReviewAsync()
