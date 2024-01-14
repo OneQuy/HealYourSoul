@@ -22,7 +22,6 @@ import { DownloadFileAsync, GetFLPFromRLP } from '../../handle/FileUtils';
 import { SaveToGalleryAsync } from '../../handle/CameraRoll';
 import { ToastOptions, toast } from '@baronha/ting';
 import ImageAsMap from '../../handle/ImageAsMap';
-import { MainTrack } from '../../handle/tracking/Tracking';
 import { track_PressRandom, track_PressSaveMedia, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 
