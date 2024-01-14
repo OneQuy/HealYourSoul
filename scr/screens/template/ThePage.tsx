@@ -35,6 +35,8 @@ import { track_PressFavorite, track_PressNextPost, track_PressSaveMedia, track_S
 
 const videoNumbSize = 10;
 const videoTouchEffectRadius = 100;
+
+const maxLimitMsForOneTap = 300
 const touchDistanceThreshold = 5;
 
 type ThePageProps = {
@@ -63,6 +65,9 @@ const ThePage = ({ category }: ThePageProps) => {
     const fileList = useRef<FileList | null>(null);
     const previousPostIDs = useRef<number[]>([]);
     const bigViewStartTouchNERef = useRef<GestureResponderEvent['nativeEvent'] | null>(null);
+    const bigViewTapTimeOutCallback = useRef<NodeJS.Timeout | undefined>(undefined)
+    const bigViewTapCount = useRef(0)
+    const bigViewLastTapTick = useRef(0)
     const allSavedLocalPostIdsRef = useRef<number[] | undefined>(undefined);
     const [streakData, setStreakData] = useState<Streak | undefined>(undefined);
 
@@ -569,6 +574,58 @@ const ThePage = ({ category }: ThePageProps) => {
         setNeedLoadPost(isNext ? 'next' : 'previous')
     }, [onPressReloadAsync]);
 
+    const tapCounted = useCallback(() => {
+        const count = bigViewTapCount.current
+
+        console.log('tapped', count);
+        
+        if (count === 1) {
+            // // load next post when current is image post
+
+            // if (mediaURI.current && currentMediaIsImage) {
+            //     onPressNextPost(true, true)
+            // }
+
+
+            //     // handle touch effect for video
+
+            //     if (!videoRef.current || !isTouchOrMove || isLongPressed)
+            //     return;
+
+            // videoTouchEffectTranslate.setValue({ x: e.nativeEvent.locationX - videoTouchEffectRadius / 2, y: e.nativeEvent.locationY - videoTouchEffectRadius / 2 })
+
+            // videoTouchEffectZoomAV.setValue(0);
+
+            // Animated.timing(
+            //     videoTouchEffectZoomAV,
+            //     {
+            //         toValue: 1,
+            //         duration: 300,
+            //         useNativeDriver: false,
+            //     }).start(() => videoTouchEffectZoomAV.setValue(0));
+
+            // onPressPlayVideo();
+        }
+    }, [onPressPlayVideo, currentMediaIsImage, onPressNextPost])
+
+    const handleCountTap = useCallback(() => {
+        const now = Date.now()
+        const howLongFromLastTap = now - bigViewLastTapTick.current
+        bigViewLastTapTick.current = now
+
+        if (howLongFromLastTap > maxLimitMsForOneTap) { // count as a new tap
+            bigViewTapCount.current = 1
+        }
+        else { // count as a continous tap
+            bigViewTapCount.current++
+        }
+
+        if (bigViewTapTimeOutCallback.current)
+            clearTimeout(bigViewTapTimeOutCallback.current)
+
+        bigViewTapTimeOutCallback.current = setTimeout(tapCounted, maxLimitMsForOneTap);
+    }, [tapCounted])
+
     const onTouchEndBigView = useCallback((e: GestureResponderEvent) => {
         if (!bigViewStartTouchNERef.current)
             return;
@@ -579,12 +636,15 @@ const ThePage = ({ category }: ThePageProps) => {
             Math.pow(e.nativeEvent.locationX - bigViewStartTouchNERef.current.locationX, 2) +
             Math.pow(e.nativeEvent.locationY - bigViewStartTouchNERef.current.locationY, 2));
 
-        const isTouch = distanceFromStart < touchDistanceThreshold // is touch or move
+        const isTouchOrMove = distanceFromStart < touchDistanceThreshold // is touch or move
 
-        const howLongFromStart = e.nativeEvent.timestamp - bigViewStartTouchNERef.current.timestamp;
-        const isLongPressed = howLongFromStart > 500 && isTouch;
+        const howLongFromStartTouch = e.nativeEvent.timestamp - bigViewStartTouchNERef.current.timestamp;
+        const isLongPressed = howLongFromStartTouch > maxLimitMsForOneTap && isTouchOrMove;
+        const isTap = !isLongPressed && isTouchOrMove; // tap = quick touch
 
-        if (isLongPressed) {
+        if (isTap)
+            handleCountTap()
+        else if (isLongPressed) {
 
             // tmp show toast
 
@@ -595,33 +655,7 @@ const ThePage = ({ category }: ThePageProps) => {
 
             toast(options);
         }
-        else if (isTouch) {
-            // load next post when current is image post
-
-            if (mediaURI.current && currentMediaIsImage) {
-                onPressNextPost(true, true)
-            }
-        }
-
-        // handle touch effect for video
-
-        if (!videoRef.current || !isTouch || isLongPressed)
-            return;
-
-        videoTouchEffectTranslate.setValue({ x: e.nativeEvent.locationX - videoTouchEffectRadius / 2, y: e.nativeEvent.locationY - videoTouchEffectRadius / 2 })
-
-        videoTouchEffectZoomAV.setValue(0);
-
-        Animated.timing(
-            videoTouchEffectZoomAV,
-            {
-                toValue: 1,
-                duration: 300,
-                useNativeDriver: false,
-            }).start(() => videoTouchEffectZoomAV.setValue(0));
-
-        onPressPlayVideo();
-    }, [onPressPlayVideo, currentMediaIsImage, onPressNextPost]);
+    }, [handleCountTap])
 
     const onPlayVideoError = useCallback((error: any) => {
         Alert.alert('Video load failed', 'Can not play this video (Post ID: ' + post.current?.id + '). Let\'s go to the next post!\n\nError: ' + JSON.stringify(error),
