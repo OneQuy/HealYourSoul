@@ -196,7 +196,7 @@ const WikipediaScreen = () => {
 
     const onSwiped = useCallback((result: SwipeResult) => {
         if (result.primaryDirectionIsHorizontalOrVertical && !result.primaryDirectionIsPositive) {
-            onPressRandom(false)
+            onPressRandom(true)
         }
     }, [])
 
