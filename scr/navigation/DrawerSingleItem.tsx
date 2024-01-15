@@ -25,7 +25,7 @@ const DrawerSingleItem = ({
     const theme = useContext(ThemeContext);
     const [isFocused, onPress] = useDrawerMenuItemUtils(route.name, masterProps)
 
-    const icon = useMemo(() => GetIconOfScreen(route.name as ScreenName), [])
+    const icon = useMemo(() => GetIconOfScreen(route.name as ScreenName), [route.name])
 
     const onPressButton = useCallback(() => {
         track_PressDrawerItem(FilterOnlyLetterAndNumberFromString(route.name))
