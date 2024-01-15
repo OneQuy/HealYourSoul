@@ -3,6 +3,7 @@ import React, { useCallback, useContext, useMemo, useState } from 'react'
 import { BorderRadius, FontSize, Outline } from '../../constants/AppConstants'
 import { ThemeContext } from '../../constants/Colors';
 import RemoveScreenView from './RemoveScreenView';
+import SettingView from './SettingView';
 
 const SettingScreen = () => {
   const theme = useContext(ThemeContext);
@@ -33,6 +34,10 @@ const SettingScreen = () => {
           <Text style={style.topButtonText}>Remove Screen</Text>
         </TouchableOpacity>
       </View>
+      {
+        !showMainView ? undefined :
+          <SettingView />
+      }
       {
         !showRemoveScreenView ? undefined :
           <RemoveScreenView />
