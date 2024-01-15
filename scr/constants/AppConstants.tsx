@@ -206,6 +206,7 @@ export const LocalText = {
   learn_more: "Learn more",
   enable_all: "Enable all",
   Contact: "Contact",
+  community: "Community",
   error: "Error",
   credit_to_author: 'Credit to the author.',
   credit_to: 'Credit to',
