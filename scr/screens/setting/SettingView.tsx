@@ -6,7 +6,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import { Linking, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useCallback, useContext, useMemo } from 'react'
-import { ThemeColor, ThemeContext } from '../../constants/Colors';
+import { ThemeContext } from '../../constants/Colors';
 import { FontSize, FontWeight, Icon, LocalText, Outline, Size } from '../../constants/AppConstants';
 import { ScrollView } from 'react-native-gesture-handler';
 import { CopyAndToast } from '../../handle/AppUtils';
@@ -14,21 +14,16 @@ import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 
 const SettingView = () => {
   const theme = useContext(ThemeContext)
-  // const navigation = useNavigation()
-  // const disableScreens = useAppSelector((state: RootState) => state.userData.disableScreens)
-  // const dispatch = useAppDispatch()
 
   const style = useMemo(() => {
     return StyleSheet.create({
       masterView: { flex: 1, backgroundColor: theme.background, padding: Outline.Horizontal },
       scrollView: { gap: Outline.GapHorizontal },
       flexRowWithGap: { flexDirection: 'row', gap: Outline.GapHorizontal },
-      // buttonContainerTO: { margin: Outline.GapHorizontal, minWidth: widthPercentageToDP(40), padding: Outline.GapVertical, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth, gap: Outline.GapHorizontal, flexDirection: 'row' },
-      emailCopyTO: { marginLeft: Outline.Horizontal, justifyContent: 'center', alignItems: 'center' },
+      emailCopyTO: { justifyContent: 'center', alignItems: 'center' },
       communityIconTO: { justifyContent: 'center', alignItems: 'center' },
       titleText: { color: theme.text, fontSize: FontSize.Small_L, fontWeight: FontWeight.B600 },
       emailText: { color: theme.text, fontSize: FontSize.Normal },
-      // buttonText: { textAlign: 'center', color: theme.text, fontSize: FontSize.Small, flex: 1 },
     })
   }, [theme])
 
