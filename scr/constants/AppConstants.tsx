@@ -183,6 +183,8 @@ export enum Icon {
   Eye = 'eye-outline',
   Star = 'star',
   Coffee = 'coffee',
+  CheckBox_Yes = 'checkbox-marked-outline',
+  CheckBox_No = 'checkbox-blank-outline',
 
   // MaterialIcons
 
@@ -205,8 +207,18 @@ export const LocalText = {
   update_content: "Please update the app to the latest version for the best experience.",
   learn_more: "Learn more",
   enable_all: "Enable all",
+  send: "Send",
+  share_app: "Share this app",
   Contact: "Contact",
+  notification: "Notification",
+  notification_quote_of_the_day: "Quote of the day",
+  notification_quote_of_the_day_desc: 'Send a quote at 10:00 AM every day',
+  notification_fact_of_the_day: "Fact of the day",
+  notification_fact_of_the_day_desc: 'Send a fun fact at 19:00 every day.',
+  notification_joke_of_the_day: "Joke of the day",
+  notification_joke_of_the_day_desc: 'Send a joke at 14:00 every day.',
   community: "Community",
+  feedback: "Feedback",
   error: "Error",
   credit_to_author: 'Credit to the author.',
   credit_to: 'Credit to',
@@ -306,3 +318,5 @@ export const StorageKey_LastInstalledVersion = 'last_version'
 export const StorageKey_LastAskForUpdateApp = 'ask_for_update_app'
 export const StorageKey_ForceDev = 'force_dev'
 export const StorageKey_Rated = 'rated'
+export const StorageKey_Notification_Quote = 'noti_quote'
+export const StorageKey_Notification_Fact = 'noti_fact'
