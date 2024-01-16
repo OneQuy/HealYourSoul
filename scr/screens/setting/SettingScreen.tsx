@@ -18,7 +18,7 @@ const SettingScreen = () => {
   const style = useMemo(() => {
     return StyleSheet.create({
       masterView: { flex: 1, backgroundColor: theme.background, gap: Outline.GapHorizontal },
-      topButtonContainerView: { gap: Outline.GapHorizontal, flexDirection: 'row' },
+      topButtonContainerView: { padding: Outline.GapVertical, paddingHorizontal: Outline.GapVertical_2, gap: Outline.GapHorizontal, flexDirection: 'row' },
       topButtonTO: { padding: Outline.GapVertical, borderRadius: BorderRadius.BR8, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' },
       topButtonText: { color: theme.text, fontSize: FontSize.Small },
     })

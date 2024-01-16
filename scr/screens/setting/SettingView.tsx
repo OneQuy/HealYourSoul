@@ -26,7 +26,7 @@ const SettingView = () => {
 
   const style = useMemo(() => {
     return StyleSheet.create({
-      masterView: { flex: 1, backgroundColor: theme.background, padding: Outline.Horizontal },
+      masterView: { flex: 1, backgroundColor: theme.background, padding: Outline.Horizontal, paddingVertical: Outline.GapHorizontal },
       scrollView: { gap: Outline.GapHorizontal },
       flexRowWithGap: { flexDirection: 'row', gap: Outline.GapHorizontal },
       checkbox: { flexDirection: 'row', gap: Outline.GapHorizontal, alignItems: 'center', justifyContent: 'space-between' },
