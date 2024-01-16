@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useCallback, useContext, useMemo, useState } from 'react'
-import { BorderRadius, FontSize, Outline } from '../../constants/AppConstants'
+import { BorderRadius, FontSize, FontWeight, Outline } from '../../constants/AppConstants'
 import { ThemeContext } from '../../constants/Colors';
 import RemoveScreenView from './RemoveScreenView';
 import SettingView from './SettingView';
@@ -19,18 +19,19 @@ const SettingScreen = () => {
     return StyleSheet.create({
       masterView: { flex: 1, backgroundColor: theme.background, gap: Outline.GapHorizontal },
       topButtonContainerView: { padding: Outline.GapVertical, paddingHorizontal: Outline.GapVertical_2, gap: Outline.GapHorizontal, flexDirection: 'row' },
-      topButtonTO: { padding: Outline.GapVertical, borderRadius: BorderRadius.BR8, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' },
-      topButtonText: { color: theme.text, fontSize: FontSize.Small },
+      topButtonTO: { borderColor: theme.text, borderWidth: StyleSheet.hairlineWidth, padding: Outline.GapVertical, borderRadius: BorderRadius.BR8, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' },
+      topButtonTO_Inactive: { borderColor: theme.text, borderWidth: StyleSheet.hairlineWidth, padding: Outline.GapVertical, borderRadius: BorderRadius.BR8, flex: 1, justifyContent: 'center', alignItems: 'center' },
+      topButtonText: { color: theme.text, fontWeight: FontWeight.B600, fontSize: FontSize.Small },
     })
   }, [theme])
 
   return (
     <View style={style.masterView}>
       <View style={style.topButtonContainerView}>
-        <TouchableOpacity onPress={() => onPressView(true)} style={style.topButtonTO}>
+        <TouchableOpacity onPress={() => onPressView(true)} style={showMainView ? style.topButtonTO : style.topButtonTO_Inactive}>
           <Text style={style.topButtonText}>Setting</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => onPressView(false)} style={style.topButtonTO}>
+        <TouchableOpacity onPress={() => onPressView(false)} style={showRemoveScreenView ? style.topButtonTO : style.topButtonTO_Inactive}>
           <Text style={style.topButtonText}>Remove Screen</Text>
         </TouchableOpacity>
       </View>

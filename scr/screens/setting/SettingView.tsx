@@ -90,7 +90,7 @@ const SettingView = () => {
 
   return (
     <View style={style.masterView}>
-      <ScrollView contentContainerStyle={style.scrollView}>
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={style.scrollView}>
         {/* notification */}
 
         <Text style={style.titleText}>{LocalText.notification}</Text>
