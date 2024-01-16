@@ -210,6 +210,7 @@ export const LocalText = {
   send: "Send",
   share_app: "Share this app",
   Contact: "Contact",
+  install_app_date: "The date you install the app",
   notification: "Notification",
   notification_quote_of_the_day: "Quote of the day",
   notification_quote_of_the_day_desc: 'Send a quote at 10:00 AM every day',

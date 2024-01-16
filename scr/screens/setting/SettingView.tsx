@@ -5,13 +5,15 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { Linking, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { useCallback, useContext, useMemo, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors';
-import { BorderRadius, FontSize, FontWeight, Icon, LocalText, Outline, Size } from '../../constants/AppConstants';
+import { BorderRadius, FontSize, FontWeight, Icon, LocalText, Outline, Size, StorageKey_FirstTimeInstallTick } from '../../constants/AppConstants';
 import { ScrollView } from 'react-native-gesture-handler';
 import { CopyAndToast } from '../../handle/AppUtils';
 import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
+import { GetDateAsync } from '../../handle/AsyncStorageUtils';
+import { SafeDateString } from '../../handle/UtilsTS';
 
 const limitFeedback = 300
 
@@ -20,6 +22,7 @@ const SettingView = () => {
   const [isNoti_Quote, setIsNoti_Quote] = useState(true)
   const [isNoti_Fact, setIsNoti_Fact] = useState(true)
   const [isNoti_Joke, setIsNoti_Joke] = useState(false)
+  const [installDate, setInstallDate] = useState('')
 
   const style = useMemo(() => {
     return StyleSheet.create({
@@ -33,6 +36,7 @@ const SettingView = () => {
       titleText: { color: theme.text, fontSize: FontSize.Small_L, fontWeight: FontWeight.B600 },
       descNotiText: { color: theme.text, fontSize: FontSize.Small },
       emailText: { color: theme.text, fontSize: FontSize.Normal },
+      statText: { color: theme.text, fontSize: FontSize.Small_L },
       sendFeedbackTO: { alignSelf: 'center', paddingVertical: Outline.GapVertical, paddingHorizontal: Outline.GapVertical_2, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth, },
     })
   }, [theme])
@@ -71,6 +75,18 @@ const SettingView = () => {
   const hair100Width = useCallback(() => {
     return <View style={{ marginVertical: Outline.Horizontal, backgroundColor: theme.text, width: '100%', height: StyleSheet.hairlineWidth }} />
   }, [theme])
+
+  useEffect(() => {
+    (async () => {
+      // set text first day install
+
+      const firstTimeInstallTick = await GetDateAsync(StorageKey_FirstTimeInstallTick)
+
+      if (firstTimeInstallTick !== undefined) {
+        setInstallDate(SafeDateString(firstTimeInstallTick))
+      }
+    })()
+  }, [])
 
   return (
     <View style={style.masterView}>
@@ -159,8 +175,9 @@ const SettingView = () => {
           hair100Width()
         }
 
+        {/* install date */}
 
-
+        <Text style={style.statText}>{LocalText.install_app_date + ': ' + installDate}</Text>
       </ScrollView>
     </View>
   )
