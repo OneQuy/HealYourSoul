@@ -306,6 +306,7 @@ export const StorageKey_LocalFileVersion = (cat: Category) => 'local_file_versio
 export const StorageKey_WasteTimeItems = 'waste_time_item'
 export const StorageKey_NinjaFact = 'ninja_fact_arr'
 export const StorageKey_NinjaJoke = 'ninja_joke_arr'
+export const StorageKey_Quote = 'quote_arr'
 
 export const StorageKey_Streak = 'streak'
 export const StorageKey_SelectingFunWebsiteId = 'selecting_fun_website_id'
