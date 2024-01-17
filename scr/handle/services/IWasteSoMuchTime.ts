@@ -55,9 +55,9 @@ const extract = (text: string): RandomImage[] => {
             title += text[i]
         }
 
-        if (title) 
+        if (title)
             title = HTMLCharConvert(title)
-        
+
         // ==================
 
         const idxImgUrl = text.indexOf(imgFind)
@@ -104,11 +104,10 @@ export const GetIWasteSoMuchTimeAsync = async (): Promise<RandomImage | undefine
             return item
 
         const link = url + RandomInt(1, 1000)
-        // console.log('fetchhhhh', link);
 
         const response = await fetch(link)
 
-        if (response.status !== 200)
+        if (!response.ok)
             return undefined
 
         const t = await response.text()

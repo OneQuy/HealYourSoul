@@ -33,9 +33,7 @@ export const GetTriviaAsync = async (difficulty: TriviaDifficulty = 'all', answe
                 await DelayAsync(500)
         }
 
-        if (!res || res.status !== 200) {
-            // console.log(res);
-
+        if (!res || !res.ok) {
             return undefined
         }
 

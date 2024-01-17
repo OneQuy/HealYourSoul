@@ -17,7 +17,7 @@ export const GetWikiAsync = async (): Promise<object | undefined> => {
                 await DelayAsync(100)
         }
 
-        if (!res || res.status !== 200) {
+        if (!res || !res.ok) {
             return undefined
         }
 

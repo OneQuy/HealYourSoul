@@ -58,7 +58,7 @@ export const GetRandomUnsplashPictureAsync = async (): Promise<RandomImage | und
 
         // console.log(ToCanPrint(data))
 
-        if (data.status !== 200)
+        if (!data.ok)
             return undefined
 
         return { uri: data.url }

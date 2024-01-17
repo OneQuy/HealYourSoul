@@ -17,7 +17,7 @@ export const GetQuoteTextAsync = async (): Promise<string | undefined> => {
                 await DelayAsync(500)
         }
 
-        if (!res || res.status !== 200) {
+        if (!res || !res.ok) {
             return undefined
         }
 
