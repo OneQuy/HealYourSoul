@@ -511,7 +511,7 @@ export const SaveCurrentScreenForLoadNextTime = (navigation: NavigationProp<Reac
     AsyncStorage.setItem('categoryScreenToOpenFirst', screenName);
 }
 
-const getApiDataItemFromCached = async <T extends (string | {})>(key: string): Promise<T | undefined> => {
+const GetApiDataItemFromCached = async <T extends (string | {})>(key: string): Promise<T | undefined> => {
     const cachedItemArr = await AsyncStorage.getItem(key)
 
     if (!cachedItemArr)
