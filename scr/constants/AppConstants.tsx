@@ -303,8 +303,11 @@ export const LocalText = {
 export const StorageKey_AwardPictureLastSeenIdxOfYear = (year: number) => 'award_picture_last_seen_idx_' + year
 export const StorageKey_LocalFileVersion = (cat: Category) => 'local_file_version_' + cat
 
-export const StorageKey_Streak = 'streak'
 export const StorageKey_WasteTimeItems = 'waste_time_item'
+export const StorageKey_NinjaFact = 'ninja_fact_arr'
+export const StorageKey_NinjaJoke = 'ninja_joke_arr'
+
+export const StorageKey_Streak = 'streak'
 export const StorageKey_SelectingFunWebsiteId = 'selecting_fun_website_id'
 export const StorageKey_SelectingTopMovieIdx = 'selecting_movie_idx'
 export const StorageKey_SelectingShortFilmIdx = 'selecting_short_film_idx'
