@@ -1,6 +1,6 @@
 // https://notifee.app/react-native/docs
 
-import notifee, { AndroidStyle, Notification, NotificationAndroid, TimestampTrigger, TriggerType } from '@notifee/react-native';
+import notifee, { AndroidChannel, AndroidImportance, AndroidStyle, Notification, NotificationAndroid, TimestampTrigger, TriggerType } from '@notifee/react-native';
 
 export type NotificationOption = {
   message: string,
@@ -21,7 +21,9 @@ export const initNotificationAsync = async () => {
   channelId = await notifee.createChannel({
     id: 'default',
     name: 'Default Channel',
-  });
+    importance: AndroidImportance.HIGH,
+    sound: 'default',
+  } as AndroidChannel);
 
   // Request permissions (required for iOS)
   await notifee.requestPermission()
@@ -62,11 +64,29 @@ export const setNotification = (option: NotificationOption) => { // main
   );
 }
 
+export const setNotification_ForNextDay = (  // sub
+  dayIdxFromToday: number,
+  option: NotificationOption,
+  hourIn24h: number,
+  minute?: number,
+  seconds?: number) => {
+    const d = new Date()
+    d.setDate(d.getDate() + dayIdxFromToday)
+    d.setHours(hourIn24h)
+    d.setMinutes(minute === undefined ? 0 : minute)
+    d.setSeconds(seconds === undefined ? 0 : seconds)
+    
+    setNotification({
+      ...option,
+      timestamp: d.getMilliseconds(),
+    } as NotificationOption)
+}
+
 export const setNotification_RemainSeconds = (  // sub
   seconds: number,
   option: NotificationOption) => {
   setNotification({
     ...option,
     timestamp: Date.now() + seconds * 1000
-  })
+  } as NotificationOption)
 }

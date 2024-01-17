@@ -7,13 +7,14 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { Linking, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors';
-import { BorderRadius, FontSize, FontWeight, Icon, LocalText, Outline, Size, StorageKey_FirstTimeInstallTick } from '../../constants/AppConstants';
+import { BorderRadius, FontSize, FontWeight, Icon, LocalText, Outline, Size, StorageKey_FirstTimeInstallTick, StorageKey_NinjaFact_ToggleNoti, StorageKey_NinjaJoke_ToggleNoti, StorageKey_Quote_ToggleNoti } from '../../constants/AppConstants';
 import { ScrollView } from 'react-native-gesture-handler';
 import { CopyAndToast } from '../../handle/AppUtils';
 import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
-import { GetDateAsync } from '../../handle/AsyncStorageUtils';
+import { GetBooleanAsync, GetDateAsync, SetBooleanAsync } from '../../handle/AsyncStorageUtils';
 import { SafeDateString } from '../../handle/UtilsTS';
+import { timeInHour24hNoti_Fact, timeInHour24hNoti_Joke, timeInHour24hNoti_Quote } from '../../handle/GoodayNotification';
 
 const limitFeedback = 300
 
@@ -42,13 +43,17 @@ const SettingView = () => {
   }, [theme])
 
   const onPressNoti = useCallback((type: 'quote' | 'fact' | 'joke') => {
-    if (type === 'fact')
+    if (type === 'fact') {
       setIsNoti_Fact(!isNoti_Fact)
+      SetBooleanAsync(StorageKey_NinjaFact_ToggleNoti, !isNoti_Fact)
+    }
     else if (type === 'quote') {
       setIsNoti_Quote(!isNoti_Quote)
+      SetBooleanAsync(StorageKey_Quote_ToggleNoti, !isNoti_Quote)
     }
     else if (type === 'joke') {
       setIsNoti_Joke(!isNoti_Joke)
+      SetBooleanAsync(StorageKey_NinjaJoke_ToggleNoti, !isNoti_Joke)
     }
   }, [isNoti_Fact, isNoti_Quote, isNoti_Joke])
 
@@ -85,6 +90,10 @@ const SettingView = () => {
       if (firstTimeInstallTick !== undefined) {
         setInstallDate(SafeDateString(firstTimeInstallTick))
       }
+
+      setIsNoti_Quote(await GetBooleanAsync(StorageKey_Quote_ToggleNoti, true))
+      setIsNoti_Joke(await GetBooleanAsync(StorageKey_NinjaJoke_ToggleNoti, true))
+      setIsNoti_Fact(await GetBooleanAsync(StorageKey_NinjaFact_ToggleNoti, true))
     })()
   }, [])
 
@@ -100,21 +109,21 @@ const SettingView = () => {
             <MaterialCommunityIcons name={isNoti_Quote ? Icon.CheckBox_Yes : Icon.CheckBox_No} color={theme.counterPrimary} size={Size.Icon} />
           </TouchableOpacity>
         </View>
-        <Text style={style.descNotiText}>{LocalText.notification_quote_of_the_day_desc}</Text>
+        <Text style={style.descNotiText}>{LocalText.notification_quote_of_the_day_desc.replace('#', timeInHour24hNoti_Quote.toString())}</Text>
         <View style={style.checkbox}>
           <Text style={style.emailText}>{LocalText.notification_fact_of_the_day}</Text>
           <TouchableOpacity onPress={() => onPressNoti('fact')} style={style.emailCopyTO} >
             <MaterialCommunityIcons name={isNoti_Fact ? Icon.CheckBox_Yes : Icon.CheckBox_No} color={theme.counterPrimary} size={Size.Icon} />
           </TouchableOpacity>
         </View>
-        <Text style={style.descNotiText}>{LocalText.notification_fact_of_the_day_desc}</Text>
+        <Text style={style.descNotiText}>{LocalText.notification_fact_of_the_day_desc.replace('#', timeInHour24hNoti_Fact.toString())}</Text>
         <View style={style.checkbox}>
           <Text style={style.emailText}>{LocalText.notification_joke_of_the_day}</Text>
           <TouchableOpacity onPress={() => onPressNoti('joke')} style={style.emailCopyTO} >
             <MaterialCommunityIcons name={isNoti_Joke ? Icon.CheckBox_Yes : Icon.CheckBox_No} color={theme.counterPrimary} size={Size.Icon} />
           </TouchableOpacity>
         </View>
-        <Text style={style.descNotiText}>{LocalText.notification_joke_of_the_day_desc}</Text>
+        <Text style={style.descNotiText}>{LocalText.notification_joke_of_the_day_desc.replace('#', timeInHour24hNoti_Joke.toString())}</Text>
         {
           hair100Width()
         }

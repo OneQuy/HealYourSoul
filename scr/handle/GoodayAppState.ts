@@ -4,13 +4,11 @@ import { HandleAppConfigAsync } from "./AppConfigHandler"
 import { HandleStartupAlertAsync } from "./StartupAlert"
 import { CheckAndTriggerFirstOpenAppOfTheDayAsync } from "./AppUtils"
 import { track_AppStateActive } from "./tracking/GoodayTracking"
-import { StorageKey_LastTimeCheckAndReloadAppConfig, StorageKey_Quote_DataNoti } from "../constants/AppConstants"
+import { StorageKey_LastTimeCheckAndReloadAppConfig } from "../constants/AppConstants"
 import { GetDateAsync_IsValueExistedAndIsToday, SetDateAsync_Now } from "./AsyncStorageUtils"
 import { NetLord } from "./NetLord"
 import { HandldAlertUpdateAppAsync } from "./HandleAlertUpdateApp"
-import AsyncStorage from "@react-native-async-storage/async-storage"
-import { setNotification_RemainSeconds } from "./Nofitication"
-import { PickRandomElement } from "./Utils"
+import { setNotificationAsync } from "./GoodayNotification"
 
 /** only reload if app re-active after a period 1 day */
 const checkAndReloadAppConfigAsync = async () => {
@@ -46,38 +44,6 @@ const onAppConfigReloadedAsync = async () => {
     await HandldAlertUpdateAppAsync() // alert_priority 2 (doc)
 }
 
-const setNotification = async () => {
-    // quote
-
-    const quotesTxt = await AsyncStorage.getItem(StorageKey_Quote_DataNoti)
-
-    if (quotesTxt !== null) {
-        const quotes = JSON.parse(quotesTxt) as {}[]
-
-        console.log(quotes.length);
-
-        for (let i = 0; i < 10 && i < quotes.length; i++) {
-            let time = i * 30
-
-            if (time <= 0)
-                time = 10
-
-            const quote = PickRandomElement(quotes)
-            
-            console.log(time, quote);
-
-            setNotification_RemainSeconds(time, {
-                // @ts-ignore
-                title: quote.author,
-
-                // @ts-ignore
-                message: quote.content,
-            })
-        }
-    }
-
-}
-
 const onActiveAsync = async () => {
     // check to show warning alert
 
@@ -93,7 +59,7 @@ const onActiveAsync = async () => {
 }
 
 const onBackgroundAsync = async () => {
-    setNotification()
+    setNotificationAsync()
 }
 
 const onStateChanged = (state: AppStateStatus) => {
