@@ -511,6 +511,25 @@ export const SaveCurrentScreenForLoadNextTime = (navigation: NavigationProp<Reac
     AsyncStorage.setItem('categoryScreenToOpenFirst', screenName);
 }
 
+const getApiDataItemFromCached = async <T extends (string | {})>(key: string): Promise<T | undefined> => {
+    const cachedItemArr = await AsyncStorage.getItem(key)
+
+    if (!cachedItemArr)
+        return undefined
+
+    const arr = JSON.parse(cachedItemArr) as T[]
+
+    if (!arr || arr.length <= 0)
+        return undefined
+
+    const item = arr[0]
+
+    const subArr = arr.slice(1)
+    await AsyncStorage.setItem(key, JSON.stringify(subArr))
+
+    return item
+}
+
 /**
  * on freshly open app or first active of the day
  */
