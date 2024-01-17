@@ -2,8 +2,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 
 // boolean =================
 
-export const GetBooleanAsync = async (key: string): Promise<boolean> => {
+export const GetBooleanAsync = async (key: string, defaultValue?: boolean): Promise<boolean> => {
     const s = await AsyncStorage.getItem(key)
+
+    if (!s)
+        return defaultValue === undefined ? false : defaultValue
+
     return s === '1'
 }
 
@@ -17,11 +21,11 @@ export const SetBooleanAsync = async (key: string, value: boolean): Promise<void
  * 
  * @return number or NaN
  */
-export const GetNumberFloatAsync = async (key: string): Promise<number> => {
+export const GetNumberFloatAsync = async (key: string, defaultValue?: number): Promise<number> => {
     const s = await AsyncStorage.getItem(key)
 
     if (!s)
-        return Number.NaN
+        return defaultValue === undefined ? Number.NaN : defaultValue
 
     try {
         return Number.parseFloat(s)
@@ -35,11 +39,11 @@ export const GetNumberFloatAsync = async (key: string): Promise<number> => {
  * 
  * @return number or NaN
  */
-export const GetNumberIntAsync = async (key: string): Promise<number> => {
+export const GetNumberIntAsync = async (key: string, defaultValue?: number): Promise<number> => {
     const s = await AsyncStorage.getItem(key)
 
     if (!s)
-        return Number.NaN
+        return defaultValue === undefined ? Number.NaN : defaultValue
 
     try {
         return Number.parseInt(s)
