@@ -12,6 +12,7 @@ import { LocalText } from "../constants/AppConstants";
 import { ToastTheme } from "./AppUtils";
 import { InitTrackingAsync } from "./tracking/Tracking";
 import { HandldAlertUpdateAppAsync } from "./HandleAlertUpdateApp";
+import { initNotificationAsync } from "./Nofitication";
 
 export type LoadAppDataResult = {
     categoryScreenToOpenFirst: keyof DrawerParamList | null
@@ -54,6 +55,10 @@ export async function LoadAppData(theme: ThemeColor): Promise<LoadAppDataResult>
     // handle alert update
 
     await HandldAlertUpdateAppAsync() // alert_priority 2 (doc)
+
+    // init noti
+
+    await initNotificationAsync() // alert_priority 3 (doc)
 
     // handle: versions file
 

@@ -308,6 +308,10 @@ export const StorageKey_NinjaFact = 'ninja_fact_arr'
 export const StorageKey_NinjaJoke = 'ninja_joke_arr'
 export const StorageKey_Quote = 'quote_arr'
 
+export const StorageKey_NinjaFact_DataNoti = 'ninja_fact_arr_noti'
+export const StorageKey_NinjaJoke_DataNoti = 'ninja_joke_arr_noti'
+export const StorageKey_Quote_DataNoti = 'quote_arr_noti'
+
 export const StorageKey_Streak = 'streak'
 export const StorageKey_SelectingFunWebsiteId = 'selecting_fun_website_id'
 export const StorageKey_SelectingTopMovieIdx = 'selecting_movie_idx'

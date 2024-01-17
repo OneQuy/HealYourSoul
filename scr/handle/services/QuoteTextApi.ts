@@ -6,6 +6,32 @@ import { GetApiDataItemFromCached } from "../AppUtils"
 
 const url = 'https://api.quotable.io/quotes/random?limit=100'
 
+export const GetQuoteListAsync_FromApi = async (): Promise<{ content: string, author: string }[] | undefined> => {
+    let res: Response | undefined
+
+    for (let i = 0; i < 5; i++) {
+        res = await fetch(url)
+
+        if (res.status === 200) {
+            break
+        }
+        else
+            await DelayAsync(500)
+    }
+
+    if (!res || !res.ok) {
+        return undefined
+    }
+
+    const arr = await res.json() as object[]
+
+    if (!Array.isArray(arr) || arr.length <= 0)
+        return undefined
+
+    // @ts-ignore
+    return arr.map(i => ({ content: i.content, author: i.author }))
+}
+
 export const GetQuoteTextAsync = async (): Promise<string | undefined> => {
     try {
 
@@ -16,29 +42,10 @@ export const GetQuoteTextAsync = async (): Promise<string | undefined> => {
             return '\"' + json.content + '"\n\n- ' + json.author
         }
 
-        let res: Response | undefined
+        const forSavedArr = await GetQuoteListAsync_FromApi()
 
-        for (let i = 0; i < 5; i++) {
-            res = await fetch(url)
-
-            if (res.status === 200) {
-                break
-            }
-            else
-                await DelayAsync(500)
-        }
-
-        if (!res || !res.ok) {
+        if (forSavedArr === undefined)
             return undefined
-        }
-
-        const arr = await res.json() as object[]
-
-        if (!Array.isArray(arr) || arr.length <= 0)
-            return undefined
-
-        // @ts-ignore
-        const forSavedArr = arr.map(i => ({ content: i.content, author: i.author }))
 
         await AsyncStorage.setItem(StorageKey_Quote, JSON.stringify(forSavedArr))
 

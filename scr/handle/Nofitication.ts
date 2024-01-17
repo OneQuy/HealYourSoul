@@ -1,6 +1,6 @@
 // https://notifee.app/react-native/docs
 
-import notifee, { Notification, TimestampTrigger, TriggerType } from '@notifee/react-native';
+import notifee, { AndroidStyle, Notification, NotificationAndroid, TimestampTrigger, TriggerType } from '@notifee/react-native';
 
 export type NotificationOption = {
   message: string,
@@ -49,7 +49,13 @@ export const setNotification = (option: NotificationOption) => { // main
     {
       title: option.title,
       body: option.message,
-      android: { channelId },
+      android: {
+        channelId,
+        style: {
+          type: AndroidStyle.BIGTEXT,
+          text: option.message,
+        },
+      } as NotificationAndroid,
     } as Notification,
 
     trigger,
