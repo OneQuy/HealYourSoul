@@ -304,6 +304,11 @@ export const StorageKey_AwardPictureLastSeenIdxOfYear = (year: number) => 'award
 export const StorageKey_LocalFileVersion = (cat: Category) => 'local_file_version_' + cat
 
 export const StorageKey_WasteTimeItems = 'waste_time_item'
+
+export const StorageKey_NinjaFact_ToggleNoti = 'ninja_fact_ToggleNoti'
+export const StorageKey_NinjaJoke_ToggleNoti = 'ninja_joke_ToggleNoti'
+export const StorageKey_Quote_ToggleNoti = 'quote_ToggleNoti'
+
 export const StorageKey_NinjaFact = 'ninja_fact_arr'
 export const StorageKey_NinjaJoke = 'ninja_joke_arr'
 export const StorageKey_Quote = 'quote_arr'
