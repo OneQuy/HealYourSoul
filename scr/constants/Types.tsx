@@ -89,6 +89,11 @@ export type RandomImage = {
     uri: string,
 }
 
+export type Quote = {
+    content: string,
+    author: string,
+}
+
 export type ShortFilm = {
     "name": string,
     "desc": string,

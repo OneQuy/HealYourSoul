@@ -1,5 +1,5 @@
 import { Alert, Linking, Platform } from "react-native";
-import { Category, FirebaseDBPath, FirebasePath, Icon, LocalPath, LocalText, NeedReloadReason, ScreenName, StorageKey_LastTimeCheckFirstOpenAppOfTheDay, StorageKey_Quote_DataNoti } from "../constants/AppConstants";
+import { Category, FirebaseDBPath, FirebasePath, Icon, LocalPath, LocalText, NeedReloadReason, ScreenName, StorageKey_LastTimeCheckFirstOpenAppOfTheDay } from "../constants/AppConstants";
 import { ThemeColor } from "../constants/Colors";
 import { FileList, MediaType, PostMetadata } from "../constants/Types";
 import { FirebaseStorage_DownloadAndReadJsonAsync } from "../firebase/FirebaseStorage";
@@ -16,8 +16,8 @@ import { NavigationProp } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CheckDuplicateAndDownloadAsync } from "../firebase/FirebaseStorageDownloadManager";
 import { track_FirstOpenOfTheDayAsync, track_HandleError, track_OnUseEffectOnceEnterAppAsync } from "./tracking/GoodayTracking";
-import { GetDateAsync, SetDateAsync, SetDateAsync_Now } from "./AsyncStorageUtils";
-import { GetQuoteListAsync_FromApi } from "./services/QuoteTextApi";
+import { GetDateAsync, SetDateAsync_Now } from "./AsyncStorageUtils";
+import { CheckAndPrepareDataForNotificationAsync } from "./GoodayNotification";
 
 const today = new Date()
 export const todayString = 'd' + today.getDate() + '_m' + (today.getMonth() + 1) + '_' + today.getFullYear()
@@ -531,23 +531,6 @@ export const GetApiDataItemFromCached = async <T extends (string | {})>(key: str
     return item
 }
 
-const CheckAndPrepareDataForNotificationAsync = async () => {
-    // quote
-
-    const quotes = await GetQuoteListAsync_FromApi()
-
-    if (quotes === undefined)
-        return undefined
-
-    await AsyncStorage.setItem(StorageKey_Quote_DataNoti, JSON.stringify(quotes))
-
-    console.log('quotes_noti', quotes.length);
-    
-    // fact
-
-    // joke
-}
-
 /**
  * on freshly open app or first active of the day
  */
@@ -572,5 +555,5 @@ export const CheckAndTriggerFirstOpenAppOfTheDayAsync = async () => {
 export const OnUseEffectOnceEnterApp = () => {
     track_OnUseEffectOnceEnterAppAsync(startFreshlyOpenAppTick)
     CheckAndTriggerFirstOpenAppOfTheDayAsync()
-    // CheckAndPrepareDataForNotificationAsync()
+    CheckAndPrepareDataForNotificationAsync()
 }

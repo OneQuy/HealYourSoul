@@ -1,12 +1,12 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { DelayAsync } from "../Utils"
-import { ToCanPrint } from "../UtilsTS"
 import { StorageKey_Quote } from "../../constants/AppConstants"
 import { GetApiDataItemFromCached } from "../AppUtils"
+import { Quote } from "../../constants/Types"
 
 const url = 'https://api.quotable.io/quotes/random?limit=100'
 
-export const GetQuoteListAsync_FromApi = async (): Promise<{ content: string, author: string }[] | undefined> => {
+export const GetQuoteListAsync_FromApi = async (): Promise<Quote[] | undefined> => {
     let res: Response | undefined
 
     for (let i = 0; i < 5; i++) {
@@ -29,16 +29,15 @@ export const GetQuoteListAsync_FromApi = async (): Promise<{ content: string, au
         return undefined
 
     // @ts-ignore
-    return arr.map(i => ({ content: i.content, author: i.author }))
+    return arr.map(i => ({ content: i.content, author: i.author } as Quote))
 }
 
 export const GetQuoteTextAsync = async (): Promise<string | undefined> => {
     try {
 
-        let json = await GetApiDataItemFromCached<object>(StorageKey_Quote)
+        let json = await GetApiDataItemFromCached<Quote>(StorageKey_Quote)
 
         if (json !== undefined) {
-            // @ts-ignore
             return '\"' + json.content + '"\n\n- ' + json.author
         }
 
@@ -49,12 +48,11 @@ export const GetQuoteTextAsync = async (): Promise<string | undefined> => {
 
         await AsyncStorage.setItem(StorageKey_Quote, JSON.stringify(forSavedArr))
 
-        json = await GetApiDataItemFromCached<object>(StorageKey_Quote)
+        json = await GetApiDataItemFromCached<Quote>(StorageKey_Quote)
 
         if (json === undefined)
             return undefined
 
-        // @ts-ignore
         const data = '\"' + json.content + '"\n\n- ' + json.author
 
         return data
