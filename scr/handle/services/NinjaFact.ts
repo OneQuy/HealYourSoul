@@ -4,6 +4,7 @@ import { NINJA_FACT_KEY } from '../../../keys';
 const options = {
     method: 'GET',
     url: 'https://facts-by-api-ninjas.p.rapidapi.com/v1/facts',
+    params: {limit: '30'},
     headers: {
         'X-RapidAPI-Key': NINJA_FACT_KEY,
         'X-RapidAPI-Host': 'facts-by-api-ninjas.p.rapidapi.com'

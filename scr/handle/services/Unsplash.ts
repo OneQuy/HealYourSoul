@@ -10,7 +10,7 @@ import { RandomImage } from "../../constants/Types"
 //     try {
 //         const data = await fetch(`https://api.unsplash.com/photos/random?client_id=${UNSPLASH_KEY}`)
 
-//         if (data.status !== 200)
+//         if (!data.ok)
 //             return undefined
 
 //         const dataJ = await data.json();
