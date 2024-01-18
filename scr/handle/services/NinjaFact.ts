@@ -21,15 +21,10 @@ export const GetNinjaFactAsync = async (): Promise<string | undefined> => {
         if (cachedText !== undefined)
             return cachedText
 
-        const response = await axios.request(options);
+        const textArr = await GetFactListAsync_FromApi()
 
-        if (response.status !== 200)
+        if (!textArr)
             return undefined
-
-        if (!Array.isArray(response.data) || response.data.length <= 0)
-            return undefined
-
-        const textArr = response.data.map(i => i.fact as string)
 
         await AsyncStorage.setItem(StorageKey_NinjaFact, JSON.stringify(textArr))
 
@@ -37,4 +32,16 @@ export const GetNinjaFactAsync = async (): Promise<string | undefined> => {
     } catch (error) {
         return undefined
     }
+}
+
+export const GetFactListAsync_FromApi = async (): Promise<string[] | undefined> => {
+    const response = await axios.request(options);
+
+    if (response.status !== 200)
+        return undefined
+
+    if (!Array.isArray(response.data) || response.data.length <= 0)
+        return undefined
+
+    return response.data.map(i => i.fact as string)
 }

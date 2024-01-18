@@ -21,15 +21,10 @@ export const GetNinjaJokeAsync = async (): Promise<string | undefined> => {
         if (cachedText !== undefined)
             return cachedText
 
-        const response = await axios.request(options);
+        const textArr = await GetJokeListAsync_FromApi()
 
-        if (response.status !== 200)
+        if (!textArr)
             return undefined
-
-        if (!Array.isArray(response.data) || response.data.length <= 0)
-            return undefined
-
-        const textArr = response.data.map(i => i.joke as string)
 
         await AsyncStorage.setItem(StorageKey_NinjaJoke, JSON.stringify(textArr))
 
@@ -37,4 +32,16 @@ export const GetNinjaJokeAsync = async (): Promise<string | undefined> => {
     } catch (error) {
         return undefined
     }
+}
+
+export const GetJokeListAsync_FromApi = async (): Promise<string[] | undefined> => {
+    const response = await axios.request(options);
+
+    if (response.status !== 200)
+        return undefined
+
+    if (!Array.isArray(response.data) || response.data.length <= 0)
+        return undefined
+
+    return response.data.map(i => i.joke as string)
 }
