@@ -7,6 +7,8 @@ import { GetBooleanAsync } from "../AsyncStorageUtils";
 import { StorageKey_ForceDev } from "../../constants/AppConstants";
 import { toast } from "@baronha/ting";
 
+const isLog = false
+
 var isDev = true
 
 var inited = false
@@ -72,8 +74,11 @@ export const MainTrack = (
         aptaEvent = eventName
 
     trackEvent(aptaEvent, aptaValue)
-    console.log('------------------------')
-    console.log('testtttt apta event', aptaEvent, JSON.stringify(aptaValue));
+
+    if (isLog) {
+        console.log('------------------------')
+        console.log('testtttt apta event', aptaEvent, JSON.stringify(aptaValue));
+    }
 
     // track firebase
 
@@ -81,8 +86,11 @@ export const MainTrack = (
     for (let i = 0; i < fbPaths.length; i++) {
         let path = prefixFbTrackPath() + fbPaths[i]
         path = path.replaceAll('#d', todayString)
-        console.log('fb path', path);
 
+        if (isLog) {
+            console.log('fb path', path);
+        }
+        
         FirebaseDatabase_IncreaseNumberAsync(path, 0)
     }
 }
