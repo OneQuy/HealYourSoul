@@ -1,6 +1,7 @@
 // https://notifee.app/react-native/docs
 
 import notifee, { AndroidChannel, AndroidImportance, AndroidStyle, Notification, NotificationAndroid, TimestampTrigger, TriggerType } from '@notifee/react-native';
+import { Clipboard_AppendLine } from './ClipboardMan';
 
 export type NotificationOption = {
   message: string,
@@ -40,6 +41,7 @@ export const setNotification = (option: NotificationOption) => { // main
     throw 'Notification option is invalid'
 
   if (option.timestamp < Date.now()) {
+    Clipboard_AppendLine(new Date(option.timestamp).toLocaleString() + ', xxxxxxx')
     return
   }
 
@@ -47,6 +49,8 @@ export const setNotification = (option: NotificationOption) => { // main
     type: TriggerType.TIMESTAMP,
     timestamp: option.timestamp,
   }
+
+  Clipboard_AppendLine(new Date(option.timestamp).toLocaleString() + ', ' + option.message)
 
   notifee.createTriggerNotification(
     {

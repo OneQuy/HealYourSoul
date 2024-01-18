@@ -26,7 +26,7 @@ export const setNotificationAsync = async () => {
 
     // quote
 
-    const isToggleQuote = await GetBooleanAsync(StorageKey_Quote_ToggleNoti)
+    const isToggleQuote = await GetBooleanAsync(StorageKey_Quote_ToggleNoti, true)
 
     if (arr_Quote && isToggleQuote) {
         for (let i = 0; i < arr_Quote.length && i < daysToNotiEveryday; i++) {
@@ -48,7 +48,7 @@ export const setNotificationAsync = async () => {
 
     // fact
 
-    const isToggleFact = await GetBooleanAsync(StorageKey_NinjaFact_ToggleNoti)
+    const isToggleFact = await GetBooleanAsync(StorageKey_NinjaFact_ToggleNoti, true)
 
     if (arr_Fact && isToggleFact) {
         for (let i = 0; i < arr_Fact.length && i < daysToNotiEveryday; i++) {
@@ -107,7 +107,6 @@ export const CheckAndPrepareDataForNotificationAsync_Quote = async () => {
     let arr: Quote[] = cached ? JSON.parse(cached) as Quote[] : []
 
     if (arr && arr.length >= 1) {
-        ShuffleArray(arr)
         arr_Quote = arr
         return
     }
@@ -145,7 +144,6 @@ export const CheckAndPrepareDataForNotificationAsync_Fact = async () => {
     let arr: string[] = cached ? JSON.parse(cached) as string[] : []
 
     if (arr && arr.length >= 1) {
-        ShuffleArray(arr)
         arr_Fact = arr
         return
     }
@@ -182,7 +180,6 @@ export const CheckAndPrepareDataForNotificationAsync_Joke = async () => {
     let arr: string[] = cached ? JSON.parse(cached) as string[] : []
 
     if (arr && arr.length >= 1) {
-        ShuffleArray(arr)
         arr_Joke = arr
         return
     }
