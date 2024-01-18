@@ -46,6 +46,7 @@ const SettingView = () => {
       emailText: { color: theme.text, fontSize: FontSize.Normal },
       statText: { color: theme.text, fontSize: FontSize.Small_L },
       sendFeedbackTO: { alignSelf: 'center', paddingVertical: Outline.GapVertical, paddingHorizontal: Outline.GapVertical_2, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth, },
+      sendFeedbackInput: { width: '100%', height: '100%' },
     })
   }, [theme])
 
@@ -76,10 +77,11 @@ const SettingView = () => {
     const res = await FirebaseDatabase_SetValueAsync('feedback/t' + Date.now(), feedbackText)
     setIsSendingFeedback(false)
 
-    if (res === null) {
+    if (res === null) { // success
       Alert.alert(LocalText.done, LocalText.popup_content_sent_feedback)
+      setFeedbackText('')
     }
-    else {
+    else { // fail
       Alert.alert(LocalText.popup_title_error, LocalText.popup_content_error)
     }
   }, [feedbackText, isSendingFeedback])
@@ -188,6 +190,7 @@ const SettingView = () => {
         <Text onPress={onPressGetLogStorage} style={style.titleText}>{LocalText.feedback}</Text>
         <View style={style.textInputConView}>
           <TextInput
+          style={style.sendFeedbackInput}
             maxLength={limitFeedback}
             multiline={true}
             value={feedbackText}
