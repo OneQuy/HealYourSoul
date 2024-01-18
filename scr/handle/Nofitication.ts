@@ -2,6 +2,7 @@
 
 import notifee, { AndroidChannel, AndroidImportance, AndroidStyle, Notification, NotificationAndroid, TimestampTrigger, TriggerType } from '@notifee/react-native';
 import { Clipboard_AppendLine } from './ClipboardMan';
+import { StorageLog_LogAsync } from './StorageLog';
 
 export type NotificationOption = {
   message: string,
@@ -41,7 +42,7 @@ export const setNotification = (option: NotificationOption) => { // main
     throw 'Notification option is invalid'
 
   if (option.timestamp < Date.now()) {
-    Clipboard_AppendLine(new Date(option.timestamp).toLocaleString() + ', xxxxxxx')
+    // StorageLog_LogAsync('Overed noti: ' + new Date(option.timestamp).toLocaleString(), option.message)
     return
   }
 
@@ -49,8 +50,8 @@ export const setNotification = (option: NotificationOption) => { // main
     type: TriggerType.TIMESTAMP,
     timestamp: option.timestamp,
   }
-
-  Clipboard_AppendLine(new Date(option.timestamp).toLocaleString() + ', ' + option.message)
+  
+  // StorageLog_LogAsync('set noti: ' + new Date(option.timestamp).toLocaleString() + ', ' + option.message)
 
   notifee.createTriggerNotification(
     {
