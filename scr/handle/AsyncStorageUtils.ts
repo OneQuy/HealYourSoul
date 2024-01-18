@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import { IsTodayAndSameHour } from "./UtilsTS"
 
 // boolean =================
 
@@ -80,6 +81,15 @@ export const GetDateAsync_IsValueExistedAndIsToday = async (key: string): Promis
         return false
 
     return IsToday(d)
+}
+
+export const GetDateAsync_IsValueExistedAndIsTodayAndSameHour = async (key: string): Promise<boolean> => {
+    const d = await GetDateAsync(key)
+
+    if (d === undefined)
+        return false
+
+    return IsTodayAndSameHour(d)
 }
 
 export const SetDateAsync = async (key: string, value: number): Promise<void> => {

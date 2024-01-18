@@ -302,6 +302,7 @@ export const LocalText = {
   popup_content_error: "Uh-oh! Something went wrong. We're fixing it. Thanks for your patience!",
 
   popup_content_sent_feedback: 'Thank you for taking the time to provide feedback! Your input is valuable and helps us improve.',
+  popup_content_sent_feedback_error_hour: 'You just sent feedback recently. Please send another one at least in the next hour. Thank you!',
 }
 
 // storage
@@ -342,5 +343,4 @@ export const StorageKey_LastInstalledVersion = 'last_version'
 export const StorageKey_LastAskForUpdateApp = 'ask_for_update_app'
 export const StorageKey_ForceDev = 'force_dev'
 export const StorageKey_Rated = 'rated'
-export const StorageKey_Notification_Quote = 'noti_quote'
-export const StorageKey_Notification_Fact = 'noti_fact'
+export const StorageKey_LastTickSendFeedback = 'feedback_tick'

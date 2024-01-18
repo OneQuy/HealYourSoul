@@ -524,6 +524,15 @@ export const DistanceFrom2Dates = (d1: Date | number, d2: Date | number): number
     return distanceMs / 24 / 3600 / 1000
 }
 
+export const IsTodayAndSameHour = (date: Date): boolean => {
+    if (!IsToday(date))
+        return false
+
+    const now = new Date()
+    
+    return date.getHours() === now.getHours()
+}
+
 export const IsToday = (date: Date): boolean => {
     return IsSameDateMonthYear(date, new Date())
 }

@@ -7,13 +7,13 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { ActivityIndicator, Alert, Linking, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors';
-import { BorderRadius, FontSize, FontWeight, Icon, LocalText, Outline, Size, StorageKey_FirstTimeInstallTick, StorageKey_NinjaFact_ToggleNoti, StorageKey_NinjaJoke_ToggleNoti, StorageKey_Quote_ToggleNoti } from '../../constants/AppConstants';
+import { BorderRadius, FontSize, FontWeight, Icon, LocalText, Outline, Size, StorageKey_FirstTimeInstallTick, StorageKey_LastTickSendFeedback, StorageKey_NinjaFact_ToggleNoti, StorageKey_NinjaJoke_ToggleNoti, StorageKey_Quote_ToggleNoti } from '../../constants/AppConstants';
 import { ScrollView } from 'react-native-gesture-handler';
 import { CopyAndToast, ToastTheme } from '../../handle/AppUtils';
 import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
-import { GetBooleanAsync, GetDateAsync, SetBooleanAsync } from '../../handle/AsyncStorageUtils';
-import { SafeDateString, btoa, atob } from '../../handle/UtilsTS';
+import { GetBooleanAsync, GetDateAsync, GetDateAsync_IsValueExistedAndIsTodayAndSameHour, SetBooleanAsync, SetDateAsync_Now } from '../../handle/AsyncStorageUtils';
+import { SafeDateString, btoa, atob, IsToday, ToCanPrint } from '../../handle/UtilsTS';
 import { onPressTestNoti, timeInHour24hNoti_Fact, timeInHour24hNoti_Joke, timeInHour24hNoti_Quote } from '../../handle/GoodayNotification';
 import { StorageLog_GetAsync } from '../../handle/StorageLog';
 import Clipboard from '@react-native-clipboard/clipboard';
@@ -73,6 +73,11 @@ const SettingView = () => {
     if (isSendingFeedback)
       return
 
+    if (await GetDateAsync_IsValueExistedAndIsTodayAndSameHour(StorageKey_LastTickSendFeedback)) {
+      Alert.alert(LocalText.popup_title_error, LocalText.popup_content_sent_feedback_error_hour)
+      return
+    }
+
     setIsSendingFeedback(true)
     const res = await FirebaseDatabase_SetValueAsync('feedback/t' + Date.now(), feedbackText)
     setIsSendingFeedback(false)
@@ -80,9 +85,10 @@ const SettingView = () => {
     if (res === null) { // success
       Alert.alert(LocalText.done, LocalText.popup_content_sent_feedback)
       setFeedbackText('')
+      SetDateAsync_Now(StorageKey_LastTickSendFeedback)
     }
     else { // fail
-      Alert.alert(LocalText.popup_title_error, LocalText.popup_content_error)
+      Alert.alert(LocalText.popup_title_error, LocalText.popup_content_error + '\n\n' + ToCanPrint(res))
     }
   }, [feedbackText, isSendingFeedback])
 
@@ -190,7 +196,7 @@ const SettingView = () => {
         <Text onPress={onPressGetLogStorage} style={style.titleText}>{LocalText.feedback}</Text>
         <View style={style.textInputConView}>
           <TextInput
-          style={style.sendFeedbackInput}
+            style={style.sendFeedbackInput}
             maxLength={limitFeedback}
             multiline={true}
             value={feedbackText}
