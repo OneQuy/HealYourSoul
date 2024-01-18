@@ -15,6 +15,8 @@ import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { GetBooleanAsync, GetDateAsync, SetBooleanAsync } from '../../handle/AsyncStorageUtils';
 import { SafeDateString } from '../../handle/UtilsTS';
 import { timeInHour24hNoti_Fact, timeInHour24hNoti_Joke, timeInHour24hNoti_Quote } from '../../handle/GoodayNotification';
+import { StorageLog_GetAsync } from '../../handle/StorageLog';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 const limitFeedback = 300
 
@@ -57,6 +59,10 @@ const SettingView = () => {
     }
   }, [isNoti_Fact, isNoti_Quote, isNoti_Joke])
 
+  const onPressGetLogStorage = useCallback(async () => {
+    Clipboard.setString(await StorageLog_GetAsync())
+  }, [])
+
   const onPressSendFeedback = useCallback(() => {
   }, [])
 
@@ -92,8 +98,8 @@ const SettingView = () => {
       }
 
       setIsNoti_Quote(await GetBooleanAsync(StorageKey_Quote_ToggleNoti, true))
-      setIsNoti_Joke(await GetBooleanAsync(StorageKey_NinjaJoke_ToggleNoti, true))
       setIsNoti_Fact(await GetBooleanAsync(StorageKey_NinjaFact_ToggleNoti, true))
+      setIsNoti_Joke(await GetBooleanAsync(StorageKey_NinjaJoke_ToggleNoti, false))
     })()
   }, [])
 
@@ -161,7 +167,7 @@ const SettingView = () => {
 
         {/* feedback */}
 
-        <Text style={style.titleText}>{LocalText.feedback}</Text>
+        <Text onPress={onPressGetLogStorage} style={style.titleText}>{LocalText.feedback}</Text>
         <View style={style.textInputConView}>
           <TextInput
             maxLength={limitFeedback}
