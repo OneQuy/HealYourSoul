@@ -4,19 +4,22 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { Linking, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, Alert, Linking, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors';
 import { BorderRadius, FontSize, FontWeight, Icon, LocalText, Outline, Size, StorageKey_FirstTimeInstallTick, StorageKey_NinjaFact_ToggleNoti, StorageKey_NinjaJoke_ToggleNoti, StorageKey_Quote_ToggleNoti } from '../../constants/AppConstants';
 import { ScrollView } from 'react-native-gesture-handler';
-import { CopyAndToast } from '../../handle/AppUtils';
+import { CopyAndToast, ToastTheme } from '../../handle/AppUtils';
 import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { GetBooleanAsync, GetDateAsync, SetBooleanAsync } from '../../handle/AsyncStorageUtils';
-import { SafeDateString } from '../../handle/UtilsTS';
+import { SafeDateString, btoa, atob } from '../../handle/UtilsTS';
 import { onPressTestNoti, timeInHour24hNoti_Fact, timeInHour24hNoti_Joke, timeInHour24hNoti_Quote } from '../../handle/GoodayNotification';
 import { StorageLog_GetAsync } from '../../handle/StorageLog';
 import Clipboard from '@react-native-clipboard/clipboard';
+import { FirebaseDatabase_SetValueAsync } from '../../firebase/FirebaseDatabase';
+import { IsDev } from '../../handle/tracking/Tracking';
+import { ToastOptions, toast } from '@baronha/ting';
 
 const limitFeedback = 300
 
@@ -26,6 +29,8 @@ const SettingView = () => {
   const [isNoti_Fact, setIsNoti_Fact] = useState(true)
   const [isNoti_Joke, setIsNoti_Joke] = useState(false)
   const [installDate, setInstallDate] = useState('')
+  const [feedbackText, setFeedbackText] = useState('')
+  const [isSendingFeedback, setIsSendingFeedback] = useState(false)
 
   const style = useMemo(() => {
     return StyleSheet.create({
@@ -63,8 +68,21 @@ const SettingView = () => {
     Clipboard.setString(await StorageLog_GetAsync())
   }, [])
 
-  const onPressSendFeedback = useCallback(() => {
-  }, [])
+  const onPressSendFeedback = useCallback(async () => {
+    if (isSendingFeedback)
+      return
+
+    setIsSendingFeedback(true)
+    const res = await FirebaseDatabase_SetValueAsync('feedback/t' + Date.now(), feedbackText)
+    setIsSendingFeedback(false)
+
+    if (res === null) {
+      Alert.alert(LocalText.done, LocalText.popup_content_sent_feedback)
+    }
+    else {
+      Alert.alert(LocalText.popup_title_error, LocalText.popup_content_error)
+    }
+  }, [feedbackText, isSendingFeedback])
 
   const onPress = useCallback((type: 'telegram' | 'facebook' | 'twitter' | 'email') => {
     track_SimpleWithParam('press_community', type)
@@ -172,10 +190,16 @@ const SettingView = () => {
           <TextInput
             maxLength={limitFeedback}
             multiline={true}
+            value={feedbackText}
+            onChangeText={setFeedbackText}
           />
         </View>
         <TouchableOpacity onPress={onPressSendFeedback} style={style.sendFeedbackTO}>
-          <Text style={style.titleText}>{LocalText.send}</Text>
+          {
+            isSendingFeedback ?
+              <ActivityIndicator /> :
+              <Text style={style.titleText}>{LocalText.send}</Text>
+          }
         </TouchableOpacity>
         {
           hair100Width()

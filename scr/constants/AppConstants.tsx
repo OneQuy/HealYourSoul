@@ -228,6 +228,7 @@ export const LocalText = {
   no_internet: 'No internet!',
   cant_get_content: 'Cant get the content!',
   thank_iap: 'Your purchase is successful! Thank you so much for this support!',
+  done: 'Done!',
   you_are_awesome: 'You are awsome!!',
   donate_me: 'Donate / Support',
   theme: 'Theme',
@@ -296,6 +297,11 @@ export const LocalText = {
 
   popup_title_need_internet: 'No Internet',
   popup_content_need_internet: 'Please check your network and try again.',
+  
+  popup_title_error: 'Ooops!',
+  popup_content_error: "Uh-oh! Something went wrong. We're fixing it. Thanks for your patience!",
+
+  popup_content_sent_feedback: 'Thank you for taking the time to provide feedback! Your input is valuable and helps us improve.',
 }
 
 // storage
