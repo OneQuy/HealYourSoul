@@ -29,6 +29,8 @@ export const setNotificationAsync = async () => {
     const isToggleQuote = await GetBooleanAsync(StorageKey_Quote_ToggleNoti, true)
 
     if (arr_Quote && isToggleQuote) {
+        ShuffleArray(arr_Quote)
+
         for (let i = 0; i < arr_Quote.length && i < daysToNotiEveryday; i++) {
             const quote = arr_Quote[i]
 
@@ -51,6 +53,8 @@ export const setNotificationAsync = async () => {
     const isToggleFact = await GetBooleanAsync(StorageKey_NinjaFact_ToggleNoti, true)
 
     if (arr_Fact && isToggleFact) {
+        ShuffleArray(arr_Fact)
+
         for (let i = 0; i < arr_Fact.length && i < daysToNotiEveryday; i++) {
             const quote = arr_Fact[i]
 
@@ -71,6 +75,8 @@ export const setNotificationAsync = async () => {
     const isToggleJoke = await GetBooleanAsync(StorageKey_NinjaJoke_ToggleNoti)
 
     if (arr_Joke && isToggleJoke) {
+        ShuffleArray(arr_Joke)
+
         for (let i = 0; i < arr_Joke.length && i < daysToNotiEveryday; i++) {
             const quote = arr_Joke[i]
 
