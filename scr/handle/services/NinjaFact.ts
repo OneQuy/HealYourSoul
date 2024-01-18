@@ -35,13 +35,18 @@ export const GetNinjaFactAsync = async (): Promise<string | undefined> => {
 }
 
 export const GetFactListAsync_FromApi = async (): Promise<string[] | undefined> => {
-    const response = await axios.request(options);
+    try {
+        const response = await axios.request(options);
 
-    if (response.status !== 200)
+        if (response.status !== 200)
+            return undefined
+
+        if (!Array.isArray(response.data) || response.data.length <= 0)
+            return undefined
+
+        return response.data.map(i => i.fact as string)
+    }
+    catch {
         return undefined
-
-    if (!Array.isArray(response.data) || response.data.length <= 0)
-        return undefined
-
-    return response.data.map(i => i.fact as string)
+    }
 }

@@ -10,9 +10,14 @@ export const GetQuoteListAsync_FromApi = async (): Promise<Quote[] | undefined> 
     let res: Response | undefined
 
     for (let i = 0; i < 5; i++) {
-        res = await fetch(url)
+        res = undefined
 
-        if (res.status === 200) {
+        try {
+            res = await fetch(url)
+        }
+        catch { }
+
+        if (res && res.status === 200) {
             break
         }
         else
