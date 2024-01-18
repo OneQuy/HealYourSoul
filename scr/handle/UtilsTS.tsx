@@ -331,6 +331,13 @@ export const IsNumType = (o: any) => {
 
 // array utils ---------------------------
 
+export function ShuffleArray<T>(arr: T[]) : void {
+    if (!Array.isArray(arr))
+        return
+
+    arr.sort((_, __) => Math.random() > 0.5 ? 1 : -1)
+}
+
 export function ArrayRemove<T>(arr: T[], value: T): boolean {
     const idx = arr.indexOf(value)
 

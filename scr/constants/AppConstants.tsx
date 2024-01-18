@@ -317,6 +317,10 @@ export const StorageKey_NinjaFact_DataNoti = 'ninja_fact_arr_noti'
 export const StorageKey_NinjaJoke_DataNoti = 'ninja_joke_arr_noti'
 export const StorageKey_Quote_DataNoti = 'quote_arr_noti'
 
+export const StorageKey_NinjaFact_LastDateDownload_DataNoti = 'ninja_fact_arr_noti_date'
+export const StorageKey_NinjaJoke_LastDateDownload_DataNoti = 'ninja_joke_arr_noti_date'
+export const StorageKey_Quote_LastDateDownload_DataNoti = 'quote_arr_noti_date'
+
 export const StorageKey_Streak = 'streak'
 export const StorageKey_SelectingFunWebsiteId = 'selecting_fun_website_id'
 export const StorageKey_SelectingTopMovieIdx = 'selecting_movie_idx'
