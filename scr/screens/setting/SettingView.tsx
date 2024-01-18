@@ -14,7 +14,7 @@ import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { GetBooleanAsync, GetDateAsync, SetBooleanAsync } from '../../handle/AsyncStorageUtils';
 import { SafeDateString } from '../../handle/UtilsTS';
-import { timeInHour24hNoti_Fact, timeInHour24hNoti_Joke, timeInHour24hNoti_Quote } from '../../handle/GoodayNotification';
+import { onPressTestNoti, timeInHour24hNoti_Fact, timeInHour24hNoti_Joke, timeInHour24hNoti_Quote } from '../../handle/GoodayNotification';
 import { StorageLog_GetAsync } from '../../handle/StorageLog';
 import Clipboard from '@react-native-clipboard/clipboard';
 
@@ -110,21 +110,21 @@ const SettingView = () => {
 
         <Text style={style.titleText}>{LocalText.notification}</Text>
         <View style={style.checkbox}>
-          <Text style={style.emailText}>{LocalText.notification_quote_of_the_day}</Text>
+          <Text onPress={() => onPressTestNoti('quote')} style={style.emailText}>{LocalText.notification_quote_of_the_day}</Text>
           <TouchableOpacity onPress={() => onPressNoti('quote')} style={style.emailCopyTO} >
             <MaterialCommunityIcons name={isNoti_Quote ? Icon.CheckBox_Yes : Icon.CheckBox_No} color={theme.counterPrimary} size={Size.Icon} />
           </TouchableOpacity>
         </View>
         <Text style={style.descNotiText}>{LocalText.notification_quote_of_the_day_desc.replace('#', timeInHour24hNoti_Quote.toString())}</Text>
         <View style={style.checkbox}>
-          <Text style={style.emailText}>{LocalText.notification_fact_of_the_day}</Text>
+          <Text onPress={() => onPressTestNoti('fact')} style={style.emailText}>{LocalText.notification_fact_of_the_day}</Text>
           <TouchableOpacity onPress={() => onPressNoti('fact')} style={style.emailCopyTO} >
             <MaterialCommunityIcons name={isNoti_Fact ? Icon.CheckBox_Yes : Icon.CheckBox_No} color={theme.counterPrimary} size={Size.Icon} />
           </TouchableOpacity>
         </View>
         <Text style={style.descNotiText}>{LocalText.notification_fact_of_the_day_desc.replace('#', timeInHour24hNoti_Fact.toString())}</Text>
         <View style={style.checkbox}>
-          <Text style={style.emailText}>{LocalText.notification_joke_of_the_day}</Text>
+          <Text onPress={() => onPressTestNoti('joke')} style={style.emailText}>{LocalText.notification_joke_of_the_day}</Text>
           <TouchableOpacity onPress={() => onPressNoti('joke')} style={style.emailCopyTO} >
             <MaterialCommunityIcons name={isNoti_Joke ? Icon.CheckBox_Yes : Icon.CheckBox_No} color={theme.counterPrimary} size={Size.Icon} />
           </TouchableOpacity>

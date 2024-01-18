@@ -2,11 +2,13 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LocalText, StorageKey_NinjaFact_DataNoti, StorageKey_NinjaFact_LastDateDownload_DataNoti, StorageKey_NinjaFact_ToggleNoti, StorageKey_NinjaJoke_DataNoti, StorageKey_NinjaJoke_LastDateDownload_DataNoti, StorageKey_NinjaJoke_ToggleNoti, StorageKey_Quote_DataNoti, StorageKey_Quote_LastDateDownload_DataNoti, StorageKey_Quote_ToggleNoti } from "../constants/AppConstants";
 import { GetQuoteListAsync_FromApi } from "./services/QuoteTextApi";
 import { Quote } from "../constants/Types";
-import { cancelAllLocalNotificationsAsync, setNotification_ForNextDay } from "./Nofitication";
+import { cancelAllLocalNotificationsAsync, setNotification_ForNextDay, setNotification_RemainSeconds } from "./Nofitication";
 import { GetBooleanAsync, GetDateAsync, SetDateAsync_Now } from "./AsyncStorageUtils";
 import { GetFactListAsync_FromApi } from "./services/NinjaFact";
 import { GetJokeListAsync_FromApi } from "./services/NinjaJoke";
 import { ShuffleArray } from "./UtilsTS";
+import { PickRandomElement, RandomInt } from "./Utils";
+import { toast } from "@baronha/ting";
 
 const daysToNotiEveryday = 10
 const daysToRedownloadData = 5
@@ -165,7 +167,6 @@ export const CheckAndPrepareDataForNotificationAsync_Fact = async () => {
     await CheckAndPrepareDataForNotificationAsync_Fact()
 }
 
-
 export const CheckAndPrepareDataForNotificationAsync_Joke = async () => {
     if (arr_Joke)
         return
@@ -213,4 +214,37 @@ export const CheckAndPrepareDataForNotificationAsync = async () => {
     // joke
 
     CheckAndPrepareDataForNotificationAsync_Joke()
+}
+
+export const onPressTestNoti = (type: 'quote' | 'fact' | 'joke') => {
+    let title = ''
+    let message = ''
+
+    if (type === 'quote' && arr_Quote) {
+        const quote: Quote = PickRandomElement(arr_Quote)
+
+        title = LocalText.notification_quote_of_the_day
+        message = quote.content + ' (' + quote.author + ')'
+    }
+    else if (type === 'fact' && arr_Fact) {
+        message = PickRandomElement(arr_Fact)
+        title = LocalText.fact_of_the_day
+    }
+    else if (type === 'joke' && arr_Joke) {
+        message = PickRandomElement(arr_Joke)
+        title = LocalText.notification_joke_of_the_day
+    }
+
+    if (title && message) {
+        setNotification_RemainSeconds(1, {
+            title,
+            message
+        })
+    }
+    else {
+        toast({
+            title: 'Ooopsssss',
+            message: 'No data to show test notification!'
+        })
+    }
 }
