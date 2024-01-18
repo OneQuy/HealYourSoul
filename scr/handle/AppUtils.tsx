@@ -8,7 +8,6 @@ import { DeleteFileAsync, DeleteTempDirAsync, GetFLPFromRLP, IsExistedAsync, Rea
 import { versions } from "./VersionsHandler";
 import { ToastOptions, toast } from "@baronha/ting";
 import { ColorNameToHex, IsToday, ToCanPrint, VersionToNumber } from "./UtilsTS";
-import { AppLog } from "./AppLog";
 import RNFS, { DownloadProgressCallbackResult, ReadDirItem } from "react-native-fs";
 import { IsInternetAvailableAsync } from "./NetLord";
 import Clipboard from "@react-native-clipboard/clipboard";
@@ -300,10 +299,7 @@ export const CopyAndToast = (s: string, theme: ThemeColor) => {
 }
 
 export const HandleError = (methodName: string, error: any, keepSilentForUser?: boolean) => {
-    const err = methodName + ' - ' + error;
-
     track_HandleError(methodName, error)
-    AppLog.Log(err);
 
     if (keepSilentForUser === true)
         return
