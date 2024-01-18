@@ -331,7 +331,7 @@ export const IsNumType = (o: any) => {
 
 // array utils ---------------------------
 
-export function ShuffleArray<T>(arr: T[]) : void {
+export function ShuffleArray<T>(arr: T[]): void {
     if (!Array.isArray(arr))
         return
 
@@ -514,6 +514,15 @@ export const ExtractAllNumbersInText = (text: string): number[] => {
 }
 
 // time ---------------------------
+
+export const DistanceFrom2Dates = (d1: Date | number, d2: Date | number): number => {
+    const tick1 = typeof d1 === 'number' ? d1 : d1.getTime()
+    const tick2 = typeof d2 === 'number' ? d2 : d2.getTime()
+
+    const distanceMs = Math.abs(tick1 - tick2)
+
+    return distanceMs / 24 / 3600 / 1000
+}
 
 export const IsToday = (date: Date): boolean => {
     return IsSameDateMonthYear(date, new Date())
