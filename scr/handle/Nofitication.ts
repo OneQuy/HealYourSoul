@@ -1,6 +1,8 @@
 // https://notifee.app/react-native/docs
 
 import notifee, { AndroidChannel, AndroidImportance, AndroidStyle, Notification, NotificationAndroid, TimestampTrigger, TriggerType } from '@notifee/react-native';
+import { Clipboard_AppendLine } from './ClipboardMan';
+import { RandomInt } from './Utils';
 
 export type NotificationOption = {
   message: string,
@@ -21,7 +23,7 @@ export const initNotificationAsync = async () => {
   channelId = await notifee.createChannel({
     id: 'default',
     name: 'Default Channel',
-    importance: AndroidImportance.HIGH,
+    importance: AndroidImportance.DEFAULT,
     sound: 'default',
   } as AndroidChannel);
 
@@ -29,8 +31,8 @@ export const initNotificationAsync = async () => {
   await notifee.requestPermission()
 }
 
-export const cancelAllLocalNotifications = () => {
-  notifee.cancelAllNotifications()
+export const cancelAllLocalNotificationsAsync = async () => {
+  await notifee.cancelAllNotifications()
 }
 
 export const setNotification = (option: NotificationOption) => { // main
@@ -39,8 +41,9 @@ export const setNotification = (option: NotificationOption) => { // main
     !option.title)
     throw 'Notification option is invalid'
 
-  if (option.timestamp < Date.now())
+  if (option.timestamp < Date.now()) {
     return
+  }
 
   const trigger: TimestampTrigger = {
     type: TriggerType.TIMESTAMP,
@@ -64,21 +67,27 @@ export const setNotification = (option: NotificationOption) => { // main
   );
 }
 
+/**
+ * @param dayIdxFromToday 0 is today, 1 is tomorrow,...
+ */
 export const setNotification_ForNextDay = (  // sub
   dayIdxFromToday: number,
-  option: NotificationOption,
   hourIn24h: number,
+  option: NotificationOption,
   minute?: number,
   seconds?: number) => {
     const d = new Date()
+    // minute = d.getMinutes() + RandomInt(1, 3)
+    // hourIn24h = d.getHours()
+
     d.setDate(d.getDate() + dayIdxFromToday)
     d.setHours(hourIn24h)
     d.setMinutes(minute === undefined ? 0 : minute)
     d.setSeconds(seconds === undefined ? 0 : seconds)
-    
+        
     setNotification({
       ...option,
-      timestamp: d.getMilliseconds(),
+      timestamp: d.getTime(),
     } as NotificationOption)
 }
 
