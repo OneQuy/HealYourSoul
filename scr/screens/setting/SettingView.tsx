@@ -51,6 +51,7 @@ const SettingView = () => {
       emailCopyTO: { justifyContent: 'center', alignItems: 'center' },
       communityIconTO: { justifyContent: 'center', alignItems: 'center' },
       titleText: { color: theme.text, fontSize: FontSize.Small_L, fontWeight: FontWeight.B600 },
+      litmiFeedbackText: { color: theme.text, fontSize: FontSize.Small_L, fontWeight: '300' },
       btnText: { textAlign: 'center', color: theme.text, fontSize: FontSize.Small_L, fontWeight: FontWeight.B600 },
       descNotiText: { color: theme.text, fontSize: FontSize.Small },
       emailText: { color: theme.text, fontSize: FontSize.Normal },
@@ -224,7 +225,7 @@ const SettingView = () => {
 
         {/* feedback */}
 
-        <Text onPress={onPressGetLogStorage} style={style.titleText}>{LocalText.feedback + ' (' + feedbackText.length + '/' + limitFeedback + ')'}</Text>
+        <Text onPress={onPressGetLogStorage} style={style.titleText}>{LocalText.feedback}<Text style={style.litmiFeedbackText}>{' (' + feedbackText.length + '/' + limitFeedback + ')'}</Text></Text>
         <View style={style.textInputConView}>
           <TextInput
             style={style.sendFeedbackInput}
