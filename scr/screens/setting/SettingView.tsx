@@ -9,17 +9,15 @@ import React, { useCallback, useContext, useEffect, useMemo, useState } from 're
 import { ThemeContext } from '../../constants/Colors';
 import { BorderRadius, FontSize, FontWeight, Icon, LocalText, Outline, Size, StorageKey_FirstTimeInstallTick, StorageKey_LastTickSendFeedback, StorageKey_NinjaFact_ToggleNoti, StorageKey_NinjaJoke_ToggleNoti, StorageKey_Quote_ToggleNoti } from '../../constants/AppConstants';
 import { ScrollView } from 'react-native-gesture-handler';
-import { CopyAndToast, ToastTheme } from '../../handle/AppUtils';
+import { CopyAndToast } from '../../handle/AppUtils';
 import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { GetBooleanAsync, GetDateAsync, GetDateAsync_IsValueExistedAndIsTodayAndSameHour, SetBooleanAsync, SetDateAsync_Now } from '../../handle/AsyncStorageUtils';
-import { SafeDateString, btoa, atob, IsToday, ToCanPrint } from '../../handle/UtilsTS';
+import { SafeDateString, ToCanPrint } from '../../handle/UtilsTS';
 import { onPressTestNoti, timeInHour24hNoti_Fact, timeInHour24hNoti_Joke, timeInHour24hNoti_Quote } from '../../handle/GoodayNotification';
 import { StorageLog_GetAsync } from '../../handle/StorageLog';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { FirebaseDatabase_SetValueAsync } from '../../firebase/FirebaseDatabase';
-import { IsDev } from '../../handle/tracking/Tracking';
-import { ToastOptions, toast } from '@baronha/ting';
 
 const limitFeedback = 300
 
@@ -46,7 +44,7 @@ const SettingView = () => {
       emailText: { color: theme.text, fontSize: FontSize.Normal },
       statText: { color: theme.text, fontSize: FontSize.Small_L },
       sendFeedbackTO: { alignSelf: 'center', paddingVertical: Outline.GapVertical, paddingHorizontal: Outline.GapVertical_2, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth, },
-      sendFeedbackInput: { width: '100%', height: '100%' },
+      sendFeedbackInput: { textAlignVertical: 'top', textAlign: 'left', width: '100%', height: '100%' },
     })
   }, [theme])
 
@@ -64,6 +62,10 @@ const SettingView = () => {
       SetBooleanAsync(StorageKey_NinjaJoke_ToggleNoti, !isNoti_Joke)
     }
   }, [isNoti_Fact, isNoti_Quote, isNoti_Joke])
+
+  const onPressShareThisApp = useCallback(async () => {
+    
+  }, [])
 
   const onPressGetLogStorage = useCallback(async () => {
     Clipboard.setString(await StorageLog_GetAsync())
