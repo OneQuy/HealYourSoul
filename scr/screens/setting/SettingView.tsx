@@ -4,7 +4,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { ActivityIndicator, Alert, Linking, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, Share as RNShare, Alert, Linking, StyleSheet, Text, TextInput, TouchableOpacity, View, ShareContent, ShareOptions } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors';
 import { BorderRadius, FontSize, FontWeight, Icon, LocalText, Outline, Size, StorageKey_FirstTimeInstallTick, StorageKey_LastTickSendFeedback, StorageKey_NinjaFact_ToggleNoti, StorageKey_NinjaJoke_ToggleNoti, StorageKey_Quote_ToggleNoti } from '../../constants/AppConstants';
@@ -20,6 +20,16 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import { FirebaseDatabase_SetValueAsync } from '../../firebase/FirebaseDatabase';
 
 const limitFeedback = 300
+
+const shareAppText= `Gooday - Make your day good. A meme, information & positive stuffs app.
+
+Download now!
+
+AppStore: https://apps.apple.com/us/app/gooday-make-your-day/id6471367879
+
+Google Play: https://play.google.com/store/apps/details?id=com.healyoursoul
+
+#gooday #make_your_day_good`
 
 const SettingView = () => {
   const theme = useContext(ThemeContext)
@@ -64,9 +74,15 @@ const SettingView = () => {
     }
   }, [isNoti_Fact, isNoti_Quote, isNoti_Joke])
 
-  const onPressShareThisApp = useCallback(async () => {
-
-  }, [])
+  const onPressShareApp = useCallback(() => {
+    RNShare.share({
+      title: 'Gooday',
+      message: shareAppText,
+    } as ShareContent,
+      {
+        tintColor: theme.primary,
+      } as ShareOptions)
+  }, [theme])
 
   const onPressGetLogStorage = useCallback(async () => {
     Clipboard.setString(await StorageLog_GetAsync())
@@ -74,7 +90,7 @@ const SettingView = () => {
 
   const onFocusInput = useCallback(async () => {
     // @ts-ignore
-    scrollRef?.current?.scrollToEnd({animated: true})
+    scrollRef?.current?.scrollToEnd({ animated: true })
   }, [])
 
   const onPressSendFeedback = useCallback(async () => {
@@ -228,7 +244,7 @@ const SettingView = () => {
 
         {/* share app */}
 
-        <TouchableOpacity onPress={onPressSendFeedback} style={style.sendFeedbackTO}>
+        <TouchableOpacity onPress={onPressShareApp} style={style.sendFeedbackTO}>
           <Text style={style.titleText}>{LocalText.share_app}</Text>
         </TouchableOpacity>
         {
