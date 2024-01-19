@@ -13,7 +13,7 @@ import { CopyAndToast } from '../../handle/AppUtils';
 import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { GetBooleanAsync, GetDateAsync, GetDateAsync_IsValueExistedAndIsTodayAndSameHour, SetBooleanAsync, SetDateAsync_Now } from '../../handle/AsyncStorageUtils';
-import { SafeDateString, ToCanPrint } from '../../handle/UtilsTS';
+import { IsValuableStringOrArray, SafeDateString, ToCanPrint } from '../../handle/UtilsTS';
 import { onPressTestNoti, timeInHour24hNoti_Fact, timeInHour24hNoti_Joke, timeInHour24hNoti_Quote } from '../../handle/GoodayNotification';
 import { StorageLog_GetAsync } from '../../handle/StorageLog';
 import Clipboard from '@react-native-clipboard/clipboard';
@@ -21,7 +21,7 @@ import { FirebaseDatabase_SetValueAsync } from '../../firebase/FirebaseDatabase'
 
 const limitFeedback = 300
 
-const shareAppText= `Gooday - Make your day good. A meme, information & positive stuffs app.
+const shareAppText = `Gooday - Make your day good. A meme, information & positive stuffs app.
 
 Download now!
 
@@ -51,10 +51,11 @@ const SettingView = () => {
       emailCopyTO: { justifyContent: 'center', alignItems: 'center' },
       communityIconTO: { justifyContent: 'center', alignItems: 'center' },
       titleText: { color: theme.text, fontSize: FontSize.Small_L, fontWeight: FontWeight.B600 },
+      btnText: { textAlign: 'center', color: theme.text, fontSize: FontSize.Small_L, fontWeight: FontWeight.B600 },
       descNotiText: { color: theme.text, fontSize: FontSize.Small },
       emailText: { color: theme.text, fontSize: FontSize.Normal },
       statText: { color: theme.text, fontSize: FontSize.Small_L },
-      sendFeedbackTO: { alignSelf: 'center', paddingVertical: Outline.GapVertical, paddingHorizontal: Outline.GapVertical_2, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth, },
+      sendFeedbackTO: { minWidth: '50%', alignSelf: 'center', paddingVertical: Outline.GapVertical, paddingHorizontal: Outline.GapVertical_2, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth, },
       sendFeedbackInput: { textAlignVertical: 'top', textAlign: 'left', width: '100%', height: '100%' },
     })
   }, [theme])
@@ -95,6 +96,9 @@ const SettingView = () => {
 
   const onPressSendFeedback = useCallback(async () => {
     if (isSendingFeedback)
+      return
+
+    if (!IsValuableStringOrArray(feedbackText))
       return
 
     if (await GetDateAsync_IsValueExistedAndIsTodayAndSameHour(StorageKey_LastTickSendFeedback)) {
@@ -235,7 +239,7 @@ const SettingView = () => {
           {
             isSendingFeedback ?
               <ActivityIndicator /> :
-              <Text style={style.titleText}>{LocalText.send}</Text>
+              <Text style={style.btnText}>{LocalText.send}</Text>
           }
         </TouchableOpacity>
         {
@@ -245,7 +249,7 @@ const SettingView = () => {
         {/* share app */}
 
         <TouchableOpacity onPress={onPressShareApp} style={style.sendFeedbackTO}>
-          <Text style={style.titleText}>{LocalText.share_app}</Text>
+          <Text style={style.btnText}>{LocalText.share_app}</Text>
         </TouchableOpacity>
         {
           hair100Width()
