@@ -5,7 +5,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { ActivityIndicator, Alert, Linking, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors';
 import { BorderRadius, FontSize, FontWeight, Icon, LocalText, Outline, Size, StorageKey_FirstTimeInstallTick, StorageKey_LastTickSendFeedback, StorageKey_NinjaFact_ToggleNoti, StorageKey_NinjaJoke_ToggleNoti, StorageKey_Quote_ToggleNoti } from '../../constants/AppConstants';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -29,6 +29,7 @@ const SettingView = () => {
   const [installDate, setInstallDate] = useState('')
   const [feedbackText, setFeedbackText] = useState('')
   const [isSendingFeedback, setIsSendingFeedback] = useState(false)
+  const scrollRef = useRef()
 
   const style = useMemo(() => {
     return StyleSheet.create({
@@ -64,11 +65,15 @@ const SettingView = () => {
   }, [isNoti_Fact, isNoti_Quote, isNoti_Joke])
 
   const onPressShareThisApp = useCallback(async () => {
-    
+
   }, [])
 
   const onPressGetLogStorage = useCallback(async () => {
     Clipboard.setString(await StorageLog_GetAsync())
+  }, [])
+
+  const onFocusInput = useCallback(async () => {
+    scrollRef?.current?.scrollToEnd({animated: true})
   }, [])
 
   const onPressSendFeedback = useCallback(async () => {
@@ -133,7 +138,10 @@ const SettingView = () => {
 
   return (
     <View style={style.masterView}>
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={style.scrollView}>
+      <ScrollView
+        // @ts-ignore
+        ref={scrollRef}
+        showsVerticalScrollIndicator={false} contentContainerStyle={style.scrollView}>
         {/* notification */}
 
         <Text style={style.titleText}>{LocalText.notification}</Text>
@@ -203,6 +211,7 @@ const SettingView = () => {
             multiline={true}
             value={feedbackText}
             onChangeText={setFeedbackText}
+            onFocus={(e) => onFocusInput()}
           />
         </View>
         <TouchableOpacity onPress={onPressSendFeedback} style={style.sendFeedbackTO}>
