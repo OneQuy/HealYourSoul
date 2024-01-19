@@ -212,7 +212,7 @@ export const LocalText = {
   share_app: "Share Gooday",
   rate_app: "Rate app",
   Contact: "Contact",
-  install_app_date: "The date you install the app",
+  install_app_date: "The date you installed Gooday",
   notification: "Notification",
   notification_quote_of_the_day: "Quote of the day",
   notification_quote_of_the_day_desc: 'Send a quote at #:00 AM every day. (Tap this to test)',
