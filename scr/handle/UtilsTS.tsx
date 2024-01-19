@@ -331,6 +331,14 @@ export const IsNumType = (o: any) => {
 
 // array utils ---------------------------
 
+export function IsValuableStringOrArray<T>(arr: T[] | string): boolean {
+    if (typeof arr === 'string') {
+        return arr.length > 0
+    }
+    else
+        return Array.isArray(arr) && arr.length > 0
+}
+
 export function ShuffleArray<T>(arr: T[]): void {
     if (!Array.isArray(arr))
         return
