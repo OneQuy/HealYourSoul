@@ -123,6 +123,14 @@ export const track_SimpleWithCat = (category: Category, event: string) => {
     )
 }
 
+export const track_Simple = (event: string) => {
+    MainTrack(event,
+        [
+            `total/${event}`,
+        ]
+    )
+}
+
 export const track_SimpleWithParam = (event: string, value: string) => {
     MainTrack(event,
         [
