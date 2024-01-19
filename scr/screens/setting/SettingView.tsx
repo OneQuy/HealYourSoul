@@ -122,7 +122,7 @@ const SettingView = () => {
       const firstTimeInstallTick = await GetDateAsync(StorageKey_FirstTimeInstallTick)
 
       if (firstTimeInstallTick !== undefined) {
-        setInstallDate(SafeDateString(firstTimeInstallTick))
+        setInstallDate(SafeDateString(firstTimeInstallTick, '/'))
       }
 
       setIsNoti_Quote(await GetBooleanAsync(StorageKey_Quote_ToggleNoti, true))
