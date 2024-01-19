@@ -82,6 +82,8 @@ const SettingView = () => {
   }, [isNoti_Fact, isNoti_Quote, isNoti_Joke])
 
   const onPressShareApp = useCallback(() => {
+    track_Simple('share_app')
+    
     RNShare.share({
       title: 'Gooday',
       message: shareAppText,
@@ -102,7 +104,7 @@ const SettingView = () => {
 
   const onPressSendFeedback = useCallback(async () => {
     track_Simple('press_send_feedback')
-    
+
     if (isSendingFeedback)
       return
 

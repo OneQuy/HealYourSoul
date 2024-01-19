@@ -9,6 +9,7 @@ import { GetJokeListAsync_FromApi } from "./services/NinjaJoke";
 import { ShuffleArray } from "./UtilsTS";
 import { PickRandomElement, RandomInt } from "./Utils";
 import { toast } from "@baronha/ting";
+import { track_Simple } from "./tracking/GoodayTracking";
 
 const daysToNotiEveryday = 10
 const daysToRedownloadData = 5
@@ -236,12 +237,16 @@ export const onPressTestNoti = (type: 'quote' | 'fact' | 'joke') => {
     }
 
     if (title && message) {
+        track_Simple('test_noti/' + type)
+        
         setNotification_RemainSeconds(1, {
             title,
             message
         })
     }
     else {
+        track_Simple('test_noti/fail_to_show')
+
         toast({
             title: 'Ooopsssss',
             message: 'No data to show test notification!'
