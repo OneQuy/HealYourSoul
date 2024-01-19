@@ -1,8 +1,6 @@
 // https://notifee.app/react-native/docs
 
 import notifee, { AndroidChannel, AndroidImportance, AndroidStyle, Notification, NotificationAndroid, TimestampTrigger, TriggerType } from '@notifee/react-native';
-import { Clipboard_AppendLine } from './ClipboardMan';
-import { StorageLog_LogAsync } from './StorageLog';
 
 export type NotificationOption = {
   message: string,
