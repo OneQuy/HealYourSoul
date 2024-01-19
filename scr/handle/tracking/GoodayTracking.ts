@@ -96,6 +96,20 @@ export const track_PressSaveMedia = (category: Category) => {
     track_SimpleWithCat(category, 'save_media')
 }
 
+export const track_ToggleNotification = (type: string, toggle: boolean) => {
+    const event = 'toggle_noti'
+
+    MainTrack(event,
+        [
+            `total/${event}/${type}/${toggle ? 'on' : 'off'}`
+        ],
+        {
+            type,
+            toggle
+        }
+    )
+}
+
 export const track_SimpleWithCat = (category: Category, event: string) => {
     MainTrack(event,
         [

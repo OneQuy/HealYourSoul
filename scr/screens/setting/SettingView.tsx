@@ -10,7 +10,7 @@ import { ThemeContext } from '../../constants/Colors';
 import { BorderRadius, FontSize, FontWeight, Icon, LocalText, Outline, Size, StorageKey_FirstTimeInstallTick, StorageKey_LastTickSendFeedback, StorageKey_NinjaFact_ToggleNoti, StorageKey_NinjaJoke_ToggleNoti, StorageKey_Quote_ToggleNoti } from '../../constants/AppConstants';
 import { ScrollView } from 'react-native-gesture-handler';
 import { CopyAndToast, RateApp } from '../../handle/AppUtils';
-import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
+import { track_SimpleWithParam, track_ToggleNotification } from '../../handle/tracking/GoodayTracking';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { GetBooleanAsync, GetDateAsync, GetDateAsync_IsValueExistedAndIsTodayAndSameHour, SetBooleanAsync, SetDateAsync_Now } from '../../handle/AsyncStorageUtils';
 import { IsValuableStringOrArray, SafeDateString, ToCanPrint } from '../../handle/UtilsTS';
@@ -63,15 +63,19 @@ const SettingView = () => {
   }, [theme])
 
   const onPressNoti = useCallback((type: 'quote' | 'fact' | 'joke') => {
+
     if (type === 'fact') {
+      track_ToggleNotification(type, !isNoti_Fact)
       setIsNoti_Fact(!isNoti_Fact)
       SetBooleanAsync(StorageKey_NinjaFact_ToggleNoti, !isNoti_Fact)
     }
     else if (type === 'quote') {
+      track_ToggleNotification(type, !isNoti_Quote)
       setIsNoti_Quote(!isNoti_Quote)
       SetBooleanAsync(StorageKey_Quote_ToggleNoti, !isNoti_Quote)
     }
     else if (type === 'joke') {
+      track_ToggleNotification(type, !isNoti_Joke)
       setIsNoti_Joke(!isNoti_Joke)
       SetBooleanAsync(StorageKey_NinjaJoke_ToggleNoti, !isNoti_Joke)
     }
