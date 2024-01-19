@@ -224,7 +224,7 @@ const SettingView = () => {
 
         {/* feedback */}
 
-        <Text onPress={onPressGetLogStorage} style={style.titleText}>{LocalText.feedback}</Text>
+        <Text onPress={onPressGetLogStorage} style={style.titleText}>{LocalText.feedback + ' (' + feedbackText.length + '/' + limitFeedback + ')'}</Text>
         <View style={style.textInputConView}>
           <TextInput
             style={style.sendFeedbackInput}
