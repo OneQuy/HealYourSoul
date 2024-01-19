@@ -57,6 +57,7 @@ const SettingView = () => {
       emailText: { color: theme.text, fontSize: FontSize.Normal },
       statText: { color: theme.text, fontSize: FontSize.Small_L },
       sendFeedbackTO: { minWidth: '50%', alignSelf: 'center', paddingVertical: Outline.GapVertical, paddingHorizontal: Outline.GapVertical_2, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth, },
+      shareTO: { flexDirection: 'row', justifyContent: 'center', gap: Outline.GapHorizontal, flex: 1, alignSelf: 'center', paddingVertical: Outline.GapVertical, paddingHorizontal: Outline.GapVertical_2, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth, },
       sendFeedbackInput: { textAlignVertical: 'top', textAlign: 'left', width: '100%', height: '100%' },
     })
   }, [theme])
@@ -176,7 +177,7 @@ const SettingView = () => {
           </TouchableOpacity>
         </View>
         <Text onPress={() => onPressTestNoti('quote')} style={style.descNotiText}>{LocalText.notification_quote_of_the_day_desc.replace('#', timeInHour24hNoti_Quote.toString())}</Text>
-        
+
         {/* fact */}
         <View style={style.checkbox}>
           <Text onPress={() => onPressTestNoti('fact')} style={style.emailText}>{LocalText.notification_fact_of_the_day}</Text>
@@ -185,7 +186,7 @@ const SettingView = () => {
           </TouchableOpacity>
         </View>
         <Text onPress={() => onPressTestNoti('fact')} style={style.descNotiText}>{LocalText.notification_fact_of_the_day_desc.replace('#', timeInHour24hNoti_Fact.toString())}</Text>
-        
+
         {/* joke */}
         <View style={style.checkbox}>
           <Text onPress={() => onPressTestNoti('joke')} style={style.emailText}>{LocalText.notification_joke_of_the_day}</Text>
@@ -255,9 +256,16 @@ const SettingView = () => {
 
         {/* share app */}
 
-        <TouchableOpacity onPress={onPressShareApp} style={style.sendFeedbackTO}>
-          <Text style={style.btnText}>{LocalText.share_app}</Text>
-        </TouchableOpacity>
+        <View style={style.flexRowWithGap}>
+          <TouchableOpacity onPress={onPressShareApp} style={style.shareTO}>
+            <MaterialCommunityIcons name={Icon.ShareText} color={theme.counterPrimary} size={Size.IconSmaller} />
+            <Text style={style.btnText}>{LocalText.share_app}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={onPressShareApp} style={style.shareTO}>
+          <MaterialCommunityIcons name={Icon.Star} color={theme.counterPrimary} size={Size.IconSmaller} />
+            <Text style={style.btnText}>{LocalText.rate_app}</Text>
+          </TouchableOpacity>
+        </View>
         {
           hair100Width()
         }
