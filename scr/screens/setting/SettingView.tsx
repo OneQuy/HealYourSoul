@@ -9,7 +9,7 @@ import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } 
 import { ThemeContext } from '../../constants/Colors';
 import { BorderRadius, FontSize, FontWeight, Icon, LocalText, Outline, Size, StorageKey_FirstTimeInstallTick, StorageKey_LastTickSendFeedback, StorageKey_NinjaFact_ToggleNoti, StorageKey_NinjaJoke_ToggleNoti, StorageKey_Quote_ToggleNoti } from '../../constants/AppConstants';
 import { ScrollView } from 'react-native-gesture-handler';
-import { CopyAndToast } from '../../handle/AppUtils';
+import { CopyAndToast, RateApp } from '../../handle/AppUtils';
 import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { GetBooleanAsync, GetDateAsync, GetDateAsync_IsValueExistedAndIsTodayAndSameHour, SetBooleanAsync, SetDateAsync_Now } from '../../handle/AsyncStorageUtils';
@@ -261,8 +261,8 @@ const SettingView = () => {
             <MaterialCommunityIcons name={Icon.ShareText} color={theme.counterPrimary} size={Size.IconSmaller} />
             <Text style={style.btnText}>{LocalText.share_app}</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={onPressShareApp} style={style.shareTO}>
-          <MaterialCommunityIcons name={Icon.Star} color={theme.counterPrimary} size={Size.IconSmaller} />
+          <TouchableOpacity onPress={RateApp} style={style.shareTO}>
+            <MaterialCommunityIcons name={Icon.Star} color={theme.counterPrimary} size={Size.IconSmaller} />
             <Text style={style.btnText}>{LocalText.rate_app}</Text>
           </TouchableOpacity>
         </View>

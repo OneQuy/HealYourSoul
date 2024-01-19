@@ -1,5 +1,5 @@
 import { Alert, Linking, Platform } from "react-native";
-import { Category, FirebaseDBPath, FirebasePath, Icon, LocalPath, LocalText, NeedReloadReason, ScreenName, StorageKey_LastTimeCheckFirstOpenAppOfTheDay } from "../constants/AppConstants";
+import { Category, FirebaseDBPath, FirebasePath, Icon, LocalPath, LocalText, NeedReloadReason, ScreenName, StorageKey_LastTimeCheckFirstOpenAppOfTheDay, StorageKey_Rated } from "../constants/AppConstants";
 import { ThemeColor } from "../constants/Colors";
 import { FileList, MediaType, PostMetadata } from "../constants/Types";
 import { FirebaseStorage_DownloadAndReadJsonAsync } from "../firebase/FirebaseStorage";
@@ -14,9 +14,10 @@ import Clipboard from "@react-native-clipboard/clipboard";
 import { NavigationProp } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CheckDuplicateAndDownloadAsync } from "../firebase/FirebaseStorageDownloadManager";
-import { track_FirstOpenOfTheDayAsync, track_HandleError, track_OnUseEffectOnceEnterAppAsync } from "./tracking/GoodayTracking";
-import { GetDateAsync, SetDateAsync_Now } from "./AsyncStorageUtils";
+import { track_FirstOpenOfTheDayAsync, track_HandleError, track_OnUseEffectOnceEnterAppAsync, track_SimpleWithParam } from "./tracking/GoodayTracking";
+import { GetBooleanAsync, GetDateAsync, SetBooleanAsync, SetDateAsync_Now } from "./AsyncStorageUtils";
 import { CheckAndPrepareDataForNotificationAsync } from "./GoodayNotification";
+import { CheckAndShowInAppReviewAsync } from "./InAppReview";
 
 const today = new Date()
 export const todayString = 'd' + today.getDate() + '_m' + (today.getMonth() + 1) + '_' + today.getFullYear()
@@ -285,6 +286,32 @@ export const GetAllSavedLocalPostIDsListAsync = async (cat: Category) => {
     {
         return undefined;
     }
+}
+
+
+export const RateApp = async () => {
+    const res = await CheckAndShowInAppReviewAsync()
+
+    track_SimpleWithParam('rated', res === true ? 'true' : 'false')
+
+    console.log('rated result: ' + ToCanPrint(res));
+
+    if (res === true) // success
+    {
+        if (Platform.OS === 'ios')
+            return
+
+        const ratedBefore = await GetBooleanAsync(StorageKey_Rated)
+
+        if (!ratedBefore) {
+            SetBooleanAsync(StorageKey_Rated, true)
+            return
+        }
+    }
+
+    // fail
+
+    OpenStore()
 }
 
 export const CopyAndToast = (s: string, theme: ThemeColor) => {

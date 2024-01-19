@@ -10,19 +10,18 @@ import { ThemeContext } from "../constants/Colors";
 import { DrawerContentComponentProps, } from '@react-navigation/drawer';
 import { Image, ImageBackground, Linking, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import DrawerCoupleItem from "./DrawerCoupleItem";
-import { BorderRadius, FontSize, FontWeight, Icon, LocalText, Outline, ScreenName, Size, StorageKey_ForceDev, StorageKey_Rated } from "../constants/AppConstants";
+import { BorderRadius, FontSize, FontWeight, Icon, LocalText, Outline, ScreenName, Size, StorageKey_ForceDev } from "../constants/AppConstants";
 import { CommonStyles } from "../constants/CommonConstants";
 import useDrawerMenuItemUtils from '../hooks/useDrawerMenuItemUtils';
 import { logoScr } from '../screens/others/SplashScreen';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { IsContentScreen, OpenStore, versionAsNumber } from '../handle/AppUtils';
+import { IsContentScreen, OpenStore, RateApp, versionAsNumber } from '../handle/AppUtils';
 import { GetAppConfig } from '../handle/AppConfigHandler';
-import { FilterOnlyLetterAndNumberFromString, RegexUrl, ToCanPrint } from '../handle/UtilsTS';
-import { track_PressDrawerItem, track_SimpleWithParam } from '../handle/tracking/GoodayTracking';
-import { GetBooleanAsync, SetBooleanAsync } from '../handle/AsyncStorageUtils';
+import { FilterOnlyLetterAndNumberFromString, RegexUrl } from '../handle/UtilsTS';
+import { track_PressDrawerItem } from '../handle/tracking/GoodayTracking';
+import { SetBooleanAsync } from '../handle/AsyncStorageUtils';
 import { toast } from '@baronha/ting';
 import { IsDev } from '../handle/tracking/Tracking';
-import { CheckAndShowInAppReviewAsync } from '../handle/InAppReview';
 
 const primiumBG = require('../../assets/images/btn_bg_1.jpeg')
 
@@ -97,31 +96,6 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
     return arr
   }, [disableScreens])
 
-  const onPressRateMe = useCallback(async () => {
-    const res = await CheckAndShowInAppReviewAsync()
-
-    track_SimpleWithParam('rated', res === true ? 'true' : 'false')
-
-    console.log('rated result: ' + ToCanPrint(res));
-
-    if (res === true) // success
-    {
-      if (Platform.OS === 'ios')
-        return
-
-      const ratedBefore = await GetBooleanAsync(StorageKey_Rated)
-
-      if (!ratedBefore) {
-        SetBooleanAsync(StorageKey_Rated, true)
-        return
-      }
-    }
-
-    // fail
-
-    OpenStore()
-  }, [])
-
   const onPressLogo = useCallback(() => {
     pressLogoCountRef.current++
 
@@ -180,7 +154,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
             <MaterialIcons name={Icon.Setting} color={theme.counterPrimary} size={Size.IconTiny} />
             <Text style={[{ color: theme.text }, style.settingBtnText]}>{LocalText.setting}</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={onPressRateMe} style={[style.settingBtnView, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]}>
+          <TouchableOpacity onPress={RateApp} style={[style.settingBtnView, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]}>
             <MaterialIcons name={Icon.Star} color={theme.counterPrimary} size={Size.IconTiny} />
             <Text style={[{ color: theme.text }, style.settingBtnText]}>{LocalText.rate_me}</Text>
           </TouchableOpacity>
