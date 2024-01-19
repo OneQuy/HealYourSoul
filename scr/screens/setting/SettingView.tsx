@@ -73,6 +73,7 @@ const SettingView = () => {
   }, [])
 
   const onFocusInput = useCallback(async () => {
+    // @ts-ignore
     scrollRef?.current?.scrollToEnd({animated: true})
   }, [])
 
