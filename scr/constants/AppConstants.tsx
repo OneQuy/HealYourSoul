@@ -207,6 +207,7 @@ export const LocalText = {
   update_content: "Please update the app to the latest version for the best experience.",
   learn_more: "Learn more",
   enable_all: "Enable all",
+  remove_screen_intro: "Tap to enable/disable screens:",
   send: "Send",
   share_app: "Share Gooday",
   rate_app: "Rate app",

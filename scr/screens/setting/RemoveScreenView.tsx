@@ -27,10 +27,11 @@ const RemoveScreenView = () => {
 
   const style = useMemo(() => {
     return StyleSheet.create({
-      masterView: { flex: 1, backgroundColor: theme.background, alignItems: 'center' },
+      masterView: { gap: Outline.GapVertical, flex: 1, backgroundColor: theme.background, alignItems: 'center' },
       buttonContainerTO: { margin: Outline.GapHorizontal, minWidth: widthPercentageToDP(40), padding: Outline.GapVertical, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth, gap: Outline.GapHorizontal, flexDirection: 'row' },
       enableAllTO: { width: '80%', margin: Outline.Horizontal, padding: Outline.Horizontal, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth, },
       enableAllButtonText: { textAlign: 'center', color: theme.text, fontSize: FontSize.Small },
+      intro_text: { textAlign: 'center', color: theme.text, fontSize: FontSize.Normal },
       buttonText: { textAlign: 'center', color: theme.text, fontSize: FontSize.Small, flex: 1 },
       flatList: { flex: 1 },
     })
@@ -59,6 +60,8 @@ const RemoveScreenView = () => {
 
   return (
     <View style={style.masterView}>
+      <Text style={style.intro_text}>{LocalText.remove_screen_intro}</Text>
+
       <FlatList
         data={allScreenNames}
         numColumns={2}
