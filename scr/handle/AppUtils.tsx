@@ -332,7 +332,7 @@ export async function PreDownloadPosts(
         const post = fileList.posts[ipost]
         const postID = post.id
 
-        if (seenIDs.includes(postID))
+        if (seenIDs && seenIDs.includes(postID))
             continue
 
         if (Math.abs(currentPost.id - postID) > postPredownloadLimit)
