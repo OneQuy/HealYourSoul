@@ -1,7 +1,7 @@
-import { Share as RNShare, View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, Image, ShareContent, Alert, Linking, GestureResponderEvent } from 'react-native'
+import { Share as RNShare, View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, ShareContent, Alert, Linking, GestureResponderEvent, Animated } from 'react-native'
 import React, { LegacyRef, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
-import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size, StorageKey_LocalFileVersion, StorageKey_SelectingFunWebsiteId, StorageKey_Streak } from '../../constants/AppConstants'
+import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size, StorageKey_LocalFileVersion, StorageKey_SelectingFunWebsiteId } from '../../constants/AppConstants'
 import Share from 'react-native-share';
 
 
@@ -18,7 +18,6 @@ import { CommonStyles } from '../../constants/CommonConstants'
 import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
 import { FunWebsite, Streak } from '../../constants/Types';
 import StreakPopup from '../components/StreakPopup';
-import { GetWikiAsync } from '../../handle/services/Wikipedia';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 import { ScrollView } from 'react-native-gesture-handler';
 import WebView from 'react-native-webview';
@@ -33,6 +32,7 @@ import useIsFavorited from '../../hooks/useIsFavorited';
 import ListWebsite from './ListWebsite';
 import { track_PressFavorite, track_PressNextPost, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
+import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 
 const category = Category.FunWebsites
 const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Ffun_websites.json?alt=media&token=10ecb626-e576-49d4-b124-a9ba148a93a6'
@@ -47,6 +47,16 @@ const FunWebsitesScreen = () => {
     const [selectingItem, setSelectingItem] = useState<FunWebsite | undefined>(undefined)
     const [isShowList, setIsShowList] = useState(false)
     const viewShotRef = useRef<LegacyRef<ViewShot> | undefined>();
+
+     // animation
+
+     const mediaViewScaleAnimRef = useRef(new Animated.Value(1)).current
+
+     // play loaded media anim
+ 
+     const onImageLoaded = useCallback(() => {
+         playAnimLoadedMedia(mediaViewScaleAnimRef)
+     }, [])
 
     const [funWebsites, errorDownloadJson, _, reUpdateData] = useCheckAndDownloadRemoteFile<FunWebsite[]>(
         fileURL,
@@ -273,7 +283,14 @@ const FunWebsitesScreen = () => {
                                                     <MaterialCommunityIcons name={Icon.List} color={theme.counterPrimary} size={Size.Icon} />
                                                 </View>
                                             </View>
-                                            <ImageBackgroundWithLoading resizeMode='contain' source={{ uri: selectingItem?.img }} style={styleSheet.image} indicatorProps={{ color: theme.text }} />
+                                            <Animated.View style={[{ transform: [{ scale: mediaViewScaleAnimRef }] }]}>
+                                                <ImageBackgroundWithLoading 
+                                                    resizeMode='contain' 
+                                                    onLoad={onImageLoaded}
+                                                    source={{ uri: selectingItem?.img }} 
+                                                    style={styleSheet.image} 
+                                                    indicatorProps={{ color: theme.text }} />
+                                            </Animated.View>
                                             <TouchableOpacity onPress={onPressLink} style={styleSheet.titleTO}>
                                                 <Text selectable style={[styleSheet.titleView, { color: theme.text, }]}>{selectingItem?.url}</Text>
                                                 <MaterialCommunityIcons name={Icon.Link} color={theme.text} size={Size.IconSmaller} />
