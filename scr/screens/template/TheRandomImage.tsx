@@ -158,8 +158,6 @@ const TheRandomImage = ({
 
     useFocusEffect(useCallback(() => SaveCurrentScreenForLoadNextTime(navigation), []))
 
-    // console.log(currentItem?.uri);
-
     return (
         <View pointerEvents={handling ? 'none' : 'auto'} style={[styleSheet.masterView, { backgroundColor: theme.background }]}>
             <View style={CommonStyles.flex_1} >
