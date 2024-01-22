@@ -177,15 +177,6 @@ const ThePage = ({ category }: ThePageProps) => {
     const playAnimLoadedMedia = useCallback(() => {
         mediaViewScaleAnimRef.setValue(0)
 
-        // Animated.timing(
-        //     mediaViewScaleAnimRef,
-        //     {
-        //         duration: 200,
-        //         toValue: 1,
-        //         useNativeDriver: true,
-        //     }
-        // ).start()
-
         Animated.spring(
             mediaViewScaleAnimRef,
             {
