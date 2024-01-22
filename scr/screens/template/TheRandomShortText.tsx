@@ -26,14 +26,6 @@ interface TheRandomShortTextProps {
     getTextAsync: () => Promise<string | undefined>
 }
 
-const FakeTextContents = [
-    'Winter hazards such as wind, cold, snow, or whiteout conditions can turn an outing into a tragedy. Have a plan and a back-up plan in case parking is limited or conditions are unsafe. Weather can change quickly!',
-    'This is the closest I can get for web support with available APIs. Since Safari does not support captureStream, I wont be able to read the FPS yet',
-    'Strategy games are an irresistibly fun way to improve our decision-making skills, but what makes these type of games so alluring?',
-    'This group will pump again soon.',
-    'Profitable trades are being shared here',
-]
-
 const TheRandomShortText = ({
     category,
     getTextAsync,
