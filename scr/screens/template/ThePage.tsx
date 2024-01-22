@@ -8,7 +8,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { View, Text, Image, TouchableOpacity, ActivityIndicator, Alert, PanResponder, LayoutChangeEvent, GestureResponderEvent, Animated, StyleSheet, } from 'react-native'
-import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useLayoutEffect, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { BorderRadius, Category, FontSize, Icon, LocalText, NeedReloadReason, Opacity, Outline, Size } from '../../constants/AppConstants';
 import { ThemeContext } from '../../constants/Colors';
 import { heightPercentageToDP as hp, } from "react-native-responsive-screen";
@@ -177,17 +177,27 @@ const ThePage = ({ category }: ThePageProps) => {
     const playAnimLoadedMedia = useCallback(() => {
         mediaViewScaleAnimRef.setValue(0)
 
-        Animated.timing(
+        // Animated.timing(
+        //     mediaViewScaleAnimRef,
+        //     {
+        //         duration: 200,
+        //         toValue: 1,
+        //         useNativeDriver: true,
+        //     }
+        // ).start()
+        
+        Animated.spring(
             mediaViewScaleAnimRef,
             {
-                duration: 200,
                 toValue: 1,
                 useNativeDriver: true,
             }
         ).start()
     }, [])
 
-    useEffect(() => {
+    // play loaded media anim
+
+    useLayoutEffect(() => {
         if (mediaURI.current === '')
             return
 
@@ -611,8 +621,6 @@ const ThePage = ({ category }: ThePageProps) => {
     }, [])
 
     const onTapCounted = useCallback((count: number, lastTapEvent: GestureResponderEvent['nativeEvent']) => {
-        console.log('tapped', count);
-
         if (count === 1) {
             // // load next post when current is image post
 
