@@ -1,7 +1,7 @@
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, Alert, Linking, GestureResponderEvent } from 'react-native'
+import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, Alert, Linking, GestureResponderEvent, Animated } from 'react-native'
 import React, { LegacyRef, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size, StorageKey_LocalFileVersion, StorageKey_SelectingShortFilmIdx } from '../../constants/AppConstants'
@@ -28,6 +28,7 @@ import { DownloadFileAsync, GetFLPFromRLP } from '../../handle/FileUtils';
 import WebView from 'react-native-webview';
 import { track_PressFavorite, track_PressNextPost, track_PressRandom, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
+import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 
 const category = Category.BestShortFilms
 const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Fshort_films.json?alt=media&token=537eec8b-f774-4908-a5fa-45f8daf676d8'
@@ -52,6 +53,16 @@ const BestShortFilmsScreen = () => {
         false,
         async () => AsyncStorage.getItem(StorageKey_LocalFileVersion(category)),
         async () => AsyncStorage.setItem(StorageKey_LocalFileVersion(category), GetRemoteFileConfigVersion('short_films').toString()))
+
+    // animation
+
+    const mediaViewScaleAnimRef = useRef(new Animated.Value(1)).current
+
+    // play loaded media anim
+
+    const onImageLoaded = useCallback(() => {
+        playAnimLoadedMedia(mediaViewScaleAnimRef)
+    }, [])
 
     const idCurrent = useMemo(() => {
         if (!selectingItem)
@@ -319,7 +330,9 @@ const BestShortFilmsScreen = () => {
                                                     <MaterialCommunityIcons name={Icon.List} color={theme.counterPrimary} size={Size.Icon} />
                                                 </View>
                                             </View>
-                                            <ImageBackgroundWithLoading resizeMode='contain' source={{ uri: selectingItem?.img }} style={styleSheet.image} indicatorProps={{ color: theme.text }} />
+                                            <Animated.View style={[{ transform: [{ scale: mediaViewScaleAnimRef }] }]}>
+                                                <ImageBackgroundWithLoading onLoad={onImageLoaded} resizeMode='contain' source={{ uri: selectingItem?.img }} style={styleSheet.image} indicatorProps={{ color: theme.text }} />
+                                            </Animated.View>
                                             <Text selectable style={[styleSheet.nameView, { color: theme.text, }]}>{selectingItem?.name}</Text>
                                             {
                                                 !selectingItem?.author ? undefined :
