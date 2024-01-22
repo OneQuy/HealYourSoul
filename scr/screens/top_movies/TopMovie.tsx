@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, Alert, GestureResponderEvent } from 'react-native'
+import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, Alert, GestureResponderEvent, Animated } from 'react-native'
 import React, { LegacyRef, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size, StorageKey_LocalFileVersion, StorageKey_SelectingTopMovieIdx } from '../../constants/AppConstants'
@@ -30,6 +30,7 @@ import ListMovie from './ListMovie';
 import { DownloadFileAsync, GetFLPFromRLP } from '../../handle/FileUtils';
 import { track_PressFavorite, track_PressNextPost, track_PressRandom, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
+import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 
 const category = Category.TopMovie
 const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Ftop_movies.json?alt=media&token=4203c962-58bb-41c3-a1a0-ab3b1b3359f8'
@@ -53,6 +54,12 @@ const TopMovieScreen = () => {
         false,
         async () => AsyncStorage.getItem(StorageKey_LocalFileVersion(category)),
         async () => AsyncStorage.setItem(StorageKey_LocalFileVersion(category), GetRemoteFileConfigVersion('top_movies').toString()))
+
+    const mediaViewScaleAnimRef = useRef(new Animated.Value(1)).current
+
+    const onImageLoaded = useCallback(() => {
+        playAnimLoadedMedia(mediaViewScaleAnimRef)
+    }, [])
 
     const idNumber = useMemo(() => {
         if (!selectingItem)
@@ -288,7 +295,9 @@ const TopMovieScreen = () => {
                                                     <MaterialCommunityIcons name={Icon.List} color={theme.counterPrimary} size={Size.Icon} />
                                                 </View>
                                             </View>
-                                            <ImageBackgroundWithLoading resizeMode='contain' source={{ uri: selectingItem?.thumbnailUri }} style={styleSheet.image} indicatorProps={{ color: theme.text }} />
+                                            <Animated.View style={[{ transform: [{ scale: mediaViewScaleAnimRef }] }]}>
+                                                <ImageBackgroundWithLoading onLoad={onImageLoaded} resizeMode='contain' source={{ uri: selectingItem?.thumbnailUri }} style={styleSheet.image} indicatorProps={{ color: theme.text }} />
+                                            </Animated.View>
                                             <Text selectable style={[styleSheet.titleView, { color: theme.text, }]}>{selectingItem?.title}</Text>
                                             <Text selectable style={[styleSheet.infoTextView, { color: theme.text, }]}>{selectingItem?.info}</Text>
                                             <Text selectable style={[styleSheet.infoTextView, { color: theme.text, }]}>★ {selectingItem?.rate} on IMDb</Text>
