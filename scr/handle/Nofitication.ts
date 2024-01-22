@@ -19,9 +19,9 @@ export const initNotificationAsync = async () => {
 
   // Create a channel (required for Android)
   channelId = await notifee.createChannel({
-    id: 'default',
-    name: 'Default Channel',
-    importance: AndroidImportance.DEFAULT,
+    id: 'main',
+    name: 'Main Channel',
+    importance: AndroidImportance.HIGH,
     sound: 'default',
   } as AndroidChannel);
 
