@@ -1,5 +1,5 @@
-import { View, Text, TouchableOpacity, ActivityIndicator, Share as RNShare, ShareContent, ShareOptions, Alert, StyleSheet, TouchableWithoutFeedback } from 'react-native'
-import React, { LegacyRef, useCallback, useContext, useEffect, useRef, useState } from 'react'
+import { View, Text, TouchableOpacity, ActivityIndicator, Share as RNShare, ShareContent, ShareOptions, Alert, StyleSheet, TouchableWithoutFeedback, Animated } from 'react-native'
+import React, { LegacyRef, useCallback, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { BorderRadius, Category, FontSize, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
 import Share from 'react-native-share';
@@ -20,6 +20,7 @@ import StreakPopup from '../components/StreakPopup';
 import { ToCanPrint } from '../../handle/UtilsTS';
 import { track_PressRandom, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
+import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 
 interface TheRandomShortTextProps {
     category: Category,
@@ -37,6 +38,19 @@ const TheRandomShortText = ({
     const [handling, setHandling] = useState(false);
     const [streakData, setStreakData] = useState<Streak | undefined>(undefined);
     const viewShotRef = useRef<LegacyRef<ViewShot> | undefined>();
+
+    // animation
+
+    const mediaViewScaleAnimRef = useRef(new Animated.Value(1)).current
+
+    // play loaded anim
+
+    useLayoutEffect(() => {
+        if (!text)
+            return
+
+        playAnimLoadedMedia(mediaViewScaleAnimRef)
+    }, [text])
 
     const onPressRandom = useCallback(async (shouldTracking: boolean) => {
         reasonToReload.current = NeedReloadReason.None
@@ -158,7 +172,10 @@ const TheRandomShortText = ({
                             <View style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
                                 <ActivityIndicator color={theme.counterPrimary} style={{ marginRight: Outline.Horizontal }} />
                             </View> :
-                            <View onTouchStart={onBigViewStartTouch} onTouchEnd={onBigViewEndTouch} style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
+                            <Animated.View
+                                onTouchStart={onBigViewStartTouch}
+                                onTouchEnd={onBigViewEndTouch}
+                                style={[{ transform: [{ scale: mediaViewScaleAnimRef }] }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]}>
                                 {
                                     reasonToReload.current !== NeedReloadReason.None ?
                                         // true ?
@@ -172,7 +189,7 @@ const TheRandomShortText = ({
                                             <Text selectable style={{ color: theme.text, fontSize: FontSize.Big }}>{text}</Text>
                                         </TouchableWithoutFeedback>
                                 }
-                            </View>
+                            </Animated.View>
                     }
                 </View>
             </ViewShot>
