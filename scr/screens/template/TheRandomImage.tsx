@@ -47,9 +47,6 @@ const TheRandomImage = ({
     // play loaded media anim
 
     const onLoadedImage = useCallback((_: NativeSyntheticEvent<ImageLoadEventData>) => {
-        // if (!currentItem?.uri)
-        //     return
-
         playAnimLoadedMedia(mediaViewScaleAnimRef)
     }, [])
 
