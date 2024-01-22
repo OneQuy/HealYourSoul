@@ -185,7 +185,7 @@ const ThePage = ({ category }: ThePageProps) => {
         //         useNativeDriver: true,
         //     }
         // ).start()
-        
+
         Animated.spring(
             mediaViewScaleAnimRef,
             {
@@ -759,7 +759,9 @@ const ThePage = ({ category }: ThePageProps) => {
 
     const style = useMemo(() => {
         return StyleSheet.create({
-            flex1: { flex: 1 }
+            flex1: { flex: 1 },
+            headerOptionTO: { marginRight: 15 },
+            subBtnTO: { justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', },
         })
     }, [theme])
 
@@ -948,10 +950,4 @@ const ThePage = ({ category }: ThePageProps) => {
     )
 }
 
-export default ThePage;
-
-
-const style = StyleSheet.create({
-    headerOptionTO: { marginRight: 15 },
-    subBtnTO: { justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', },
-})
+export default ThePage
