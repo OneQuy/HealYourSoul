@@ -170,6 +170,30 @@ const ThePage = ({ category }: ThePageProps) => {
     const curMediaIdx = useRef<number>(0);
     const [isFavorited, likeCount, onPressFavoriteFromHook] = useIsFavorited(category, post.current?.id)
 
+    // animation
+
+    const mediaViewScaleAnimRef = useRef(new Animated.Value(1)).current
+
+    const playAnimLoadedMedia = useCallback(() => {
+        mediaViewScaleAnimRef.setValue(0)
+
+        Animated.timing(
+            mediaViewScaleAnimRef,
+            {
+                duration: 200,
+                toValue: 1,
+                useNativeDriver: true,
+            }
+        ).start()
+    }, [])
+
+    useEffect(() => {
+        if (mediaURI.current === '')
+            return
+
+        playAnimLoadedMedia();
+    }, [mediaURI.current])
+
     // calculations
 
     const showNextMediaButton: boolean = post.current !== null && curMediaIdx.current < post.current.media.length - 1;
@@ -233,7 +257,7 @@ const ThePage = ({ category }: ThePageProps) => {
 
             // update offline ids
 
-            addPostIDToOfflineList(forPost.id);
+            addPostIDToOfflineList(forPost.id)
         } else { // fail
             reasonToReload.current = uriOrReasonToReload;
         }
@@ -773,7 +797,7 @@ const ThePage = ({ category }: ThePageProps) => {
                         }
                     </View> :
                     // have media
-                    <View style={style.flex1} >
+                    <Animated.View style={[style.flex1, { transform: [{ scale: mediaViewScaleAnimRef }] }]} >
                         {
                             currentMediaIsImage ?
                                 <Image resizeMode='contain' style={{ width: '100%', height: '100%', }} source={{ uri: mediaURI.current }} />
@@ -851,7 +875,7 @@ const ThePage = ({ category }: ThePageProps) => {
                                     </View>
                             }
                         </View>
-                    </View>
+                    </Animated.View>
             }
 
             {/* credit author */}
