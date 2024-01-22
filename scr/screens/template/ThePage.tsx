@@ -8,7 +8,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { View, Text, Image, TouchableOpacity, ActivityIndicator, Alert, PanResponder, LayoutChangeEvent, GestureResponderEvent, Animated, StyleSheet, } from 'react-native'
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { BorderRadius, Category, FontSize, Icon, LocalText, NeedReloadReason, Opacity, Outline, Size } from '../../constants/AppConstants';
 import { ThemeContext } from '../../constants/Colors';
 import { heightPercentageToDP as hp, } from "react-native-responsive-screen";
@@ -725,6 +725,12 @@ const ThePage = ({ category }: ThePageProps) => {
         SetStreakAsync(Category[category], seenIDs && typeof seenIDs.length === 'number' ? seenIDs.length : 0)
     }, [seenIDs]);
 
+    const style = useMemo(() => {
+        return StyleSheet.create({
+            flex1: { flex: 1 }
+        })
+    }, [theme])
+
     // main render
 
     return (
@@ -750,7 +756,7 @@ const ThePage = ({ category }: ThePageProps) => {
             {
                 mediaURI.current === '' ?
                     // no media
-                    <View style={{ flex: 1 }} >
+                    <View style={style.flex1} >
                         {
                             reasonToReload.current !== NeedReloadReason.None ?
                                 // need to reload
@@ -767,7 +773,7 @@ const ThePage = ({ category }: ThePageProps) => {
                         }
                     </View> :
                     // have media
-                    <View style={{ flex: 1 }} >
+                    <View style={style.flex1} >
                         {
                             currentMediaIsImage ?
                                 <Image resizeMode='contain' style={{ width: '100%', height: '100%', }} source={{ uri: mediaURI.current }} />
@@ -782,7 +788,7 @@ const ThePage = ({ category }: ThePageProps) => {
                                         paused={!videoIsPlaying}
                                         onProgress={onVideoProcess}
                                         onEnd={onVideoCompleted}
-                                        style={{ flex: 1 }} />
+                                        style={style.flex1} />
                                 </View>
                         }
                         {/* menu overlay */}
