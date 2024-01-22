@@ -1,5 +1,5 @@
-import { View, Text, TouchableOpacity, ActivityIndicator, Alert, StyleSheet } from 'react-native'
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
+import { View, Text, TouchableOpacity, ActivityIndicator, Alert, StyleSheet, Animated, NativeSyntheticEvent, ImageLoadEventData } from 'react-native'
+import React, { useCallback, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { BorderRadius, Category, FontSize, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
 import Share from 'react-native-share';
@@ -22,6 +22,7 @@ import { ToastOptions, toast } from '@baronha/ting';
 import ImageAsMap from '../../handle/ImageAsMap';
 import { track_PressRandom, track_PressSaveMedia, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
+import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 
 interface TheRandomImageProps {
     category: Category,
@@ -38,6 +39,19 @@ const TheRandomImage = ({
     const theme = useContext(ThemeContext);
     const [handling, setHandling] = useState(false);
     const [streakData, setStreakData] = useState<Streak | undefined>(undefined);
+
+    // animation
+
+    const mediaViewScaleAnimRef = useRef(new Animated.Value(1)).current
+
+    // play loaded media anim
+
+    const onLoadedImage = useCallback((_: NativeSyntheticEvent<ImageLoadEventData>) => {
+        // if (!currentItem?.uri)
+        //     return
+
+        playAnimLoadedMedia(mediaViewScaleAnimRef)
+    }, [])
 
     const onPressRandom = useCallback(async (shouldTracking: boolean) => {
         reasonToReload.current = NeedReloadReason.None
@@ -182,7 +196,10 @@ const TheRandomImage = ({
                                             !currentItem?.title ? undefined :
                                                 <Text numberOfLines={3} style={[{ color: theme.text, }, styleSheet.titleText]}>{currentItem.title}</Text>
                                         }
-                                        <View onTouchStart={onBigViewStartTouch} onTouchEnd={onBigViewEndTouch} style={styleSheet.imageTO}
+                                        <Animated.View
+                                            onTouchStart={onBigViewStartTouch}
+                                            onTouchEnd={onBigViewEndTouch}
+                                            style={[styleSheet.imageTO, { transform: [{ scale: mediaViewScaleAnimRef }] }]}
                                         // onTouchEnd={onPressRandom}
                                         >
                                             <ImageAsMap
@@ -191,8 +208,9 @@ const TheRandomImage = ({
                                                 loadingIndicatorProps={{ color: theme.text }}
                                                 notMinScaleCoverModeWhenImageIsLandscape={true}
                                                 initialPointCenterByMapSizePercent={[0.5, 0]}
+                                                onLoadedImage={onLoadedImage}
                                             />
-                                        </View>
+                                        </Animated.View>
                                     </View>
                             }
                         </View>

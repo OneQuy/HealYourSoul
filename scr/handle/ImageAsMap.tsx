@@ -33,6 +33,7 @@ type ImageAsMapProps = {
     minScaleIsContainIfImageRatioOver?: number,
     notMinScaleCoverModeWhenImageIsLandscape?: boolean,
     loadingIndicatorProps?: ActivityIndicatorProps,
+    onLoadedImage?: (e: NativeSyntheticEvent<ImageLoadEventData>) => void,
 
     /**
      * default is [0.5, 0.5] (center of the map)
@@ -63,6 +64,7 @@ const ImageAsMap = ({
     minScaleIsContainIfImageRatioOver,
     notMinScaleCoverModeWhenImageIsLandscape,
     loadingIndicatorProps,
+    onLoadedImage,
 }: ImageAsMapProps) => {
     const [mapRealOriginSize, setMapRealOriginSize] = useState<[number, number]>([10, 10])
     const [viewportRealSize, setViewportRealSize] = useState<[number, number]>([0, 0])
@@ -277,6 +279,9 @@ const ImageAsMap = ({
     }
 
     const onLoadedMap = (e: NativeSyntheticEvent<ImageLoadEventData>) => {
+        if (typeof onLoadedImage === 'function')
+            onLoadedImage(e)
+
         Image.getSize(e.nativeEvent.source.uri, (w, h) => {
             setMapRealOriginSize([w, h])
 
