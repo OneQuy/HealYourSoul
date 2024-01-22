@@ -33,6 +33,7 @@ import Share from 'react-native-share';
 import useIsFavorited from '../../hooks/useIsFavorited';
 import { track_PressFavorite, track_PressNextPost, track_PressSaveMedia, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
+import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 
 const videoNumbSize = 10;
 const videoTouchEffectRadius = 100;
@@ -174,25 +175,13 @@ const ThePage = ({ category }: ThePageProps) => {
 
     const mediaViewScaleAnimRef = useRef(new Animated.Value(1)).current
 
-    const playAnimLoadedMedia = useCallback(() => {
-        mediaViewScaleAnimRef.setValue(0)
-
-        Animated.spring(
-            mediaViewScaleAnimRef,
-            {
-                toValue: 1,
-                useNativeDriver: true,
-            }
-        ).start()
-    }, [])
-
     // play loaded media anim
 
     useLayoutEffect(() => {
         if (mediaURI.current === '')
             return
 
-        playAnimLoadedMedia();
+        playAnimLoadedMedia(mediaViewScaleAnimRef)
     }, [mediaURI.current])
 
     // calculations
