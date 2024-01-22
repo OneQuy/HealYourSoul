@@ -1,7 +1,7 @@
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { View, Text, TouchableOpacity, Alert, StyleSheet, TouchableWithoutFeedback, ScrollView, NativeSyntheticEvent, ImageErrorEventData, ImageLoadEventData, StyleProp, ImageStyle, Dimensions, ActivityIndicator, ImageBackground, Linking, GestureResponderEvent } from 'react-native'
-import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { View, Text, TouchableOpacity, Alert, StyleSheet, TouchableWithoutFeedback, ScrollView, NativeSyntheticEvent, ImageErrorEventData, ImageLoadEventData, StyleProp, ImageStyle, Dimensions, ActivityIndicator, ImageBackground, Linking, GestureResponderEvent, Animated } from 'react-native'
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size, StorageKey_AwardPictureLastSeenIdxOfYear } from '../../constants/AppConstants'
 import Share from 'react-native-share';
@@ -23,6 +23,9 @@ import useIsFavorited from '../../hooks/useIsFavorited';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { track_PressFavorite, track_PressNextPost, track_PressSaveMedia, track_PressYearOfAwardPicture, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
+import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
+
+const BGAnim = Animated.createAnimatedComponent(ImageBackground)
 
 const screen = Dimensions.get('screen')
 
@@ -43,6 +46,8 @@ const PicturesOfTheYearScreen = () => {
         const year = dataOfYears.find(y => y.year === selectingYear)
         return year?.list[selectingPhotoIndex]
     }, [selectingPhotoIndex, selectingYear])
+
+    const mediaViewScaleAnimRef = useRef(new Animated.Value(1)).current
 
     const selectingPhotoID = useMemo(() => {
         return Number.parseInt(selectingYear.toString() + selectingPhotoIndex.toString())
@@ -173,6 +178,8 @@ const PicturesOfTheYearScreen = () => {
 
     const onImageLoad = useCallback((_: NativeSyntheticEvent<ImageLoadEventData>) => {
         setShowLoadImageIndicator(false)
+
+        playAnimLoadedMedia(mediaViewScaleAnimRef)
     }, [])
 
     const onImageError = useCallback((_: NativeSyntheticEvent<ImageErrorEventData>) => {
@@ -321,8 +328,8 @@ const PicturesOfTheYearScreen = () => {
                                 <TouchableWithoutFeedback onPressIn={onBigViewStartTouch} onPressOut={onBigViewEndTouch}
                                 // onPress={() => onPressNext(-1, 'next')}
                                 >
-                                    <ImageBackground
-                                        style={imageStyle}
+                                    <BGAnim
+                                        style={[{ transform: [{ scale: mediaViewScaleAnimRef }] }, imageStyle]}
                                         onLoadStart={onImageStartLoad}
                                         onLoad={onImageLoad}
                                         resizeMode='contain' onError={onImageError} source={{ uri: selectingPhoto?.imageUri }} >
@@ -332,7 +339,7 @@ const PicturesOfTheYearScreen = () => {
                                                     <ActivityIndicator color={theme.counterPrimary} style={{ marginRight: Outline.Horizontal }} />
                                                 </View>
                                         }
-                                    </ImageBackground>
+                                    </BGAnim>
                                 </TouchableWithoutFeedback>
                                 {/* title */}
                                 <Text selectable style={[{ color: theme.text }, styleSheet.titleText]}>{selectingPhoto?.title}</Text>
