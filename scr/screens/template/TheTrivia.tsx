@@ -1,9 +1,7 @@
-import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet } from 'react-native'
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
+import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, Animated } from 'react-native'
+import React, { useCallback, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size, StorageKey_TriviaAnswerType, StorageKey_TriviaDifficulty } from '../../constants/AppConstants'
-
-// @ts-ignore
 
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -19,6 +17,9 @@ import { PickRandomElement } from '../../handle/Utils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { track_PressRandom, track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
+import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
+
+const TOAnim = Animated.createAnimatedComponent(TouchableOpacity)
 
 interface TheTriviaProps {
     category: Category,
@@ -50,6 +51,17 @@ const TheTrivia = ({
     const [userChosenAnswer, setUserChosenAnswer] = useState<string | undefined>(undefined);
     const [difficulty, setDifficulty] = useState<TriviaDifficulty>('all');
     const [type, setType] = useState<TriviaAnswerType>('all');
+
+    const mediaViewScaleAnimRef = useRef((Array(4).fill(0).map(i => new Animated.Value(1))))
+
+    useEffect(() => {
+        if (!trivia)
+            return
+
+        for (let i = 0; i < trivia.answer.length && i < mediaViewScaleAnimRef.current.length; i++) {
+            playAnimLoadedMedia(mediaViewScaleAnimRef.current[i], i * 200)
+        }
+    }, [trivia])
 
     const onPressDifficulty = useCallback(async (diff: TriviaDifficulty) => {
         setDifficulty(diff)
@@ -96,7 +108,6 @@ const TheTrivia = ({
 
         setHandling(false)
     }, [])
-
 
     const onPressHeaderOption = useCallback(async () => {
         if (streakData)
@@ -196,7 +207,6 @@ const TheTrivia = ({
                         <View style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
                             {
                                 reasonToReload.current !== NeedReloadReason.None ?
-                                    // true ?
                                     <TouchableOpacity onPress={() => onPressRandom(true)} style={[{ gap: Outline.GapVertical }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]} >
                                         <MaterialCommunityIcons name={reasonToReload.current === NeedReloadReason.NoInternet ? Icon.NoInternet : Icon.HeartBroken} color={theme.primary} size={Size.IconBig} />
                                         <Text style={{ fontSize: FontSize.Normal, color: theme.counterPrimary }}>{reasonToReload.current === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
@@ -210,7 +220,7 @@ const TheTrivia = ({
                                             <Text selectable style={{ color: theme.text, fontSize: FontSize.Big, marginBottom: Outline.Horizontal }}>{trivia?.question}</Text>
                                         </TouchableOpacity>
                                         {
-                                            allAnswer?.map((answer: string) => {
+                                            allAnswer?.map((answer: string, index: number) => {
                                                 let bgColor: string | undefined = undefined
                                                 let icon = ''
 
@@ -225,14 +235,18 @@ const TheTrivia = ({
                                                     }
                                                 }
 
-                                                return <TouchableOpacity onPress={() => onPressAnwser(answer)} style={[styleSheet.answerTO, { backgroundColor: bgColor }, { gap: Outline.GapHorizontal, padding: Outline.GapVertical, borderRadius: BorderRadius.BR8 }]} key={answer}>
+                                                return <TOAnim onPress={() => onPressAnwser(answer)} style={[
+                                                    { transform: [{ scale: userChosenAnswer ? 1 : mediaViewScaleAnimRef.current[index] }] },
+                                                    styleSheet.answerTO,
+                                                    { backgroundColor: bgColor },
+                                                    { gap: Outline.GapHorizontal, padding: Outline.GapVertical, borderRadius: BorderRadius.BR8 }]} key={answer}>
                                                     {
                                                         icon === '' ?
                                                             undefined :
                                                             <MaterialCommunityIcons name={icon} color={'white'} size={Size.Icon} />
                                                     }
                                                     <Text style={{ verticalAlign: 'middle', textAlign: 'center', fontSize: FontSize.Small_L, color: bgColor ? 'white' : theme.text }}>{answer}</Text>
-                                                </TouchableOpacity>
+                                                </TOAnim>
                                             })
                                         }
                                     </View>
