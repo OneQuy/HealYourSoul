@@ -1,4 +1,4 @@
-import { Share as RNShare, View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, Image, ShareContent, Alert, Linking } from 'react-native'
+import { Share as RNShare, View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, ShareContent, Alert, Linking, Animated } from 'react-native'
 import React, { LegacyRef, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
@@ -27,6 +27,7 @@ import { ToCanPrint } from '../../handle/UtilsTS';
 import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading';
 import { track_PressRandom, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
+import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 
 const category = Category.Wikipedia
 
@@ -39,6 +40,12 @@ const WikipediaScreen = () => {
     const [data, setData] = useState<object | undefined>(undefined);
     const [showFull, setShowFull] = useState(false);
     const viewShotRef = useRef<LegacyRef<ViewShot> | undefined>();
+
+    const mediaViewScaleAnimRef = useRef(new Animated.Value(1)).current
+
+    const onImageLoaded = useCallback(() => {
+        playAnimLoadedMedia(mediaViewScaleAnimRef)
+    }, [])
 
     const currentContent = useMemo(() => {
         if (typeof data !== 'object')
@@ -246,9 +253,9 @@ const WikipediaScreen = () => {
                                         </TouchableOpacity>
                                         :
                                         <View onTouchStart={onBigViewStartTouch} onTouchEnd={onBigViewEndTouch} style={styleSheet.contentView}>
-                                            <View style={CommonStyles.justifyContentCenter_AlignItemsCenter}>
-                                                <ImageBackgroundWithLoading resizeMode='contain' source={{ uri: currentThumbUri }} style={styleSheet.image} indicatorProps={{ color: theme.text }} />
-                                            </View>
+                                            <Animated.View style={[{ transform: [{ scale: mediaViewScaleAnimRef }] }, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
+                                                <ImageBackgroundWithLoading onLoad={onImageLoaded} resizeMode='contain' source={{ uri: currentThumbUri }} style={styleSheet.image} indicatorProps={{ color: theme.text }} />
+                                            </Animated.View>
                                             <TouchableOpacity onPress={onPressLink} style={styleSheet.titleTO}>
                                                 <Text selectable style={[styleSheet.titleView, { color: theme.text, }]}>{currentTitle}</Text>
                                                 <MaterialCommunityIcons name={Icon.Link} color={theme.text} size={Size.IconSmaller} />
