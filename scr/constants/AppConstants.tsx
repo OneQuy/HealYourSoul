@@ -214,6 +214,7 @@ export const LocalText = {
   Contact: "Contact",
   install_app_date: "The date you installed Gooday",
   notification: "Notification",
+  anim_load_media: "Animation show media",
   notification_quote_of_the_day: "Quote of the day",
   notification_quote_of_the_day_desc: 'Send a quote at #:00 AM every day. (Tap this to test)',
   notification_fact_of_the_day: "Fact of the day",
@@ -312,7 +313,6 @@ export const LocalText = {
 export const StorageKey_AwardPictureLastSeenIdxOfYear = (year: number) => 'award_picture_last_seen_idx_' + year
 export const StorageKey_LocalFileVersion = (cat: Category) => 'local_file_version_' + cat
 
-export const StorageKey_WasteTimeItems = 'waste_time_item'
 
 export const StorageKey_NinjaFact_ToggleNoti = 'ninja_fact_ToggleNoti'
 export const StorageKey_NinjaJoke_ToggleNoti = 'ninja_joke_ToggleNoti'
@@ -330,6 +330,8 @@ export const StorageKey_NinjaFact_LastDateDownload_DataNoti = 'ninja_fact_arr_no
 export const StorageKey_NinjaJoke_LastDateDownload_DataNoti = 'ninja_joke_arr_noti_date'
 export const StorageKey_Quote_LastDateDownload_DataNoti = 'quote_arr_noti_date'
 
+export const StorageKey_IsAnimLoadMedia = 'IsAnimLoadMedia'
+export const StorageKey_WasteTimeItems = 'waste_time_item'
 export const StorageKey_Streak = 'streak'
 export const StorageKey_SelectingFunWebsiteId = 'selecting_fun_website_id'
 export const StorageKey_SelectingTopMovieIdx = 'selecting_movie_idx'

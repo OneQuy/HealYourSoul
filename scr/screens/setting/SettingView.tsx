@@ -7,7 +7,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { ActivityIndicator, Share as RNShare, Alert, Linking, StyleSheet, Text, TextInput, TouchableOpacity, View, ShareContent, ShareOptions } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors';
-import { BorderRadius, FontSize, FontWeight, Icon, LocalText, Outline, Size, StorageKey_FirstTimeInstallTick, StorageKey_LastTickSendFeedback, StorageKey_NinjaFact_ToggleNoti, StorageKey_NinjaJoke_ToggleNoti, StorageKey_Quote_ToggleNoti } from '../../constants/AppConstants';
+import { BorderRadius, FontSize, FontWeight, Icon, LocalText, Outline, Size, StorageKey_FirstTimeInstallTick, StorageKey_IsAnimLoadMedia, StorageKey_LastTickSendFeedback, StorageKey_NinjaFact_ToggleNoti, StorageKey_NinjaJoke_ToggleNoti, StorageKey_Quote_ToggleNoti } from '../../constants/AppConstants';
 import { ScrollView } from 'react-native-gesture-handler';
 import { CopyAndToast, RateApp } from '../../handle/AppUtils';
 import { track_Simple, track_SimpleWithParam, track_ToggleNotification } from '../../handle/tracking/GoodayTracking';
@@ -18,6 +18,7 @@ import { onPressTestNoti, timeInHour24hNoti_Fact, timeInHour24hNoti_Joke, timeIn
 import { StorageLog_GetAsync } from '../../handle/StorageLog';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { FirebaseDatabase_SetValueAsync } from '../../firebase/FirebaseDatabase';
+import { reloadSettingAnimWhenLoadMedia } from '../../handle/GoodayAnimation';
 
 const limitFeedback = 300
 
@@ -36,6 +37,7 @@ const SettingView = () => {
   const [isNoti_Quote, setIsNoti_Quote] = useState(true)
   const [isNoti_Fact, setIsNoti_Fact] = useState(true)
   const [isNoti_Joke, setIsNoti_Joke] = useState(false)
+  const [isAnimLoadMedia, setIsAnimLoadMedia] = useState(true)
   const [installDate, setInstallDate] = useState('')
   const [feedbackText, setFeedbackText] = useState('')
   const [isSendingFeedback, setIsSendingFeedback] = useState(false)
@@ -62,7 +64,7 @@ const SettingView = () => {
     })
   }, [theme])
 
-  const onPressNoti = useCallback((type: 'quote' | 'fact' | 'joke') => {
+  const onPressNoti = useCallback((type: 'quote' | 'fact' | 'joke' | 'anim_load_media') => {
 
     if (type === 'fact') {
       track_ToggleNotification(type, !isNoti_Fact)
@@ -79,11 +81,17 @@ const SettingView = () => {
       setIsNoti_Joke(!isNoti_Joke)
       SetBooleanAsync(StorageKey_NinjaJoke_ToggleNoti, !isNoti_Joke)
     }
-  }, [isNoti_Fact, isNoti_Quote, isNoti_Joke])
+    else if (type === 'anim_load_media') {
+      // track_ToggleNotification(type, !isAnimLoadMedia)
+      setIsAnimLoadMedia(!isAnimLoadMedia)
+      SetBooleanAsync(StorageKey_IsAnimLoadMedia, !isAnimLoadMedia)
+      reloadSettingAnimWhenLoadMedia()
+    }
+  }, [isNoti_Fact, isNoti_Quote, isNoti_Joke, isAnimLoadMedia])
 
   const onPressShareApp = useCallback(() => {
     track_Simple('share_app')
-    
+
     RNShare.share({
       title: 'Gooday',
       message: shareAppText,
@@ -164,6 +172,8 @@ const SettingView = () => {
       setIsNoti_Quote(await GetBooleanAsync(StorageKey_Quote_ToggleNoti, true))
       setIsNoti_Fact(await GetBooleanAsync(StorageKey_NinjaFact_ToggleNoti, true))
       setIsNoti_Joke(await GetBooleanAsync(StorageKey_NinjaJoke_ToggleNoti, false))
+
+      setIsAnimLoadMedia(await GetBooleanAsync(StorageKey_IsAnimLoadMedia, true))
     })()
   }, [])
 
@@ -203,6 +213,21 @@ const SettingView = () => {
           </TouchableOpacity>
         </View>
         <Text onPress={() => onPressTestNoti('joke')} style={style.descNotiText}>{LocalText.notification_joke_of_the_day_desc.replace('#', timeInHour24hNoti_Joke.toString())}</Text>
+        {
+          hair100Width()
+        }
+        
+        {/* anim */}
+
+        <Text style={style.titleText}>{LocalText.setting}</Text>
+
+        {/* quote */}
+        <View style={style.checkbox}>
+          <Text onPress={() => onPressTestNoti('quote')} style={style.emailText}>{LocalText.anim_load_media}</Text>
+          <TouchableOpacity onPress={() => onPressNoti('anim_load_media')} style={style.emailCopyTO} >
+            <MaterialCommunityIcons name={isAnimLoadMedia ? Icon.CheckBox_Yes : Icon.CheckBox_No} color={theme.counterPrimary} size={Size.Icon} />
+          </TouchableOpacity>
+        </View>
         {
           hair100Width()
         }
