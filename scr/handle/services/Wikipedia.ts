@@ -10,7 +10,7 @@ export const GetWikiAsync = async (): Promise<object | undefined> => {
         for (let i = 0; i < 5; i++) {
             res = await fetch(url)
 
-            if (res.status === 200) {
+            if (res.ok) {
                 break
             }
             else

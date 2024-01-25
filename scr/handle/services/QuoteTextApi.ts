@@ -17,7 +17,7 @@ export const GetQuoteListAsync_FromApi = async (): Promise<Quote[] | undefined> 
         }
         catch { }
 
-        if (res && res.status === 200) {
+        if (res && res.ok) {
             break
         }
         else
