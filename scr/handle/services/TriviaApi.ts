@@ -21,12 +21,11 @@ export const GetTriviaAsync = async (difficulty: TriviaDifficulty = 'all', answe
             answerTypeParam = '&type=boolean'
 
         const url = 'https://opentdb.com/api.php?amount=1&encode=base64' + diff + answerTypeParam
-        // console.log(url);
 
         for (let i = 0; i < 5; i++) {
             res = await fetch(url)
 
-            if (res.status === 200) {
+            if (res.ok) {
                 break
             }
             else
