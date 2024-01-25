@@ -24,6 +24,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { track_PressFavorite, track_PressNextPost, track_PressSaveMedia, track_PressYearOfAwardPicture, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
+import FavoriteButton from '../others/FavoriteButton';
 
 const BGAnim = Animated.createAnimatedComponent(ImageBackground)
 
@@ -41,6 +42,7 @@ const PicturesOfTheYearScreen = () => {
     const [selectingPhotoIndex, setSelectingPhotoIndex] = useState(0)
     const [isShowAwardList, setIsShowLisShowAwardList] = useState(false)
     const [isShowLoadImageIndicator, setShowLoadImageIndicator] = useState(false)
+    const favoriteCallbackRef = useRef<(() => void) | undefined>(undefined);
 
     const selectingPhoto = useMemo(() => {
         const year = dataOfYears.find(y => y.year === selectingYear)
@@ -52,13 +54,6 @@ const PicturesOfTheYearScreen = () => {
     const selectingPhotoID = useMemo(() => {
         return Number.parseInt(selectingYear.toString() + selectingPhotoIndex.toString())
     }, [selectingPhotoIndex, selectingYear])
-
-    const [isFavorited, likeCount, onPressFavoriteFromHook] = useIsFavorited(category, selectingPhotoID)
-
-    const onPressFavorite = useCallback(() => {
-        track_PressFavorite(category, !isFavorited)
-        onPressFavoriteFromHook()
-    }, [onPressFavoriteFromHook, isFavorited])
 
     const renderIconReward = useCallback(() => {
 
@@ -253,9 +248,10 @@ const PicturesOfTheYearScreen = () => {
 
     const onTapCounted = useCallback((count: number, _: GestureResponderEvent['nativeEvent']) => {
         if (count === 2) {
-            onPressFavorite()
+            if (favoriteCallbackRef.current)
+                favoriteCallbackRef.current()
         }
-    }, [onPressFavorite])
+    }, [])
 
     const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(onTapCounted, onLongPressed, onSwiped)
 
@@ -359,13 +355,7 @@ const PicturesOfTheYearScreen = () => {
                 </View>
             </View>
             <View style={styleSheet.mainButtonsView}>
-                <TouchableOpacity onPress={onPressFavorite} style={{ flexDirection: 'row', gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
-                    <MaterialCommunityIcons name={!isFavorited ? "cards-heart-outline" : 'cards-heart'} color={theme.counterPrimary} size={Size.IconSmaller} />
-                    {
-                        Number.isNaN(likeCount) ? undefined :
-                            <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{likeCount}</Text>
-                    }
-                </TouchableOpacity>
+                <FavoriteButton callbackRef={favoriteCallbackRef} id={selectingPhotoID} category={category} />
                 <TouchableOpacity onPress={() => onPressNext(-1, 'next')} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
                     <MaterialCommunityIcons name={Icon.Right} color={theme.counterPrimary} size={Size.Icon} />
                     <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{LocalText.next}</Text>
