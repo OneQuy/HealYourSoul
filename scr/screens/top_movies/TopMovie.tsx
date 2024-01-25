@@ -25,12 +25,12 @@ import useCheckAndDownloadRemoteFile from '../../hooks/useCheckAndDownloadRemote
 import { RandomInt, TempDirName } from '../../handle/Utils';
 import { GetRemoteFileConfigVersion } from '../../handle/AppConfigHandler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import useIsFavorited from '../../hooks/useIsFavorited';
 import ListMovie from './ListMovie';
 import { DownloadFileAsync, GetFLPFromRLP } from '../../handle/FileUtils';
-import { track_PressFavorite, track_PressNextPost, track_PressRandom, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
+import { track_PressNextPost, track_PressRandom, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
+import FavoriteButton from '../others/FavoriteButton';
 
 const category = Category.TopMovie
 const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Ftop_movies.json?alt=media&token=4203c962-58bb-41c3-a1a0-ab3b1b3359f8'
@@ -44,6 +44,7 @@ const TopMovieScreen = () => {
     const [selectingItem, setSelectingItem] = useState<TopMovie | undefined>(undefined)
     const [isShowList, setIsShowList] = useState(false)
     const viewShotRef = useRef<LegacyRef<ViewShot> | undefined>();
+    const favoriteCallbackRef = useRef<(() => void) | undefined>(undefined);
 
     const [topMovies, errorDownloadJson, _, reUpdateData] = useCheckAndDownloadRemoteFile<TopMovie[]>(
         fileURL,
@@ -79,13 +80,6 @@ const TopMovieScreen = () => {
 
         return id
     }, [selectingItem])
-
-    const [isFavorited, likeCount, onPressFavoriteFromHook] = useIsFavorited(category, idNumber)
-
-    const onPressFavorite = useCallback(async () => {
-        track_PressFavorite(category, !isFavorited)
-        onPressFavoriteFromHook()
-    }, [onPressFavoriteFromHook, isFavorited])
 
     const getSelectingIdxAsync = useCallback(async () => {
         const s = await AsyncStorage.getItem(StorageKey_SelectingTopMovieIdx)
@@ -217,9 +211,10 @@ const TopMovieScreen = () => {
 
     const onTapCounted = useCallback((count: number, _: GestureResponderEvent['nativeEvent']) => {
         if (count === 2) {
-            onPressFavorite()
+            if (favoriteCallbackRef.current)
+                favoriteCallbackRef.current()
         }
-    }, [onPressFavorite])
+    }, [])
 
     const onSwiped = useCallback((result: SwipeResult) => {
         if (result.primaryDirectionIsHorizontalOrVertical && !result.primaryDirectionIsPositive) {
@@ -321,13 +316,7 @@ const TopMovieScreen = () => {
             </ViewShot>
             {/* main btn */}
             <View style={styleSheet.mainButtonsView}>
-                <TouchableOpacity onPress={onPressFavorite} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
-                    <MaterialCommunityIcons name={!isFavorited ? "cards-heart-outline" : 'cards-heart'} color={theme.counterPrimary} size={Size.IconSmaller} />
-                    {
-                        Number.isNaN(likeCount) ? undefined :
-                            <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{likeCount}</Text>
-                    }
-                </TouchableOpacity>
+                <FavoriteButton callbackRef={favoriteCallbackRef} id={idNumber} category={category} />
                 <TouchableOpacity onPress={onPressRandom} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
                     <MaterialCommunityIcons name={Icon.Dice} color={theme.counterPrimary} size={Size.Icon} />
                     <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{LocalText.random}</Text>
