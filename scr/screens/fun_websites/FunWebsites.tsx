@@ -33,6 +33,7 @@ import ListWebsite from './ListWebsite';
 import { track_PressFavorite, track_PressNextPost, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
+import FavoriteButton from '../others/FavoriteButton';
 
 const category = Category.FunWebsites
 const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Ffun_websites.json?alt=media&token=10ecb626-e576-49d4-b124-a9ba148a93a6'
@@ -47,16 +48,17 @@ const FunWebsitesScreen = () => {
     const [selectingItem, setSelectingItem] = useState<FunWebsite | undefined>(undefined)
     const [isShowList, setIsShowList] = useState(false)
     const viewShotRef = useRef<LegacyRef<ViewShot> | undefined>();
+    const favoriteCallbackRef = useRef<(() => void) | undefined>(undefined);
 
-     // animation
+    // animation
 
-     const mediaViewScaleAnimRef = useRef(new Animated.Value(1)).current
+    const mediaViewScaleAnimRef = useRef(new Animated.Value(1)).current
 
-     // play loaded media anim
- 
-     const onImageLoaded = useCallback(() => {
-         playAnimLoadedMedia(mediaViewScaleAnimRef)
-     }, [])
+    // play loaded media anim
+
+    const onImageLoaded = useCallback(() => {
+        playAnimLoadedMedia(mediaViewScaleAnimRef)
+    }, [])
 
     const [funWebsites, errorDownloadJson, _, reUpdateData] = useCheckAndDownloadRemoteFile<FunWebsite[]>(
         fileURL,
@@ -67,13 +69,6 @@ const FunWebsitesScreen = () => {
         false,
         async () => AsyncStorage.getItem(StorageKey_LocalFileVersion(category)),
         async () => AsyncStorage.setItem(StorageKey_LocalFileVersion(category), GetRemoteFileConfigVersion('fun_websites').toString()))
-
-    const [isFavorited, likeCount, onPressFavoriteFromHook] = useIsFavorited(category, selectingItem?.id)
-
-    const onPressFavorite = useCallback(async () => {
-        track_PressFavorite(category, !isFavorited)
-        onPressFavoriteFromHook()
-    }, [onPressFavoriteFromHook, isFavorited])
 
     const shortUrl = useMemo(() => {
         if (!selectingItem)
@@ -211,9 +206,10 @@ const FunWebsitesScreen = () => {
 
     const onTapCounted = useCallback((count: number, _: GestureResponderEvent['nativeEvent']) => {
         if (count === 2) {
-            onPressFavorite()
+            if (favoriteCallbackRef.current)
+                favoriteCallbackRef.current()
         }
-    }, [onPressFavorite])
+    }, [])
 
     const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(onTapCounted, onLongPressed, onSwiped)
 
@@ -284,11 +280,11 @@ const FunWebsitesScreen = () => {
                                                 </View>
                                             </View>
                                             <Animated.View style={[{ transform: [{ scale: mediaViewScaleAnimRef }] }]}>
-                                                <ImageBackgroundWithLoading 
-                                                    resizeMode='contain' 
+                                                <ImageBackgroundWithLoading
+                                                    resizeMode='contain'
                                                     onLoad={onImageLoaded}
-                                                    source={{ uri: selectingItem?.img }} 
-                                                    style={styleSheet.image} 
+                                                    source={{ uri: selectingItem?.img }}
+                                                    style={styleSheet.image}
                                                     indicatorProps={{ color: theme.text }} />
                                             </Animated.View>
                                             <TouchableOpacity onPress={onPressLink} style={styleSheet.titleTO}>
@@ -317,13 +313,7 @@ const FunWebsitesScreen = () => {
             </ViewShot>
             {/* main btn */}
             <View style={styleSheet.mainButtonsView}>
-                <TouchableOpacity onPress={onPressFavorite} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
-                    <MaterialCommunityIcons name={!isFavorited ? "cards-heart-outline" : 'cards-heart'} color={theme.counterPrimary} size={Size.IconSmaller} />
-                    {
-                        Number.isNaN(likeCount) ? undefined :
-                            <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{likeCount}</Text>
-                    }
-                </TouchableOpacity>
+                <FavoriteButton callbackRef={favoriteCallbackRef} id={selectingItem?.id} category={category} />
                 <TouchableOpacity onPress={onPressInAppWeb} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
                     <MaterialCommunityIcons name={showFull ? Icon.X : Icon.Eye} color={theme.counterPrimary} size={Size.Icon} />
                     <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{showFull ? '' : LocalText.go}</Text>
