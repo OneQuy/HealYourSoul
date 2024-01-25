@@ -30,10 +30,10 @@ import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
 import StreakPopup from '../components/StreakPopup';
 import { CommonStyles } from '../../constants/CommonConstants';
 import Share from 'react-native-share';
-import useIsFavorited from '../../hooks/useIsFavorited';
-import { track_PressFavorite, track_PressNextPost, track_PressSaveMedia, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
+import { track_PressNextPost, track_PressSaveMedia, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
+import FavoriteButton from '../others/FavoriteButton';
 
 const videoNumbSize = 10;
 const videoTouchEffectRadius = 100;
@@ -66,6 +66,7 @@ const ThePage = ({ category }: ThePageProps) => {
     const fileList = useRef<FileList | null>(null);
     const previousPostIDs = useRef<number[]>([]);
     const allSavedLocalPostIdsRef = useRef<number[] | undefined>(undefined);
+    const favoriteCallbackRef = useRef<(() => void) | undefined>(undefined);
     const [streakData, setStreakData] = useState<Streak | undefined>(undefined);
 
     const seenIDs = useAppSelector((state: RootState) => {
@@ -169,7 +170,6 @@ const ThePage = ({ category }: ThePageProps) => {
     const mediaURI = useRef('');
     const post = useRef<PostMetadata | null>(null);
     const curMediaIdx = useRef<number>(0);
-    const [isFavorited, likeCount, onPressFavoriteFromHook] = useIsFavorited(category, post.current?.id)
 
     // animation
 
@@ -193,11 +193,6 @@ const ThePage = ({ category }: ThePageProps) => {
     const hasCredit: boolean = post.current !== null && post.current.author != null && post.current.author.length > 0;
 
     // handles
-
-    const onPressFavorite = useCallback(async () => {
-        track_PressFavorite(category, !isFavorited)
-        onPressFavoriteFromHook()
-    }, [onPressFavoriteFromHook, isFavorited])
 
     const onBeginLoadNextOrPreviousPostAsync = useCallback(async () => {
         if (!post.current)
@@ -629,9 +624,10 @@ const ThePage = ({ category }: ThePageProps) => {
             onPressPlayVideo();
         }
         else if (count === 2) {
-            onPressFavorite()
+            if (favoriteCallbackRef.current)
+                favoriteCallbackRef.current()
         }
-    }, [onPressFavorite, onPressPlayVideo])
+    }, [onPressPlayVideo])
 
     const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(onTapCounted, onLongPressed, onSwiped)
 
@@ -892,13 +888,7 @@ const ThePage = ({ category }: ThePageProps) => {
 
             {/* navi part */}
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: Outline.Horizontal, gap: Outline.GapHorizontal }}>
-                <TouchableOpacity onPress={onPressFavorite} style={{ flexDirection: 'row', gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
-                    <MaterialCommunityIcons name={!isFavorited ? "cards-heart-outline" : 'cards-heart'} color={theme.counterPrimary} size={Size.IconSmaller} />
-                    {
-                        Number.isNaN(likeCount) ? undefined :
-                            <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{likeCount}</Text>
-                    }
-                </TouchableOpacity>
+                <FavoriteButton callbackRef={favoriteCallbackRef} id={post.current?.id} category={category} />
                 {
                     !activePreviousPostButton ? undefined :
                         <TouchableOpacity onPress={() => onPressNextPost(false, true)} style={{ borderRadius: BorderRadius.BR8, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
