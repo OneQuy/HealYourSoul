@@ -29,6 +29,7 @@ import WebView from 'react-native-webview';
 import { track_PressFavorite, track_PressNextPost, track_PressRandom, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
+import FavoriteButton from '../others/FavoriteButton';
 
 const category = Category.BestShortFilms
 const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Fshort_films.json?alt=media&token=537eec8b-f774-4908-a5fa-45f8daf676d8'
@@ -43,6 +44,7 @@ const BestShortFilmsScreen = () => {
     const [isShowList, setIsShowList] = useState(false)
     const viewShotRef = useRef<LegacyRef<ViewShot> | undefined>();
     const [showFull, setShowFull] = useState(false);
+    const favoriteCallbackRef = useRef<(() => void) | undefined>(undefined);
 
     const [shortFilms, errorDownloadJson, _, reUpdateData] = useCheckAndDownloadRemoteFile<ShortFilm[]>(
         fileURL,
@@ -79,13 +81,6 @@ const BestShortFilmsScreen = () => {
 
         return id
     }, [selectingItem])
-
-    const [isFavorited, likeCount, onPressFavoriteFromHook] = useIsFavorited(category, idCurrent)
-
-    const onPressFavorite = useCallback(async () => {
-        track_PressFavorite(category, !isFavorited)
-        onPressFavoriteFromHook()
-    }, [onPressFavoriteFromHook, isFavorited])
 
     const getSelectingIdxAsync = useCallback(async () => {
         const s = await AsyncStorage.getItem(StorageKey_SelectingShortFilmIdx)
@@ -252,9 +247,10 @@ const BestShortFilmsScreen = () => {
 
     const onTapCounted = useCallback((count: number, _: GestureResponderEvent['nativeEvent']) => {
         if (count === 2) {
-            onPressFavorite()
+            if (favoriteCallbackRef.current)
+                favoriteCallbackRef.current()
         }
-    }, [onPressFavorite])
+    }, [])
 
     const onSwiped = useCallback((result: SwipeResult) => {
         if (result.primaryDirectionIsHorizontalOrVertical && !result.primaryDirectionIsPositive) {
@@ -360,13 +356,7 @@ const BestShortFilmsScreen = () => {
             </ViewShot>
             {/* main btn */}
             <View style={styleSheet.mainButtonsView}>
-                <TouchableOpacity onPress={onPressFavorite} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
-                    <MaterialCommunityIcons name={!isFavorited ? "cards-heart-outline" : 'cards-heart'} color={theme.counterPrimary} size={Size.IconSmaller} />
-                    {
-                        Number.isNaN(likeCount) ? undefined :
-                            <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{likeCount}</Text>
-                    }
-                </TouchableOpacity>
+                <FavoriteButton callbackRef={favoriteCallbackRef} id={idCurrent} category={category} />
                 <TouchableOpacity onPress={onPressRandom} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
                     <MaterialCommunityIcons name={Icon.Dice} color={theme.counterPrimary} size={Size.Icon} />
                     {/* <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{LocalText.random}</Text> */}
