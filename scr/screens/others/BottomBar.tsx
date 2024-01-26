@@ -11,6 +11,7 @@ export type BottomBarItem = {
     icon?: string,
     onPress?: () => void,
     text?: string,
+    scaleIcon?: number,
 
     favoriteBtn?: FavoriteButtonProp,
 }
@@ -35,7 +36,9 @@ const BottomBar = ({ items }: { items: BottomBarItem[] }) => {
                     else {
                         return (
                             <TouchableOpacity key={item.text} onPress={item.onPress} style={styleSheet.mainBtnsTO}>
-                                <MaterialCommunityIcons name={item.icon} color={theme.counterPrimary} size={Size.Icon} />
+                                <View style={{ transform: [{ scale: typeof item.scaleIcon === 'number' ? item.scaleIcon : 1 }] }}>
+                                    <MaterialCommunityIcons name={item.icon} color={theme.counterPrimary} size={Size.Icon} />
+                                </View>
                                 <Text style={styleSheet.mainBtnTxt}>{item.text}</Text>
                             </TouchableOpacity>
                         )

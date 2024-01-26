@@ -740,10 +740,6 @@ const ThePage = ({ category }: ThePageProps) => {
         return StyleSheet.create({
             flex1: { flex: 1 },
             headerOptionTO: { marginRight: 15 },
-            mainBtnsTO: { justifyContent: 'center', flex: 1, alignItems: 'center', gap: Outline.GapVertical },
-            mainBtnsView: { borderRadius: BorderRadius.BR8, paddingVertical: Outline.GapVertical_2, marginHorizontal: Outline.GapVertical, backgroundColor: theme.primary, flexDirection: 'row', justifyContent: 'space-between', },
-            mainBtnTxt: { color: theme.counterPrimary, fontSize: FontSize.Small },
-            naviScale: { transform: [{ scale: 1.3 }] },
             authorView: { paddingHorizontal: Outline.Horizontal, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' },
             authorText: { flex: 1, fontSize: FontSize.Small, color: theme.counterBackground },
             authorCopyTO: { marginLeft: Outline.Horizontal, justifyContent: 'center', alignItems: 'center' },
@@ -761,7 +757,8 @@ const ThePage = ({ category }: ThePageProps) => {
             {
                 text: LocalText.previous,
                 onPress: () => onPressNextPost(false, true),
-                icon: Icon.Left
+                icon: Icon.Left,
+                scaleIcon: 1.5,
             },
             {
                 favoriteBtn: {
@@ -773,7 +770,8 @@ const ThePage = ({ category }: ThePageProps) => {
             {
                 text: LocalText.next,
                 onPress: () => onPressNextPost(true, true),
-                icon: Icon.Right
+                icon: Icon.Right,
+                scaleIcon: 1.5,
             },
             {
                 text: LocalText.save,
