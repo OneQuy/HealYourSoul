@@ -59,7 +59,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
             Linking.openURL(data.link)
         }
       },
-      data.color && data.color.length > 0 ? data.color : theme.text]
+      data.color && data.color.length > 0 ? data.color : theme.primary]
   }, [GetAppConfig()?.notice, theme])
 
   const showUpdateBtn = useMemo(() => {
@@ -77,7 +77,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
   const routeCoupleArr = useMemo(() => {
     const routes = props.state.routes.filter(screen => {
       const name = screen.name as ScreenName
-      
+
       return IsContentScreen(name) &&
         (!disableScreens || !disableScreens.includes(name))
     })
@@ -129,6 +129,8 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
     onPressSetting()
   }, [onPressSetting])
 
+  const colorSetting = isFocusSetting ? theme.text : theme.primary
+
   return (
     <View style={{ flex: 1 }}>
       {/* logo & app name */}
@@ -150,19 +152,21 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
 
         {/* setting & rating */}
         <View style={style.settingContainer}>
-          <TouchableOpacity onPress={onPressSettingButton} style={[style.settingBtnView, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter, {backgroundColor: isFocusSetting ? theme.primary : undefined}]}>
-            <MaterialIcons name={Icon.Setting} color={theme.counterPrimary} size={Size.IconTiny} />
-            <Text style={[{ color: theme.text }, style.settingBtnText]}>{LocalText.setting}</Text>
+          <TouchableOpacity onPress={onPressSettingButton} style={[style.settingBtnView, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter, { backgroundColor: isFocusSetting ? theme.primary : undefined }]}>
+            <MaterialIcons name={Icon.Setting} color={colorSetting} size={Size.IconTiny} />
+            <Text style={[{ color: colorSetting }, style.settingBtnText]}>{LocalText.setting}</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={RateApp} style={[style.settingBtnView, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]}>
-            <MaterialIcons name={Icon.Star} color={theme.counterPrimary} size={Size.IconTiny} />
-            <Text style={[{ color: theme.text }, style.settingBtnText]}>{LocalText.rate_me}</Text>
+            <MaterialIcons name={Icon.Star} color={theme.primary} size={Size.IconTiny} />
+            <Text style={[{ color: theme.primary }, style.settingBtnText]}>{LocalText.rate_me}</Text>
           </TouchableOpacity>
         </View>
 
         {/* version */}
         <View onTouchEnd={OpenStore} style={style.versionContainerView}>
-          <Text style={{ color: theme.text, }}>Version: v{versionAsNumber}</Text>
+          {/* version text */}
+          <Text style={{ color: theme.primary, }}>Version: v{versionAsNumber}</Text>
+          {/* update btn */}
           {
             !showUpdateBtn ? undefined :
               <View style={[style.versionBtnView, { backgroundColor: theme.primary, }]}>
