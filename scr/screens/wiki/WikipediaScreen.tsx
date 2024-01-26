@@ -253,7 +253,7 @@ const WikipediaScreen = () => {
         navigation.setOptions({
             headerRight: () =>
                 <TouchableOpacity onPress={onPressHeaderOption} style={styleSheet.headerOptionTO}>
-                    <MaterialCommunityIcons name={Icon.ThreeDots} color={theme.counterPrimary} size={Size.Icon} />
+                    <MaterialCommunityIcons name={Icon.ThreeDots} color={theme.counterBackground} size={Size.Icon} />
                 </TouchableOpacity>
         });
     }, [theme, onPressHeaderOption])
@@ -271,7 +271,7 @@ const WikipediaScreen = () => {
                         handling ?
                             // true ?
                             <View style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
-                                <ActivityIndicator color={theme.counterPrimary} style={{ marginRight: Outline.Horizontal }} />
+                                <ActivityIndicator color={theme.counterBackground} style={{ marginRight: Outline.Horizontal }} />
                             </View> :
                             <View style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
                                 {
