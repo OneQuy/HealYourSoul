@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, ActivityIndicator, Share as RNShare, ShareContent, ShareOptions, Alert, StyleSheet, TouchableWithoutFeedback, Animated } from 'react-native'
-import React, { LegacyRef, useCallback, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import React, { LegacyRef, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { BorderRadius, Category, FontSize, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
 import Share from 'react-native-share';
@@ -21,6 +21,7 @@ import { ToCanPrint } from '../../handle/UtilsTS';
 import { track_PressRandom, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
+import BottomBar, { BottomBarItem } from '../others/BottomBar';
 
 interface TheRandomShortTextProps {
     category: Category,
@@ -139,6 +140,31 @@ const TheRandomShortText = ({
 
     const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(undefined, undefined, onSwiped)
 
+    const bottomBarItems = useMemo(() => {
+        return [
+            {
+                text: LocalText.share_image,
+                onPress: onPressShareImage,
+                icon: Icon.ShareImage
+            },
+            {
+                text: LocalText.copy,
+                onPress: onPressCopy,
+                icon: Icon.Copy,
+            },
+            {
+                text: LocalText.random,
+                onPress: () => onPressRandom(true),
+                icon: Icon.Dice
+            },
+            {
+                text: LocalText.share,
+                onPress: onPressShareText,
+                icon: Icon.ShareText,
+            },
+        ] as BottomBarItem[]
+    }, [onPressShareImage, onPressShareImage, onPressShareText, onPressCopy])
+
     // on init once (for load first post)
 
     useEffect(() => {
@@ -193,29 +219,9 @@ const TheRandomShortText = ({
                     }
                 </View>
             </ViewShot>
-            <View>
-                <TouchableOpacity onPress={() => onPressRandom(true)} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, padding: Outline.GapVertical_2, backgroundColor: theme.primary, }, styleSheet.randomTO]}>
-                    <MaterialCommunityIcons name={Icon.Dice} color={theme.counterPrimary} size={Size.Icon} />
-                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Normal }}>{LocalText.random}</Text>
-                </TouchableOpacity>
-            </View>
-            <View style={[{ gap: Outline.GapHorizontal }, CommonStyles.row_width100Percent]}>
-                <TouchableOpacity onPress={onPressCopy} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }, styleSheet.subBtnTO]}>
-                    <MaterialIcons name={Icon.Copy} color={theme.counterPrimary} size={Size.IconSmaller} />
-                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Small_L }}>{LocalText.copy}</Text>
-                </TouchableOpacity>
 
-                <TouchableOpacity onPress={onPressShareText} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }, styleSheet.subBtnTO]}>
-                    <MaterialCommunityIcons name={Icon.ShareText} color={theme.counterPrimary} size={Size.IconSmaller} />
-                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Small_L }}>{LocalText.share}</Text>
-                </TouchableOpacity>
+            <BottomBar items={bottomBarItems} />
 
-                <TouchableOpacity onPress={onPressShareImage} style={[styleSheet.subBtnTO, { flex: 1.5, gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }]}>
-                    <MaterialCommunityIcons name={Icon.ShareImage} color={theme.counterPrimary} size={Size.IconSmaller} />
-                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Small_L }}>{LocalText.share_image}</Text>
-                </TouchableOpacity>
-
-            </View>
             {
                 streakData ? <StreakPopup streak={streakData} /> : undefined
             }
@@ -226,8 +232,6 @@ const TheRandomShortText = ({
 export default TheRandomShortText
 
 const styleSheet = StyleSheet.create({
-    masterView: { padding: Outline.Horizontal, flex: 1, gap: Outline.GapVertical, },
-    randomTO: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: '100%' },
-    subBtnTO: { justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', },
+    masterView: { flex: 1, gap: Outline.GapVertical, },
     headerOptionTO: { marginRight: 15 }
 })

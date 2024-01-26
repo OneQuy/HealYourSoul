@@ -21,14 +21,14 @@ const BottomBar = ({ items }: { items: BottomBarItem[] }) => {
 
     const styleSheet = useMemo(() => {
         return StyleSheet.create({
-            mainBtnsView: { marginBottom: Outline.GapVertical, borderRadius: BorderRadius.BR8, paddingVertical: Outline.GapVertical_2, marginHorizontal: Outline.GapVertical, backgroundColor: theme.primary, flexDirection: 'row', justifyContent: 'space-between', },
+            masterView: { marginBottom: Outline.GapVertical, borderRadius: BorderRadius.BR8, paddingVertical: Outline.GapVertical_2, marginHorizontal: Outline.GapVertical, backgroundColor: theme.primary, flexDirection: 'row', justifyContent: 'space-between', },
             mainBtnsTO: { justifyContent: 'center', flex: 1, alignItems: 'center', gap: Outline.GapVertical },
             mainBtnTxt: { color: theme.counterPrimary, fontSize: FontSize.Small },
         })
     }, [theme])
 
     return (
-        <View style={styleSheet.mainBtnsView}>
+        <View style={styleSheet.masterView}>
             {
                 items.map((item) => {
                     if (item.favoriteBtn)
