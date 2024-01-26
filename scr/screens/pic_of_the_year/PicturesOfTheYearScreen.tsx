@@ -25,6 +25,7 @@ import { track_PressFavorite, track_PressNextPost, track_PressSaveMedia, track_P
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import FavoriteButton from '../others/FavoriteButton';
+import BottomBar, { BottomBarItem } from '../others/BottomBar';
 
 const BGAnim = Animated.createAnimatedComponent(ImageBackground)
 
@@ -255,6 +256,34 @@ const PicturesOfTheYearScreen = () => {
 
     const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(onTapCounted, onLongPressed, onSwiped)
 
+    const bottomBarItems = useMemo(() => {
+        return [
+            {
+                text: LocalText.share,
+                onPress: onPressShareImage,
+                icon: Icon.ShareImage
+            },
+            {
+                favoriteBtn: {
+                    callbackRef: favoriteCallbackRef,
+                    id: selectingPhotoID,
+                    category,
+                }
+            },
+            {
+                text: LocalText.next,
+                onPress: () => onPressNext(-1, 'next'),
+                icon: Icon.Right,
+                scaleIcon: 1.5,
+            },
+            {
+                text: LocalText.save,
+                onPress: onPressSaveToPhoto,
+                icon: Icon.Download,
+            }
+        ] as BottomBarItem[]
+    }, [onPressShareImage, onPressSaveToPhoto, selectingPhotoID, onPressNext])
+
     // auto select idx when update year
 
     useEffect(() => {
@@ -292,9 +321,9 @@ const PicturesOfTheYearScreen = () => {
                         reasonToReload !== NeedReloadReason.None ?
                             // error
                             <TouchableOpacity onPress={() => onPressNext(-1, 'none')} style={[{ gap: Outline.GapVertical }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]} >
-                                <MaterialCommunityIcons name={reasonToReload === NeedReloadReason.NoInternet ? Icon.NoInternet : Icon.HeartBroken} color={theme.primary} size={Size.IconBig} />
-                                <Text style={{ fontSize: FontSize.Normal, color: theme.counterPrimary }}>{reasonToReload === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
-                                <Text style={{ fontSize: FontSize.Small_L, color: theme.counterPrimary }}>{LocalText.tap_to_retry}</Text>
+                                <MaterialCommunityIcons name={reasonToReload === NeedReloadReason.NoInternet ? Icon.NoInternet : Icon.HeartBroken} color={theme.counterBackground} size={Size.IconMedium} />
+                                <Text style={{ fontSize: FontSize.Normal, color: theme.counterBackground }}>{reasonToReload === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
+                                <Text style={{ fontSize: FontSize.Small_L, color: theme.counterBackground }}>{LocalText.tap_to_retry}</Text>
                             </TouchableOpacity>
                             :
                             // content
@@ -303,8 +332,10 @@ const PicturesOfTheYearScreen = () => {
                                     <ScrollView horizontal contentContainerStyle={[styleSheet.scrollYear]}>
                                         {
                                             dataOfYears.map((year) => {
-                                                return <TouchableOpacity onPress={() => onPressYear(year.year)} style={[styleSheet.yearView, { backgroundColor: selectingYear === year.year ? theme.primary : undefined }]} key={year.year}>
-                                                    <Text style={{ color: theme.counterBackground }}>{year.year}</Text>
+                                                const isFocus = selectingYear === year.year
+
+                                                return <TouchableOpacity onPress={() => onPressYear(year.year)} style={[styleSheet.yearView, { backgroundColor: isFocus ? theme.primary : undefined }]} key={year.year}>
+                                                    <Text style={{ color: isFocus ? theme.counterPrimary : theme.counterBackground }}>{year.year}</Text>
                                                 </TouchableOpacity>
                                             })
                                         }
@@ -317,7 +348,7 @@ const PicturesOfTheYearScreen = () => {
                                     }
                                     <Text style={[{ color: theme.counterBackground, }, styleSheet.rewardText]}>{selectingPhoto?.reward + (selectingPhoto?.category ? ' - ' + selectingPhoto?.category : '')}</Text>
                                     <View style={styleSheet.showListIconView}>
-                                        <MaterialCommunityIcons name={Icon.List} color={theme.counterPrimary} size={Size.Icon} />
+                                        <MaterialCommunityIcons name={Icon.List} color={theme.counterBackground} size={Size.Icon} />
                                     </View>
                                 </View>
                                 {/* image */}
@@ -332,7 +363,7 @@ const PicturesOfTheYearScreen = () => {
                                         {
                                             !isShowLoadImageIndicator ? undefined :
                                                 <View style={[{ backgroundColor: theme.background, }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]}>
-                                                    <ActivityIndicator color={theme.counterPrimary} style={{ marginRight: Outline.Horizontal }} />
+                                                    <ActivityIndicator color={theme.counterBackground} style={{ marginRight: Outline.Horizontal }} />
                                                 </View>
                                         }
                                     </BGAnim>
@@ -354,23 +385,10 @@ const PicturesOfTheYearScreen = () => {
                     }
                 </View>
             </View>
-            <View style={styleSheet.mainButtonsView}>
-                <FavoriteButton callbackRef={favoriteCallbackRef} id={selectingPhotoID} category={category} />
-                <TouchableOpacity onPress={() => onPressNext(-1, 'next')} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
-                    <MaterialCommunityIcons name={Icon.Right} color={theme.counterPrimary} size={Size.Icon} />
-                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Normal }}>{LocalText.next}</Text>
-                </TouchableOpacity>
-            </View>
-            <View style={[{ marginBottom: Outline.GapVertical, gap: Outline.GapHorizontal }, CommonStyles.row_width100Percent]}>
-                <TouchableOpacity onPress={onPressSaveToPhoto} style={[styleSheet.subBtnTO, { flex: 1.5, gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }]}>
-                    <MaterialCommunityIcons name={Icon.Download} color={theme.counterPrimary} size={Size.IconSmaller} />
-                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Small_L }}>{LocalText.save}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={onPressShareImage} style={[styleSheet.subBtnTO, { flex: 1.5, gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }]}>
-                    <MaterialCommunityIcons name={Icon.ShareImage} color={theme.counterPrimary} size={Size.IconSmaller} />
-                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Small_L }}>{LocalText.share}</Text>
-                </TouchableOpacity>
-            </View>
+
+            {/* main btn part */}
+            <BottomBar items={bottomBarItems} />
+
             {
                 isShowAwardList ? <SelectAward setIdx={(idx: number) => onPressNext(idx, 'menu')} year={selectingYear} selectIdx={selectingPhotoIndex} /> : undefined
             }
