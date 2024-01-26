@@ -740,6 +740,7 @@ const ThePage = ({ category }: ThePageProps) => {
             subBtnTO: { justifyContent: 'center', flex: 1, alignItems: 'center', gap: Outline.GapVertical },
             mainBtnsView: { borderRadius: BorderRadius.BR8, paddingVertical: Outline.GapVertical_2, marginHorizontal: Outline.GapVertical, backgroundColor: theme.primary, flexDirection: 'row', justifyContent: 'space-between', },
             mainBtnTxt: { color: theme.text, fontSize: FontSize.Small },
+            naviScale: { transform: [{ scale: 1.3 }] },
         })
     }, [theme])
 
@@ -897,14 +898,18 @@ const ThePage = ({ category }: ThePageProps) => {
                 </TouchableOpacity>
                 {/* previous */}
                 <TouchableOpacity onPress={() => onPressNextPost(false, true)} style={[style.subBtnTO]}>
-                    <MaterialCommunityIcons name={Icon.Left} color={theme.counterPrimary} size={Size.Icon} />
+                    <View style={style.naviScale}>
+                        <MaterialCommunityIcons name={Icon.Left} color={theme.counterPrimary} size={Size.Icon} />
+                    </View>
                     <Text style={style.mainBtnTxt}>{LocalText.previous}</Text>
                 </TouchableOpacity>
                 {/* favorite */}
                 <FavoriteButton callbackRef={favoriteCallbackRef} id={post.current?.id} category={category} />
                 {/* next */}
                 <TouchableOpacity onPress={() => onPressNextPost(true, true)} style={[style.subBtnTO]}>
-                    <MaterialCommunityIcons name={Icon.Right} color={theme.counterPrimary} size={Size.Icon} />
+                    <View style={style.naviScale}>
+                        <MaterialCommunityIcons name={Icon.Right} color={theme.counterPrimary} size={Size.Icon} />
+                    </View>
                     <Text style={style.mainBtnTxt}>{LocalText.next}</Text>
                 </TouchableOpacity>
                 {/* download */}
