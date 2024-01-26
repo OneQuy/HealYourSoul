@@ -19,12 +19,10 @@ import { SaveToGalleryAsync } from '../../handle/CameraRoll';
 import { ToastOptions, toast } from '@baronha/ting';
 import { NetLord } from '../../handle/NetLord';
 import SelectAward from './SelectAward';
-import useIsFavorited from '../../hooks/useIsFavorited';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { track_PressFavorite, track_PressNextPost, track_PressSaveMedia, track_PressYearOfAwardPicture, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
+import { track_PressNextPost, track_PressSaveMedia, track_PressYearOfAwardPicture, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
-import FavoriteButton from '../others/FavoriteButton';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
 
 const BGAnim = Animated.createAnimatedComponent(ImageBackground)
@@ -57,7 +55,6 @@ const PicturesOfTheYearScreen = () => {
     }, [selectingPhotoIndex, selectingYear])
 
     const renderIconReward = useCallback(() => {
-
         if (!selectingPhoto)
             return undefined
 
@@ -403,9 +400,6 @@ export default PicturesOfTheYearScreen
 
 const styleSheet = StyleSheet.create({
     masterView: { flex: 1, gap: Outline.GapVertical, },
-    mainButtonsView: { gap: Outline.GapHorizontal, marginHorizontal: Outline.GapVertical_2, flexDirection: 'row' },
-    mainBtnTO: { paddingVertical: Outline.GapVertical, flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', },
-    subBtnTO: { justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', },
     headerOptionTO: { marginRight: 15 },
     rewardText: { flex: 1, fontWeight: FontWeight.B600, textAlign: 'center', fontSize: FontSize.Normal },
     rewardContainerView: { paddingHorizontal: Outline.GapVertical, flexDirection: 'row', gap: Outline.GapHorizontal },

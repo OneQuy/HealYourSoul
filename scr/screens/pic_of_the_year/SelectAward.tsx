@@ -39,8 +39,8 @@ const SelectAward = ({ year, selectIdx, setIdx }: { year: number, selectIdx: num
                 !showSeparator ? undefined :
                     <View style={{ position: 'absolute', alignSelf: 'flex-start', top: -listPopupGap / 2, backgroundColor: 'gray', width: '100%', height: StyleSheet.hairlineWidth }} />
             }
-            <ImageBackgroundWithLoading source={{ uri: item.imageUri }} resizeMode='cover' style={styleSheet.image} />
-            <Text style={[styleSheet.text, { color: theme.counterBackground }]}>{item?.reward + (item?.category ? ' - ' + item?.category : '')}</Text>
+            <ImageBackgroundWithLoading source={{ uri: item.imageUri }} resizeMode='cover' style={styleSheet.image} indicatorProps={{ color: theme.counterBackground }} />
+            <Text style={[styleSheet.text, { color:  isSelecting ? theme.counterPrimary : theme.counterBackground }]}>{item?.reward + (item?.category ? ' - ' + item?.category : '')}</Text>
         </TouchableOpacity>
     }, [selectIdx, theme])
 
