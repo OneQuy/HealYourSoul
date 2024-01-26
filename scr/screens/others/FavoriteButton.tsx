@@ -34,7 +34,7 @@ const FavoriteButton = (
     const style = useMemo(() => {
         return StyleSheet.create({
             masterTO: { gap: Outline.GapVertical, flex: 1, justifyContent: 'center', alignItems: 'center' },
-            countText: { color: theme.counterBackground, fontSize: FontSize.Small },
+            countText: { color: theme.counterPrimary, fontSize: FontSize.Small },
         })
     }, [theme])
 

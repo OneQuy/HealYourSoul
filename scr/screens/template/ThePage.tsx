@@ -742,15 +742,16 @@ const ThePage = ({ category }: ThePageProps) => {
             mainBtnTxt: { color: theme.counterPrimary, fontSize: FontSize.Small },
             naviScale: { transform: [{ scale: 1.3 }] },
             authorView: { paddingHorizontal: Outline.Horizontal, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' },
-            authorText: { flex: 1, fontSize: FontSize.Small, color: theme.primary },
+            authorText: { flex: 1, fontSize: FontSize.Small, color: theme.counterBackground },
             authorCopyTO: { marginLeft: Outline.Horizontal, justifyContent: 'center', alignItems: 'center' },
-            titleTxt: { marginHorizontal: Outline.Horizontal, marginTop: Outline.GapHorizontal, textAlignVertical: 'center', fontSize: FontSize.Normal, color: theme.primary },
+            titleTxt: { marginHorizontal: Outline.Horizontal, marginTop: Outline.GapHorizontal, textAlignVertical: 'center', fontSize: FontSize.Normal, color: theme.counterBackground },
         })
     }, [theme])
 
     // main render
 
-    // if(post.current)
+    if(post.current)
+    post.current.url = 'wwwww.fdsjfdasjf.ocm'
     //     post.current.title = 'hihihi'
 
     return (
@@ -880,7 +881,7 @@ const ThePage = ({ category }: ThePageProps) => {
                 {
                     !hasCredit ? undefined :
                         <TouchableOpacity onPress={() => onPressCopy(post.current?.author)} style={style.authorCopyTO} >
-                            <MaterialIcons name={Icon.Copy} color={theme.primary} size={Size.IconSmaller} />
+                            <MaterialIcons name={Icon.Copy} color={theme.counterBackground} size={Size.IconSmaller} />
                         </TouchableOpacity>
                 }
             </View>
@@ -888,10 +889,10 @@ const ThePage = ({ category }: ThePageProps) => {
             {/* link credit */}
             {
                 post.current === null || !post.current.url ? null :
-                    <View style={{ paddingHorizontal: Outline.Horizontal, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
-                        <Text numberOfLines={1} style={{ flex: 1, fontSize: FontSize.Small, color: theme.counterBackground }}>{post.current.url}</Text>
-                        <TouchableOpacity onPress={() => onPressCopy(post.current?.url)} style={{ marginLeft: Outline.Horizontal, justifyContent: 'center', alignItems: 'center' }} >
-                            <MaterialIcons name={Icon.Copy} color={theme.counterPrimary} size={Size.IconSmaller} />
+                    <View style={style.authorView}>
+                        <Text numberOfLines={1} style={style.authorText}>{post.current.url}</Text>
+                        <TouchableOpacity onPress={() => onPressCopy(post.current?.url)} style={style.authorCopyTO} >
+                            <MaterialIcons name={Icon.Copy} color={theme.counterBackground} size={Size.IconSmaller} />
                         </TouchableOpacity>
                     </View>
             }
