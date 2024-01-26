@@ -31,6 +31,7 @@ import { track_PressNextPost, track_PressRandom, track_SimpleWithCat } from '../
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import FavoriteButton from '../others/FavoriteButton';
+import BottomBar, { BottomBarItem } from '../others/BottomBar';
 
 const category = Category.TopMovie
 const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Ftop_movies.json?alt=media&token=4203c962-58bb-41c3-a1a0-ab3b1b3359f8'
@@ -224,6 +225,39 @@ const TopMovieScreen = () => {
 
     const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(onTapCounted, onLongPressed, onSwiped)
 
+    const bottomBarItems = useMemo(() => {
+        return [
+            {
+                text: LocalText.share_image,
+                onPress: onPressShareImage,
+                icon: Icon.ShareImage
+            },
+            {
+                text: LocalText.random,
+                onPress: onPressRandom,
+                icon: Icon.Dice,
+            },
+            {
+                favoriteBtn: {
+                    callbackRef: favoriteCallbackRef,
+                    id: idNumber,
+                    category,
+                }
+            },
+            {
+                text: LocalText.next,
+                onPress: () => onPressNext(-1, 'next'),
+                icon: Icon.Right,
+                scaleIcon: 1.5,
+            },
+            {
+                text: LocalText.share,
+                onPress: onPressShareText,
+                icon: Icon.ShareText
+            },
+        ] as BottomBarItem[]
+    }, [onPressShareImage, idNumber, onPressNext, onPressRandom, onPressShareText])
+
     // for load data first time
 
     useEffect(() => {
@@ -314,31 +348,10 @@ const TopMovieScreen = () => {
                     }
                 </View>
             </ViewShot>
-            {/* main btn */}
-            <View style={styleSheet.mainButtonsView}>
-                <FavoriteButton callbackRef={favoriteCallbackRef} id={idNumber} category={category} />
-                <TouchableOpacity onPress={onPressRandom} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
-                    <MaterialCommunityIcons name={Icon.Dice} color={theme.counterPrimary} size={Size.Icon} />
-                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Normal }}>{LocalText.random}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => onPressNext(-1, 'next')} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
-                    <MaterialCommunityIcons name={Icon.Right} color={theme.counterPrimary} size={Size.Icon} />
-                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Normal }}>{LocalText.next}</Text>
-                </TouchableOpacity>
-            </View>
-            {/* sub btns */}
-            <View style={[{ gap: Outline.GapHorizontal }, CommonStyles.row_width100Percent]}>
-                <TouchableOpacity onPress={onPressShareText} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }, styleSheet.subBtnTO]}>
-                    <MaterialCommunityIcons name={Icon.ShareText} color={theme.counterPrimary} size={Size.IconSmaller} />
-                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Small_L }}>{LocalText.share}</Text>
-                </TouchableOpacity>
 
-                <TouchableOpacity onPress={onPressShareImage} style={[styleSheet.subBtnTO, { gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }]}>
-                    <MaterialCommunityIcons name={Icon.ShareImage} color={theme.counterPrimary} size={Size.IconSmaller} />
-                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Small_L }}>{LocalText.share_image}</Text>
-                </TouchableOpacity>
+            {/* main btn part */}
+            <BottomBar items={bottomBarItems} />
 
-            </View>
             {
                 isShowList && Array.isArray(topMovies) ? <ListMovie getSelectingIdAsync={getSelectingIdxAsync} setIdx={(idx: number) => onPressNext(idx, 'menu')} list={topMovies} /> : undefined
             }
