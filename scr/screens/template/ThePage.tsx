@@ -773,8 +773,8 @@ const ThePage = ({ category }: ThePageProps) => {
 
             {/* media view */}
             {
-                // mediaURI.current === '' ?
-                true ?
+                mediaURI.current === '' ?
+                // true ?
                     // no media
                     <View style={style.flex1} >
                         {
