@@ -321,22 +321,22 @@ const BestShortFilmsScreen = () => {
                                         :
                                         <View onTouchStart={onBigViewStartTouch} onTouchEnd={onBigViewEndTouch} style={styleSheet.contentView}>
                                             <View onTouchEnd={() => setIsShowList(true)} style={[styleSheet.nameContainerView, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
-                                                <Text style={[{ color: theme.text, }, styleSheet.nameText]}>{selectingItem?.name}</Text>
+                                                <Text style={[{ color: theme.counterBackground, }, styleSheet.nameText]}>{selectingItem?.name}</Text>
                                                 <View style={styleSheet.showListIconView}>
                                                     <MaterialCommunityIcons name={Icon.List} color={theme.counterPrimary} size={Size.Icon} />
                                                 </View>
                                             </View>
                                             <Animated.View style={[{ transform: [{ scale: mediaViewScaleAnimRef }] }]}>
-                                                <ImageBackgroundWithLoading onLoad={onImageLoaded} resizeMode='contain' source={{ uri: selectingItem?.img }} style={styleSheet.image} indicatorProps={{ color: theme.text }} />
+                                                <ImageBackgroundWithLoading onLoad={onImageLoaded} resizeMode='contain' source={{ uri: selectingItem?.img }} style={styleSheet.image} indicatorProps={{ color: theme.counterBackground }} />
                                             </Animated.View>
-                                            <Text selectable style={[styleSheet.nameView, { color: theme.text, }]}>{selectingItem?.name}</Text>
+                                            <Text selectable style={[styleSheet.nameView, { color: theme.counterBackground, }]}>{selectingItem?.name}</Text>
                                             {
                                                 !selectingItem?.author ? undefined :
-                                                    <Text selectable style={[styleSheet.infoTextView, { color: theme.text, }]}>{LocalText.credit_to + ': ' + selectingItem.author}</Text>
+                                                    <Text selectable style={[styleSheet.infoTextView, { color: theme.counterBackground, }]}>{LocalText.credit_to + ': ' + selectingItem.author}</Text>
                                             }
                                             <View style={styleSheet.contentScrollView}>
                                                 <ScrollView >
-                                                    <Text selectable adjustsFontSizeToFit style={[{ flexWrap: 'wrap', color: theme.text, fontSize: FontSize.Small_L }]}>{selectingItem?.desc}</Text>
+                                                    <Text selectable adjustsFontSizeToFit style={[{ flexWrap: 'wrap', color: theme.counterBackground, fontSize: FontSize.Small_L }]}>{selectingItem?.desc}</Text>
                                                 </ScrollView>
                                             </View>
                                             {
@@ -374,17 +374,17 @@ const BestShortFilmsScreen = () => {
             <View style={[{ gap: Outline.GapHorizontal }, CommonStyles.row_width100Percent]}>
                 <TouchableOpacity onPress={onPressShareText} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }, styleSheet.subBtnTO]}>
                     <MaterialCommunityIcons name={Icon.ShareText} color={theme.counterPrimary} size={Size.IconSmaller} />
-                    <Text style={{ color: theme.text, fontSize: FontSize.Small_L }}>{LocalText.share}</Text>
+                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Small_L }}>{LocalText.share}</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={onPressOpenYoutubeApp} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }, styleSheet.subBtnTO]}>
                     <MaterialCommunityIcons name={Icon.Youtube} color={theme.counterPrimary} size={Size.IconSmaller} />
-                    <Text style={{ color: theme.text, fontSize: FontSize.Small_L }}>{LocalText.open_youtube}</Text>
+                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Small_L }}>{LocalText.open_youtube}</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={onPressShareImage} style={[styleSheet.subBtnTO, { gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }]}>
                     <MaterialCommunityIcons name={Icon.ShareImage} color={theme.counterPrimary} size={Size.IconSmaller} />
-                    <Text style={{ color: theme.text, fontSize: FontSize.Small_L }}>{LocalText.share_image}</Text>
+                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Small_L }}>{LocalText.share_image}</Text>
                 </TouchableOpacity>
 
             </View>

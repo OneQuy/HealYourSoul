@@ -129,14 +129,14 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
     onPressSetting()
   }, [onPressSetting])
 
-  const colorSetting = isFocusSetting ? theme.text : theme.primary
+  const colorSetting = isFocusSetting ? theme.counterBackground : theme.primary
 
   return (
     <View style={{ flex: 1 }}>
       {/* logo & app name */}
       <View onTouchEnd={IsDev() ? onPressLogo : undefined} style={[style.topMasterView, CommonStyles.justifyContentCenter_AlignItemsCenter, { marginTop: safeAreaInsets.top }]}>
         <Image source={logoScr} resizeMode='contain' style={[style.logoImg]} />
-        <Text style={[style.appNameText, { color: theme.text }]}>Gooday{IsDev() ? '.' : ''}</Text>
+        <Text style={[style.appNameText, { color: theme.counterBackground }]}>Gooday{IsDev() ? '.' : ''}</Text>
       </View>
       {
         renderCategoryButtons()
@@ -170,7 +170,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
           {
             !showUpdateBtn ? undefined :
               <View style={[style.versionBtnView, { backgroundColor: theme.primary, }]}>
-                <Text style={[style.versionText, { color: theme.text, }]}>{LocalText.update}</Text>
+                <Text style={[style.versionText, { color: theme.counterBackground, }]}>{LocalText.update}</Text>
               </View>
           }
         </View>

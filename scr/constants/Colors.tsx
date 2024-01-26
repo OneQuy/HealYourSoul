@@ -2,33 +2,40 @@ import { createContext } from "react";
 
 export type ThemeColor = {
     background: string,
+    counterBackground: string,
+
     primary: string,
     counterPrimary: string,
-    text: string,
 }
 
-export const defaultThemeType: ThemeType = 'yellow';
+export const defaultThemeType: ThemeType = 'black';
 
 export type ThemeType = keyof typeof themes;
 
 export const themes = {
-    yellow: {
+    black: {
         background: '#fff',
+        counterBackground: '#000',
+
         primary: '#000',
-        counterPrimary: '#ffffff',
-        text: '#ffffff',
+        counterPrimary: '#fff',
     } as ThemeColor,
-    
-    dark: {
-        background: '#0d111c',
-        primary: '#fff39c',
-        counterPrimary: '#000',
-        text: '#000000',
-    } as ThemeColor,
+
+    // dark: {
+    //     background: '#0d111c',
+    //     counterBackground: '#000000',
+
+    //     primary: '#fff39c',
+    //     counterPrimary: '#000',
+    // } as ThemeColor,
 }
 
 export function GetColors(type: ThemeType) {
+    // @ts-ignore
+    if (type === 'yellow')
+        type = 'black'
+
     return themes[type];
 }
 
-export const ThemeContext = createContext(GetColors('yellow'));
+export const ThemeContext = createContext(GetColors('black'));

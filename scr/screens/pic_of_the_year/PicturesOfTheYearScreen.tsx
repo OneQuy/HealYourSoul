@@ -304,7 +304,7 @@ const PicturesOfTheYearScreen = () => {
                                         {
                                             dataOfYears.map((year) => {
                                                 return <TouchableOpacity onPress={() => onPressYear(year.year)} style={[styleSheet.yearView, { backgroundColor: selectingYear === year.year ? theme.primary : undefined }]} key={year.year}>
-                                                    <Text style={{ color: theme.text }}>{year.year}</Text>
+                                                    <Text style={{ color: theme.counterBackground }}>{year.year}</Text>
                                                 </TouchableOpacity>
                                             })
                                         }
@@ -315,7 +315,7 @@ const PicturesOfTheYearScreen = () => {
                                     {
                                         renderIconReward()
                                     }
-                                    <Text style={[{ color: theme.text, }, styleSheet.rewardText]}>{selectingPhoto?.reward + (selectingPhoto?.category ? ' - ' + selectingPhoto?.category : '')}</Text>
+                                    <Text style={[{ color: theme.counterBackground, }, styleSheet.rewardText]}>{selectingPhoto?.reward + (selectingPhoto?.category ? ' - ' + selectingPhoto?.category : '')}</Text>
                                     <View style={styleSheet.showListIconView}>
                                         <MaterialCommunityIcons name={Icon.List} color={theme.counterPrimary} size={Size.Icon} />
                                     </View>
@@ -338,14 +338,14 @@ const PicturesOfTheYearScreen = () => {
                                     </BGAnim>
                                 </TouchableWithoutFeedback>
                                 {/* title */}
-                                <Text selectable style={[{ color: theme.text }, styleSheet.titleText]}>{selectingPhoto?.title}</Text>
+                                <Text selectable style={[{ color: theme.counterBackground }, styleSheet.titleText]}>{selectingPhoto?.title}</Text>
                                 {/* author */}
-                                <Text onPress={onPressCredit} style={[{ color: theme.text }, styleSheet.authorText]}>📷 {selectingPhoto?.author + (selectingPhoto?.country ? ' (' + selectingPhoto?.country + ')' : '')}</Text>
+                                <Text onPress={onPressCredit} style={[{ color: theme.counterBackground }, styleSheet.authorText]}>📷 {selectingPhoto?.author + (selectingPhoto?.country ? ' (' + selectingPhoto?.country + ')' : '')}</Text>
                                 {/* descitpion */}
                                 {
                                     selectingPhoto?.description ?
                                         <ScrollView contentContainerStyle={styleSheet.descScrollView}>
-                                            <Text selectable style={[{ color: theme.text }, styleSheet.descText]}>{selectingPhoto?.description}</Text>
+                                            <Text selectable style={[{ color: theme.counterBackground }, styleSheet.descText]}>{selectingPhoto?.description}</Text>
                                         </ScrollView>
                                         :
                                         undefined
@@ -358,17 +358,17 @@ const PicturesOfTheYearScreen = () => {
                 <FavoriteButton callbackRef={favoriteCallbackRef} id={selectingPhotoID} category={category} />
                 <TouchableOpacity onPress={() => onPressNext(-1, 'next')} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
                     <MaterialCommunityIcons name={Icon.Right} color={theme.counterPrimary} size={Size.Icon} />
-                    <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{LocalText.next}</Text>
+                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Normal }}>{LocalText.next}</Text>
                 </TouchableOpacity>
             </View>
             <View style={[{ marginBottom: Outline.GapVertical, gap: Outline.GapHorizontal }, CommonStyles.row_width100Percent]}>
                 <TouchableOpacity onPress={onPressSaveToPhoto} style={[styleSheet.subBtnTO, { flex: 1.5, gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }]}>
                     <MaterialCommunityIcons name={Icon.Download} color={theme.counterPrimary} size={Size.IconSmaller} />
-                    <Text style={{ color: theme.text, fontSize: FontSize.Small_L }}>{LocalText.save}</Text>
+                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Small_L }}>{LocalText.save}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={onPressShareImage} style={[styleSheet.subBtnTO, { flex: 1.5, gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }]}>
                     <MaterialCommunityIcons name={Icon.ShareImage} color={theme.counterPrimary} size={Size.IconSmaller} />
-                    <Text style={{ color: theme.text, fontSize: FontSize.Small_L }}>{LocalText.share}</Text>
+                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Small_L }}>{LocalText.share}</Text>
                 </TouchableOpacity>
             </View>
             {

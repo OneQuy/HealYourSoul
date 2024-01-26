@@ -30,9 +30,9 @@ const RemoveScreenView = () => {
       masterView: { gap: Outline.GapVertical, flex: 1, backgroundColor: theme.background, alignItems: 'center' },
       buttonContainerTO: { margin: Outline.GapHorizontal, minWidth: widthPercentageToDP(40), padding: Outline.GapVertical, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth, gap: Outline.GapHorizontal, flexDirection: 'row' },
       enableAllTO: { width: '80%', margin: Outline.Horizontal, padding: Outline.Horizontal, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth, },
-      enableAllButtonText: { textAlign: 'center', color: theme.text, fontSize: FontSize.Small },
-      intro_text: { textAlign: 'center', color: theme.text, fontSize: FontSize.Normal },
-      buttonText: { textAlign: 'center', color: theme.text, fontSize: FontSize.Small, flex: 1 },
+      enableAllButtonText: { textAlign: 'center', color: theme.counterBackground, fontSize: FontSize.Small },
+      intro_text: { textAlign: 'center', color: theme.counterBackground, fontSize: FontSize.Normal },
+      buttonText: { textAlign: 'center', color: theme.counterBackground, fontSize: FontSize.Small, flex: 1 },
       flatList: { flex: 1 },
     })
   }, [theme])

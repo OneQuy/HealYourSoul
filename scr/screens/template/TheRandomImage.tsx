@@ -191,7 +191,7 @@ const TheRandomImage = ({
                                     <View style={styleSheet.contentView}>
                                         {
                                             !currentItem?.title ? undefined :
-                                                <Text numberOfLines={3} style={[{ color: theme.text, }, styleSheet.titleText]}>{currentItem.title}</Text>
+                                                <Text numberOfLines={3} style={[{ color: theme.counterBackground, }, styleSheet.titleText]}>{currentItem.title}</Text>
                                         }
                                         <Animated.View
                                             onTouchStart={onBigViewStartTouch}
@@ -202,7 +202,7 @@ const TheRandomImage = ({
                                             <ImageAsMap
                                                 uri={currentItem?.uri}
                                                 minScaleIsContainIfImageRatioOver={3}
-                                                loadingIndicatorProps={{ color: theme.text }}
+                                                loadingIndicatorProps={{ color: theme.counterBackground }}
                                                 notMinScaleCoverModeWhenImageIsLandscape={true}
                                                 initialPointCenterByMapSizePercent={[0.5, 0]}
                                                 onLoadedImage={onLoadedImage}
@@ -216,17 +216,17 @@ const TheRandomImage = ({
             <View style={{ marginHorizontal: Outline.GapVertical_2 }}>
                 <TouchableOpacity onPress={() => onPressRandom(true)} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, padding: Outline.GapVertical_2, backgroundColor: theme.primary, }, styleSheet.randomTO]}>
                     <MaterialCommunityIcons name={Icon.Dice} color={theme.counterPrimary} size={Size.Icon} />
-                    <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{LocalText.random}</Text>
+                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Normal }}>{LocalText.random}</Text>
                 </TouchableOpacity>
             </View>
             <View style={[{ marginBottom: Outline.GapVertical, gap: Outline.GapHorizontal }, CommonStyles.row_width100Percent]}>
                 <TouchableOpacity onPress={onPressSaveToPhoto} style={[styleSheet.subBtnTO, { flex: 1.5, gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }]}>
                     <MaterialCommunityIcons name={Icon.Download} color={theme.counterPrimary} size={Size.IconSmaller} />
-                    <Text style={{ color: theme.text, fontSize: FontSize.Small_L }}>{LocalText.save}</Text>
+                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Small_L }}>{LocalText.save}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={onPressShareImage} style={[styleSheet.subBtnTO, { flex: 1.5, gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }]}>
                     <MaterialCommunityIcons name={Icon.ShareImage} color={theme.counterPrimary} size={Size.IconSmaller} />
-                    <Text style={{ color: theme.text, fontSize: FontSize.Small_L }}>{LocalText.share}</Text>
+                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Small_L }}>{LocalText.share}</Text>
                 </TouchableOpacity>
             </View>
             {

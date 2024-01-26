@@ -285,27 +285,27 @@ const TopMovieScreen = () => {
                                         :
                                         <View onTouchStart={onBigViewStartTouch} onTouchEnd={onBigViewEndTouch} style={styleSheet.contentView}>
                                             <View onTouchEnd={() => setIsShowList(true)} style={[styleSheet.titleContainerView, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
-                                                <Text style={[{ color: theme.text, }, styleSheet.titleText]}>{selectingItem?.title}</Text>
+                                                <Text style={[{ color: theme.counterBackground, }, styleSheet.titleText]}>{selectingItem?.title}</Text>
                                                 <View style={styleSheet.showListIconView}>
                                                     <MaterialCommunityIcons name={Icon.List} color={theme.counterPrimary} size={Size.Icon} />
                                                 </View>
                                             </View>
                                             <Animated.View style={[{ transform: [{ scale: mediaViewScaleAnimRef }] }]}>
-                                                <ImageBackgroundWithLoading onLoad={onImageLoaded} resizeMode='contain' source={{ uri: selectingItem?.thumbnailUri }} style={styleSheet.image} indicatorProps={{ color: theme.text }} />
+                                                <ImageBackgroundWithLoading onLoad={onImageLoaded} resizeMode='contain' source={{ uri: selectingItem?.thumbnailUri }} style={styleSheet.image} indicatorProps={{ color: theme.counterBackground }} />
                                             </Animated.View>
-                                            <Text selectable style={[styleSheet.titleView, { color: theme.text, }]}>{selectingItem?.title}</Text>
-                                            <Text selectable style={[styleSheet.infoTextView, { color: theme.text, }]}>{selectingItem?.info}</Text>
-                                            <Text selectable style={[styleSheet.infoTextView, { color: theme.text, }]}>★ {selectingItem?.rate} on IMDb</Text>
+                                            <Text selectable style={[styleSheet.titleView, { color: theme.counterBackground, }]}>{selectingItem?.title}</Text>
+                                            <Text selectable style={[styleSheet.infoTextView, { color: theme.counterBackground, }]}>{selectingItem?.info}</Text>
+                                            <Text selectable style={[styleSheet.infoTextView, { color: theme.counterBackground, }]}>★ {selectingItem?.rate} on IMDb</Text>
                                             <View style={styleSheet.contentScrollView}>
                                                 <ScrollView >
-                                                    <Text selectable adjustsFontSizeToFit style={[{ flexWrap: 'wrap', color: theme.text, fontSize: FontSize.Small_L }]}>{selectingItem?.desc}</Text>
+                                                    <Text selectable adjustsFontSizeToFit style={[{ flexWrap: 'wrap', color: theme.counterBackground, fontSize: FontSize.Small_L }]}>{selectingItem?.desc}</Text>
                                                 </ScrollView>
                                             </View>
                                             <View style={[styleSheet.rankView]}>
                                                 <View style={styleSheet.rankBGView} />
                                                 {
                                                     !selectingItem?.rank ? undefined :
-                                                        <Text style={[{ color: theme.text }, styleSheet.rankText]}>#{'\n' + selectingItem.rank}</Text>
+                                                        <Text style={[{ color: theme.counterBackground }, styleSheet.rankText]}>#{'\n' + selectingItem.rank}</Text>
                                                 }
                                             </View>
                                         </View>
@@ -319,23 +319,23 @@ const TopMovieScreen = () => {
                 <FavoriteButton callbackRef={favoriteCallbackRef} id={idNumber} category={category} />
                 <TouchableOpacity onPress={onPressRandom} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
                     <MaterialCommunityIcons name={Icon.Dice} color={theme.counterPrimary} size={Size.Icon} />
-                    <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{LocalText.random}</Text>
+                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Normal }}>{LocalText.random}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => onPressNext(-1, 'next')} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
                     <MaterialCommunityIcons name={Icon.Right} color={theme.counterPrimary} size={Size.Icon} />
-                    <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{LocalText.next}</Text>
+                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Normal }}>{LocalText.next}</Text>
                 </TouchableOpacity>
             </View>
             {/* sub btns */}
             <View style={[{ gap: Outline.GapHorizontal }, CommonStyles.row_width100Percent]}>
                 <TouchableOpacity onPress={onPressShareText} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }, styleSheet.subBtnTO]}>
                     <MaterialCommunityIcons name={Icon.ShareText} color={theme.counterPrimary} size={Size.IconSmaller} />
-                    <Text style={{ color: theme.text, fontSize: FontSize.Small_L }}>{LocalText.share}</Text>
+                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Small_L }}>{LocalText.share}</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={onPressShareImage} style={[styleSheet.subBtnTO, { gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }]}>
                     <MaterialCommunityIcons name={Icon.ShareImage} color={theme.counterPrimary} size={Size.IconSmaller} />
-                    <Text style={{ color: theme.text, fontSize: FontSize.Small_L }}>{LocalText.share_image}</Text>
+                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Small_L }}>{LocalText.share_image}</Text>
                 </TouchableOpacity>
 
             </View>

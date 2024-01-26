@@ -40,7 +40,7 @@ const SelectAward = ({ year, selectIdx, setIdx }: { year: number, selectIdx: num
                     <View style={{ position: 'absolute', alignSelf: 'flex-start', top: -listPopupGap / 2, backgroundColor: 'gray', width: '100%', height: StyleSheet.hairlineWidth }} />
             }
             <ImageBackgroundWithLoading source={{ uri: item.imageUri }} resizeMode='cover' style={styleSheet.image} />
-            <Text style={[styleSheet.text, { color: theme.text }]}>{item?.reward + (item?.category ? ' - ' + item?.category : '')}</Text>
+            <Text style={[styleSheet.text, { color: theme.counterBackground }]}>{item?.reward + (item?.category ? ' - ' + item?.category : '')}</Text>
         </TouchableOpacity>
     }, [selectIdx, theme])
 
@@ -59,9 +59,9 @@ const SelectAward = ({ year, selectIdx, setIdx }: { year: number, selectIdx: num
             <View style={[{ backgroundColor: theme.background, }, styleSheet.bgView]}>
                 <View style={[{ flexDirection: 'row' }, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
                     <MaterialCommunityIcons name={Icon.ThreeDots} color={theme.background} size={Size.Icon} />
-                    <Text style={[{ color: theme.text, }, styleSheet.title]}>{year + ' ' + LocalText.winners}</Text>
+                    <Text style={[{ color: theme.counterBackground, }, styleSheet.title]}>{year + ' ' + LocalText.winners}</Text>
                     <TouchableOpacity onPress={() => setIdx(selectIdx)}>
-                        <MaterialCommunityIcons name={Icon.X} color={theme.text} size={Size.Icon} />
+                        <MaterialCommunityIcons name={Icon.X} color={theme.counterBackground} size={Size.Icon} />
                     </TouchableOpacity>
                 </View>
                 <FlatList

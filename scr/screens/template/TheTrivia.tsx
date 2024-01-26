@@ -182,18 +182,18 @@ const TheTrivia = ({
     return (
         <View pointerEvents={handling ? 'none' : 'auto'} style={[styleSheet.masterView, { backgroundColor: theme.background }]}>
             <View style={{ flexDirection: 'row', gap: Outline.GapHorizontal }}>
-                <Text style={{ fontWeight: FontWeight.B500, padding: Outline.VerticalMini, color: theme.text, fontSize: FontSize.Small }}>{LocalText.difficulty}: </Text>
+                <Text style={{ fontWeight: FontWeight.B500, padding: Outline.VerticalMini, color: theme.counterBackground, fontSize: FontSize.Small }}>{LocalText.difficulty}: </Text>
                 {
-                    Difficulties.map((diff: TriviaDifficulty) => <TouchableOpacity key={diff} onPress={() => onPressDifficulty(diff)} style={{ borderWidth: diff === difficulty ? 1 : 0, borderColor: theme.text, padding: Outline.VerticalMini, borderRadius: BorderRadius.BR8 }}>
-                        <Text style={{ color: theme.text, fontSize: FontSize.Small }}>{diff}</Text>
+                    Difficulties.map((diff: TriviaDifficulty) => <TouchableOpacity key={diff} onPress={() => onPressDifficulty(diff)} style={{ borderWidth: diff === difficulty ? 1 : 0, borderColor: theme.counterBackground, padding: Outline.VerticalMini, borderRadius: BorderRadius.BR8 }}>
+                        <Text style={{ color: theme.counterBackground, fontSize: FontSize.Small }}>{diff}</Text>
                     </TouchableOpacity>)
                 }
             </View>
             <View style={{ flexDirection: 'row', gap: Outline.GapHorizontal }}>
-                <Text style={{ fontWeight: FontWeight.B500, padding: Outline.VerticalMini, color: theme.text, fontSize: FontSize.Small }}>{LocalText.answer_type}: </Text>
+                <Text style={{ fontWeight: FontWeight.B500, padding: Outline.VerticalMini, color: theme.counterBackground, fontSize: FontSize.Small }}>{LocalText.answer_type}: </Text>
                 {
-                    AnswerTypes.map((itype: TriviaAnswerType) => <TouchableOpacity key={itype} onPress={() => onPressAnswerType(itype)} style={{ borderWidth: itype === type ? 1 : 0, borderColor: theme.text, padding: Outline.VerticalMini, borderRadius: BorderRadius.BR8 }}>
-                        <Text style={{ color: theme.text, fontSize: FontSize.Small }}>{itype}</Text>
+                    AnswerTypes.map((itype: TriviaAnswerType) => <TouchableOpacity key={itype} onPress={() => onPressAnswerType(itype)} style={{ borderWidth: itype === type ? 1 : 0, borderColor: theme.counterBackground, padding: Outline.VerticalMini, borderRadius: BorderRadius.BR8 }}>
+                        <Text style={{ color: theme.counterBackground, fontSize: FontSize.Small }}>{itype}</Text>
                     </TouchableOpacity>)
                 }
             </View>
@@ -217,7 +217,7 @@ const TheTrivia = ({
                                         <TouchableOpacity
                                         // onPress={() => onPressRandom(true)}
                                         >
-                                            <Text selectable style={{ color: theme.text, fontSize: FontSize.Big, marginBottom: Outline.Horizontal }}>{trivia?.question}</Text>
+                                            <Text selectable style={{ color: theme.counterBackground, fontSize: FontSize.Big, marginBottom: Outline.Horizontal }}>{trivia?.question}</Text>
                                         </TouchableOpacity>
                                         {
                                             allAnswer?.map((answer: string, index: number) => {
@@ -245,7 +245,7 @@ const TheTrivia = ({
                                                             undefined :
                                                             <MaterialCommunityIcons name={icon} color={'white'} size={Size.Icon} />
                                                     }
-                                                    <Text style={{ verticalAlign: 'middle', textAlign: 'center', fontSize: FontSize.Small_L, color: bgColor ? 'white' : theme.text }}>{answer}</Text>
+                                                    <Text style={{ verticalAlign: 'middle', textAlign: 'center', fontSize: FontSize.Small_L, color: bgColor ? 'white' : theme.counterBackground }}>{answer}</Text>
                                                 </TOAnim>
                                             })
                                         }
@@ -257,7 +257,7 @@ const TheTrivia = ({
             <View>
                 <TouchableOpacity onPress={() => onPressRandom(true)} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, padding: Outline.GapVertical_2, backgroundColor: theme.primary, }, styleSheet.randomTO]}>
                     <MaterialCommunityIcons name={Icon.Dice} color={theme.counterPrimary} size={Size.Icon} />
-                    <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{LocalText.random}</Text>
+                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Normal }}>{LocalText.random}</Text>
                 </TouchableOpacity>
             </View>
             {

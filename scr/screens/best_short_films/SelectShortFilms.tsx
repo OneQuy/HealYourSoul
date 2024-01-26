@@ -24,7 +24,7 @@ const BestShortFilms = ({ list, setIdx, getSelectingIdAsync: getSelectingIdxAsyn
         
         return <TouchableOpacity onPress={() => setIdx(index)} style={[{ backgroundColor: isSelecting ? theme.primary : undefined, borderRadius: isSelecting ? BorderRadius.BR8 : 0, borderWidth: isSelecting ? 1 : 0 }, styleSheet.itemTO]}>
             <ImageBackgroundWithLoading source={{ uri: item.img }} resizeMode='cover' style={styleSheet.image} />
-            <Text style={[styleSheet.text, { color: theme.text }]}>{item.name}</Text>
+            <Text style={[styleSheet.text, { color: theme.counterBackground }]}>{item.name}</Text>
         </TouchableOpacity>
     }, [selectIdx, theme])
 
@@ -49,9 +49,9 @@ const BestShortFilms = ({ list, setIdx, getSelectingIdAsync: getSelectingIdxAsyn
             <View style={[{ backgroundColor: theme.background, }, styleSheet.bgView]}>
                 <View style={[{ flexDirection: 'row' }, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
                     <MaterialCommunityIcons name={Icon.ThreeDots} color={theme.background} size={Size.Icon} />
-                    <Text style={[{ color: theme.text, }, styleSheet.name]}>{LocalText.best_short_films}</Text>
+                    <Text style={[{ color: theme.counterBackground, }, styleSheet.name]}>{LocalText.best_short_films}</Text>
                     <TouchableOpacity onPress={() => setIdx(selectIdx)}>
-                        <MaterialCommunityIcons name={Icon.X} color={theme.text} size={Size.Icon} />
+                        <MaterialCommunityIcons name={Icon.X} color={theme.counterBackground} size={Size.Icon} />
                     </TouchableOpacity>
                 </View>
                 <FlatList

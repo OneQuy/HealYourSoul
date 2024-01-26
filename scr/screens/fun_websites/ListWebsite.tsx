@@ -27,7 +27,7 @@ const ListWebsite = ({ list, setIdx, getSelectingIdAsync }: { list: FunWebsite[]
 
         return <TouchableOpacity onPress={() => setIdx(item.id)} style={[{ backgroundColor: isSelecting ? theme.primary : undefined, borderRadius: isSelecting ? BorderRadius.BR8 : 0, borderWidth: isSelecting ? 1 : 0 }, styleSheet.itemTO]}>
             <ImageBackgroundWithLoading source={{ uri: item.img }} resizeMode='cover' style={styleSheet.image} />
-            <Text style={[styleSheet.text, { color: theme.text }]}>{urlShort}</Text>
+            <Text style={[styleSheet.text, { color: theme.counterBackground }]}>{urlShort}</Text>
         </TouchableOpacity>
     }, [selectIdx, theme])
 
@@ -53,9 +53,9 @@ const ListWebsite = ({ list, setIdx, getSelectingIdAsync }: { list: FunWebsite[]
             <View style={[{ backgroundColor: theme.background, }, styleSheet.bgView]}>
                 <View style={[{ flexDirection: 'row' }, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
                     <MaterialCommunityIcons name={Icon.ThreeDots} color={theme.background} size={Size.Icon} />
-                    <Text style={[{ color: theme.text, }, styleSheet.title]}>{LocalText.fun_websites}</Text>
+                    <Text style={[{ color: theme.counterBackground, }, styleSheet.title]}>{LocalText.fun_websites}</Text>
                     <TouchableOpacity onPress={() => setIdx(selectIdx)}>
-                        <MaterialCommunityIcons name={Icon.X} color={theme.text} size={Size.Icon} />
+                        <MaterialCommunityIcons name={Icon.X} color={theme.counterBackground} size={Size.Icon} />
                     </TouchableOpacity>
                 </View>
                 <FlatList

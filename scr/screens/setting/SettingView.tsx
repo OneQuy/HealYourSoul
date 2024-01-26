@@ -52,12 +52,12 @@ const SettingView = () => {
       textInputConView: { height: heightPercentageToDP(20), padding: Outline.GapVertical, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth },
       emailCopyTO: { justifyContent: 'center', alignItems: 'center' },
       communityIconTO: { justifyContent: 'center', alignItems: 'center' },
-      titleText: { color: theme.text, fontSize: FontSize.Small_L, fontWeight: FontWeight.B600 },
-      litmiFeedbackText: { color: theme.text, fontSize: FontSize.Small_L, fontWeight: '300' },
-      btnText: { textAlign: 'center', color: theme.text, fontSize: FontSize.Small_L, fontWeight: FontWeight.B600 },
-      descNotiText: { color: theme.text, fontSize: FontSize.Small },
-      emailText: { color: theme.text, fontSize: FontSize.Normal },
-      statText: { color: theme.text, fontSize: FontSize.Small_L },
+      titleText: { color: theme.counterBackground, fontSize: FontSize.Small_L, fontWeight: FontWeight.B600 },
+      litmiFeedbackText: { color: theme.counterBackground, fontSize: FontSize.Small_L, fontWeight: '300' },
+      btnText: { textAlign: 'center', color: theme.counterBackground, fontSize: FontSize.Small_L, fontWeight: FontWeight.B600 },
+      descNotiText: { color: theme.counterBackground, fontSize: FontSize.Small },
+      emailText: { color: theme.counterBackground, fontSize: FontSize.Normal },
+      statText: { color: theme.counterBackground, fontSize: FontSize.Small_L },
       sendFeedbackTO: { minWidth: '50%', alignSelf: 'center', paddingVertical: Outline.GapVertical, paddingHorizontal: Outline.GapVertical_2, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth, },
       shareTO: { flexDirection: 'row', justifyContent: 'center', gap: Outline.GapHorizontal, flex: 1, alignSelf: 'center', paddingVertical: Outline.GapVertical, paddingHorizontal: Outline.GapVertical_2, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth, },
       sendFeedbackInput: { textAlignVertical: 'top', textAlign: 'left', width: '100%', height: '100%' },
@@ -156,7 +156,7 @@ const SettingView = () => {
   }, [])
 
   const hair100Width = useCallback(() => {
-    return <View style={{ marginVertical: Outline.Horizontal, backgroundColor: theme.text, width: '100%', height: StyleSheet.hairlineWidth }} />
+    return <View style={{ marginVertical: Outline.Horizontal, backgroundColor: theme.counterBackground, width: '100%', height: StyleSheet.hairlineWidth }} />
   }, [theme])
 
   useEffect(() => {

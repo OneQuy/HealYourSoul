@@ -739,7 +739,7 @@ const ThePage = ({ category }: ThePageProps) => {
             headerOptionTO: { marginRight: 15 },
             subBtnTO: { justifyContent: 'center', flex: 1, alignItems: 'center', gap: Outline.GapVertical },
             mainBtnsView: { borderRadius: BorderRadius.BR8, paddingVertical: Outline.GapVertical_2, marginHorizontal: Outline.GapVertical, backgroundColor: theme.primary, flexDirection: 'row', justifyContent: 'space-between', },
-            mainBtnTxt: { color: theme.text, fontSize: FontSize.Small },
+            mainBtnTxt: { color: theme.counterBackground, fontSize: FontSize.Small },
             naviScale: { transform: [{ scale: 1.3 }] },
             authorView: { paddingHorizontal: Outline.Horizontal, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' },
             authorText: { flex: 1, fontSize: FontSize.Small, color: theme.primary },
@@ -760,7 +760,7 @@ const ThePage = ({ category }: ThePageProps) => {
             {
                 isInternetAvailable ? null :
                     <View style={{ paddingHorizontal: Outline.Horizontal, paddingVertical: 2, backgroundColor: ColorNameToRgb('silver', 0.5), alignItems: 'center' }}>
-                        <Text style={{ textAlignVertical: 'center', fontSize: FontSize.Small, color: theme.text }}>{LocalText.you_are_offline}</Text>
+                        <Text style={{ textAlignVertical: 'center', fontSize: FontSize.Small, color: theme.counterBackground }}>{LocalText.you_are_offline}</Text>
                     </View>
             }
 
@@ -889,7 +889,7 @@ const ThePage = ({ category }: ThePageProps) => {
             {
                 post.current === null || !post.current.url ? null :
                     <View style={{ paddingHorizontal: Outline.Horizontal, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
-                        <Text numberOfLines={1} style={{ flex: 1, fontSize: FontSize.Small, color: theme.text }}>{post.current.url}</Text>
+                        <Text numberOfLines={1} style={{ flex: 1, fontSize: FontSize.Small, color: theme.counterBackground }}>{post.current.url}</Text>
                         <TouchableOpacity onPress={() => onPressCopy(post.current?.url)} style={{ marginLeft: Outline.Horizontal, justifyContent: 'center', alignItems: 'center' }} >
                             <MaterialIcons name={Icon.Copy} color={theme.counterPrimary} size={Size.IconSmaller} />
                         </TouchableOpacity>

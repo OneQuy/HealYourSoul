@@ -27,7 +27,7 @@ const DrawerSingleItem = ({
 
     const icon = useMemo(() => GetIconOfScreen(route.name as ScreenName), [route.name])
 
-    const color = isFocused ? theme.text : theme.primary
+    const color = isFocused ? theme.counterBackground : theme.primary
 
     const onPressButton = useCallback(() => {
         track_PressDrawerItem(FilterOnlyLetterAndNumberFromString(route.name))
