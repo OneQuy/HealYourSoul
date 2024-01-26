@@ -5,11 +5,14 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React, { useContext, useMemo } from 'react'
 import { ThemeContext } from '../../constants/Colors';
 import { BorderRadius, FontSize, Outline, Size } from '../../constants/AppConstants';
+import FavoriteButton, { FavoriteButtonProp } from './FavoriteButton';
 
 export type BottomBarItem = {
-    icon: string,
-    onPress: () => void,
-    text: string,
+    icon?: string,
+    onPress?: () => void,
+    text?: string,
+
+    favoriteBtn?: FavoriteButtonProp,
 }
 
 const BottomBar = ({ items }: { items: BottomBarItem[] }) => {
@@ -26,13 +29,17 @@ const BottomBar = ({ items }: { items: BottomBarItem[] }) => {
     return (
         <View style={styleSheet.mainBtnsView}>
             {
-                items.map((item) => {                    
-                    return (
-                        <TouchableOpacity key={item.text} onPress={item.onPress} style={styleSheet.mainBtnsTO}>
-                            <MaterialCommunityIcons name={item.icon} color={theme.counterPrimary} size={Size.Icon} />
-                            <Text style={styleSheet.mainBtnTxt}>{item.text}</Text>
-                        </TouchableOpacity>
-                    )
+                items.map((item) => {
+                    if (item.favoriteBtn)
+                        return <FavoriteButton {...item.favoriteBtn} />
+                    else {
+                        return (
+                            <TouchableOpacity key={item.text} onPress={item.onPress} style={styleSheet.mainBtnsTO}>
+                                <MaterialCommunityIcons name={item.icon} color={theme.counterPrimary} size={Size.Icon} />
+                                <Text style={styleSheet.mainBtnTxt}>{item.text}</Text>
+                            </TouchableOpacity>
+                        )
+                    }
                 })
             }
         </View>

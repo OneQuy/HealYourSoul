@@ -9,16 +9,18 @@ import { track_PressFavorite } from '../../handle/tracking/GoodayTracking';
 import useIsFavorited from '../../hooks/useIsFavorited';
 import { ThemeContext } from '../../constants/Colors';
 
+export type FavoriteButtonProp = {
+    category: Category,
+    id: string | number | undefined,
+    callbackRef: React.MutableRefObject<(() => void) | undefined>,
+}
+
 const FavoriteButton = (
     {
         category,
         id,
         callbackRef,
-    }: {
-        category: Category,
-        id: string | number | undefined,
-        callbackRef: React.MutableRefObject<(() => void) | undefined>,
-    }) => {
+    }: FavoriteButtonProp) => {
     const theme = useContext(ThemeContext);
     const scaleAnim = useRef(new Animated.Value(1)).current
 
