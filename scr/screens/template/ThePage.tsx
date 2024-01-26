@@ -773,21 +773,23 @@ const ThePage = ({ category }: ThePageProps) => {
 
             {/* media view */}
             {
-                mediaURI.current === '' ?
+                // mediaURI.current === '' ?
+                true ?
                     // no media
                     <View style={style.flex1} >
                         {
                             reasonToReload.current !== NeedReloadReason.None ?
+                            // true ?
                                 // need to reload
                                 <TouchableOpacity onPress={onPressReloadAsync} style={{ flex: 1, justifyContent: 'center', alignItems: 'center', gap: Outline.GapVertical }} >
-                                    <MaterialCommunityIcons name={reasonToReload.current === NeedReloadReason.NoInternet ? 'access-point-network-off' : 'heart-broken'} color={theme.primary} size={Size.IconBig} />
-                                    <Text style={{ fontSize: FontSize.Normal, color: theme.counterPrimary }}>{reasonToReload.current === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
-                                    <Text style={{ fontSize: FontSize.Small_L, color: theme.counterPrimary }}>{LocalText.tap_to_retry}</Text>
+                                    <MaterialCommunityIcons name={reasonToReload.current === NeedReloadReason.NoInternet ? 'access-point-network-off' : 'heart-broken'} color={theme.counterBackground} size={Size.IconMedium} />
+                                    <Text style={{ fontSize: FontSize.Normal, color: theme.counterBackground }}>{reasonToReload.current === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
+                                    <Text style={{ fontSize: FontSize.Small_L, color: theme.counterBackground }}>{LocalText.tap_to_retry}</Text>
                                 </TouchableOpacity> :
                                 // loading
                                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', gap: Outline.GapVertical }} >
-                                    <MaterialCommunityIcons name={'file-image-outline'} color={theme.primary} size={100} />
-                                    <Text style={{ fontSize: FontSize.Big }}>{downloadPercent}%</Text>
+                                    <MaterialCommunityIcons name={'file-image-outline'} color={theme.counterBackground} size={Size.IconBig} />
+                                    <Text style={{ fontSize: FontSize.Big, color: theme.counterBackground }}>{downloadPercent}%</Text>
                                 </View>
                         }
                     </View> :
