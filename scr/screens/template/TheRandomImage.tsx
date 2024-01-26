@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, ActivityIndicator, Alert, StyleSheet, Animated, NativeSyntheticEvent, ImageLoadEventData } from 'react-native'
-import React, { useCallback, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { BorderRadius, Category, FontSize, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
 import Share from 'react-native-share';
@@ -169,6 +169,22 @@ const TheRandomImage = ({
 
     useFocusEffect(useCallback(() => SaveCurrentScreenForLoadNextTime(navigation), []))
 
+    const styleSheet = useMemo(() => {
+        return StyleSheet.create({
+            masterView: { flex: 1, gap: Outline.GapVertical, },
+            titleText: { textAlign: 'center', fontSize: FontSize.Normal, paddingHorizontal: Outline.Horizontal, },
+            contentView: { width: '100%', height: '100%', gap: Outline.GapVertical, paddingTop: Outline.GapHorizontal },
+            randomTO: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: '100%' },
+            subBtnTO: { justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', },
+            headerOptionTO: { marginRight: 15 },
+            image: { width: '100%', height: '100%' },
+            imageTO: { flex: 1 },
+            mainBtnsTO: { justifyContent: 'center', flex: 1, alignItems: 'center', gap: Outline.GapVertical },
+            mainBtnsView: { marginBottom: Outline.GapVertical, borderRadius: BorderRadius.BR8, paddingVertical: Outline.GapVertical_2, marginHorizontal: Outline.GapVertical, backgroundColor: theme.primary, flexDirection: 'row', justifyContent: 'space-between', },
+            mainBtnTxt: { color: theme.counterPrimary, fontSize: FontSize.Small },
+        })
+    }, [theme])
+
     return (
         <View pointerEvents={handling ? 'none' : 'auto'} style={[styleSheet.masterView, { backgroundColor: theme.background }]}>
             <View style={CommonStyles.flex_1} >
@@ -213,20 +229,22 @@ const TheRandomImage = ({
                         </View>
                 }
             </View>
-            <View style={{ marginHorizontal: Outline.GapVertical_2 }}>
-                <TouchableOpacity onPress={() => onPressRandom(true)} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, padding: Outline.GapVertical_2, backgroundColor: theme.primary, }, styleSheet.randomTO]}>
+            {/* main btn part */}
+            <View style={styleSheet.mainBtnsView}>
+                {/* share */}
+                <TouchableOpacity onPress={onPressShareImage} style={[styleSheet.mainBtnsTO]}>
+                    <MaterialCommunityIcons name={Icon.ShareImage} color={theme.counterPrimary} size={Size.Icon} />
+                    <Text style={styleSheet.mainBtnTxt}>{LocalText.save}</Text>
+                </TouchableOpacity>
+                {/* random */}
+                <TouchableOpacity onPress={() => onPressRandom(true)} style={[styleSheet.mainBtnsTO]}>
                     <MaterialCommunityIcons name={Icon.Dice} color={theme.counterPrimary} size={Size.Icon} />
-                    <Text style={{ color: theme.counterPrimary, fontSize: FontSize.Normal }}>{LocalText.random}</Text>
+                    <Text style={styleSheet.mainBtnTxt}>{LocalText.random}</Text>
                 </TouchableOpacity>
-            </View>
-            <View style={[{ marginBottom: Outline.GapVertical, gap: Outline.GapHorizontal }, CommonStyles.row_width100Percent]}>
-                <TouchableOpacity onPress={onPressSaveToPhoto} style={[styleSheet.subBtnTO, { flex: 1.5, gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }]}>
-                    <MaterialCommunityIcons name={Icon.Download} color={theme.counterPrimary} size={Size.IconSmaller} />
-                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Small_L }}>{LocalText.save}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={onPressShareImage} style={[styleSheet.subBtnTO, { flex: 1.5, gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }]}>
-                    <MaterialCommunityIcons name={Icon.ShareImage} color={theme.counterPrimary} size={Size.IconSmaller} />
-                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Small_L }}>{LocalText.share}</Text>
+                {/* download */}
+                <TouchableOpacity onPress={onPressSaveToPhoto} style={[styleSheet.mainBtnsTO]}>
+                    <MaterialCommunityIcons name={Icon.Download} color={theme.counterPrimary} size={Size.Icon} />
+                    <Text style={styleSheet.mainBtnTxt}>{LocalText.save}</Text>
                 </TouchableOpacity>
             </View>
             {
@@ -237,14 +255,3 @@ const TheRandomImage = ({
 }
 
 export default TheRandomImage
-
-const styleSheet = StyleSheet.create({
-    masterView: { flex: 1, gap: Outline.GapVertical, },
-    titleText: { textAlign: 'center', fontSize: FontSize.Normal, paddingHorizontal: Outline.Horizontal, },
-    contentView: { width: '100%', height: '100%', gap: Outline.GapVertical, paddingTop: Outline.GapHorizontal },
-    randomTO: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: '100%' },
-    subBtnTO: { justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', },
-    headerOptionTO: { marginRight: 15 },
-    image: { width: '100%', height: '100%' },
-    imageTO: { flex: 1 },
-})
