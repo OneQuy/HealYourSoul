@@ -897,14 +897,14 @@ const ThePage = ({ category }: ThePageProps) => {
                 </TouchableOpacity>
                 {/* previous */}
                 <TouchableOpacity onPress={() => onPressNextPost(false, true)} style={[style.subBtnTO]}>
-                    <MaterialIcons name={Icon.Left} color={theme.counterPrimary} size={Size.Icon} />
+                    <MaterialCommunityIcons name={Icon.Left} color={theme.counterPrimary} size={Size.Icon} />
                     <Text style={style.mainBtnTxt}>{LocalText.previous}</Text>
                 </TouchableOpacity>
                 {/* favorite */}
                 <FavoriteButton callbackRef={favoriteCallbackRef} id={post.current?.id} category={category} />
                 {/* next */}
                 <TouchableOpacity onPress={() => onPressNextPost(true, true)} style={[style.subBtnTO]}>
-                    <MaterialIcons name={Icon.Right} color={theme.counterPrimary} size={Size.Icon} />
+                    <MaterialCommunityIcons name={Icon.Right} color={theme.counterPrimary} size={Size.Icon} />
                     <Text style={style.mainBtnTxt}>{LocalText.next}</Text>
                 </TouchableOpacity>
                 {/* download */}
