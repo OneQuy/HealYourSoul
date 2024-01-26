@@ -20,8 +20,16 @@ export const themes = {
         primary: '#000000',
         counterPrimary: '#ffffff',
     } as ThemeColor,
+    
+    bblack: {
+        background: '#fad502',
+        counterBackground: '#6800a3',
 
-    // dark: {
+        primary: '#6800a3',
+        counterPrimary: '#ffffff',
+    } as ThemeColor,
+
+    // yellow: {
     //     background: '#0d111c',
     //     counterBackground: '#000000',
 

@@ -28,7 +28,6 @@ import { SaveToGalleryAsync } from '../../handle/CameraRoll';
 import { Cheat } from '../../handle/Cheat';
 import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
 import StreakPopup from '../components/StreakPopup';
-import { CommonStyles } from '../../constants/CommonConstants';
 import Share from 'react-native-share';
 import { track_PressNextPost, track_PressSaveMedia, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
@@ -539,6 +538,9 @@ const ThePage = ({ category }: ThePageProps) => {
     }, [checkAndLoadFileListAndStartShowPostAsync]);
 
     const onPressNextPost = useCallback(async (isNext: boolean, shouldTracking: boolean) => {
+        if (!activePreviousPostButton)
+            return
+
         track_PressNextPost(shouldTracking, category, isNext)
 
         if (!fileList.current) {
@@ -572,7 +574,7 @@ const ThePage = ({ category }: ThePageProps) => {
         }
 
         setNeedLoadPost(isNext ? 'next' : 'previous')
-    }, [onPressReloadAsync]);
+    }, [onPressReloadAsync, activePreviousPostButton]);
 
     const onPlayVideoError = useCallback((error: any) => {
         Alert.alert('Video load failed', 'Can not play this video (Post ID: ' + post.current?.id + '). Let\'s go to the next post!\n\nError: ' + JSON.stringify(error),
@@ -774,12 +776,12 @@ const ThePage = ({ category }: ThePageProps) => {
             {/* media view */}
             {
                 mediaURI.current === '' ?
-                // true ?
+                    // true ?
                     // no media
                     <View style={style.flex1} >
                         {
                             reasonToReload.current !== NeedReloadReason.None ?
-                            // true ?
+                                // true ?
                                 // need to reload
                                 <TouchableOpacity onPress={onPressReloadAsync} style={{ flex: 1, justifyContent: 'center', alignItems: 'center', gap: Outline.GapVertical }} >
                                     <MaterialCommunityIcons name={reasonToReload.current === NeedReloadReason.NoInternet ? 'access-point-network-off' : 'heart-broken'} color={theme.counterBackground} size={Size.IconMedium} />
