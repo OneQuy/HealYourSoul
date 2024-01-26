@@ -271,7 +271,6 @@ export default TheTrivia
 const styleSheet = StyleSheet.create({
     masterView: { padding: Outline.Horizontal, flex: 1, gap: Outline.GapVertical, },
     randomTO: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: '100%' },
-    subBtnTO: { justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', },
     headerOptionTO: { marginRight: 15 },
     answerTO: { flexDirection: 'row', justifyContent: 'center', borderWidth: StyleSheet.hairlineWidth * 2, }
 })

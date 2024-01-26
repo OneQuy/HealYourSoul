@@ -28,6 +28,7 @@ import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading
 import { track_PressRandom, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
+import BottomBar, { BottomBarItem } from '../others/BottomBar';
 
 const category = Category.Wikipedia
 
@@ -209,6 +210,36 @@ const WikipediaScreen = () => {
 
     const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(undefined, undefined, onSwiped)
 
+    const bottomBarItems = useMemo(() => {
+        return [
+            {
+                text: LocalText.share_image,
+                onPress: onPressShareImage,
+                icon: Icon.ShareImage
+            },
+            {
+                text: showFull ? '' : LocalText.read_full,
+                onPress: onPressInAppWeb,
+                icon: showFull ? Icon.X : Icon.Book
+            },
+            {
+                text: LocalText.random,
+                onPress: () => onPressRandom(true),
+                icon: Icon.Dice,
+            },
+            {
+                text: LocalText.copy,
+                onPress: onPressCopy,
+                icon: Icon.Copy,
+            },
+            {
+                text: LocalText.share,
+                onPress: onPressShareText,
+                icon: Icon.ShareText,
+            },
+        ] as BottomBarItem[]
+    }, [onPressShareImage, onPressInAppWeb, onPressShareText, showFull, onPressCopy])
+
     // on init once (for load first post)
 
     useEffect(() => {
@@ -280,35 +311,10 @@ const WikipediaScreen = () => {
                     }
                 </View>
             </ViewShot>
-            {/* main btn */}
-            <View style={styleSheet.mainButtonsView}>
-                <TouchableOpacity onPress={onPressInAppWeb} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
-                    <MaterialCommunityIcons name={showFull ? Icon.X : Icon.Book} color={theme.counterPrimary} size={Size.Icon} />
-                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Normal }}>{showFull ? '' : LocalText.read_full}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => onPressRandom(true)} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
-                    <MaterialCommunityIcons name={Icon.Dice} color={theme.counterPrimary} size={Size.Icon} />
-                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Normal }}>{LocalText.random}</Text>
-                </TouchableOpacity>
-            </View>
-            {/* sub btns */}
-            <View style={[{ gap: Outline.GapHorizontal }, CommonStyles.row_width100Percent]}>
-                <TouchableOpacity onPress={onPressCopy} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }, styleSheet.subBtnTO]}>
-                    <MaterialIcons name={Icon.Copy} color={theme.counterPrimary} size={Size.IconSmaller} />
-                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Small_L }}>{LocalText.copy}</Text>
-                </TouchableOpacity>
 
-                <TouchableOpacity onPress={onPressShareText} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }, styleSheet.subBtnTO]}>
-                    <MaterialCommunityIcons name={Icon.ShareText} color={theme.counterPrimary} size={Size.IconSmaller} />
-                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Small_L }}>{LocalText.share}</Text>
-                </TouchableOpacity>
+            {/* main btns */}
+            <BottomBar items={bottomBarItems} />
 
-                <TouchableOpacity onPress={onPressShareImage} style={[styleSheet.subBtnTO, { flex: 1.5, gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }]}>
-                    <MaterialCommunityIcons name={Icon.ShareImage} color={theme.counterPrimary} size={Size.IconSmaller} />
-                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Small_L }}>{LocalText.share_image}</Text>
-                </TouchableOpacity>
-
-            </View>
             {
                 streakData ? <StreakPopup streak={streakData} /> : undefined
             }
@@ -320,9 +326,6 @@ export default WikipediaScreen
 
 const styleSheet = StyleSheet.create({
     masterView: { paddingBottom: Outline.Horizontal, flex: 1, gap: Outline.GapVertical, },
-    mainButtonsView: { gap: Outline.GapHorizontal, marginHorizontal: Outline.GapVertical_2, flexDirection: 'row' },
-    mainBtnTO: { paddingVertical: Outline.GapVertical, flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', },
-    subBtnTO: { justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', },
     headerOptionTO: { marginRight: 15 },
     image: { width: '100%', height: heightPercentageToDP(30) },
     contentView: { flex: 1, gap: Outline.GapVertical },
