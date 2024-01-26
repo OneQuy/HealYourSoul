@@ -245,9 +245,7 @@ const TheRandomImage = ({
                 }
             </View>
             {/* main btn part */}
-            <BottomBar
-                items={bottomBarItems}
-            />
+            <BottomBar items={bottomBarItems} />
             {
                 streakData ? <StreakPopup streak={streakData} /> : undefined
             }
