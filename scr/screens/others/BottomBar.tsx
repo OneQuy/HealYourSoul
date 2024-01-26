@@ -31,7 +31,7 @@ const BottomBar = ({ items }: { items: BottomBarItem[] }) => {
             {
                 items.map((item) => {
                     if (item.favoriteBtn)
-                        return <FavoriteButton {...item.favoriteBtn} />
+                        return <FavoriteButton key={'favorite'} {...item.favoriteBtn} />
                     else {
                         return (
                             <TouchableOpacity key={item.text} onPress={item.onPress} style={styleSheet.mainBtnsTO}>

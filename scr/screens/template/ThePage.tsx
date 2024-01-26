@@ -33,6 +33,7 @@ import { track_PressNextPost, track_PressSaveMedia, track_SimpleWithCat } from '
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import FavoriteButton from '../others/FavoriteButton';
+import BottomBar, { BottomBarItem } from '../others/BottomBar';
 
 const videoNumbSize = 10;
 const videoTouchEffectRadius = 100;
@@ -538,7 +539,7 @@ const ThePage = ({ category }: ThePageProps) => {
     }, [checkAndLoadFileListAndStartShowPostAsync]);
 
     const onPressNextPost = useCallback(async (isNext: boolean, shouldTracking: boolean) => {
-        if (!activePreviousPostButton)
+        if (!activePreviousPostButton && !isNext)
             return
 
         track_PressNextPost(shouldTracking, category, isNext)
@@ -750,6 +751,38 @@ const ThePage = ({ category }: ThePageProps) => {
         })
     }, [theme])
 
+    const bottomBarItems = useMemo(() => {
+        return [
+            {
+                text: LocalText.share,
+                onPress: onPressShareImage,
+                icon: Icon.ShareImage
+            },
+            {
+                text: LocalText.previous,
+                onPress: () => onPressNextPost(false, true),
+                icon: Icon.Left
+            },
+            {
+                favoriteBtn: {
+                    callbackRef: favoriteCallbackRef,
+                    id: post.current?.id,
+                    category,
+                }
+            },
+            {
+                text: LocalText.next,
+                onPress: () => onPressNextPost(true, true),
+                icon: Icon.Right
+            },
+            {
+                text: LocalText.save,
+                onPress: onPressDownloadMedia,
+                icon: Icon.Download
+            },
+        ] as BottomBarItem[]
+    }, [onPressShareImage, onPressNextPost, post.current?.id, onPressDownloadMedia])
+
     // main render
 
     // if(post.current)
@@ -902,34 +935,7 @@ const ThePage = ({ category }: ThePageProps) => {
             }
 
             {/* main btn part */}
-            <View style={style.mainBtnsView}>
-                {/* share */}
-                <TouchableOpacity onPress={onPressShareImage} style={[style.mainBtnsTO]}>
-                    <MaterialCommunityIcons name={Icon.ShareImage} color={theme.counterPrimary} size={Size.Icon} />
-                    <Text style={style.mainBtnTxt}>{LocalText.share}</Text>
-                </TouchableOpacity>
-                {/* previous */}
-                <TouchableOpacity onPress={() => onPressNextPost(false, true)} style={[style.mainBtnsTO]}>
-                    <View style={style.naviScale}>
-                        <MaterialCommunityIcons name={Icon.Left} color={theme.counterPrimary} size={Size.Icon} />
-                    </View>
-                    <Text style={style.mainBtnTxt}>{LocalText.previous}</Text>
-                </TouchableOpacity>
-                {/* favorite */}
-                <FavoriteButton callbackRef={favoriteCallbackRef} id={post.current?.id} category={category} />
-                {/* next */}
-                <TouchableOpacity onPress={() => onPressNextPost(true, true)} style={[style.mainBtnsTO]}>
-                    <View style={style.naviScale}>
-                        <MaterialCommunityIcons name={Icon.Right} color={theme.counterPrimary} size={Size.Icon} />
-                    </View>
-                    <Text style={style.mainBtnTxt}>{LocalText.next}</Text>
-                </TouchableOpacity>
-                {/* download */}
-                <TouchableOpacity onPress={onPressDownloadMedia} style={[style.mainBtnsTO]}>
-                    <MaterialCommunityIcons name={Icon.Download} color={theme.counterPrimary} size={Size.Icon} />
-                    <Text style={style.mainBtnTxt}>{LocalText.save}</Text>
-                </TouchableOpacity>
-            </View>
+            <BottomBar items={bottomBarItems} />
 
             {/* streak */}
             {
