@@ -132,7 +132,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
   const colorSetting = isFocusSetting ? theme.counterBackground : theme.primary
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: theme.background }}>
       {/* logo & app name */}
       <View onTouchEnd={IsDev() ? onPressLogo : undefined} style={[style.topMasterView, CommonStyles.justifyContentCenter_AlignItemsCenter, { marginTop: safeAreaInsets.top }]}>
         <Image source={logoScr} resizeMode='contain' style={[style.logoImg]} />
