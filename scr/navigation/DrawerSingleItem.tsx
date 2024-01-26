@@ -27,17 +27,19 @@ const DrawerSingleItem = ({
 
     const icon = useMemo(() => GetIconOfScreen(route.name as ScreenName), [route.name])
 
+    const color = isFocused ? theme.text : theme.primary
+
     const onPressButton = useCallback(() => {
         track_PressDrawerItem(FilterOnlyLetterAndNumberFromString(route.name))
         onPress()
     }, [onPress])
 
     return (
-        <TouchableOpacity onPress={onPressButton} style={[style.masterTO, CommonStyles.justifyContentCenter_AlignItemsCenter, { paddingHorizontal: Outline.GapVertical, backgroundColor: isFocused ? theme.primary : undefined, borderRadius: BorderRadius.BR8, borderColor: theme.text }]}>
+        <TouchableOpacity onPress={onPressButton} style={[style.masterTO, CommonStyles.justifyContentCenter_AlignItemsCenter, { paddingHorizontal: Outline.GapVertical, backgroundColor: isFocused ? theme.primary : undefined, borderRadius: BorderRadius.BR8, borderColor: theme.primary }]}>
             <View style={[style.iconView, { marginRight: Outline.GapVertical, }]}>
-                <MaterialCommunityIcons name={icon} color={theme.text} size={Size.IconSmaller} />
+                <MaterialCommunityIcons name={icon} color={color} size={Size.IconSmaller} />
             </View>
-            <Text style={[style.labelText, { color: theme.text, }]}>{route.name}</Text>
+            <Text style={[style.labelText, { color: color }]}>{route.name}</Text>
         </TouchableOpacity>
     )
 }
