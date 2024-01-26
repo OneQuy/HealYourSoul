@@ -750,8 +750,8 @@ const ThePage = ({ category }: ThePageProps) => {
 
     // main render
 
-    if(post.current)
-    post.current.url = 'wwwww.fdsjfdasjf.ocm'
+    // if(post.current)
+    // post.current.url = 'wwwww.fdsjfdasjf.ocm'
     //     post.current.title = 'hihihi'
 
     return (
