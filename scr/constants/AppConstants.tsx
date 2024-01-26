@@ -250,7 +250,7 @@ export const LocalText = {
   next: 'Next',
   previous: 'Previous',
   read_full: 'Read Full',
-  go: 'Go!',
+  view: 'View',
   saved: 'Saved!',
   setting: 'Setting',
   rate_me: 'Rate me',

@@ -4,10 +4,6 @@ import { ThemeContext } from '../../constants/Colors'
 import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size, StorageKey_LocalFileVersion, StorageKey_SelectingFunWebsiteId } from '../../constants/AppConstants'
 import Share from 'react-native-share';
 
-
-// @ts-ignore
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { NetLord } from '../../handle/NetLord'
@@ -28,12 +24,10 @@ import useCheckAndDownloadRemoteFile from '../../hooks/useCheckAndDownloadRemote
 import { TempDirName } from '../../handle/Utils';
 import { GetRemoteFileConfigVersion } from '../../handle/AppConfigHandler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import useIsFavorited from '../../hooks/useIsFavorited';
 import ListWebsite from './ListWebsite';
-import { track_PressFavorite, track_PressNextPost, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
+import { track_PressNextPost, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
-import FavoriteButton from '../others/FavoriteButton';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
 
 const category = Category.FunWebsites
@@ -172,28 +166,28 @@ const FunWebsitesScreen = () => {
         setShowFull(!showFull)
     }, [showFull])
 
-    const onPressShareImage = useCallback(() => {
-        if (!selectingItem)
-            return
+    // const onPressShareImage = useCallback(() => {
+    //     if (!selectingItem)
+    //         return
 
-        track_SimpleWithCat(category, 'share_as_image')
+    //     track_SimpleWithCat(category, 'share_as_image')
 
-        const message = selectingItem.desc + '\n\n' + selectingItem.url
-        // @ts-ignore
-        viewShotRef.current.capture().then(async (uri: string) => {
-            Share
-                .open({
-                    message,
-                    url: uri,
-                })
-                .catch((err) => {
-                    const error = ToCanPrint(err)
+    //     const message = selectingItem.desc + '\n\n' + selectingItem.url
+    //     // @ts-ignore
+    //     viewShotRef.current.capture().then(async (uri: string) => {
+    //         Share
+    //             .open({
+    //                 message,
+    //                 url: uri,
+    //             })
+    //             .catch((err) => {
+    //                 const error = ToCanPrint(err)
 
-                    if (!error.includes('User did not share'))
-                        Alert.alert('Fail', error)
-                });
-        })
-    }, [selectingItem, theme])
+    //                 if (!error.includes('User did not share'))
+    //                     Alert.alert('Fail', error)
+    //             });
+    //     })
+    // }, [selectingItem, theme])
 
     const onSwiped = useCallback((result: SwipeResult) => {
         if (result.primaryDirectionIsHorizontalOrVertical && !result.primaryDirectionIsPositive) {
@@ -217,12 +211,12 @@ const FunWebsitesScreen = () => {
     const bottomBarItems = useMemo(() => {
         return [
             {
-                text: LocalText.share_image,
-                onPress: onPressShareImage,
-                icon: Icon.ShareImage
+                text: LocalText.copy,
+                onPress: onPressCopy,
+                icon: Icon.Copy
             },
             {
-                text: showFull ? '' : LocalText.go,
+                text: showFull ? LocalText.close : LocalText.view,
                 onPress: onPressInAppWeb,
                 icon: showFull ? Icon.X : Icon.Eye,
             },
@@ -240,17 +234,12 @@ const FunWebsitesScreen = () => {
                 scaleIcon: 1.5,
             },
             {
-                text: LocalText.copy,
-                onPress: onPressCopy,
-                icon: Icon.Copy
-            },
-            {
                 text: LocalText.share,
                 onPress: onPressShareText,
                 icon: Icon.ShareText
             },
         ] as BottomBarItem[]
-    }, [onPressShareImage, showFull, onPressInAppWeb, selectingItem?.id, onPressNext, onPressCopy, onPressShareText])
+    }, [showFull, onPressInAppWeb, selectingItem?.id, onPressNext, onPressCopy, onPressShareText])
 
     // for load data first time
 
@@ -368,9 +357,6 @@ export default FunWebsitesScreen
 
 const styleSheet = StyleSheet.create({
     masterView: { paddingBottom: Outline.Horizontal, flex: 1, gap: Outline.GapVertical, },
-    mainButtonsView: { gap: Outline.GapHorizontal, marginHorizontal: Outline.GapVertical_2, flexDirection: 'row' },
-    mainBtnTO: { paddingVertical: Outline.GapVertical, flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', },
-    subBtnTO: { justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', },
     headerOptionTO: { marginRight: 15 },
     image: { width: widthPercentageToDP(100), height: heightPercentageToDP(50) },
     contentView: { flex: 1, gap: Outline.GapVertical, paddingTop: Outline.GapHorizontal },

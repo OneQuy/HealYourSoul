@@ -301,7 +301,7 @@ const PicturesOfTheYearScreen = () => {
         navigation.setOptions({
             headerRight: () =>
                 <TouchableOpacity onPress={onPressHeaderOption} style={styleSheet.headerOptionTO}>
-                    <MaterialCommunityIcons name={Icon.ThreeDots} color={theme.counterPrimary} size={Size.Icon} />
+                    <MaterialCommunityIcons name={Icon.ThreeDots} color={theme.counterBackground} size={Size.Icon} />
                 </TouchableOpacity>
         });
     }, [theme, onPressHeaderOption])
