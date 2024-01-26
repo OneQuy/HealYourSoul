@@ -23,6 +23,7 @@ import ImageAsMap from '../../handle/ImageAsMap';
 import { track_PressRandom, track_PressSaveMedia, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
+import BottomBar, { BottomBarItem } from '../others/BottomBar';
 
 interface TheRandomImageProps {
     category: Category,
@@ -169,19 +170,33 @@ const TheRandomImage = ({
 
     useFocusEffect(useCallback(() => SaveCurrentScreenForLoadNextTime(navigation), []))
 
+    const bottomBarItems = useMemo(() => {
+        return [
+            {
+                text: LocalText.share,
+                onPress: onPressShareImage,
+                icon: Icon.ShareImage
+            },
+            {
+                text: LocalText.random,
+                onPress: () => onPressRandom(true),
+                icon: Icon.Dice
+            },
+            {
+                text: LocalText.save,
+                onPress: onPressSaveToPhoto,
+                icon: Icon.Download
+            },
+        ] as BottomBarItem[]
+    }, [onPressRandom, onPressSaveToPhoto, onPressShareImage])
+
     const styleSheet = useMemo(() => {
         return StyleSheet.create({
             masterView: { flex: 1, gap: Outline.GapVertical, },
             titleText: { textAlign: 'center', fontSize: FontSize.Normal, paddingHorizontal: Outline.Horizontal, },
             contentView: { width: '100%', height: '100%', gap: Outline.GapVertical, paddingTop: Outline.GapHorizontal },
-            randomTO: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: '100%' },
-            subBtnTO: { justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', },
             headerOptionTO: { marginRight: 15 },
-            image: { width: '100%', height: '100%' },
             imageTO: { flex: 1 },
-            mainBtnsTO: { justifyContent: 'center', flex: 1, alignItems: 'center', gap: Outline.GapVertical },
-            mainBtnsView: { marginBottom: Outline.GapVertical, borderRadius: BorderRadius.BR8, paddingVertical: Outline.GapVertical_2, marginHorizontal: Outline.GapVertical, backgroundColor: theme.primary, flexDirection: 'row', justifyContent: 'space-between', },
-            mainBtnTxt: { color: theme.counterPrimary, fontSize: FontSize.Small },
         })
     }, [theme])
 
@@ -230,23 +245,9 @@ const TheRandomImage = ({
                 }
             </View>
             {/* main btn part */}
-            <View style={styleSheet.mainBtnsView}>
-                {/* share */}
-                <TouchableOpacity onPress={onPressShareImage} style={[styleSheet.mainBtnsTO]}>
-                    <MaterialCommunityIcons name={Icon.ShareImage} color={theme.counterPrimary} size={Size.Icon} />
-                    <Text style={styleSheet.mainBtnTxt}>{LocalText.save}</Text>
-                </TouchableOpacity>
-                {/* random */}
-                <TouchableOpacity onPress={() => onPressRandom(true)} style={[styleSheet.mainBtnsTO]}>
-                    <MaterialCommunityIcons name={Icon.Dice} color={theme.counterPrimary} size={Size.Icon} />
-                    <Text style={styleSheet.mainBtnTxt}>{LocalText.random}</Text>
-                </TouchableOpacity>
-                {/* download */}
-                <TouchableOpacity onPress={onPressSaveToPhoto} style={[styleSheet.mainBtnsTO]}>
-                    <MaterialCommunityIcons name={Icon.Download} color={theme.counterPrimary} size={Size.Icon} />
-                    <Text style={styleSheet.mainBtnTxt}>{LocalText.save}</Text>
-                </TouchableOpacity>
-            </View>
+            <BottomBar
+                items={bottomBarItems}
+            />
             {
                 streakData ? <StreakPopup streak={streakData} /> : undefined
             }
