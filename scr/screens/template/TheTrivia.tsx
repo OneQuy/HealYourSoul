@@ -221,7 +221,7 @@ const TheTrivia = ({
                                         </TouchableOpacity>
                                         {
                                             allAnswer?.map((answer: string, index: number) => {
-                                                let bgColor: string | undefined = undefined
+                                                let bgColor: string | undefined = theme.background
                                                 let icon = ''
 
                                                 if (userChosenAnswer !== undefined) { // user did pick answer
@@ -238,14 +238,13 @@ const TheTrivia = ({
                                                 return <TOAnim onPress={() => onPressAnwser(answer)} style={[
                                                     { transform: [{ scale: userChosenAnswer ? 1 : mediaViewScaleAnimRef.current[index] }] },
                                                     styleSheet.answerTO,
-                                                    { backgroundColor: bgColor },
-                                                    { gap: Outline.GapHorizontal, padding: Outline.GapVertical, borderRadius: BorderRadius.BR8 }]} key={answer}>
+                                                    { backgroundColor: bgColor, gap: Outline.GapHorizontal, padding: Outline.GapVertical, borderRadius: BorderRadius.BR8 }]} key={answer}>
                                                     {
                                                         icon === '' ?
                                                             undefined :
                                                             <MaterialCommunityIcons name={icon} color={'white'} size={Size.Icon} />
                                                     }
-                                                    <Text style={{ verticalAlign: 'middle', textAlign: 'center', fontSize: FontSize.Small_L, color: bgColor ? 'white' : theme.counterBackground }}>{answer}</Text>
+                                                    <Text style={{ verticalAlign: 'middle', textAlign: 'center', fontSize: FontSize.Small_L, color: icon ? 'white' : theme.counterBackground }}>{answer}</Text>
                                                 </TOAnim>
                                             })
                                         }
