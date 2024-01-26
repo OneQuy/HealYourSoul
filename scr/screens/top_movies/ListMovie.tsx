@@ -23,8 +23,8 @@ const ListMovie = ({ list, setIdx, getSelectingIdAsync: getSelectingIdxAsync }: 
         const isSelecting = index === selectIdx
 
         return <TouchableOpacity onPress={() => setIdx(index)} style={[{ backgroundColor: isSelecting ? theme.primary : undefined, borderRadius: isSelecting ? BorderRadius.BR8 : 0, borderWidth: isSelecting ? 1 : 0 }, styleSheet.itemTO]}>
-            <ImageBackgroundWithLoading source={{ uri: item.thumbnailUri }} resizeMode='cover' style={styleSheet.image} />
-            <Text style={[styleSheet.text, { color: theme.counterBackground }]}>#{item.rank + '. ' + item.title}</Text>
+            <ImageBackgroundWithLoading indicatorProps={{ color: theme.counterBackground }} source={{ uri: item.thumbnailUri }} resizeMode='cover' style={styleSheet.image} />
+            <Text style={[styleSheet.text, { color: isSelecting ? theme.counterPrimary : theme.counterBackground }]}>#{item.rank + '. ' + item.title}</Text>
         </TouchableOpacity>
     }, [selectIdx, theme])
 

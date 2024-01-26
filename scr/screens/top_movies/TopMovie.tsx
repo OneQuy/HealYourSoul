@@ -177,34 +177,34 @@ const TopMovieScreen = () => {
             })
     }, [selectingItem, theme])
 
-    const onPressShareImage = useCallback(() => {
-        if (!selectingItem)
-            return
+    // const onPressShareImage = useCallback(() => {
+    //     if (!selectingItem)
+    //         return
 
-        track_SimpleWithCat(category, 'share_as_image')
+    //     track_SimpleWithCat(category, 'share_as_image')
 
-        const message =
-            '#' + selectingItem.rank + '. ' +
-            selectingItem.title + ': ' +
-            selectingItem.desc + '\n' +
-            selectingItem.info + '\n' +
-            '★ ' + selectingItem.rate + ' on IMDb'
+    //     const message =
+    //         '#' + selectingItem.rank + '. ' +
+    //         selectingItem.title + ': ' +
+    //         selectingItem.desc + '\n' +
+    //         selectingItem.info + '\n' +
+    //         '★ ' + selectingItem.rate + ' on IMDb'
 
-        // @ts-ignore
-        viewShotRef.current.capture().then(async (uri: string) => {
-            Share
-                .open({
-                    message,
-                    url: uri,
-                })
-                .catch((err) => {
-                    const error = ToCanPrint(err)
+    //     // @ts-ignore
+    //     viewShotRef.current.capture().then(async (uri: string) => {
+    //         Share
+    //             .open({
+    //                 message,
+    //                 url: uri,
+    //             })
+    //             .catch((err) => {
+    //                 const error = ToCanPrint(err)
 
-                    if (!error.includes('User did not share'))
-                        Alert.alert('Fail', error)
-                });
-        })
-    }, [selectingItem, theme])
+    //                 if (!error.includes('User did not share'))
+    //                     Alert.alert('Fail', error)
+    //             });
+    //     })
+    // }, [selectingItem, theme])
 
     const onLongPressed = useCallback(() => {
         console.log('long pressed');
@@ -227,11 +227,11 @@ const TopMovieScreen = () => {
 
     const bottomBarItems = useMemo(() => {
         return [
-            {
-                text: LocalText.share_image,
-                onPress: onPressShareImage,
-                icon: Icon.ShareImage
-            },
+            // {
+            //     text: LocalText.share_image,
+            //     onPress: onPressShareImage,
+            //     icon: Icon.ShareImage
+            // },
             {
                 text: LocalText.random,
                 onPress: onPressRandom,
@@ -256,7 +256,7 @@ const TopMovieScreen = () => {
                 icon: Icon.ShareText
             },
         ] as BottomBarItem[]
-    }, [onPressShareImage, idNumber, onPressNext, onPressRandom, onPressShareText])
+    }, [idNumber, onPressNext, onPressRandom, onPressShareText])
 
     // for load data first time
 
@@ -306,22 +306,22 @@ const TopMovieScreen = () => {
                     {
                         handling ?
                             <View style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
-                                <ActivityIndicator color={theme.counterPrimary} style={{ marginRight: Outline.Horizontal }} />
+                                <ActivityIndicator color={theme.counterBackground} style={{ marginRight: Outline.Horizontal }} />
                             </View> :
                             <View style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
                                 {
                                     reasonToReload.current !== NeedReloadReason.None ?
                                         <TouchableOpacity onPress={() => onPressNext(-1, 'none')} style={[{ gap: Outline.GapVertical }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]} >
-                                            <MaterialCommunityIcons name={reasonToReload.current === NeedReloadReason.NoInternet ? Icon.NoInternet : Icon.HeartBroken} color={theme.primary} size={Size.IconBig} />
-                                            <Text style={{ fontSize: FontSize.Normal, color: theme.counterPrimary }}>{reasonToReload.current === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
-                                            <Text style={{ fontSize: FontSize.Small_L, color: theme.counterPrimary }}>{LocalText.tap_to_retry}</Text>
+                                            <MaterialCommunityIcons name={reasonToReload.current === NeedReloadReason.NoInternet ? Icon.NoInternet : Icon.HeartBroken} color={theme.counterBackground} size={Size.IconMedium} />
+                                            <Text style={{ fontSize: FontSize.Normal, color: theme.counterBackground }}>{reasonToReload.current === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
+                                            <Text style={{ fontSize: FontSize.Small_L, color: theme.counterBackground }}>{LocalText.tap_to_retry}</Text>
                                         </TouchableOpacity>
                                         :
                                         <View onTouchStart={onBigViewStartTouch} onTouchEnd={onBigViewEndTouch} style={styleSheet.contentView}>
                                             <View onTouchEnd={() => setIsShowList(true)} style={[styleSheet.titleContainerView, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
                                                 <Text style={[{ color: theme.counterBackground, }, styleSheet.titleText]}>{selectingItem?.title}</Text>
                                                 <View style={styleSheet.showListIconView}>
-                                                    <MaterialCommunityIcons name={Icon.List} color={theme.counterPrimary} size={Size.Icon} />
+                                                    <MaterialCommunityIcons name={Icon.List} color={theme.counterBackground} size={Size.Icon} />
                                                 </View>
                                             </View>
                                             <Animated.View style={[{ transform: [{ scale: mediaViewScaleAnimRef }] }]}>
