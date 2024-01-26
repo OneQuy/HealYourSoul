@@ -207,7 +207,7 @@ const TheRandomImage = ({
                     handling ?
                         // true ?
                         <View style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
-                            <ActivityIndicator color={theme.counterPrimary} style={{ marginRight: Outline.Horizontal }} />
+                            <ActivityIndicator color={theme.counterBackground} style={{ marginRight: Outline.Horizontal }} />
                         </View> :
                         <View style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
                             {

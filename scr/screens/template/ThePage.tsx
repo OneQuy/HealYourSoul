@@ -708,7 +708,7 @@ const ThePage = ({ category }: ThePageProps) => {
                 )
                 :
                 () => (
-                    <ActivityIndicator color={theme.counterPrimary} style={style.headerOptionTO} />
+                    <ActivityIndicator color={theme.counterBackground} style={style.headerOptionTO} />
                 )
         });
     }, [handling, theme, onPressHeaderOption]);
