@@ -218,9 +218,9 @@ const WikipediaScreen = () => {
                 icon: Icon.ShareImage
             },
             {
-                text: showFull ? '' : LocalText.read_full,
-                onPress: onPressInAppWeb,
-                icon: showFull ? Icon.X : Icon.Book
+                text: LocalText.copy,
+                onPress: onPressCopy,
+                icon: Icon.Copy,
             },
             {
                 text: LocalText.random,
@@ -228,9 +228,9 @@ const WikipediaScreen = () => {
                 icon: Icon.Dice,
             },
             {
-                text: LocalText.copy,
-                onPress: onPressCopy,
-                icon: Icon.Copy,
+                text: showFull ? LocalText.close : LocalText.read_full,
+                onPress: onPressInAppWeb,
+                icon: showFull ? Icon.X : Icon.Eye
             },
             {
                 text: LocalText.share,
