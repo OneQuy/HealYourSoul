@@ -366,9 +366,6 @@ export default TopMovieScreen
 
 const styleSheet = StyleSheet.create({
     masterView: { paddingBottom: Outline.Horizontal, flex: 1, gap: Outline.GapVertical, },
-    mainButtonsView: { gap: Outline.GapHorizontal, marginHorizontal: Outline.GapVertical_2, flexDirection: 'row' },
-    mainBtnTO: { paddingVertical: Outline.GapVertical, flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', },
-    subBtnTO: { justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', },
     headerOptionTO: { marginRight: 15 },
     image: { width: widthPercentageToDP(100), height: heightPercentageToDP(40) },
     contentView: { flex: 1, gap: Outline.GapVertical, paddingTop: Outline.GapHorizontal },

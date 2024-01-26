@@ -30,6 +30,7 @@ import { track_PressFavorite, track_PressNextPost, track_PressRandom, track_Simp
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import FavoriteButton from '../others/FavoriteButton';
+import BottomBar, { BottomBarItem } from '../others/BottomBar';
 
 const category = Category.BestShortFilms
 const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Fshort_films.json?alt=media&token=537eec8b-f774-4908-a5fa-45f8daf676d8'
@@ -211,35 +212,35 @@ const BestShortFilmsScreen = () => {
             })
     }, [selectingItem, theme])
 
-    const onPressShareImage = useCallback(() => {
-        if (!selectingItem)
-            return
+    // const onPressShareImage = useCallback(() => {
+    //     if (!selectingItem)
+    //         return
 
-        track_SimpleWithCat(category, 'share_as_image')
+    //     track_SimpleWithCat(category, 'share_as_image')
 
-        const message =
-            selectingItem.name +
-            (selectingItem.author ? ' (' + selectingItem.author + '): ' : ': ') +
-            selectingItem.desc + '\n\n' +
-            selectingItem.url
+    //     const message =
+    //         selectingItem.name +
+    //         (selectingItem.author ? ' (' + selectingItem.author + '): ' : ': ') +
+    //         selectingItem.desc + '\n\n' +
+    //         selectingItem.url
 
-        console.log(message);
+    //     console.log(message);
 
-        // @ts-ignore
-        viewShotRef.current.capture().then(async (uri: string) => {
-            Share
-                .open({
-                    message,
-                    url: uri,
-                })
-                .catch((err) => {
-                    const error = ToCanPrint(err)
+    //     // @ts-ignore
+    //     viewShotRef.current.capture().then(async (uri: string) => {
+    //         Share
+    //             .open({
+    //                 message,
+    //                 url: uri,
+    //             })
+    //             .catch((err) => {
+    //                 const error = ToCanPrint(err)
 
-                    if (!error.includes('User did not share'))
-                        Alert.alert('Fail', error)
-                });
-        })
-    }, [selectingItem, theme])
+    //                 if (!error.includes('User did not share'))
+    //                     Alert.alert('Fail', error)
+    //             });
+    //     })
+    // }, [selectingItem, theme])
 
     const onLongPressed = useCallback(() => {
         console.log('long pressed');
@@ -259,6 +260,39 @@ const BestShortFilmsScreen = () => {
     }, [onPressNext])
 
     const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(onTapCounted, onLongPressed, onSwiped)
+
+    const bottomBarItems = useMemo(() => {
+        return [
+            {
+                text: showFull ? LocalText.close : LocalText.view,
+                onPress: onPressInAppWeb,
+                icon: showFull ? Icon.X : Icon.Eye
+            },
+            {
+                text: LocalText.random,
+                onPress: onPressRandom,
+                icon: Icon.Dice,
+            },
+            {
+                favoriteBtn: {
+                    callbackRef: favoriteCallbackRef,
+                    id: idCurrent,
+                    category,
+                }
+            },
+            {
+                text: LocalText.next,
+                onPress: () => onPressNext(-1, 'next'),
+                icon: Icon.Right,
+                scaleIcon: 1.5,
+            },
+            {
+                text: LocalText.share,
+                onPress: onPressShareText,
+                icon: Icon.ShareText
+            },
+        ] as BottomBarItem[]
+    }, [idCurrent, showFull, onPressNext, onPressRandom, onPressShareText])
 
     // for load data first time
 
@@ -308,15 +342,15 @@ const BestShortFilmsScreen = () => {
                     {
                         handling ?
                             <View style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
-                                <ActivityIndicator color={theme.counterPrimary} style={{ marginRight: Outline.Horizontal }} />
+                                <ActivityIndicator color={theme.counterBackground} style={{ marginRight: Outline.Horizontal }} />
                             </View> :
                             <View style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
                                 {
                                     reasonToReload.current !== NeedReloadReason.None ?
                                         <TouchableOpacity onPress={() => onPressNext(-1, 'none')} style={[{ gap: Outline.GapVertical }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]} >
-                                            <MaterialCommunityIcons name={reasonToReload.current === NeedReloadReason.NoInternet ? Icon.NoInternet : Icon.HeartBroken} color={theme.primary} size={Size.IconBig} />
-                                            <Text style={{ fontSize: FontSize.Normal, color: theme.counterPrimary }}>{reasonToReload.current === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
-                                            <Text style={{ fontSize: FontSize.Small_L, color: theme.counterPrimary }}>{LocalText.tap_to_retry}</Text>
+                                            <MaterialCommunityIcons name={reasonToReload.current === NeedReloadReason.NoInternet ? Icon.NoInternet : Icon.HeartBroken} color={theme.counterBackground} size={Size.IconMedium} />
+                                            <Text style={{ fontSize: FontSize.Normal, color: theme.counterBackground }}>{reasonToReload.current === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
+                                            <Text style={{ fontSize: FontSize.Small_L, color: theme.counterBackground }}>{LocalText.tap_to_retry}</Text>
                                         </TouchableOpacity>
                                         :
                                         <View onTouchStart={onBigViewStartTouch} onTouchEnd={onBigViewEndTouch} style={styleSheet.contentView}>
@@ -354,40 +388,10 @@ const BestShortFilmsScreen = () => {
                     }
                 </View>
             </ViewShot>
-            {/* main btn */}
-            <View style={styleSheet.mainButtonsView}>
-                <FavoriteButton callbackRef={favoriteCallbackRef} id={idCurrent} category={category} />
-                <TouchableOpacity onPress={onPressRandom} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
-                    <MaterialCommunityIcons name={Icon.Dice} color={theme.counterPrimary} size={Size.Icon} />
-                    {/* <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{LocalText.random}</Text> */}
-                </TouchableOpacity>
-                <TouchableOpacity onPress={onPressInAppWeb} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
-                    <MaterialCommunityIcons name={showFull ? Icon.X : Icon.Eye} color={theme.counterPrimary} size={Size.Icon} />
-                    {/* <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{showFull ? '' : LocalText.read_full}</Text> */}
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => onPressNext(-1, 'next')} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
-                    <MaterialCommunityIcons name={Icon.Right} color={theme.counterPrimary} size={Size.Icon} />
-                    {/* <Text style={{ color: theme.text, fontSize: FontSize.Normal }}>{LocalText.next}</Text> */}
-                </TouchableOpacity>
-            </View>
-            {/* sub btns */}
-            <View style={[{ gap: Outline.GapHorizontal }, CommonStyles.row_width100Percent]}>
-                <TouchableOpacity onPress={onPressShareText} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }, styleSheet.subBtnTO]}>
-                    <MaterialCommunityIcons name={Icon.ShareText} color={theme.counterPrimary} size={Size.IconSmaller} />
-                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Small_L }}>{LocalText.share}</Text>
-                </TouchableOpacity>
 
-                <TouchableOpacity onPress={onPressOpenYoutubeApp} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }, styleSheet.subBtnTO]}>
-                    <MaterialCommunityIcons name={Icon.Youtube} color={theme.counterPrimary} size={Size.IconSmaller} />
-                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Small_L }}>{LocalText.open_youtube}</Text>
-                </TouchableOpacity>
+            {/* main btn part */}
+            <BottomBar items={bottomBarItems} />
 
-                <TouchableOpacity onPress={onPressShareImage} style={[styleSheet.subBtnTO, { gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }]}>
-                    <MaterialCommunityIcons name={Icon.ShareImage} color={theme.counterPrimary} size={Size.IconSmaller} />
-                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Small_L }}>{LocalText.share_image}</Text>
-                </TouchableOpacity>
-
-            </View>
             {
                 isShowList && Array.isArray(shortFilms) ? <ListMovie getSelectingIdAsync={getSelectingIdxAsync} setIdx={(idx: number) => onPressNext(idx, 'menu')} list={shortFilms} /> : undefined
             }
@@ -402,9 +406,6 @@ export default BestShortFilmsScreen
 
 const styleSheet = StyleSheet.create({
     masterView: { paddingBottom: Outline.Horizontal, flex: 1, gap: Outline.GapVertical, },
-    mainButtonsView: { gap: Outline.GapHorizontal, marginHorizontal: Outline.GapVertical_2, flexDirection: 'row' },
-    mainBtnTO: { paddingVertical: Outline.GapVertical, flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', },
-    subBtnTO: { justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', },
     headerOptionTO: { marginRight: 15 },
     image: { width: widthPercentageToDP(100), height: heightPercentageToDP(40) },
     contentView: { flex: 1, gap: Outline.GapVertical, paddingTop: Outline.GapHorizontal },
