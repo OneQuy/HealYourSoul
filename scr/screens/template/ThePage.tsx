@@ -750,7 +750,7 @@ const ThePage = ({ category }: ThePageProps) => {
     const bottomBarItems = useMemo(() => {
         return [
             {
-                text: LocalText.share,
+                text: LocalText.share_image,
                 onPress: onPressShareImage,
                 icon: Icon.ShareImage
             },
