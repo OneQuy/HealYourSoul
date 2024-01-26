@@ -741,10 +741,17 @@ const ThePage = ({ category }: ThePageProps) => {
             mainBtnsView: { borderRadius: BorderRadius.BR8, paddingVertical: Outline.GapVertical_2, marginHorizontal: Outline.GapVertical, backgroundColor: theme.primary, flexDirection: 'row', justifyContent: 'space-between', },
             mainBtnTxt: { color: theme.text, fontSize: FontSize.Small },
             naviScale: { transform: [{ scale: 1.3 }] },
+            authorView: { paddingHorizontal: Outline.Horizontal, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' },
+            authorText: { flex: 1, fontSize: FontSize.Small, color: theme.primary },
+            authorCopyTO: { marginLeft: Outline.Horizontal, justifyContent: 'center', alignItems: 'center' },
+            titleTxt: { marginHorizontal: Outline.Horizontal, marginTop: Outline.GapHorizontal, textAlignVertical: 'center', fontSize: FontSize.Normal, color: theme.primary },
         })
     }, [theme])
 
     // main render
+
+    // if(post.current)
+    //     post.current.title = 'hihihi'
 
     return (
         // master view
@@ -758,12 +765,10 @@ const ThePage = ({ category }: ThePageProps) => {
             }
 
             {/* title */}
-            <View style={{ paddingHorizontal: Outline.Horizontal, paddingTop: 0 }}>
-                {
-                    post.current === null || !post.current.title ? null :
-                        <Text numberOfLines={3} style={{ textAlignVertical: 'center', fontSize: FontSize.Normal, color: theme.text }}>{post.current.title}</Text>
-                }
-            </View>
+            {
+                post.current === null || !post.current.title ? null :
+                    <Text numberOfLines={3} style={style.titleTxt}>{post.current.title}</Text>
+            }
 
             {/* media view */}
             {
@@ -868,12 +873,14 @@ const ThePage = ({ category }: ThePageProps) => {
             }
 
             {/* credit author */}
-            <View style={{ paddingHorizontal: Outline.Horizontal, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
-                <Text numberOfLines={1} style={{ flex: 1, fontSize: FontSize.Small, color: theme.text }}>{hasCredit ? post.current?.author : LocalText.credit_to_author}</Text>
+            <View style={style.authorView}>
+                {/* author text */}
+                <Text numberOfLines={1} style={style.authorText}>{hasCredit ? post.current?.author : LocalText.credit_to_author}</Text>
+                {/* copy btn */}
                 {
                     !hasCredit ? undefined :
-                        <TouchableOpacity onPress={() => onPressCopy(post.current?.author)} style={{ marginLeft: Outline.Horizontal, justifyContent: 'center', alignItems: 'center' }} >
-                            <MaterialIcons name={Icon.Copy} color={theme.counterPrimary} size={Size.IconSmaller} />
+                        <TouchableOpacity onPress={() => onPressCopy(post.current?.author)} style={style.authorCopyTO} >
+                            <MaterialIcons name={Icon.Copy} color={theme.primary} size={Size.IconSmaller} />
                         </TouchableOpacity>
                 }
             </View>
