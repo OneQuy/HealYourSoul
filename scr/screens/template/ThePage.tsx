@@ -846,7 +846,7 @@ const ThePage = ({ category }: ThePageProps) => {
                                             {...videoBarPanResponder.panHandlers}
                                             style={{ flex: 1, flexDirection: 'row', height: '100%', marginHorizontal: Outline.Horizontal, }}>
                                             {/* bar bg */}
-                                            <View style={{ width: '100%', height: 3, borderRadius: 5, alignSelf: 'center', backgroundColor: 'white', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
+                                            <View style={{ width: '100%', height: 3, borderRadius: 5, alignSelf: 'center', backgroundColor: theme.counterPrimary, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
                                                 {/* bar */}
                                                 <Animated.View style={[{
                                                     width: videoBarPercent.interpolate({
@@ -858,7 +858,7 @@ const ThePage = ({ category }: ThePageProps) => {
                                                     backgroundColor: 'black'
                                                 }]} />
                                                 {/* numb */}
-                                                <Animated.View pointerEvents={'none'} style={[{ transform: [{ translateX: videoNumbPosX }] }, { position: 'absolute', width: videoNumbSize, height: videoNumbSize, borderRadius: videoNumbSize / 2, backgroundColor: 'black' }]} />
+                                                <Animated.View pointerEvents={'none'} style={[{ transform: [{ translateX: videoNumbPosX }] }, { position: 'absolute', width: videoNumbSize, height: videoNumbSize, borderRadius: videoNumbSize / 2, backgroundColor: theme.counterPrimary }]} />
                                             </View>
                                         </View>
                                         {/* time remain text */}

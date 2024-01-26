@@ -14,11 +14,11 @@ export type ThemeType = keyof typeof themes;
 
 export const themes = {
     black: {
-        background: '#fff',
-        counterBackground: '#000',
+        background: '#ffffff',
+        counterBackground: '#000000',
 
-        primary: '#000',
-        counterPrimary: '#fff',
+        primary: '#000000',
+        counterPrimary: '#ffffff',
     } as ThemeColor,
 
     // dark: {
