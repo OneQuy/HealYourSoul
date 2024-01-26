@@ -737,7 +737,9 @@ const ThePage = ({ category }: ThePageProps) => {
         return StyleSheet.create({
             flex1: { flex: 1 },
             headerOptionTO: { marginRight: 15 },
-            subBtnTO: { justifyContent: 'center', flexDirection: 'row', flex: 1, alignItems: 'center', },
+            subBtnTO: { justifyContent: 'center', flex: 1, alignItems: 'center', gap: Outline.GapVertical },
+            mainBtnsView: { borderRadius: BorderRadius.BR8, paddingVertical: Outline.GapVertical_2, marginHorizontal: Outline.GapVertical, backgroundColor: theme.primary, flexDirection: 'row', justifyContent: 'space-between', },
+            mainBtnTxt: { color: theme.text, fontSize: FontSize.Small },
         })
     }, [theme])
 
@@ -886,29 +888,29 @@ const ThePage = ({ category }: ThePageProps) => {
                     </View>
             }
 
-            {/* navi part */}
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: Outline.Horizontal, gap: Outline.GapHorizontal }}>
+            {/* main btn part */}
+            <View style={style.mainBtnsView}>
+                {/* favorite */}
                 <FavoriteButton callbackRef={favoriteCallbackRef} id={post.current?.id} category={category} />
-                {
-                    !activePreviousPostButton ? undefined :
-                        <TouchableOpacity onPress={() => onPressNextPost(false, true)} style={{ borderRadius: BorderRadius.BR8, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
-                            <MaterialIcons name={Icon.Left} color={theme.counterPrimary} size={Size.Icon} />
-                        </TouchableOpacity>
-                }
-                <TouchableOpacity onPress={() => onPressNextPost(true, true)} style={{ borderRadius: BorderRadius.BR8, paddingVertical: Outline.VerticalMini, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
+                {/* previous */}
+                <TouchableOpacity onPress={() => onPressNextPost(false, true)} style={[style.subBtnTO]}>
+                    <MaterialIcons name={Icon.Left} color={theme.counterPrimary} size={Size.Icon} />
+                    <Text style={style.mainBtnTxt}>{LocalText.previous}</Text>
+                </TouchableOpacity>
+                {/* next */}
+                <TouchableOpacity onPress={() => onPressNextPost(true, true)} style={[style.subBtnTO]}>
                     <MaterialIcons name={Icon.Right} color={theme.counterPrimary} size={Size.Icon} />
+                    <Text style={style.mainBtnTxt}>{LocalText.next}</Text>
                 </TouchableOpacity>
-            </View>
-
-            {/* menu part */}
-            <View style={[{ gap: Outline.GapHorizontal }, CommonStyles.row_width100Percent]}>
-                <TouchableOpacity onPress={onPressDownloadMedia} style={[style.subBtnTO, { flex: 1.5, gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }]}>
-                    <MaterialCommunityIcons name={Icon.Download} color={theme.counterPrimary} size={Size.IconSmaller} />
-                    <Text style={{ color: theme.text, fontSize: FontSize.Small_L }}>{LocalText.save}</Text>
+                {/* download */}
+                <TouchableOpacity onPress={onPressDownloadMedia} style={[style.subBtnTO]}>
+                    <MaterialCommunityIcons name={Icon.Download} color={theme.counterPrimary} size={Size.Icon} />
+                    <Text style={style.mainBtnTxt}>{LocalText.save}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={onPressShareImage} style={[style.subBtnTO, { flex: 1.5, gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }]}>
-                    <MaterialCommunityIcons name={Icon.ShareImage} color={theme.counterPrimary} size={Size.IconSmaller} />
-                    <Text style={{ color: theme.text, fontSize: FontSize.Small_L }}>{LocalText.share}</Text>
+                {/* share */}
+                <TouchableOpacity onPress={onPressShareImage} style={[style.subBtnTO]}>
+                    <MaterialCommunityIcons name={Icon.ShareImage} color={theme.counterPrimary} size={Size.Icon} />
+                    <Text style={style.mainBtnTxt}>{LocalText.share}</Text>
                 </TouchableOpacity>
             </View>
 

@@ -14,9 +14,9 @@ export type ThemeType = keyof typeof themes;
 export const themes = {
     yellow: {
         background: '#fff',
-        primary: '#fff39c',
-        counterPrimary: '#000',
-        text: '#000000',
+        primary: '#000',
+        counterPrimary: '#ffffff',
+        text: '#ffffff',
     } as ThemeColor,
     
     dark: {

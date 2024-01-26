@@ -246,6 +246,7 @@ export const LocalText = {
   share_image: 'Share Image',
   random: 'Random',
   next: 'Next',
+  previous: 'Previous',
   read_full: 'Read Full',
   go: 'Go!',
   saved: 'Saved!',
