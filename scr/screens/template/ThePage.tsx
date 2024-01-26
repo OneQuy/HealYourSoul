@@ -890,13 +890,18 @@ const ThePage = ({ category }: ThePageProps) => {
 
             {/* main btn part */}
             <View style={style.mainBtnsView}>
-                {/* favorite */}
-                <FavoriteButton callbackRef={favoriteCallbackRef} id={post.current?.id} category={category} />
+                {/* share */}
+                <TouchableOpacity onPress={onPressShareImage} style={[style.subBtnTO]}>
+                    <MaterialCommunityIcons name={Icon.ShareImage} color={theme.counterPrimary} size={Size.Icon} />
+                    <Text style={style.mainBtnTxt}>{LocalText.share}</Text>
+                </TouchableOpacity>
                 {/* previous */}
                 <TouchableOpacity onPress={() => onPressNextPost(false, true)} style={[style.subBtnTO]}>
                     <MaterialIcons name={Icon.Left} color={theme.counterPrimary} size={Size.Icon} />
                     <Text style={style.mainBtnTxt}>{LocalText.previous}</Text>
                 </TouchableOpacity>
+                {/* favorite */}
+                <FavoriteButton callbackRef={favoriteCallbackRef} id={post.current?.id} category={category} />
                 {/* next */}
                 <TouchableOpacity onPress={() => onPressNextPost(true, true)} style={[style.subBtnTO]}>
                     <MaterialIcons name={Icon.Right} color={theme.counterPrimary} size={Size.Icon} />
@@ -906,11 +911,6 @@ const ThePage = ({ category }: ThePageProps) => {
                 <TouchableOpacity onPress={onPressDownloadMedia} style={[style.subBtnTO]}>
                     <MaterialCommunityIcons name={Icon.Download} color={theme.counterPrimary} size={Size.Icon} />
                     <Text style={style.mainBtnTxt}>{LocalText.save}</Text>
-                </TouchableOpacity>
-                {/* share */}
-                <TouchableOpacity onPress={onPressShareImage} style={[style.subBtnTO]}>
-                    <MaterialCommunityIcons name={Icon.ShareImage} color={theme.counterPrimary} size={Size.Icon} />
-                    <Text style={style.mainBtnTxt}>{LocalText.share}</Text>
                 </TouchableOpacity>
             </View>
 
