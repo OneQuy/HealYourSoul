@@ -23,8 +23,8 @@ const BestShortFilms = ({ list, setIdx, getSelectingIdAsync: getSelectingIdxAsyn
         const isSelecting = index === selectIdx
         
         return <TouchableOpacity onPress={() => setIdx(index)} style={[{ backgroundColor: isSelecting ? theme.primary : undefined, borderRadius: isSelecting ? BorderRadius.BR8 : 0, borderWidth: isSelecting ? 1 : 0 }, styleSheet.itemTO]}>
-            <ImageBackgroundWithLoading source={{ uri: item.img }} resizeMode='cover' style={styleSheet.image} />
-            <Text style={[styleSheet.text, { color: theme.counterBackground }]}>{item.name}</Text>
+            <ImageBackgroundWithLoading indicatorProps={{ color: theme.counterBackground }} source={{ uri: item.img }} resizeMode='cover' style={styleSheet.image} />
+            <Text style={[styleSheet.text, { color: isSelecting ? theme.counterPrimary : theme.counterBackground }]}>{item.name}</Text>
         </TouchableOpacity>
     }, [selectIdx, theme])
 

@@ -357,7 +357,7 @@ const BestShortFilmsScreen = () => {
                                             <View onTouchEnd={() => setIsShowList(true)} style={[styleSheet.nameContainerView, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
                                                 <Text style={[{ color: theme.counterBackground, }, styleSheet.nameText]}>{selectingItem?.name}</Text>
                                                 <View style={styleSheet.showListIconView}>
-                                                    <MaterialCommunityIcons name={Icon.List} color={theme.counterPrimary} size={Size.Icon} />
+                                                    <MaterialCommunityIcons name={Icon.List} color={theme.counterBackground} size={Size.Icon} />
                                                 </View>
                                             </View>
                                             <Animated.View style={[{ transform: [{ scale: mediaViewScaleAnimRef }] }]}>
