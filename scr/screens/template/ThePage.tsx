@@ -737,9 +737,9 @@ const ThePage = ({ category }: ThePageProps) => {
         return StyleSheet.create({
             flex1: { flex: 1 },
             headerOptionTO: { marginRight: 15 },
-            subBtnTO: { justifyContent: 'center', flex: 1, alignItems: 'center', gap: Outline.GapVertical },
+            mainBtnsTO: { justifyContent: 'center', flex: 1, alignItems: 'center', gap: Outline.GapVertical },
             mainBtnsView: { borderRadius: BorderRadius.BR8, paddingVertical: Outline.GapVertical_2, marginHorizontal: Outline.GapVertical, backgroundColor: theme.primary, flexDirection: 'row', justifyContent: 'space-between', },
-            mainBtnTxt: { color: theme.counterBackground, fontSize: FontSize.Small },
+            mainBtnTxt: { color: theme.counterPrimary, fontSize: FontSize.Small },
             naviScale: { transform: [{ scale: 1.3 }] },
             authorView: { paddingHorizontal: Outline.Horizontal, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' },
             authorText: { flex: 1, fontSize: FontSize.Small, color: theme.primary },
@@ -899,12 +899,12 @@ const ThePage = ({ category }: ThePageProps) => {
             {/* main btn part */}
             <View style={style.mainBtnsView}>
                 {/* share */}
-                <TouchableOpacity onPress={onPressShareImage} style={[style.subBtnTO]}>
+                <TouchableOpacity onPress={onPressShareImage} style={[style.mainBtnsTO]}>
                     <MaterialCommunityIcons name={Icon.ShareImage} color={theme.counterPrimary} size={Size.Icon} />
                     <Text style={style.mainBtnTxt}>{LocalText.share}</Text>
                 </TouchableOpacity>
                 {/* previous */}
-                <TouchableOpacity onPress={() => onPressNextPost(false, true)} style={[style.subBtnTO]}>
+                <TouchableOpacity onPress={() => onPressNextPost(false, true)} style={[style.mainBtnsTO]}>
                     <View style={style.naviScale}>
                         <MaterialCommunityIcons name={Icon.Left} color={theme.counterPrimary} size={Size.Icon} />
                     </View>
@@ -913,14 +913,14 @@ const ThePage = ({ category }: ThePageProps) => {
                 {/* favorite */}
                 <FavoriteButton callbackRef={favoriteCallbackRef} id={post.current?.id} category={category} />
                 {/* next */}
-                <TouchableOpacity onPress={() => onPressNextPost(true, true)} style={[style.subBtnTO]}>
+                <TouchableOpacity onPress={() => onPressNextPost(true, true)} style={[style.mainBtnsTO]}>
                     <View style={style.naviScale}>
                         <MaterialCommunityIcons name={Icon.Right} color={theme.counterPrimary} size={Size.Icon} />
                     </View>
                     <Text style={style.mainBtnTxt}>{LocalText.next}</Text>
                 </TouchableOpacity>
                 {/* download */}
-                <TouchableOpacity onPress={onPressDownloadMedia} style={[style.subBtnTO]}>
+                <TouchableOpacity onPress={onPressDownloadMedia} style={[style.mainBtnsTO]}>
                     <MaterialCommunityIcons name={Icon.Download} color={theme.counterPrimary} size={Size.Icon} />
                     <Text style={style.mainBtnTxt}>{LocalText.save}</Text>
                 </TouchableOpacity>
