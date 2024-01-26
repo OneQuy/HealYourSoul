@@ -34,6 +34,7 @@ import { track_PressFavorite, track_PressNextPost, track_SimpleWithCat } from '.
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import FavoriteButton from '../others/FavoriteButton';
+import BottomBar, { BottomBarItem } from '../others/BottomBar';
 
 const category = Category.FunWebsites
 const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Ffun_websites.json?alt=media&token=10ecb626-e576-49d4-b124-a9ba148a93a6'
@@ -213,6 +214,44 @@ const FunWebsitesScreen = () => {
 
     const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(onTapCounted, onLongPressed, onSwiped)
 
+    const bottomBarItems = useMemo(() => {
+        return [
+            {
+                text: LocalText.share_image,
+                onPress: onPressShareImage,
+                icon: Icon.ShareImage
+            },
+            {
+                text: showFull ? '' : LocalText.go,
+                onPress: onPressInAppWeb,
+                icon: showFull ? Icon.X : Icon.Eye,
+            },
+            {
+                favoriteBtn: {
+                    callbackRef: favoriteCallbackRef,
+                    id: selectingItem?.id,
+                    category,
+                }
+            },
+            {
+                text: LocalText.next,
+                onPress: () => onPressNext(-1, 'next'),
+                icon: Icon.Right,
+                scaleIcon: 1.5,
+            },
+            {
+                text: LocalText.copy,
+                onPress: onPressCopy,
+                icon: Icon.Copy
+            },
+            {
+                text: LocalText.share,
+                onPress: onPressShareText,
+                icon: Icon.ShareText
+            },
+        ] as BottomBarItem[]
+    }, [onPressShareImage, showFull, onPressInAppWeb, selectingItem?.id, onPressNext, onPressCopy, onPressShareText])
+
     // for load data first time
 
     useEffect(() => {
@@ -311,36 +350,10 @@ const FunWebsitesScreen = () => {
                     }
                 </View>
             </ViewShot>
-            {/* main btn */}
-            <View style={styleSheet.mainButtonsView}>
-                <FavoriteButton callbackRef={favoriteCallbackRef} id={selectingItem?.id} category={category} />
-                <TouchableOpacity onPress={onPressInAppWeb} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
-                    <MaterialCommunityIcons name={showFull ? Icon.X : Icon.Eye} color={theme.counterPrimary} size={Size.Icon} />
-                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Normal }}>{showFull ? '' : LocalText.go}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => onPressNext(-1, 'next')} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, backgroundColor: theme.primary, }, styleSheet.mainBtnTO]}>
-                    <MaterialCommunityIcons name={Icon.Right} color={theme.counterPrimary} size={Size.Icon} />
-                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Normal }}>{LocalText.next}</Text>
-                </TouchableOpacity>
-            </View>
-            {/* sub btns */}
-            <View style={[{ gap: Outline.GapHorizontal }, CommonStyles.row_width100Percent]}>
-                <TouchableOpacity onPress={onPressCopy} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }, styleSheet.subBtnTO]}>
-                    <MaterialIcons name={Icon.Copy} color={theme.counterPrimary} size={Size.IconSmaller} />
-                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Small_L }}>{LocalText.copy}</Text>
-                </TouchableOpacity>
 
-                <TouchableOpacity onPress={onPressShareText} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }, styleSheet.subBtnTO]}>
-                    <MaterialCommunityIcons name={Icon.ShareText} color={theme.counterPrimary} size={Size.IconSmaller} />
-                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Small_L }}>{LocalText.share}</Text>
-                </TouchableOpacity>
+            {/* main btn part */}
+            <BottomBar items={bottomBarItems} />
 
-                <TouchableOpacity onPress={onPressShareImage} style={[styleSheet.subBtnTO, { flex: 1.5, gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8 }]}>
-                    <MaterialCommunityIcons name={Icon.ShareImage} color={theme.counterPrimary} size={Size.IconSmaller} />
-                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Small_L }}>{LocalText.share_image}</Text>
-                </TouchableOpacity>
-
-            </View>
             {
                 isShowList && Array.isArray(funWebsites) ? <ListWebsite getSelectingIdAsync={getSelectingIdAsync} setIdx={(idx: number) => onPressNext(idx, 'menu')} list={funWebsites} /> : undefined
             }
