@@ -389,6 +389,11 @@ const BestShortFilmsScreen = () => {
                 </View>
             </ViewShot>
 
+            <TouchableOpacity onPress={onPressOpenYoutubeApp} style={styleSheet.openYtb}>
+                <MaterialCommunityIcons name={Icon.Youtube} color={theme.counterBackground} size={Size.IconSmaller} />
+                <Text style={{ color: theme.counterBackground, fontSize: FontSize.Small_L }}>{LocalText.open_youtube}</Text>
+            </TouchableOpacity>
+
             {/* main btn part */}
             <BottomBar items={bottomBarItems} />
 
@@ -416,4 +421,5 @@ const styleSheet = StyleSheet.create({
     nameText: { marginLeft: widthPercentageToDP(12), flex: 1, textAlign: 'center', fontSize: FontSize.Normal },
     nameContainerView: { paddingHorizontal: Outline.GapVertical, flexDirection: 'row', gap: Outline.GapHorizontal },
     showListIconView: { padding: Outline.GapHorizontal, borderWidth: StyleSheet.hairlineWidth, borderRadius: BorderRadius.BR8 },
+    openYtb: { marginLeft: Outline.VerticalMini, gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, flexDirection: 'row' },
 })
