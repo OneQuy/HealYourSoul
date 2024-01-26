@@ -216,7 +216,7 @@ const TheRandomImage = ({
             <View style={{ marginHorizontal: Outline.GapVertical_2 }}>
                 <TouchableOpacity onPress={() => onPressRandom(true)} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, padding: Outline.GapVertical_2, backgroundColor: theme.primary, }, styleSheet.randomTO]}>
                     <MaterialCommunityIcons name={Icon.Dice} color={theme.counterPrimary} size={Size.Icon} />
-                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Normal }}>{LocalText.random}</Text>
+                    <Text style={{ color: theme.counterPrimary, fontSize: FontSize.Normal }}>{LocalText.random}</Text>
                 </TouchableOpacity>
             </View>
             <View style={[{ marginBottom: Outline.GapVertical, gap: Outline.GapHorizontal }, CommonStyles.row_width100Percent]}>
