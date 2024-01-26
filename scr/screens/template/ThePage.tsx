@@ -700,7 +700,7 @@ const ThePage = ({ category }: ThePageProps) => {
             headerRight: !handling ?
                 () => (
                     <TouchableOpacity onPress={onPressHeaderOption} style={style.headerOptionTO}>
-                        <MaterialCommunityIcons name={Icon.ThreeDots} color={theme.counterPrimary} size={Size.Icon} />
+                        <MaterialCommunityIcons name={Icon.ThreeDots} color={theme.primary} size={Size.Icon} />
                     </TouchableOpacity>
                 )
                 :
