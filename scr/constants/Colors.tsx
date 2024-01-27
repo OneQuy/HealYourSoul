@@ -13,36 +13,24 @@ export const defaultThemeType: ThemeType = 'black';
 export type ThemeType = keyof typeof themes;
 
 export const themes = {
-    bflack: {
+    black: {
         background: '#ffffff',
         counterBackground: '#000000',
 
         primary: '#000000',
         counterPrimary: '#ffffff',
     } as ThemeColor,
-    
-    black: {
+
+    yellow: {
         background: '#fad502',
         counterBackground: '#6800a3',
 
         primary: '#6800a3',
         counterPrimary: '#ffffff',
     } as ThemeColor,
-
-    // yellow: {
-    //     background: '#0d111c',
-    //     counterBackground: '#000000',
-
-    //     primary: '#fff39c',
-    //     counterPrimary: '#000',
-    // } as ThemeColor,
-}
+} as const
 
 export function GetColors(type: ThemeType) {
-    // @ts-ignore
-    if (type === 'yellow')
-        type = 'black'
-
     return themes[type];
 }
 

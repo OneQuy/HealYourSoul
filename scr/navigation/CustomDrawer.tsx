@@ -129,7 +129,6 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
     onPressSetting()
   }, [onPressSetting])
 
-  const colorSetting = isFocusSetting ? theme.counterBackground : theme.primary
   const colorSettingText = isFocusSetting ? theme.background : theme.primary
 
   return (
@@ -201,20 +200,3 @@ const style = StyleSheet.create({
   settingBtnView: { padding: Outline.VerticalMini, borderWidth: StyleSheet.hairlineWidth, borderRadius: BorderRadius.BR8, flexDirection: 'row', gap: Outline.GapHorizontal },
   settingContainer: { flexDirection: 'row', gap: Outline.GapHorizontal, marginRight: Outline.Horizontal },
 })
-
-// const themeValues = useRef(Object.keys(themes));
-//   const pressLogoCountRef = useRef(0)
-//   const dispatch = useAppDispatch();
-//   const currentTheme = useAppSelector((state: RootState) => state.misc.themeType);
-
-//  {/* theme setting */}
-//  <View style={{ flexDirection: 'row', gap: 20 }}>
-//  <Text style={{ color: theme.text, }}>{LocalText.theme}</Text>
-//  {
-//    themeValues.current.map((theme, index) =>
-//      <TouchableOpacity
-//        onPress={() => dispatch(setTheme(theme as ThemeType))}
-//        key={index}
-//        style={{ borderWidth: currentTheme === theme ? 1 : 0, width: 20, height: 20, borderRadius: 10, backgroundColor: themes[theme as ThemeType].primary }} />)
-//  }
-// </View>
