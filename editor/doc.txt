@@ -8,9 +8,11 @@ simple:
 node editor pull
 
 pull all of type:
-node editor cat=draw
+node editor pull cat=cute
+node editor pull cat=meme
+node editor pull cat=sunset
 
-pull from ID to ID:
+pull from ID to ID (?)
 node editor startid=5 cat=quote endid=7
 
 =======================

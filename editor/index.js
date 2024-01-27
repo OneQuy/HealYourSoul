@@ -1,14 +1,23 @@
-const { PullAllAsync } = require("./src/PullData");
+const { PullAllAsync, PullByTypeAsync } = require("./src/PullData");
 const { UploadPostAsync } = require("./src/Push");
 const { GenDataPictureOfTheYear } = require("./src/GeneratePictureOfTheYear")
-const { GenDataTopMovies  } = require("./src/GenTopMovies")
+const { GenDataTopMovies } = require("./src/GenTopMovies")
 const { Tmp } = require("./src/tmp")
-const { LogRed } = require("./src/Utils_NodeJS");
+const { LogRed, LogGreen } = require("./src/Utils_NodeJS");
 const { IsParamExist, GetParam, } = require("./src/common/Utils");
 
 async function JustDoIt() {
-  if (IsParamExist('pull'))
-    await PullAllAsync()
+  if (IsParamExist('pull')) {
+    const cat = GetParam('cat')
+
+    if (cat)
+      PullByTypeAsync(cat)
+    else {
+      LogGreen('starting pull all cat!')
+
+      await PullAllAsync()
+    }
+  }
   else if (IsParamExist('tmp')) {
     Tmp()
   }
@@ -41,6 +50,14 @@ async function JustDoIt() {
       cat = 'art'
     else if (IsParamExist('sarcasm'))
       cat = 'sarcasm'
+    else if (IsParamExist('awesome'))
+      cat = 'awesome'
+    else if (IsParamExist('typo'))
+      cat = 'typo'
+    else if (IsParamExist('info'))
+      cat = 'info'
+    else if (IsParamExist('sunset'))
+      cat = 'sunset'
     else {
       LogRed('no specify the cat to upload');
       return

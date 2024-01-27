@@ -116,4 +116,5 @@ module.exports = {
     PullAllAsync,
     PullFileListAsync,
     GetFirebasePath,
+    PullByTypeAsync
 }
