@@ -13,6 +13,62 @@ export const defaultThemeType: ThemeType = 'white';
 export type ThemeType = keyof typeof themes;
 
 export const themes = {
+    pinkbrown: { // l
+        background: '#6D454C',
+        counterBackground: '#fafafa',
+
+        primary: '#EF709D',
+        counterPrimary: '#1c1c1c',
+    } as ThemeColor,
+
+    blue: { // l
+        background: '#fafafa',
+        counterBackground: '#1c1c1c',
+
+        primary: '#3185FC',
+        counterPrimary: '#fafafa',
+    } as ThemeColor,
+
+    green_dark: { // d
+        background: '#fafafa',
+        counterBackground: '#30321C',
+
+        primary: '#30321C',
+        counterPrimary: '#fafafa',
+    } as ThemeColor,
+
+    gold_light: { // d
+        background: '#fafafa',
+        counterBackground: '#1c1c1c',
+
+        primary: '#F3CA40',
+        counterPrimary: '#1c1c1c',
+    } as ThemeColor,
+
+    gold: { // d
+        background: '#1c1c1c',
+        counterBackground: '#F3CA40',
+
+        primary: '#F3CA40',
+        counterPrimary: '#1c1c1c',
+    } as ThemeColor,
+
+    orange: { // l
+        background: '#EEE2DF',
+        counterBackground: '#1c1c1c',
+
+        primary: '#C97C5D',
+        counterPrimary: '#fafafa',
+    } as ThemeColor,
+
+    purple: { // l
+        background: '#fafafa',
+        counterBackground: '#453750',
+
+        primary: '#453750',
+        counterPrimary: '#fafafa',
+    } as ThemeColor,
+
     yellowgreendark: { // d
         background: '#1c1c1c',
         counterBackground: '#EDEEC9',
