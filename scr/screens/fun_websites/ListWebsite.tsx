@@ -21,13 +21,14 @@ const ListWebsite = ({ list, setIdx, getSelectingIdAsync }: { list: FunWebsite[]
 
     const renderItem = useCallback(({ item, index }: { item: FunWebsite, index: number }) => {
         const isSelecting = index === selectIdx
+        const textColor = isSelecting ? theme.counterPrimary : theme.counterBackground
 
         let urlShort = item.url.replaceAll('https://', '')
         urlShort = urlShort.replaceAll('www.', '')
 
         return <TouchableOpacity onPress={() => setIdx(item.id)} style={[{ backgroundColor: isSelecting ? theme.primary : undefined, borderRadius: isSelecting ? BorderRadius.BR8 : 0, borderWidth: isSelecting ? 1 : 0 }, styleSheet.itemTO]}>
-            <ImageBackgroundWithLoading indicatorProps={{ color: theme.counterBackground }} source={{ uri: item.img }} resizeMode='cover' style={styleSheet.image} />
-            <Text style={[styleSheet.text, { color: isSelecting ? theme.counterPrimary : theme.counterBackground }]}>{urlShort}</Text>
+            <ImageBackgroundWithLoading indicatorProps={{ color: textColor }} source={{ uri: item.img }} resizeMode='cover' style={styleSheet.image} />
+            <Text style={[styleSheet.text, { color: textColor }]}>{urlShort}</Text>
         </TouchableOpacity>
     }, [selectIdx, theme])
 

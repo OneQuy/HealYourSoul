@@ -18,13 +18,13 @@ const ListMovie = ({ list, setIdx, getSelectingIdAsync: getSelectingIdxAsync }: 
     const theme = useContext(ThemeContext);
     const flatlistRef = useRef()
     const [selectIdx, setSelectIdx] = useState(0)
-
     const renderItem = useCallback(({ item, index }: { item: TopMovie, index: number }) => {
         const isSelecting = index === selectIdx
+        const textColor = isSelecting ? theme.counterPrimary : theme.counterBackground
 
         return <TouchableOpacity onPress={() => setIdx(index)} style={[{ backgroundColor: isSelecting ? theme.primary : undefined, borderRadius: isSelecting ? BorderRadius.BR8 : 0, borderWidth: isSelecting ? 1 : 0 }, styleSheet.itemTO]}>
-            <ImageBackgroundWithLoading indicatorProps={{ color: theme.counterBackground }} source={{ uri: item.thumbnailUri }} resizeMode='cover' style={styleSheet.image} />
-            <Text style={[styleSheet.text, { color: isSelecting ? theme.counterPrimary : theme.counterBackground }]}>#{item.rank + '. ' + item.title}</Text>
+            <ImageBackgroundWithLoading indicatorProps={{ color: textColor }} source={{ uri: item.thumbnailUri }} resizeMode='cover' style={styleSheet.image} />
+            <Text style={[styleSheet.text, { color: textColor }]}>#{item.rank + '. ' + item.title}</Text>
         </TouchableOpacity>
     }, [selectIdx, theme])
 
