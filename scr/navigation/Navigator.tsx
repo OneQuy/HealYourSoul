@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect, useMemo } from 'react'
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { ScreenName } from '../constants/AppConstants';
@@ -26,6 +26,8 @@ import { OnUseEffectOnceEnterApp } from '../handle/AppUtils';
 import { InitAppStateMan } from '../handle/AppStateMan';
 import { RegisterGoodayAppState } from '../handle/GoodayAppState';
 import SettingScreen from '../screens/setting/SettingScreen';
+import { ThemeContext } from '../constants/Colors';
+import { StyleSheet } from 'react-native';
 
 export type DrawerParamList = {
   [ScreenName.Meme]: undefined,
@@ -96,6 +98,15 @@ const ScreenList: ScreenNamePair[] = [
 ]
 
 const Navigator = ({ initialRouteName }: MainNavigatorProps) => {
+  const theme = useContext(ThemeContext);
+
+  const style = useMemo(() => {
+    return StyleSheet.create({
+      header: { backgroundColor: theme.background },
+      title: { color: theme.counterBackground },
+    })
+  }, [theme])
+
   useEffect(() => {
     // init app state
 
@@ -116,6 +127,10 @@ const Navigator = ({ initialRouteName }: MainNavigatorProps) => {
       <Drawer.Navigator
         initialRouteName={!initialRouteName ? ScreenName.Meme : initialRouteName}
         drawerContent={(props) => <CustomDrawerContent {...props} />}
+        screenOptions={{
+          headerStyle: style.header,
+          headerTitleStyle: style.title,
+        }}
       >
         {
           ScreenList.map(([screenName, screen]) => {
