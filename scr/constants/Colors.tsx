@@ -8,25 +8,25 @@ export type ThemeColor = {
     counterPrimary: string,
 }
 
-export const defaultThemeType: ThemeType = 'light';
+export const defaultThemeType: ThemeType = 'white';
 
 export type ThemeType = keyof typeof themes;
 
 export const themes = {
-    light: {
-        background: '#ffffff',
-        counterBackground: '#000000',
+    white: {
+        background: '#fafafa',
+        counterBackground: '#1c1c1c',
 
-        primary: '#000000',
-        counterPrimary: '#ffffff',
+        primary: '#1c1c1c',
+        counterPrimary: '#fafafa',
     } as ThemeColor,
     
-    dark: {
-        background: '#000000',
-        counterBackground: '#ffffff',
+    black: {
+        background: '#1c1c1c',
+        counterBackground: '#fafafa',
 
-        primary: '#ffffff',
-        counterPrimary: '#000000'
+        primary: '#fafafa',
+        counterPrimary: '#1c1c1c'
     } as ThemeColor,
 
     yellow: {
@@ -34,7 +34,15 @@ export const themes = {
         counterBackground: '#6800a3',
 
         primary: '#6800a3',
-        counterPrimary: '#ffffff',
+        counterPrimary: '#fafafa',
+    } as ThemeColor,
+    
+    brown: {
+        background: '#D0B17A',
+        counterBackground: '#1c1c1c',
+
+        primary: '#1c1c1c',
+        counterPrimary: 'white',
     } as ThemeColor,
 } as const
 
@@ -42,4 +50,4 @@ export function GetColors(type: ThemeType) {
     return themes[type];
 }
 
-export const ThemeContext = createContext(GetColors('light'));
+export const ThemeContext = createContext(GetColors('white'));
