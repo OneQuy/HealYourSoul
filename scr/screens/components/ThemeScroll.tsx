@@ -4,26 +4,34 @@ import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { ThemeType, themes } from '../../constants/Colors';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { setTheme } from '../../redux/MiscSlice';
+import { Outline } from '../../constants/AppConstants';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
+
+const size = heightPercentageToDP(2.5)
 
 const ThemeScroll = () => {
     const themeValues = useRef(Object.keys(themes));
     const dispatch = useAppDispatch();
-    const currentTheme = useAppSelector((state: RootState) => state.misc.themeType);
 
-    // const style = useMemo(() => {
-    //     return StyleSheet.create({
-    //         circleTO: 
-    //     })
-    // }, [theme])
+    const style = useMemo(() => {
+        return StyleSheet.create({
+            scrollView: { gap: Outline.GapHorizontal, }
+        })
+    }, [])
 
     return (
-        <ScrollView horizontal>
+        <ScrollView horizontal contentContainerStyle={style.scrollView}>
             {
                 themeValues.current.map((theme, index) =>
                     <TouchableOpacity
                         onPress={() => dispatch(setTheme(theme as ThemeType))}
                         key={index}
-                        style={{ borderWidth: currentTheme === theme ? 1 : 0, width: 20, height: 20, borderRadius: 10, backgroundColor: themes[theme as ThemeType].primary }}
+                        style={{
+                            width: size,
+                            height: size,
+                            borderRadius: size / 2,
+                            backgroundColor: themes[theme as ThemeType].primary
+                        }}
                     />)
             }
         </ScrollView>

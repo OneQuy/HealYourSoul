@@ -22,6 +22,7 @@ import { track_PressDrawerItem } from '../handle/tracking/GoodayTracking';
 import { SetBooleanAsync } from '../handle/AsyncStorageUtils';
 import { toast } from '@baronha/ting';
 import { IsDev } from '../handle/tracking/Tracking';
+import ThemeScroll from '../screens/components/ThemeScroll';
 
 const primiumBG = require('../../assets/images/btn_bg_1.jpeg')
 
@@ -163,6 +164,10 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
             <Text style={[{ color: theme.primary }, style.settingBtnText]}>{LocalText.rate_me}</Text>
           </TouchableOpacity>
         </View>
+
+        {/* theme */}
+
+        <ThemeScroll />
 
         {/* version */}
         <View onTouchEnd={OpenStore} style={style.versionContainerView}>
