@@ -28,11 +28,12 @@ const RemoveScreenView = () => {
   const style = useMemo(() => {
     return StyleSheet.create({
       masterView: { gap: Outline.GapVertical, flex: 1, backgroundColor: theme.background, alignItems: 'center' },
-      buttonContainerTO: { margin: Outline.GapHorizontal, minWidth: widthPercentageToDP(40), padding: Outline.GapVertical, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth, gap: Outline.GapHorizontal, flexDirection: 'row' },
-      enableAllTO: { width: '80%', margin: Outline.Horizontal, padding: Outline.Horizontal, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth, },
+      buttonContainerTO: { margin: Outline.GapHorizontal, minWidth: widthPercentageToDP(40), padding: Outline.GapVertical, borderColor: theme.primary, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth, gap: Outline.GapHorizontal, flexDirection: 'row' },
+      enableAllTO: { borderColor: theme.counterBackground, width: '80%', margin: Outline.Horizontal, padding: Outline.Horizontal, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth, },
       enableAllButtonText: { textAlign: 'center', color: theme.counterBackground, fontSize: FontSize.Small },
       intro_text: { textAlign: 'center', color: theme.counterBackground, fontSize: FontSize.Normal },
-      buttonText: { textAlign: 'center', color: theme.counterBackground, fontSize: FontSize.Small, flex: 1 },
+      buttonText: { textAlign: 'center', color: theme.counterPrimary, fontSize: FontSize.Small, flex: 1 },
+      buttonText_Disable: { textAlign: 'center', color: theme.counterBackground, fontSize: FontSize.Small, flex: 1 },
       flatList: { flex: 1 },
     })
   }, [theme])
@@ -53,8 +54,8 @@ const RemoveScreenView = () => {
     const icon = GetIconOfScreen(item)
 
     return <TouchableOpacity onPress={onPress} key={item} style={[style.buttonContainerTO, { backgroundColor: isVisible ? theme.primary : undefined }]}>
-      <MaterialCommunityIcons name={icon} color={'black'} size={Size.IconTiny} />
-      <Text style={style.buttonText}>{item}</Text>
+      <MaterialCommunityIcons name={icon} color={isVisible ? theme.counterPrimary : theme.counterBackground} size={Size.IconTiny} />
+      <Text style={isVisible ? style.buttonText : style.buttonText_Disable}>{item}</Text>
     </TouchableOpacity>
   }, [disableScreens, style, theme])
 
@@ -69,6 +70,7 @@ const RemoveScreenView = () => {
         renderItem={renderButton}
         contentContainerStyle={style.flatList}
       />
+
       <TouchableOpacity onPress={onPressEnableAll} style={[style.enableAllTO,]}>
         <Text style={style.enableAllButtonText}>{LocalText.enable_all}</Text>
       </TouchableOpacity>
