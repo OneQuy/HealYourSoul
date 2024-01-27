@@ -13,7 +13,7 @@ export const defaultThemeType: ThemeType = 'black';
 export type ThemeType = keyof typeof themes;
 
 export const themes = {
-    black: {
+    bflack: {
         background: '#ffffff',
         counterBackground: '#000000',
 
@@ -21,7 +21,7 @@ export const themes = {
         counterPrimary: '#ffffff',
     } as ThemeColor,
     
-    bblack: {
+    black: {
         background: '#fad502',
         counterBackground: '#6800a3',
 

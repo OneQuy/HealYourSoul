@@ -431,24 +431,6 @@ const ThePage = ({ category }: ThePageProps) => {
 
     // button handles
 
-    const onPressShareImage = useCallback(async () => {
-        if (!mediaURI.current)
-            return
-
-        track_SimpleWithCat(category, 'share')
-
-        Share
-            .open({
-                url: mediaURI.current,
-            })
-            .catch((err) => {
-                const error = ToCanPrint(err)
-
-                if (!error.includes('User did not share'))
-                    Alert.alert('Fail', error)
-            });
-    }, [])
-
     const onPressDownloadMedia = useCallback(async () => {
         if (!mediaURI.current) {
             Alert.alert(LocalText.oops, LocalText.no_media_to_download);
@@ -749,10 +731,15 @@ const ThePage = ({ category }: ThePageProps) => {
 
     const bottomBarItems = useMemo(() => {
         return [
+            // {
+            //     text: LocalText.share_image,
+            //     onPress: onPressShareImage,
+            //     icon: Icon.ShareImage
+            // },
             {
-                text: LocalText.share_image,
-                onPress: onPressShareImage,
-                icon: Icon.ShareImage
+                text: LocalText.save,
+                onPress: onPressDownloadMedia,
+                icon: Icon.Download
             },
             {
                 text: LocalText.previous,
@@ -773,13 +760,8 @@ const ThePage = ({ category }: ThePageProps) => {
                 icon: Icon.Right,
                 scaleIcon: 1.5,
             },
-            {
-                text: LocalText.save,
-                onPress: onPressDownloadMedia,
-                icon: Icon.Download
-            },
         ] as BottomBarItem[]
-    }, [onPressShareImage, onPressNextPost, post.current?.id, onPressDownloadMedia])
+    }, [onPressNextPost, post.current?.id, onPressDownloadMedia])
 
     // main render
 
@@ -944,3 +926,22 @@ const ThePage = ({ category }: ThePageProps) => {
 }
 
 export default ThePage
+
+
+// const onPressShareImage = useCallback(async () => {
+//     if (!mediaURI.current)
+//         return
+
+//     track_SimpleWithCat(category, 'share')
+
+//     Share
+//         .open({
+//             url: mediaURI.current,
+//         })
+//         .catch((err) => {
+//             const error = ToCanPrint(err)
+
+//             if (!error.includes('User did not share'))
+//                 Alert.alert('Fail', error)
+//         });
+// }, [])
