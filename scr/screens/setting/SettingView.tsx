@@ -19,6 +19,7 @@ import { StorageLog_GetAsync } from '../../handle/StorageLog';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { FirebaseDatabase_SetValueAsync } from '../../firebase/FirebaseDatabase';
 import { reloadSettingAnimWhenLoadMedia } from '../../handle/GoodayAnimation';
+import ThemeScroll from '../components/ThemeScroll';
 
 const limitFeedback = 300
 
@@ -52,7 +53,7 @@ const SettingView = () => {
       textInputConView: { height: heightPercentageToDP(20), padding: Outline.GapVertical, borderColor: theme.counterBackground, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth },
       emailCopyTO: { justifyContent: 'center', alignItems: 'center' },
       communityIconTO: { justifyContent: 'center', alignItems: 'center' },
-      titleText: { color: theme.counterBackground, fontSize: FontSize.Small_L, fontWeight: FontWeight.B600 },
+      titleText: { color: theme.primary, fontSize: FontSize.Small_L, fontWeight: FontWeight.B600 },
       litmiFeedbackText: { color: theme.counterBackground, fontSize: FontSize.Small_L, fontWeight: '300' },
       btnText: { textAlign: 'center', color: theme.counterBackground, fontSize: FontSize.Small_L, fontWeight: FontWeight.B600 },
       descNotiText: { color: theme.counterBackground, fontSize: FontSize.Small },
@@ -183,6 +184,14 @@ const SettingView = () => {
         // @ts-ignore
         ref={scrollRef}
         showsVerticalScrollIndicator={false} contentContainerStyle={style.scrollView}>
+        
+        <Text style={style.titleText}>{LocalText.theme}</Text>
+
+        <ThemeScroll />
+        {
+          hair100Width()
+        }
+
         {/* notification */}
 
         <Text style={style.titleText}>{LocalText.notification}</Text>
@@ -216,7 +225,7 @@ const SettingView = () => {
         {
           hair100Width()
         }
-        
+
         {/* anim */}
 
         <Text style={style.titleText}>{LocalText.setting}</Text>
