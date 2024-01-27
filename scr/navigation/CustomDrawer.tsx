@@ -130,7 +130,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
   }, [onPressSetting])
 
   const colorSetting = isFocusSetting ? theme.counterBackground : theme.primary
-  const colorSettingText = isFocusSetting ? theme.background : theme.counterPrimary
+  const colorSettingText = isFocusSetting ? theme.background : theme.primary
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.background }}>
@@ -154,12 +154,12 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
         {/* setting & rating */}
         <View style={style.settingContainer}>
           {/* setting */}
-          <TouchableOpacity onPress={onPressSettingButton} style={[style.settingBtnView, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter, { backgroundColor: isFocusSetting ? theme.primary : undefined }]}>
+          <TouchableOpacity onPress={onPressSettingButton} style={[style.settingBtnView, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter, { borderColor: theme.primary, backgroundColor: isFocusSetting ? theme.primary : undefined }]}>
             <MaterialIcons name={Icon.Setting} color={colorSettingText} size={Size.IconTiny} />
             <Text style={[{ color: colorSettingText }, style.settingBtnText]}>{LocalText.setting}</Text>
           </TouchableOpacity>
           {/* rate */}
-          <TouchableOpacity onPress={RateApp} style={[style.settingBtnView, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]}>
+          <TouchableOpacity onPress={RateApp} style={[style.settingBtnView, { borderColor: theme.primary }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]}>
             <MaterialIcons name={Icon.Star} color={theme.primary} size={Size.IconTiny} />
             <Text style={[{ color: theme.primary }, style.settingBtnText]}>{LocalText.rate_me}</Text>
           </TouchableOpacity>
