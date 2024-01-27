@@ -17,7 +17,7 @@ import { CheckAndGetFileListAsync, CheckLocalFileAndGetURIAsync, CopyAndToast, G
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { PickRandomElement, RoundNumber, SecondsToHourMinuteSecondString } from '../../handle/Utils';
-import { addDrawSeenID, addQuoteSeenID, addMemeSeenID, addLoveSeenID, addSatisfyingSeenID, addCatDogSeenID, addNSFWSeenID, addCuteSeenID, addArtSeenID, addSarcasmSeenID } from '../../redux/UserDataSlice';
+import { addDrawSeenID, addQuoteSeenID, addMemeSeenID, addLoveSeenID, addSatisfyingSeenID, addCatDogSeenID, addNSFWSeenID, addCuteSeenID, addArtSeenID, addSarcasmSeenID, addTypoSeenID, addSunsetSeenID, addInfoSeenID, addAwesomeSeenID } from '../../redux/UserDataSlice';
 import { setMutedVideo } from '../../redux/MiscSlice';
 import { ColorNameToRgb, HexToRgb, ToCanPrint } from '../../handle/UtilsTS';
 import { ToastOptions, toast } from '@baronha/ting';
@@ -28,11 +28,9 @@ import { SaveToGalleryAsync } from '../../handle/CameraRoll';
 import { Cheat } from '../../handle/Cheat';
 import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
 import StreakPopup from '../components/StreakPopup';
-import Share from 'react-native-share';
 import { track_PressNextPost, track_PressSaveMedia, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
-import FavoriteButton from '../others/FavoriteButton';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
 
 const videoNumbSize = 10;
@@ -90,6 +88,14 @@ const ThePage = ({ category }: ThePageProps) => {
             return state.userData.artSeenIDs;
         else if (category === Category.Sarcasm)
             return state.userData.sarcasmSeenIDs;
+        else if (category === Category.Info)
+            return state.userData.infoSeenIDs;
+        else if (category === Category.Typo)
+            return state.userData.typoSeenIDs;
+        else if (category === Category.Sunset)
+            return state.userData.sunsetSeenIDs;
+        else if (category === Category.Awesome)
+            return state.userData.awesomeSeenIDs;
         else
             throw new Error('not implement cat: ' + category);
     });
@@ -552,6 +558,14 @@ const ThePage = ({ category }: ThePageProps) => {
                 dispatch(addArtSeenID(post.current.id));
             else if (category === Category.Sarcasm)
                 dispatch(addSarcasmSeenID(post.current.id));
+            else if (category === Category.Typo)
+                dispatch(addTypoSeenID(post.current.id));
+            else if (category === Category.Sunset)
+                dispatch(addSunsetSeenID(post.current.id));
+            else if (category === Category.Info)
+                dispatch(addInfoSeenID(post.current.id));
+            else if (category === Category.Awesome)
+                dispatch(addAwesomeSeenID(post.current.id));
             else
                 throw new Error('NI cat: ' + category);
         }

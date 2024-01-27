@@ -12,7 +12,7 @@ import LoveScreen from '../screens/love/LoveScreen';
 import { CustomDrawerContent } from './CustomDrawer';
 import NSFWScreen from '../screens/nsfw/NSFWScreen';
 import IAPPage from '../screens/IAP/IAPPage';
-import { ArtScreen, CuteScreen, QuoteTextScreen, RandomMemeScreen, SarcasmScreen, } from '../screens/other_thepage_screens/Index';
+import { ArtScreen, AwesomeScreen, CuteScreen, InfoScreen, QuoteTextScreen, RandomMemeScreen, SarcasmScreen, SunsetScreen, TypoScreen, } from '../screens/other_thepage_screens/Index';
 import NinjaFactScreen from '../screens/ninja_fact/NinjaFactScreen';
 import PictureScreen from '../screens/picture/PictureScreen';
 import NinjaJokeScreen from '../screens/ninja_fact/NinjaJokeScreen';
@@ -49,6 +49,10 @@ export type DrawerParamList = {
   [ScreenName.FunWebsite]: undefined,
   [ScreenName.TopMovie]: undefined,
   [ScreenName.BestShortFilms]: undefined,
+  [ScreenName.Awesome]: undefined,
+  [ScreenName.Sunset]: undefined,
+  [ScreenName.Info]: undefined,
+  [ScreenName.Typo]: undefined,
   [ScreenName.IAPPage]: undefined,
   [ScreenName.Setting]: undefined,
 }
@@ -63,6 +67,10 @@ const Drawer = createDrawerNavigator<DrawerParamList>();
 
 const ScreenList: ScreenNamePair[] = [
   [ScreenName.Meme, MemeScreen],
+  [ScreenName.Awesome, AwesomeScreen],
+  [ScreenName.Info, InfoScreen],
+  [ScreenName.Typo, TypoScreen],
+  [ScreenName.Sunset, SunsetScreen],
   [ScreenName.RandomMeme, RandomMemeScreen],
   [ScreenName.Comic, ComicScreen],
   [ScreenName.NSFW, NSFWScreen],

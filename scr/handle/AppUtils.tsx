@@ -89,6 +89,14 @@ export const GetListFileRLP = (cat: Category, localOrFb: boolean) => {
             return FirebasePath.ListFile_Cute;
         else if (cat === Category.Sarcasm)
             return FirebasePath.ListFile_Sarcasm;
+        else if (cat === Category.Sunset)
+            return FirebasePath.ListFile_Sunset;
+        else if (cat === Category.Typo)
+            return FirebasePath.ListFile_Typo;
+        else if (cat === Category.Info)
+            return FirebasePath.ListFile_Info;
+        else if (cat === Category.Awesome)
+            return FirebasePath.ListFile_Awesome;
         else
             throw new Error('GetListFileRLP: ' + cat);
     }
@@ -113,6 +121,14 @@ export const GetListFileRLP = (cat: Category, localOrFb: boolean) => {
             return LocalPath.ListFile_Cute;
         else if (cat === Category.Sarcasm)
             return LocalPath.ListFile_Sarcasm;
+        else if (cat === Category.Typo)
+            return LocalPath.ListFile_Typo;
+        else if (cat === Category.Info)
+            return LocalPath.ListFile_Info;
+        else if (cat === Category.Awesome)
+            return LocalPath.ListFile_Awesome;
+        else if (cat === Category.Sunset)
+            return LocalPath.ListFile_Sunset;
         else
             throw new Error('GetListFileRLP: ' + cat);
     }
@@ -139,6 +155,14 @@ export const GetDBVersionPath = (cat: Category) => {
         return FirebaseDBPath.Version_Cute;
     else if (cat === Category.Sarcasm)
         return FirebaseDBPath.Version_Sarcasm;
+    else if (cat === Category.Sunset)
+        return FirebaseDBPath.Version_Sunset;
+    else if (cat === Category.Typo)
+        return FirebaseDBPath.Version_Typo;
+    else if (cat === Category.Info)
+        return FirebaseDBPath.Version_Info;
+    else if (cat === Category.Awesome)
+        return FirebaseDBPath.Version_Awesome;
     else
         throw new Error('GetDBPath: ' + cat);
 }
@@ -196,6 +220,14 @@ export async function CheckAndGetFileListAsync(cat: Category): Promise<FileList 
         needDownload = true;
     else if (cat === Category.Sarcasm && localVersion < versions.sarcasm)
         needDownload = true;
+    else if (cat === Category.Awesome && localVersion < versions.awesome)
+        needDownload = true;
+    else if (cat === Category.Typo && localVersion < versions.typo)
+        needDownload = true;
+    else if (cat === Category.Sunset && localVersion < versions.sunset)
+        needDownload = true;
+    else if (cat === Category.Info && localVersion < versions.info)
+        needDownload = true;
 
     if (!needDownload && localFileList !== null) {
         if (Cheat('IsLog_LoadFileList')) {
@@ -235,6 +267,14 @@ const GetMediaFullPath = (localOrFb: boolean, cat: Category, postID: number, med
         path = `art/data/${postID}/${mediaIdx}`;
     else if (cat === Category.Sarcasm)
         path = `sarcasm/data/${postID}/${mediaIdx}`;
+    else if (cat === Category.Typo)
+        path = `typo/data/${postID}/${mediaIdx}`;
+    else if (cat === Category.Info)
+        path = `info/data/${postID}/${mediaIdx}`;
+    else if (cat === Category.Awesome)
+        path = `awesome/data/${postID}/${mediaIdx}`;
+    else if (cat === Category.Sunset)
+        path = `sunset/data/${postID}/${mediaIdx}`;
     else
         throw new Error('GetDataFullPath: ' + cat);
 
@@ -273,6 +313,14 @@ export const GetAllSavedLocalPostIDsListAsync = async (cat: Category) => {
         path = `sarcasm/data`;
     else if (cat === Category.Art)
         path = `art/data`;
+    else if (cat === Category.Awesome)
+        path = `awesome/data`;
+    else if (cat === Category.Typo)
+        path = `typo/data`;
+    else if (cat === Category.Info)
+        path = `info/data`;
+    else if (cat === Category.Sunset)
+        path = `sunset/data`;
     else
         throw new Error('GetDataFullPath: ' + cat);
 
@@ -516,6 +564,14 @@ export const GetIconOfScreen = (screen: ScreenName) => {
         return 'video-vintage'
     else if (screen === ScreenName.RandomMeme)
         return 'emoticon-lol'
+    else if (screen === ScreenName.Awesome)
+        return 'star-shooting'
+    else if (screen === ScreenName.Sunset)
+        return 'weather-sunset'
+    else if (screen === ScreenName.Typo)
+        return 'format-letter-ends-with'
+    else if (screen === ScreenName.Info)
+        return 'information'
     else
         return Icon.HeartBroken
 }

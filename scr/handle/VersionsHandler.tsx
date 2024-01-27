@@ -17,11 +17,15 @@ export type Versions = {
     cute: number,
     art: number,
     sarcasm: number,
+    awesome: number,
+    typo: number,
+    sunset: number,
+    info: number,
 }
 
 export var versions: Versions;
 
-export async function HandleVersionsFileAsync(theme: ThemeColor) {
+export async function HandleVersionsFileAsync() {
     let time = new Date();
    
     const isInternet = await IsInternetAvailableAsync();

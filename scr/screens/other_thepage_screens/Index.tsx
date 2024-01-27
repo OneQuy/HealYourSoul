@@ -4,8 +4,6 @@ import { Category } from '../../constants/AppConstants';
 import TheRandomShortText from '../template/TheRandomShortText';
 import { GetQuoteTextAsync } from '../../handle/services/QuoteTextApi';
 import TheRandomImage from '../template/TheRandomImage';
-import { GetRedditMemeAsync } from '../../handle/services/RedditMeme';
-import { GetWikiAsync } from '../../handle/services/Wikipedia';
 import { GetIWasteSoMuchTimeAsync } from '../../handle/services/IWasteSoMuchTime';
 
 export const CuteScreen = () => {
@@ -14,6 +12,18 @@ export const CuteScreen = () => {
 
 export const ArtScreen = () => {
   return <ThePage category={Category.Art} />;
+}
+export const AwesomeScreen = () => {
+  return <ThePage category={Category.Awesome} />;
+}
+export const SunsetScreen = () => {
+  return <ThePage category={Category.Sunset} />;
+}
+export const InfoScreen = () => {
+  return <ThePage category={Category.Info} />;
+}
+export const TypoScreen = () => {
+  return <ThePage category={Category.Typo} />;
 }
 
 export const SarcasmScreen = () => {

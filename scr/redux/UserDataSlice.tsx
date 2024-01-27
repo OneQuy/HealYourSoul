@@ -15,6 +15,18 @@ export type UserDataState = {
 
     topMovieFavoritesIDs: (number | string)[],
 
+    awesomeSeenIDs: (number | string)[],
+    awesomeFavoritedIDs: (number | string)[],
+
+    infoSeenIDs: (number | string)[],
+    infoFavoritedIDs: (number | string)[],
+
+    typoSeenIDs: (number | string)[],
+    typoFavoritedIDs: (number | string)[],
+
+    sunsetSeenIDs: (number | string)[],
+    sunsetFavoritedIDs: (number | string)[],
+
     drawSeenIDs: (number | string)[],
     drawFavoritedIDs: (number | string)[],
 
@@ -64,6 +76,18 @@ const initialState: UserDataState = {
 
     memeSeenIDs: [],
     memeFavoritedIDs: [],
+
+    sunsetSeenIDs: [],
+    sunsetFavoritedIDs: [],
+
+    infoSeenIDs: [],
+    infoFavoritedIDs: [],
+
+    typoSeenIDs: [],
+    typoFavoritedIDs: [],
+
+    awesomeSeenIDs: [],
+    awesomeFavoritedIDs: [],
 
     quoteSeenIDs: [],
     quoteFavoritedIDs: [],
@@ -203,6 +227,106 @@ const slice = createSlice({
 
         removeMemeFavoritedID(state, action: PayloadAction<number | string>) {
             state.memeFavoritedIDs = state.memeFavoritedIDs.filter(i => i !== action.payload)
+        },
+
+        // info
+
+        addInfoSeenID(state, action: PayloadAction<number | string>) {
+            if (!state.infoSeenIDs)
+                state.infoSeenIDs = []
+
+            if (!state.infoSeenIDs.includes(action.payload))
+                state.infoSeenIDs.push(action.payload);
+        },
+
+        addInfoFavoritedID(state, action: PayloadAction<number | string>) {
+            if (!state.infoFavoritedIDs)
+                state.infoFavoritedIDs = []
+
+            if (!state.infoFavoritedIDs.includes(action.payload))
+                state.infoFavoritedIDs.push(action.payload);
+        },
+
+        removeInfoFavoritedID(state, action: PayloadAction<number | string>) {
+            if (!state.infoFavoritedIDs)
+                state.infoFavoritedIDs = []
+
+            state.infoFavoritedIDs = state.infoFavoritedIDs.filter(i => i !== action.payload)
+        },
+
+        // typo
+
+        addTypoSeenID(state, action: PayloadAction<number | string>) {
+            if (!state.typoSeenIDs)
+                state.typoSeenIDs = []
+
+            if (!state.typoSeenIDs.includes(action.payload))
+                state.typoSeenIDs.push(action.payload);
+        },
+
+        addTypoFavoritedID(state, action: PayloadAction<number | string>) {
+            if (!state.typoFavoritedIDs)
+                state.typoFavoritedIDs = []
+
+            if (!state.typoFavoritedIDs.includes(action.payload))
+                state.typoFavoritedIDs.push(action.payload);
+        },
+
+        removeTypoFavoritedID(state, action: PayloadAction<number | string>) {
+            if (!state.typoFavoritedIDs)
+                state.typoFavoritedIDs = []
+
+            state.typoFavoritedIDs = state.typoFavoritedIDs.filter(i => i !== action.payload)
+        },
+
+        // awesome
+
+        addAwesomeSeenID(state, action: PayloadAction<number | string>) {
+            if (!state.awesomeSeenIDs)
+                state.awesomeSeenIDs = []
+
+            if (!state.awesomeSeenIDs.includes(action.payload))
+                state.awesomeSeenIDs.push(action.payload);
+        },
+
+        addAwesomeFavoritedID(state, action: PayloadAction<number | string>) {
+            if (!state.awesomeFavoritedIDs)
+                state.awesomeFavoritedIDs = []
+
+            if (!state.awesomeFavoritedIDs.includes(action.payload))
+                state.awesomeFavoritedIDs.push(action.payload);
+        },
+
+        removeAwesomeFavoritedID(state, action: PayloadAction<number | string>) {
+            if (!state.awesomeFavoritedIDs)
+                state.awesomeFavoritedIDs = []
+
+            state.awesomeFavoritedIDs = state.awesomeFavoritedIDs.filter(i => i !== action.payload)
+        },
+
+        // sunset
+
+        addSunsetSeenID(state, action: PayloadAction<number | string>) {
+            if (!state.sunsetSeenIDs)
+                state.sunsetSeenIDs = []
+
+            if (!state.sunsetSeenIDs.includes(action.payload))
+                state.sunsetSeenIDs.push(action.payload);
+        },
+
+        addSunsetFavoritedID(state, action: PayloadAction<number | string>) {
+            if (!state.sunsetFavoritedIDs)
+                state.sunsetFavoritedIDs = []
+
+            if (!state.sunsetFavoritedIDs.includes(action.payload))
+                state.sunsetFavoritedIDs.push(action.payload);
+        },
+
+        removeSunsetFavoritedID(state, action: PayloadAction<number | string>) {
+            if (!state.sunsetFavoritedIDs)
+                state.sunsetFavoritedIDs = []
+
+            state.sunsetFavoritedIDs = state.sunsetFavoritedIDs.filter(i => i !== action.payload)
         },
 
         // quote
@@ -355,7 +479,6 @@ export const {
     addQuoteFavoritedID,
     removeQuoteFavoritedID,
 
-
     addCatDogSeenID,
     addCatDogFavoritedID,
     removeCatDogFavoritedID,
@@ -375,6 +498,22 @@ export const {
     addCuteSeenID,
     addCuteFavoritedID,
     removeCuteFavoritedID,
+
+    addInfoSeenID,
+    addInfoFavoritedID,
+    removeInfoFavoritedID,
+
+    addTypoSeenID,
+    addTypoFavoritedID,
+    removeTypoFavoritedID,
+
+    addSunsetSeenID,
+    addSunsetFavoritedID,
+    removeSunsetFavoritedID,
+
+    addAwesomeSeenID,
+    addAwesomeFavoritedID,
+    removeAwesomeFavoritedID,
 
     addArtSeenID,
     addArtFavoritedID,

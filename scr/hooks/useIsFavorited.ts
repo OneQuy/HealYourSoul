@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Category } from "../constants/AppConstants";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/Store";
-import { addDrawFavoritedID, addQuoteFavoritedID, addMemeFavoritedID, removeDrawFavoritedID, removeQuoteFavoritedID, removeMemeFavoritedID, removeLoveFavoritedID, addLoveFavoritedID, removeSatisfyingFavoritedID, addSatisfyingFavoritedID, removeCatDogFavoritedID, addCatDogFavoritedID, removeNSFWFavoritedID, addNSFWFavoritedID, removeCuteFavoritedID, addCuteFavoritedID, removeArtFavoritedID, addArtFavoritedID, removeSarcasmFavoritedID, addSarcasmFavoritedID, removeAwardPictureFavoritedID, addAwardPictureFavoritedID, removeFunWebsiteFavoritedID, addFunWebsiteFavoritedID, removeTopMovieFavoritedID, addTopMovieFavoritedID, removeShortFilmsFavoritedID, addShortFilmsFavoritedID } from '../redux/UserDataSlice'
+import { addDrawFavoritedID, addQuoteFavoritedID, addMemeFavoritedID, removeDrawFavoritedID, removeQuoteFavoritedID, removeMemeFavoritedID, removeLoveFavoritedID, addLoveFavoritedID, removeSatisfyingFavoritedID, addSatisfyingFavoritedID, removeCatDogFavoritedID, addCatDogFavoritedID, removeNSFWFavoritedID, addNSFWFavoritedID, removeCuteFavoritedID, addCuteFavoritedID, removeArtFavoritedID, addArtFavoritedID, removeSarcasmFavoritedID, addSarcasmFavoritedID, removeAwardPictureFavoritedID, addAwardPictureFavoritedID, removeFunWebsiteFavoritedID, addFunWebsiteFavoritedID, removeTopMovieFavoritedID, addTopMovieFavoritedID, removeShortFilmsFavoritedID, addShortFilmsFavoritedID, removeSunsetFavoritedID, addSunsetFavoritedID, removeTypoFavoritedID, addTypoFavoritedID, removeAwesomeFavoritedID, addAwesomeFavoritedID, removeInfoFavoritedID, addInfoFavoritedID } from '../redux/UserDataSlice'
 import { GetPostLikeCountAsync, LikePostAsync } from "../handle/LikeCountHandler";
 
 export default function useIsFavorited(category: Category, id: number | string | undefined)
@@ -38,6 +38,14 @@ export default function useIsFavorited(category: Category, id: number | string |
             return state.userData.topMovieFavoritesIDs;
         else if (category === Category.BestShortFilms)
             return state.userData.shortFilmsFavoritedIDs;
+        else if (category === Category.Info)
+            return state.userData.infoFavoritedIDs;
+        else if (category === Category.Typo)
+            return state.userData.typoFavoritedIDs;
+        else if (category === Category.Sunset)
+            return state.userData.sunsetFavoritedIDs;
+        else if (category === Category.Awesome)
+            return state.userData.awesomeFavoritedIDs;
         else
             throw new Error('NI cat: ' + Category[category]);
     })
@@ -135,6 +143,30 @@ export default function useIsFavorited(category: Category, id: number | string |
                 dispatch(removeShortFilmsFavoritedID(id));
             else
                 dispatch(addShortFilmsFavoritedID(id));
+        }
+        else if (category === Category.Sunset) {
+            if (isFavorited)
+                dispatch(removeSunsetFavoritedID(id));
+            else
+                dispatch(addSunsetFavoritedID(id));
+        }
+        else if (category === Category.Typo) {
+            if (isFavorited)
+                dispatch(removeTypoFavoritedID(id));
+            else
+                dispatch(addTypoFavoritedID(id));
+        }
+        else if (category === Category.Awesome) {
+            if (isFavorited)
+                dispatch(removeAwesomeFavoritedID(id));
+            else
+                dispatch(addAwesomeFavoritedID(id));
+        }
+        else if (category === Category.Info) {
+            if (isFavorited)
+                dispatch(removeInfoFavoritedID(id));
+            else
+                dispatch(addInfoFavoritedID(id));
         }
         else
             throw new Error('NI cat: ' + category);

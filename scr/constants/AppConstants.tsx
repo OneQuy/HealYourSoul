@@ -5,9 +5,12 @@ import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-nat
 export enum ScreenName {
   Comic = 'Warm', // draw
   Meme = 'Meme',
-  RedditMeme = 'Reddit Meme',
+  Awesome = 'Awesome',
+  Typo = 'Typography',
+  Info = 'Infography',
+  Sunset = 'Nature',
   Quote = 'Motivation',
-  CatDog = 'Cat. Dog. Animal',
+  CatDog = 'Animal',
   Love = 'Love',
   Satisfying  = 'Satisfying',
   NSFW = 'NSFW',
@@ -43,6 +46,10 @@ export enum LocalPath {
   ListFile_Cute = LocalPath.MasterDirName + '/cute/list.json',
   ListFile_Art = LocalPath.MasterDirName + '/art/list.json',
   ListFile_Sarcasm = LocalPath.MasterDirName + '/sarcasm/list.json',
+  ListFile_Awesome = LocalPath.MasterDirName + '/awesome/list.json',
+  ListFile_Typo = LocalPath.MasterDirName + '/typo/list.json',
+  ListFile_Info = LocalPath.MasterDirName + '/info/list.json',
+  ListFile_Sunset = LocalPath.MasterDirName + '/sunset/list.json',
 }
 
 export enum FirebasePath {
@@ -56,6 +63,10 @@ export enum FirebasePath {
   ListFile_Art = 'art/list.json',
   ListFile_Cute = 'cute/list.json',
   ListFile_Sarcasm = 'sarcasm/list.json',
+  ListFile_Awesome = 'awesome/list.json',
+  ListFile_Info = 'info/list.json',
+  ListFile_Typo = 'typo/list.json',
+  ListFile_Sunset = 'sunset/list.json',
 }
 
 export enum FirebaseDBPath {
@@ -69,6 +80,10 @@ export enum FirebaseDBPath {
   Version_Cute = 'app/versions/cute',
   Version_Art = 'app/versions/art',
   Version_Sarcasm = 'app/versions/sarcasm',
+  Version_Sunset = 'app/versions/sunset',
+  Version_Typo = 'app/versions/typo',
+  Version_Info = 'app/versions/info',
+  Version_Awesome = 'app/versions/awesome',
 }
 
 // category
@@ -96,7 +111,10 @@ export enum Category {
   TopMovie = 19,
   BestShortFilms = 20,
   RandomMeme = 21,
-  // Reminder = 14,
+  Awesome = 22,
+  Typo = 23,
+  Info = 24,
+  Sunset = 25,
 }
 
 // margin / padding
