@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useRef } from 'react'
 import { ScrollView } from 'react-native-gesture-handler'
-import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
+import { useAppDispatch } from '../../redux/Store';
 import { ThemeType, themes } from '../../constants/Colors';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { setTheme } from '../../redux/MiscSlice';

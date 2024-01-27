@@ -30,17 +30,20 @@ const SelectAward = ({ year, selectIdx, setIdx }: { year: number, selectIdx: num
 
     const renderItem = useCallback(({ item, index }: { item: AwardPicture, index: number }) => {
         const isSelecting = index === selectIdx
+
         const showSeparator = index > 0 &&
             ((curYearData.list[index].category !== curYearData.list[index - 1].category) ||
                 (curYearData.list[index].category === undefined && curYearData.list[index - 1].category === undefined))
+
+        const textColor = isSelecting ? theme.counterPrimary : theme.counterBackground
 
         return <TouchableOpacity onPress={() => setIdx(index)} style={[{ backgroundColor: isSelecting ? theme.primary : undefined, borderRadius: isSelecting ? BorderRadius.BR8 : 0, borderWidth: isSelecting ? 1 : 0 }, styleSheet.itemTO]}>
             {
                 !showSeparator ? undefined :
                     <View style={{ position: 'absolute', alignSelf: 'flex-start', top: -listPopupGap / 2, backgroundColor: 'gray', width: '100%', height: StyleSheet.hairlineWidth }} />
             }
-            <ImageBackgroundWithLoading source={{ uri: item.imageUri }} resizeMode='cover' style={styleSheet.image} indicatorProps={{ color: theme.counterBackground }} />
-            <Text style={[styleSheet.text, { color:  isSelecting ? theme.counterPrimary : theme.counterBackground }]}>{item?.reward + (item?.category ? ' - ' + item?.category : '')}</Text>
+            <ImageBackgroundWithLoading source={{ uri: item.imageUri }} resizeMode='cover' style={styleSheet.image} indicatorProps={{ color: textColor }} />
+            <Text style={[styleSheet.text, { color: textColor }]}>{item?.reward + (item?.category ? ' - ' + item?.category : '')}</Text>
         </TouchableOpacity>
     }, [selectIdx, theme])
 
