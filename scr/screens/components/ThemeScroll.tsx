@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react'
+import React, { useCallback, useMemo, useRef } from 'react'
 import { ScrollView } from 'react-native-gesture-handler'
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { ThemeType, themes } from '../../constants/Colors';
@@ -19,20 +19,28 @@ const ThemeScroll = () => {
         })
     }, [])
 
+    const renderItem = useCallback((theme: string, index: number) => {
+        const value = themes[theme as ThemeType]
+
+        return (
+            <TouchableOpacity
+                onPress={() => dispatch(setTheme(theme as ThemeType))}
+                key={index}
+                style={{
+                    width: size,
+                    height: size,
+                    borderRadius: size / 2,
+                    borderColor: value.primary,
+                    backgroundColor: value.background,
+                    borderWidth: size / 5,
+                }}
+            />)
+    }, [])
+
     return (
         <ScrollView horizontal contentContainerStyle={style.scrollView}>
             {
-                themeValues.current.map((theme, index) =>
-                    <TouchableOpacity
-                        onPress={() => dispatch(setTheme(theme as ThemeType))}
-                        key={index}
-                        style={{
-                            width: size,
-                            height: size,
-                            borderRadius: size / 2,
-                            backgroundColor: themes[theme as ThemeType].primary
-                        }}
-                    />)
+                themeValues.current.map(renderItem)
             }
         </ScrollView>
     )
