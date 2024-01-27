@@ -13,7 +13,15 @@ export const defaultThemeType: ThemeType = 'white';
 export type ThemeType = keyof typeof themes;
 
 export const themes = {
-    pinkbrown: { // l
+    orangegrey: { // d
+        background: '#DBD3D8',
+        counterBackground: '#1c1c1c',
+
+        primary: '#F95738',
+        counterPrimary: '#DBD3D8',
+    } as ThemeColor,
+    
+    pinkbrown: { // d
         background: '#6D454C',
         counterBackground: '#fafafa',
 
