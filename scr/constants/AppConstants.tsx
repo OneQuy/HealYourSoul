@@ -15,7 +15,7 @@ export enum ScreenName {
   Satisfying  = 'Satisfying',
   NSFW = 'NSFW',
   Art = 'Art',
-  Cute = 'Wholesome. Cute',
+  Cute = 'Cute',
   Sarcasm = 'Sarcasm',
   IAPPage = 'Premium',
   WikiFact = 'Random Wikipedia',
