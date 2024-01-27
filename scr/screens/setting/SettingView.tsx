@@ -49,7 +49,7 @@ const SettingView = () => {
       scrollView: { gap: Outline.GapHorizontal },
       flexRowWithGap: { flexDirection: 'row', gap: Outline.GapHorizontal },
       checkbox: { flexDirection: 'row', gap: Outline.GapHorizontal, alignItems: 'center', justifyContent: 'space-between' },
-      textInputConView: { height: heightPercentageToDP(20), padding: Outline.GapVertical, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth },
+      textInputConView: { height: heightPercentageToDP(20), padding: Outline.GapVertical, borderColor: theme.counterBackground, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth },
       emailCopyTO: { justifyContent: 'center', alignItems: 'center' },
       communityIconTO: { justifyContent: 'center', alignItems: 'center' },
       titleText: { color: theme.counterBackground, fontSize: FontSize.Small_L, fontWeight: FontWeight.B600 },
