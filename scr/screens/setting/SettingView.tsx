@@ -56,11 +56,11 @@ const SettingView = () => {
       litmiFeedbackText: { color: theme.counterBackground, fontSize: FontSize.Small_L, fontWeight: '300' },
       btnText: { textAlign: 'center', color: theme.counterBackground, fontSize: FontSize.Small_L, fontWeight: FontWeight.B600 },
       descNotiText: { color: theme.counterBackground, fontSize: FontSize.Small },
-      emailText: { color: theme.counterBackground, fontSize: FontSize.Normal },
+      contentTxt: { color: theme.counterBackground, fontSize: FontSize.Normal },
       statText: { color: theme.counterBackground, fontSize: FontSize.Small_L },
       sendFeedbackTO: { minWidth: '50%', alignSelf: 'center', paddingVertical: Outline.GapVertical, paddingHorizontal: Outline.GapVertical_2, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth, },
       shareTO: { flexDirection: 'row', justifyContent: 'center', gap: Outline.GapHorizontal, flex: 1, alignSelf: 'center', paddingVertical: Outline.GapVertical, paddingHorizontal: Outline.GapVertical_2, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth, },
-      sendFeedbackInput: { textAlignVertical: 'top', textAlign: 'left', width: '100%', height: '100%' },
+      sendFeedbackInput: { color: theme.counterBackground, textAlignVertical: 'top', textAlign: 'left', width: '100%', height: '100%' },
     })
   }, [theme])
 
@@ -189,27 +189,27 @@ const SettingView = () => {
 
         {/* quote */}
         <View style={style.checkbox}>
-          <Text onPress={() => onPressTestNoti('quote')} style={style.emailText}>{LocalText.notification_quote_of_the_day}</Text>
+          <Text onPress={() => onPressTestNoti('quote')} style={style.contentTxt}>{LocalText.notification_quote_of_the_day}</Text>
           <TouchableOpacity onPress={() => onPressNoti('quote')} style={style.emailCopyTO} >
-            <MaterialCommunityIcons name={isNoti_Quote ? Icon.CheckBox_Yes : Icon.CheckBox_No} color={theme.counterPrimary} size={Size.Icon} />
+            <MaterialCommunityIcons name={isNoti_Quote ? Icon.CheckBox_Yes : Icon.CheckBox_No} color={theme.counterBackground} size={Size.Icon} />
           </TouchableOpacity>
         </View>
         <Text onPress={() => onPressTestNoti('quote')} style={style.descNotiText}>{LocalText.notification_quote_of_the_day_desc.replace('#', timeInHour24hNoti_Quote.toString())}</Text>
 
         {/* fact */}
         <View style={style.checkbox}>
-          <Text onPress={() => onPressTestNoti('fact')} style={style.emailText}>{LocalText.notification_fact_of_the_day}</Text>
+          <Text onPress={() => onPressTestNoti('fact')} style={style.contentTxt}>{LocalText.notification_fact_of_the_day}</Text>
           <TouchableOpacity onPress={() => onPressNoti('fact')} style={style.emailCopyTO} >
-            <MaterialCommunityIcons name={isNoti_Fact ? Icon.CheckBox_Yes : Icon.CheckBox_No} color={theme.counterPrimary} size={Size.Icon} />
+            <MaterialCommunityIcons name={isNoti_Fact ? Icon.CheckBox_Yes : Icon.CheckBox_No} color={theme.counterBackground} size={Size.Icon} />
           </TouchableOpacity>
         </View>
         <Text onPress={() => onPressTestNoti('fact')} style={style.descNotiText}>{LocalText.notification_fact_of_the_day_desc.replace('#', timeInHour24hNoti_Fact.toString())}</Text>
 
         {/* joke */}
         <View style={style.checkbox}>
-          <Text onPress={() => onPressTestNoti('joke')} style={style.emailText}>{LocalText.notification_joke_of_the_day}</Text>
+          <Text onPress={() => onPressTestNoti('joke')} style={style.contentTxt}>{LocalText.notification_joke_of_the_day}</Text>
           <TouchableOpacity onPress={() => onPressNoti('joke')} style={style.emailCopyTO} >
-            <MaterialCommunityIcons name={isNoti_Joke ? Icon.CheckBox_Yes : Icon.CheckBox_No} color={theme.counterPrimary} size={Size.Icon} />
+            <MaterialCommunityIcons name={isNoti_Joke ? Icon.CheckBox_Yes : Icon.CheckBox_No} color={theme.counterBackground} size={Size.Icon} />
           </TouchableOpacity>
         </View>
         <Text onPress={() => onPressTestNoti('joke')} style={style.descNotiText}>{LocalText.notification_joke_of_the_day_desc.replace('#', timeInHour24hNoti_Joke.toString())}</Text>
@@ -223,9 +223,9 @@ const SettingView = () => {
 
         {/* quote */}
         <View style={style.checkbox}>
-          <Text onPress={() => onPressTestNoti('quote')} style={style.emailText}>{LocalText.anim_load_media}</Text>
+          <Text onPress={() => onPressTestNoti('quote')} style={style.contentTxt}>{LocalText.anim_load_media}</Text>
           <TouchableOpacity onPress={() => onPressNoti('anim_load_media')} style={style.emailCopyTO} >
-            <MaterialCommunityIcons name={isAnimLoadMedia ? Icon.CheckBox_Yes : Icon.CheckBox_No} color={theme.counterPrimary} size={Size.Icon} />
+            <MaterialCommunityIcons name={isAnimLoadMedia ? Icon.CheckBox_Yes : Icon.CheckBox_No} color={theme.counterBackground} size={Size.Icon} />
           </TouchableOpacity>
         </View>
         {
@@ -236,9 +236,9 @@ const SettingView = () => {
 
         <Text style={style.titleText}>{LocalText.Contact}</Text>
         <View style={style.flexRowWithGap}>
-          <Text style={style.emailText}>onequy@gmail.com</Text>
+          <Text style={style.contentTxt}>onequy@gmail.com</Text>
           <TouchableOpacity onPress={() => onPress('email')} style={style.emailCopyTO} >
-            <MaterialIcons name={Icon.Copy} color={theme.counterPrimary} size={Size.IconSmaller} />
+            <MaterialIcons name={Icon.Copy} color={theme.counterBackground} size={Size.IconSmaller} />
           </TouchableOpacity>
         </View>
         {
@@ -250,13 +250,13 @@ const SettingView = () => {
         <Text style={style.titleText}>{LocalText.community}</Text>
         <View style={style.flexRowWithGap}>
           <TouchableOpacity onPress={() => onPress('telegram')} style={style.communityIconTO} >
-            <MaterialIcons name={'telegram'} color={theme.counterPrimary} size={Size.IconMedium} />
+            <MaterialIcons name={'telegram'} color={theme.counterBackground} size={Size.IconMedium} />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => onPress('facebook')} style={style.communityIconTO} >
-            <MaterialCommunityIcons name={'facebook'} color={theme.counterPrimary} size={Size.IconMedium} />
+            <MaterialCommunityIcons name={'facebook'} color={theme.counterBackground} size={Size.IconMedium} />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => onPress('twitter')} style={style.communityIconTO} >
-            <MaterialCommunityIcons name={'twitter'} color={theme.counterPrimary} size={Size.IconMedium} />
+            <MaterialCommunityIcons name={'twitter'} color={theme.counterBackground} size={Size.IconMedium} />
           </TouchableOpacity>
         </View>
         {
@@ -291,11 +291,11 @@ const SettingView = () => {
 
         <View style={style.flexRowWithGap}>
           <TouchableOpacity onPress={onPressShareApp} style={style.shareTO}>
-            <MaterialCommunityIcons name={Icon.ShareText} color={theme.counterPrimary} size={Size.IconSmaller} />
+            <MaterialCommunityIcons name={Icon.ShareText} color={theme.counterBackground} size={Size.IconSmaller} />
             <Text style={style.btnText}>{LocalText.share_app}</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={RateApp} style={style.shareTO}>
-            <MaterialCommunityIcons name={Icon.Star} color={theme.counterPrimary} size={Size.IconSmaller} />
+            <MaterialCommunityIcons name={Icon.Star} color={theme.counterBackground} size={Size.IconSmaller} />
             <Text style={style.btnText}>{LocalText.rate_app}</Text>
           </TouchableOpacity>
         </View>
