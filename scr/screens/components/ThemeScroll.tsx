@@ -7,7 +7,7 @@ import { setTheme } from '../../redux/MiscSlice';
 import { Outline } from '../../constants/AppConstants';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 
-const size = heightPercentageToDP(2.5)
+const size = heightPercentageToDP(3.5)
 
 const ThemeScroll = () => {
     const themeValues = useRef(Object.keys(themes));
@@ -38,7 +38,11 @@ const ThemeScroll = () => {
     }, [])
 
     return (
-        <ScrollView horizontal contentContainerStyle={style.scrollView}>
+        <ScrollView
+            horizontal
+            contentContainerStyle={style.scrollView}
+            showsHorizontalScrollIndicator={false}
+        >
             {
                 themeValues.current.map(renderItem)
             }

@@ -167,7 +167,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
 
         {/* theme */}
 
-        <ThemeScroll />
+        {/* <ThemeScroll /> */}
 
         {/* version */}
         <View onTouchEnd={OpenStore} style={style.versionContainerView}>
