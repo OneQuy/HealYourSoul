@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useCallback, useContext, useMemo, useState } from 'react'
-import { BorderRadius, FontSize, FontWeight, Outline } from '../../constants/AppConstants'
+import { BorderRadius, FontSize, FontWeight, LocalText, Outline } from '../../constants/AppConstants'
 import { ThemeContext } from '../../constants/Colors';
 import RemoveScreenView from './RemoveScreenView';
 import SettingView from './SettingView';
@@ -33,7 +33,7 @@ const SettingScreen = () => {
           <Text style={showMainView ? style.topButtonText : style.topButtonText_Inactive}>Setting</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => onPressView(false)} style={showRemoveScreenView ? style.topButtonTO : style.topButtonTO_Inactive}>
-          <Text style={!showMainView ? style.topButtonText : style.topButtonText_Inactive}>Remove Screen</Text>
+          <Text style={!showMainView ? style.topButtonText : style.topButtonText_Inactive}>{LocalText.toggle_screen}</Text>
         </TouchableOpacity>
       </View>
       {

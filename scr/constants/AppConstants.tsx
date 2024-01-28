@@ -226,6 +226,7 @@ export const LocalText = {
   learn_more: "Learn more",
   enable_all: "Enable all",
   remove_screen_intro: "Tap to enable/disable screens:",
+  toggle_screen: "Toggle screen",
   send: "Send",
   share_app: "Share Gooday",
   like: "Like",
