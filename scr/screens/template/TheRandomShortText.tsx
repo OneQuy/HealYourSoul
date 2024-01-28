@@ -22,6 +22,7 @@ import { track_PressRandom, track_SimpleWithCat } from '../../handle/tracking/Go
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
+import HeaderSettingButton from '../components/HeaderSettingButton';
 
 interface TheRandomShortTextProps {
     category: Category,
@@ -172,16 +173,13 @@ const TheRandomShortText = ({
         onPressRandom(false)
     }, [])
 
-    // on change theme
+    // update header setting btn
 
     useEffect(() => {
         navigation.setOptions({
-            headerRight: () =>
-                <TouchableOpacity onPress={onPressHeaderOption} style={styleSheet.headerOptionTO}>
-                    <MaterialCommunityIcons name={Icon.ThreeDots} color={theme.counterBackground} size={Size.Icon} />
-                </TouchableOpacity>
+            headerRight: () => <HeaderSettingButton onPress={onPressHeaderOption} />
         });
-    }, [theme, onPressHeaderOption])
+    }, [onPressHeaderOption])
 
     // save last visit category screen
 

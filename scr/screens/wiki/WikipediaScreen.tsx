@@ -248,7 +248,7 @@ const WikipediaScreen = () => {
         onPressRandom(false)
     }, [])
 
-    // on change theme
+    // update header setting btn
 
     useEffect(() => {
         navigation.setOptions({
