@@ -275,7 +275,7 @@ export const LocalText = {
   saved: 'Saved!',
   setting: 'Setting',
   animation: 'Animation',
-  rate_me: 'Rate me',
+  rate_me: 'Rate app',
   save: 'Save',
   no_media_to_download: 'No media to download!',
   oops: 'Oooops',
