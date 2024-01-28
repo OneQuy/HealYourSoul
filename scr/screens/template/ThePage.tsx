@@ -33,6 +33,7 @@ import { track_PressNextPost, track_PressSaveMedia, track_SimpleWithCat } from '
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
+import HeaderSettingButton from '../components/HeaderSettingButton';
 
 const videoNumbSize = 10;
 const videoTouchEffectRadius = 100;
@@ -716,14 +717,10 @@ const ThePage = ({ category }: ThePageProps) => {
     useEffect(() => {
         navigation.setOptions({
             headerRight: !handling ?
-                () => (
-                    <TouchableOpacity onPress={onPressHeaderOption} style={style.headerOptionTO}>
-                        <MaterialCommunityIcons name={Icon.ThreeDots} color={theme.counterBackground} size={Size.Icon} />
-                    </TouchableOpacity>
-                )
+                () => <HeaderSettingButton onPress={onPressHeaderOption} />
                 :
                 () => (
-                    <ActivityIndicator color={theme.counterBackground} style={style.headerOptionTO} />
+                    <ActivityIndicator color={theme.primary} style={style.headerOptionTO} />
                 )
         });
     }, [handling, theme, onPressHeaderOption]);
