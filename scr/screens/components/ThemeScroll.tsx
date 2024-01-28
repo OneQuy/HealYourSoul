@@ -1,17 +1,29 @@
-import React, { useCallback, useMemo, useRef } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { ScrollView } from 'react-native-gesture-handler'
 import { useAppDispatch } from '../../redux/Store';
 import { ThemeType, themes } from '../../constants/Colors';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { setTheme } from '../../redux/MiscSlice';
 import { Outline } from '../../constants/AppConstants';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 
 const size = heightPercentageToDP(3.5)
 
-const ThemeScroll = () => {
-    const themeValues = useRef(Object.keys(themes));
+const ThemeScroll = ({ mode }: { mode: 'lights' | 'darks' | 'specials' | 'all' }) => {
     const dispatch = useAppDispatch();
+
+    const listToDraw = useMemo(() => {
+        const themeValues = Object.keys(themes)
+
+        if (mode === 'darks')
+            return themeValues.filter(i => i.includes('dark'))
+        else if (mode === 'lights')
+            return themeValues.filter(i => i.includes('light'))
+        else if (mode === 'specials')
+            return themeValues.filter(i => i.includes('special'))
+        else
+            return themeValues
+    }, [])
 
     const style = useMemo(() => {
         return StyleSheet.create({
@@ -22,9 +34,15 @@ const ThemeScroll = () => {
     const renderItem = useCallback((theme: string, index: number) => {
         const value = themes[theme as ThemeType]
 
+        const onPress = () => {
+            console.log('set theme: ' + theme);
+
+            dispatch(setTheme(theme as ThemeType))
+        }
+
         return (
             <TouchableOpacity
-                onPress={() => dispatch(setTheme(theme as ThemeType))}
+                onPress={onPress}
                 key={index}
                 style={{
                     width: size,
@@ -41,10 +59,9 @@ const ThemeScroll = () => {
         <ScrollView
             horizontal
             contentContainerStyle={style.scrollView}
-            showsHorizontalScrollIndicator={false}
-        >
+            showsHorizontalScrollIndicator={false}>
             {
-                themeValues.current.map(renderItem)
+                listToDraw.map(renderItem)
             }
         </ScrollView>
     )

@@ -57,7 +57,7 @@ const SettingView = () => {
       litmiFeedbackText: { color: theme.counterBackground, fontSize: FontSize.Small_L, fontWeight: '300' },
       btnText: { textAlign: 'center', color: theme.counterPrimary, fontSize: FontSize.Small_L, fontWeight: FontWeight.B500 },
       descNotiText: { color: theme.counterBackground, fontSize: FontSize.Small },
-      contentTxt: { color: theme.counterBackground, fontSize: FontSize.Normal },
+      contentTxt: { color: theme.counterBackground, fontSize: FontSize.Small_L },
       statText: { color: theme.counterBackground, fontSize: FontSize.Small_L },
       sendFeedbackTO: { backgroundColor: theme.primary, minWidth: 100, alignSelf: 'center', paddingVertical: Outline.GapVertical, paddingHorizontal: Outline.GapVertical_2, borderRadius: BorderRadius.BR8 },
       shareTO: { backgroundColor: theme.primary, flexDirection: 'row', justifyContent: 'center', gap: Outline.GapHorizontal, flex: 1, alignSelf: 'center', paddingVertical: Outline.GapVertical, paddingHorizontal: Outline.GapVertical_2, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth, },
@@ -188,9 +188,16 @@ const SettingView = () => {
         {/* theme */}
 
         <Text style={style.titleText}>{LocalText.theme}</Text>
-
-        <ThemeScroll />
         
+        <Text style={style.contentTxt}>{LocalText.lights_mode}</Text>
+        <ThemeScroll mode='lights' />
+        
+        <Text style={style.contentTxt}>{LocalText.darks_mode}</Text>
+        <ThemeScroll mode='darks' />
+        
+        <Text style={style.contentTxt}>{LocalText.specials_theme}</Text>
+        <ThemeScroll mode='specials' />
+
         {
           hair100Width()
         }

@@ -68,7 +68,7 @@ export const themes = {
         shouldStatusBarLight: false,
     } as ThemeColor,
 
-    darkgreen_banana_special: {
+    green_banana_special: {
         background: '#C1C1C1',
         counterBackground: '#1c1c1c',
 
@@ -78,7 +78,7 @@ export const themes = {
         shouldStatusBarLight: false,
     } as ThemeColor,
 
-    red_blue_dark_special: {
+    red_blue_special: {
         background: '#2A1E5C',
         counterBackground: '#fafafa',
 
@@ -90,7 +90,7 @@ export const themes = {
 
     // dark
 
-    light_brown_dark: {
+    brown_dark: {
         background: '#1c1c1c',
         counterBackground: '#fafafa',
 
@@ -140,7 +140,7 @@ export const themes = {
         shouldStatusBarLight: true,
     } as ThemeColor,
 
-    brown_dark: {
+    brown2_dark: {
         background: '#1c1c1c',
         counterBackground: '#fafafa',
 
@@ -332,7 +332,7 @@ export const themes = {
         shouldStatusBarLight: false,
     } as ThemeColor,
 
-    dark_blue_light: {
+    blue2_light: {
         background: '#fafafa',
         counterBackground: '#1c1c1c',
 
