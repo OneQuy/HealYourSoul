@@ -6,6 +6,8 @@ export type ThemeColor = {
 
     primary: string,
     counterPrimary: string,
+
+    shouldStatusBarLight: boolean,
 }
 
 export const defaultThemeType: ThemeType = 'white';
@@ -13,133 +15,115 @@ export const defaultThemeType: ThemeType = 'white';
 export type ThemeType = keyof typeof themes;
 
 export const themes = {
-    orangegrey: { // d
-        background: '#DBD3D8',
-        counterBackground: '#1c1c1c',
+    // light
 
-        primary: '#F95738',
-        counterPrimary: '#DBD3D8',
-    } as ThemeColor,
-    
-    pinkbrown: { // d
-        background: '#6D454C',
-        counterBackground: '#fafafa',
-
-        primary: '#EF709D',
-        counterPrimary: '#1c1c1c',
-    } as ThemeColor,
-
-    blue: { // l
+    blue_light: { // l
         background: '#fafafa',
         counterBackground: '#1c1c1c',
 
         primary: '#3185FC',
         counterPrimary: '#fafafa',
+
+        shouldStatusBarLight: false,
     } as ThemeColor,
 
-    green_dark: { // d
-        background: '#fafafa',
-        counterBackground: '#30321C',
-
-        primary: '#30321C',
-        counterPrimary: '#fafafa',
-    } as ThemeColor,
-
-    gold_light: { // d
+    green_light: { // l
         background: '#fafafa',
         counterBackground: '#1c1c1c',
 
-        primary: '#F3CA40',
-        counterPrimary: '#1c1c1c',
-    } as ThemeColor,
-
-    gold: { // d
-        background: '#1c1c1c',
-        counterBackground: '#F3CA40',
-
-        primary: '#F3CA40',
-        counterPrimary: '#1c1c1c',
-    } as ThemeColor,
-
-    orange: { // l
-        background: '#EEE2DF',
-        counterBackground: '#1c1c1c',
-
-        primary: '#C97C5D',
+        primary: '#4a8758',
         counterPrimary: '#fafafa',
+
+        shouldStatusBarLight: false,
     } as ThemeColor,
 
-    purple: { // l
-        background: '#fafafa',
-        counterBackground: '#453750',
-
-        primary: '#453750',
-        counterPrimary: '#fafafa',
-    } as ThemeColor,
-
-    yellowgreendark: { // d
-        background: '#1c1c1c',
-        counterBackground: '#EDEEC9',
-
-        primary: '#EDEEC9',
-        counterPrimary: '#1c1c1c',
-    } as ThemeColor,
-    
-    green: { // l
-        background: '#fafafa',
-        counterBackground: '#1c1c1c',
-
-        primary: '#98C9A3',
-        counterPrimary: '#1c1c1c',
-    } as ThemeColor,
-
-    pink: { // l
+    pink_light: { // l
         background: '#fafafa',
         counterBackground: '#1c1c1c',
 
         primary: '#F39A9D',
-        counterPrimary: '#1c1c1c',
-    } as ThemeColor,
-    
-    darkblue: { // d
-        background: '#2D3142',
-        counterBackground: '#fafafa',
+        counterPrimary: '#fafafa',
 
-        primary: '#fafafa',
-        counterPrimary: '#2D3142',
+        shouldStatusBarLight: false,
     } as ThemeColor,
-    
-    white: {
+
+    brown_light: { // l
+        background: '#fafafa',
+        counterBackground: '#1c1c1c',
+
+        primary: '#C97C5D',
+        counterPrimary: '#fafafa',
+
+        shouldStatusBarLight: false,
+    } as ThemeColor,
+
+    gold_light: { // l
+        background: '#ffffff',
+        counterBackground: '#1c1c1c',
+
+        primary: '#f7c623',
+        counterPrimary: '#1c1c1c',
+
+        shouldStatusBarLight: false,
+    } as ThemeColor,
+
+    purple_light: { // l
+        background: '#fafafa',
+        counterBackground: '#1c1c1c',
+
+        primary: '#6f3999',
+        counterPrimary: '#fafafa',
+
+        shouldStatusBarLight: false,
+    } as ThemeColor,
+
+    default_light: {
         background: '#fafafa',
         counterBackground: '#1c1c1c',
 
         primary: '#1c1c1c',
         counterPrimary: '#fafafa',
     } as ThemeColor,
-    
-    black: {
-        background: '#1c1c1c',
-        counterBackground: '#fafafa',
 
-        primary: '#fafafa',
-        counterPrimary: '#1c1c1c'
-    } as ThemeColor,
+    // gold: { // d
+    //     background: '#1c1c1c',
+    //     counterBackground: '#F3CA40',
 
-    yellow: { // l
-        background: '#fad502',
-        counterBackground: '#6800a3',
+    //     primary: '#F3CA40',
+    //     counterPrimary: '#1c1c1c',
+    // } as ThemeColor,
 
-        primary: '#6800a3',
-        counterPrimary: '#fafafa',
-    } as ThemeColor,
-    
-    brown: { // l
-        background: '#D0B17A',
-        counterBackground: '#1c1c1c',
+    // yellowgreendark: { // d
+    //     background: '#1c1c1c',
+    //     counterBackground: '#EDEEC9',
 
-        primary: '#1c1c1c',
-        counterPrimary: 'white',
-    } as ThemeColor,
+    //     primary: '#EDEEC9',
+    //     counterPrimary: '#1c1c1c',
+    // } as ThemeColor,
+
+    // black: {
+    //     background: '#1c1c1c',
+    //     counterBackground: '#fafafa',
+
+    //     primary: '#fafafa',
+    //     counterPrimary: '#1c1c1c'
+    // } as ThemeColor,
+
+    // yellow: { // l
+    //     background: '#fad502',
+    //     counterBackground: '#6800a3',
+
+    //     primary: '#6800a3',
+    //     counterPrimary: '#fafafa',
+    // } as ThemeColor,
+
+    // brown: { // l
+    //     background: '#D0B17A',
+    //     counterBackground: '#1c1c1c',
+
+    //     primary: '#1c1c1c',
+    //     counterPrimary: 'white',
+    // } as ThemeColor,
 } as const
 
 export function GetColors(type: ThemeType) {
