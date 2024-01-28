@@ -55,12 +55,12 @@ const SettingView = () => {
       communityIconTO: { justifyContent: 'center', alignItems: 'center' },
       titleText: { color: theme.primary, fontSize: FontSize.Small_L, fontWeight: FontWeight.B600 },
       litmiFeedbackText: { color: theme.counterBackground, fontSize: FontSize.Small_L, fontWeight: '300' },
-      btnText: { textAlign: 'center', color: theme.counterBackground, fontSize: FontSize.Small_L, fontWeight: FontWeight.B600 },
+      btnText: { textAlign: 'center', color: theme.counterPrimary, fontSize: FontSize.Small_L, fontWeight: FontWeight.B500 },
       descNotiText: { color: theme.counterBackground, fontSize: FontSize.Small },
       contentTxt: { color: theme.counterBackground, fontSize: FontSize.Normal },
       statText: { color: theme.counterBackground, fontSize: FontSize.Small_L },
-      sendFeedbackTO: { minWidth: '50%', alignSelf: 'center', paddingVertical: Outline.GapVertical, paddingHorizontal: Outline.GapVertical_2, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth, },
-      shareTO: { flexDirection: 'row', justifyContent: 'center', gap: Outline.GapHorizontal, flex: 1, alignSelf: 'center', paddingVertical: Outline.GapVertical, paddingHorizontal: Outline.GapVertical_2, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth, },
+      sendFeedbackTO: { backgroundColor: theme.primary, minWidth: 100, alignSelf: 'center', paddingVertical: Outline.GapVertical, paddingHorizontal: Outline.GapVertical_2, borderRadius: BorderRadius.BR8 },
+      shareTO: { backgroundColor: theme.primary, flexDirection: 'row', justifyContent: 'center', gap: Outline.GapHorizontal, flex: 1, alignSelf: 'center', paddingVertical: Outline.GapVertical, paddingHorizontal: Outline.GapVertical_2, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth, },
       sendFeedbackInput: { color: theme.counterBackground, textAlignVertical: 'top', textAlign: 'left', width: '100%', height: '100%' },
     })
   }, [theme])
@@ -184,12 +184,13 @@ const SettingView = () => {
         // @ts-ignore
         ref={scrollRef}
         showsVerticalScrollIndicator={false} contentContainerStyle={style.scrollView}>
-        
+
         {/* theme */}
-        
+
         <Text style={style.titleText}>{LocalText.theme}</Text>
 
         <ThemeScroll />
+        
         {
           hair100Width()
         }
@@ -230,7 +231,7 @@ const SettingView = () => {
 
         {/* anim */}
 
-        <Text style={style.titleText}>{LocalText.setting}</Text>
+        <Text style={style.titleText}>{LocalText.animation}</Text>
 
         {/* quote */}
         <View style={style.checkbox}>
@@ -302,11 +303,11 @@ const SettingView = () => {
 
         <View style={style.flexRowWithGap}>
           <TouchableOpacity onPress={onPressShareApp} style={style.shareTO}>
-            <MaterialCommunityIcons name={Icon.ShareText} color={theme.counterBackground} size={Size.IconSmaller} />
+            <MaterialCommunityIcons name={Icon.ShareText} color={theme.counterPrimary} size={Size.IconSmaller} />
             <Text style={style.btnText}>{LocalText.share_app}</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={RateApp} style={style.shareTO}>
-            <MaterialCommunityIcons name={Icon.Star} color={theme.counterBackground} size={Size.IconSmaller} />
+            <MaterialCommunityIcons name={Icon.Star} color={theme.counterPrimary} size={Size.IconSmaller} />
             <Text style={style.btnText}>{LocalText.rate_app}</Text>
           </TouchableOpacity>
         </View>
