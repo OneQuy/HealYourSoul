@@ -18,12 +18,32 @@ export const themes = {
 
     // specials
 
-    article_special: { // l
+    article_special: {
         background: '#D0B17A',
         counterBackground: '#1c1c1c',
 
         primary: '#1c1c1c',
         counterPrimary: '#fafafa',
+
+        shouldStatusBarLight: false,
+    } as ThemeColor,
+    
+    yellow_red_special: {
+        background: '#EDAE49',
+        counterBackground: '#1c1c1c',
+
+        primary: '#D1495B',
+        counterPrimary: '#EDAE49',
+
+        shouldStatusBarLight: false,
+    } as ThemeColor,
+    
+    blue_special: {
+        background: '#EBEBD3',
+        counterBackground: '#1c1c1c',
+
+        primary: '#083D77',
+        counterPrimary: '#f7c623',
 
         shouldStatusBarLight: false,
     } as ThemeColor,
