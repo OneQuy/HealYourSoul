@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from 'react'
 import { ScrollView } from 'react-native-gesture-handler'
-import { useAppDispatch } from '../../redux/Store';
+import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { ThemeType, themes } from '../../constants/Colors';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { setTheme } from '../../redux/MiscSlice';
@@ -11,6 +11,7 @@ const size = heightPercentageToDP(3.5)
 
 const ThemeScroll = ({ mode }: { mode: 'lights' | 'darks' | 'specials' | 'all' }) => {
     const dispatch = useAppDispatch();
+    const currentTheme = useAppSelector((state: RootState) => state.misc.themeType)
 
     const listToDraw = useMemo(() => {
         const themeValues = Object.keys(themes)
@@ -33,6 +34,7 @@ const ThemeScroll = ({ mode }: { mode: 'lights' | 'darks' | 'specials' | 'all' }
 
     const renderItem = useCallback((theme: string, index: number) => {
         const value = themes[theme as ThemeType]
+        const isCurrentTheme = theme === currentTheme
 
         const onPress = () => {
             console.log('set theme: ' + theme);
@@ -51,9 +53,22 @@ const ThemeScroll = ({ mode }: { mode: 'lights' | 'darks' | 'specials' | 'all' }
                     borderColor: value.primary,
                     backgroundColor: value.background,
                     borderWidth: size / 5,
-                }}
-            />)
-    }, [])
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}>
+                {
+                    !isCurrentTheme ? undefined :
+                        <View
+                            style={{
+                                width: size / 4,
+                                height: size / 4,
+                                borderRadius: size / 4 / 2,
+                                backgroundColor: value.counterBackground,
+                            }} />
+                }
+            </TouchableOpacity>
+        )
+    }, [currentTheme])
 
     return (
         <ScrollView
