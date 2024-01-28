@@ -213,9 +213,7 @@ const TheTrivia = ({
                                     </TouchableOpacity>
                                     :
                                     <View onTouchStart={onBigViewStartTouch} onTouchEnd={onBigViewEndTouch} style={{ gap: Outline.GapVertical }}>
-                                        <TouchableOpacity
-                                        // onPress={() => onPressRandom(true)}
-                                        >
+                                        <TouchableOpacity>
                                             <Text selectable style={{ color: theme.counterBackground, fontSize: FontSize.Big, marginBottom: Outline.Horizontal }}>{trivia?.question}</Text>
                                         </TouchableOpacity>
                                         {
