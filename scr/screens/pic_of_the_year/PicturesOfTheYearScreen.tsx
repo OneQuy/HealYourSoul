@@ -24,6 +24,7 @@ import { track_PressNextPost, track_PressSaveMedia, track_PressYearOfAwardPictur
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
+import HeaderSettingButton from '../components/HeaderSettingButton';
 
 const BGAnim = Animated.createAnimatedComponent(ImageBackground)
 
@@ -295,16 +296,13 @@ const PicturesOfTheYearScreen = () => {
         SetStreakAsync(Category[category])
     }, [])
 
-    // on change theme
+    // update header setting btn
 
     useEffect(() => {
         navigation.setOptions({
-            headerRight: () =>
-                <TouchableOpacity onPress={onPressHeaderOption} style={styleSheet.headerOptionTO}>
-                    <MaterialCommunityIcons name={Icon.ThreeDots} color={theme.counterBackground} size={Size.Icon} />
-                </TouchableOpacity>
+            headerRight: () => <HeaderSettingButton onPress={onPressHeaderOption} />
         });
-    }, [theme, onPressHeaderOption])
+    }, [onPressHeaderOption])
 
     // save last visit category screen
 
@@ -331,7 +329,7 @@ const PicturesOfTheYearScreen = () => {
                                             dataOfYears.map((year) => {
                                                 const isFocus = selectingYear === year.year
 
-                                                return <TouchableOpacity onPress={() => onPressYear(year.year)} style={[styleSheet.yearView, { backgroundColor: isFocus ? theme.primary : undefined }]} key={year.year}>
+                                                return <TouchableOpacity onPress={() => onPressYear(year.year)} style={[styleSheet.yearView, { borderColor: theme.primary, backgroundColor: isFocus ? theme.primary : undefined }]} key={year.year}>
                                                     <Text style={{ color: isFocus ? theme.counterPrimary : theme.counterBackground }}>{year.year}</Text>
                                                 </TouchableOpacity>
                                             })
@@ -344,7 +342,7 @@ const PicturesOfTheYearScreen = () => {
                                         renderIconReward()
                                     }
                                     <Text style={[{ color: theme.counterBackground, }, styleSheet.rewardText]}>{selectingPhoto?.reward + (selectingPhoto?.category ? ' - ' + selectingPhoto?.category : '')}</Text>
-                                    <View style={styleSheet.showListIconView}>
+                                    <View style={[{ borderColor: theme.counterBackground }, styleSheet.showListIconView]}>
                                         <MaterialCommunityIcons name={Icon.List} color={theme.counterBackground} size={Size.Icon} />
                                     </View>
                                 </View>
