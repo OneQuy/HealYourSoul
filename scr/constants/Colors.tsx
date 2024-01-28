@@ -354,6 +354,10 @@ export const themes = {
 } as const
 
 export function GetColors(type: ThemeType) {
+    // @ts-ignore
+    if (type === 'yellow')
+        type = 'default_light'
+
     return themes[type];
 }
 
