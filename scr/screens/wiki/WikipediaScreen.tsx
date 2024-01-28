@@ -29,6 +29,7 @@ import { track_PressRandom, track_SimpleWithCat } from '../../handle/tracking/Go
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
+import HeaderSettingButton from '../components/HeaderSettingButton';
 
 const category = Category.Wikipedia
 
@@ -178,29 +179,29 @@ const WikipediaScreen = () => {
             } as ShareOptions)
     }, [currentContent, currentTitle, currentLink, theme])
 
-    const onPressShareImage = useCallback(() => {
-        if (!currentContent)
-            return
+    // const onPressShareImage = useCallback(() => {
+    //     if (!currentContent)
+    //         return
 
-        track_SimpleWithCat(category, 'share_as_image')
+    //     track_SimpleWithCat(category, 'share_as_image')
 
-        const message = currentTitle + '\n\n' + currentContent + '\n\nLink: ' + currentLink
+    //     const message = currentTitle + '\n\n' + currentContent + '\n\nLink: ' + currentLink
 
-        // @ts-ignore
-        viewShotRef.current.capture().then(async (uri: string) => {
-            Share
-                .open({
-                    message,
-                    url: uri,
-                })
-                .catch((err) => {
-                    const error = ToCanPrint(err)
+    //     // @ts-ignore
+    //     viewShotRef.current.capture().then(async (uri: string) => {
+    //         Share
+    //             .open({
+    //                 message,
+    //                 url: uri,
+    //             })
+    //             .catch((err) => {
+    //                 const error = ToCanPrint(err)
 
-                    if (!error.includes('User did not share'))
-                        Alert.alert('Fail', error)
-                });
-        })
-    }, [currentTitle, currentContent, currentLink, theme])
+    //                 if (!error.includes('User did not share'))
+    //                     Alert.alert('Fail', error)
+    //             });
+    //     })
+    // }, [currentTitle, currentContent, currentLink, theme])
 
     const onSwiped = useCallback((result: SwipeResult) => {
         if (result.primaryDirectionIsHorizontalOrVertical && !result.primaryDirectionIsPositive) {
@@ -212,20 +213,15 @@ const WikipediaScreen = () => {
 
     const bottomBarItems = useMemo(() => {
         return [
-            {
-                text: LocalText.share_image,
-                onPress: onPressShareImage,
-                icon: Icon.ShareImage
-            },
+            // {
+            //     text: LocalText.share_image,
+            //     onPress: onPressShareImage,
+            //     icon: Icon.ShareImage
+            // },
             {
                 text: LocalText.copy,
                 onPress: onPressCopy,
                 icon: Icon.Copy,
-            },
-            {
-                text: LocalText.random,
-                onPress: () => onPressRandom(true),
-                icon: Icon.Dice,
             },
             {
                 text: showFull ? LocalText.close : LocalText.read_full,
@@ -233,12 +229,17 @@ const WikipediaScreen = () => {
                 icon: showFull ? Icon.X : Icon.Eye
             },
             {
+                text: LocalText.random,
+                onPress: () => onPressRandom(true),
+                icon: Icon.Dice,
+            },
+            {
                 text: LocalText.share,
                 onPress: onPressShareText,
                 icon: Icon.ShareText,
             },
         ] as BottomBarItem[]
-    }, [onPressShareImage, onPressInAppWeb, onPressShareText, showFull, onPressCopy])
+    }, [onPressInAppWeb, onPressShareText, showFull, onPressCopy])
 
     // on init once (for load first post)
 
@@ -251,12 +252,9 @@ const WikipediaScreen = () => {
 
     useEffect(() => {
         navigation.setOptions({
-            headerRight: () =>
-                <TouchableOpacity onPress={onPressHeaderOption} style={styleSheet.headerOptionTO}>
-                    <MaterialCommunityIcons name={Icon.ThreeDots} color={theme.counterBackground} size={Size.Icon} />
-                </TouchableOpacity>
+            headerRight: () => <HeaderSettingButton onPress={onPressHeaderOption} />
         });
-    }, [theme, onPressHeaderOption])
+    }, [onPressHeaderOption])
 
     // save last visit category screen
 
