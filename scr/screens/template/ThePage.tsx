@@ -863,7 +863,7 @@ const ThePage = ({ category }: ThePageProps) => {
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', flex: 1, alignItems: 'center' }} >
                                 {/* previous media btn */}
                                 <TouchableOpacity onPress={() => onPressNextMedia(false)} disabled={!showPreviousMediaButton} style={{ paddingVertical: hp('2%'), opacity: showPreviousMediaButton ? Opacity.Primary : 0, borderTopRightRadius: BorderRadius.BR8, borderBottomRightRadius: BorderRadius.BR8, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
-                                    <MaterialIcons name={Icon.ArrowLeft} color={theme.counterPrimary} size={Size.IconSmaller} />
+                                    <MaterialIcons name={Icon.ArrowLeft} color={theme.counterPrimary} size={Size.Icon} />
                                 </TouchableOpacity>
                                 {/* center view & big play video btn */}
                                 <View
@@ -875,7 +875,7 @@ const ThePage = ({ category }: ThePageProps) => {
                                 </View>
                                 {/* next media btn */}
                                 <TouchableOpacity onPress={() => onPressNextMedia(true)} disabled={!showNextMediaButton} style={{ paddingVertical: hp('2%'), opacity: showNextMediaButton ? Opacity.Primary : 0, borderTopLeftRadius: BorderRadius.BR8, borderBottomLeftRadius: BorderRadius.BR8, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' }} >
-                                    <MaterialIcons name={Icon.ArrowRight} color={theme.counterPrimary} size={Size.IconSmaller} />
+                                    <MaterialIcons name={Icon.ArrowRight} color={theme.counterPrimary} size={Size.Icon} />
                                 </TouchableOpacity>
                             </View>
                             {/* video controller */}
