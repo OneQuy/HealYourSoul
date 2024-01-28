@@ -217,16 +217,16 @@ const FunWebsitesScreen = () => {
                 icon: Icon.Copy
             },
             {
-                text: showFull ? LocalText.close : LocalText.view,
-                onPress: onPressInAppWeb,
-                icon: showFull ? Icon.X : Icon.Eye,
-            },
-            {
                 favoriteBtn: {
                     callbackRef: favoriteCallbackRef,
                     id: selectingItem?.id,
                     category,
                 }
+            },
+            {
+                text: showFull ? LocalText.close : LocalText.view,
+                onPress: onPressInAppWeb,
+                icon: showFull ? Icon.X : Icon.Eye,
             },
             {
                 text: LocalText.next,
