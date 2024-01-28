@@ -10,12 +10,12 @@ export type ThemeColor = {
     shouldStatusBarLight: boolean,
 }
 
-export const defaultThemeType: ThemeType = 'white';
+export const defaultThemeType: ThemeType = 'default_light'
 
 export type ThemeType = keyof typeof themes;
 
 export const themes = {
-    // light
+    // dark
 
     light_brown_light: { // l
         background: '#fafafa',
@@ -36,6 +36,16 @@ export const themes = {
 
         shouldStatusBarLight: false,
     } as ThemeColor,
+    
+    pink_light: { // l
+        background: '#fafafa',
+        counterBackground: '#1c1c1c',
+
+        primary: '#F39A9D',
+        counterPrimary: '#fafafa',
+
+        shouldStatusBarLight: false,
+    } as ThemeColor,
 
     orange_light: { // l
         background: '#fafafa',
@@ -52,16 +62,6 @@ export const themes = {
         counterBackground: '#1c1c1c',
 
         primary: '#DE3C4B',
-        counterPrimary: '#fafafa',
-
-        shouldStatusBarLight: false,
-    } as ThemeColor,
-
-    pink_light: { // l
-        background: '#fafafa',
-        counterBackground: '#1c1c1c',
-
-        primary: '#F39A9D',
         counterPrimary: '#fafafa',
 
         shouldStatusBarLight: false,
@@ -135,6 +135,126 @@ export const themes = {
         counterPrimary: '#fafafa',
     } as ThemeColor,
 
+    // // light
+
+    // light_brown_light: { // l
+    //     background: '#fafafa',
+    //     counterBackground: '#1c1c1c',
+
+    //     primary: '#B19C81',
+    //     counterPrimary: '#fafafa',
+
+    //     shouldStatusBarLight: false,
+    // } as ThemeColor,
+
+    // gold_light: { // l
+    //     background: '#ffffff',
+    //     counterBackground: '#1c1c1c',
+
+    //     primary: '#f7c623',
+    //     counterPrimary: '#1c1c1c',
+
+    //     shouldStatusBarLight: false,
+    // } as ThemeColor,
+    
+    // pink_light: { // l
+    //     background: '#fafafa',
+    //     counterBackground: '#1c1c1c',
+
+    //     primary: '#F39A9D',
+    //     counterPrimary: '#fafafa',
+
+    //     shouldStatusBarLight: false,
+    // } as ThemeColor,
+
+    // orange_light: { // l
+    //     background: '#fafafa',
+    //     counterBackground: '#1c1c1c',
+
+    //     primary: '#fc9732',
+    //     counterPrimary: '#fafafa',
+
+    //     shouldStatusBarLight: false,
+    // } as ThemeColor,
+    
+    // red_light: { // l
+    //     background: '#fafafa',
+    //     counterBackground: '#1c1c1c',
+
+    //     primary: '#DE3C4B',
+    //     counterPrimary: '#fafafa',
+
+    //     shouldStatusBarLight: false,
+    // } as ThemeColor,
+    
+    // brown_light: { // l
+    //     background: '#fafafa',
+    //     counterBackground: '#1c1c1c',
+
+    //     primary: '#C97C5D',
+    //     counterPrimary: '#fafafa',
+
+    //     shouldStatusBarLight: false,
+    // } as ThemeColor,
+
+    // blue_light: { // l
+    //     background: '#fafafa',
+    //     counterBackground: '#1c1c1c',
+
+    //     primary: '#3185FC',
+    //     counterPrimary: '#fafafa',
+
+    //     shouldStatusBarLight: false,
+    // } as ThemeColor,
+
+    // green_light_2: { // l
+    //     background: '#fafafa',
+    //     counterBackground: '#1c1c1c',
+
+    //     primary: '#80CED7',
+    //     counterPrimary: '#fafafa',
+
+    //     shouldStatusBarLight: false,
+    // } as ThemeColor,
+    
+    // banana_light: { // l
+    //     background: '#fafafa',
+    //     counterBackground: '#1c1c1c',
+
+    //     primary: '#84c454',
+    //     counterPrimary: '#fafafa',
+
+    //     shouldStatusBarLight: false,
+    // } as ThemeColor,
+    
+    // green_light: { // l
+    //     background: '#fafafa',
+    //     counterBackground: '#1c1c1c',
+
+    //     primary: '#4a8758',
+    //     counterPrimary: '#fafafa',
+
+    //     shouldStatusBarLight: false,
+    // } as ThemeColor,
+
+    // purple_light: { // l
+    //     background: '#fafafa',
+    //     counterBackground: '#1c1c1c',
+
+    //     primary: '#6f3999',
+    //     counterPrimary: '#fafafa',
+
+    //     shouldStatusBarLight: false,
+    // } as ThemeColor,
+
+    // dark_blue_light: {
+    //     background: '#fafafa',
+    //     counterBackground: '#1c1c1c',
+
+    //     primary: '#282F44',
+    //     counterPrimary: '#fafafa',
+    // } as ThemeColor,
+
     default_light: {
         background: '#fafafa',
         counterBackground: '#1c1c1c',
@@ -188,4 +308,4 @@ export function GetColors(type: ThemeType) {
     return themes[type];
 }
 
-export const ThemeContext = createContext(GetColors('white'));
+export const ThemeContext = createContext(GetColors('default_light'));
