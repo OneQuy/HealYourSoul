@@ -28,7 +28,7 @@ const ThemeScroll = ({ mode }: { mode: 'lights' | 'darks' | 'specials' | 'all' }
 
     const style = useMemo(() => {
         return StyleSheet.create({
-            scrollView: { gap: Outline.GapHorizontal, }
+            scrollView: { gap: Outline.GapVertical, }
         })
     }, [])
 
