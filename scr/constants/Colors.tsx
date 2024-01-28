@@ -15,6 +15,19 @@ export const defaultThemeType: ThemeType = 'default_light'
 export type ThemeType = keyof typeof themes;
 
 export const themes = {
+
+    // specials
+
+    article_special: { // l
+        background: '#D0B17A',
+        counterBackground: '#1c1c1c',
+
+        primary: '#1c1c1c',
+        counterPrimary: '#fafafa',
+
+        shouldStatusBarLight: false,
+    } as ThemeColor,
+
     // dark
 
     light_brown_dark: {
@@ -97,6 +110,16 @@ export const themes = {
         shouldStatusBarLight: true,
     } as ThemeColor,
 
+    green_little_dark: {
+        background: '#1c1c1c',
+        counterBackground: '#EDEEC9',
+
+        primary: '#EDEEC9',
+        counterPrimary: '#1c1c1c',
+
+        shouldStatusBarLight: true,
+    } as ThemeColor,
+
     banana_dark: {
         background: '#1c1c1c',
         counterBackground: '#fafafa',
@@ -126,7 +149,7 @@ export const themes = {
 
         shouldStatusBarLight: true,
     } as ThemeColor,
-    
+
     default_dark: {
         background: '#1c1c1c',
         counterBackground: '#fafafa',
@@ -268,46 +291,6 @@ export const themes = {
 
         shouldStatusBarLight: false,
     } as ThemeColor,
-
-    // gold: { // d
-    //     background: '#1c1c1c',
-    //     counterBackground: '#F3CA40',
-
-    //     primary: '#F3CA40',
-    //     counterPrimary: '#1c1c1c',
-    // } as ThemeColor,
-
-    // yellowgreendark: { // d
-    //     background: '#1c1c1c',
-    //     counterBackground: '#EDEEC9',
-
-    //     primary: '#EDEEC9',
-    //     counterPrimary: '#1c1c1c',
-    // } as ThemeColor,
-
-    // black: {
-    //     background: '#1c1c1c',
-    //     counterBackground: '#fafafa',
-
-    //     primary: '#fafafa',
-    //     counterPrimary: '#1c1c1c'
-    // } as ThemeColor,
-
-    // yellow: { // l
-    //     background: '#fad502',
-    //     counterBackground: '#6800a3',
-
-    //     primary: '#6800a3',
-    //     counterPrimary: '#fafafa',
-    // } as ThemeColor,
-
-    // brown: { // l
-    //     background: '#D0B17A',
-    //     counterBackground: '#1c1c1c',
-
-    //     primary: '#1c1c1c',
-    //     counterPrimary: 'white',
-    // } as ThemeColor,
 } as const
 
 export function GetColors(type: ThemeType) {
