@@ -319,8 +319,8 @@ const TopMovieScreen = () => {
                                         :
                                         <View onTouchStart={onBigViewStartTouch} onTouchEnd={onBigViewEndTouch} style={styleSheet.contentView}>
                                             <View onTouchEnd={() => setIsShowList(true)} style={[styleSheet.titleContainerView, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
-                                                <Text style={[{ color: theme.counterBackground, }, styleSheet.titleText]}>{selectingItem?.title}</Text>
-                                                <View style={styleSheet.showListIconView}>
+                                                <Text style={[{ color: theme.counterBackground }, styleSheet.titleText]}>{selectingItem ? '#' + selectingItem.rank : ''}</Text>
+                                                <View style={[{ borderColor: theme.counterBackground, }, styleSheet.showListIconView]}>
                                                     <MaterialCommunityIcons name={Icon.List} color={theme.counterBackground} size={Size.Icon} />
                                                 </View>
                                             </View>
@@ -334,13 +334,6 @@ const TopMovieScreen = () => {
                                                 <ScrollView >
                                                     <Text selectable adjustsFontSizeToFit style={[{ flexWrap: 'wrap', color: theme.counterBackground, fontSize: FontSize.Small_L }]}>{selectingItem?.desc}</Text>
                                                 </ScrollView>
-                                            </View>
-                                            <View style={[styleSheet.rankView]}>
-                                                <View style={styleSheet.rankBGView} />
-                                                {
-                                                    !selectingItem?.rank ? undefined :
-                                                        <Text style={[{ color: theme.counterBackground }, styleSheet.rankText]}>#{'\n' + selectingItem.rank}</Text>
-                                                }
                                             </View>
                                         </View>
                                 }
@@ -373,10 +366,7 @@ const styleSheet = StyleSheet.create({
     titleView: { marginLeft: Outline.Horizontal, fontSize: FontSize.Normal, fontWeight: FontWeight.B500 },
     infoTextView: { paddingLeft: Outline.Horizontal, fontSize: FontSize.Small_L, },
     titleTO: { marginHorizontal: Outline.GapVertical_2, flexDirection: 'row', justifyContent: 'space-between' },
-    titleText: { marginLeft: widthPercentageToDP(12), flex: 1, textAlign: 'center', fontSize: FontSize.Normal },
+    titleText: { marginLeft: widthPercentageToDP(12), flex: 1, textAlign: 'center', fontWeight: FontWeight.Bold, fontSize: FontSize.Big},
     titleContainerView: { paddingHorizontal: Outline.GapVertical, flexDirection: 'row', gap: Outline.GapHorizontal },
     showListIconView: { padding: Outline.GapHorizontal, borderWidth: StyleSheet.hairlineWidth, borderRadius: BorderRadius.BR8 },
-    rankView: { position: 'absolute' },
-    rankText: { fontSize: FontSize.Small_L, padding: Outline.GapHorizontal, fontWeight: FontWeight.B600, textAlign: 'center' },
-    rankBGView: { position: 'absolute', left: -widthPercentageToDP(11), top: -heightPercentageToDP(3), width: widthPercentageToDP(30), height: heightPercentageToDP(10), backgroundColor: 'gold', transform: [{ rotateZ: '-45deg' }] },
 })
