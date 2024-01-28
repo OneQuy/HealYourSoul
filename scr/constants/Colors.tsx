@@ -17,122 +17,114 @@ export type ThemeType = keyof typeof themes;
 export const themes = {
     // dark
 
-    light_brown_light: { // l
-        background: '#fafafa',
-        counterBackground: '#1c1c1c',
+    light_brown_dark: {
+        background: '#1c1c1c',
+        counterBackground: '#fafafa',
 
         primary: '#B19C81',
-        counterPrimary: '#fafafa',
+        counterPrimary: '#1c1c1c',
 
-        shouldStatusBarLight: false,
+        shouldStatusBarLight: true,
     } as ThemeColor,
 
-    gold_light: { // l
-        background: '#ffffff',
-        counterBackground: '#1c1c1c',
+    gold_dark: {
+        background: '#1c1c1c',
+        counterBackground: '#fafafa',
 
         primary: '#f7c623',
         counterPrimary: '#1c1c1c',
 
-        shouldStatusBarLight: false,
+        shouldStatusBarLight: true,
     } as ThemeColor,
-    
-    pink_light: { // l
-        background: '#fafafa',
-        counterBackground: '#1c1c1c',
+
+    pink_dark: { // l
+        background: '#1c1c1c',
+        counterBackground: '#fafafa',
 
         primary: '#F39A9D',
-        counterPrimary: '#fafafa',
+        counterPrimary: '#1c1c1c',
 
-        shouldStatusBarLight: false,
+        shouldStatusBarLight: true,
     } as ThemeColor,
 
-    orange_light: { // l
-        background: '#fafafa',
-        counterBackground: '#1c1c1c',
+    orange_dark: {
+        background: '#1c1c1c',
+        counterBackground: '#fafafa',
 
         primary: '#fc9732',
-        counterPrimary: '#fafafa',
+        counterPrimary: '#1c1c1c',
 
-        shouldStatusBarLight: false,
+        shouldStatusBarLight: true,
     } as ThemeColor,
-    
-    red_light: { // l
-        background: '#fafafa',
-        counterBackground: '#1c1c1c',
+
+    red_dark: {
+        background: '#1c1c1c',
+        counterBackground: '#fafafa',
 
         primary: '#DE3C4B',
-        counterPrimary: '#fafafa',
+        counterPrimary: '#1c1c1c',
 
-        shouldStatusBarLight: false,
+        shouldStatusBarLight: true,
     } as ThemeColor,
-    
-    brown_light: { // l
-        background: '#fafafa',
-        counterBackground: '#1c1c1c',
+
+    brown_dark: {
+        background: '#1c1c1c',
+        counterBackground: '#fafafa',
 
         primary: '#C97C5D',
-        counterPrimary: '#fafafa',
+        counterPrimary: '#1c1c1c',
 
-        shouldStatusBarLight: false,
+        shouldStatusBarLight: true,
     } as ThemeColor,
 
-    blue_light: { // l
-        background: '#fafafa',
-        counterBackground: '#1c1c1c',
+    blue_dark: {
+        background: '#1c1c1c',
+        counterBackground: '#fafafa',
 
         primary: '#3185FC',
-        counterPrimary: '#fafafa',
+        counterPrimary: '#1c1c1c',
 
-        shouldStatusBarLight: false,
+        shouldStatusBarLight: true,
     } as ThemeColor,
 
-    green_light_2: { // l
-        background: '#fafafa',
-        counterBackground: '#1c1c1c',
+    green_dark_2: {
+        background: '#1c1c1c',
+        counterBackground: '#fafafa',
 
         primary: '#80CED7',
-        counterPrimary: '#fafafa',
+        counterPrimary: '#1c1c1c',
 
-        shouldStatusBarLight: false,
+        shouldStatusBarLight: true,
     } as ThemeColor,
-    
-    banana_light: { // l
-        background: '#fafafa',
-        counterBackground: '#1c1c1c',
+
+    banana_dark: {
+        background: '#1c1c1c',
+        counterBackground: '#fafafa',
 
         primary: '#84c454',
-        counterPrimary: '#fafafa',
+        counterPrimary: '#1c1c1c',
 
-        shouldStatusBarLight: false,
+        shouldStatusBarLight: true,
     } as ThemeColor,
-    
-    green_light: { // l
-        background: '#fafafa',
-        counterBackground: '#1c1c1c',
+
+    green_dark: {
+        background: '#1c1c1c',
+        counterBackground: '#fafafa',
 
         primary: '#4a8758',
-        counterPrimary: '#fafafa',
+        counterPrimary: '#1c1c1c',
 
-        shouldStatusBarLight: false,
+        shouldStatusBarLight: true,
     } as ThemeColor,
 
-    purple_light: { // l
-        background: '#fafafa',
-        counterBackground: '#1c1c1c',
+    purple_dark: {
+        background: '#1c1c1c',
+        counterBackground: '#fafafa',
 
         primary: '#6f3999',
         counterPrimary: '#fafafa',
 
-        shouldStatusBarLight: false,
-    } as ThemeColor,
-
-    dark_blue_light: {
-        background: '#fafafa',
-        counterBackground: '#1c1c1c',
-
-        primary: '#282F44',
-        counterPrimary: '#fafafa',
+        shouldStatusBarLight: true,
     } as ThemeColor,
 
     // // light
@@ -156,7 +148,7 @@ export const themes = {
 
     //     shouldStatusBarLight: false,
     // } as ThemeColor,
-    
+
     // pink_light: { // l
     //     background: '#fafafa',
     //     counterBackground: '#1c1c1c',
@@ -176,7 +168,7 @@ export const themes = {
 
     //     shouldStatusBarLight: false,
     // } as ThemeColor,
-    
+
     // red_light: { // l
     //     background: '#fafafa',
     //     counterBackground: '#1c1c1c',
@@ -186,7 +178,7 @@ export const themes = {
 
     //     shouldStatusBarLight: false,
     // } as ThemeColor,
-    
+
     // brown_light: { // l
     //     background: '#fafafa',
     //     counterBackground: '#1c1c1c',
@@ -216,7 +208,7 @@ export const themes = {
 
     //     shouldStatusBarLight: false,
     // } as ThemeColor,
-    
+
     // banana_light: { // l
     //     background: '#fafafa',
     //     counterBackground: '#1c1c1c',
@@ -226,7 +218,7 @@ export const themes = {
 
     //     shouldStatusBarLight: false,
     // } as ThemeColor,
-    
+
     // green_light: { // l
     //     background: '#fafafa',
     //     counterBackground: '#1c1c1c',
@@ -253,6 +245,8 @@ export const themes = {
 
     //     primary: '#282F44',
     //     counterPrimary: '#fafafa',
+
+    //     shouldStatusBarLight: false,
     // } as ThemeColor,
 
     default_light: {
@@ -261,6 +255,8 @@ export const themes = {
 
         primary: '#1c1c1c',
         counterPrimary: '#fafafa',
+
+        shouldStatusBarLight: false,
     } as ThemeColor,
 
     // gold: { // d

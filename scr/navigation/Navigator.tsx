@@ -102,7 +102,7 @@ const Navigator = ({ initialRouteName }: MainNavigatorProps) => {
 
   const style = useMemo(() => {
     return StyleSheet.create({
-      header: { backgroundColor: theme.background },
+      header: { backgroundColor: theme.background, elevation: 0, shadowColor: theme.background },
     })
   }, [theme])
 
@@ -128,7 +128,7 @@ const Navigator = ({ initialRouteName }: MainNavigatorProps) => {
         drawerContent={(props) => <CustomDrawerContent {...props} />}
         screenOptions={{
           headerStyle: style.header,
-          headerTintColor: theme.counterBackground,
+          headerTintColor: theme.primary,
         }}
       >
         {
