@@ -29,6 +29,7 @@ import { track_PressNextPost, track_SimpleWithCat } from '../../handle/tracking/
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
+import HeaderSettingButton from '../components/HeaderSettingButton';
 
 const category = Category.FunWebsites
 const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Ffun_websites.json?alt=media&token=10ecb626-e576-49d4-b124-a9ba148a93a6'
@@ -266,16 +267,13 @@ const FunWebsitesScreen = () => {
         SetStreakAsync(Category[category])
     }, [])
 
-    // on change theme
+    // update header setting btn
 
     useEffect(() => {
         navigation.setOptions({
-            headerRight: () =>
-                <TouchableOpacity onPress={onPressHeaderOption} style={styleSheet.headerOptionTO}>
-                    <MaterialCommunityIcons name={Icon.ThreeDots} color={theme.counterBackground} size={Size.Icon} />
-                </TouchableOpacity>
+            headerRight: () => <HeaderSettingButton onPress={onPressHeaderOption} />
         });
-    }, [theme, onPressHeaderOption])
+    }, [onPressHeaderOption])
 
     // save last visit category screen
 
@@ -303,7 +301,7 @@ const FunWebsitesScreen = () => {
                                         <View onTouchStart={onBigViewStartTouch} onTouchEnd={onBigViewEndTouch} style={styleSheet.contentView}>
                                             <View onTouchEnd={() => setIsShowList(true)} style={[styleSheet.titleContainerView, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
                                                 <Text style={[{ color: theme.counterBackground, }, styleSheet.titleText]}>{shortUrl}</Text>
-                                                <View style={styleSheet.showListIconView}>
+                                                <View style={[{ borderColor: theme.counterBackground, }, styleSheet.showListIconView]}>
                                                     <MaterialCommunityIcons name={Icon.List} color={theme.counterBackground} size={Size.Icon} />
                                                 </View>
                                             </View>
