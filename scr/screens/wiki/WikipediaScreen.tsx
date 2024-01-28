@@ -299,7 +299,7 @@ const WikipediaScreen = () => {
                                                     <View style={[{ backgroundColor: 'green' }, CommonStyles.width100Percent_Height100Percent_PositionAbsolute_JustifyContentCenter_AlignItemsCenter]}>
                                                         <WebView
                                                             source={{ uri: currentLink }}
-                                                            containerStyle={{ width: '100%', height: '100%' }}
+                                                            containerStyle={{ width: '100%', height: '100%', }}
                                                         />
                                                     </View>
                                             }
