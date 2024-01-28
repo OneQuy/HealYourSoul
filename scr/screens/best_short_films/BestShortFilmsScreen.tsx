@@ -22,15 +22,14 @@ import useCheckAndDownloadRemoteFile from '../../hooks/useCheckAndDownloadRemote
 import { RandomInt, TempDirName } from '../../handle/Utils';
 import { GetRemoteFileConfigVersion } from '../../handle/AppConfigHandler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import useIsFavorited from '../../hooks/useIsFavorited';
 import ListMovie from './SelectShortFilms';
 import { DownloadFileAsync, GetFLPFromRLP } from '../../handle/FileUtils';
 import WebView from 'react-native-webview';
-import { track_PressFavorite, track_PressNextPost, track_PressRandom, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
+import { track_PressNextPost, track_PressRandom, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
-import FavoriteButton from '../others/FavoriteButton';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
+import HeaderSettingButton from '../components/HeaderSettingButton';
 
 const category = Category.BestShortFilms
 const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Fshort_films.json?alt=media&token=537eec8b-f774-4908-a5fa-45f8daf676d8'
@@ -319,16 +318,13 @@ const BestShortFilmsScreen = () => {
         SetStreakAsync(Category[category])
     }, [])
 
-    // on change theme
+    // update header setting btn
 
     useEffect(() => {
         navigation.setOptions({
-            headerRight: () =>
-                <TouchableOpacity onPress={onPressHeaderOption} style={styleSheet.headerOptionTO}>
-                    <MaterialCommunityIcons name={Icon.ThreeDots} color={theme.counterPrimary} size={Size.Icon} />
-                </TouchableOpacity>
+            headerRight: () => <HeaderSettingButton onPress={onPressHeaderOption} />
         });
-    }, [theme, onPressHeaderOption])
+    }, [onPressHeaderOption])
 
     // save last visit category screen
 
@@ -356,7 +352,7 @@ const BestShortFilmsScreen = () => {
                                         <View onTouchStart={onBigViewStartTouch} onTouchEnd={onBigViewEndTouch} style={styleSheet.contentView}>
                                             <View onTouchEnd={() => setIsShowList(true)} style={[styleSheet.nameContainerView, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
                                                 <Text style={[{ color: theme.counterBackground, }, styleSheet.nameText]}>{selectingItem?.name}</Text>
-                                                <View style={styleSheet.showListIconView}>
+                                                <View style={[{ borderColor: theme.counterBackground, }, styleSheet.showListIconView]}>
                                                     <MaterialCommunityIcons name={Icon.List} color={theme.counterBackground} size={Size.Icon} />
                                                 </View>
                                             </View>
