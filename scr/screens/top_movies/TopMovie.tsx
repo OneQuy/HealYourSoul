@@ -233,9 +233,9 @@ const TopMovieScreen = () => {
             //     icon: Icon.ShareImage
             // },
             {
-                text: LocalText.random,
-                onPress: onPressRandom,
-                icon: Icon.Dice,
+                text: LocalText.share,
+                onPress: onPressShareText,
+                icon: Icon.ShareText
             },
             {
                 favoriteBtn: {
@@ -245,15 +245,15 @@ const TopMovieScreen = () => {
                 }
             },
             {
+                text: LocalText.random,
+                onPress: onPressRandom,
+                icon: Icon.Dice,
+            },
+            {
                 text: LocalText.next,
                 onPress: () => onPressNext(-1, 'next'),
                 icon: Icon.Right,
                 scaleIcon: 1.5,
-            },
-            {
-                text: LocalText.share,
-                onPress: onPressShareText,
-                icon: Icon.ShareText
             },
         ] as BottomBarItem[]
     }, [idNumber, onPressNext, onPressRandom, onPressShareText])
