@@ -18,6 +18,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { track_PressRandom, track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
+import HeaderSettingButton from '../components/HeaderSettingButton';
 
 const TOAnim = Animated.createAnimatedComponent(TouchableOpacity)
 
@@ -168,12 +169,9 @@ const TheTrivia = ({
 
     useEffect(() => {
         navigation.setOptions({
-            headerRight: () =>
-                <TouchableOpacity onPress={onPressHeaderOption} style={styleSheet.headerOptionTO}>
-                    <MaterialCommunityIcons name={Icon.ThreeDots} color={theme.counterBackground} size={Size.Icon} />
-                </TouchableOpacity>
+            headerRight: () => <HeaderSettingButton onPress={onPressHeaderOption} />
         });
-    }, [theme, onPressHeaderOption])
+    }, [onPressHeaderOption])
 
     // save last visit category screen
 
