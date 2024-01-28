@@ -12,6 +12,7 @@ import { enableAllScreen, toggleDisableScreen } from '../../redux/UserDataSlice'
 import { GetIconOfScreen, IsContentScreen } from '../../handle/AppUtils';
 import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 import { FilterOnlyLetterAndNumberFromString } from '../../handle/UtilsTS';
+import { CommonStyles } from '../../constants/CommonConstants';
 
 const RemoveScreenView = () => {
   const theme = useContext(ThemeContext)
@@ -63,13 +64,15 @@ const RemoveScreenView = () => {
     <View style={style.masterView}>
       <Text style={style.intro_text}>{LocalText.remove_screen_intro}</Text>
 
-      <FlatList
-        data={allScreenNames}
-        numColumns={2}
-        keyExtractor={(item) => item}
-        renderItem={renderButton}
-        contentContainerStyle={style.flatList}
-      />
+      <View style={CommonStyles.flex_1}>
+        <FlatList
+          data={allScreenNames}
+          numColumns={2}
+          keyExtractor={(item) => item}
+          renderItem={renderButton}
+          contentContainerStyle={style.flatList}
+        />
+      </View>
 
       <TouchableOpacity onPress={onPressEnableAll} style={[style.enableAllTO,]}>
         <Text style={style.enableAllButtonText}>{LocalText.enable_all}</Text>
