@@ -185,6 +185,8 @@ const SettingView = () => {
         ref={scrollRef}
         showsVerticalScrollIndicator={false} contentContainerStyle={style.scrollView}>
         
+        {/* theme */}
+        
         <Text style={style.titleText}>{LocalText.theme}</Text>
 
         <ThemeScroll />
