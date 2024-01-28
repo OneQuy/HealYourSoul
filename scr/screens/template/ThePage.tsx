@@ -7,6 +7,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import Share from 'react-native-share';
 import { View, Text, Image, TouchableOpacity, ActivityIndicator, Alert, PanResponder, LayoutChangeEvent, GestureResponderEvent, Animated, StyleSheet, } from 'react-native'
 import React, { useCallback, useLayoutEffect, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { BorderRadius, Category, FontSize, Icon, LocalText, NeedReloadReason, Opacity, Outline, Size } from '../../constants/AppConstants';
@@ -583,6 +584,24 @@ const ThePage = ({ category }: ThePageProps) => {
             ]);
     }, [onPressNextPost]);
 
+    const onPressShareImage = useCallback(async () => {
+        if (!mediaURI.current)
+            return
+
+        track_SimpleWithCat(category, 'share')
+
+        Share
+            .open({
+                url: mediaURI.current,
+            })
+            .catch((err) => {
+                const error = ToCanPrint(err)
+
+                if (!error.includes('User did not share'))
+                    Alert.alert('Fail', error)
+            });
+    }, [])
+
     const onSwiped = useCallback((result: SwipeResult) => {
         if (!result.primaryDirectionIsHorizontalOrVertical)
             return
@@ -745,15 +764,10 @@ const ThePage = ({ category }: ThePageProps) => {
 
     const bottomBarItems = useMemo(() => {
         return [
-            // {
-            //     text: LocalText.share_image,
-            //     onPress: onPressShareImage,
-            //     icon: Icon.ShareImage
-            // },
             {
-                text: LocalText.save,
-                onPress: onPressDownloadMedia,
-                icon: Icon.Download
+                text: LocalText.share,
+                onPress: onPressShareImage,
+                icon: Icon.ShareImage
             },
             {
                 text: LocalText.previous,
@@ -773,6 +787,11 @@ const ThePage = ({ category }: ThePageProps) => {
                 onPress: () => onPressNextPost(true, true),
                 icon: Icon.Right,
                 scaleIcon: 1.5,
+            },
+            {
+                text: LocalText.save,
+                onPress: onPressDownloadMedia,
+                icon: Icon.Download
             },
         ] as BottomBarItem[]
     }, [onPressNextPost, post.current?.id, onPressDownloadMedia])
@@ -940,22 +959,3 @@ const ThePage = ({ category }: ThePageProps) => {
 }
 
 export default ThePage
-
-
-// const onPressShareImage = useCallback(async () => {
-//     if (!mediaURI.current)
-//         return
-
-//     track_SimpleWithCat(category, 'share')
-
-//     Share
-//         .open({
-//             url: mediaURI.current,
-//         })
-//         .catch((err) => {
-//             const error = ToCanPrint(err)
-
-//             if (!error.includes('User did not share'))
-//                 Alert.alert('Fail', error)
-//         });
-// }, [])
