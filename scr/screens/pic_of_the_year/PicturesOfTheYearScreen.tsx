@@ -82,7 +82,7 @@ const PicturesOfTheYearScreen = () => {
         return <View style={[{ backgroundColor: color }, styleSheet.rewardIconView, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
             {
                 selectingPhoto?.reward.includes('Grand') ?
-                    <MaterialCommunityIcons name={'crown'} color={theme.counterPrimary} size={Size.Icon} />
+                    <MaterialCommunityIcons name={'crown'} color={'black'} size={Size.Icon} />
                     :
                     <Text style={[styleSheet.rewaredPositionText]}>{positionText}</Text>
             }
