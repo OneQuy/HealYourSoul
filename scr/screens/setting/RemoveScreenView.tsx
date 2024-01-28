@@ -5,7 +5,7 @@ import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native
 import React, { useCallback, useContext, useMemo } from 'react'
 import { ThemeContext } from '../../constants/Colors';
 import { useNavigation } from '@react-navigation/native';
-import { BorderRadius, FontSize, Icon, LocalText, Outline, ScreenName, Size } from '../../constants/AppConstants';
+import { BorderRadius, FontSize, LocalText, Outline, ScreenName, Size } from '../../constants/AppConstants';
 import { widthPercentageToDP } from 'react-native-responsive-screen';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { enableAllScreen, toggleDisableScreen } from '../../redux/UserDataSlice';
@@ -29,7 +29,7 @@ const RemoveScreenView = () => {
   const style = useMemo(() => {
     return StyleSheet.create({
       masterView: { gap: Outline.GapVertical, flex: 1, backgroundColor: theme.background, alignItems: 'center' },
-      buttonContainerTO: { margin: Outline.GapHorizontal, minWidth: widthPercentageToDP(40), padding: Outline.GapVertical, borderColor: theme.primary, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth, gap: Outline.GapHorizontal, flexDirection: 'row' },
+      buttonContainerTO: { margin: Outline.GapHorizontal, minWidth: widthPercentageToDP(40), alignItems: 'center', padding: Outline.GapVertical, borderColor: theme.primary, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth, gap: Outline.GapHorizontal, flexDirection: 'row' },
       enableAllTO: { borderColor: theme.counterBackground, width: '80%', margin: Outline.Horizontal, padding: Outline.Horizontal, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth, },
       enableAllButtonText: { textAlign: 'center', color: theme.counterBackground, fontSize: FontSize.Small },
       intro_text: { textAlign: 'center', color: theme.counterBackground, fontSize: FontSize.Normal },
