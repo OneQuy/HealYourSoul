@@ -126,128 +126,138 @@ export const themes = {
 
         shouldStatusBarLight: true,
     } as ThemeColor,
+    
+    default_dark: {
+        background: '#1c1c1c',
+        counterBackground: '#fafafa',
 
-    // // light
+        primary: '#fafafa',
+        counterPrimary: '#1c1c1c',
 
-    // light_brown_light: { // l
-    //     background: '#fafafa',
-    //     counterBackground: '#1c1c1c',
+        shouldStatusBarLight: true,
+    } as ThemeColor,
 
-    //     primary: '#B19C81',
-    //     counterPrimary: '#fafafa',
+    // light
 
-    //     shouldStatusBarLight: false,
-    // } as ThemeColor,
+    light_brown_light: { // l
+        background: '#fafafa',
+        counterBackground: '#1c1c1c',
 
-    // gold_light: { // l
-    //     background: '#ffffff',
-    //     counterBackground: '#1c1c1c',
+        primary: '#B19C81',
+        counterPrimary: '#fafafa',
 
-    //     primary: '#f7c623',
-    //     counterPrimary: '#1c1c1c',
+        shouldStatusBarLight: false,
+    } as ThemeColor,
 
-    //     shouldStatusBarLight: false,
-    // } as ThemeColor,
+    gold_light: { // l
+        background: '#ffffff',
+        counterBackground: '#1c1c1c',
 
-    // pink_light: { // l
-    //     background: '#fafafa',
-    //     counterBackground: '#1c1c1c',
+        primary: '#f7c623',
+        counterPrimary: '#1c1c1c',
 
-    //     primary: '#F39A9D',
-    //     counterPrimary: '#fafafa',
+        shouldStatusBarLight: false,
+    } as ThemeColor,
 
-    //     shouldStatusBarLight: false,
-    // } as ThemeColor,
+    pink_light: { // l
+        background: '#fafafa',
+        counterBackground: '#1c1c1c',
 
-    // orange_light: { // l
-    //     background: '#fafafa',
-    //     counterBackground: '#1c1c1c',
+        primary: '#F39A9D',
+        counterPrimary: '#fafafa',
 
-    //     primary: '#fc9732',
-    //     counterPrimary: '#fafafa',
+        shouldStatusBarLight: false,
+    } as ThemeColor,
 
-    //     shouldStatusBarLight: false,
-    // } as ThemeColor,
+    orange_light: { // l
+        background: '#fafafa',
+        counterBackground: '#1c1c1c',
 
-    // red_light: { // l
-    //     background: '#fafafa',
-    //     counterBackground: '#1c1c1c',
+        primary: '#fc9732',
+        counterPrimary: '#fafafa',
 
-    //     primary: '#DE3C4B',
-    //     counterPrimary: '#fafafa',
+        shouldStatusBarLight: false,
+    } as ThemeColor,
 
-    //     shouldStatusBarLight: false,
-    // } as ThemeColor,
+    red_light: { // l
+        background: '#fafafa',
+        counterBackground: '#1c1c1c',
 
-    // brown_light: { // l
-    //     background: '#fafafa',
-    //     counterBackground: '#1c1c1c',
+        primary: '#DE3C4B',
+        counterPrimary: '#fafafa',
 
-    //     primary: '#C97C5D',
-    //     counterPrimary: '#fafafa',
+        shouldStatusBarLight: false,
+    } as ThemeColor,
 
-    //     shouldStatusBarLight: false,
-    // } as ThemeColor,
+    brown_light: { // l
+        background: '#fafafa',
+        counterBackground: '#1c1c1c',
 
-    // blue_light: { // l
-    //     background: '#fafafa',
-    //     counterBackground: '#1c1c1c',
+        primary: '#C97C5D',
+        counterPrimary: '#fafafa',
 
-    //     primary: '#3185FC',
-    //     counterPrimary: '#fafafa',
+        shouldStatusBarLight: false,
+    } as ThemeColor,
 
-    //     shouldStatusBarLight: false,
-    // } as ThemeColor,
+    blue_light: { // l
+        background: '#fafafa',
+        counterBackground: '#1c1c1c',
 
-    // green_light_2: { // l
-    //     background: '#fafafa',
-    //     counterBackground: '#1c1c1c',
+        primary: '#3185FC',
+        counterPrimary: '#fafafa',
 
-    //     primary: '#80CED7',
-    //     counterPrimary: '#fafafa',
+        shouldStatusBarLight: false,
+    } as ThemeColor,
 
-    //     shouldStatusBarLight: false,
-    // } as ThemeColor,
+    green_light_2: { // l
+        background: '#fafafa',
+        counterBackground: '#1c1c1c',
 
-    // banana_light: { // l
-    //     background: '#fafafa',
-    //     counterBackground: '#1c1c1c',
+        primary: '#80CED7',
+        counterPrimary: '#fafafa',
 
-    //     primary: '#84c454',
-    //     counterPrimary: '#fafafa',
+        shouldStatusBarLight: false,
+    } as ThemeColor,
 
-    //     shouldStatusBarLight: false,
-    // } as ThemeColor,
+    banana_light: { // l
+        background: '#fafafa',
+        counterBackground: '#1c1c1c',
 
-    // green_light: { // l
-    //     background: '#fafafa',
-    //     counterBackground: '#1c1c1c',
+        primary: '#84c454',
+        counterPrimary: '#fafafa',
 
-    //     primary: '#4a8758',
-    //     counterPrimary: '#fafafa',
+        shouldStatusBarLight: false,
+    } as ThemeColor,
 
-    //     shouldStatusBarLight: false,
-    // } as ThemeColor,
+    green_light: { // l
+        background: '#fafafa',
+        counterBackground: '#1c1c1c',
 
-    // purple_light: { // l
-    //     background: '#fafafa',
-    //     counterBackground: '#1c1c1c',
+        primary: '#4a8758',
+        counterPrimary: '#fafafa',
 
-    //     primary: '#6f3999',
-    //     counterPrimary: '#fafafa',
+        shouldStatusBarLight: false,
+    } as ThemeColor,
 
-    //     shouldStatusBarLight: false,
-    // } as ThemeColor,
+    purple_light: { // l
+        background: '#fafafa',
+        counterBackground: '#1c1c1c',
 
-    // dark_blue_light: {
-    //     background: '#fafafa',
-    //     counterBackground: '#1c1c1c',
+        primary: '#6f3999',
+        counterPrimary: '#fafafa',
 
-    //     primary: '#282F44',
-    //     counterPrimary: '#fafafa',
+        shouldStatusBarLight: false,
+    } as ThemeColor,
 
-    //     shouldStatusBarLight: false,
-    // } as ThemeColor,
+    dark_blue_light: {
+        background: '#fafafa',
+        counterBackground: '#1c1c1c',
+
+        primary: '#282F44',
+        counterPrimary: '#fafafa',
+
+        shouldStatusBarLight: false,
+    } as ThemeColor,
 
     default_light: {
         background: '#fafafa',
