@@ -112,26 +112,26 @@ const TheRandomShortText = ({
             } as ShareOptions)
     }, [text, theme])
 
-    const onPressShareImage = useCallback(() => {
-        if (!text)
-            return
+    // const onPressShareImage = useCallback(() => {
+    //     if (!text)
+    //         return
 
-        track_SimpleWithCat(category, 'share_as_image')
+    //     track_SimpleWithCat(category, 'share_as_image')
 
-        // @ts-ignore
-        viewShotRef.current.capture().then(async (uri: string) => {
-            Share
-                .open({
-                    url: uri,
-                })
-                .catch((err) => {
-                    const error = ToCanPrint(err)
+    //     // @ts-ignore
+    //     viewShotRef.current.capture().then(async (uri: string) => {
+    //         Share
+    //             .open({
+    //                 url: uri,
+    //             })
+    //             .catch((err) => {
+    //                 const error = ToCanPrint(err)
 
-                    if (!error.includes('User did not share'))
-                        Alert.alert('Fail', error)
-                });
-        })
-    }, [text, theme])
+    //                 if (!error.includes('User did not share'))
+    //                     Alert.alert('Fail', error)
+    //             });
+    //     })
+    // }, [text, theme])
 
     const onSwiped = useCallback((result: SwipeResult) => {
         if (result.primaryDirectionIsHorizontalOrVertical && !result.primaryDirectionIsPositive) {
@@ -143,11 +143,11 @@ const TheRandomShortText = ({
 
     const bottomBarItems = useMemo(() => {
         return [
-            {
-                text: LocalText.share_image,
-                onPress: onPressShareImage,
-                icon: Icon.ShareImage
-            },
+            // {
+            //     text: LocalText.share_image,
+            //     onPress: onPressShareImage,
+            //     icon: Icon.ShareImage
+            // },
             {
                 text: LocalText.copy,
                 onPress: onPressCopy,
@@ -164,7 +164,7 @@ const TheRandomShortText = ({
                 icon: Icon.ShareText,
             },
         ] as BottomBarItem[]
-    }, [onPressShareImage, onPressShareImage, onPressShareText, onPressCopy])
+    }, [onPressRandom, onPressShareText, onPressCopy])
 
     // on init once (for load first post)
 
