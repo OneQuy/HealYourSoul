@@ -237,7 +237,7 @@ const TheTrivia = ({
                                                 return <TOAnim onPress={() => onPressAnwser(answer)} style={[
                                                     { transform: [{ scale: userChosenAnswer ? 1 : mediaViewScaleAnimRef.current[index] }] },
                                                     styleSheet.answerTO,
-                                                    { backgroundColor: bgColor, gap: Outline.GapHorizontal, padding: Outline.GapVertical, borderRadius: BorderRadius.BR8 }]} key={answer}>
+                                                    { borderColor: theme.primary, backgroundColor: bgColor, gap: Outline.GapHorizontal, padding: Outline.GapVertical, borderRadius: BorderRadius.BR8 }]} key={answer}>
                                                     {
                                                         icon === '' ?
                                                             undefined :
