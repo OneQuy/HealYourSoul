@@ -1,4 +1,4 @@
-import { View } from 'react-native'
+import { StatusBar, View } from 'react-native'
 import React, { useEffect } from 'react'
 import { CommonStyles } from './constants/CommonConstants'
 import Navigator from './navigation/Navigator'
@@ -37,13 +37,14 @@ const AppRender = () => {
     if (Cheat('ClearAllUserData')) {
       dispatch(clearAllUserData());
       AsyncStorage.clear()
-      
+
       console.log('ClearAllUserData');
     }
   }, []);
 
   return (
     <ThemeContext.Provider value={theme} >
+      <StatusBar backgroundColor={theme.background} barStyle={theme.shouldStatusBarLight ? 'light-content' : 'dark-content'} />
       <View style={CommonStyles.flex_1}>
         {
           handled && result ?
