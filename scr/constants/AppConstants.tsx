@@ -7,7 +7,7 @@ export enum ScreenName {
   Meme = 'Meme',
   Awesome = 'Awesome',
   Typo = 'Typography',
-  Info = 'Infography',
+  Info = 'Infographic',
   Sunset = 'Nature',
   Quote = 'Motivation',
   CatDog = 'Animal',
@@ -17,17 +17,17 @@ export enum ScreenName {
   Art = 'Art',
   Cute = 'Cute',
   Sarcasm = 'Sarcasm',
-  IAPPage = 'Premium',
+  IAPPage = 'Support App',
   WikiFact = 'Random Wikipedia',
   ShortFact = 'Fun Fact', // ninja fact
   Picture = 'Random Picture', // unsplash
-  Joke = 'Random Joke', // ninja joke
-  QuoteText = 'Random Quote',
+  Joke = 'Joke', // ninja joke
+  QuoteText = 'Quote',
   Trivia = 'Trivia',
   AwardPicture = 'Photos of Year',
-  FunWebsite = 'Fun Websites',
+  FunWebsite = 'Fun Website',
   TopMovie = 'Top 250 Movies',
-  BestShortFilms = 'Best Short Films',
+  BestShortFilms = 'Good Short Film',
   RandomMeme = 'Random Meme',
   Setting = 'Setting',
 }
