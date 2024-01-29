@@ -6,6 +6,7 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { setTheme } from '../../redux/MiscSlice';
 import { Outline } from '../../constants/AppConstants';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
+import { track_Theme } from '../../handle/tracking/GoodayTracking';
 
 const size = heightPercentageToDP(3.5)
 
@@ -39,6 +40,8 @@ const ThemeScroll = ({ mode }: { mode: 'lights' | 'darks' | 'specials' | 'all' }
         const onPress = () => {
             console.log('set theme: ' + theme);
 
+            track_Theme(theme)
+            
             dispatch(setTheme(theme as ThemeType))
         }
 
