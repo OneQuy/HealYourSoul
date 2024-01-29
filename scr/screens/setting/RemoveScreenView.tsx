@@ -6,7 +6,7 @@ import React, { useCallback, useContext, useMemo } from 'react'
 import { ThemeContext } from '../../constants/Colors';
 import { useNavigation } from '@react-navigation/native';
 import { BorderRadius, FontSize, LocalText, Outline, ScreenName, Size } from '../../constants/AppConstants';
-import { widthPercentageToDP } from 'react-native-responsive-screen';
+import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { enableAllScreen, toggleDisableScreen } from '../../redux/UserDataSlice';
 import { GetIconOfScreen, IsContentScreen } from '../../handle/AppUtils';
@@ -29,13 +29,12 @@ const RemoveScreenView = () => {
   const style = useMemo(() => {
     return StyleSheet.create({
       masterView: { gap: Outline.GapVertical, flex: 1, backgroundColor: theme.background, alignItems: 'center' },
-      buttonContainerTO: { margin: Outline.GapHorizontal, minWidth: widthPercentageToDP(40), alignItems: 'center', padding: Outline.GapVertical, borderColor: theme.primary, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth, gap: Outline.GapHorizontal, flexDirection: 'row' },
+      buttonContainerTO: { margin: Outline.GapHorizontal, minHeight: heightPercentageToDP(5), minWidth: widthPercentageToDP(40), alignItems: 'center', padding: Outline.GapVertical, borderColor: theme.primary, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth, gap: Outline.GapHorizontal, flexDirection: 'row' },
       enableAllTO: { borderColor: theme.counterBackground, width: '80%', margin: Outline.Horizontal, padding: Outline.Horizontal, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth, },
       enableAllButtonText: { textAlign: 'center', color: theme.counterBackground, fontSize: FontSize.Small },
       intro_text: { textAlign: 'center', color: theme.counterBackground, fontSize: FontSize.Normal },
       buttonText: { textAlign: 'center', color: theme.counterPrimary, fontSize: FontSize.Small, flex: 1 },
       buttonText_Disable: { textAlign: 'center', color: theme.counterBackground, fontSize: FontSize.Small, flex: 1 },
-      flatList: { flex: 1 },
     })
   }, [theme])
 
@@ -70,7 +69,7 @@ const RemoveScreenView = () => {
           numColumns={2}
           keyExtractor={(item) => item}
           renderItem={renderButton}
-          contentContainerStyle={style.flatList}
+          showsVerticalScrollIndicator={false}
         />
       </View>
 
