@@ -38,8 +38,8 @@ export const track_FirstOpenOfTheDayAsync = async () => {
     }
 }
 
-export const track_AppStateActive = () => {
-    const event = 'app_state_active'
+export const track_AppStateActive = (isActive: boolean) => {
+    const event = isActive ? 'app_state_active' : 'app_state_inactive'
 
     MainTrack(event,
         [

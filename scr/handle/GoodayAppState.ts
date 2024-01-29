@@ -55,11 +55,15 @@ const onActiveAsync = async () => {
 
     // track app state active
 
-    track_AppStateActive()
+    track_AppStateActive(true)
 }
 
 const onBackgroundAsync = async () => {
     setNotificationAsync()
+
+    // track app state inactive
+
+    track_AppStateActive(false)
 }
 
 const onStateChanged = (state: AppStateStatus) => {
