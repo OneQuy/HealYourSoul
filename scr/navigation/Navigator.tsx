@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React, { useContext, useEffect, useMemo } from 'react'
+import React, { useCallback, useContext, useEffect, useMemo } from 'react'
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { ScreenName } from '../constants/AppConstants';
@@ -106,6 +106,12 @@ const Navigator = ({ initialRouteName }: MainNavigatorProps) => {
     })
   }, [theme])
 
+  const renderListScreens = useMemo(() => {
+    return ScreenList.map(([screenName, screen]) => {
+      return <Drawer.Screen key={screenName} name={screenName} component={screen} />
+    })
+  }, [])
+
   useEffect(() => {
     // init app state
 
@@ -132,9 +138,7 @@ const Navigator = ({ initialRouteName }: MainNavigatorProps) => {
         }}
       >
         {
-          ScreenList.map(([screenName, screen]) => {
-            return <Drawer.Screen key={screenName} name={screenName} component={screen} />
-          })
+          renderListScreens
         }
       </Drawer.Navigator>
     </NavigationContainer>
