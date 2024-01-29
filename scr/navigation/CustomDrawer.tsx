@@ -60,7 +60,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
             Linking.openURL(data.link)
         }
       },
-      data.color && data.color.length > 0 ? data.color : theme.primary]
+      data.color && data.color.length > 0 ? data.color : theme.counterBackground]
   }, [GetAppConfig()?.notice, theme])
 
   const showUpdateBtn = useMemo(() => {
