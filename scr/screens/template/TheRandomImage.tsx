@@ -195,6 +195,7 @@ const TheRandomImage = ({
             contentView: { width: '100%', height: '100%', gap: Outline.GapVertical, paddingTop: Outline.GapHorizontal },
             headerOptionTO: { marginRight: 15 },
             imageTO: { flex: 1 },
+            authorText: { marginLeft: Outline.GapVertical, fontSize: FontSize.Small, color: theme.counterBackground },
         })
     }, [theme])
 
@@ -226,7 +227,6 @@ const TheRandomImage = ({
                                             onTouchStart={onBigViewStartTouch}
                                             onTouchEnd={onBigViewEndTouch}
                                             style={[styleSheet.imageTO, { transform: [{ scale: mediaViewScaleAnimRef }] }]}
-                                        // onTouchEnd={onPressRandom}
                                         >
                                             <ImageAsMap
                                                 uri={currentItem?.uri}
@@ -237,6 +237,7 @@ const TheRandomImage = ({
                                                 onLoadedImage={onLoadedImage}
                                             />
                                         </Animated.View>
+                                        <Text numberOfLines={1} style={styleSheet.authorText}>{LocalText.credit_to_author}</Text>
                                     </View>
                             }
                         </View>
