@@ -752,7 +752,7 @@ const ThePage = ({ category }: ThePageProps) => {
         return StyleSheet.create({
             flex1: { flex: 1 },
             headerOptionTO: { marginRight: 15 },
-            authorView: { paddingHorizontal: Outline.Horizontal, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' },
+            authorView: { paddingHorizontal: Outline.GapVertical, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' },
             authorText: { flex: 1, fontSize: FontSize.Small, color: theme.counterBackground },
             authorCopyTO: { marginLeft: Outline.Horizontal, justifyContent: 'center', alignItems: 'center' },
             titleTxt: { marginHorizontal: Outline.Horizontal, marginTop: Outline.GapHorizontal, textAlignVertical: 'center', fontSize: FontSize.Normal, color: theme.counterBackground },
