@@ -188,7 +188,7 @@ const SettingView = () => {
         </TouchableOpacity>
         <TouchableOpacity onPress={() => onPress('facebook')} style={style.communityIconTO} >
           <MaterialCommunityIcons name={'facebook'} color={theme.counterPrimary} size={Size.Icon} />
-          <Text style={style.communitiyTOTxt}>Facecbook</Text>
+          <Text style={style.communitiyTOTxt}>Facebook</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => onPress('twitter')} style={style.communityIconTO} >
           <MaterialCommunityIcons name={'twitter'} color={theme.counterPrimary} size={Size.Icon} />
