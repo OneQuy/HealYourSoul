@@ -69,30 +69,38 @@ const Drawer = createDrawerNavigator<DrawerParamList>();
 
 const ScreenList: ScreenNamePair[] = [
   [ScreenName.Meme, MemeScreen],
-  [ScreenName.Awesome, AwesomeScreen],
-  [ScreenName.Info, InfoScreen],
-  [ScreenName.Typo, TypoScreen],
-  [ScreenName.Sunset, SunsetScreen],
   [ScreenName.RandomMeme, RandomMemeScreen],
-  [ScreenName.Comic, ComicScreen],
-  [ScreenName.NSFW, NSFWScreen],
+  [ScreenName.Comic, ComicScreen], // warm
   [ScreenName.CatDog, CatDogScreen],
-  [ScreenName.Quote, QuoteScreen],
-  [ScreenName.Satisfying, SatisfyingScreen],
-  [ScreenName.Love, LoveScreen],
-  [ScreenName.Sarcasm, SarcasmScreen],
-  [ScreenName.Cute, CuteScreen],
+  [ScreenName.NSFW, NSFWScreen],
+  [ScreenName.Quote, QuoteScreen], // movivation
   [ScreenName.Art, ArtScreen],
-  [ScreenName.Trivia, TheTriviaScreen],
+  [ScreenName.Awesome, AwesomeScreen],
+  [ScreenName.Typo, TypoScreen],
+  [ScreenName.Cute, CuteScreen],
+  [ScreenName.Sunset, SunsetScreen], // picked nature
+  [ScreenName.Love, LoveScreen],
+  [ScreenName.Satisfying, SatisfyingScreen],
+  [ScreenName.Sarcasm, SarcasmScreen],
+  [ScreenName.Info, InfoScreen],
+  
   [ScreenName.WikiFact, WikipediaScreen],
+  [ScreenName.Trivia, TheTriviaScreen],
+  
+  
   [ScreenName.ShortFact, NinjaFactScreen],
   [ScreenName.Joke, NinjaJokeScreen],
   [ScreenName.QuoteText, QuoteTextScreen],
-  [ScreenName.Picture, PictureScreen],
-  [ScreenName.AwardPicture, PicturesOfTheYearScreen],
-  [ScreenName.FunWebsite, FunWebsitesScreen],
-  [ScreenName.TopMovie, TopMovieScreen],
+  
   [ScreenName.BestShortFilms, BestShortFilmsScreen],
+  [ScreenName.FunWebsite, FunWebsitesScreen],
+  [ScreenName.AwardPicture, PicturesOfTheYearScreen],
+  
+  [ScreenName.Picture, PictureScreen],
+  [ScreenName.TopMovie, TopMovieScreen],
+
+  // app
+
   [ScreenName.IAPPage, IAPPage],
   [ScreenName.Setting, SettingScreen],
 ]
