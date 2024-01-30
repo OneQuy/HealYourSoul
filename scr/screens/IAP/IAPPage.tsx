@@ -4,13 +4,13 @@ import { BorderRadius, FontSize, FontWeight, LocalText, Outline } from '../../co
 import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { FetchListroductsAsync, IAPProduct, InitIAPAsync, PurchaseAsync } from '../../handle/IAP';
-import { SafeDateString, ToCanPrintError } from '../../handle/UtilsTS';
+import { SafeDateString, ToCanPrint, ToCanPrintError } from '../../handle/UtilsTS';
 import { Product } from 'react-native-iap';
 import { IsInternetAvailableAsync } from '../../handle/NetLord';
 import IAPPage_Subscribed from './IAPPage_Subscribed';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { setSubscribe } from '../../redux/UserDataSlice';
-import { GetExpiredDateAndDaysLeft } from '../../handle/AppUtils';
+import { GetExpiredDateAndDaysLeft, HandleError } from '../../handle/AppUtils';
 import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 
 const ids = [
@@ -76,7 +76,7 @@ const IAPPage = () => {
     setProcessingId('')
 
     if (res === undefined) { // success
-      track_SimpleWithParam('iap_resulted', 'successssss')
+      track_SimpleWithParam('iap_resulted', 'successssss_' + id)
 
       dispatch(setSubscribe(id))
 
@@ -87,6 +87,8 @@ const IAPPage = () => {
     }
     else { // fail
       track_SimpleWithParam('iap_resulted', 'failed')
+
+      HandleError('IAP_Failed', ToCanPrint(res), true)
 
       Alert.alert(
         'Error',
