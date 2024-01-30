@@ -294,6 +294,7 @@ const WikipediaScreen = () => {
                                                     <Text selectable adjustsFontSizeToFit style={[{ flexWrap: 'wrap', color: theme.counterBackground, fontSize: FontSize.Small_L }]}>{currentContent}</Text>
                                                 </ScrollView>
                                             </View>
+                                            <Text numberOfLines={1} style={[{ color: theme.counterBackground }, styleSheet.authorText]}>{LocalText.credit_to_author}</Text>
                                             {
                                                 !showFull || !currentLink ? undefined :
                                                     <View style={[{ backgroundColor: 'green' }, CommonStyles.width100Percent_Height100Percent_PositionAbsolute_JustifyContentCenter_AlignItemsCenter]}>
@@ -328,6 +329,7 @@ const styleSheet = StyleSheet.create({
     image: { width: '100%', height: heightPercentageToDP(30) },
     contentView: { flex: 1, gap: Outline.GapVertical },
     contentScrollView: { flex: 1, marginHorizontal: Outline.GapVertical_2 },
+    authorText: { marginLeft: Outline.GapVertical, fontSize: FontSize.Small },
     titleView: { fontSize: FontSize.Normal, fontWeight: FontWeight.B500 },
     titleTO: { marginHorizontal: Outline.GapVertical_2, flexDirection: 'row', justifyContent: 'space-between' }
 })
