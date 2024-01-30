@@ -317,11 +317,14 @@ const FunWebsitesScreen = () => {
                                                 <Text selectable style={[styleSheet.titleView, { color: theme.counterBackground, }]}>{selectingItem?.url}</Text>
                                                 <MaterialCommunityIcons name={Icon.Link} color={theme.counterBackground} size={Size.IconSmaller} />
                                             </TouchableOpacity>
+                                            {/* content */}
                                             <View style={styleSheet.contentScrollView}>
                                                 <ScrollView >
                                                     <Text selectable adjustsFontSizeToFit style={[{ flexWrap: 'wrap', color: theme.counterBackground, fontSize: FontSize.Small_L }]}>{selectingItem?.desc}</Text>
                                                 </ScrollView>
                                             </View>
+                                            {/* author */}
+                                            <Text numberOfLines={1} style={[{ color: theme.counterBackground }, styleSheet.authorText]}>{LocalText.credit_to_author}</Text>
                                             {
                                                 !showFull || !selectingItem?.url ? undefined :
                                                     <View style={[CommonStyles.width100Percent_Height100Percent_PositionAbsolute_JustifyContentCenter_AlignItemsCenter]}>
@@ -359,6 +362,7 @@ const styleSheet = StyleSheet.create({
     image: { width: widthPercentageToDP(100), height: heightPercentageToDP(50) },
     contentView: { flex: 1, gap: Outline.GapVertical, paddingTop: Outline.GapHorizontal },
     contentScrollView: { flex: 1, marginHorizontal: Outline.GapVertical_2 },
+    authorText: { marginLeft: Outline.GapVertical, fontSize: FontSize.Small },
     titleView: { fontSize: FontSize.Normal, fontWeight: FontWeight.B500 },
     titleTO: { marginHorizontal: Outline.GapVertical_2, flexDirection: 'row', justifyContent: 'space-between' },
     titleText: { flex: 1, textAlign: 'center', fontSize: FontSize.Normal },
