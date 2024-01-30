@@ -644,16 +644,19 @@ export const ToCanPrint = (something: any) => {
     return something;
 }
 
-export const OpenYoutubeAsync = async (videoID: string): Promise<boolean> => {
+export const OpenYoutubeAsync = async (videoID: string, openBrowserIfFail: boolean = true): Promise<boolean> => {
     const url = (Platform.OS === 'android' ? 'vnd.youtube:///' : 'youtube://') + videoID
 
     const can = await Linking.canOpenURL(url)
 
-    if (!can)
+    if (!can) {
+        if (openBrowserIfFail === true)
+            Linking.openURL('https://youtu.be/' + videoID)
+        
         return false
+    }
 
     Linking.openURL(url)
-    
     return true
 }
 
