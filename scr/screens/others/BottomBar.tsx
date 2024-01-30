@@ -27,23 +27,27 @@ const BottomBar = ({ items }: { items: BottomBarItem[] }) => {
         })
     }, [theme])
 
+    const renderedItems = useMemo(() => {
+        return items.map((item) => {
+            if (item.favoriteBtn)
+                return <FavoriteButton key={'favorite'} {...item.favoriteBtn} />
+            else {
+                return (
+                    <TouchableOpacity key={item.text} onPress={item.onPress} style={styleSheet.mainBtnTO}>
+                        <View style={{ transform: [{ scale: typeof item.scaleIcon === 'number' ? item.scaleIcon : 1 }] }}>
+                            <MaterialCommunityIcons name={item.icon} color={theme.counterPrimary} size={Size.Icon} />
+                        </View>
+                        <Text style={styleSheet.mainBtnTxt}>{item.text}</Text>
+                    </TouchableOpacity>
+                )
+            }
+        })
+    }, [items, theme, styleSheet])
+
     return (
         <View style={styleSheet.masterView}>
             {
-                items.map((item) => {
-                    if (item.favoriteBtn)
-                        return <FavoriteButton key={'favorite'} {...item.favoriteBtn} />
-                    else {
-                        return (
-                            <TouchableOpacity key={item.text} onPress={item.onPress} style={styleSheet.mainBtnTO}>
-                                <View style={{ transform: [{ scale: typeof item.scaleIcon === 'number' ? item.scaleIcon : 1 }] }}>
-                                    <MaterialCommunityIcons name={item.icon} color={theme.counterPrimary} size={Size.Icon} />
-                                </View>
-                                <Text style={styleSheet.mainBtnTxt}>{item.text}</Text>
-                            </TouchableOpacity>
-                        )
-                    }
-                })
+                renderedItems
             }
         </View>
     )
