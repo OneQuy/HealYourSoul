@@ -52,12 +52,13 @@ const SettingView = () => {
       checkbox: { flexDirection: 'row', gap: Outline.GapHorizontal, alignItems: 'center', justifyContent: 'space-between' },
       textInputConView: { height: heightPercentageToDP(20), padding: Outline.GapVertical, borderColor: theme.counterBackground, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth },
       emailCopyTO: { justifyContent: 'center', alignItems: 'center' },
-      communityIconTO: { justifyContent: 'center', alignItems: 'center' },
+      communityIconTO: { flex: 1, flexDirection: 'row', gap: Outline.GapHorizontal, backgroundColor: theme.primary, paddingVertical: Outline.GapVertical, borderRadius: BorderRadius.BR8, justifyContent: 'center', alignItems: 'center' },
       titleText: { color: theme.primary, fontSize: FontSize.Small_L, fontWeight: FontWeight.B600 },
       litmiFeedbackText: { color: theme.counterBackground, fontSize: FontSize.Small_L, fontWeight: '300' },
       btnText: { textAlign: 'center', color: theme.counterPrimary, fontSize: FontSize.Small_L, fontWeight: FontWeight.B500 },
       descNotiText: { color: theme.counterBackground, fontSize: FontSize.Small },
       contentTxt: { color: theme.counterBackground, fontSize: FontSize.Small_L },
+      communitiyTOTxt: { color: theme.counterPrimary, fontSize: FontSize.Small_L },
       statText: { color: theme.counterBackground, fontSize: FontSize.Small_L },
       sendFeedbackTO: { backgroundColor: theme.primary, minWidth: 100, alignSelf: 'center', paddingVertical: Outline.GapVertical, paddingHorizontal: Outline.GapVertical_2, borderRadius: BorderRadius.BR8 },
       shareTO: { backgroundColor: theme.primary, flexDirection: 'row', justifyContent: 'center', gap: Outline.GapHorizontal, flex: 1, alignSelf: 'center', paddingVertical: Outline.GapVertical, paddingHorizontal: Outline.GapVertical_2, borderRadius: BorderRadius.BR8, },
@@ -178,6 +179,26 @@ const SettingView = () => {
     })()
   }, [])
 
+  const renderCommunityBtns = useMemo(() => {
+    return (
+      <View style={style.flexRowWithGap}>
+        <TouchableOpacity onPress={() => onPress('telegram')} style={style.communityIconTO} >
+          <MaterialIcons name={'telegram'} color={theme.counterPrimary} size={Size.Icon} />
+          <Text style={style.communitiyTOTxt}>Telegram</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => onPress('facebook')} style={style.communityIconTO} >
+          <MaterialCommunityIcons name={'facebook'} color={theme.counterPrimary} size={Size.Icon} />
+          <Text style={style.communitiyTOTxt}>Facecbook</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => onPress('twitter')} style={style.communityIconTO} >
+          <MaterialCommunityIcons name={'twitter'} color={theme.counterPrimary} size={Size.Icon} />
+          <Text style={style.communitiyTOTxt}>X (Twitter)</Text>
+        </TouchableOpacity>
+      </View>
+    )
+
+  }, [theme, style])
+
   return (
     <View style={style.masterView}>
       <ScrollView
@@ -188,13 +209,13 @@ const SettingView = () => {
         {/* theme */}
 
         <Text style={style.titleText}>{LocalText.theme}</Text>
-        
+
         <Text style={style.contentTxt}>{LocalText.lights_mode}</Text>
         <ThemeScroll mode='lights' />
-        
+
         <Text style={style.contentTxt}>{LocalText.darks_mode}</Text>
         <ThemeScroll mode='darks' />
-        
+
         <Text style={style.contentTxt}>{LocalText.specials_theme}</Text>
         <ThemeScroll mode='specials' />
 
@@ -267,17 +288,10 @@ const SettingView = () => {
         {/* community */}
 
         <Text style={style.titleText}>{LocalText.community}</Text>
-        <View style={style.flexRowWithGap}>
-          <TouchableOpacity onPress={() => onPress('telegram')} style={style.communityIconTO} >
-            <MaterialIcons name={'telegram'} color={theme.counterBackground} size={Size.IconMedium} />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => onPress('facebook')} style={style.communityIconTO} >
-            <MaterialCommunityIcons name={'facebook'} color={theme.counterBackground} size={Size.IconMedium} />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => onPress('twitter')} style={style.communityIconTO} >
-            <MaterialCommunityIcons name={'twitter'} color={theme.counterBackground} size={Size.IconMedium} />
-          </TouchableOpacity>
-        </View>
+        {
+          renderCommunityBtns
+        }
+
         {
           hair100Width()
         }
