@@ -21,8 +21,8 @@ const BottomBar = ({ items }: { items: BottomBarItem[] }) => {
 
     const styleSheet = useMemo(() => {
         return StyleSheet.create({
-            masterView: { marginBottom: Outline.GapVertical, borderRadius: BorderRadius.BR8, paddingVertical: Outline.GapVertical_2, marginHorizontal: Outline.GapVertical, backgroundColor: theme.primary, flexDirection: 'row', justifyContent: 'space-between', },
-            mainBtnsTO: { justifyContent: 'center', flex: 1, alignItems: 'center', gap: Outline.GapVertical },
+            masterView: { marginBottom: Outline.GapVertical, borderRadius: BorderRadius.BR8, marginHorizontal: Outline.GapVertical, backgroundColor: theme.primary, flexDirection: 'row', justifyContent: 'space-between', },
+            mainBtnTO: { paddingVertical: Outline.GapVertical_2, justifyContent: 'center', flex: 1, alignItems: 'center', gap: Outline.GapVertical },
             mainBtnTxt: { color: theme.counterPrimary, fontSize: FontSize.Small },
         })
     }, [theme])
@@ -35,7 +35,7 @@ const BottomBar = ({ items }: { items: BottomBarItem[] }) => {
                         return <FavoriteButton key={'favorite'} {...item.favoriteBtn} />
                     else {
                         return (
-                            <TouchableOpacity key={item.text} onPress={item.onPress} style={styleSheet.mainBtnsTO}>
+                            <TouchableOpacity key={item.text} onPress={item.onPress} style={styleSheet.mainBtnTO}>
                                 <View style={{ transform: [{ scale: typeof item.scaleIcon === 'number' ? item.scaleIcon : 1 }] }}>
                                     <MaterialCommunityIcons name={item.icon} color={theme.counterPrimary} size={Size.Icon} />
                                 </View>
