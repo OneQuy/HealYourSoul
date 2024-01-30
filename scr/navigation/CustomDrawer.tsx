@@ -156,12 +156,12 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
           {/* setting */}
           <TouchableOpacity onPress={onPressSettingButton} style={[style.settingBtnView, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter, { borderColor: theme.primary, backgroundColor: isFocusSetting ? theme.primary : undefined }]}>
             <MaterialIcons name={Icon.Setting} color={colorSettingText} size={Size.IconTiny} />
-            <Text style={[{ color: colorSettingText }, style.settingBtnText]}>{LocalText.setting}</Text>
+            <Text style={[{ color: colorSettingText }]}>{LocalText.setting}</Text>
           </TouchableOpacity>
           {/* rate */}
           <TouchableOpacity onPress={RateApp} style={[style.settingBtnView, { borderColor: theme.primary }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]}>
             <MaterialIcons name={Icon.Star} color={theme.primary} size={Size.IconTiny} />
-            <Text style={[{ color: theme.primary }, style.settingBtnText]}>{LocalText.rate_me}</Text>
+            <Text style={[{ color: theme.primary }]}>{LocalText.rate_me}</Text>
           </TouchableOpacity>
         </View>
 
@@ -177,7 +177,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
           {
             !showUpdateBtn ? undefined :
               <View style={[style.versionBtnView, { backgroundColor: theme.primary, }]}>
-                <Text style={[style.versionText, { color: theme.counterPrimary, }]}>{LocalText.update}</Text>
+                <Text style={[style.updateBtnTxt, { color: theme.counterPrimary, }]}>{LocalText.update}</Text>
               </View>
           }
         </View>
@@ -200,8 +200,7 @@ const style = StyleSheet.create({
   premiumText: { color: 'black', fontSize: FontSize.Small_L, fontWeight: FontWeight.B500 },
   versionContainerView: { flexDirection: 'row', alignItems: 'center' },
   versionBtnView: { marginLeft: Outline.GapVertical, borderRadius: BorderRadius.BR8, padding: Outline.VerticalMini },
-  versionText: { fontWeight: FontWeight.B500 },
-  settingBtnText: { fontSize: FontSize.Small },
+  updateBtnTxt: { fontWeight: FontWeight.B500 },
   settingBtnView: { padding: Outline.VerticalMini, borderWidth: StyleSheet.hairlineWidth, borderRadius: BorderRadius.BR8, flexDirection: 'row', gap: Outline.GapHorizontal },
   settingContainer: { flexDirection: 'row', gap: Outline.GapHorizontal, marginRight: Outline.Horizontal },
 })

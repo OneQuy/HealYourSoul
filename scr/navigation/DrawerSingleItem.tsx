@@ -2,7 +2,7 @@ import { Text, StyleSheet, TouchableOpacity, View } from 'react-native'
 import React, { useCallback, useContext, useMemo } from 'react'
 import { DrawerContentComponentProps } from '@react-navigation/drawer'
 import { CommonActions, DrawerActions } from '@react-navigation/native'
-import { BorderRadius, Icon, Outline, ScreenName, Size } from '../constants/AppConstants'
+import { BorderRadius, FontSize, Icon, Outline, ScreenName, Size } from '../constants/AppConstants'
 import { CommonStyles } from '../constants/CommonConstants'
 
 // @ts-ignore
@@ -39,7 +39,7 @@ const DrawerSingleItem = ({
             <View style={[style.iconView, { marginRight: Outline.GapVertical, }]}>
                 <MaterialCommunityIcons name={icon} color={color} size={Size.IconSmaller} />
             </View>
-            <Text style={[style.labelText, { color: color }]}>{route.name}</Text>
+            <Text adjustsFontSizeToFit numberOfLines={2} style={[style.labelText, { color: color }]}>{route.name}</Text>
         </TouchableOpacity>
     )
 }
@@ -47,7 +47,17 @@ const DrawerSingleItem = ({
 export default DrawerSingleItem
 
 const style = StyleSheet.create({
-    masterTO: { flexDirection: 'row', flex: 1, borderWidth: StyleSheet.hairlineWidth, },
-    iconView: { height: '100%', justifyContent: 'center', },
-    labelText: { flex: 1, textAlign: 'center', }
+    masterTO: {
+        flexDirection: 'row',
+        flex: 1,
+        borderWidth: StyleSheet.hairlineWidth,
+    },
+    iconView: {
+        justifyContent: 'center',
+    },
+    labelText: {
+        flex: 1,
+        textAlign: 'center',
+        // fontSize: FontSize.Small,
+    }
 })

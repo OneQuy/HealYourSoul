@@ -3,7 +3,7 @@ import React from 'react'
 import { RandomColor, ToCanPrint } from '../handle/UtilsTS'
 import { DrawerContentComponentProps } from '@react-navigation/drawer'
 import DrawerSingleItem from './DrawerSingleItem'
-import { Outline } from '../constants/AppConstants'
+import { FontSize, Outline } from '../constants/AppConstants'
 import { heightPercentageToDP } from 'react-native-responsive-screen'
 
 type Props = {
@@ -30,5 +30,8 @@ const DrawerCoupleItem = ({
 export default DrawerCoupleItem
 
 const style = StyleSheet.create({
-    masterView: { flexDirection: 'row', height: heightPercentageToDP(6.3), width: '100%' }
+    masterView: {
+        flexDirection: 'row',
+        height: heightPercentageToDP(5.5)
+    }
 })
