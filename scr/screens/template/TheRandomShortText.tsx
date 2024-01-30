@@ -209,14 +209,17 @@ const TheRandomShortText = ({
                                             <Text style={{ fontSize: FontSize.Small_L, color: theme.counterBackground }}>{LocalText.tap_to_retry}</Text>
                                         </TouchableOpacity>
                                         :
-                                        <TouchableWithoutFeedback onPress={() => onPressRandom(true)}>
-                                            <Text selectable style={{ marginHorizontal: Outline.Horizontal, color: theme.counterBackground, fontSize: FontSize.Big }}>{text}</Text>
-                                        </TouchableWithoutFeedback>
+                                        <Text selectable style={{ marginHorizontal: Outline.Horizontal, color: theme.counterBackground, fontSize: FontSize.Big }}>{text}</Text>
                                 }
                             </Animated.View>
                     }
                 </View>
             </ViewShot>
+
+            {
+                handling || reasonToReload.current !== NeedReloadReason.None ? undefined :
+                    <Text numberOfLines={1} style={[{ color: theme.counterBackground }, styleSheet.authorText]}>{LocalText.credit_to_author}</Text>
+            }
 
             <BottomBar items={bottomBarItems} />
 
@@ -231,5 +234,6 @@ export default TheRandomShortText
 
 const styleSheet = StyleSheet.create({
     masterView: { flex: 1, gap: Outline.GapVertical, },
-    headerOptionTO: { marginRight: 15 }
+    headerOptionTO: { marginRight: 15 },
+    authorText: { marginLeft: Outline.GapVertical, fontSize: FontSize.Small },
 })
