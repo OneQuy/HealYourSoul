@@ -288,6 +288,7 @@ const SettingView = () => {
         {/* community */}
 
         <Text style={style.titleText}>{LocalText.community}</Text>
+        <Text style={style.contentTxt}>{LocalText.community_content}:</Text>
         {
           renderCommunityBtns
         }
@@ -299,6 +300,8 @@ const SettingView = () => {
         {/* feedback */}
 
         <Text onPress={onPressGetLogStorage} style={style.titleText}>{LocalText.feedback}<Text style={style.litmiFeedbackText}>{' (' + feedbackText.length + '/' + limitFeedback + ')'}</Text></Text>
+        <Text style={style.contentTxt}>{LocalText.feedback_info}</Text>
+
         <View style={style.textInputConView}>
           <TextInput
             style={style.sendFeedbackInput}
