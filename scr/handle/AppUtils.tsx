@@ -360,6 +360,10 @@ export const RateApp = async () => {
     // fail
 
     OpenStore()
+
+    if (typeof res !== 'boolean') {
+        HandleError('RateApp', ToCanPrint(res), true)
+    }
 }
 
 export const CopyAndToast = (s: string, theme: ThemeColor) => {
