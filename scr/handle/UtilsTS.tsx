@@ -13,7 +13,7 @@ number
 other utils
 */
 
-import { Alert, Platform, AlertButton, PermissionsAndroid } from "react-native";
+import { Alert, Platform, AlertButton, PermissionsAndroid, Linking } from "react-native";
 import { Buffer as TheBuffer } from 'buffer'
 
 // const -------------------------
@@ -537,7 +537,7 @@ export const IsTodayAndSameHour = (date: Date): boolean => {
         return false
 
     const now = new Date()
-    
+
     return date.getHours() === now.getHours()
 }
 
@@ -642,6 +642,19 @@ export const ToCanPrint = (something: any) => {
     }
 
     return something;
+}
+
+export const OpenYoutubeAsync = async (videoID: string): Promise<boolean> => {
+    const url = (Platform.OS === 'android' ? 'vnd.youtube:///' : 'youtube://') + videoID
+
+    const can = await Linking.canOpenURL(url)
+
+    if (!can)
+        return false
+
+    Linking.openURL(url)
+    
+    return true
 }
 
 /**

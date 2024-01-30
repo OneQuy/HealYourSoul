@@ -8,7 +8,7 @@ import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedRelo
 import Share from 'react-native-share';
 import { NetLord } from '../../handle/NetLord'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
-import { SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
+import { HandleError, SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
 import ViewShot from 'react-native-view-shot'
 import { CommonStyles } from '../../constants/CommonConstants'
 import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
@@ -16,7 +16,7 @@ import { Streak, ShortFilm } from '../../constants/Types';
 import StreakPopup from '../components/StreakPopup';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 import { ScrollView } from 'react-native-gesture-handler';
-import { ToCanPrint, IsChar, IsNumChar } from '../../handle/UtilsTS';
+import { ToCanPrint, IsChar, IsNumChar, OpenYoutubeAsync } from '../../handle/UtilsTS';
 import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading';
 import useCheckAndDownloadRemoteFile from '../../hooks/useCheckAndDownloadRemoteFile';
 import { RandomInt, TempDirName } from '../../handle/Utils';
@@ -30,6 +30,7 @@ import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
 import HeaderSettingButton from '../components/HeaderSettingButton';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 const category = Category.BestShortFilms
 const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Fshort_films.json?alt=media&token=537eec8b-f774-4908-a5fa-45f8daf676d8'
@@ -136,17 +137,14 @@ const BestShortFilmsScreen = () => {
         if (idx < 0)
             return
 
-        url = 'youtube://' + url.substring(idx + 1)
-        const can = await Linking.canOpenURL(url)
+        const id = url.substring(idx + 1)
 
-        if (!can)
-            return
+        const can = await OpenYoutubeAsync(id)
 
-        Linking.openURL(url)
-
-        console.log(url);
-
-        track_SimpleWithCat(category, 'open_ytb_app')
+        if (can)
+            track_SimpleWithCat(category, 'open_ytb_app')
+        else
+            HandleError('onPressOpenYoutubeApp-' + Category[category], 'failed to open Youtube', true)
     }, [selectingItem])
 
     const onPressRandom = useCallback(async () => {
