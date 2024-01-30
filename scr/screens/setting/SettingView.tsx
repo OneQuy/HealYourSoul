@@ -52,13 +52,13 @@ const SettingView = () => {
       checkbox: { flexDirection: 'row', gap: Outline.GapHorizontal, alignItems: 'center', justifyContent: 'space-between' },
       textInputConView: { height: heightPercentageToDP(20), padding: Outline.GapVertical, borderColor: theme.counterBackground, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth },
       emailCopyTO: { justifyContent: 'center', alignItems: 'center' },
-      communityIconTO: { flex: 1, flexDirection: 'row', gap: Outline.GapHorizontal, backgroundColor: theme.primary, paddingVertical: Outline.GapVertical, borderRadius: BorderRadius.BR8, justifyContent: 'center', alignItems: 'center' },
+      communityIconTO: { paddingHorizontal: Outline.GapVertical, flex: 1, flexDirection: 'row', gap: Outline.GapHorizontal, backgroundColor: theme.primary, paddingVertical: Outline.GapVertical, borderRadius: BorderRadius.BR8, justifyContent: 'center', alignItems: 'center' },
+      communitiyTOTxt: { flex: 1, textAlign: 'center', color: theme.counterPrimary, fontSize: FontSize.Small_L },
       titleText: { color: theme.primary, fontSize: FontSize.Small_L, fontWeight: FontWeight.B600 },
       litmiFeedbackText: { color: theme.counterBackground, fontSize: FontSize.Small_L, fontWeight: '300' },
       btnText: { textAlign: 'center', color: theme.counterPrimary, fontSize: FontSize.Small_L, fontWeight: FontWeight.B500 },
       descNotiText: { color: theme.counterBackground, fontSize: FontSize.Small },
       contentTxt: { color: theme.counterBackground, fontSize: FontSize.Small_L },
-      communitiyTOTxt: { color: theme.counterPrimary, fontSize: FontSize.Small_L },
       statText: { color: theme.counterBackground, fontSize: FontSize.Small_L },
       sendFeedbackTO: { backgroundColor: theme.primary, minWidth: 100, alignSelf: 'center', paddingVertical: Outline.GapVertical, paddingHorizontal: Outline.GapVertical_2, borderRadius: BorderRadius.BR8 },
       shareTO: { backgroundColor: theme.primary, flexDirection: 'row', justifyContent: 'center', gap: Outline.GapHorizontal, flex: 1, alignSelf: 'center', paddingVertical: Outline.GapVertical, paddingHorizontal: Outline.GapVertical_2, borderRadius: BorderRadius.BR8, },
@@ -183,16 +183,16 @@ const SettingView = () => {
     return (
       <View style={style.flexRowWithGap}>
         <TouchableOpacity onPress={() => onPress('telegram')} style={style.communityIconTO} >
-          <MaterialIcons name={'telegram'} color={theme.counterPrimary} size={Size.Icon} />
-          <Text style={style.communitiyTOTxt}>Telegram</Text>
+          <MaterialIcons name={'telegram'} color={theme.counterPrimary} size={Size.IconSmaller} />
+          <Text adjustsFontSizeToFit numberOfLines={1} style={style.communitiyTOTxt}>Telegram</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => onPress('facebook')} style={style.communityIconTO} >
-          <MaterialCommunityIcons name={'facebook'} color={theme.counterPrimary} size={Size.Icon} />
-          <Text style={style.communitiyTOTxt}>Facebook</Text>
+          <MaterialCommunityIcons name={'facebook'} color={theme.counterPrimary} size={Size.IconSmaller} />
+          <Text adjustsFontSizeToFit numberOfLines={1} style={style.communitiyTOTxt}>Facebook</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => onPress('twitter')} style={style.communityIconTO} >
-          <MaterialCommunityIcons name={'twitter'} color={theme.counterPrimary} size={Size.Icon} />
-          <Text style={style.communitiyTOTxt}>X (Twitter)</Text>
+          <MaterialCommunityIcons name={'twitter'} color={theme.counterPrimary} size={Size.IconSmaller} />
+          <Text adjustsFontSizeToFit numberOfLines={1} style={style.communitiyTOTxt}>X (Twitter)</Text>
         </TouchableOpacity>
       </View>
     )
