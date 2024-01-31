@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, ActivityIndicator, Share as RNShare, ShareContent, ShareOptions, Alert, StyleSheet, TouchableWithoutFeedback, Animated } from 'react-native'
+import { View, Text, TouchableOpacity, ActivityIndicator, Share as RNShare, ShareContent, ShareOptions, Alert, StyleSheet, TouchableWithoutFeedback, Animated, ScrollView } from 'react-native'
 import React, { LegacyRef, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { BorderRadius, Category, FontSize, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
@@ -209,7 +209,7 @@ const TheRandomShortText = ({
                                             <Text style={{ fontSize: FontSize.Small_L, color: theme.counterBackground }}>{LocalText.tap_to_retry}</Text>
                                         </TouchableOpacity>
                                         :
-                                        <Text selectable style={{ marginHorizontal: Outline.Horizontal, color: theme.counterBackground, fontSize: FontSize.Big }}>{text}</Text>
+                                        <Text adjustsFontSizeToFit numberOfLines={20} selectable style={{ verticalAlign: 'middle', marginHorizontal: Outline.Horizontal, color: theme.counterBackground, fontSize: FontSize.Big }}>{text}</Text>
                                 }
                             </Animated.View>
                     }
