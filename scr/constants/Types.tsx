@@ -37,7 +37,6 @@ export type AppConfig = {
         content: string,
         link: string,
         is_press_to_open_store: boolean,
-        color: string,
     },
     startup_alert?: {
         max_version: number,

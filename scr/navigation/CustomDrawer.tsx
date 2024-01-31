@@ -22,7 +22,6 @@ import { track_PressDrawerItem } from '../handle/tracking/GoodayTracking';
 import { SetBooleanAsync } from '../handle/AsyncStorageUtils';
 import { toast } from '@baronha/ting';
 import { IsDev } from '../handle/tracking/Tracking';
-import ThemeScroll from '../screens/components/ThemeScroll';
 
 const primiumBG = require('../../assets/images/btn_bg_1.jpeg')
 
@@ -34,20 +33,20 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
   const theme = useContext(ThemeContext);
   const disableScreens = useAppSelector((state: RootState) => state.userData.disableScreens)
 
-  const [notice, onPressNotice, colorNotice] = useMemo(() => {
+  const [notice, onPressNotice] = useMemo(() => {
     const data = GetAppConfig()?.notice
 
     if (!data)
-      return [undefined, undefined, undefined]
+      return [undefined, undefined]
 
     const maxVersion = typeof data.max_version === 'number' ? data.max_version : 0
 
     if (versionAsNumber > maxVersion) {
-      return [undefined, undefined, undefined]
+      return [undefined, undefined]
     }
 
     if (!data.content || data.content.trim().length <= 0) {
-      return [undefined, undefined, undefined]
+      return [undefined, undefined]
     }
 
     return [
@@ -59,8 +58,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
           if (RegexUrl(data.link))
             Linking.openURL(data.link)
         }
-      },
-      data.color && data.color.length > 0 ? data.color : theme.counterBackground]
+      }]
   }, [GetAppConfig()?.notice, theme])
 
   const showUpdateBtn = useMemo(() => {
@@ -173,19 +171,21 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
         {/* version */}
         <View onTouchEnd={OpenStore} style={style.versionContainerView}>
           {/* version text */}
-          <Text style={{ color: theme.background, }}>Version: v{versionAsNumber}</Text>
+          <Text style={{ color: theme.counterPrimary, }}>Version: v{versionAsNumber}</Text>
           {/* update btn */}
           {
             !showUpdateBtn ? undefined :
-              <View style={[style.versionBtnView, { backgroundColor: theme.primary, }]}>
-                <Text style={[style.updateBtnTxt, { color: theme.counterPrimary, }]}>{LocalText.update}</Text>
+            // false ? undefined :
+              <View style={[style.versionBtnView, { backgroundColor: theme.background, }]}>
+                <Text style={[style.updateBtnTxt, { color: theme.counterBackground, }]}>{LocalText.update}</Text>
               </View>
           }
         </View>
         {/* notice */}
         {
           !notice ? undefined :
-            <Text onPress={onPressNotice} style={{ color: colorNotice, }}>{notice}</Text>
+          // false ? undefined :
+            <Text onPress={onPressNotice} adjustsFontSizeToFit numberOfLines={3} style={{ marginHorizontal: Outline.Horizontal, color: theme.counterPrimary, textAlign: 'center' }}>{notice}</Text>
         }
       </View>
     </View>
