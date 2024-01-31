@@ -107,8 +107,9 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
     SetBooleanAsync(StorageKey_ForceDev, true)
     toast({ message: 'FORCE DEV' })
   }, [])
+
   const renderCategoryButtons = useCallback(() => {
-    return <ScrollView showsVerticalScrollIndicator={false}>
+    return <ScrollView contentContainerStyle={{ paddingBottom: Outline.GapHorizontal, }} showsVerticalScrollIndicator={false}>
       {
         routeCoupleArr.map((couple, idx) => {
           return <DrawerCoupleItem
@@ -130,7 +131,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
     onPressSetting()
   }, [onPressSetting])
 
-  const colorSettingText = isFocusSetting ? theme.background : theme.primary
+  const colorSettingText = !isFocusSetting ? theme.background : theme.primary
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.background }}>
@@ -142,7 +143,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
       {
         renderCategoryButtons()
       }
-      <View style={[style.bottomMasterView]}>
+      <View style={[style.bottomMasterView, { backgroundColor: theme.primary }]}>
         {/* premium btn */}
         <TouchableOpacity onPress={onPressPremiumButton}>
           <ImageBackground resizeMode="cover" source={primiumBG} style={[style.premiumIB, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
@@ -154,14 +155,14 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
         {/* setting & rating */}
         <View style={style.settingContainer}>
           {/* setting */}
-          <TouchableOpacity onPress={onPressSettingButton} style={[style.settingBtnView, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter, { borderColor: theme.primary, backgroundColor: isFocusSetting ? theme.primary : undefined }]}>
+          <TouchableOpacity onPress={onPressSettingButton} style={[style.settingBtnView, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter, { borderColor: theme.background, backgroundColor: isFocusSetting ? theme.background : theme.primary }]}>
             <MaterialIcons name={Icon.Setting} color={colorSettingText} size={Size.IconTiny} />
             <Text style={[{ color: colorSettingText }]}>{LocalText.setting}</Text>
           </TouchableOpacity>
           {/* rate */}
-          <TouchableOpacity onPress={RateApp} style={[style.settingBtnView, { borderColor: theme.primary }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]}>
-            <MaterialIcons name={Icon.Star} color={theme.primary} size={Size.IconTiny} />
-            <Text style={[{ color: theme.primary }]}>{LocalText.rate_me}</Text>
+          <TouchableOpacity onPress={RateApp} style={[style.settingBtnView, { borderColor: theme.background }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]}>
+            <MaterialIcons name={Icon.Star} color={theme.background} size={Size.IconTiny} />
+            <Text style={[{ color: theme.background }]}>{LocalText.rate_me}</Text>
           </TouchableOpacity>
         </View>
 
@@ -172,7 +173,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
         {/* version */}
         <View onTouchEnd={OpenStore} style={style.versionContainerView}>
           {/* version text */}
-          <Text style={{ color: theme.primary, }}>Version: v{versionAsNumber}</Text>
+          <Text style={{ color: theme.background, }}>Version: v{versionAsNumber}</Text>
           {/* update btn */}
           {
             !showUpdateBtn ? undefined :
@@ -195,12 +196,12 @@ const style = StyleSheet.create({
   topMasterView: { flexDirection: 'row', gap: Outline.GapVertical, marginBottom: Outline.GapVertical, },
   logoImg: { width: Size.IconBig, height: Size.IconBig },
   appNameText: { fontSize: FontSize.Normal, fontWeight: FontWeight.Bold },
-  bottomMasterView: { marginLeft: Outline.Horizontal, marginVertical: Outline.Horizontal, gap: Outline.GapVertical },
-  premiumIB: { flexDirection: 'row', gap: Outline.GapHorizontal, padding: Outline.GapVertical_2, paddingHorizontal: Outline.Horizontal, marginRight: Outline.Horizontal, borderRadius: BorderRadius.BR8, overflow: 'hidden', },
+  bottomMasterView: { borderTopRightRadius: BorderRadius.BR8, borderTopLeftRadius: BorderRadius.BR8, paddingVertical: Outline.Horizontal, gap: Outline.GapVertical },
+  premiumIB: { marginLeft: Outline.Horizontal, flexDirection: 'row', gap: Outline.GapHorizontal, padding: Outline.GapVertical_2, paddingHorizontal: Outline.Horizontal, marginRight: Outline.Horizontal, borderRadius: BorderRadius.BR8, overflow: 'hidden', },
   premiumText: { color: 'black', fontSize: FontSize.Small_L, fontWeight: FontWeight.B500 },
-  versionContainerView: { flexDirection: 'row', alignItems: 'center' },
+  versionContainerView: { marginLeft: Outline.Horizontal, flexDirection: 'row', alignItems: 'center' },
   versionBtnView: { marginLeft: Outline.GapVertical, borderRadius: BorderRadius.BR8, padding: Outline.VerticalMini },
   updateBtnTxt: { fontWeight: FontWeight.B500 },
   settingBtnView: { padding: Outline.VerticalMini, borderWidth: StyleSheet.hairlineWidth, borderRadius: BorderRadius.BR8, flexDirection: 'row', gap: Outline.GapHorizontal },
-  settingContainer: { flexDirection: 'row', gap: Outline.GapHorizontal, marginRight: Outline.Horizontal },
+  settingContainer: { marginLeft: Outline.Horizontal, flexDirection: 'row', gap: Outline.GapHorizontal, marginRight: Outline.Horizontal },
 })
