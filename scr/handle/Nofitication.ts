@@ -25,6 +25,8 @@ export const initNotificationAsync = async () => {
     sound: 'default',
   } as AndroidChannel);
 
+  notifee.onBackgroundEvent(async (_) => {})
+
   // Request permissions (required for iOS)
   await notifee.requestPermission()
 }
