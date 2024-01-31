@@ -59,7 +59,7 @@ const SettingView = () => {
       btnText: { textAlign: 'center', color: theme.counterPrimary, fontSize: FontSize.Small_L, fontWeight: FontWeight.B500 },
       descNotiText: { color: theme.counterBackground, fontSize: FontSize.Small },
       contentTxt: { color: theme.counterBackground, fontSize: FontSize.Small_L },
-      statText: { color: theme.counterBackground, fontSize: FontSize.Small_L },
+      statText: { marginBottom: Outline.Horizontal, color: theme.counterBackground, fontSize: FontSize.Small_L },
       sendFeedbackTO: { backgroundColor: theme.primary, minWidth: 100, alignSelf: 'center', paddingVertical: Outline.GapVertical, paddingHorizontal: Outline.GapVertical_2, borderRadius: BorderRadius.BR8 },
       shareTO: { backgroundColor: theme.primary, flexDirection: 'row', justifyContent: 'center', gap: Outline.GapHorizontal, flex: 1, alignSelf: 'center', paddingVertical: Outline.GapVertical, paddingHorizontal: Outline.GapVertical_2, borderRadius: BorderRadius.BR8, },
       sendFeedbackInput: { color: theme.counterBackground, textAlignVertical: 'top', textAlign: 'left', width: '100%', height: '100%' },
