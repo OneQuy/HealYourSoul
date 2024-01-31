@@ -38,7 +38,7 @@ const ThemeScroll = ({ mode }: { mode: 'lights' | 'darks' | 'specials' | 'all' }
         const isCurrentTheme = theme === currentTheme
 
         const onPress = () => {
-            console.log('set theme: ' + theme);
+            // console.log('set theme: ' + theme);
 
             track_Theme(theme)
             
