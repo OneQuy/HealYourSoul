@@ -83,19 +83,14 @@ const ScreenList: ScreenNamePair[] = [
   [ScreenName.Satisfying, SatisfyingScreen],
   [ScreenName.Sarcasm, SarcasmScreen],
   [ScreenName.Info, InfoScreen],
-  
   [ScreenName.WikiFact, WikipediaScreen],
   [ScreenName.Trivia, TheTriviaScreen],
-  
-  
   [ScreenName.ShortFact, NinjaFactScreen],
   [ScreenName.Joke, NinjaJokeScreen],
   [ScreenName.QuoteText, QuoteTextScreen],
-  
   [ScreenName.BestShortFilms, BestShortFilmsScreen],
   [ScreenName.FunWebsite, FunWebsitesScreen],
   [ScreenName.AwardPicture, PicturesOfTheYearScreen],
-  
   [ScreenName.Picture, PictureScreen],
   [ScreenName.TopMovie, TopMovieScreen],
 
