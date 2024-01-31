@@ -32,7 +32,6 @@ export default DrawerCoupleItem
 const style = StyleSheet.create({
     masterView: {
         flexDirection: 'row',
-        height: heightPercentageToDP(5.5),
-        minHeight: 50,
+        height: Math.max(50, heightPercentageToDP(5.5)),
     }
 })

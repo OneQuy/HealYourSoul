@@ -108,7 +108,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
     toast({ message: 'FORCE DEV' })
   }, [])
   const renderCategoryButtons = useCallback(() => {
-    return <ScrollView>
+    return <ScrollView showsVerticalScrollIndicator={false}>
       {
         routeCoupleArr.map((couple, idx) => {
           return <DrawerCoupleItem
