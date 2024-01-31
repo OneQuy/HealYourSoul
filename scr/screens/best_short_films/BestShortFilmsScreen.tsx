@@ -415,5 +415,5 @@ const styleSheet = StyleSheet.create({
     nameText: { marginLeft: widthPercentageToDP(12), flex: 1, textAlign: 'center', fontSize: FontSize.Normal },
     nameContainerView: { paddingHorizontal: Outline.GapVertical, flexDirection: 'row', gap: Outline.GapHorizontal },
     showListIconView: { padding: Outline.GapHorizontal, borderWidth: StyleSheet.hairlineWidth, borderRadius: BorderRadius.BR8 },
-    openYtb: { marginLeft: Outline.VerticalMini, gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, flexDirection: 'row' },
+    openYtb: { alignItems: 'center', marginLeft: Outline.VerticalMini, gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, flexDirection: 'row' },
 })
