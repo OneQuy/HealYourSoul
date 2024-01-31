@@ -147,7 +147,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
         <TouchableOpacity onPress={onPressPremiumButton}>
           <ImageBackground resizeMode="cover" source={primiumBG} style={[style.premiumIB, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
             <MaterialCommunityIcons name={Icon.Coffee} color={'black'} size={Size.Icon} />
-            <Text style={[style.premiumText]}>{LocalText.donate_me}</Text>
+            <Text numberOfLines={1} adjustsFontSizeToFit style={[style.premiumText]}>{LocalText.donate_me}</Text>
           </ImageBackground>
         </TouchableOpacity>
 
@@ -196,7 +196,7 @@ const style = StyleSheet.create({
   logoImg: { width: Size.IconBig, height: Size.IconBig },
   appNameText: { fontSize: FontSize.Normal, fontWeight: FontWeight.Bold },
   bottomMasterView: { marginLeft: Outline.Horizontal, marginVertical: Outline.Horizontal, gap: Outline.GapVertical },
-  premiumIB: { flexDirection: 'row', gap: Outline.GapHorizontal, padding: Outline.GapVertical_2, marginRight: Outline.Horizontal, borderRadius: BorderRadius.BR8, overflow: 'hidden', },
+  premiumIB: { flexDirection: 'row', gap: Outline.GapHorizontal, padding: Outline.GapVertical_2, paddingHorizontal: Outline.Horizontal, marginRight: Outline.Horizontal, borderRadius: BorderRadius.BR8, overflow: 'hidden', },
   premiumText: { color: 'black', fontSize: FontSize.Small_L, fontWeight: FontWeight.B500 },
   versionContainerView: { flexDirection: 'row', alignItems: 'center' },
   versionBtnView: { marginLeft: Outline.GapVertical, borderRadius: BorderRadius.BR8, padding: Outline.VerticalMini },
