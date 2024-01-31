@@ -121,7 +121,9 @@ export enum Category {
 
 export enum Outline {
   Horizontal = wp('4%'),
+  
   VerticalMini = hp('0.7%'),
+  Vertical = hp(3.5),
 
   GapVertical = hp('1%'),
   GapVertical_2 = hp('2%'),

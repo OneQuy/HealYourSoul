@@ -19,6 +19,7 @@ import { track_PressRandom, track_SimpleWithParam } from '../../handle/tracking/
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import HeaderSettingButton from '../components/HeaderSettingButton';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const TOAnim = Animated.createAnimatedComponent(TouchableOpacity)
 
@@ -52,6 +53,7 @@ const TheTrivia = ({
     const [userChosenAnswer, setUserChosenAnswer] = useState<string | undefined>(undefined);
     const [difficulty, setDifficulty] = useState<TriviaDifficulty>('all');
     const [type, setType] = useState<TriviaAnswerType>('all');
+    const safeArea = useSafeAreaInsets()
 
     const mediaViewScaleAnimRef = useRef((Array(4).fill(0).map(i => new Animated.Value(1))))
 
@@ -178,7 +180,7 @@ const TheTrivia = ({
     useFocusEffect(useCallback(() => SaveCurrentScreenForLoadNextTime(navigation), []))
 
     return (
-        <View pointerEvents={handling ? 'none' : 'auto'} style={[styleSheet.masterView, { backgroundColor: theme.background }]}>
+        <View pointerEvents={handling ? 'none' : 'auto'} style={[styleSheet.masterView, { paddingBottom: safeArea.bottom > 0 ? safeArea.bottom : Outline.GapVertical, backgroundColor: theme.background }]}>
             <View style={{ flexDirection: 'row', gap: Outline.GapHorizontal }}>
                 <Text style={{ fontWeight: FontWeight.B500, padding: Outline.VerticalMini, color: theme.counterBackground, fontSize: FontSize.Small }}>{LocalText.difficulty}: </Text>
                 {
@@ -251,7 +253,7 @@ const TheTrivia = ({
                 }
             </View>
             <View>
-                <TouchableOpacity onPress={() => onPressRandom(true)} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, padding: Outline.GapVertical_2, backgroundColor: theme.primary, }, styleSheet.randomTO]}>
+                <TouchableOpacity onPress={() => onPressRandom(true)} style={[{ gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR, padding: Outline.GapVertical_2, backgroundColor: theme.primary, }, styleSheet.randomTO]}>
                     <MaterialCommunityIcons name={Icon.Dice} color={theme.counterPrimary} size={Size.Icon} />
                     <Text style={{ color: theme.counterPrimary, fontSize: FontSize.Normal }}>{LocalText.random}</Text>
                 </TouchableOpacity>
@@ -266,7 +268,7 @@ const TheTrivia = ({
 export default TheTrivia
 
 const styleSheet = StyleSheet.create({
-    masterView: { padding: Outline.Horizontal, flex: 1, gap: Outline.GapVertical, },
+    masterView: { paddingHorizontal: Outline.GapVertical, flex: 1, gap: Outline.GapVertical, },
     randomTO: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: '100%' },
     headerOptionTO: { marginRight: 15 },
     answerTO: { flexDirection: 'row', justifyContent: 'center', borderWidth: StyleSheet.hairlineWidth * 2, }

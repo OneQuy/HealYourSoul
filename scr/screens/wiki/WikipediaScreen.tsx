@@ -324,7 +324,7 @@ const WikipediaScreen = () => {
 export default WikipediaScreen
 
 const styleSheet = StyleSheet.create({
-    masterView: { paddingBottom: Outline.Horizontal, flex: 1, gap: Outline.GapVertical, },
+    masterView: { flex: 1, gap: Outline.GapVertical, },
     headerOptionTO: { marginRight: 15 },
     image: { width: '100%', height: heightPercentageToDP(30) },
     contentView: { flex: 1, gap: Outline.GapVertical },

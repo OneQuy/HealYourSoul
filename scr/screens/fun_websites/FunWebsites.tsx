@@ -357,7 +357,7 @@ const FunWebsitesScreen = () => {
 export default FunWebsitesScreen
 
 const styleSheet = StyleSheet.create({
-    masterView: { paddingBottom: Outline.Horizontal, flex: 1, gap: Outline.GapVertical, },
+    masterView: { flex: 1, gap: Outline.GapVertical, },
     headerOptionTO: { marginRight: 15 },
     image: { width: widthPercentageToDP(100), height: heightPercentageToDP(50) },
     contentView: { flex: 1, gap: Outline.GapVertical, paddingTop: Outline.GapHorizontal },

@@ -356,7 +356,7 @@ const TopMovieScreen = () => {
 export default TopMovieScreen
 
 const styleSheet = StyleSheet.create({
-    masterView: { paddingBottom: Outline.Horizontal, flex: 1, gap: Outline.GapVertical, },
+    masterView: { flex: 1, gap: Outline.GapVertical, },
     headerOptionTO: { marginRight: 15 },
     image: { width: widthPercentageToDP(100), height: heightPercentageToDP(40) },
     contentView: { flex: 1, gap: Outline.GapVertical, paddingTop: Outline.GapHorizontal },

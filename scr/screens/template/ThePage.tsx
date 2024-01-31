@@ -801,7 +801,7 @@ const ThePage = ({ category }: ThePageProps) => {
 
     return (
         // master view
-        <View style={{ pointerEvents: handling ? 'none' : 'auto', backgroundColor: theme.background, flex: 1, gap: Outline.GapVertical, paddingBottom: Outline.GapVertical }}>
+        <View style={{ pointerEvents: handling ? 'none' : 'auto', backgroundColor: theme.background, flex: 1, gap: Outline.GapVertical, }}>
             {/* net state */}
             {
                 isInternetAvailable ? null :

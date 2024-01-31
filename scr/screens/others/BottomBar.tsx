@@ -1,11 +1,13 @@
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Platform } from 'react-native'
 import React, { useContext, useMemo } from 'react'
 import { ThemeContext } from '../../constants/Colors';
 import { BorderRadius, FontSize, Outline, Size } from '../../constants/AppConstants';
 import FavoriteButton, { FavoriteButtonProp } from './FavoriteButton';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export type BottomBarItem = {
     icon?: string,
@@ -18,14 +20,22 @@ export type BottomBarItem = {
 
 const BottomBar = ({ items }: { items: BottomBarItem[] }) => {
     const theme = useContext(ThemeContext);
+    const safeArea = useSafeAreaInsets()
 
     const styleSheet = useMemo(() => {
         return StyleSheet.create({
-            masterView: { marginBottom: Outline.GapVertical, borderRadius: BorderRadius.BR8, marginHorizontal: Outline.GapVertical, backgroundColor: theme.primary, flexDirection: 'row', justifyContent: 'space-between', },
+            masterView: {
+                marginBottom: safeArea.bottom > 0 ? safeArea.bottom : Outline.GapVertical,
+                marginHorizontal: Outline.GapVertical,
+                borderRadius: BorderRadius.BR,
+                backgroundColor: theme.primary,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+            },
             mainBtnTO: { paddingVertical: Outline.GapVertical_2, justifyContent: 'center', flex: 1, alignItems: 'center', gap: Outline.GapVertical },
             mainBtnTxt: { color: theme.counterPrimary, fontSize: FontSize.Small },
         })
-    }, [theme])
+    }, [theme, safeArea])
 
     const renderedItems = useMemo(() => {
         return items.map((item) => {
