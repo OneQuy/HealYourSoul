@@ -13,6 +13,7 @@ import { ToastTheme } from "./AppUtils";
 import { InitTrackingAsync } from "./tracking/Tracking";
 import { HandldAlertUpdateAppAsync } from "./HandleAlertUpdateApp";
 import { initNotificationAsync } from "./Nofitication";
+import { CheckIsDevAsync } from "./IsDev";
 
 export type LoadAppDataResult = {
     categoryScreenToOpenFirst: keyof DrawerParamList | null
@@ -44,14 +45,18 @@ export async function LoadAppData(theme: ThemeColor): Promise<LoadAppDataResult>
     else
         await HandleAppConfigAsync()
 
+    // check is dev
+
+    CheckIsDevAsync()
+
     // init tracking
 
     InitTrackingAsync()
-    
+
     // handle alert (must after app config)
 
     await HandleStartupAlertAsync() // alert_priority 1 (doc)
-    
+
     // handle alert update
 
     await HandldAlertUpdateAppAsync() // alert_priority 2 (doc)
