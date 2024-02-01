@@ -22,6 +22,7 @@
     "@react-navigation/drawer": "^6.6.3",
     "@react-navigation/native": "^6.1.7",
     "@reduxjs/toolkit": "^1.9.5",
+    "@typedigital/telemetrydeck-react": "^0.2.0",
     "axios": "^1.6.2",
     "copy-paste": "^1.5.3",
     "firebase": "^10.0.0",
