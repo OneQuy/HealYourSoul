@@ -47,11 +47,11 @@ export async function LoadAppData(theme: ThemeColor): Promise<LoadAppDataResult>
 
     // check is dev
 
-    CheckIsDevAsync()
+    await CheckIsDevAsync()
 
     // init tracking
 
-    InitTrackingAsync()
+    await InitTrackingAsync()
 
     // handle alert (must after app config)
 
