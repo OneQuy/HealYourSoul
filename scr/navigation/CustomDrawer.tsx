@@ -4,13 +4,13 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { useCallback, useContext, useMemo, useRef } from "react";
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { RootState, useAppSelector } from "../redux/Store";
 import { ThemeContext } from "../constants/Colors";
 import { DrawerContentComponentProps, } from '@react-navigation/drawer';
 import { Image, ImageBackground, Linking, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import DrawerCoupleItem from "./DrawerCoupleItem";
-import { BorderRadius, FontSize, FontWeight, Icon, LocalText, Outline, ScreenName, Size, StorageKey_ForceDev } from "../constants/AppConstants";
+import { BorderRadius, FontSize, FontWeight, Icon, LocalText, Outline, ScreenName, Size, StorageKey_ForceDev, StorageKey_PremiumBgID } from "../constants/AppConstants";
 import { CommonStyles } from "../constants/CommonConstants";
 import useDrawerMenuItemUtils from '../hooks/useDrawerMenuItemUtils';
 import { logoScr } from '../screens/others/SplashScreen';
@@ -19,11 +19,23 @@ import { IsContentScreen, OpenStore, RateApp, versionAsNumber } from '../handle/
 import { GetAppConfig } from '../handle/AppConfigHandler';
 import { FilterOnlyLetterAndNumberFromString, RegexUrl } from '../handle/UtilsTS';
 import { track_PressDrawerItem } from '../handle/tracking/GoodayTracking';
-import { SetBooleanAsync } from '../handle/AsyncStorageUtils';
+import { GetNumberIntAsync, SetBooleanAsync, SetNumberAsync } from '../handle/AsyncStorageUtils';
 import { toast } from '@baronha/ting';
 import { IsDev } from '../handle/tracking/Tracking';
 
-const primiumBG = require('../../assets/images/btn_bg_1.jpeg')
+const premiumBGs = [
+  [require(`../../assets/images/premium_btn/0.jpg`), 'black'],
+  [require(`../../assets/images/premium_btn/4.jpg`), 'white'],
+  [require(`../../assets/images/premium_btn/5.jpg`), 'black'],
+  [require(`../../assets/images/premium_btn/3.jpg`), 'white'],
+  [require(`../../assets/images/premium_btn/6.jpg`), 'white'],
+  [require(`../../assets/images/premium_btn/7.jpeg`), 'white'],
+  [require(`../../assets/images/premium_btn/2.jpg`), 'black'],
+  [require(`../../assets/images/premium_btn/8.jpg`), 'black'],
+  [require(`../../assets/images/premium_btn/1.jpg`), 'white'],
+]
+
+// const primiumBG = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS254VqqJtd-a3QAJcb4h67DwQ_CKeDYdIGSA&usqp=CAU'
 
 export function CustomDrawerContent(props: DrawerContentComponentProps) {
   const pressLogoCountRef = useRef(0)
@@ -32,6 +44,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
   const safeAreaInsets = useSafeAreaInsets()
   const theme = useContext(ThemeContext);
   const disableScreens = useAppSelector((state: RootState) => state.userData.disableScreens)
+  const [premiumBg, setPremiumBg] = useState<[NodeRequire, string]>([premiumBGs[0][0], 'black'])
 
   const [notice, onPressNotice] = useMemo(() => {
     const data = GetAppConfig()?.notice
@@ -60,6 +73,23 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
         }
       }]
   }, [GetAppConfig()?.notice, theme])
+
+  const changePremiumBtnBg = useCallback(async () => {
+    let curId = await GetNumberIntAsync(StorageKey_PremiumBgID, -1)
+
+    curId++
+
+    if (curId >= premiumBGs.length)
+      curId = 0
+
+    const set = premiumBGs[curId]
+
+    setPremiumBg([set[0], set[1]])
+
+    SetNumberAsync(StorageKey_PremiumBgID, curId)
+
+    // console.log(curId);
+  }, [])
 
   const showUpdateBtn = useMemo(() => {
     const data = GetAppConfig()?.latest_version
@@ -96,6 +126,9 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
   }, [disableScreens])
 
   const onPressLogo = useCallback(() => {
+    if (IsDev())
+      changePremiumBtnBg()
+
     pressLogoCountRef.current++
 
     if (pressLogoCountRef.current < 20)
@@ -129,6 +162,10 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
     onPressSetting()
   }, [onPressSetting])
 
+  useEffect(() => {
+    changePremiumBtnBg()
+  }, [])
+
   const colorSettingText = !isFocusSetting ? theme.background : theme.primary
 
   return (
@@ -144,9 +181,10 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
       <View style={[style.bottomMasterView, { backgroundColor: theme.primary }]}>
         {/* premium btn */}
         <TouchableOpacity onPress={onPressPremiumButton}>
-          <ImageBackground resizeMode="cover" source={primiumBG} style={[style.premiumIB, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
-            <MaterialCommunityIcons name={Icon.Coffee} color={'black'} size={Size.Icon} />
-            <Text numberOfLines={1} adjustsFontSizeToFit style={[style.premiumText]}>{LocalText.donate_me}</Text>
+          {/* @ts-ignore */}
+          <ImageBackground resizeMode="cover" source={premiumBg[0]} style={[style.premiumIB, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
+            <MaterialCommunityIcons name={Icon.Coffee} color={premiumBg[1]} size={Size.Icon} />
+            <Text numberOfLines={1} adjustsFontSizeToFit style={[style.premiumText, { color: premiumBg[1] }]}>{LocalText.donate_me}</Text>
           </ImageBackground>
         </TouchableOpacity>
 
@@ -171,11 +209,11 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
         {/* version */}
         <View onTouchEnd={OpenStore} style={style.versionContainerView}>
           {/* version text */}
-          <Text style={{ color: theme.counterPrimary, }}>Version: v{versionAsNumber}</Text>
+          <Text style={{ color: theme.background, }}>Version: v{versionAsNumber}</Text>
           {/* update btn */}
           {
             !showUpdateBtn ? undefined :
-            // false ? undefined :
+              // false ? undefined :
               <View style={[style.versionBtnView, { backgroundColor: theme.background, }]}>
                 <Text style={[style.updateBtnTxt, { color: theme.counterBackground, }]}>{LocalText.update}</Text>
               </View>
@@ -184,7 +222,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
         {/* notice */}
         {
           !notice ? undefined :
-          // false ? undefined :
+            // false ? undefined :
             <Text onPress={onPressNotice} adjustsFontSizeToFit numberOfLines={3} style={{ marginHorizontal: Outline.Horizontal, color: theme.counterPrimary, textAlign: 'center' }}>{notice}</Text>
         }
       </View>
@@ -196,9 +234,9 @@ const style = StyleSheet.create({
   topMasterView: { flexDirection: 'row', gap: Outline.GapVertical, marginBottom: Outline.GapVertical, },
   logoImg: { width: Size.IconBig, height: Size.IconBig },
   appNameText: { fontSize: FontSize.Normal, fontWeight: FontWeight.Bold },
-  bottomMasterView: { borderTopRightRadius: BorderRadius.BR8, borderTopLeftRadius: BorderRadius.BR8, paddingVertical: Outline.Horizontal, gap: Outline.GapVertical },
-  premiumIB: { marginLeft: Outline.Horizontal, flexDirection: 'row', gap: Outline.GapHorizontal, padding: Outline.GapVertical_2, paddingHorizontal: Outline.Horizontal, marginRight: Outline.Horizontal, borderRadius: BorderRadius.BR8, overflow: 'hidden', },
-  premiumText: { color: 'black', fontSize: FontSize.Small_L, fontWeight: FontWeight.B500 },
+  bottomMasterView: { borderTopRightRadius: BorderRadius.BR, borderTopLeftRadius: BorderRadius.BR, paddingVertical: Outline.Horizontal, gap: Outline.GapVertical },
+  premiumIB: { marginLeft: Outline.Horizontal, flexDirection: 'row', gap: Outline.GapHorizontal, padding: Outline.GapVertical_2, paddingHorizontal: Outline.Horizontal, marginRight: Outline.Horizontal, borderRadius: BorderRadius.BR, overflow: 'hidden', },
+  premiumText: { color: 'white', fontSize: FontSize.Small_L, fontWeight: FontWeight.B500 },
   versionContainerView: { marginLeft: Outline.Horizontal, flexDirection: 'row', alignItems: 'center' },
   versionBtnView: { marginLeft: Outline.GapVertical, borderRadius: BorderRadius.BR8, padding: Outline.VerticalMini },
   updateBtnTxt: { fontWeight: FontWeight.B500 },

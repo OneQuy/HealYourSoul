@@ -35,7 +35,7 @@ const DrawerSingleItem = ({
     }, [onPress])
 
     return (
-        <TouchableOpacity onPress={onPressButton} style={[style.masterTO, CommonStyles.justifyContentCenter_AlignItemsCenter, { paddingHorizontal: Outline.GapVertical, backgroundColor: isFocused ? theme.primary : undefined, borderRadius: BorderRadius.BR8, borderColor: theme.primary }]}>
+        <TouchableOpacity onPress={onPressButton} style={[style.masterTO, CommonStyles.justifyContentCenter_AlignItemsCenter, { paddingHorizontal: Outline.GapVertical, backgroundColor: isFocused ? theme.primary : undefined, borderRadius: BorderRadius.BR, borderColor: theme.primary }]}>
             <View style={[style.iconView, { marginRight: Outline.GapVertical, }]}>
                 <MaterialCommunityIcons name={icon} color={color} size={Size.IconSmaller} />
             </View>

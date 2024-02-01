@@ -261,7 +261,7 @@ export const LocalText = {
   thank_iap: 'Your purchase is successful! Thank you so much for this support!',
   done: 'Done!',
   you_are_awesome: 'You are awsome!!',
-  donate_me: 'Donate / Support',
+  donate_me: 'Give me a coffee',
   theme: 'Theme',
   great: 'Great!!',
   you_rock: 'You rock!!',
@@ -378,3 +378,4 @@ export const StorageKey_LastAskForUpdateApp = 'ask_for_update_app'
 export const StorageKey_ForceDev = 'force_dev'
 export const StorageKey_Rated = 'rated'
 export const StorageKey_LastTickSendFeedback = 'feedback_tick'
+export const StorageKey_PremiumBgID = 'premium_bg_ids'
