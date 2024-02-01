@@ -14,6 +14,7 @@ import { InitTrackingAsync } from "./tracking/Tracking";
 import { HandldAlertUpdateAppAsync } from "./HandleAlertUpdateApp";
 import { initNotificationAsync } from "./Nofitication";
 import { CheckIsDevAsync } from "./IsDev";
+import { InitUserIDAsync } from "./UserID";
 
 export type LoadAppDataResult = {
     categoryScreenToOpenFirst: keyof DrawerParamList | null
@@ -27,6 +28,10 @@ export async function LoadAppData(theme: ThemeColor): Promise<LoadAppDataResult>
     // cheat clear all local file
 
     await CheckAndClearAllLocalFileBeforeLoadApp();
+
+    // user id
+    
+    await InitUserIDAsync()
 
     // init net checker
 
