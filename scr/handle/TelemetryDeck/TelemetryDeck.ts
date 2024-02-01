@@ -12,9 +12,10 @@
 import { createTelemetryDeck } from "@typedigital/telemetrydeck-react";
 import { IsDev } from "../IsDev";
 import { TELEMETRY_DECK_KEY } from "../../../keys";
+import { UserID } from "../UserID";
 
 export const telemetryDeck = createTelemetryDeck({
     appID: TELEMETRY_DECK_KEY,
-    clientUser: "anonymous",
+    clientUser: UserID(),
     testMode: IsDev(),
 });
