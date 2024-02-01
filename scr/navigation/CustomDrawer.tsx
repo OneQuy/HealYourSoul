@@ -21,7 +21,7 @@ import { FilterOnlyLetterAndNumberFromString, RegexUrl } from '../handle/UtilsTS
 import { track_PressDrawerItem } from '../handle/tracking/GoodayTracking';
 import { GetNumberIntAsync, SetBooleanAsync, SetNumberAsync } from '../handle/AsyncStorageUtils';
 import { toast } from '@baronha/ting';
-import { IsDev } from '../handle/tracking/Tracking';
+import { IsDev } from '../handle/IsDev';
 
 const premiumBGs = [
   [require(`../../assets/images/premium_btn/0.jpg`), 'black'],

@@ -62,7 +62,7 @@ export async function LoadAppData(theme: ThemeColor): Promise<LoadAppDataResult>
 
     // handle: versions file
 
-    await HandleVersionsFileAsync(theme);
+    await HandleVersionsFileAsync();
 
     // load screen to open
 

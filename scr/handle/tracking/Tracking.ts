@@ -2,18 +2,11 @@ import Aptabase, { trackEvent } from "@aptabase/react-native";
 import { FirebaseDatabase_IncreaseNumberAsync, FirebaseDatabase_SetValueAsync } from "../../firebase/FirebaseDatabase";
 import { todayString } from "../AppUtils";
 import { APTA_KEY_DEV, APTA_KEY_PRODUCTION } from "../../../keys";
-import { GetAppConfig } from "../AppConfigHandler";
-import { GetBooleanAsync } from "../AsyncStorageUtils";
-import { StorageKey_ForceDev } from "../../constants/AppConstants";
-import { toast } from "@baronha/ting";
+import { IsDev } from "../IsDev";
 
 const isLog = false
 
-var isDev = true
-
 var inited = false
-
-export const IsDev = () => isDev
 
 const prefixFbTrackPath = () => IsDev() ? 'tracking/dev/' : 'tracking/production/'
 
@@ -22,24 +15,6 @@ export const InitTrackingAsync = async () => {
         return
 
     inited = true
-
-    const isDevSaved = await GetBooleanAsync(StorageKey_ForceDev)
-
-    if (__DEV__ || isDevSaved)
-        isDev = true
-    else {
-        const config = GetAppConfig()
-
-        if (!config) {
-            isDev = false
-        }
-        else
-            isDev = config.force_dev
-    }
-
-    if (IsDev()) {
-        toast({ message: 'DEV' })
-    }
 
     Aptabase.init(IsDev() ? APTA_KEY_DEV : APTA_KEY_PRODUCTION)
 }
@@ -90,7 +65,7 @@ export const MainTrack = (
         if (isLog) {
             console.log('fb path', path);
         }
-        
+
         FirebaseDatabase_IncreaseNumberAsync(path, 0)
     }
 }
