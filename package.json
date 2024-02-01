@@ -1,6 +1,6 @@
 {
   "name": "gooday",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -25,6 +25,7 @@
     "@typedigital/telemetrydeck-react": "^0.2.0",
     "axios": "^1.6.2",
     "copy-paste": "^1.5.3",
+    "expo-crypto": "^12.8.0",
     "firebase": "^10.0.0",
     "react": "18.2.0",
     "react-native": "0.72.3",
@@ -42,7 +43,9 @@
     "react-native-view-shot": "^3.8.0",
     "react-native-webview": "^13.6.3",
     "react-redux": "^8.1.1",
-    "redux-persist": "^6.0.0"
+    "redux-persist": "^6.0.0",
+    "text-encoding": "^0.7.0",
+    "expo": "^49.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

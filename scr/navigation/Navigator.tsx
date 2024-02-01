@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React, { useCallback, useContext, useEffect, useMemo } from 'react'
+import React, { useContext, useEffect, useMemo } from 'react'
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { ScreenName } from '../constants/AppConstants';
@@ -29,7 +29,7 @@ import SettingScreen from '../screens/setting/SettingScreen';
 import { ThemeContext } from '../constants/Colors';
 import { StyleSheet } from 'react-native';
 import { TelemetryDeckProvider } from "@typedigital/telemetrydeck-react"
-import { telemetryDeck } from '../handle/tracking/TelemetryDeck';
+import { telemetryDeck } from '../handle/TelemetryDeck/TelemetryDeck';
 
 export type DrawerParamList = {
   [ScreenName.Meme]: undefined,
