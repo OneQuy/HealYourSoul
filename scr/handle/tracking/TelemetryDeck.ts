@@ -4,7 +4,7 @@ import { TELEMETRY_DECK_KEY } from "../../../keys";
 
 console.log('key tele is dev: ' + IsDev());
 
-const telemetryDeck = createTelemetryDeck({
+export const telemetryDeck = createTelemetryDeck({
     appID: TELEMETRY_DECK_KEY,
     clientUser: "anonymous",
     testMode: IsDev(),

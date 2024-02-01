@@ -28,6 +28,8 @@ import { RegisterGoodayAppState } from '../handle/GoodayAppState';
 import SettingScreen from '../screens/setting/SettingScreen';
 import { ThemeContext } from '../constants/Colors';
 import { StyleSheet } from 'react-native';
+import { TelemetryDeckProvider } from "@typedigital/telemetrydeck-react"
+import { telemetryDeck } from '../handle/tracking/TelemetryDeck';
 
 export type DrawerParamList = {
   [ScreenName.Meme]: undefined,
@@ -131,20 +133,22 @@ const Navigator = ({ initialRouteName }: MainNavigatorProps) => {
   }, [])
 
   return (
-    <NavigationContainer>
-      <Drawer.Navigator
-        initialRouteName={!initialRouteName ? ScreenName.Meme : initialRouteName}
-        drawerContent={(props) => <CustomDrawerContent {...props} />}
-        screenOptions={{
-          headerStyle: style.header,
-          headerTintColor: theme.primary,
-        }}
-      >
-        {
-          renderListScreens
-        }
-      </Drawer.Navigator>
-    </NavigationContainer>
+    <TelemetryDeckProvider telemetryDeck={telemetryDeck}>
+      <NavigationContainer>
+        <Drawer.Navigator
+          initialRouteName={!initialRouteName ? ScreenName.Meme : initialRouteName}
+          drawerContent={(props) => <CustomDrawerContent {...props} />}
+          screenOptions={{
+            headerStyle: style.header,
+            headerTintColor: theme.primary,
+          }}
+        >
+          {
+            renderListScreens
+          }
+        </Drawer.Navigator>
+      </NavigationContainer>
+    </TelemetryDeckProvider>
   )
 }
 
