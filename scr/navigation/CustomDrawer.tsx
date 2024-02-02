@@ -126,9 +126,11 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
   }, [disableScreens])
 
   const onPressLogo = useCallback(() => {
-    if (IsDev())
-      changePremiumBtnBg()
+    changePremiumBtnBg()
 
+    if (!IsDev())
+      return
+    
     pressLogoCountRef.current++
 
     if (pressLogoCountRef.current < 20)
