@@ -4,6 +4,7 @@ import { todayString } from "../AppUtils";
 import { APTA_KEY_DEV, APTA_KEY_PRODUCTION } from "../../../keys";
 import { IsDev } from "../IsDev";
 import { useTelemetryDeck } from "@typedigital/telemetrydeck-react";
+import { GetAppConfig } from "../AppConfigHandler";
 
 export type SignalType = ReturnType<typeof useTelemetryDeck>['signal']
 
@@ -46,34 +47,46 @@ export const MainTrack = (
         return
     }
 
+    const appConfig = GetAppConfig()
+
+    const shouldTrackAptabase = !appConfig || appConfig.tracking.enableAptabase
+    const shouldTrackFirebase = !appConfig || appConfig.tracking.enableFirebase
+    const shouldTrackTelemetry = !appConfig || appConfig.tracking.enableTelemetry
+
+    // console.log(shouldTrackAptabase, shouldTrackFirebase, shouldTrackTelemetry);
+
     if (IsDev())
         eventName = 'dev__' + eventName
 
     // track aptabase
 
-    trackEvent(eventName, trackingValuesObject)
+    if (shouldTrackAptabase) {
+        trackEvent(eventName, trackingValuesObject)
 
-    if (isLog) {
-        console.log('------------------------')
-        console.log('tracking aptabase: ', eventName, JSON.stringify(trackingValuesObject));
+        if (isLog) {
+            console.log('------------------------')
+            console.log('tracking aptabase: ', eventName, JSON.stringify(trackingValuesObject));
+        }
     }
 
     // track firebase
 
-    for (let i = 0; i < fbPaths.length; i++) {
-        let path = prefixFbTrackPath() + fbPaths[i]
-        path = path.replaceAll('#d', todayString)
+    if (shouldTrackFirebase) {
+        for (let i = 0; i < fbPaths.length; i++) {
+            let path = prefixFbTrackPath() + fbPaths[i]
+            path = path.replaceAll('#d', todayString)
 
-        if (isLog) {
-            console.log('tracking on firebase: ', path);
+            if (isLog) {
+                console.log('tracking on firebase: ', path);
+            }
+
+            FirebaseDatabase_IncreaseNumberAsync(path, 0)
         }
-
-        FirebaseDatabase_IncreaseNumberAsync(path, 0)
     }
 
     // track telemetry
 
-    if (signal) {
+    if (signal && shouldTrackTelemetry) {
         signal(eventName, trackingValuesObject)
 
         if (isLog) {
