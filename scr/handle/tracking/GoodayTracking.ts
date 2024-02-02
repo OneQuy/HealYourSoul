@@ -4,7 +4,7 @@ import { MainTrack, TrackErrorOnFirebase } from "./Tracking"
 import { versionAsNumber } from "../AppUtils"
 import { ToCanPrint } from "../UtilsTS"
 import { UserID } from "../UserID"
-import { Dimensions } from "react-native"
+import { Dimensions, Platform } from "react-native"
 import { RoundNumber } from "../Utils"
 
 let dimen = Dimensions.get('screen')
@@ -56,6 +56,10 @@ export const track_FirstOpenOfTheDayAsync = async () => {
 
         track_SimpleWithParam('dimension_screen', 's' + radioOfScreen)
         track_SimpleWithParam('dimension_window', 's' + radioOfWindow)
+        
+        // platform
+
+        track_SimpleWithParam('platform', Platform.OS.toString())
     }
 }
 
