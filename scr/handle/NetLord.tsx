@@ -11,7 +11,8 @@ const ThresholdFetchTime = 2000;
 
 // https://licensebuttons.net/l/by-sa/4.0/88x31.png
 
-const FetchURL = 'https://s1cdn.vnecdn.net/vnexpress/restruct/i/v800/v2_2019/pc/graphics/logo.svg'
+// const FetchURL = 'https://s1cdn.vnecdn.net/vnexpress/restruct/i/v800/v2_2019/pc/graphics/logo.svg'
+const FetchURL = 'https://ssl.gstatic.com/ui/v1/icons/mail/rfr/logo_gmail_lockup_dark_1x_r5.png'
 
 export class NetLord {
     private static startTick: number = 0;
