@@ -46,24 +46,19 @@ export const MainTrack = (
         return
     }
 
-    // track apta base
-
-    let aptaEvent
-
     if (IsDev())
-        aptaEvent = 'dev__' + eventName
-    else
-        aptaEvent = eventName
+        eventName = 'dev__' + eventName
 
-    trackEvent(aptaEvent, trackingValuesObject)
+    // track aptabase
+
+    trackEvent(eventName, trackingValuesObject)
 
     if (isLog) {
         console.log('------------------------')
-        console.log('tracking aptabase: ', aptaEvent, JSON.stringify(trackingValuesObject));
+        console.log('tracking aptabase: ', eventName, JSON.stringify(trackingValuesObject));
     }
 
     // track firebase
-
 
     for (let i = 0; i < fbPaths.length; i++) {
         let path = prefixFbTrackPath() + fbPaths[i]
@@ -75,6 +70,8 @@ export const MainTrack = (
 
         FirebaseDatabase_IncreaseNumberAsync(path, 0)
     }
+
+    // track telemetry
 
     if (signal) {
         signal(eventName, trackingValuesObject)
