@@ -583,6 +583,8 @@ const ThePage = ({ category }: ThePageProps) => {
                     onPress: () => onPressNextPost(true, false)
                 }
             ]);
+
+        HandleError('ThePage_onPlayVideoError', error, true)
     }, [onPressNextPost]);
 
     const onPressShareImage = useCallback(async () => {
