@@ -3,12 +3,19 @@ import { FirebaseDatabase_IncreaseNumberAsync, FirebaseDatabase_SetValueAsync } 
 import { todayString } from "../AppUtils";
 import { APTA_KEY_DEV, APTA_KEY_PRODUCTION } from "../../../keys";
 import { IsDev } from "../IsDev";
+import { useTelemetryDeck } from "@typedigital/telemetrydeck-react";
+
+export type SignalType = ReturnType<typeof useTelemetryDeck>['signal']
 
 const isLog = false
 
 var inited = false
 
+var signal: SignalType | undefined = undefined
+
 const prefixFbTrackPath = () => IsDev() ? 'tracking/dev/' : 'tracking/production/'
+
+export const SetSignal = (sig: SignalType) => signal = sig
 
 export const InitTrackingAsync = async () => {
     if (inited)
@@ -67,5 +74,9 @@ export const MainTrack = (
         }
 
         FirebaseDatabase_IncreaseNumberAsync(path, 0)
+    }
+
+    if (signal) {
+        signal(eventName)
     }
 }

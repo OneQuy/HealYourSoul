@@ -10,12 +10,9 @@
 // 7. add this app: <TelemetryDeckProvider telemetryDeck={telemetryDeck}>
 
 import { createTelemetryDeck } from "@typedigital/telemetrydeck-react";
-import { IsDev } from "../IsDev";
-import { TELEMETRY_DECK_KEY } from "../../../keys";
-import { UserID } from "../UserID";
 
-export const telemetryDeck = createTelemetryDeck({
-    appID: TELEMETRY_DECK_KEY,
-    clientUser: UserID(),
-    testMode: IsDev(),
+export const createTelemetryDeckClient = (appID: string, userID: string, isTest: boolean) => createTelemetryDeck({
+    appID,
+    clientUser: userID,
+    testMode: isTest,
 });

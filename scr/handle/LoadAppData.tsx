@@ -13,11 +13,15 @@ import { ToastTheme } from "./AppUtils";
 import { InitTrackingAsync } from "./tracking/Tracking";
 import { HandldAlertUpdateAppAsync } from "./HandleAlertUpdateApp";
 import { initNotificationAsync } from "./Nofitication";
-import { CheckIsDevAsync } from "./IsDev";
-import { InitUserIDAsync } from "./UserID";
+import { CheckIsDevAsync, IsDev } from "./IsDev";
+import { InitUserIDAsync, UserID } from "./UserID";
+import TelemetryDeck from "@telemetrydeck/sdk";
+import { createTelemetryDeckClient } from "./TelemetryDeck/TelemetryDeck";
+import { TELEMETRY_DECK_KEY } from "../../keys";
 
 export type LoadAppDataResult = {
-    categoryScreenToOpenFirst: keyof DrawerParamList | null
+    categoryScreenToOpenFirst: keyof DrawerParamList | null,
+    telemetryDeckClient: TelemetryDeck,
 }
 
 export async function LoadAppData(theme: ThemeColor): Promise<LoadAppDataResult> {
@@ -30,7 +34,7 @@ export async function LoadAppData(theme: ThemeColor): Promise<LoadAppDataResult>
     await CheckAndClearAllLocalFileBeforeLoadApp();
 
     // user id
-    
+
     await InitUserIDAsync()
 
     // init net checker
@@ -78,9 +82,14 @@ export async function LoadAppData(theme: ThemeColor): Promise<LoadAppDataResult>
 
     const categoryScreenToOpenFirst = await AsyncStorage.getItem('categoryScreenToOpenFirst');
 
+    // teleletry
+
+    const telemetryDeckClient = createTelemetryDeckClient(TELEMETRY_DECK_KEY, UserID(), IsDev())
+
     // return
 
     return {
-        categoryScreenToOpenFirst
-    } as LoadAppDataResult;
+        categoryScreenToOpenFirst,
+        telemetryDeckClient
+    } as LoadAppDataResult
 }

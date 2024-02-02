@@ -12,6 +12,7 @@ import { GetColors, ThemeContext } from './constants/Colors'
 import { Cheat } from './handle/Cheat'
 import { clearAllUserData } from './redux/UserDataSlice'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { TelemetryDeckProvider } from '@typedigital/telemetrydeck-react'
 
 const App = () => {
   return (
@@ -42,17 +43,21 @@ const AppRender = () => {
     }
   }, []);
 
+  if (!handled || !result)
+    return <SplashScreen theme={theme} />
+
   return (
-    <ThemeContext.Provider value={theme} >
-      <StatusBar backgroundColor={theme.background} barStyle={theme.shouldStatusBarLight ? 'light-content' : 'dark-content'} />
-      <View style={CommonStyles.flex_1}>
-        {
-          handled && result ?
-            <Navigator initialRouteName={result.categoryScreenToOpenFirst} /> :
-            <SplashScreen />
-        }
-      </View>
-    </ThemeContext.Provider>);
+    <TelemetryDeckProvider telemetryDeck={result.telemetryDeckClient}>
+      <ThemeContext.Provider value={theme} >
+        <StatusBar backgroundColor={theme.background} barStyle={theme.shouldStatusBarLight ? 'light-content' : 'dark-content'} />
+        <View style={CommonStyles.flex_1}>
+          {
+            <Navigator initialRouteName={result.categoryScreenToOpenFirst} />
+          }
+        </View>
+      </ThemeContext.Provider>
+    </TelemetryDeckProvider>
+  )
 }
 
 export default App

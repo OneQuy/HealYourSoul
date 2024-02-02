@@ -28,8 +28,8 @@ import { RegisterGoodayAppState } from '../handle/GoodayAppState';
 import SettingScreen from '../screens/setting/SettingScreen';
 import { ThemeContext } from '../constants/Colors';
 import { StyleSheet } from 'react-native';
-import { TelemetryDeckProvider } from "@typedigital/telemetrydeck-react"
-import { telemetryDeck } from '../handle/TelemetryDeck/TelemetryDeck';
+import { useTelemetryDeck } from "@typedigital/telemetrydeck-react"
+import { SetSignal } from '../handle/tracking/Tracking';
 
 export type DrawerParamList = {
   [ScreenName.Meme]: undefined,
@@ -104,6 +104,7 @@ const ScreenList: ScreenNamePair[] = [
 
 const Navigator = ({ initialRouteName }: MainNavigatorProps) => {
   const theme = useContext(ThemeContext);
+  const { signal } = useTelemetryDeck()
 
   const style = useMemo(() => {
     return StyleSheet.create({
@@ -118,6 +119,14 @@ const Navigator = ({ initialRouteName }: MainNavigatorProps) => {
   }, [])
 
   useEffect(() => {
+    console.log('set signal');
+    
+    SetSignal(signal)
+  }, [signal])
+
+  useEffect(() => {
+    console.log('start app');
+
     // init app state
 
     InitAppStateMan()
@@ -133,22 +142,20 @@ const Navigator = ({ initialRouteName }: MainNavigatorProps) => {
   }, [])
 
   return (
-    <TelemetryDeckProvider telemetryDeck={telemetryDeck}>
-      <NavigationContainer>
-        <Drawer.Navigator
-          initialRouteName={!initialRouteName ? ScreenName.Meme : initialRouteName}
-          drawerContent={(props) => <CustomDrawerContent {...props} />}
-          screenOptions={{
-            headerStyle: style.header,
-            headerTintColor: theme.primary,
-          }}
-        >
-          {
-            renderListScreens
-          }
-        </Drawer.Navigator>
-      </NavigationContainer>
-    </TelemetryDeckProvider>
+    <NavigationContainer>
+      <Drawer.Navigator
+        initialRouteName={!initialRouteName ? ScreenName.Meme : initialRouteName}
+        drawerContent={(props) => <CustomDrawerContent {...props} />}
+        screenOptions={{
+          headerStyle: style.header,
+          headerTintColor: theme.primary,
+        }}
+      >
+        {
+          renderListScreens
+        }
+      </Drawer.Navigator>
+    </NavigationContainer>
   )
 }
 
