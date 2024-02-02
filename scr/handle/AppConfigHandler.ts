@@ -1,6 +1,5 @@
 import { FirebaseDatabase_GetValueAsync } from "../firebase/FirebaseDatabase";
 import { HandleError } from "./AppUtils";
-import { ThemeColor, } from "../constants/Colors";
 import { SetNetLordFetchUrl } from "./NetLord";
 import { AppConfig } from "../constants/Types";
 import { SetDateAsync_Now } from "./AsyncStorageUtils";
