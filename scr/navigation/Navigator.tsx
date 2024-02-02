@@ -119,14 +119,10 @@ const Navigator = ({ initialRouteName }: MainNavigatorProps) => {
   }, [])
 
   useEffect(() => {
-    console.log('set signal');
-    
     SetSignal(signal)
   }, [signal])
 
   useEffect(() => {
-    console.log('start app');
-
     // init app state
 
     InitAppStateMan()

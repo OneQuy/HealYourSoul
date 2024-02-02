@@ -3,6 +3,7 @@ import { GetDateAsync, GetNumberIntAsync, SetDateAsync_Now, SetNumberAsync } fro
 import { MainTrack, TrackErrorOnFirebase } from "./Tracking"
 import { versionAsNumber } from "../AppUtils"
 import { ToCanPrint } from "../UtilsTS"
+import { UserID } from "../UserID"
 
 /**
  * on first useEffect of the app (freshly open) or first active state of the day
@@ -32,7 +33,10 @@ export const track_FirstOpenOfTheDayAsync = async () => {
             [
                 `total/${event}`,
                 `events/${event}/#d`,
-            ])
+            ],
+            {
+                userID: UserID(),
+            })
 
         track_SimpleWithParam('versions', 'v' + versionAsNumber)
     }
