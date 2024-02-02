@@ -48,6 +48,13 @@ export type AppConfig = {
         button_link_title: string,
         show_update_button: boolean,
         ok_title: string,
+    },
+    tracking: {
+        enableFirebase: boolean,
+        enableTelemetry: boolean,
+        
+        enableAptabase: boolean,
+        aptabaseProductionKey: string,
     }
 }
 
