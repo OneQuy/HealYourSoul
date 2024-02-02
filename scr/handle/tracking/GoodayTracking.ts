@@ -4,6 +4,14 @@ import { MainTrack, TrackErrorOnFirebase } from "./Tracking"
 import { versionAsNumber } from "../AppUtils"
 import { ToCanPrint } from "../UtilsTS"
 import { UserID } from "../UserID"
+import { Dimensions } from "react-native"
+import { RoundNumber } from "../Utils"
+
+let dimen = Dimensions.get('screen')
+const radioOfScreen = RoundNumber(Math.max(dimen.height, dimen.width) / Math.min(dimen.height, dimen.width), 2) * 100
+
+dimen = Dimensions.get('window')
+const radioOfWindow = RoundNumber(Math.max(dimen.height, dimen.width) / Math.min(dimen.height, dimen.width), 2) * 100
 
 /**
  * on first useEffect of the app (freshly open) or first active state of the day
@@ -25,6 +33,8 @@ export const track_FirstOpenOfTheDayAsync = async () => {
     const firstTimeInstallTick = await GetDateAsync(StorageKey_FirstTimeInstallTick)
 
     if (firstTimeInstallTick === undefined) {
+        //  newly install
+
         SetDateAsync_Now(StorageKey_FirstTimeInstallTick)
 
         let event = 'newly_install'
@@ -38,7 +48,14 @@ export const track_FirstOpenOfTheDayAsync = async () => {
                 userID: UserID(),
             })
 
+        // version
+
         track_SimpleWithParam('versions', 'v' + versionAsNumber)
+
+        // dimension
+
+        track_SimpleWithParam('dimension_screen', 's' + radioOfScreen)
+        track_SimpleWithParam('dimension_window', 's' + radioOfWindow)
     }
 }
 
