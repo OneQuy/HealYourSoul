@@ -358,6 +358,18 @@ export function ArrayRemove<T>(arr: T[], value: T): boolean {
 
 // string utils ---------------------------
 
+export function IsValuableArrayOrString(value: string | [], trimString: boolean = true) {
+    if (Array.isArray(value)) {
+        return value.length > 0
+    }
+    else {
+        if (trimString && value)
+            value = value.trim()
+
+        return value && value.length > 0
+    }
+}
+
 export function RegexUrl(url: string) {
     var expression = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi;
     var regex = new RegExp(expression);
@@ -652,7 +664,7 @@ export const OpenYoutubeAsync = async (videoID: string, openBrowserIfFail: boole
     if (!can) {
         if (openBrowserIfFail === true)
             Linking.openURL('https://youtu.be/' + videoID)
-        
+
         return false
     }
 
