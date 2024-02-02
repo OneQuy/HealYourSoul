@@ -40,7 +40,7 @@ export const TrackErrorOnFirebase = (error: string) => {
 export const MainTrack = (
     eventName: string,
     fbPaths: (string | undefined)[],
-    aptaValue?: Record<string, string | number | boolean>) => {
+    trackingValuesObject?: Record<string, string | number | boolean>) => {
     if (!inited) {
         console.error('not inited tracking yet')
         return
@@ -55,11 +55,11 @@ export const MainTrack = (
     else
         aptaEvent = eventName
 
-    trackEvent(aptaEvent, aptaValue)
+    trackEvent(aptaEvent, trackingValuesObject)
 
     if (isLog) {
         console.log('------------------------')
-        console.log('testtttt apta event', aptaEvent, JSON.stringify(aptaValue));
+        console.log('tracking aptabase: ', aptaEvent, JSON.stringify(trackingValuesObject));
     }
 
     // track firebase
@@ -70,13 +70,17 @@ export const MainTrack = (
         path = path.replaceAll('#d', todayString)
 
         if (isLog) {
-            console.log('fb path', path);
+            console.log('tracking on firebase: ', path);
         }
 
         FirebaseDatabase_IncreaseNumberAsync(path, 0)
     }
 
     if (signal) {
-        signal(eventName)
+        signal(eventName, trackingValuesObject)
+
+        if (isLog) {
+            console.log('tracking telemetry: ', eventName, JSON.stringify(trackingValuesObject))
+        }
     }
 }
