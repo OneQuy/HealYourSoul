@@ -24,18 +24,18 @@ import { toast } from '@baronha/ting';
 import { IsDev } from '../handle/IsDev';
 
 const premiumBGs = [
-  [require(`../../assets/images/premium_btn/0.jpg`), 'black'],
+  [require(`../../assets/images/premium_btn/0.jpg`), '#1c1c1c'],
   [require(`../../assets/images/premium_btn/4.jpg`), 'white'],
-  [require(`../../assets/images/premium_btn/5.jpg`), 'black'],
-  [require(`../../assets/images/premium_btn/3.jpg`), 'white'],
-  [require(`../../assets/images/premium_btn/6.jpg`), 'white'],
+  [require(`../../assets/images/premium_btn/5.jpg`), '#1c1c1c'],
+  [require(`../../assets/images/premium_btn/3.jpg`), '#1c1c1c'], // 3
+  [require(`../../assets/images/premium_btn/6.jpg`), '#1c1c1c'],
   [require(`../../assets/images/premium_btn/7.jpeg`), 'white'],
-  [require(`../../assets/images/premium_btn/2.jpg`), 'black'],
-  [require(`../../assets/images/premium_btn/8.jpg`), 'black'],
+  [require(`../../assets/images/premium_btn/2.jpg`), 'white'], // 6
+  [require(`../../assets/images/premium_btn/8.jpg`), '#1c1c1c'],
   [require(`../../assets/images/premium_btn/1.jpg`), 'white'],
 ]
 
-// const primiumBG = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS254VqqJtd-a3QAJcb4h67DwQ_CKeDYdIGSA&usqp=CAU'
+// const urlbg = 'https://images.unsplash.com/photo-1548268770-66184a21657e?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzR8fHNreXxlbnwwfHwwfHx8MA%3D%3D'
 
 export function CustomDrawerContent(props: DrawerContentComponentProps) {
   const pressLogoCountRef = useRef(0)
@@ -130,7 +130,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
 
     if (!IsDev())
       return
-    
+
     pressLogoCountRef.current++
 
     if (pressLogoCountRef.current < 20)
@@ -185,6 +185,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
         <TouchableOpacity onPress={onPressPremiumButton}>
           {/* @ts-ignore */}
           <ImageBackground resizeMode="cover" source={premiumBg[0]} style={[style.premiumIB, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
+            {/* <ImageBackground resizeMode="cover" source={{ uri: urlbg }} style={[style.premiumIB, CommonStyles.justifyContentCenter_AlignItemsCenter]}> */}
             <MaterialCommunityIcons name={Icon.Coffee} color={premiumBg[1]} size={Size.Icon} />
             <Text numberOfLines={1} adjustsFontSizeToFit style={[style.premiumText, { color: premiumBg[1] }]}>{LocalText.donate_me}</Text>
           </ImageBackground>
