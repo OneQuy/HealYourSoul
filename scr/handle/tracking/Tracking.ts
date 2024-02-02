@@ -5,6 +5,7 @@ import { APTA_KEY_DEV, APTA_KEY_PRODUCTION } from "../../../keys";
 import { IsDev } from "../IsDev";
 import { useTelemetryDeck } from "@typedigital/telemetrydeck-react";
 import { GetAppConfig } from "../AppConfigHandler";
+import { IsValuableArrayOrString } from "../UtilsTS";
 
 export type SignalType = ReturnType<typeof useTelemetryDeck>['signal']
 
@@ -24,7 +25,14 @@ export const InitTrackingAsync = async () => {
 
     inited = true
 
-    Aptabase.init(IsDev() ? APTA_KEY_DEV : APTA_KEY_PRODUCTION)
+    const appConfig = GetAppConfig()
+
+    let productionKey = APTA_KEY_PRODUCTION
+
+    if (appConfig && IsValuableArrayOrString(appConfig.tracking.aptabaseProductionKey))
+        productionKey = appConfig.tracking.aptabaseProductionKey
+
+    Aptabase.init(IsDev() ? APTA_KEY_DEV : productionKey)
 }
 
 export const TrackErrorOnFirebase = (error: string) => {
