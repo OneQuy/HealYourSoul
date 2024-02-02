@@ -173,7 +173,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
   return (
     <View style={{ flex: 1, backgroundColor: theme.background }}>
       {/* logo & app name */}
-      <View onTouchEnd={IsDev() ? onPressLogo : undefined} style={[style.topMasterView, CommonStyles.justifyContentCenter_AlignItemsCenter, { marginTop: safeAreaInsets.top }]}>
+      <View onTouchEnd={onPressLogo} style={[style.topMasterView, CommonStyles.justifyContentCenter_AlignItemsCenter, { marginTop: safeAreaInsets.top }]}>
         <Image source={logoScr} resizeMode='contain' style={[style.logoImg]} />
         <Text style={[style.appNameText, { color: theme.counterBackground }]}>Gooday{IsDev() ? '.' : ''}</Text>
       </View>
