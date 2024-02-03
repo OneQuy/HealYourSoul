@@ -25,6 +25,7 @@ const Onboarding = () => {
 
             welcomeView: { marginHorizontal: Outline.Horizontal, alignItems: 'center', },
             welcomeText: { color: theme.counterBackground, fontSize: FontSize.Big, fontWeight: FontWeight.Bold },
+            welcomeText_Gooday: { color: theme.primary, fontSize: FontSize.Big, fontWeight: FontWeight.Bold },
             welcomeText_2: { color: theme.counterBackground, fontSize: FontSize.Small_L, },
             welcomeText_3: { textAlign: 'center', marginTop: Outline.Horizontal, color: theme.counterBackground, fontSize: FontSize.Small_L, },
 
@@ -61,15 +62,17 @@ const Onboarding = () => {
                     style={style.logoImg} />
             </View>
 
-            {/* welcome text */}
+            {/* welcome texts */}
 
             <View style={style.welcomeView}>
-                <Text adjustsFontSizeToFit numberOfLines={1} style={style.welcomeText}>{LocalText.welcome_text}</Text>
+                <Text adjustsFontSizeToFit numberOfLines={1} style={style.welcomeText}>
+                    {LocalText.welcome_text} <Text adjustsFontSizeToFit numberOfLines={1} style={style.welcomeText_Gooday}>Gooday!</Text>
+                </Text>
                 <Text adjustsFontSizeToFit numberOfLines={1} style={style.welcomeText_2}>{LocalText.welcome_text_2}</Text>
                 <Text style={style.welcomeText_3}>{LocalText.welcome_text_3}</Text>
             </View>
 
-            {/* bottom */}
+            {/* bottom part*/}
 
             <View style={style.bottomBtnsContainerView}>
                 {/* set theme */}
