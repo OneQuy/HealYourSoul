@@ -21,20 +21,19 @@ const Onboarding = () => {
         return StyleSheet.create({
             masterView: { flex: 1, backgroundColor: theme.background, justifyContent: 'space-evenly', alignItems: 'center', },
             logoAppNameContainerView: { gap: Outline.GapVertical, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' },
-            logoImg: { width: heightPercentageToDP(8), aspectRatio: 1 },
-            appNameText: { color: theme.counterBackground, fontSize: FontSize.Big, fontWeight: FontWeight.Bold },
+            logoImg: { width: heightPercentageToDP(10), aspectRatio: 1 },
 
-            welcomeView: { alignItems: 'center', },
+            welcomeView: { marginHorizontal: Outline.Horizontal, alignItems: 'center', },
             welcomeText: { color: theme.counterBackground, fontSize: FontSize.Big, fontWeight: FontWeight.Bold },
             welcomeText_2: { color: theme.counterBackground, fontSize: FontSize.Small_L, },
-            welcomeText_3: { textAlign: 'center', margin: Outline.Horizontal, color: theme.counterBackground, fontSize: FontSize.Small_L, },
+            welcomeText_3: { textAlign: 'center', marginTop: Outline.Horizontal, color: theme.counterBackground, fontSize: FontSize.Small_L, },
 
             bottomBtnsContainerView: { width: '100%', gap: Outline.GapHorizontal, },
             bottomContainerView: { alignItems: 'center', gap: Outline.GapHorizontal, },
             themeBtnsContainerView: { flexDirection: 'row', paddingHorizontal: Outline.Horizontal, gap: Outline.GapHorizontal, },
             startTO: { marginTop: Outline.Vertical, backgroundColor: theme.primary, marginHorizontal: Outline.Horizontal, padding: Outline.Horizontal, borderRadius: BorderRadius.BR, alignItems: 'center' },
             themeTO: { flex: 1, padding: Outline.GapVertical, borderWidth: StyleSheet.hairlineWidth, borderColor: theme.counterBackground, borderRadius: BorderRadius.BR, alignItems: 'center', justifyContent: 'center', },
-            themeTOText: { color: theme.counterBackground, fontSize: FontSize.Small_L, },
+            themeTOText: { color: theme.counterBackground, fontSize: FontSize.Small, },
             btnText: { color: theme.counterPrimary, fontSize: FontSize.Small_L, fontWeight: FontWeight.Bold },
         })
     }, [theme])
@@ -60,7 +59,6 @@ const Onboarding = () => {
                     source={logoScr}
                     resizeMode='contain'
                     style={style.logoImg} />
-                <Text style={style.appNameText}>Gooday{IsDev() ? '.' : ''}</Text>
             </View>
 
             {/* welcome text */}
