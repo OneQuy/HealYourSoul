@@ -5,11 +5,13 @@ import { defaultThemeType, ThemeType } from "../constants/Colors";
 export type MiscState = {
     themeType: ThemeType,
     mutedVideo: boolean,
+    onboarded: boolean,
 }
 
 const initialState: MiscState = {
     themeType: defaultThemeType,
     mutedVideo: true,
+    onboarded: false,
 }
 
 const slice = createSlice({
@@ -23,12 +25,17 @@ const slice = createSlice({
         setMutedVideo: (state) => {
             state.mutedVideo = !state.mutedVideo;
         },
+        
+        setOnboarded: (state) => {
+            state.onboarded = !state.onboarded;
+        },
     }
 });
 
 export const {
     setTheme,
     setMutedVideo,
+    setOnboarded,
 } = slice.actions;
 
 export default slice.reducer;

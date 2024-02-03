@@ -8,7 +8,7 @@ import { BorderRadius, FontSize, FontWeight, LocalText, Outline } from '../../co
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 import ThemeScroll from '../components/ThemeScroll';
 import { useAppDispatch } from '../../redux/Store';
-import { setTheme } from '../../redux/MiscSlice';
+import { setOnboarded, setTheme } from '../../redux/MiscSlice';
 import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 
 
@@ -50,6 +50,8 @@ const Onboarding = () => {
         else if (type === 'dark') {
             dispatch(setTheme('default_dark'))
         }
+        else
+            dispatch(setOnboarded())
     }, [])
 
     return (

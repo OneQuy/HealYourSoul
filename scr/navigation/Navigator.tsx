@@ -30,6 +30,8 @@ import { ThemeContext } from '../constants/Colors';
 import { StyleSheet } from 'react-native';
 import { useTelemetryDeck } from "@typedigital/telemetrydeck-react"
 import { SetSignal } from '../handle/tracking/Tracking';
+import Onboarding from '../screens/onboarding/Onboarding';
+import { RootState, useAppSelector } from '../redux/Store';
 
 export type DrawerParamList = {
   [ScreenName.Meme]: undefined,
@@ -105,6 +107,7 @@ const ScreenList: ScreenNamePair[] = [
 const Navigator = ({ initialRouteName }: MainNavigatorProps) => {
   const theme = useContext(ThemeContext);
   const { signal } = useTelemetryDeck()
+  const isOnboarded = useAppSelector((state: RootState) => state.misc.onboarded);
 
   const style = useMemo(() => {
     return StyleSheet.create({
@@ -136,6 +139,9 @@ const Navigator = ({ initialRouteName }: MainNavigatorProps) => {
       RegisterGoodayAppState(false)
     }
   }, [])
+
+  if (!isOnboarded)
+    return <Onboarding />
 
   return (
     <NavigationContainer>
