@@ -6,10 +6,10 @@ import { ThemeContext } from '../../constants/Colors';
 import { logoScr } from '../others/SplashScreen';
 import { BorderRadius, FontSize, FontWeight, LocalText, Outline } from '../../constants/AppConstants';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
-import { IsDev } from '../../handle/IsDev';
 import ThemeScroll from '../components/ThemeScroll';
 import { useAppDispatch } from '../../redux/Store';
 import { setTheme } from '../../redux/MiscSlice';
+import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 
 
 const Onboarding = () => {
@@ -39,8 +39,10 @@ const Onboarding = () => {
         })
     }, [theme])
 
-    const onPressed_Theme = useCallback((type: 'light' | 'dark' | 'other') => {
-        if (type === 'other')
+    const onPressed = useCallback((type: 'light' | 'dark' | 'color' | 'enter') => {
+        track_SimpleWithParam('onboarding', type)
+
+        if (type === 'color')
             setShowThemes(val => !val)
         else if (type === 'light') {
             dispatch(setTheme('default_light'))
@@ -65,11 +67,11 @@ const Onboarding = () => {
             {/* welcome texts */}
 
             <View style={style.welcomeView}>
-                <Text adjustsFontSizeToFit numberOfLines={1} style={style.welcomeText}>
+                <Text selectable adjustsFontSizeToFit numberOfLines={1} style={style.welcomeText}>
                     {LocalText.welcome_text} <Text adjustsFontSizeToFit numberOfLines={1} style={style.welcomeText_Gooday}>Gooday!</Text>
                 </Text>
-                <Text adjustsFontSizeToFit numberOfLines={1} style={style.welcomeText_2}>{LocalText.welcome_text_2}</Text>
-                <Text style={style.welcomeText_3}>{LocalText.welcome_text_3}</Text>
+                <Text selectable adjustsFontSizeToFit numberOfLines={1} style={style.welcomeText_2}>{LocalText.welcome_text_2}</Text>
+                <Text selectable style={style.welcomeText_3}>{LocalText.welcome_text_3}</Text>
             </View>
 
             {/* bottom part*/}
@@ -77,15 +79,15 @@ const Onboarding = () => {
             <View style={style.bottomBtnsContainerView}>
                 {/* set theme */}
                 <View style={style.bottomContainerView}>
-                    <Text adjustsFontSizeToFit numberOfLines={1} style={style.welcomeText_2}>{LocalText.set_your_theme}:</Text>
+                    <Text selectable adjustsFontSizeToFit numberOfLines={1} style={style.welcomeText_2}>{LocalText.set_your_theme}:</Text>
                     <View style={style.themeBtnsContainerView}>
-                        <TouchableOpacity onPress={() => onPressed_Theme('light')} style={style.themeTO}>
+                        <TouchableOpacity onPress={() => onPressed('light')} style={style.themeTO}>
                             <Text adjustsFontSizeToFit numberOfLines={1} style={style.themeTOText}>{LocalText.lights_mode}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => onPressed_Theme('dark')} style={style.themeTO}>
+                        <TouchableOpacity onPress={() => onPressed('dark')} style={style.themeTO}>
                             <Text adjustsFontSizeToFit numberOfLines={1} style={style.themeTOText}>{LocalText.darks_mode}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => onPressed_Theme('other')} style={style.themeTO}>
+                        <TouchableOpacity onPress={() => onPressed('color')} style={style.themeTO}>
                             <Text adjustsFontSizeToFit numberOfLines={1} style={style.themeTOText}>{LocalText.color}</Text>
                         </TouchableOpacity>
                     </View>
@@ -96,7 +98,7 @@ const Onboarding = () => {
                 </View>
 
                 {/* start btn */}
-                <TouchableOpacity style={style.startTO}>
+                <TouchableOpacity onPress={() => onPressed('enter')} style={style.startTO}>
                     <Text adjustsFontSizeToFit numberOfLines={1} style={style.btnText}>{LocalText.start_gooday}</Text>
                 </TouchableOpacity>
             </View>
