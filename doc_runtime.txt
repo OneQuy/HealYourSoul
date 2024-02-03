@@ -1,3 +1,7 @@
+started project: 13/07/2023
+
+=========================
+
 alert priority:
 
 1. await HandleStartupAlertAsync() // alert_priority 1
