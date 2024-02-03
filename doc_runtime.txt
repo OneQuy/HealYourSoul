@@ -9,3 +9,9 @@ alert priority:
 3. initNotificationAsync() // alert_priority 3 (doc)
 
 =========================
+
+flow 
+
+1. splash screen
+2. onboarding (can start tracking here)
+3. navigator
