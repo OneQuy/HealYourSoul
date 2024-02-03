@@ -326,6 +326,13 @@ export const LocalText = {
   multi_choice: 'Multi-choice',
   true_false: 'True/False',
 
+  start_gooday: 'Start to good your day!',
+  color: 'Color',
+  welcome_text: `Welcome to Gooday!`,
+  welcome_text_2: `Your daily dose of laughter and positivity!`,
+  welcome_text_3: `In Gooday, I believe in the power of laughter, positive and beautiful stuffs to brighten your day and lift your spirits. Dive into a world filled with hilarious memes, gorgeous pictures and heartwarming content that is sure to bring a smile to your face.`,
+  set_your_theme: 'Pick your own theme',
+  
   // popup
 
   popup_title_need_internet: 'No Internet',
