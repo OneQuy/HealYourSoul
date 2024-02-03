@@ -21,6 +21,9 @@ import { FirebaseDatabase_SetValueAsync } from '../../firebase/FirebaseDatabase'
 import { reloadSettingAnimWhenLoadMedia } from '../../handle/GoodayAnimation';
 import ThemeScroll from '../components/ThemeScroll';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { IsDev } from '../../handle/IsDev';
+import { useAppDispatch } from '../../redux/Store';
+import { setOnboarded } from '../../redux/MiscSlice';
 
 const limitFeedback = 300
 
@@ -45,10 +48,11 @@ const SettingView = () => {
   const [isSendingFeedback, setIsSendingFeedback] = useState(false)
   const scrollRef = useRef()
   const insets = useSafeAreaInsets()
+  const dispatch = useAppDispatch()
 
   const style = useMemo(() => {
     return StyleSheet.create({
-      masterView: { paddingBottom: insets.bottom, flex: 1, backgroundColor: theme.background, padding: Outline.Horizontal, paddingVertical: Outline.GapHorizontal },
+      masterView: { paddingBottom: insets.bottom + Outline.GapHorizontal, flex: 1, backgroundColor: theme.background, padding: Outline.Horizontal, paddingVertical: Outline.GapHorizontal },
       scrollView: { gap: Outline.GapHorizontal },
       flexRowWithGap: { flexDirection: 'row', gap: Outline.GapHorizontal },
       checkbox: { flexDirection: 'row', gap: Outline.GapHorizontal, alignItems: 'center', justifyContent: 'space-between' },
@@ -69,7 +73,10 @@ const SettingView = () => {
   }, [theme, insets])
 
   const onPressCreditLogo = useCallback(() => {
-    Linking.openURL('https://www.flaticon.com/free-icons/turtle')
+    if (IsDev())
+      dispatch(setOnboarded())
+    else
+      Linking.openURL('https://www.flaticon.com/free-icons/turtle')
   }, [])
 
   const onPressNoti = useCallback((type: 'quote' | 'fact' | 'joke' | 'anim_load_media') => {
@@ -358,7 +365,7 @@ const SettingView = () => {
           {LocalText.logo_credit} <Text onPress={onPressCreditLogo} style={style.contentTxt_withBold}>Freepik - Flaticon</Text>
         </Text>
         <Text style={style.contentTxt_withBold}>
-          Gooday <Text style={[style.contentTxt, { fontWeight: 'normal'}]}>{LocalText.myself_credit}</Text>
+          Gooday <Text style={[style.contentTxt, { fontWeight: 'normal' }]}>{LocalText.myself_credit}</Text>
         </Text>
       </ScrollView>
     </View>
