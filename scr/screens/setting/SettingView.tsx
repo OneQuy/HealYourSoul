@@ -20,6 +20,7 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import { FirebaseDatabase_SetValueAsync } from '../../firebase/FirebaseDatabase';
 import { reloadSettingAnimWhenLoadMedia } from '../../handle/GoodayAnimation';
 import ThemeScroll from '../components/ThemeScroll';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const limitFeedback = 300
 
@@ -43,10 +44,11 @@ const SettingView = () => {
   const [feedbackText, setFeedbackText] = useState('')
   const [isSendingFeedback, setIsSendingFeedback] = useState(false)
   const scrollRef = useRef()
+  const insets = useSafeAreaInsets()
 
   const style = useMemo(() => {
     return StyleSheet.create({
-      masterView: { flex: 1, backgroundColor: theme.background, padding: Outline.Horizontal, paddingVertical: Outline.GapHorizontal },
+      masterView: { paddingBottom: insets.bottom, flex: 1, backgroundColor: theme.background, padding: Outline.Horizontal, paddingVertical: Outline.GapHorizontal },
       scrollView: { gap: Outline.GapHorizontal },
       flexRowWithGap: { flexDirection: 'row', gap: Outline.GapHorizontal },
       checkbox: { flexDirection: 'row', gap: Outline.GapHorizontal, alignItems: 'center', justifyContent: 'space-between' },
@@ -59,12 +61,12 @@ const SettingView = () => {
       btnText: { textAlign: 'center', color: theme.counterPrimary, fontSize: FontSize.Small_L, fontWeight: FontWeight.B500 },
       descNotiText: { color: theme.counterBackground, fontSize: FontSize.Small },
       contentTxt: { color: theme.counterBackground, fontSize: FontSize.Small_L },
-      statText: { marginBottom: Outline.Horizontal, color: theme.counterBackground, fontSize: FontSize.Small_L },
+      statText: { color: theme.counterBackground, fontSize: FontSize.Small_L },
       sendFeedbackTO: { backgroundColor: theme.primary, minWidth: 100, alignSelf: 'center', paddingVertical: Outline.GapVertical, paddingHorizontal: Outline.GapVertical_2, borderRadius: BorderRadius.BR8 },
       shareTO: { backgroundColor: theme.primary, flexDirection: 'row', justifyContent: 'center', gap: Outline.GapHorizontal, flex: 1, alignSelf: 'center', paddingVertical: Outline.GapVertical, paddingHorizontal: Outline.GapVertical_2, borderRadius: BorderRadius.BR8, },
       sendFeedbackInput: { color: theme.counterBackground, textAlignVertical: 'top', textAlign: 'left', width: '100%', height: '100%' },
     })
-  }, [theme])
+  }, [theme, insets])
 
   const onPressNoti = useCallback((type: 'quote' | 'fact' | 'joke' | 'anim_load_media') => {
 
