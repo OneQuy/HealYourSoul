@@ -29,7 +29,7 @@ import { SaveToGalleryAsync } from '../../handle/CameraRoll';
 import { Cheat } from '../../handle/Cheat';
 import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
 import StreakPopup from '../components/StreakPopup';
-import { track_PressNextPost, track_PressSaveMedia, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
+import { track_PressNextPost, track_PressNextPostMedia, track_PressSaveMedia, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
@@ -219,7 +219,11 @@ const ThePage = ({ category }: ThePageProps) => {
 
         if (isNextPost === 'none') { // just change media
             if (mediaURI.current !== '')
-                curMediaIdx.current = curMediaIdx.current + (isNext ? 1 : -1);
+                curMediaIdx.current = curMediaIdx.current + (isNext ? 1 : -1)
+
+            // tracking
+
+            track_PressNextPostMedia(category, isNext)
         }
         else // change post too
             curMediaIdx.current = 0;

@@ -118,6 +118,12 @@ export const track_PressNextPost = (shouldTracking: boolean, category: Category,
     track_SimpleWithCat(category, event)
 }
 
+export const track_PressNextPostMedia = (category: Category, isNextOrPrevious: boolean) => {
+    const event = isNextOrPrevious ? 'press_next_media' : 'press_previous_media'
+
+    track_SimpleWithCat(category, event)
+}
+
 export const track_PressSaveMedia = (category: Category) => {
     track_SimpleWithCat(category, 'save_media')
 }
