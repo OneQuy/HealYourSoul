@@ -1,8 +1,7 @@
 import React, { useCallback, useMemo } from 'react'
-import { ScrollView } from 'react-native-gesture-handler'
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { ThemeType, themes } from '../../constants/Colors';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { setTheme } from '../../redux/MiscSlice';
 import { Outline } from '../../constants/AppConstants';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
