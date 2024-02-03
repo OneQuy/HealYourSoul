@@ -1,7 +1,7 @@
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, Alert, Linking, GestureResponderEvent, Animated } from 'react-native'
+import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, Alert, GestureResponderEvent, Animated } from 'react-native'
 import React, { LegacyRef, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size, StorageKey_LocalFileVersion, StorageKey_SelectingShortFilmIdx } from '../../constants/AppConstants'
@@ -30,7 +30,7 @@ import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
 import HeaderSettingButton from '../components/HeaderSettingButton';
-import Clipboard from '@react-native-clipboard/clipboard';
+import useIntroduceCat from '../components/IntroduceCat';
 
 const category = Category.BestShortFilms
 const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Fshort_films.json?alt=media&token=537eec8b-f774-4908-a5fa-45f8daf676d8'
@@ -46,6 +46,7 @@ const BestShortFilmsScreen = () => {
     const viewShotRef = useRef<LegacyRef<ViewShot> | undefined>();
     const [showFull, setShowFull] = useState(false);
     const favoriteCallbackRef = useRef<(() => void) | undefined>(undefined);
+    const [showIntroduceCat, renderShowIntroduceCat] = useIntroduceCat(category)
 
     const [shortFilms, errorDownloadJson, _, reUpdateData] = useCheckAndDownloadRemoteFile<ShortFilm[]>(
         fileURL,
@@ -327,6 +328,11 @@ const BestShortFilmsScreen = () => {
     // save last visit category screen
 
     useFocusEffect(useCallback(() => SaveCurrentScreenForLoadNextTime(navigation), []))
+
+    // introduce cat
+
+    if (showIntroduceCat)
+        return renderShowIntroduceCat()
 
     return (
         <View pointerEvents={handling ? 'none' : 'auto'} style={[styleSheet.masterView, { backgroundColor: theme.background }]}>
