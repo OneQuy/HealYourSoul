@@ -34,6 +34,7 @@ import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
 import HeaderSettingButton from '../components/HeaderSettingButton';
+import useIntroduceCat from '../components/IntroduceCat';
 
 const videoNumbSize = 10;
 const videoTouchEffectRadius = 100;
@@ -68,6 +69,7 @@ const ThePage = ({ category }: ThePageProps) => {
     const allSavedLocalPostIdsRef = useRef<number[] | undefined>(undefined);
     const favoriteCallbackRef = useRef<(() => void) | undefined>(undefined);
     const [streakData, setStreakData] = useState<Streak | undefined>(undefined);
+    const [showIntroduceCat, renderShowIntroduceCat] = useIntroduceCat(category)
 
     const seenIDs = useAppSelector((state: RootState) => {
         if (category === Category.Draw)
@@ -798,6 +800,11 @@ const ThePage = ({ category }: ThePageProps) => {
             },
         ] as BottomBarItem[]
     }, [onPressNextPost, post.current?.id, onPressDownloadMedia])
+
+    // introduce cat
+
+    if (showIntroduceCat)
+        return renderShowIntroduceCat()
 
     // main render
 

@@ -89,7 +89,7 @@ export enum FirebaseDBPath {
 // category
 
 export enum Category {
-  Draw = 0,
+  Draw = 0, // warm
   Meme = 1,
   Quote = 2,
   CatDog = 3,
@@ -336,6 +336,12 @@ export const LocalText = {
   welcome_text_3: `In Gooday, I believe in the power of laughter, positive and beautiful stuffs to brighten your day and lift your spirits. Dive into a world filled with hilarious memes, gorgeous pictures, useful and heartwarming content that is sure to heal your soul and bring a smile to your face.`,
   set_your_theme: 'Pick your own theme',
   
+  introduce_Draw: `Embrace Heartwarming Moments in Every Frame!
+  
+Immerse yourself in a world of positivity with carefully curated visuals that spark joy and warmth. Share smiles, capture memories, and feel the love with every delightful image and video 🌈`,
+  
+  introduce_BestShortFilms: 'Discover cinematic excellence with "Good Short Films," showcasing carefully curated and selectively chosen award-winning gems on YouTube and other streaming platforms 🎬',
+  
   // popup
 
   popup_title_need_internet: 'No Internet',
@@ -352,7 +358,7 @@ export const LocalText = {
 
 export const StorageKey_AwardPictureLastSeenIdxOfYear = (year: number) => 'award_picture_last_seen_idx_' + year
 export const StorageKey_LocalFileVersion = (cat: Category) => 'local_file_version_' + cat
-
+export const StorageKey_ShowedIntroduceCat = (cat: Category) => 'introduce_' + cat
 
 export const StorageKey_NinjaFact_ToggleNoti = 'ninja_fact_ToggleNoti'
 export const StorageKey_NinjaJoke_ToggleNoti = 'ninja_joke_ToggleNoti'
