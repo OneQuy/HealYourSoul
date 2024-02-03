@@ -61,12 +61,16 @@ const SettingView = () => {
       btnText: { textAlign: 'center', color: theme.counterPrimary, fontSize: FontSize.Small_L, fontWeight: FontWeight.B500 },
       descNotiText: { color: theme.counterBackground, fontSize: FontSize.Small },
       contentTxt: { color: theme.counterBackground, fontSize: FontSize.Small_L },
-      statText: { color: theme.counterBackground, fontSize: FontSize.Small_L },
+      contentTxt_withBold: { color: theme.counterBackground, fontSize: FontSize.Small_L, fontWeight: FontWeight.Bold },
       sendFeedbackTO: { backgroundColor: theme.primary, minWidth: 100, alignSelf: 'center', paddingVertical: Outline.GapVertical, paddingHorizontal: Outline.GapVertical_2, borderRadius: BorderRadius.BR8 },
       shareTO: { backgroundColor: theme.primary, flexDirection: 'row', justifyContent: 'center', gap: Outline.GapHorizontal, flex: 1, alignSelf: 'center', paddingVertical: Outline.GapVertical, paddingHorizontal: Outline.GapVertical_2, borderRadius: BorderRadius.BR8, },
       sendFeedbackInput: { color: theme.counterBackground, textAlignVertical: 'top', textAlign: 'left', width: '100%', height: '100%' },
     })
   }, [theme, insets])
+
+  const onPressCreditLogo = useCallback(() => {
+    Linking.openURL('https://www.flaticon.com/free-icons/turtle')
+  }, [])
 
   const onPressNoti = useCallback((type: 'quote' | 'fact' | 'joke' | 'anim_load_media') => {
 
@@ -343,7 +347,19 @@ const SettingView = () => {
 
         {/* install date */}
 
-        <Text style={style.statText}>{LocalText.install_app_date + ': ' + installDate}</Text>
+        <Text style={style.contentTxt}>{LocalText.install_app_date + ': ' + installDate}</Text>
+        {
+          hair100Width()
+        }
+
+        {/* logo credit */}
+
+        <Text style={style.contentTxt}>
+          {LocalText.logo_credit} <Text onPress={onPressCreditLogo} style={style.contentTxt_withBold}>Freepik - Flaticon</Text>
+        </Text>
+        <Text style={style.contentTxt_withBold}>
+          Gooday <Text style={[style.contentTxt, { fontWeight: 'normal'}]}>{LocalText.myself_credit}</Text>
+        </Text>
       </ScrollView>
     </View>
   )
