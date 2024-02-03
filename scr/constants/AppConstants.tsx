@@ -272,6 +272,7 @@ export const LocalText = {
   copy: 'Copy',
   later: 'Later',
   share: 'Share',
+  got_it: 'Got it!',
   open_youtube: 'Open in Youtube',
   share_image: 'Share Image',
   random: 'Random',
