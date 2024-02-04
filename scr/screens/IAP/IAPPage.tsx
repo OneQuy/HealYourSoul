@@ -155,7 +155,7 @@ const IAPPage = () => {
 
   return (
     <ScrollView contentContainerStyle={{ backgroundColor: theme.background, padding: Outline.Horizontal, paddingBottom: insets.bottom + Outline.VerticalMini, gap: Outline.GapVertical_2 }}>
-      <Text selectable style={{ padding: 10, backgroundColor: undefined, color: theme.counterBackground, fontSize: FontSize.Small_L, }}>{LocalText.premium_benefit}</Text>
+      <Text selectable style={{ color: theme.counterBackground, fontSize: FontSize.Small_L, }}>{LocalText.premium_benefit}</Text>
       {
         reasonItems.map(({ icon, title, content }) => {
           return (
