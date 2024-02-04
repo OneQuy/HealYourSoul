@@ -5,6 +5,7 @@ import { BorderRadius, Category, FontSize, FontWeight, LocalText, Outline, Stora
 import { GetBooleanAsync, SetBooleanAsync } from '../../handle/AsyncStorageUtils'
 import { useNavigation } from '@react-navigation/native'
 import { widthPercentageToDP } from 'react-native-responsive-screen'
+import { track_SimpleWithCat } from '../../handle/tracking/GoodayTracking'
 
 const useIntroduceCat = (category: Category) => {
     const theme = useContext(ThemeContext);
@@ -15,6 +16,7 @@ const useIntroduceCat = (category: Category) => {
     const onPressOkay = useCallback(() => {
         setIsShow(false)
         SetBooleanAsync(StorageKey_ShowedIntroduceCat(category), true)
+        track_SimpleWithCat(category, 'got_it_intro')
     }, [])
 
     const styleSheet = useMemo(() => {
