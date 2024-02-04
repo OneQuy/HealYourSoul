@@ -60,7 +60,7 @@ const useIntroduceCat = (category: Category) => {
                 </View>
             </View>
         )
-    }, [content, styleSheet, onPressOkay, navigation])
+    }, [content, styleSheet, onPressOkay, navigation?.getState().index])
 
     useEffect(() => {
         (async () => {

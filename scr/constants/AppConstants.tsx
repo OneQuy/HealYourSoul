@@ -340,6 +340,7 @@ export const LocalText = {
   introduce_Draw: 'Warm is the screen that contains images and video of heartwarming moments, hope this will heal your soul even a little! 🌈',
   introduce_BestShortFilms: 'Discover cinematic excellence with "Good Short Films" showcasing carefully curated and selectively chosen award-winning gems on YouTube and other streaming platforms 🎬',
   introduce_Wikipedia: 'Learn something new everyday!\n\nLet\'s read at least one Wikipedia post daily. It will increase your knowledge day by day and help you develop a good habit! 📖',
+  introduce_FunWebsites: "Getting boring? Discover the globe's most entertaining corners with Fun Websites screen! Explore the best of the web's playful side. Unleash a world of laughter, games, and surprises at your fingertips. You can press the [View] button to try it out right in the app. 🌐",
   
   // popup
 

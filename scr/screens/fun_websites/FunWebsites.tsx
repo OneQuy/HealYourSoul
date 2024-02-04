@@ -1,8 +1,8 @@
-import { Share as RNShare, View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, ShareContent, Alert, Linking, GestureResponderEvent, Animated } from 'react-native'
+import { Share as RNShare, View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, ShareContent, Linking, GestureResponderEvent, Animated } from 'react-native'
 import React, { LegacyRef, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size, StorageKey_LocalFileVersion, StorageKey_SelectingFunWebsiteId } from '../../constants/AppConstants'
-import Share from 'react-native-share';
+// import Share from 'react-native-share';
 
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -18,7 +18,6 @@ import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsi
 import { ScrollView } from 'react-native-gesture-handler';
 import WebView from 'react-native-webview';
 import { ShareOptions } from 'react-native-share';
-import { ToCanPrint } from '../../handle/UtilsTS';
 import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading';
 import useCheckAndDownloadRemoteFile from '../../hooks/useCheckAndDownloadRemoteFile';
 import { TempDirName } from '../../handle/Utils';
@@ -30,6 +29,7 @@ import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
 import HeaderSettingButton from '../components/HeaderSettingButton';
+import useIntroduceCat from '../components/IntroduceCat';
 
 const category = Category.FunWebsites
 const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Ffun_websites.json?alt=media&token=10ecb626-e576-49d4-b124-a9ba148a93a6'
@@ -45,6 +45,7 @@ const FunWebsitesScreen = () => {
     const [isShowList, setIsShowList] = useState(false)
     const viewShotRef = useRef<LegacyRef<ViewShot> | undefined>();
     const favoriteCallbackRef = useRef<(() => void) | undefined>(undefined);
+    const [showIntroduceCat, renderShowIntroduceCat] = useIntroduceCat(category)
 
     // animation
 
@@ -278,6 +279,14 @@ const FunWebsitesScreen = () => {
     // save last visit category screen
 
     useFocusEffect(useCallback(() => SaveCurrentScreenForLoadNextTime(navigation), []))
+
+
+    // introduce cat
+
+    if (showIntroduceCat)
+        return renderShowIntroduceCat()
+
+    // main render
 
     return (
         <View pointerEvents={handling ? 'none' : 'auto'} style={[styleSheet.masterView, { backgroundColor: theme.background }]}>
