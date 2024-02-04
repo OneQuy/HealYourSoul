@@ -6,7 +6,7 @@ import { FilterOnlyLetterAndNumberFromString, IsValuableArrayOrString, ToCanPrin
 import { UserID } from "../UserID"
 import { Dimensions, Platform } from "react-native"
 import { RoundNumber } from "../Utils"
-import { GetIPLocationAsync } from "../../hooks/useCountryFromIP"
+import { GetIPLocationAsync, IPLocation } from "../../hooks/useCountryFromIP"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 
 let dimen = Dimensions.get('screen')
@@ -14,6 +14,8 @@ const radioOfScreen = RoundNumber(Math.max(dimen.height, dimen.width) / Math.min
 
 dimen = Dimensions.get('window')
 const radioOfWindow = RoundNumber(Math.max(dimen.height, dimen.width) / Math.min(dimen.height, dimen.width), 2) * 100
+
+export var location: IPLocation | undefined | string
 
 /**
  * on first useEffect of the app (freshly open) or first active state of the day
@@ -264,7 +266,7 @@ export const checkAndTrackLocation = async () => {
 
     // get location 
 
-    const location = await GetIPLocationAsync()
+    location = await GetIPLocationAsync()
 
     if (typeof location === 'object') {
         if (IsValuableArrayOrString(location.country_name)) {
@@ -303,6 +305,8 @@ export const checkAndTrackLocation = async () => {
                 // @ts-ignore
                 obj.region = regionOrCity
             }
+
+            console.log('track location', ToCanPrint(obj));
 
             MainTrack(event,
                 fbArr,

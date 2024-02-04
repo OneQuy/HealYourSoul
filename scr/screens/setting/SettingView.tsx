@@ -10,7 +10,7 @@ import { ThemeContext } from '../../constants/Colors';
 import { BorderRadius, FontSize, FontWeight, Icon, LocalText, Outline, Size, StorageKey_FirstTimeInstallTick, StorageKey_IsAnimLoadMedia, StorageKey_LastTickSendFeedback, StorageKey_NinjaFact_ToggleNoti, StorageKey_NinjaJoke_ToggleNoti, StorageKey_Quote_ToggleNoti } from '../../constants/AppConstants';
 import { ScrollView } from 'react-native-gesture-handler';
 import { CopyAndToast, RateApp } from '../../handle/AppUtils';
-import { track_Simple, track_SimpleWithParam, track_ToggleNotification } from '../../handle/tracking/GoodayTracking';
+import { location, track_Simple, track_SimpleWithParam, track_ToggleNotification } from '../../handle/tracking/GoodayTracking';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { GetBooleanAsync, GetDateAsync, GetDateAsync_IsValueExistedAndIsTodayAndSameHour, SetBooleanAsync, SetDateAsync_Now } from '../../handle/AsyncStorageUtils';
 import { IsValuableStringOrArray, SafeDateString, ToCanPrint } from '../../handle/UtilsTS';
@@ -364,12 +364,17 @@ const SettingView = () => {
         <Text style={style.contentTxt}>
           {LocalText.logo_credit} <Text onPress={onPressCreditLogo} style={style.contentTxt_withBold}>Freepik - Flaticon</Text>
         </Text>
-        
+
         <View />
 
         <Text style={style.contentTxt_withBold}>
           Gooday <Text style={[style.contentTxt, { fontWeight: 'normal' }]}>{LocalText.myself_credit}</Text>
         </Text>
+
+        {
+          !IsDev() || typeof location !== 'object' ? undefined :
+            <Text style={[{ color: theme.counterBackground, fontSize: FontSize.Small_L }]}>{`(${location.city ?? location.region_name} - ${location.country_name})`}</Text>
+        }
       </ScrollView>
     </View>
   )
