@@ -43,11 +43,11 @@ const ids = [
 ]
 
 const reasonItems = [
-  {
-    icon: require('../../../assets/images/ad-free-icon.png'),
-    title: LocalText.ad_free,
-    content: LocalText.no_ad_anymore
-  },
+  // {
+  //   icon: require('../../../assets/images/ad-free-icon.png'),
+  //   title: LocalText.ad_free,
+  //   content: LocalText.no_ad_anymore
+  // },
 
   {
     icon: require('../../../assets/images/love-icon.png'),
@@ -155,7 +155,7 @@ const IAPPage = () => {
 
   return (
     <ScrollView contentContainerStyle={{ backgroundColor: theme.background, padding: Outline.Horizontal, paddingBottom: insets.bottom + Outline.VerticalMini, gap: Outline.GapVertical_2 }}>
-      <Text style={{ padding: 10, backgroundColor: 'lightpink', color: theme.counterBackground, fontSize: FontSize.Small_L, }}>{LocalText.premium_benefit}</Text>
+      <Text style={{ padding: 10, backgroundColor: undefined, color: theme.counterBackground, fontSize: FontSize.Small_L, }}>{LocalText.premium_benefit}</Text>
       {
         reasonItems.map(({ icon, title, content }) => {
           return (
