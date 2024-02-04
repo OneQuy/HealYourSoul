@@ -25,6 +25,7 @@ import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
 import HeaderSettingButton from '../components/HeaderSettingButton';
+import useIntroduceCat from '../components/IntroduceCat';
 
 const BGAnim = Animated.createAnimatedComponent(ImageBackground)
 
@@ -43,6 +44,7 @@ const PicturesOfTheYearScreen = () => {
     const [isShowAwardList, setIsShowLisShowAwardList] = useState(false)
     const [isShowLoadImageIndicator, setShowLoadImageIndicator] = useState(false)
     const favoriteCallbackRef = useRef<(() => void) | undefined>(undefined);
+    const [showIntroduceCat, renderShowIntroduceCat] = useIntroduceCat(category)
 
     const selectingPhoto = useMemo(() => {
         const year = dataOfYears.find(y => y.year === selectingYear)
@@ -307,6 +309,13 @@ const PicturesOfTheYearScreen = () => {
     // save last visit category screen
 
     useFocusEffect(useCallback(() => SaveCurrentScreenForLoadNextTime(navigation), []))
+
+    // introduce cat
+
+    if (showIntroduceCat)
+        return renderShowIntroduceCat()
+
+    // main render
 
     return (
         <View style={[styleSheet.masterView, { backgroundColor: theme.background }]}>
