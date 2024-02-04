@@ -2,12 +2,18 @@
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { TouchableOpacity, StyleSheet } from 'react-native'
-import React, { useContext, useMemo } from 'react'
-import { Icon, Size } from '../../constants/AppConstants';
+import React, { useCallback, useContext, useMemo } from 'react'
+import { Icon, ScreenName, Size } from '../../constants/AppConstants';
 import { ThemeContext } from '../../constants/Colors';
+import { useNavigation } from '@react-navigation/native';
 
 const HeaderSettingButton = ({ onPress }: { onPress: () => {} }) => {
     const theme = useContext(ThemeContext);
+    const navigation = useNavigation()
+
+    const onPressPremium = useCallback(() => {
+        navigation.navigate(ScreenName.IAPPage as never)
+    }, [navigation])
 
     const style = useMemo(() => {
         return StyleSheet.create({
@@ -16,8 +22,8 @@ const HeaderSettingButton = ({ onPress }: { onPress: () => {} }) => {
     }, [])
 
     return (
-        <TouchableOpacity onPress={onPress} style={style.headerOptionTO}>
-            <MaterialCommunityIcons name={Icon.ThreeDots} color={theme.primary} size={Size.Icon} />
+        <TouchableOpacity onPress={onPressPremium} style={style.headerOptionTO}>
+            <MaterialCommunityIcons name={Icon.Star} color={theme.primary} size={Size.Icon} />
         </TouchableOpacity>
     )
 }
