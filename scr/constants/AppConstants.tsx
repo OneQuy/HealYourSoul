@@ -297,7 +297,7 @@ export const LocalText = {
   subscribe_for: 'Subscribe for',
   today: 'Today',
   warning_premium: 'These subscriptions are non-renewable. If you no longer wish to subscribe, it will be automatically canceled at the end of the period.',
-  thank_you_premium: "Any subscription is greatly appreciated. Thank you so much!",
+  thank_you_premium: "Any purchase is greatly appreciated. Thank you 💛",
 
   // ad_free: 'Ad-free',
   // no_ad_anymore: 'No ad during your subscription time.\n',

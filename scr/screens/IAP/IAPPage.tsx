@@ -155,15 +155,15 @@ const IAPPage = () => {
 
   return (
     <ScrollView contentContainerStyle={{ backgroundColor: theme.background, padding: Outline.Horizontal, paddingBottom: insets.bottom + Outline.VerticalMini, gap: Outline.GapVertical_2 }}>
-      <Text style={{ padding: 10, backgroundColor: undefined, color: theme.counterBackground, fontSize: FontSize.Small_L, }}>{LocalText.premium_benefit}</Text>
+      <Text selectable style={{ padding: 10, backgroundColor: undefined, color: theme.counterBackground, fontSize: FontSize.Small_L, }}>{LocalText.premium_benefit}</Text>
       {
         reasonItems.map(({ icon, title, content }) => {
           return (
             <View key={title} style={{ flexDirection: 'row', gap: Outline.Horizontal }}>
               <Image source={icon} resizeMode='contain' style={{ width: wp('13%'), height: wp('13%') }} />
               <View style={{ flex: 1, justifyContent: 'center', gap: Outline.GapHorizontal }}>
-                <Text style={{ color: theme.counterBackground, fontSize: FontSize.Normal, fontWeight: FontWeight.B500 }}>{title}</Text>
-                <Text style={{ color: theme.counterBackground, fontSize: FontSize.Small_L, }}>{content}</Text>
+                <Text selectable style={{ color: theme.counterBackground, fontSize: FontSize.Normal, fontWeight: FontWeight.B500 }}>{title}</Text>
+                <Text selectable style={{ color: theme.counterBackground, fontSize: FontSize.Small_L, }}>{content}</Text>
               </View>
             </View>)
         })
@@ -186,13 +186,13 @@ const IAPPage = () => {
                   <Text style={{ color: 'black', fontSize: FontSize.Normal }}>{price}{processingId === sku ? '  ' : ''}{processingId === sku ? <ActivityIndicator color={theme.counterBackground} size={'small'} /> : undefined}</Text>
                 </ImageBackground>
               </TouchableOpacity>
-              <Text style={{ color: theme.counterBackground, fontSize: FontSize.Small, }}>{LocalText.subscribe_for} {month}-month ({LocalText.today} {'->'} {SafeDateString(expiredDate, '/')})</Text>
+              <Text selectable style={{ color: theme.counterBackground, fontSize: FontSize.Small, }}>{LocalText.subscribe_for} {month}-month ({LocalText.today} {'->'} {SafeDateString(expiredDate, '/')})</Text>
             </View>)
         })
       }
       <View style={{ backgroundColor: theme.counterBackground, width: '100%', height: StyleSheet.hairlineWidth }} />
-      <Text style={{ color: theme.counterBackground, fontSize: FontSize.Small_L, }}>{LocalText.warning_premium}</Text>
-      <Text style={{ color: theme.counterBackground, fontSize: FontSize.Small_L, }}>{LocalText.thank_you_premium}</Text>
+      <Text selectable style={{ color: theme.counterBackground, fontSize: FontSize.Small_L, }}>{LocalText.warning_premium}</Text>
+      <Text selectable style={{ color: theme.counterBackground, fontSize: FontSize.Small_L, }}>{LocalText.thank_you_premium}</Text>
     </ScrollView>
   )
 }
