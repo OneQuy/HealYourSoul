@@ -300,7 +300,7 @@ export const LocalText = {
   thank_you_premium: 'Any subscription always supports me a lot. Thank you so much!',
 
   ad_free: 'Ad-free',
-  no_ad_anymore: 'No ad during your subscription time.',
+  no_ad_anymore: 'No ad during your subscription time.\n',
   
   support_me: 'Support app',
   support_me_info: "Support me in covering the cost of the data server every month.",

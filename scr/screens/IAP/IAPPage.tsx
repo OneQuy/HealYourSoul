@@ -50,7 +50,7 @@ const reasonItems = [
   },
 
   {
-    icon: require('../../../assets/images/love-icon.jpeg'),
+    icon: require('../../../assets/images/love-icon.png'),
     title: LocalText.support_me,
     content: LocalText.support_me_info
   },
