@@ -161,7 +161,7 @@ const IAPPage = () => {
           return (
             <View key={title} style={{ flexDirection: 'row', gap: Outline.Horizontal }}>
               <Image source={icon} resizeMode='contain' style={{ width: wp('13%'), height: wp('13%') }} />
-              <View style={{ flex: 1, justifyContent: 'center', gap: Outline.GapVertical }}>
+              <View style={{ flex: 1, justifyContent: 'center', gap: Outline.GapHorizontal }}>
                 <Text style={{ color: theme.counterBackground, fontSize: FontSize.Normal, fontWeight: FontWeight.B500 }}>{title}</Text>
                 <Text style={{ color: theme.counterBackground, fontSize: FontSize.Small_L, }}>{content}</Text>
               </View>
