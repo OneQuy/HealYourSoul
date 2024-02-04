@@ -70,17 +70,17 @@ const useIntroduceCat = (category: Category) => {
 
             const content = LocalText[catS as keyof typeof LocalText]
 
-            if (!content) {
+            if (!content) { // no content to show
                 setIsShow(false)
                 return
             }
 
             const showed = await GetBooleanAsync(StorageKey_ShowedIntroduceCat(category))
 
-            // if (showed) {
-            //     setIsShow(false)
-            //     return
-            // }
+            if (showed) { // already showed
+                setIsShow(false)
+                return
+            }
 
             setContent(content)
         })()
