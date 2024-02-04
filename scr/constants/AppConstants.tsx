@@ -303,10 +303,10 @@ export const LocalText = {
   // no_ad_anymore: 'No ad during your subscription time.\n',
   
   support_me: 'Support app',
-  support_me_info: "Support me in covering the cost of the data server every month.",
+  support_me_info: "Support me in covering the monthly costs of the operation and data server.",
   
   give_coffee: 'Give me a cup of coffee!',
-  give_coffee_info: "It will be a great motivation for me to improve the app every day.",
+  give_coffee_info: "It will be great motivation for me to improve the app every day.",
   
   one_month: '1 Month',
   six_month: '6 Months',
