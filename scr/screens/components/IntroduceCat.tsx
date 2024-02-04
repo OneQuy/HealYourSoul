@@ -8,7 +8,7 @@ import { widthPercentageToDP } from 'react-native-responsive-screen'
 
 const useIntroduceCat = (category: Category) => {
     const theme = useContext(ThemeContext);
-    const [isShow, setIsShow] = useState(false)
+    const [isShow, setIsShow] = useState(true)
     const [content, setContent] = useState('')
     const navigation = useNavigation()
 
@@ -29,15 +29,22 @@ const useIntroduceCat = (category: Category) => {
     }, [theme])
 
     const render = useCallback(() => {
-        if (!isShow)
-            return undefined
+        if (!content) {
+            return <View style={styleSheet.masterView} />
+        }
 
         const index = navigation.getState().index
         const screen = navigation.getState().routes[index].name
 
         return (
             <View style={styleSheet.masterView}>
+
+                {/* header */}
+
+                <Text selectable style={styleSheet.text}>{LocalText.introduce_text}</Text>
+
                 {/* title */}
+
                 <Text selectable style={styleSheet.titleTxt}>{screen}</Text>
 
                 {/* content */}
@@ -53,7 +60,7 @@ const useIntroduceCat = (category: Category) => {
                 </View>
             </View>
         )
-    }, [isShow, content, styleSheet, onPressOkay, navigation])
+    }, [content, styleSheet, onPressOkay, navigation])
 
     useEffect(() => {
         (async () => {
@@ -61,15 +68,18 @@ const useIntroduceCat = (category: Category) => {
 
             const content = LocalText[catS as keyof typeof LocalText]
 
-            if (!content)
+            if (!content) {
+                setIsShow(false)
                 return
+            }
 
             const showed = await GetBooleanAsync(StorageKey_ShowedIntroduceCat(category))
 
-            if (showed)
-                return
+            // if (showed) {
+            //     setIsShow(false)
+            //     return
+            // }
 
-            setIsShow(true)
             setContent(content)
         })()
     }, [])

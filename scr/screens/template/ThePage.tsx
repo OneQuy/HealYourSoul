@@ -808,10 +808,6 @@ const ThePage = ({ category }: ThePageProps) => {
 
     // main render
 
-    // if(post.current)
-    // post.current.url = 'wwwww.fdsjfdasjf.ocm'
-    //     post.current.title = 'hihihi'
-
     return (
         // master view
         <View style={{ pointerEvents: handling ? 'none' : 'auto', backgroundColor: theme.background, flex: 1, gap: Outline.GapVertical, }}>

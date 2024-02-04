@@ -15,3 +15,20 @@ flow
 1. splash screen
 2. onboarding (can start tracking here)
 3. navigator
+
+=========================
+
+how IntroduceCat works?
+
+1. add a text in LocalText with key: introduce_Draw ('introduce_' + cat)
+2. add hook to screen like other pages
+
+=========================
+
+=========================
+
+=========================
+
+=========================
+
+=========================

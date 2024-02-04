@@ -336,11 +336,10 @@ export const LocalText = {
   welcome_text_3: `In Gooday, I believe in the power of laughter, positive and beautiful stuffs to brighten your day and lift your spirits. Dive into a world filled with hilarious memes, gorgeous pictures, useful and heartwarming content that is sure to heal your soul and bring a smile to your face.`,
   set_your_theme: 'Pick your own theme',
   
-  introduce_Draw: `Embrace heart-warming moments in every frame!
-
-Immerse yourself in a world of positivity with carefully curated visuals that spark joy and warmth. Share smiles, capture memories, and feel the love with every delightful image and video 🌈`,
-  
+  introduce_text: 'Introduce screen',
+  introduce_Draw: 'Warm is the screen that contains images and video of heartwarming moments, hope this will heal your soul even a little! 🌈',
   introduce_BestShortFilms: 'Discover cinematic excellence with "Good Short Films" showcasing carefully curated and selectively chosen award-winning gems on YouTube and other streaming platforms 🎬',
+  introduce_Wikipedia: 'Learn something new everyday!\n\nLet\'s read at least one Wikipedia post daily. It will increase your knowledge day by day and help you develop a good habit! 📖',
   
   // popup
 
