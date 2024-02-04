@@ -56,7 +56,7 @@ export const track_FirstOpenOfTheDayAsync = async () => {
 
         track_SimpleWithParam('dimension_screen', 's' + radioOfScreen)
         track_SimpleWithParam('dimension_window', 's' + radioOfWindow)
-        
+
         // platform
 
         track_SimpleWithParam('platform', Platform.OS.toString())
@@ -93,7 +93,7 @@ export const track_OnUseEffectOnceEnterAppAsync = async (startFreshlyOpenAppTick
     // track update version
 
     const lastVersion = await GetNumberIntAsync(StorageKey_LastInstalledVersion)
-    
+
     SetNumberAsync(StorageKey_LastInstalledVersion, versionAsNumber)
 
     if (!Number.isNaN(lastVersion) && lastVersion !== versionAsNumber) {
@@ -156,13 +156,17 @@ export const track_Theme = (theme: string) => {
     )
 }
 
-export const track_SimpleWithCat = (category: Category, event: string) => {
+export const track_SimpleWithCat = (category: Category, event: string, trackDate: boolean = true) => {
+    const fbArr = [
+        `total/${event}/total`,
+        `total/${event}/` + Category[category],
+    ]
+
+    if (trackDate == true)
+        fbArr.push(`events/${event}/#d/` + Category[category])
+
     MainTrack(event,
-        [
-            `total/${event}/total`,
-            `total/${event}/` + Category[category],
-            `events/${event}/#d/` + Category[category],
-        ],
+        fbArr,
         {
             cat: Category[category],
         }

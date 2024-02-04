@@ -16,7 +16,7 @@ const useIntroduceCat = (category: Category) => {
     const onPressOkay = useCallback(() => {
         setIsShow(false)
         SetBooleanAsync(StorageKey_ShowedIntroduceCat(category), true)
-        track_SimpleWithCat(category, 'got_it_intro')
+        track_SimpleWithCat(category, 'got_it_intro', false)
     }, [])
 
     const styleSheet = useMemo(() => {
