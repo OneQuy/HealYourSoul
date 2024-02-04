@@ -296,8 +296,8 @@ export const LocalText = {
   premium_benefit: 'Hi there, I am @onequy, an indie developer from Vietnam. I developed this app to spread fun, useful information, and positive things to everyone around the world. I am trying my best to keep the app free for as long as possible. However, I would be really happy and grateful if you subscribe and want to:',
   subscribe_for: 'Subscribe for',
   today: 'Today',
-  warning_premium: 'These subscriptions are not renewable. If you dont want to subcribe anymore, it will be canceled on the end of the period automatically.',
-  thank_you_premium: 'Any subscription always supports me a lot. Thank you so much!',
+  warning_premium: 'These subscriptions are non-renewable. If you no longer wish to subscribe, it will be automatically canceled at the end of the period.',
+  thank_you_premium: "Any subscription is greatly appreciated. Thank you so much!",
 
   // ad_free: 'Ad-free',
   // no_ad_anymore: 'No ad during your subscription time.\n',
