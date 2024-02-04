@@ -52,7 +52,7 @@ const SettingView = () => {
 
   const style = useMemo(() => {
     return StyleSheet.create({
-      masterView: { paddingBottom: insets.bottom + Outline.GapHorizontal, flex: 1, backgroundColor: theme.background, padding: Outline.Horizontal, paddingVertical: Outline.GapHorizontal },
+      masterView: { paddingBottom: insets.bottom + Outline.Horizontal, flex: 1, backgroundColor: theme.background, padding: Outline.Horizontal, paddingVertical: Outline.GapHorizontal },
       scrollView: { gap: Outline.GapHorizontal },
       flexRowWithGap: { flexDirection: 'row', gap: Outline.GapHorizontal },
       checkbox: { flexDirection: 'row', gap: Outline.GapHorizontal, alignItems: 'center', justifyContent: 'space-between' },
@@ -364,6 +364,9 @@ const SettingView = () => {
         <Text style={style.contentTxt}>
           {LocalText.logo_credit} <Text onPress={onPressCreditLogo} style={style.contentTxt_withBold}>Freepik - Flaticon</Text>
         </Text>
+        
+        <View />
+
         <Text style={style.contentTxt_withBold}>
           Gooday <Text style={[style.contentTxt, { fontWeight: 'normal' }]}>{LocalText.myself_credit}</Text>
         </Text>

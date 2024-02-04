@@ -240,7 +240,7 @@ export const LocalText = {
   specials_theme: "Special theme",
   install_app_date: "The date you installed Gooday",
   logo_credit: "Turtle app logo created by",
-  myself_credit: 'made by @onequy with ❤️ & café.',
+  myself_credit: 'made by @onequy with ❤️ & café.\nThank you for enjoying Gooday!',
   notification: "Notification",
   anim_load_media: "Animation show media",
   notification_quote_of_the_day: "Quote of the day",
