@@ -735,3 +735,23 @@ export const RequestCameraPermissionAsync = async () => {
         return err
     }
 }
+
+/**
+ * @returns string if success
+ * @returns undefined if response not ok
+ * @returns any if other error
+ */
+export const GetIPAsync = async (): Promise<string | undefined | any> => {
+    try {
+        const res = await fetch('https://api.ipify.org')
+
+        if (!res.ok)
+            return undefined
+
+        const text = await res.text()
+        return text
+    }
+    catch (e) {
+        return e
+    }
+}
