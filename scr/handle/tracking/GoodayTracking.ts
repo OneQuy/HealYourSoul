@@ -1,11 +1,13 @@
-import { Category, StorageKey_FirstTimeInstallTick, StorageKey_LastInstalledVersion } from "../../constants/AppConstants"
-import { GetDateAsync, GetNumberIntAsync, SetDateAsync_Now, SetNumberAsync } from "../AsyncStorageUtils"
+import { Category, StorageKey_FirstTimeInstallTick, StorageKey_LastInstalledVersion, StorageKey_LastTickTrackLocation, StorageKey_LastTrackCountryName } from "../../constants/AppConstants"
+import { GetDateAsync, GetDateAsync_IsValueExistedAndIsToday, GetNumberIntAsync, SetDateAsync_Now, SetNumberAsync } from "../AsyncStorageUtils"
 import { MainTrack, TrackErrorOnFirebase } from "./Tracking"
 import { versionAsNumber } from "../AppUtils"
-import { ToCanPrint } from "../UtilsTS"
+import { FilterOnlyLetterAndNumberFromString, IsValuableArrayOrString, ToCanPrint } from "../UtilsTS"
 import { UserID } from "../UserID"
 import { Dimensions, Platform } from "react-native"
 import { RoundNumber } from "../Utils"
+import { GetIPLocationAsync } from "../../hooks/useCountryFromIP"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 let dimen = Dimensions.get('screen')
 const radioOfScreen = RoundNumber(Math.max(dimen.height, dimen.width) / Math.min(dimen.height, dimen.width), 2) * 100
@@ -250,4 +252,61 @@ export const track_HandleError = (methodName: string, error: any) => {
 
     const s = '' + ToCanPrint(error)
     TrackErrorOnFirebase(s)
+}
+
+export const checkAndTrackLocation = async () => {
+    const isTrackedToday = await GetDateAsync_IsValueExistedAndIsToday(StorageKey_LastTickTrackLocation)
+
+    if (isTrackedToday) {
+        // console.log('tracked todayyyy');
+        return
+    }
+
+    // get location 
+
+    const location = await GetIPLocationAsync()
+
+    if (typeof location === 'object') {
+        if (IsValuableArrayOrString(location.country_name)) {
+            SetDateAsync_Now(StorageKey_LastTickTrackLocation)
+
+            const event = 'location'
+            const country = FilterOnlyLetterAndNumberFromString(location.country_name)
+
+            const lastTrackCountry = await AsyncStorage.getItem(StorageKey_LastTrackCountryName)
+
+            if (country === lastTrackCountry) {
+                // console.log('same country', country);
+                return
+            }
+            else
+                AsyncStorage.setItem(StorageKey_LastTrackCountryName, country)
+
+            let regionOrCity = undefined
+
+            if (IsValuableArrayOrString(location.city))
+                regionOrCity = FilterOnlyLetterAndNumberFromString(location.city)
+            else if (IsValuableArrayOrString(location.region_name))
+                regionOrCity = FilterOnlyLetterAndNumberFromString(location.region_name)
+
+            const fbArr = [
+                `total/${event}/${country}/sum`,
+            ]
+
+            const obj = {
+                country
+            }
+
+            if (regionOrCity) {
+                fbArr.push(`total/${event}/${country}/` + regionOrCity)
+
+                // @ts-ignore
+                obj.region = regionOrCity
+            }
+
+            MainTrack(event,
+                fbArr,
+                obj)
+        }
+    }
 }

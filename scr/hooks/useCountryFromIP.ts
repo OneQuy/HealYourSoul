@@ -1,6 +1,6 @@
 // https://apilayer.com/marketplace/ip_to_location-api
 
-import { GetIPAsync } from "../handle/UtilsTS"
+import { GetIPAsync, ToCanPrint } from "../handle/UtilsTS"
 import { IPToLocationAPI } from "../../keys"
 
 const key = IPToLocationAPI
@@ -16,9 +16,9 @@ export type IPLocation = {
 /**
  * @returns IPLocation if success
  * @returns undefined if IP or response not ok
- * @returns any if other error
+ * @returns string (ToCanPrint) if other error
  */
-export const GetIPLocation = async (): Promise<IPLocation | undefined | any> => {
+export const GetIPLocationAsync = async (): Promise<IPLocation | undefined | string> => {
     const ip = await GetIPAsync()
 
     if (typeof ip !== 'string')
@@ -44,6 +44,6 @@ export const GetIPLocation = async (): Promise<IPLocation | undefined | any> => 
         return json
     }
     catch (e) {
-        return e
+        return ToCanPrint(e).toString()
     }
 }
