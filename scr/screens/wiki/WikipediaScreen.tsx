@@ -30,6 +30,7 @@ import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
 import HeaderSettingButton from '../components/HeaderSettingButton';
+import useIntroduceCat from '../components/IntroduceCat';
 
 const category = Category.Wikipedia
 
@@ -42,7 +43,7 @@ const WikipediaScreen = () => {
     const [data, setData] = useState<object | undefined>(undefined);
     const [showFull, setShowFull] = useState(false);
     const viewShotRef = useRef<LegacyRef<ViewShot> | undefined>();
-
+    const [showIntroduceCat, renderShowIntroduceCat] = useIntroduceCat(category)
     const mediaViewScaleAnimRef = useRef(new Animated.Value(1)).current
 
     const onImageLoaded = useCallback(() => {
@@ -259,6 +260,13 @@ const WikipediaScreen = () => {
     // save last visit category screen
 
     useFocusEffect(useCallback(() => SaveCurrentScreenForLoadNextTime(navigation), []))
+
+    // introduce cat
+
+    if (showIntroduceCat)
+        return renderShowIntroduceCat()
+
+    // main render
 
     return (
         <View pointerEvents={handling ? 'none' : 'auto'} style={[styleSheet.masterView, { backgroundColor: theme.background }]}>
