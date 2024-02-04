@@ -14,7 +14,7 @@ import Clipboard from "@react-native-clipboard/clipboard";
 import { NavigationProp } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CheckDuplicateAndDownloadAsync } from "../firebase/FirebaseStorageDownloadManager";
-import { track_FirstOpenOfTheDayAsync, track_HandleError, track_OnUseEffectOnceEnterAppAsync, track_SimpleWithParam } from "./tracking/GoodayTracking";
+import { checkAndTrackLocation, track_FirstOpenOfTheDayAsync, track_HandleError, track_OnUseEffectOnceEnterAppAsync, track_SimpleWithParam } from "./tracking/GoodayTracking";
 import { GetBooleanAsync, GetDateAsync, SetBooleanAsync, SetDateAsync_Now } from "./AsyncStorageUtils";
 import { CheckAndPrepareDataForNotificationAsync } from "./GoodayNotification";
 import { CheckAndShowInAppReviewAsync } from "./InAppReview";
@@ -630,6 +630,10 @@ export const CheckAndTriggerFirstOpenAppOfTheDayAsync = async () => {
     console.log('---- handle first open app of the day ------');
 
     track_FirstOpenOfTheDayAsync()
+
+    // track location
+
+    checkAndTrackLocation()
 }
 
 /**
