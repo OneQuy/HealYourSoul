@@ -1,4 +1,4 @@
-import { Text, StyleSheet, TouchableOpacity, View, LayoutChangeEvent, Platform } from 'react-native'
+import { Text, StyleSheet, TouchableOpacity, View, LayoutChangeEvent } from 'react-native'
 import React, { useCallback, useContext, useMemo } from 'react'
 import { DrawerContentComponentProps } from '@react-navigation/drawer'
 import { BorderRadius, Outline, ScreenName, Size } from '../constants/AppConstants'
@@ -12,7 +12,7 @@ import { track_PressDrawerItem } from '../handle/tracking/GoodayTracking'
 import { FilterOnlyLetterAndNumberFromString } from '../handle/UtilsTS'
 import { GetIconOfScreen } from '../handle/AppUtils'
 
-const idealRatio = 2.2
+const idealRatio = 2.5
 
 type Props = {
     route: DrawerContentComponentProps['state']['routes'][number],
@@ -34,6 +34,8 @@ const DrawerSingleItem = ({
 
     const onLayout = useCallback((e: LayoutChangeEvent) => {
         const ratio = e.nativeEvent.layout.width / e.nativeEvent.layout.height
+        
+        // console.log(ratio);
 
         if (ratio < idealRatio) {
 
