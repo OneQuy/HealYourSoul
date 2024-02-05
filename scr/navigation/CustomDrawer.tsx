@@ -156,7 +156,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
         })
       }
     </ScrollView>
-  }, [props])
+  }, [props, catItemHeight])
 
   const onPressPremiumButton = useCallback(() => {
     track_PressDrawerItem(FilterOnlyLetterAndNumberFromString(ScreenName.IAPPage))

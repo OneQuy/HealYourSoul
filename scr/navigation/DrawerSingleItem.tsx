@@ -40,7 +40,7 @@ const DrawerSingleItem = ({
             const h = e.nativeEvent.layout.width / idealRatio
             setHeight(h)
 
-            console.log('set height', h, e.nativeEvent.layout.height, ratio, Platform.OS);
+            // console.log('set height', h, e.nativeEvent.layout.height, ratio, Platform.OS);
         }
     }, [])
 
