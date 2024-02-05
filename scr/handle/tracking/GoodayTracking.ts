@@ -5,15 +5,14 @@ import { versionAsNumber } from "../AppUtils"
 import { FilterOnlyLetterAndNumberFromString, IsValuableArrayOrString, ToCanPrint } from "../UtilsTS"
 import { UserID } from "../UserID"
 import { Dimensions, Platform } from "react-native"
-import { RoundNumber } from "../Utils"
 import { GetIPLocationAsync, IPLocation } from "../../hooks/useCountryFromIP"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 
 let dimen = Dimensions.get('screen')
-const radioOfScreen = RoundNumber(Math.max(dimen.height, dimen.width) / Math.min(dimen.height, dimen.width), 2) * 100
+const radioOfScreen = Math.floor((Math.max(dimen.height, dimen.width) / Math.min(dimen.height, dimen.width)) * 100)
 
 dimen = Dimensions.get('window')
-const radioOfWindow = RoundNumber(Math.max(dimen.height, dimen.width) / Math.min(dimen.height, dimen.width), 2) * 100
+const radioOfWindow = Math.floor((Math.max(dimen.height, dimen.width) / Math.min(dimen.height, dimen.width)) * 100)
 
 export var location: IPLocation | undefined | string
 
