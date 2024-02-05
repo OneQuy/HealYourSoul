@@ -22,6 +22,7 @@ import { track_PressDrawerItem } from '../handle/tracking/GoodayTracking';
 import { GetNumberIntAsync, SetBooleanAsync, SetNumberAsync } from '../handle/AsyncStorageUtils';
 import { toast } from '@baronha/ting';
 import { IsDev } from '../handle/IsDev';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
 
 const premiumBGs = [
   [require(`../../assets/images/premium_btn/0.jpg`), '#1c1c1c'],
@@ -45,6 +46,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
   const theme = useContext(ThemeContext);
   const disableScreens = useAppSelector((state: RootState) => state.userData.disableScreens)
   const [premiumBg, setPremiumBg] = useState<[NodeRequire, string]>([premiumBGs[0][0], 'black'])
+  const [catItemHeight, setCatItemHeight] = useState(Math.max(50, heightPercentageToDP(7.5)))
 
   const [notice, onPressNotice] = useMemo(() => {
     const data = GetAppConfig()?.notice
@@ -148,6 +150,8 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
           return <DrawerCoupleItem
             masterProps={props}
             couple={couple}
+            height={catItemHeight}
+            setHeight={setCatItemHeight}
             key={idx} />
         })
       }

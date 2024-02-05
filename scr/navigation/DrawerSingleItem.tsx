@@ -1,8 +1,7 @@
-import { Text, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Text, StyleSheet, TouchableOpacity, View, LayoutChangeEvent, Platform } from 'react-native'
 import React, { useCallback, useContext, useMemo } from 'react'
 import { DrawerContentComponentProps } from '@react-navigation/drawer'
-import { CommonActions, DrawerActions } from '@react-navigation/native'
-import { BorderRadius, FontSize, Icon, Outline, ScreenName, Size } from '../constants/AppConstants'
+import { BorderRadius, Outline, ScreenName, Size } from '../constants/AppConstants'
 import { CommonStyles } from '../constants/CommonConstants'
 
 // @ts-ignore
@@ -13,14 +12,18 @@ import { track_PressDrawerItem } from '../handle/tracking/GoodayTracking'
 import { FilterOnlyLetterAndNumberFromString } from '../handle/UtilsTS'
 import { GetIconOfScreen } from '../handle/AppUtils'
 
+const idealRatio = 2.2
+
 type Props = {
     route: DrawerContentComponentProps['state']['routes'][number],
     masterProps: DrawerContentComponentProps,
+    setHeight: (value: number) => void,
 }
 
 const DrawerSingleItem = ({
     route,
     masterProps,
+    setHeight,
 }: Props) => {
     const theme = useContext(ThemeContext);
     const [isFocused, onPress] = useDrawerMenuItemUtils(route.name, masterProps)
@@ -29,13 +32,25 @@ const DrawerSingleItem = ({
 
     const color = isFocused ? theme.counterPrimary : theme.primary
 
+    const onLayout = useCallback((e: LayoutChangeEvent) => {
+        const ratio = e.nativeEvent.layout.width / e.nativeEvent.layout.height
+
+        if (ratio < idealRatio) {
+
+            const h = e.nativeEvent.layout.width / idealRatio
+            setHeight(h)
+
+            console.log('set height', h, e.nativeEvent.layout.height, ratio, Platform.OS);
+        }
+    }, [])
+
     const onPressButton = useCallback(() => {
         track_PressDrawerItem(FilterOnlyLetterAndNumberFromString(route.name))
         onPress()
     }, [onPress])
 
     return (
-        <TouchableOpacity onPress={onPressButton} style={[style.masterTO, CommonStyles.justifyContentCenter_AlignItemsCenter, { paddingHorizontal: Outline.GapVertical, backgroundColor: isFocused ? theme.primary : undefined, borderRadius: BorderRadius.BR, borderColor: theme.primary }]}>
+        <TouchableOpacity onLayout={onLayout} onPress={onPressButton} style={[style.masterTO, CommonStyles.justifyContentCenter_AlignItemsCenter, { paddingHorizontal: Outline.GapVertical, backgroundColor: isFocused ? theme.primary : undefined, borderRadius: BorderRadius.BR, borderColor: theme.primary }]}>
             <View style={[style.iconView, { marginRight: Outline.GapVertical, }]}>
                 <MaterialCommunityIcons name={icon} color={color} size={Size.IconSmaller} />
             </View>

@@ -1,26 +1,40 @@
-import { View, Text, StyleSheet } from 'react-native'
-import React from 'react'
-import { RandomColor, ToCanPrint } from '../handle/UtilsTS'
+import { View, StyleSheet } from 'react-native'
+import React, { useMemo } from 'react'
 import { DrawerContentComponentProps } from '@react-navigation/drawer'
 import DrawerSingleItem from './DrawerSingleItem'
-import { FontSize, Outline } from '../constants/AppConstants'
-import { heightPercentageToDP } from 'react-native-responsive-screen'
+import { Outline } from '../constants/AppConstants'
 
 type Props = {
     couple: DrawerContentComponentProps['state']['routes'],
     masterProps: DrawerContentComponentProps,
+    setHeight: (value: number) => void,
+    height: number,
 }
 
 const DrawerCoupleItem = ({
     couple,
     masterProps,
+    setHeight,
+    height,
 }: Props) => {
+    const style = useMemo(() => {
+        return StyleSheet.create({
+            masterView: {
+                flexDirection: 'row',
+                height: height,
+                gap: Outline.GapHorizontal * 2,
+                padding: Outline.GapHorizontal,
+            }
+        })
+    }, [height])
+
     return (
-        <View style={[style.masterView, { gap: Outline.GapVertical, padding: Outline.GapHorizontal }]}>
+        <View style={style.masterView}>
             {
                 couple.map((route, idx) => <DrawerSingleItem
                     masterProps={masterProps}
                     route={route}
+                    setHeight={setHeight}
                     key={idx} />)
             }
         </View>
@@ -28,10 +42,3 @@ const DrawerCoupleItem = ({
 }
 
 export default DrawerCoupleItem
-
-const style = StyleSheet.create({
-    masterView: {
-        flexDirection: 'row',
-        height: Math.max(50, heightPercentageToDP(7.5)),
-    }
-})
