@@ -24,6 +24,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { IsDev } from '../../handle/IsDev';
 import { useAppDispatch } from '../../redux/Store';
 import { setOnboarded } from '../../redux/MiscSlice';
+import { GetIPLocationAsync } from '../../hooks/useCountryFromIP';
 
 const limitFeedback = 300
 
@@ -118,6 +119,11 @@ const SettingView = () => {
 
   const onPressGetLogStorage = useCallback(async () => {
     Clipboard.setString(await StorageLog_GetAsync())
+  }, [])
+
+  const onPressDevLocation = useCallback(async () => {
+    const location = await GetIPLocationAsync()
+    Alert.alert('Location', ToCanPrint(location))
   }, [])
 
   const onFocusInput = useCallback(async () => {
@@ -367,9 +373,13 @@ const SettingView = () => {
 
         <View />
 
-        <Text style={style.contentTxt_withBold}>
+        <Text
+          onPress={IsDev() ? onPressDevLocation : undefined}
+          style={style.contentTxt_withBold}>
           Gooday <Text style={[style.contentTxt, { fontWeight: 'normal' }]}>{LocalText.myself_credit}</Text>
         </Text>
+
+        {/* location for dev */}
 
         {
           !IsDev() || typeof location !== 'object' ? undefined :
