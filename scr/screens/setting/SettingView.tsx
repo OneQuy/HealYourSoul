@@ -47,6 +47,7 @@ const SettingView = () => {
   const [installDate, setInstallDate] = useState('')
   const [feedbackText, setFeedbackText] = useState('')
   const [isSendingFeedback, setIsSendingFeedback] = useState(false)
+  const [currentRateStarIdx, setCurrentRateStarIdx] = useState(-1)
   const scrollRef = useRef()
   const insets = useSafeAreaInsets()
   const dispatch = useAppDispatch()
@@ -56,6 +57,7 @@ const SettingView = () => {
       masterView: { paddingBottom: insets.bottom + Outline.Horizontal, flex: 1, backgroundColor: theme.background, padding: Outline.Horizontal, paddingVertical: Outline.GapHorizontal },
       scrollView: { gap: Outline.GapHorizontal },
       flexRowWithGap: { flexDirection: 'row', gap: Outline.GapHorizontal },
+      rateContainerView: { flexDirection: 'row', gap: Outline.GapHorizontal, justifyContent: 'center', alignItems: 'center' },
       checkbox: { flexDirection: 'row', gap: Outline.GapHorizontal, alignItems: 'center', justifyContent: 'space-between' },
       textInputConView: { height: heightPercentageToDP(20), padding: Outline.GapVertical, borderColor: theme.primary, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth },
       emailCopyTO: { justifyContent: 'center', alignItems: 'center' },
@@ -159,6 +161,10 @@ const SettingView = () => {
     }
   }, [feedbackText, isSendingFeedback])
 
+  const onPressRateStar = useCallback((starIdx: number) => {
+    setCurrentRateStarIdx(starIdx)
+  }, [])
+  
   const onPress = useCallback((type: 'telegram' | 'facebook' | 'twitter' | 'email') => {
     track_SimpleWithParam('press_community', type)
 
@@ -218,12 +224,34 @@ const SettingView = () => {
 
   }, [theme, style])
 
+  const renderRateStars = useMemo(() => {
+    return (
+      new Array(5).fill(0).map((_, index) => {
+        return (
+          <TouchableOpacity key={index} onPress={() => onPressRateStar(index)}>
+            <MaterialCommunityIcons name={index <= currentRateStarIdx ? Icon.Star : Icon.StarOutline} color={currentRateStarIdx < 4 ? theme.counterBackground : theme.primary} size={Size.IconMedium} />
+          </TouchableOpacity>
+        )
+      })
+    )
+  }, [theme, style, onPressRateStar, currentRateStarIdx])
+
   return (
     <View style={style.masterView}>
       <ScrollView
         // @ts-ignore
         ref={scrollRef}
         showsVerticalScrollIndicator={false} contentContainerStyle={style.scrollView}>
+
+        {/* rate app */}
+
+        <Text style={style.titleText}>{LocalText.rate_app}</Text>
+
+        <View style={style.rateContainerView}>
+          {
+            renderRateStars
+          }
+        </View>
 
         {/* theme */}
 

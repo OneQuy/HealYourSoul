@@ -202,6 +202,7 @@ export enum Icon {
   Link = 'link-variant',
   Eye = 'eye-outline',
   Star = 'star',
+  StarOutline = 'star-outline',
   Coffee = 'coffee',
   CheckBox_Yes = 'checkbox-marked-outline',
   CheckBox_No = 'checkbox-blank-outline',
