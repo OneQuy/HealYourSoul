@@ -6,9 +6,9 @@ import { ThemeContext } from '../../constants/Colors';
 import { logoScr } from '../others/SplashScreen';
 import { BorderRadius, FontSize, FontWeight, LocalText, Outline } from '../../constants/AppConstants';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
-import ThemeScroll from '../components/ThemeScroll';
+import ThemeScroll, { OnPressedTheme, TrackSelectedTheme } from '../components/ThemeScroll';
 import { useAppDispatch } from '../../redux/Store';
-import { setOnboarded, setTheme } from '../../redux/MiscSlice';
+import { setOnboarded } from '../../redux/MiscSlice';
 import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 
 
@@ -45,13 +45,15 @@ const Onboarding = () => {
         if (type === 'color')
             setShowThemes(val => !val)
         else if (type === 'light') {
-            dispatch(setTheme('default_light'))
+            OnPressedTheme('default_light', dispatch)
         }
         else if (type === 'dark') {
-            dispatch(setTheme('default_dark'))
+            OnPressedTheme('default_dark', dispatch)
         }
-        else
+        else { // enter
             dispatch(setOnboarded())
+            TrackSelectedTheme()
+        }
     }, [])
 
     return (

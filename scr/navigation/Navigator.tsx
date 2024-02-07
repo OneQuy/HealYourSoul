@@ -32,6 +32,7 @@ import { useTelemetryDeck } from "@typedigital/telemetrydeck-react"
 import { SetSignal } from '../handle/tracking/Tracking';
 import Onboarding from '../screens/onboarding/Onboarding';
 import { RootState, useAppSelector } from '../redux/Store';
+import { TrackSelectedTheme } from '../screens/components/ThemeScroll';
 
 export type DrawerParamList = {
   [ScreenName.Meme]: undefined,
@@ -149,6 +150,13 @@ const Navigator = ({ initialRouteName }: MainNavigatorProps) => {
       <Drawer.Navigator
         initialRouteName={!initialRouteName ? ScreenName.Meme : initialRouteName}
         drawerContent={(props) => <CustomDrawerContent {...props} />}
+        screenListeners={{
+          blur: (e) => {
+            if (e.target?.includes(ScreenName.Setting)) {
+              TrackSelectedTheme()
+            }
+          }
+        }}
         screenOptions={{
           headerStyle: style.header,
           sceneContainerStyle: style.screenBackground,
