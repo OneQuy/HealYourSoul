@@ -342,6 +342,7 @@ export const LocalText = {
   introduce_Wikipedia: 'Learn something new everyday!\n\nLet\'s read at least one Wikipedia post daily. It will increase your knowledge day by day and help you develop a good habit! 📖',
   introduce_FunWebsites: "Getting boring? Discover the globe's most entertaining corners with Fun Websites screen! Explore the best of the web's playful side. Unleash a world of laughter, games, and surprises at your fingertips. You can press the [View] button to try it out right in the app. 🌐",
   introduce_AwardPicture: "Elevate your visual senses with our Award-Winning Pictures of the Year screen!\n\nImmerse yourself in a curated collection of the most captivating and awe-inspiring images that have earned accolades globally. Witness the world through the lens of excellence, one breathtaking photo at a time. 📸✨",
+  introduce_Satisfying: "Indulge in a collection of visually pleasing moments where every frame radiates eye-catching allure and aesthetic satisfaction. ✨",
   
   // popup
 
