@@ -1,4 +1,7 @@
-// https://apilayer.com/marketplace/ip_to_location-api
+// Usage: 
+// 1. Go to https://www.ip2location.io/dashboard
+// 2. Get free key
+// 3. Fill key to below
 
 import { GetIPAsync, ToCanPrint } from "../handle/UtilsTS"
 import { IPToLocationAPI } from "../../keys"
@@ -6,11 +9,10 @@ import { IPToLocationAPI } from "../../keys"
 const key = IPToLocationAPI
 
 export type IPLocation = {
-    "city": string,
-    "continent_name": string,
-    "country_code": string,
-    "country_name": string,
-    "region_name": string,
+    city_name: string,
+    country_code: string,
+    country_name: string,
+    region_name: string,
 }
 
 /**
@@ -28,19 +30,23 @@ export const GetIPLocationAsync = async (): Promise<IPLocation | undefined | str
         var myHeaders = new Headers();
         myHeaders.append("apikey", key)
 
-        const requestOptions = {
-            method: 'GET',
-            redirect: 'follow',
-            headers: myHeaders
-        };
-
-        const res = await fetch("https://api.apilayer.com/ip_to_location/" + ip, requestOptions)
+        const url = `https://api.ip2location.io/?key=${key}&ip=${ip}&format=json`
+        const res = await fetch(url)
 
         if (!res.ok)
             return undefined
 
-        const json = await res.json() as IPLocation
+        const result = await res.json()
 
+        const json = {
+            country_code: result.country_code,
+            country_name: result.country_name,
+            city_name: result.city_name,
+            region_name: result.region_name,
+        } as IPLocation
+
+        // console.log(json);
+        
         return json
     }
     catch (e) {
