@@ -285,8 +285,8 @@ export const checkAndTrackLocation = async () => {
 
             let regionOrCity = undefined
 
-            if (IsValuableArrayOrString(location.city))
-                regionOrCity = FilterOnlyLetterAndNumberFromString(location.city)
+            if (IsValuableArrayOrString(location.city_name))
+                regionOrCity = FilterOnlyLetterAndNumberFromString(location.city_name)
             else if (IsValuableArrayOrString(location.region_name))
                 regionOrCity = FilterOnlyLetterAndNumberFromString(location.region_name)
 

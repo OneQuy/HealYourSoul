@@ -373,7 +373,7 @@ const SettingView = () => {
 
         {
           !IsDev() || typeof location !== 'object' ? undefined :
-            <Text style={[{ color: theme.counterBackground, fontSize: FontSize.Small_L }]}>{`(${location.city ?? location.region_name} - ${location.country_name})`}</Text>
+            <Text style={[{ color: theme.counterBackground, fontSize: FontSize.Small_L }]}>{`(${location.city_name ?? location.region_name} - ${location.country_name})`}</Text>
         }
       </ScrollView>
     </View>
