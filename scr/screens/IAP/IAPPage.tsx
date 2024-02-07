@@ -192,7 +192,7 @@ const IAPPage = () => {
       }
       <View style={{ backgroundColor: theme.counterBackground, width: '100%', height: StyleSheet.hairlineWidth }} />
       <Text selectable style={{ color: theme.counterBackground, fontSize: FontSize.Small_L, }}>{LocalText.warning_premium}</Text>
-      <Text selectable style={{ color: theme.counterBackground, fontSize: FontSize.Small_L, }}>{LocalText.thank_you_premium}</Text>
+      <Text selectable numberOfLines={1} adjustsFontSizeToFit style={{ color: theme.counterBackground, fontSize: FontSize.Small_L, }}>{LocalText.thank_you_premium}</Text>
     </ScrollView>
   )
 }
