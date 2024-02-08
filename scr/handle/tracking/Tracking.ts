@@ -6,10 +6,11 @@ import { IsDev } from "../IsDev";
 import { useTelemetryDeck } from "@typedigital/telemetrydeck-react";
 import { GetAppConfig } from "../AppConfigHandler";
 import { IsValuableArrayOrString } from "../UtilsTS";
+import { Cheat } from "../Cheat";
 
 export type SignalType = ReturnType<typeof useTelemetryDeck>['signal']
 
-const isLog = false
+const isLog = Cheat('IsLog_Tracking')
 
 var inited = false
 
