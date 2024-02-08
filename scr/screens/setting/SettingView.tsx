@@ -7,7 +7,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { ActivityIndicator, Share as RNShare, Alert, Linking, StyleSheet, Text, TextInput, TouchableOpacity, View, ShareContent, ShareOptions } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors';
-import { BorderRadius, FontSize, FontWeight, Icon, LocalText, Outline, Size, StorageKey_FirstTimeInstallTick, StorageKey_IsAnimLoadMedia, StorageKey_LastStarIdxRateInApp, StorageKey_LastTickRateInApp, StorageKey_LastTickSendFeedback, StorageKey_NinjaFact_ToggleNoti, StorageKey_NinjaJoke_ToggleNoti, StorageKey_Quote_ToggleNoti } from '../../constants/AppConstants';
+import { BorderRadius, FontSize, FontWeight, Icon, LocalText, Outline, Size, StorageKey_DidRateInApp, StorageKey_FirstTimeInstallTick, StorageKey_IsAnimLoadMedia, StorageKey_LastTickSendFeedback, StorageKey_NinjaFact_ToggleNoti, StorageKey_NinjaJoke_ToggleNoti, StorageKey_Quote_ToggleNoti } from '../../constants/AppConstants';
 import { ScrollView } from 'react-native-gesture-handler';
 import { CopyAndToast, OpenStore, RateApp } from '../../handle/AppUtils';
 import { location, track_RateInApp, track_Simple, track_SimpleWithParam, track_ToggleNotification } from '../../handle/tracking/GoodayTracking';
@@ -47,7 +47,7 @@ const SettingView = () => {
   const [installDate, setInstallDate] = useState('')
   const [feedbackText, setFeedbackText] = useState('')
   const [isSendingFeedback, setIsSendingFeedback] = useState(false)
-  const [currentRateStarIdx, setCurrentRateStarIdx] = useState(-1)
+  const [showRateInApp, setShowRateInApp] = useState(false)
   const scrollRef = useRef()
   const insets = useSafeAreaInsets()
   const dispatch = useAppDispatch()
@@ -162,14 +162,8 @@ const SettingView = () => {
   }, [feedbackText, isSendingFeedback])
 
   const onPressRateStarAsync = useCallback(async (starIdx: number) => {
-    if (await GetDateAsync_IsValueExistedAndIsToday(StorageKey_LastTickRateInApp)) {
-      return
-    }
-
-    SetDateAsync_Now(StorageKey_LastTickRateInApp)
-    SetNumberAsync(StorageKey_LastStarIdxRateInApp, starIdx)
-
-    setCurrentRateStarIdx(starIdx)
+    setShowRateInApp(false)
+    SetBooleanAsync(StorageKey_DidRateInApp, true)
 
     track_RateInApp(starIdx + 1)
 
@@ -233,7 +227,9 @@ const SettingView = () => {
 
       setIsAnimLoadMedia(await GetBooleanAsync(StorageKey_IsAnimLoadMedia, true))
 
-      setCurrentRateStarIdx(await GetNumberIntAsync(StorageKey_LastStarIdxRateInApp, -1))
+      // rate in app
+
+      setShowRateInApp(!(await GetBooleanAsync(StorageKey_DidRateInApp)))
     })()
   }, [])
 
@@ -262,12 +258,12 @@ const SettingView = () => {
       new Array(5).fill(0).map((_, index) => {
         return (
           <TouchableOpacity key={index} onPress={() => onPressRateStarAsync(index)}>
-            <MaterialCommunityIcons name={index <= currentRateStarIdx ? Icon.Star : Icon.StarOutline} color={currentRateStarIdx < 4 ? theme.counterBackground : theme.primary} size={Size.IconMedium} />
+            <MaterialCommunityIcons name={Icon.Star} color={theme.counterBackground} size={Size.IconMedium} />
           </TouchableOpacity>
         )
       })
     )
-  }, [theme, style, onPressRateStarAsync, currentRateStarIdx])
+  }, [theme, style, onPressRateStarAsync])
 
   return (
     <View style={style.masterView}>
@@ -278,13 +274,18 @@ const SettingView = () => {
 
         {/* rate app */}
 
-        <Text style={style.titleText}>{LocalText.rate_app}</Text>
+        {
+          !showRateInApp ? undefined :
+            <>
+              <Text style={style.titleText}>{LocalText.rate_app}</Text>
 
-        <View style={style.rateContainerView}>
-          {
-            renderRateStars
-          }
-        </View>
+              <View style={style.rateContainerView}>
+                {
+                  renderRateStars
+                }
+              </View>
+            </>
+        }
 
         {/* theme */}
 
