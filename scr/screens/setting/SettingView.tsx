@@ -19,7 +19,7 @@ import { StorageLog_GetAsync } from '../../handle/StorageLog';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { FirebaseDatabase_SetValueAsync } from '../../firebase/FirebaseDatabase';
 import { reloadSettingAnimWhenLoadMedia } from '../../handle/GoodayAnimation';
-import ThemeScroll from '../components/ThemeScroll';
+import ThemeScroll, { TrackSelectedTheme } from '../components/ThemeScroll';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { IsDev } from '../../handle/IsDev';
 import { useAppDispatch } from '../../redux/Store';
@@ -164,7 +164,7 @@ const SettingView = () => {
   const onPressRateStar = useCallback((starIdx: number) => {
     setCurrentRateStarIdx(starIdx)
   }, [])
-  
+
   const onPress = useCallback((type: 'telegram' | 'facebook' | 'twitter' | 'email') => {
     track_SimpleWithParam('press_community', type)
 
@@ -419,3 +419,7 @@ const SettingView = () => {
 }
 
 export default SettingView
+
+export const OnBlurSettingView = () => {
+  TrackSelectedTheme()
+}
