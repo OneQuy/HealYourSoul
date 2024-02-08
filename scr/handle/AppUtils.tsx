@@ -1,5 +1,5 @@
 import { Alert, Share as RNShare, Linking, Platform, ShareContent } from "react-native";
-import { Category, FirebaseDBPath, FirebasePath, Icon, LocalPath, LocalText, NeedReloadReason, ScreenName, StorageKey_LastTimeCheckFirstOpenAppOfTheDay, StorageKey_Rated, shareAppText } from "../constants/AppConstants";
+import { Category, FirebaseDBPath, FirebasePath, Icon, LocalPath, LocalText, NeedReloadReason, ScreenName, StorageKey_Rated, shareAppText } from "../constants/AppConstants";
 import { ThemeColor } from "../constants/Colors";
 import { FileList, MediaType, PostMetadata } from "../constants/Types";
 import { FirebaseStorage_DownloadAndReadJsonAsync } from "../firebase/FirebaseStorage";
@@ -7,16 +7,15 @@ import { Cheat } from "./Cheat";
 import { DeleteFileAsync, DeleteTempDirAsync, GetFLPFromRLP, IsExistedAsync, ReadTextAsync } from "./FileUtils";
 import { versions } from "./VersionsHandler";
 import { ToastOptions, toast } from "@baronha/ting";
-import { ColorNameToHex, IsToday, ToCanPrint, VersionToNumber } from "./UtilsTS";
+import { ColorNameToHex, ToCanPrint, VersionToNumber } from "./UtilsTS";
 import RNFS, { DownloadProgressCallbackResult, ReadDirItem } from "react-native-fs";
 import { IsInternetAvailableAsync } from "./NetLord";
 import Clipboard from "@react-native-clipboard/clipboard";
 import { NavigationProp } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CheckDuplicateAndDownloadAsync } from "../firebase/FirebaseStorageDownloadManager";
-import { checkAndTrackLocation, track_FirstOpenOfTheDayAsync, track_HandleError, track_OnUseEffectOnceEnterAppAsync, track_Simple, track_SimpleWithParam } from "./tracking/GoodayTracking";
-import { GetBooleanAsync, GetDateAsync, SetBooleanAsync, SetDateAsync_Now } from "./AsyncStorageUtils";
-import { CheckAndPrepareDataForNotificationAsync } from "./GoodayNotification";
+import { track_HandleError, track_Simple, track_SimpleWithParam } from "./tracking/GoodayTracking";
+import { GetBooleanAsync, SetBooleanAsync } from "./AsyncStorageUtils";
 import { CheckAndShowInAppReviewAsync } from "./InAppReview";
 
 const today = new Date()
@@ -27,7 +26,7 @@ export const versionAsNumber = VersionToNumber(versionText)
 
 const postPredownloadLimit = 10
 
-const startFreshlyOpenAppTick = Date.now()
+export const startFreshlyOpenAppTick = Date.now()
 
 /**
  * cheat clear whole folder data
@@ -620,35 +619,4 @@ export const GetApiDataItemFromCached = async <T extends (string | {})>(key: str
     await AsyncStorage.setItem(key, JSON.stringify(subArr))
 
     return item
-}
-
-/**
- * on freshly open app or first active of the day
- */
-export const CheckAndTriggerFirstOpenAppOfTheDayAsync = async () => {
-    const lastDateTrack = await GetDateAsync(StorageKey_LastTimeCheckFirstOpenAppOfTheDay)
-
-    if (lastDateTrack !== undefined && IsToday(lastDateTrack))
-        return
-
-    SetDateAsync_Now(StorageKey_LastTimeCheckFirstOpenAppOfTheDay)
-
-    // handles
-
-    console.log('---- handle first open app of the day ------');
-
-    track_FirstOpenOfTheDayAsync()
-
-    // track location
-
-    checkAndTrackLocation()
-}
-
-/**
- * freshly open app
- */
-export const OnUseEffectOnceEnterApp = () => {
-    track_OnUseEffectOnceEnterAppAsync(startFreshlyOpenAppTick)
-    CheckAndTriggerFirstOpenAppOfTheDayAsync()
-    CheckAndPrepareDataForNotificationAsync()
 }

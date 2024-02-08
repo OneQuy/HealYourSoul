@@ -2,13 +2,14 @@ import { AppStateStatus } from "react-native"
 import { RegisterOnChangedState, UnregisterOnChangedState } from "./AppStateMan"
 import { HandleAppConfigAsync } from "./AppConfigHandler"
 import { HandleStartupAlertAsync } from "./StartupAlert"
-import { CheckAndTriggerFirstOpenAppOfTheDayAsync } from "./AppUtils"
-import { track_AppStateActive } from "./tracking/GoodayTracking"
-import { StorageKey_LastTimeCheckAndReloadAppConfig } from "../constants/AppConstants"
-import { GetDateAsync_IsValueExistedAndIsToday, SetDateAsync_Now } from "./AsyncStorageUtils"
+import { startFreshlyOpenAppTick } from "./AppUtils"
+import { checkAndTrackLocation, track_AppStateActive, track_FirstOpenOfTheDayAsync, track_OnUseEffectOnceEnterAppAsync } from "./tracking/GoodayTracking"
+import { StorageKey_LastTimeCheckAndReloadAppConfig, StorageKey_LastTimeCheckFirstOpenAppOfTheDay } from "../constants/AppConstants"
+import { GetDateAsync, GetDateAsync_IsValueExistedAndIsToday, SetDateAsync_Now } from "./AsyncStorageUtils"
 import { NetLord } from "./NetLord"
 import { HandldAlertUpdateAppAsync } from "./HandleAlertUpdateApp"
-import { setNotificationAsync } from "./GoodayNotification"
+import { CheckAndPrepareDataForNotificationAsync, setNotificationAsync } from "./GoodayNotification"
+import { IsToday } from "./UtilsTS"
 
 /** only reload if app re-active after a period 1 day */
 const checkAndReloadAppConfigAsync = async () => {
@@ -44,6 +45,14 @@ const onAppConfigReloadedAsync = async () => {
     await HandldAlertUpdateAppAsync() // alert_priority 2 (doc)
 }
 
+const onActiveOrOnceUseEffectAsync = async () => {
+    checkAndFireActiveOrOnceUseEffectWithCheckDuplicateAsync()
+}
+
+const checkAndFireActiveOrOnceUseEffectWithCheckDuplicateAsync = async () => {
+
+}
+
 const onActiveAsync = async () => {
     // check to show warning alert
 
@@ -56,6 +65,10 @@ const onActiveAsync = async () => {
     // track app state active
 
     track_AppStateActive(true)
+
+    // onActiveOrOnceUseEffectAsync
+
+    onActiveOrOnceUseEffectAsync()
 }
 
 const onBackgroundAsync = async () => {
@@ -73,6 +86,38 @@ const onStateChanged = (state: AppStateStatus) => {
     else if (state === 'background') {
         onBackgroundAsync()
     }
+}
+
+/**
+ * on freshly open app or first active of the day
+ */
+export const CheckAndTriggerFirstOpenAppOfTheDayAsync = async () => {
+    const lastDateTrack = await GetDateAsync(StorageKey_LastTimeCheckFirstOpenAppOfTheDay)
+
+    if (lastDateTrack !== undefined && IsToday(lastDateTrack))
+        return
+
+    SetDateAsync_Now(StorageKey_LastTimeCheckFirstOpenAppOfTheDay)
+
+    // handles
+
+    console.log('---- handle first open app of the day ------');
+
+    track_FirstOpenOfTheDayAsync()
+
+    // track location
+
+    checkAndTrackLocation()
+}
+
+/**
+ * freshly open app
+ */
+export const OnUseEffectOnceEnterApp = () => {
+    track_OnUseEffectOnceEnterAppAsync(startFreshlyOpenAppTick)
+
+    CheckAndTriggerFirstOpenAppOfTheDayAsync()
+    CheckAndPrepareDataForNotificationAsync()
 }
 
 export const RegisterGoodayAppState = (isRegister: boolean) => {
