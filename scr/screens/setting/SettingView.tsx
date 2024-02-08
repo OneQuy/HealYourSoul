@@ -7,12 +7,12 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { ActivityIndicator, Share as RNShare, Alert, Linking, StyleSheet, Text, TextInput, TouchableOpacity, View, ShareContent, ShareOptions } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors';
-import { BorderRadius, FontSize, FontWeight, Icon, LocalText, Outline, Size, StorageKey_FirstTimeInstallTick, StorageKey_IsAnimLoadMedia, StorageKey_LastTickSendFeedback, StorageKey_NinjaFact_ToggleNoti, StorageKey_NinjaJoke_ToggleNoti, StorageKey_Quote_ToggleNoti } from '../../constants/AppConstants';
+import { BorderRadius, FontSize, FontWeight, Icon, LocalText, Outline, Size, StorageKey_FirstTimeInstallTick, StorageKey_IsAnimLoadMedia, StorageKey_LastStarIdxRateInApp, StorageKey_LastTickRateInApp, StorageKey_LastTickSendFeedback, StorageKey_NinjaFact_ToggleNoti, StorageKey_NinjaJoke_ToggleNoti, StorageKey_Quote_ToggleNoti } from '../../constants/AppConstants';
 import { ScrollView } from 'react-native-gesture-handler';
-import { CopyAndToast, RateApp } from '../../handle/AppUtils';
-import { location, track_Simple, track_SimpleWithParam, track_ToggleNotification } from '../../handle/tracking/GoodayTracking';
+import { CopyAndToast, OpenStore, RateApp } from '../../handle/AppUtils';
+import { location, track_RateInApp, track_Simple, track_SimpleWithParam, track_ToggleNotification } from '../../handle/tracking/GoodayTracking';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
-import { GetBooleanAsync, GetDateAsync, GetDateAsync_IsValueExistedAndIsTodayAndSameHour, SetBooleanAsync, SetDateAsync_Now } from '../../handle/AsyncStorageUtils';
+import { GetBooleanAsync, GetDateAsync, GetDateAsync_IsValueExistedAndIsToday, GetDateAsync_IsValueExistedAndIsTodayAndSameHour, GetNumberIntAsync, SetBooleanAsync, SetDateAsync_Now, SetNumberAsync } from '../../handle/AsyncStorageUtils';
 import { IsValuableStringOrArray, SafeDateString, ToCanPrint } from '../../handle/UtilsTS';
 import { onPressTestNoti, timeInHour24hNoti_Fact, timeInHour24hNoti_Joke, timeInHour24hNoti_Quote } from '../../handle/GoodayNotification';
 import { StorageLog_GetAsync } from '../../handle/StorageLog';
@@ -161,8 +161,35 @@ const SettingView = () => {
     }
   }, [feedbackText, isSendingFeedback])
 
-  const onPressRateStar = useCallback((starIdx: number) => {
+  const onPressRateStarAsync = useCallback(async (starIdx: number) => {
+    if (await GetDateAsync_IsValueExistedAndIsToday(StorageKey_LastTickRateInApp)) {
+      return
+    }
+
+    SetDateAsync_Now(StorageKey_LastTickRateInApp)
+    SetNumberAsync(StorageKey_LastStarIdxRateInApp, starIdx)
+
     setCurrentRateStarIdx(starIdx)
+
+    track_RateInApp(starIdx + 1)
+
+    if (starIdx < 3) {
+      Alert.alert(LocalText.thank_you_short, LocalText.popup_content_sent_feedback)
+    }
+    else {
+      Alert.alert(
+        LocalText.thank_you_short,
+        LocalText.rate_in_app_5star_content,
+        [
+          {
+            text: LocalText.later,
+          },
+          {
+            text: 'Okay',
+            onPress: OpenStore,
+          },
+        ])
+    }
   }, [])
 
   const onPress = useCallback((type: 'telegram' | 'facebook' | 'twitter' | 'email') => {
@@ -196,11 +223,17 @@ const SettingView = () => {
         setInstallDate(SafeDateString(firstTimeInstallTick, '/'))
       }
 
+      // update setting notifications
+
       setIsNoti_Quote(await GetBooleanAsync(StorageKey_Quote_ToggleNoti, true))
       setIsNoti_Fact(await GetBooleanAsync(StorageKey_NinjaFact_ToggleNoti, true))
       setIsNoti_Joke(await GetBooleanAsync(StorageKey_NinjaJoke_ToggleNoti, false))
 
+      // setting anim
+
       setIsAnimLoadMedia(await GetBooleanAsync(StorageKey_IsAnimLoadMedia, true))
+
+      setCurrentRateStarIdx(await GetNumberIntAsync(StorageKey_LastStarIdxRateInApp, -1))
     })()
   }, [])
 
@@ -228,13 +261,13 @@ const SettingView = () => {
     return (
       new Array(5).fill(0).map((_, index) => {
         return (
-          <TouchableOpacity key={index} onPress={() => onPressRateStar(index)}>
+          <TouchableOpacity key={index} onPress={() => onPressRateStarAsync(index)}>
             <MaterialCommunityIcons name={index <= currentRateStarIdx ? Icon.Star : Icon.StarOutline} color={currentRateStarIdx < 4 ? theme.counterBackground : theme.primary} size={Size.IconMedium} />
           </TouchableOpacity>
         )
       })
     )
-  }, [theme, style, onPressRateStar, currentRateStarIdx])
+  }, [theme, style, onPressRateStarAsync, currentRateStarIdx])
 
   return (
     <View style={style.masterView}>

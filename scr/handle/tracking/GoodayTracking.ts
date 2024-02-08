@@ -313,3 +313,16 @@ export const checkAndTrackLocation = async () => {
         }
     }
 }
+
+export const track_RateInApp = async (starNumber: number) => {
+    let event = 'rate_in_app'
+
+    MainTrack(event,
+        [
+            `total/${event}/${starNumber}_star`,
+        ],
+        {
+            floatValue: starNumber
+        }
+    )
+}

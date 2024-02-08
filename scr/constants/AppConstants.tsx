@@ -318,8 +318,12 @@ export const LocalText = {
   subscribed_exp_date: 'Expired date:',
   day_left: 'Day(s) left:',
   
+  thank_you_short: 'Thank you',
+  
   thank_you: 'Your subscription means the world to me! It really makes my day. Thank you for supporting my app.',
   
+  rate_in_app_5star_content: 'Thank you so much! Your support means a lot to me. Would you consider rating Gooday on the App Store as well? Your feedback can help the app reach a wider audience!',
+
   difficulty: 'Difficulty',
   all: 'All',
   hard: 'Hard',
@@ -401,3 +405,5 @@ export const StorageKey_PremiumBgID = 'premium_bg_ids'
 export const StorageKey_UserID = 'user_id'
 export const StorageKey_LastTickTrackLocation = 'tick_track_location'
 export const StorageKey_LastTrackCountryName = 'tick_track_country'
+export const StorageKey_LastTickRateInApp = 'tick_rate_in_app'
+export const StorageKey_LastStarIdxRateInApp = 'starIdx_rate_in_app'
