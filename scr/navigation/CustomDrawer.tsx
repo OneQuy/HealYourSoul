@@ -7,7 +7,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { RootState, useAppSelector } from "../redux/Store";
 import { ThemeContext } from "../constants/Colors";
-import { DrawerContentComponentProps, } from '@react-navigation/drawer';
+import { DrawerContentComponentProps, useDrawerStatus, } from '@react-navigation/drawer';
 import { Image, ImageBackground, Linking, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import DrawerCoupleItem from "./DrawerCoupleItem";
 import { BorderRadius, FontSize, FontWeight, Icon, LocalText, Outline, ScreenName, Size, StorageKey_ForceDev, StorageKey_PremiumBgID } from "../constants/AppConstants";
@@ -15,7 +15,7 @@ import { CommonStyles } from "../constants/CommonConstants";
 import useDrawerMenuItemUtils from '../hooks/useDrawerMenuItemUtils';
 import { logoScr } from '../screens/others/SplashScreen';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { IsContentScreen, OpenStore, RateApp, versionAsNumber } from '../handle/AppUtils';
+import { IsContentScreen, OpenStore, RateApp, ShareApp, versionAsNumber } from '../handle/AppUtils';
 import { GetAppConfig } from '../handle/AppConfigHandler';
 import { FilterOnlyLetterAndNumberFromString, RegexUrl } from '../handle/UtilsTS';
 import { track_PressDrawerItem } from '../handle/tracking/GoodayTracking';
@@ -47,6 +47,8 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
   const disableScreens = useAppSelector((state: RootState) => state.userData.disableScreens)
   const [premiumBg, setPremiumBg] = useState<[NodeRequire, string]>([premiumBGs[0][0], 'black'])
   const [catItemHeight, setCatItemHeight] = useState(Math.max(50, heightPercentageToDP(7.5)))
+  const [showRateAppOrShare, setShowRateAppOrShare] = useState(true)
+  const isDrawerOpen = useDrawerStatus()
 
   const [notice, onPressNotice] = useMemo(() => {
     const data = GetAppConfig()?.notice
@@ -169,6 +171,11 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
   }, [onPressSetting])
 
   useEffect(() => {
+    if (isDrawerOpen === 'open')
+      setShowRateAppOrShare(val => !val)
+  }, [isDrawerOpen])
+
+  useEffect(() => {
     changePremiumBtnBg()
   }, [])
 
@@ -203,15 +210,11 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
             <Text style={[{ color: colorSettingText }]}>{LocalText.setting}</Text>
           </TouchableOpacity>
           {/* rate */}
-          <TouchableOpacity onPress={RateApp} style={[style.settingBtnView, { borderColor: theme.background }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]}>
-            <MaterialIcons name={Icon.Star} color={theme.background} size={Size.IconTiny} />
-            <Text style={[{ color: theme.background }]}>{LocalText.rate_me}</Text>
+          <TouchableOpacity onPress={showRateAppOrShare ? RateApp : ShareApp} style={[style.settingBtnView, { borderColor: theme.background }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]}>
+            <MaterialIcons name={showRateAppOrShare ? Icon.Star : Icon.ShareText} color={theme.background} size={Size.IconTiny} />
+            <Text style={[{ color: theme.background }]}>{showRateAppOrShare ? LocalText.rate_me : LocalText.share_app_2}</Text>
           </TouchableOpacity>
         </View>
-
-        {/* theme */}
-
-        {/* <ThemeScroll /> */}
 
         {/* version */}
         <View onTouchEnd={OpenStore} style={style.versionContainerView}>
@@ -226,6 +229,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
               </View>
           }
         </View>
+
         {/* notice */}
         {
           !notice ? undefined :

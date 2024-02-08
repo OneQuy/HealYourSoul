@@ -12,7 +12,7 @@ export enum ScreenName {
   Quote = 'Motivation',
   CatDog = 'Animal',
   Love = 'Love',
-  Satisfying  = 'Satisfying',
+  Satisfying = 'Satisfying',
   NSFW = 'NSFW',
   Art = 'Art',
   Cute = 'Cute',
@@ -121,13 +121,13 @@ export enum Category {
 
 export enum Outline {
   Horizontal = wp('4%'),
-  
+
   VerticalMini = hp('0.7%'),
   Vertical = hp(3.5),
 
   GapVertical = hp('1%'),
   GapVertical_2 = hp('2%'),
-  
+
   GapHorizontal = wp('1%'),
 }
 
@@ -145,14 +145,14 @@ export enum Size {
 // opacity
 
 export enum Opacity {
- Primary = 0.8,
+  Primary = 0.8,
 }
 
 // border radius
 
 export enum BorderRadius {
- BR8 = 8,
- BR = wp('4%'),
+  BR8 = 8,
+  BR = wp('4%'),
 }
 
 // font size
@@ -219,6 +219,16 @@ export enum Icon {
   Setting = 'settings',
 }
 
+export const shareAppText = `Gooday - Make your day good. A meme, information & positive stuffs app.
+
+It's totally free. Download now!
+
+AppStore: https://apps.apple.com/us/app/gooday-make-your-day/id6471367879
+
+Google Play: https://play.google.com/store/apps/details?id=com.healyoursoul
+
+#gooday #make_your_day_good`
+
 export const LocalText = {
   offline_mode: "Offline mode",
   you_are_offline: "You are offline",
@@ -232,6 +242,7 @@ export const LocalText = {
   toggle_screen: "Toggle screen",
   send: "Send",
   share_app: "Share Gooday",
+  share_app_2: "Share app",
   like: "Like",
   close: "Close",
   rate_app: "Rate app",
@@ -293,7 +304,7 @@ export const LocalText = {
   fun_websites: 'Fun Websites',
   top_movies: 'Top 250 Movies',
   best_short_films: 'Best Short Films',
-  
+
   premium_benefit: 'Hi there, I am @onequy, an indie developer from Vietnam. I developed this app to spread fun, useful information, and positive things to everyone around the world. I am trying my best to keep the app free for as long as possible. However, I would be really happy and grateful if you subscribe and want to:',
   subscribe_for: 'Subscribe for',
   today: 'Today',
@@ -302,26 +313,26 @@ export const LocalText = {
 
   // ad_free: 'Ad-free',
   // no_ad_anymore: 'No ad during your subscription time.\n',
-  
+
   support_me: 'Support app',
   support_me_info: "Support me in covering the monthly costs of the operation and data server.",
-  
+
   give_coffee: 'Buy me a coffee',
   give_coffee_info: "It will be great motivation for me to improve the app every day.",
-  
+
   one_month: '1 Month',
   six_month: '6 Months',
   twelve_month: '12 Months',
-  
+
   you_subscribed: 'You subscribed:',
   subscribed_date: 'Subscribed date:',
   subscribed_exp_date: 'Expired date:',
   day_left: 'Day(s) left:',
-  
+
   thank_you_short: 'Thank you',
-  
+
   thank_you: 'Your subscription means the world to me! It really makes my day. Thank you for supporting my app.',
-  
+
   rate_in_app_5star_content: 'Thank you so much! Your support means a lot to me. Would you consider rating Gooday on the App Store as well? Your feedback can help the app reach a wider audience!',
 
   difficulty: 'Difficulty',
@@ -329,7 +340,7 @@ export const LocalText = {
   hard: 'Hard',
   medium: 'Medium',
   easy: 'Easy',
-  
+
   answer_type: 'Answers type:',
   multi_choice: 'Multi-choice',
   true_false: 'True/False',
@@ -340,7 +351,7 @@ export const LocalText = {
   welcome_text_2: `Your daily dose of laughter and positivity!`,
   welcome_text_3: `In Gooday, I believe in the power of laughter, positive and beautiful stuffs to brighten your day and lift your spirits. Dive into a world filled with hilarious memes, gorgeous pictures, useful and heartwarming content that is sure to heal your soul and bring a smile to your face.`,
   set_your_theme: 'Pick your own theme',
-  
+
   introduce_text: 'Introduce screen',
   introduce_Draw: 'Warm is the screen that contains images and video of heartwarming moments, hope this will heal your soul even a little! 🌈',
   introduce_BestShortFilms: 'Discover cinematic excellence with "Good Short Films" showcasing carefully curated and selectively chosen award-winning gems on YouTube and other streaming platforms 🎬',
@@ -348,12 +359,12 @@ export const LocalText = {
   introduce_FunWebsites: "Getting boring? Discover the globe's most entertaining corners with Fun Websites screen! Explore the best of the web's playful side. Unleash a world of laughter, games, and surprises at your fingertips. You can press the [View] button to try it out right in the app. 🌐",
   introduce_AwardPicture: "Elevate your visual senses with our Award-Winning Pictures of the Year screen!\n\nImmerse yourself in a curated collection of the most captivating and awe-inspiring images that have earned accolades globally. Witness the world through the lens of excellence, one breathtaking photo at a time. 📸✨",
   introduce_Satisfying: "Indulge in a collection of visually pleasing moments where every frame radiates eye-catching allure and aesthetic satisfaction. ✨",
-  
+
   // popup
 
   popup_title_need_internet: 'No Internet',
   popup_content_need_internet: 'Please check your network and try again.',
-  
+
   popup_title_error: 'Ooops!',
   popup_content_error: "Uh-oh! Something went wrong. We're fixing it. Thanks for your patience!",
 

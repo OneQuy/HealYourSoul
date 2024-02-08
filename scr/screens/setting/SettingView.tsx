@@ -4,15 +4,15 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { ActivityIndicator, Share as RNShare, Alert, Linking, StyleSheet, Text, TextInput, TouchableOpacity, View, ShareContent, ShareOptions } from 'react-native'
+import { ActivityIndicator, Alert, Linking, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors';
 import { BorderRadius, FontSize, FontWeight, Icon, LocalText, Outline, Size, StorageKey_DidRateInApp, StorageKey_FirstTimeInstallTick, StorageKey_IsAnimLoadMedia, StorageKey_LastTickSendFeedback, StorageKey_NinjaFact_ToggleNoti, StorageKey_NinjaJoke_ToggleNoti, StorageKey_Quote_ToggleNoti } from '../../constants/AppConstants';
 import { ScrollView } from 'react-native-gesture-handler';
-import { CopyAndToast, OpenStore, RateApp } from '../../handle/AppUtils';
+import { CopyAndToast, OpenStore, RateApp, ShareApp } from '../../handle/AppUtils';
 import { location, track_RateInApp, track_Simple, track_SimpleWithParam, track_ToggleNotification } from '../../handle/tracking/GoodayTracking';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
-import { GetBooleanAsync, GetDateAsync, GetDateAsync_IsValueExistedAndIsToday, GetDateAsync_IsValueExistedAndIsTodayAndSameHour, GetNumberIntAsync, SetBooleanAsync, SetDateAsync_Now, SetNumberAsync } from '../../handle/AsyncStorageUtils';
+import { GetBooleanAsync, GetDateAsync, GetDateAsync_IsValueExistedAndIsTodayAndSameHour, SetBooleanAsync, SetDateAsync_Now } from '../../handle/AsyncStorageUtils';
 import { IsValuableStringOrArray, SafeDateString, ToCanPrint } from '../../handle/UtilsTS';
 import { onPressTestNoti, timeInHour24hNoti_Fact, timeInHour24hNoti_Joke, timeInHour24hNoti_Quote } from '../../handle/GoodayNotification';
 import { StorageLog_GetAsync } from '../../handle/StorageLog';
@@ -27,16 +27,6 @@ import { setOnboarded } from '../../redux/MiscSlice';
 import { GetIPLocationAsync } from '../../hooks/useCountryFromIP';
 
 const limitFeedback = 300
-
-const shareAppText = `Gooday - Make your day good. A meme, information & positive stuffs app.
-
-Download now!
-
-AppStore: https://apps.apple.com/us/app/gooday-make-your-day/id6471367879
-
-Google Play: https://play.google.com/store/apps/details?id=com.healyoursoul
-
-#gooday #make_your_day_good`
 
 const SettingView = () => {
   const theme = useContext(ThemeContext)
@@ -106,18 +96,6 @@ const SettingView = () => {
       reloadSettingAnimWhenLoadMedia()
     }
   }, [isNoti_Fact, isNoti_Quote, isNoti_Joke, isAnimLoadMedia])
-
-  const onPressShareApp = useCallback(() => {
-    track_Simple('share_app')
-
-    RNShare.share({
-      title: 'Gooday',
-      message: shareAppText,
-    } as ShareContent,
-      {
-        tintColor: theme.primary,
-      } as ShareOptions)
-  }, [theme])
 
   const onPressGetLogStorage = useCallback(async () => {
     Clipboard.setString(await StorageLog_GetAsync())
@@ -407,7 +385,7 @@ const SettingView = () => {
         {/* share app */}
 
         <View style={style.flexRowWithGap}>
-          <TouchableOpacity onPress={onPressShareApp} style={style.shareTO}>
+          <TouchableOpacity onPress={ShareApp} style={style.shareTO}>
             <MaterialCommunityIcons name={Icon.ShareText} color={theme.counterPrimary} size={Size.IconSmaller} />
             <Text style={style.btnText}>{LocalText.share_app}</Text>
           </TouchableOpacity>

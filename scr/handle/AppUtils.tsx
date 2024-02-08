@@ -1,5 +1,5 @@
-import { Alert, Linking, Platform } from "react-native";
-import { Category, FirebaseDBPath, FirebasePath, Icon, LocalPath, LocalText, NeedReloadReason, ScreenName, StorageKey_LastTimeCheckFirstOpenAppOfTheDay, StorageKey_Rated } from "../constants/AppConstants";
+import { Alert, Share as RNShare, Linking, Platform, ShareContent } from "react-native";
+import { Category, FirebaseDBPath, FirebasePath, Icon, LocalPath, LocalText, NeedReloadReason, ScreenName, StorageKey_LastTimeCheckFirstOpenAppOfTheDay, StorageKey_Rated, shareAppText } from "../constants/AppConstants";
 import { ThemeColor } from "../constants/Colors";
 import { FileList, MediaType, PostMetadata } from "../constants/Types";
 import { FirebaseStorage_DownloadAndReadJsonAsync } from "../firebase/FirebaseStorage";
@@ -14,7 +14,7 @@ import Clipboard from "@react-native-clipboard/clipboard";
 import { NavigationProp } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CheckDuplicateAndDownloadAsync } from "../firebase/FirebaseStorageDownloadManager";
-import { checkAndTrackLocation, track_FirstOpenOfTheDayAsync, track_HandleError, track_OnUseEffectOnceEnterAppAsync, track_SimpleWithParam } from "./tracking/GoodayTracking";
+import { checkAndTrackLocation, track_FirstOpenOfTheDayAsync, track_HandleError, track_OnUseEffectOnceEnterAppAsync, track_Simple, track_SimpleWithParam } from "./tracking/GoodayTracking";
 import { GetBooleanAsync, GetDateAsync, SetBooleanAsync, SetDateAsync_Now } from "./AsyncStorageUtils";
 import { CheckAndPrepareDataForNotificationAsync } from "./GoodayNotification";
 import { CheckAndShowInAppReviewAsync } from "./InAppReview";
@@ -336,6 +336,14 @@ export const GetAllSavedLocalPostIDsListAsync = async (cat: Category) => {
     }
 }
 
+export const ShareApp = async () => {
+    track_Simple('share_app')
+
+    RNShare.share({
+        title: 'Gooday',
+        message: shareAppText,
+    } as ShareContent)
+}
 
 export const RateApp = async () => {
     const res = await CheckAndShowInAppReviewAsync()
