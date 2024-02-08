@@ -326,3 +326,16 @@ export const track_RateInApp = async (starNumber: number) => {
         }
     )
 }
+
+export const track_OpenAppOfDayCount = (count: number) => {
+    const event = 'open_app_of_day_count'
+
+    MainTrack(event,
+        [
+            `total/${event}/${count}_times`,
+        ],
+        {
+            floatValue: count
+        }
+    )
+}

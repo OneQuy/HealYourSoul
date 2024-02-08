@@ -3,13 +3,17 @@ import { RegisterOnChangedState, UnregisterOnChangedState } from "./AppStateMan"
 import { HandleAppConfigAsync } from "./AppConfigHandler"
 import { HandleStartupAlertAsync } from "./StartupAlert"
 import { startFreshlyOpenAppTick } from "./AppUtils"
-import { checkAndTrackLocation, track_AppStateActive, track_FirstOpenOfTheDayAsync, track_OnUseEffectOnceEnterAppAsync } from "./tracking/GoodayTracking"
-import { StorageKey_LastTimeCheckAndReloadAppConfig, StorageKey_LastTimeCheckFirstOpenAppOfTheDay } from "../constants/AppConstants"
-import { GetDateAsync, GetDateAsync_IsValueExistedAndIsToday, SetDateAsync_Now } from "./AsyncStorageUtils"
+import { checkAndTrackLocation, track_AppStateActive, track_FirstOpenOfTheDayAsync, track_OnUseEffectOnceEnterAppAsync, track_OpenAppOfDayCount } from "./tracking/GoodayTracking"
+import { StorageKey_LastTimeCheckAndReloadAppConfig, StorageKey_LastTimeCheckFirstOpenAppOfTheDay, StorageKey_OpenAppOfDayCount, StorageKey_OpenAppOfDayCountForDate } from "../constants/AppConstants"
+import { GetDateAsync, GetDateAsync_IsValueExistedAndIsToday, GetNumberIntAsync, SetDateAsync, SetDateAsync_Now, SetNumberAsync } from "./AsyncStorageUtils"
 import { NetLord } from "./NetLord"
 import { HandldAlertUpdateAppAsync } from "./HandleAlertUpdateApp"
 import { CheckAndPrepareDataForNotificationAsync, setNotificationAsync } from "./GoodayNotification"
 import { IsToday } from "./UtilsTS"
+
+const HowLongInMinutesToCount2TimesUseAppSeparately = 20
+
+var lastFireOnActiveOrOnceUseEffectWithCheckDuplicate = 0
 
 /** only reload if app re-active after a period 1 day */
 const checkAndReloadAppConfigAsync = async () => {
@@ -45,12 +49,52 @@ const onAppConfigReloadedAsync = async () => {
     await HandldAlertUpdateAppAsync() // alert_priority 2 (doc)
 }
 
+
+/**
+ * will be called at 2 cases:
+ * 1. whenever freshly open app
+ * 2. whenever onAppActive
+ */
 const onActiveOrOnceUseEffectAsync = async () => {
-    checkAndFireActiveOrOnceUseEffectWithCheckDuplicateAsync()
+    checkAndFireOnActiveOrOnceUseEffectWithCheckDuplicateAsync()
 }
 
-const checkAndFireActiveOrOnceUseEffectWithCheckDuplicateAsync = async () => {
+/**
+ * will be called at 2 cases:
+ * 1. whenever freshly open app
+ * 2. onAppActive (but at least 20p after the last call this method)
+ */
+const checkAndFireOnActiveOrOnceUseEffectWithCheckDuplicateAsync = async () => {
+    const distanceMs = Date.now() - lastFireOnActiveOrOnceUseEffectWithCheckDuplicate
 
+    const minFromLastCall = distanceMs / 1000 / 60
+
+    // console.log('minFromLastCall', minFromLastCall);
+
+    if (minFromLastCall < HowLongInMinutesToCount2TimesUseAppSeparately)
+        return
+
+    lastFireOnActiveOrOnceUseEffectWithCheckDuplicate = Date.now()
+
+    // handle here:
+
+    const count = await GetNumberIntAsync(StorageKey_OpenAppOfDayCount, 0)
+
+    // console.log('checkAndFireOnActiveOrOnceUseEffectWithCheckDuplicateAsync');
+
+    if (await GetDateAsync_IsValueExistedAndIsToday(StorageKey_OpenAppOfDayCountForDate)) { // already tracked yesterday, just inc today
+        SetNumberAsync(StorageKey_OpenAppOfDayCount, count + 1)
+        console.log('inc today to', count + 1);
+    }
+    else { // need to track for yesterday
+        if (count > 0)
+            track_OpenAppOfDayCount(count)
+
+        SetDateAsync_Now(StorageKey_OpenAppOfDayCountForDate)
+        SetNumberAsync(StorageKey_OpenAppOfDayCount, 1)
+
+        // console.log('reset for today', count);
+    }
 }
 
 const onActiveAsync = async () => {
@@ -118,6 +162,7 @@ export const OnUseEffectOnceEnterApp = () => {
 
     CheckAndTriggerFirstOpenAppOfTheDayAsync()
     CheckAndPrepareDataForNotificationAsync()
+    onActiveOrOnceUseEffectAsync()
 }
 
 export const RegisterGoodayAppState = (isRegister: boolean) => {
