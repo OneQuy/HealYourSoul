@@ -89,7 +89,7 @@ export const track_OnUseEffectOnceEnterAppAsync = async (startFreshlyOpenAppTick
             `events/${event}/#d`,
         ],
         {
-            time: elapsedOpenAppTime
+            floatValue: elapsedOpenAppTime
         }
     )
 
@@ -259,7 +259,6 @@ export const checkAndTrackLocation = async () => {
     const isTrackedToday = await GetDateAsync_IsValueExistedAndIsToday(StorageKey_LastTickTrackLocation)
 
     if (isTrackedToday) {
-        // console.log('tracked todayyyy');
         return
     }
 
@@ -277,39 +276,29 @@ export const checkAndTrackLocation = async () => {
             const lastTrackCountry = await AsyncStorage.getItem(StorageKey_LastTrackCountryName)
 
             if (country === lastTrackCountry) {
-                // console.log('same country', country);
                 return
             }
             else
                 AsyncStorage.setItem(StorageKey_LastTrackCountryName, country)
 
-            let regionOrCity = undefined
+            let region = undefined
 
-            if (IsValuableArrayOrString(location.city_name))
-                regionOrCity = FilterOnlyLetterAndNumberFromString(location.city_name)
-            else if (IsValuableArrayOrString(location.region_name))
-                regionOrCity = FilterOnlyLetterAndNumberFromString(location.region_name)
+            if (IsValuableArrayOrString(location.region_name))
+                region = FilterOnlyLetterAndNumberFromString(location.region_name)
 
             const fbArr = [
                 `total/${event}/${country}/sum`,
             ]
 
-            const obj = {
-                country
+            if (region) {
+                fbArr.push(`total/${event}/${country}/` + region)
             }
 
-            if (regionOrCity) {
-                fbArr.push(`total/${event}/${country}/` + regionOrCity)
-
-                // @ts-ignore
-                obj.region = regionOrCity
-            }
-
-            console.log('track location', ToCanPrint(obj));
+            console.log('track location', ToCanPrint(location));
 
             MainTrack(event,
                 fbArr,
-                obj)
+                location)
         }
     }
 }
