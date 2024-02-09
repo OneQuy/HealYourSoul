@@ -305,7 +305,7 @@ export const LocalText = {
   top_movies: 'Top 250 Movies',
   best_short_films: 'Best Short Films',
 
-  premium_benefit: 'Hi there, I am @onequy, an indie developer from Vietnam. I developed this app to spread fun, useful information, and positive things to everyone around the world. I am trying my best to keep the app free for as long as possible. However, I would be really happy and grateful if you subscribe and want to:',
+  premium_benefit: 'Hi there, I am @onequy, an indie developer from Vietnam. I developed this app to spread fun, useful information, and positive things to everyone around the world. I am trying my best to keep the app free. However, I would be really happy and grateful if you subscribe and want to:',
   subscribe_for: 'Subscribe for',
   today: 'Today',
   warning_premium: 'These subscriptions are non-renewable. If you no longer wish to subscribe, it will be automatically canceled at the end of the period.',
