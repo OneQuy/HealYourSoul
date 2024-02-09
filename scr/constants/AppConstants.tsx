@@ -417,6 +417,7 @@ export const StorageKey_UserID = 'user_id'
 export const StorageKey_LastTickTrackLocation = 'tick_track_location'
 export const StorageKey_LastTrackCountryName = 'tick_track_country'
 export const StorageKey_DidRateInApp = 'did_rate_in_app'
+export const StorageKey_CachedIAP= 'cached_iap'
 
 export const StorageKey_OpenAppOfDayCount = 'open_app_count'
 export const StorageKey_OpenAppOfDayCountForDate = 'open_app_count_date'

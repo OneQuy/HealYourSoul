@@ -28,18 +28,27 @@ export type IAPProduct = {
     isConsumable: boolean,
 }
 
-export type SuccessCallback = (sku: string) => void
-export type ErrorCallback = (error: PurchaseError) => void
+// export type SuccessCallback = (sku: string) => void
+// export type ErrorCallback = (error: PurchaseError) => void
+
+var cachedProductsSetterAsync: ((text: string) => Promise<void>) | undefined = undefined
+var cachedProductsGetterAsync: (() => Promise<string | null>) | undefined = undefined
 
 var isInited = false
 var initedProducts: IAPProduct[]
+
+var fetchedProductsFromCached: Product[] | undefined = undefined
 
 export var fetchedProducts: Product[] = []
 
 /**
  * @returns unsubscribe method () => void if success, otherwise undefined (can not init)
  */
-export const InitIAPAsync = async (products: IAPProduct[]): Promise<(() => void) | undefined> => {
+export const InitIAPAsync = async (
+    products: IAPProduct[],
+    cachedProductsListSetterAsync?: (text: string) => Promise<void>,
+    cachedProductsListGetterAsync?: () => Promise<string | null>,
+): Promise<(() => void) | undefined> => {
     if (isInited) {
         console.warn('IAP already inited')
         return undefined
@@ -53,6 +62,11 @@ export const InitIAPAsync = async (products: IAPProduct[]): Promise<(() => void)
 
     isInited = true
     initedProducts = products
+
+    cachedProductsSetterAsync = cachedProductsListSetterAsync
+    cachedProductsGetterAsync = cachedProductsListGetterAsync
+
+    await LoadFetchedProductsFromCachedAsync()
 
     // (only android) we make sure that "ghost" pending payment are removed
     // (ghost = failed pending payment that are still marked as pending in Google's native Vending module cache)
@@ -94,14 +108,40 @@ export const InitIAPAsync = async (products: IAPProduct[]): Promise<(() => void)
     return () => { }
 }
 
-export const GetIAPProduct = async (sku: string): Promise<Product | undefined> => {
+const LoadFetchedProductsFromCachedAsync = async (): Promise<Product[]> => {
+    if (fetchedProductsFromCached !== undefined)
+        return fetchedProductsFromCached
+
+    if (typeof cachedProductsGetterAsync === 'function') {
+        const s = await cachedProductsGetterAsync()
+
+        if (s && s.length > 0)
+            fetchedProductsFromCached = JSON.parse(s) as Product[]
+    }
+
+    if (!fetchedProductsFromCached)
+        fetchedProductsFromCached = []
+
+    return fetchedProductsFromCached
+}
+
+const GetIAPProductFromCachedAsync = async (sku: string): Promise<Product | undefined> => {
+    await LoadFetchedProductsFromCachedAsync()
+
+    if (fetchedProductsFromCached)
+        return fetchedProductsFromCached.find(i => i.productId == sku)
+    else
+        return undefined
+}
+
+const GetIAPProduct = async (sku: string): Promise<Product | undefined> => {
     if (!isInited)
         throw new Error('IAP not inited yet')
 
     const products = await getProducts({ skus: [sku] })
 
     if (!products || products.length < 1)
-        return undefined
+        return await GetIAPProductFromCachedAsync(sku)
 
     return products[0]
 }
@@ -123,6 +163,15 @@ export const FetchListroductsAsync = async (skus: string[]) => {
         throw new Error('IAP not inited yet')
 
     fetchedProducts = await getProducts({ skus })
+
+    if (fetchedProducts && fetchedProducts.length > 0) { // loaded from store success, cached them
+        if (typeof cachedProductsSetterAsync === 'function') {
+            cachedProductsSetterAsync(JSON.stringify(fetchedProducts))
+        }
+    }
+    else { // load fail, need to load from cached
+        fetchedProducts = await LoadFetchedProductsFromCachedAsync()
+    }
 
     return fetchedProducts
 }

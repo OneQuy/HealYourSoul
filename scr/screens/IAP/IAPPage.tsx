@@ -1,12 +1,11 @@
 import { View, Text, ScrollView, Image, ImageBackground, Alert, StyleSheet, ActivityIndicator } from 'react-native'
 import React, { useCallback, useContext, useEffect, useState } from 'react'
-import { BorderRadius, FontSize, FontWeight, LocalText, Outline } from '../../constants/AppConstants'
+import { BorderRadius, FontSize, FontWeight, LocalText, Outline, StorageKey_CachedIAP } from '../../constants/AppConstants'
 import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { FetchListroductsAsync, IAPProduct, InitIAPAsync, PurchaseAsync } from '../../handle/IAP';
 import { SafeDateString, ToCanPrintError } from '../../handle/UtilsTS';
 import { Product } from 'react-native-iap';
-import { IsInternetAvailableAsync } from '../../handle/NetLord';
 import IAPPage_Subscribed from './IAPPage_Subscribed';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { setSubscribe } from '../../redux/UserDataSlice';
@@ -14,6 +13,7 @@ import { GetExpiredDateAndDaysLeft, HandleError } from '../../handle/AppUtils';
 import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 import { ThemeContext } from '../../constants/Colors';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ids = [
   {
@@ -101,22 +101,12 @@ const IAPPage = () => {
   }
 
   const fetchLocalPriceAsync = useCallback(async () => {
-    const isInternet = await IsInternetAvailableAsync();
-    let needRepeat = false
+    const items = await FetchListroductsAsync(ids.map(i => i.product.sku))
 
-    if (isInternet) {
-      const items = await FetchListroductsAsync(ids.map(i => i.product.sku))
-
-      if (items.length > 0)
-        setFetchedProducts(items)
-      else
-        needRepeat = true
-    }
-    else
-      needRepeat = true
-
-    if (needRepeat) {
-      setTimeout(fetchLocalPriceAsync, 1000);
+    if (items.length > 0)
+      setFetchedProducts(items)
+    else {
+      setTimeout(fetchLocalPriceAsync, 2000);
     }
   }, [])
 
@@ -129,7 +119,10 @@ const IAPPage = () => {
 
       // init IAP
 
-      resInitIAP = await InitIAPAsync(ids.map(i => i.product))
+      resInitIAP = await InitIAPAsync(
+        ids.map(i => i.product),
+        async (s: string) => AsyncStorage.setItem(StorageKey_CachedIAP, s),
+        async () => AsyncStorage.getItem(StorageKey_CachedIAP))
 
       if (resInitIAP === undefined) {
         console.error('IAP init fail')
