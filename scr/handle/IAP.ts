@@ -2,8 +2,15 @@
  * SETUP
  * 1. Like this: https://github.com/OneQuy/HealYourSoul/commit/614b9d3a2ae4e6c2928569d94ab32633ce3c7d14
  * 2. Add IAP in XCode
+ * 
  * DOC
  * https://react-native-iap.dooboolab.com/docs/get-started
+ * 
+ * USAGE
+        await InitIAPAsync(
+            ids.map(i => i.product),
+            async (s: string) => AsyncStorage.setItem(StorageKey_CachedIAP, s),
+            async () => AsyncStorage.getItem(StorageKey_CachedIAP))
  */
 
 
