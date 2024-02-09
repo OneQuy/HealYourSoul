@@ -266,41 +266,41 @@ export const checkAndTrackLocation = async () => {
 
     location = await GetIPLocationAsync()
 
-    if (typeof location === 'object') {
-        if (IsValuableArrayOrString(location.country_name)) {
-            SetDateAsync_Now(StorageKey_LastTickTrackLocation)
+    if (typeof location !== 'object')
+        return
 
-            const event = 'location'
-            const country = FilterOnlyLetterAndNumberFromString(location.country_name)
+    if (!IsValuableArrayOrString(location.country_name))
+        return
 
-            const lastTrackCountry = await AsyncStorage.getItem(StorageKey_LastTrackCountryName)
+    SetDateAsync_Now(StorageKey_LastTickTrackLocation)
 
-            if (country === lastTrackCountry) {
-                return
-            }
-            else
-                AsyncStorage.setItem(StorageKey_LastTrackCountryName, country)
+    const event = 'location'
+    const country = FilterOnlyLetterAndNumberFromString(location.country_name)
 
-            let region = undefined
+    const lastTrackCountry = await AsyncStorage.getItem(StorageKey_LastTrackCountryName)
 
-            if (IsValuableArrayOrString(location.region_name))
-                region = FilterOnlyLetterAndNumberFromString(location.region_name)
-
-            const fbArr = [
-                `total/${event}/${country}/sum`,
-            ]
-
-            if (region) {
-                fbArr.push(`total/${event}/${country}/` + region)
-            }
-
-            console.log('track location', ToCanPrint(location));
-
-            MainTrack(event,
-                fbArr,
-                location)
-        }
+    if (country === lastTrackCountry) {
+        return
     }
+    else
+        AsyncStorage.setItem(StorageKey_LastTrackCountryName, country)
+
+    let region = undefined
+
+    if (IsValuableArrayOrString(location.region_name))
+        region = FilterOnlyLetterAndNumberFromString(location.region_name)
+
+    const fbArr = [
+        `total/${event}/${country}/sum`,
+    ]
+
+    if (region) {
+        fbArr.push(`total/${event}/${country}/` + region)
+    }
+
+    console.log('****** track location', ToCanPrint(location));
+
+    MainTrack(event, fbArr, location)
 }
 
 export const track_RateInApp = async (starNumber: number) => {

@@ -13,6 +13,7 @@ export type IPLocation = {
     country_code: string,
     country_name: string,
     region_name: string,
+    ip: string,
 }
 
 /**
@@ -43,6 +44,7 @@ export const GetIPLocationAsync = async (): Promise<IPLocation | undefined | str
             country_name: result.country_name,
             city_name: result.city_name,
             region_name: result.region_name,
+            ip
         } as IPLocation
 
         // console.log(json);
