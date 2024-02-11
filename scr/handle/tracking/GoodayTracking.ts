@@ -77,7 +77,7 @@ export const track_FirstOpenOfTheDayAsync = async () => {
                 `events/${event}/#d`,
             ],
             {
-                installedDaysCount: DistanceFrom2Dates(Date.now(), firstTimeInstallTick)
+                installedDaysCount: DistanceFrom2Dates(Date.now(), firstTimeInstallTick).toFixed(1)
             })
     }
 }
