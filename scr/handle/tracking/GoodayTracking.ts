@@ -2,7 +2,7 @@ import { Category, StorageKey_CachedPressNextPost, StorageKey_FirstTimeInstallTi
 import { GetDateAsync, GetDateAsync_IsValueExistedAndIsToday, GetNumberIntAsync, SetDateAsync_Now, SetNumberAsync } from "../AsyncStorageUtils"
 import { MainTrack, TrackErrorOnFirebase } from "./Tracking"
 import { versionAsNumber } from "../AppUtils"
-import { FilterOnlyLetterAndNumberFromString, IsValuableArrayOrString, ToCanPrint } from "../UtilsTS"
+import { DistanceFrom2Dates, FilterOnlyLetterAndNumberFromString, IsValuableArrayOrString, ToCanPrint } from "../UtilsTS"
 import { UserID } from "../UserID"
 import { Dimensions, Platform } from "react-native"
 import { GetIPLocationAsync, IPLocation } from "../../hooks/useCountryFromIP"
@@ -65,6 +65,20 @@ export const track_FirstOpenOfTheDayAsync = async () => {
         // platform
 
         track_SimpleWithParam('platform', Platform.OS.toString())
+    }
+
+    // old user
+
+    else {
+        let event = 'first_open_of_day_old_user'
+
+        MainTrack(event,
+            [
+                `events/${event}/#d`,
+            ],
+            {
+                installedDaysCount: DistanceFrom2Dates(Date.now(), firstTimeInstallTick)
+            })
     }
 }
 

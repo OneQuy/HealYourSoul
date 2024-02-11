@@ -535,6 +535,10 @@ export const ExtractAllNumbersInText = (text: string): number[] => {
 
 // time ---------------------------
 
+/**
+ * 
+ * @returns days between 2 dates
+ */
 export const DistanceFrom2Dates = (d1: Date | number, d2: Date | number): number => {
     const tick1 = typeof d1 === 'number' ? d1 : d1.getTime()
     const tick2 = typeof d2 === 'number' ? d2 : d2.getTime()
