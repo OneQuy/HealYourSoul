@@ -1,4 +1,4 @@
-import { Category, StorageKey_FirstTimeInstallTick, StorageKey_LastInstalledVersion, StorageKey_LastTickTrackLocation, StorageKey_LastTrackCountryName } from "../../constants/AppConstants"
+import { Category, StorageKey_CachedPressNextPost, StorageKey_FirstTimeInstallTick, StorageKey_LastInstalledVersion, StorageKey_LastTickTrackLocation, StorageKey_LastTrackCountryName } from "../../constants/AppConstants"
 import { GetDateAsync, GetDateAsync_IsValueExistedAndIsToday, GetNumberIntAsync, SetDateAsync_Now, SetNumberAsync } from "../AsyncStorageUtils"
 import { MainTrack, TrackErrorOnFirebase } from "./Tracking"
 import { versionAsNumber } from "../AppUtils"
@@ -7,8 +7,10 @@ import { UserID } from "../UserID"
 import { Dimensions, Platform } from "react-native"
 import { GetIPLocationAsync, IPLocation } from "../../hooks/useCountryFromIP"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import { CachedValueOfCatelogry } from "../../constants/Types"
 
 export var location: IPLocation | undefined | string
+var cachedPressNextPost: CachedValueOfCatelogry[] | undefined = undefined
 
 /**
  * on first useEffect of the app (freshly open) or first active state of the day
@@ -112,11 +114,59 @@ export const track_OnUseEffectOnceEnterAppAsync = async (startFreshlyOpenAppTick
     }
 }
 
-export const track_PressNextPost = (shouldTracking: boolean, category: Category, isNextOrPrevious: boolean) => {
+export const SaveCachedPressNextPostAsync = async () => {
+    if (!cachedPressNextPost)
+        return
+
+    AsyncStorage.setItem(StorageKey_CachedPressNextPost, JSON.stringify(cachedPressNextPost))
+
+    // console.log('saved', JSON.stringify(cachedPressNextPost));
+
+}
+
+export const track_PressNextPost = async (shouldTracking: boolean, category: Category, isNextOrPrevious: boolean) => {
     if (!shouldTracking)
         return
 
-    const event = isNextOrPrevious ? 'press_next_post' : 'press_previous_post'
+    const event = isNextOrPrevious ? 'press_next_post_x5' : 'press_previous_post'
+
+
+    if (isNextOrPrevious) {
+        if (cachedPressNextPost === undefined) { // not load cached yet
+            const s = await AsyncStorage.getItem(StorageKey_CachedPressNextPost)
+
+            if (s) {
+                cachedPressNextPost = JSON.parse(s) as CachedValueOfCatelogry[]
+                AsyncStorage.removeItem(StorageKey_CachedPressNextPost)
+            }
+            else
+                cachedPressNextPost = []
+
+            // console.log('loaded ', ToCanPrint(cachedPressNextPost));
+        }
+
+        let item = cachedPressNextPost.find(i => i.cat === category)
+
+        if (item === undefined) {
+            item = {
+                value: 1,
+                cat: category
+            }
+
+            cachedPressNextPost.push(item)
+        }
+        else {
+            item.value++
+        }
+
+        // console.log('now', ToCanPrint(item));
+
+        if (item.value < 5) {
+            return
+        }
+        else
+            item.value = 0
+    }
 
     track_SimpleWithCat(category, event)
 }

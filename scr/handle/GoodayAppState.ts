@@ -3,7 +3,7 @@ import { RegisterOnChangedState, UnregisterOnChangedState } from "./AppStateMan"
 import { HandleAppConfigAsync } from "./AppConfigHandler"
 import { HandleStartupAlertAsync } from "./StartupAlert"
 import { startFreshlyOpenAppTick } from "./AppUtils"
-import { checkAndTrackLocation, track_AppStateActive, track_FirstOpenOfTheDayAsync, track_OnUseEffectOnceEnterAppAsync, track_OpenAppOfDayCount } from "./tracking/GoodayTracking"
+import { SaveCachedPressNextPostAsync, checkAndTrackLocation, track_AppStateActive, track_FirstOpenOfTheDayAsync, track_OnUseEffectOnceEnterAppAsync, track_OpenAppOfDayCount } from "./tracking/GoodayTracking"
 import { StorageKey_LastTimeCheckAndReloadAppConfig, StorageKey_LastTimeCheckFirstOpenAppOfTheDay, StorageKey_OpenAppOfDayCount, StorageKey_OpenAppOfDayCountForDate } from "../constants/AppConstants"
 import { GetDateAsync, GetDateAsync_IsValueExistedAndIsToday, GetNumberIntAsync, SetDateAsync, SetDateAsync_Now, SetNumberAsync } from "./AsyncStorageUtils"
 import { NetLord } from "./NetLord"
@@ -121,6 +121,10 @@ const onBackgroundAsync = async () => {
     // track app state inactive
 
     track_AppStateActive(false)
+
+    // SaveCachedPressNextPost
+
+    SaveCachedPressNextPostAsync()
 }
 
 const onStateChanged = (state: AppStateStatus) => {
