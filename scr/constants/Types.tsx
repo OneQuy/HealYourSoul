@@ -18,6 +18,11 @@ export type FileList = {
     posts: PostMetadata[]
 }
 
+export type CachedValueOfCatelogry = {
+    value: number,
+    cat: Category,
+}
+
 export type LatestVersionConfig = {
     version: number,
     force_update: boolean,

@@ -8,12 +8,6 @@ import { Dimensions, Platform } from "react-native"
 import { GetIPLocationAsync, IPLocation } from "../../hooks/useCountryFromIP"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 
-let dimen = Dimensions.get('screen')
-const radioOfScreen = Math.floor((Math.max(dimen.height, dimen.width) / Math.min(dimen.height, dimen.width)) * 100)
-
-dimen = Dimensions.get('window')
-const radioOfWindow = Math.floor((Math.max(dimen.height, dimen.width) / Math.min(dimen.height, dimen.width)) * 100)
-
 export var location: IPLocation | undefined | string
 
 /**
@@ -56,6 +50,12 @@ export const track_FirstOpenOfTheDayAsync = async () => {
         track_SimpleWithParam('versions', 'v' + versionAsNumber)
 
         // dimension
+
+        let dimen = Dimensions.get('screen')
+        const radioOfScreen = Math.floor((Math.max(dimen.height, dimen.width) / Math.min(dimen.height, dimen.width)) * 100)
+
+        dimen = Dimensions.get('window')
+        const radioOfWindow = Math.floor((Math.max(dimen.height, dimen.width) / Math.min(dimen.height, dimen.width)) * 100)
 
         track_SimpleWithParam('dimension_screen', 's' + radioOfScreen)
         track_SimpleWithParam('dimension_window', 's' + radioOfWindow)
