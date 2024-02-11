@@ -5,14 +5,14 @@ import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { setTheme } from '../../redux/MiscSlice';
 import { Outline } from '../../constants/AppConstants';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
-import { track_SimpleWithParam, track_Theme } from '../../handle/tracking/GoodayTracking';
+import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 
 const size = heightPercentageToDP(3.5)
 
 var selectedThemeForTracking: ThemeType | undefined = undefined
 
 export const OnPressedTheme = (theme: ThemeType, dispatch: ReturnType<typeof useAppDispatch>) => {
-    track_Theme(theme)
+    // track_Theme(theme)
     selectedThemeForTracking = theme
     dispatch(setTheme(theme as ThemeType))
 }
