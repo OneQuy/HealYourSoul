@@ -1,8 +1,8 @@
 const firebaseStorage = require('firebase/storage')
 const fs = require('fs');
 const { CheckAndMkDirOfFilepathjAsync } = require('./FileUtils');
-const { ArrayBufferToBuffer } = require('./Utils');
-const { LogRed } = require('../Utils_NodeJS');
+const { ArrayBufferToBuffer, Uint8ArrayToString } = require('./Utils');
+const { LogRed, LogGreen } = require('../Utils_NodeJS');
 
 const TimeOutError = '[time_out]'
 
@@ -97,7 +97,8 @@ async function DownloadTextAsync(firebasePath) {
         CheckAndInit();
         let theRef = firebaseStorage.ref(storage, firebasePath)
         const bytes = await firebaseStorage.getBytes(theRef)
-        const text = String.fromCharCode.apply(null, new Uint8Array(bytes));
+        const arr = new Uint8Array(bytes)
+        const text = Uint8ArrayToString(arr)
 
         return {
             text,
