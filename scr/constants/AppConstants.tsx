@@ -30,7 +30,7 @@ export enum ScreenName {
   BestShortFilms = 'Good Short Film',
   RandomMeme = 'Random Meme',
   Setting = 'Setting',
-  FunSound = 'FunSound',
+  FunSound = 'Meme Sounds',
 }
 
 // dir / file

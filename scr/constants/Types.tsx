@@ -113,6 +113,11 @@ export type ShortFilm = {
     "url": string,
 }
 
+export type FunSound = {
+    "mp3": string,
+    "name": string,
+}
+
 export type FunWebsite = {
     "id": number,
     "url": string,

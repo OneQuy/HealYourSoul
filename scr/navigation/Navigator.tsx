@@ -32,7 +32,7 @@ import { SetSignal } from '../handle/tracking/Tracking';
 import Onboarding from '../screens/onboarding/Onboarding';
 import { RootState, useAppSelector } from '../redux/Store';
 import { OnBlurSettingView } from '../screens/setting/SettingView';
-import FunSoundScreen from '../screens/FunSoundScreen';
+import FunSoundScreen from '../screens/fun_sound/FunSoundScreen';
 
 export type DrawerParamList = {
   [ScreenName.Meme]: undefined,
