@@ -2,8 +2,8 @@ const { LogRed, LogGreen } = require("./Utils_NodeJS")
 
 const fs = require('fs')
 
-const filepath = './assets/json/my_instants.json'
-const source = './editor/my-instants.txt'
+const filepath = './editor/fun_sound.json'
+const source = './editor/fun_sound.txt'
 
 const GetMiddleText = (text) => {
     let idx = text.indexOf('>')

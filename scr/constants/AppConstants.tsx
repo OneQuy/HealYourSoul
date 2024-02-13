@@ -30,6 +30,7 @@ export enum ScreenName {
   BestShortFilms = 'Good Short Film',
   RandomMeme = 'Random Meme',
   Setting = 'Setting',
+  FunSound = 'FunSound',
 }
 
 // dir / file
@@ -115,6 +116,7 @@ export enum Category {
   Typo = 23,
   Info = 24,
   Sunset = 25,
+  FunSound = 26,
 }
 
 // margin / padding
