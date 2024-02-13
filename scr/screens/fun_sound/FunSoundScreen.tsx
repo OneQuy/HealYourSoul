@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, FlatList } from 'react-native'
 import React, { useCallback, useContext, useMemo, useRef, useState } from 'react'
-import { Category, StorageKey_LocalFileVersion } from '../../constants/AppConstants'
+import { Category, LocalPath, StorageKey_LocalFileVersion } from '../../constants/AppConstants'
 import useCheckAndDownloadRemoteFile from '../../hooks/useCheckAndDownloadRemoteFile'
 import { FunSound } from '../../constants/Types'
 import { TempDirName } from '../../handle/Utils'
@@ -13,6 +13,7 @@ import FunSoundItem from './FunSoundItem'
 
 // @ts-ignore
 import Video, { VideoRef } from 'react-native-video';
+import { DownloadFileAsync, GetFLPFromRLP, IsExistedAsync } from '../../handle/FileUtils'
 
 const category = Category.FunSound
 
@@ -25,7 +26,7 @@ const FunSoundScreen = () => {
   const theme = useContext(ThemeContext);
   const videoRef = useRef<VideoRef>(null);
   const [nowMp3Uri, setNowMp3Uri] = useState('')
-  // const [videoIsPlaying, setVideoIsPlaying] = useState<boolean>(false);
+  const [videoIsPlaying, setVideoIsPlaying] = useState(false);
 
   const [funSounds, errorDownloadJson, _, reUpdateData] = useCheckAndDownloadRemoteFile<FunSound[]>(
     fileURL,
@@ -37,8 +38,9 @@ const FunSoundScreen = () => {
     async () => AsyncStorage.getItem(StorageKey_LocalFileVersion(category)),
     async () => AsyncStorage.setItem(StorageKey_LocalFileVersion(category), GetRemoteFileConfigVersion('fun_sound').toString()))
 
-  const onPressed_Sound = useCallback((item: FunSound) => {
-    setNowMp3Uri(item.mp3)
+  const playSound = useCallback(async (flp: string) => {
+    setNowMp3Uri(flp)
+    setVideoIsPlaying(true)
     videoRef.current.seek(0);
   }, [])
 
@@ -62,6 +64,7 @@ const FunSoundScreen = () => {
         source={{ uri: nowMp3Uri }}
         ref={videoRef}
         audioOnly={true}
+        paused={!videoIsPlaying}
       />
 
       {/* scroll view */}
@@ -71,7 +74,7 @@ const FunSoundScreen = () => {
           numColumns={numColumns}
           keyExtractor={(item) => item.name}
           renderItem={({ item }) => {
-            return <FunSoundItem onPressed={onPressed_Sound} data={item} />
+            return <FunSoundItem playSound={playSound} data={item} />
           }}
         />
       </View>
