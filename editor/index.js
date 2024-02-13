@@ -5,6 +5,7 @@ const { GenDataTopMovies } = require("./src/GenTopMovies")
 const { Tmp } = require("./src/tmp")
 const { LogRed, LogGreen } = require("./src/Utils_NodeJS");
 const { IsParamExist, GetParam, } = require("./src/common/Utils");
+const { GenMyInstants } = require("./src/GenMyInstant");
 
 async function JustDoIt() {
   if (IsParamExist('pull')) {
@@ -26,6 +27,9 @@ async function JustDoIt() {
   }
   else if (IsParamExist('movie')) {
     GenDataTopMovies()
+  }
+  else if (IsParamExist('instant')) {
+    GenMyInstants()
   }
   else if (IsParamExist('push')) {
     let cat
