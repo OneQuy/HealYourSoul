@@ -32,9 +32,11 @@ import { SetSignal } from '../handle/tracking/Tracking';
 import Onboarding from '../screens/onboarding/Onboarding';
 import { RootState, useAppSelector } from '../redux/Store';
 import { OnBlurSettingView } from '../screens/setting/SettingView';
+import FunSoundScreen from '../screens/FunSoundScreen';
 
 export type DrawerParamList = {
   [ScreenName.Meme]: undefined,
+  [ScreenName.FunSound]: undefined,
   [ScreenName.RandomMeme]: undefined,
   [ScreenName.Comic]: undefined,
   [ScreenName.Quote]: undefined,
@@ -97,6 +99,7 @@ const ScreenList: ScreenNamePair[] = [
   [ScreenName.AwardPicture, PicturesOfTheYearScreen],
   [ScreenName.Picture, PictureScreen],
   [ScreenName.TopMovie, TopMovieScreen],
+  [ScreenName.FunSound, FunSoundScreen],
 
   // app
 
