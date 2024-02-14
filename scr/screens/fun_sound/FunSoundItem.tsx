@@ -27,6 +27,7 @@ const FunSoundItem = ({ data, playSound }: FunSoundItemProps) => {
 
         if (!await IsExistedAsync(flp, false)) {
             setIsHandling(true)
+console.log(data.mp3);
 
             const res = await DownloadFileAsync(data.mp3, flp, false)
             setIsHandling(false)

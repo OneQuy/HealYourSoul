@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, FlatList } from 'react-native'
-import React, { useCallback, useContext, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { Category, LocalPath, StorageKey_LocalFileVersion } from '../../constants/AppConstants'
 import useCheckAndDownloadRemoteFile from '../../hooks/useCheckAndDownloadRemoteFile'
 import { FunSound } from '../../constants/Types'
@@ -11,8 +11,6 @@ import { ThemeContext } from '../../constants/Colors'
 import { SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
 import FunSoundItem from './FunSoundItem'
 
-// @ts-ignore
-import Video, { VideoRef } from 'react-native-video';
 import { DownloadFileAsync, GetFLPFromRLP, IsExistedAsync } from '../../handle/FileUtils'
 
 const category = Category.FunSound
@@ -24,9 +22,8 @@ const numColumns = 5
 const FunSoundScreen = () => {
   const navigation = useNavigation();
   const theme = useContext(ThemeContext);
-  const videoRef = useRef<VideoRef>(null);
   const [nowMp3Uri, setNowMp3Uri] = useState('')
-  const [videoIsPlaying, setVideoIsPlaying] = useState(false);
+  // const [videoIsPlaying, setVideoIsPlaying] = useState(false);
 
   const [funSounds, errorDownloadJson, _, reUpdateData] = useCheckAndDownloadRemoteFile<FunSound[]>(
     fileURL,
@@ -40,9 +37,13 @@ const FunSoundScreen = () => {
 
   const playSound = useCallback(async (flp: string) => {
     setNowMp3Uri(flp)
-    setVideoIsPlaying(true)
-    videoRef.current.seek(0);
+    // setVideoIsPlaying(true)
+
+
   }, [])
+  const onVideoCompleted = useCallback(() => {
+    setNowMp3Uri('');
+  }, []);
 
   const style = useMemo(() => {
     return StyleSheet.create({
@@ -51,22 +52,25 @@ const FunSoundScreen = () => {
     })
   }, [theme])
 
+
   // save last visit category screen
 
   useFocusEffect(useCallback(() => SaveCurrentScreenForLoadNextTime(navigation), []))
+
+
+  // useEffect(() => {
+
+  //   if (nowMp3Uri && videoRef.current)
+  //     videoRef.current.seek(0);
+
+  //   console.log('aaaa', nowMp3Uri);
+  // }, [nowMp3Uri])
 
   if (!Array.isArray(funSounds))
     return undefined
 
   return (
     <View style={style.masterView}>
-      <Video
-        source={{ uri: nowMp3Uri }}
-        ref={videoRef}
-        audioOnly={true}
-        paused={!videoIsPlaying}
-      />
-
       {/* scroll view */}
       <View style={style.flatListContainer}>
         <FlatList
