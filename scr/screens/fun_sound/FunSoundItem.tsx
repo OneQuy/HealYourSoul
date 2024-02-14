@@ -1,55 +1,35 @@
-import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator, Alert } from 'react-native'
-import React, { useCallback, useContext, useMemo, useState } from 'react'
+import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native'
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { FunSound } from '../../constants/Types'
 import { ThemeContext } from '../../constants/Colors'
-import { BorderRadius, Icon, LocalPath, LocalText, Outline, Size } from '../../constants/AppConstants'
+import { BorderRadius, Outline, Size } from '../../constants/AppConstants'
 import { heightPercentageToDP } from 'react-native-responsive-screen'
 
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { DownloadFileAsync, GetFLPFromRLP, IsExistedAsync } from '../../handle/FileUtils'
+
+// @ts-ignore
+import SoundPlayer from 'react-native-sound-player'
 import { AlertNoInternet } from '../../handle/AppUtils'
-import { NetLord } from '../../handle/NetLord'
-import { ToCanPrint } from '../../handle/UtilsTS'
 
 type FunSoundItemProps = {
     data: FunSound,
-    playSound: (flp: string) => void,
 }
 
-const FunSoundItem = ({ data, playSound }: FunSoundItemProps) => {
+const FunSoundItem = ({ data }: FunSoundItemProps) => {
     const theme = useContext(ThemeContext);
     const [isHandling, setIsHandling] = useState(false);
 
     const onPressed = useCallback(async () => {
-        const rlp = LocalPath.MasterDirName + '/fun_sound/' + data.name + '.mp3'
-        const flp = GetFLPFromRLP(rlp)
+        setIsHandling(true)
 
-        if (!await IsExistedAsync(flp, false)) {
-            setIsHandling(true)
-console.log(data.mp3);
-
-            const res = await DownloadFileAsync(data.mp3, flp, false)
-            setIsHandling(false)
-
-            if (res === null) { // success
-            }
-            else {
-                if (!NetLord.IsAvailableLastestCheck())
-                    AlertNoInternet()
-                else
-                    Alert.alert(
-                        LocalText.popup_title_error,
-                        LocalText.popup_content_error + '\n\n' + ToCanPrint(res))
-
-                return
-            }
+        try {
+            SoundPlayer.playUrl(data.mp3)
         }
-
-        const pathToPlay = GetFLPFromRLP(rlp, true)
-
-        playSound(pathToPlay)
-    }, [])
+        catch (e) {
+            AlertNoInternet()
+        }
+    }, [data])
 
     const style = useMemo(() => {
         return StyleSheet.create({
@@ -62,6 +42,28 @@ console.log(data.mp3);
             likeTxt: { color: theme.counterPrimary },
         })
     }, [theme])
+
+    useEffect(() => {
+        const _onFinishedPlayingSubscription = SoundPlayer.addEventListener('FinishedPlaying', ({ success }) => {
+            console.log('finished playing', success)
+        })
+
+        // const _onFinishedLoadingSubscription = SoundPlayer.addEventListener('FinishedLoading', ({ success }) => {
+        //     console.log('finished loading', success)
+        //     setIsHandling(false)
+        // })
+
+        const _onFinishedLoadingURLSubscription = SoundPlayer.addEventListener('FinishedLoadingURL', ({ success, url }) => {
+            console.log('finished loading url', success, url)
+            setIsHandling(false)
+        })
+
+        return () => {
+            _onFinishedPlayingSubscription.remove()
+            // _onFinishedLoadingSubscription.remove()
+            _onFinishedLoadingURLSubscription.remove()
+        }
+    }, [])
 
     return (
         <TouchableOpacity onPress={onPressed} style={style.masterView}>

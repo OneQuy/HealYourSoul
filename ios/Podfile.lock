@@ -571,6 +571,8 @@ PODS:
     - React-RCTImage
   - RNShare (10.0.2):
     - React-Core
+  - RNSoundPlayer (0.13.2):
+    - React-Core
   - SocketRocket (0.6.1)
   - SPAlert (4.2.0)
   - Ting (1.1.0):
@@ -667,6 +669,7 @@ DEPENDENCIES:
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNShare (from `../node_modules/react-native-share`)
+  - RNSoundPlayer (from `../node_modules/react-native-sound-player`)
   - "Ting (from `../node_modules/@baronha/ting`)"
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -814,6 +817,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-screens"
   RNShare:
     :path: "../node_modules/react-native-share"
+  RNSoundPlayer:
+    :path: "../node_modules/react-native-sound-player"
   Ting:
     :path: "../node_modules/@baronha/ting"
   Yoga:
@@ -894,6 +899,7 @@ SPEC CHECKSUMS:
   RNReanimated: 9f7068e43b9358a46a688d94a5a3adb258139457
   RNScreens: 50ffe2fa2342eabb2d0afbe19f7c1af286bc7fb3
   RNShare: 859ff710211285676b0bcedd156c12437ea1d564
+  RNSoundPlayer: 369105c565b8fe6ea0a43fc882dc81eba444e842
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   SPAlert: 735da1f16a887e294719217572ce1f936d8c8782
   Ting: 8f31e1ea5195095e69645fb574b8038511a19d35
