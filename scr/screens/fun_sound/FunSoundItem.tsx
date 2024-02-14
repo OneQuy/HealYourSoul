@@ -33,7 +33,7 @@ const FunSoundItem = ({ data }: FunSoundItemProps) => {
 
     const style = useMemo(() => {
         return StyleSheet.create({
-            masterView: { borderRadius: BorderRadius.BR8, flex: 1, height: heightPercentageToDP(7), backgroundColor: theme.primary, margin: Outline.GapHorizontal },
+            masterView: { borderRadius: BorderRadius.BR8, flex: 1, height: heightPercentageToDP(7), backgroundColor: theme.primary, margin: Outline.GapHorizontal / 2 },
             mainView: { flex: 1, paddingHorizontal: Outline.GapHorizontal, justifyContent: 'center', },
             btnBarView: { flexDirection: 'row', flex: 1, },
             btnPinTO: { flex: 1, justifyContent: 'center', alignItems: 'center' },
@@ -45,7 +45,7 @@ const FunSoundItem = ({ data }: FunSoundItemProps) => {
 
     useEffect(() => {
         const _onFinishedPlayingSubscription = SoundPlayer.addEventListener('FinishedPlaying', ({ success }) => {
-            console.log('finished playing', success)
+            // console.log('finished playing', success)
         })
 
         // const _onFinishedLoadingSubscription = SoundPlayer.addEventListener('FinishedLoading', ({ success }) => {
@@ -54,7 +54,7 @@ const FunSoundItem = ({ data }: FunSoundItemProps) => {
         // })
 
         const _onFinishedLoadingURLSubscription = SoundPlayer.addEventListener('FinishedLoadingURL', ({ success, url }) => {
-            console.log('finished loading url', success, url)
+            // console.log('finished loading url', success, url)
             setIsHandling(false)
         })
 

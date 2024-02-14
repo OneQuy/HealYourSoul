@@ -1,4 +1,4 @@
-import { View, StyleSheet, FlatList } from 'react-native'
+import { View, StyleSheet, FlatList, ListRenderItem } from 'react-native'
 import React, { useCallback, useContext, useMemo } from 'react'
 import { Category, StorageKey_LocalFileVersion } from '../../constants/AppConstants'
 import useCheckAndDownloadRemoteFile from '../../hooks/useCheckAndDownloadRemoteFile'
@@ -16,7 +16,7 @@ const category = Category.FunSound
 
 const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Ffun_sound.json?alt=media&token=61576a53-6c78-4428-a240-a1dd7a250825'
 
-const numColumns = 3
+const numColumns = 5
 
 const FunSoundScreen = () => {
   const navigation = useNavigation();
@@ -39,6 +39,10 @@ const FunSoundScreen = () => {
     })
   }, [theme])
 
+  const renderItem = useCallback(({ item, index }: { item: FunSound, index: number }) => {
+    return <FunSoundItem data={item} />
+  }, [])
+
   // save last visit category screen
 
   useFocusEffect(useCallback(() => SaveCurrentScreenForLoadNextTime(navigation), []))
@@ -54,9 +58,7 @@ const FunSoundScreen = () => {
           data={funSounds}
           numColumns={numColumns}
           keyExtractor={(item) => item.name}
-          renderItem={({ item }) => {
-            return <FunSoundItem data={item} />
-          }}
+          renderItem={renderItem}
         />
       </View>
     </View>
