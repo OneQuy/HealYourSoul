@@ -35,12 +35,13 @@ const FunSoundScreen = () => {
   const style = useMemo(() => {
     return StyleSheet.create({
       masterView: { flex: 1 },
-      flatListContainer: { flex: 1, }
+      flatListContainer: { flex: 1, },
+      pinContainer: { flexDirection: 'row', backgroundColor: theme.primary },
     })
   }, [theme])
 
   const renderItem = useCallback(({ item, index }: { item: FunSound, index: number }) => {
-    return <FunSoundItem data={item} />
+    return <FunSoundItem index={index} data={item} />
   }, [])
 
   // save last visit category screen
@@ -52,6 +53,15 @@ const FunSoundScreen = () => {
 
   return (
     <View style={style.masterView}>
+      {/* pin */}
+      <View style={style.pinContainer}>
+        {
+          funSounds.slice(0, numColumns).map(item => {
+            return <FunSoundItem key={item.name} data={item} />
+          })
+        }
+      </View>
+      
       {/* scroll view */}
       <View style={style.flatListContainer}>
         <FlatList

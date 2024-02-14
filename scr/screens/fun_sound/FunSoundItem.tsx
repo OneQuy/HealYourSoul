@@ -14,9 +14,10 @@ import { AlertNoInternet } from '../../handle/AppUtils'
 
 type FunSoundItemProps = {
     data: FunSound,
+    index?: number,
 }
 
-const FunSoundItem = ({ data }: FunSoundItemProps) => {
+const FunSoundItem = ({ data, index }: FunSoundItemProps) => {
     const theme = useContext(ThemeContext);
     const [isHandling, setIsHandling] = useState(false);
 
@@ -33,7 +34,12 @@ const FunSoundItem = ({ data }: FunSoundItemProps) => {
 
     const style = useMemo(() => {
         return StyleSheet.create({
-            masterView: { borderRadius: BorderRadius.BR8, flex: 1, height: heightPercentageToDP(7), backgroundColor: theme.primary, margin: Outline.GapHorizontal / 2 },
+            masterView: {
+                borderRadius: BorderRadius.BR8, flex: 1,
+                height: heightPercentageToDP(7),
+                backgroundColor: theme.primary,
+                margin: Outline.GapHorizontal / 2
+            },
             mainView: { flex: 1, paddingHorizontal: Outline.GapHorizontal, justifyContent: 'center', },
             btnBarView: { flexDirection: 'row', flex: 1, },
             btnPinTO: { flex: 1, justifyContent: 'center', alignItems: 'center' },
