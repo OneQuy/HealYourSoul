@@ -37,7 +37,7 @@ const FunSoundScreen = () => {
 
   const style = useMemo(() => {
     return StyleSheet.create({
-      masterView: { flex: 1 },
+      masterView: { flex: 1, gap: Outline.GapHorizontal, },
       flatListContainer: { flex: 1, },
       pinContainer: { flexDirection: 'row' },
     })
