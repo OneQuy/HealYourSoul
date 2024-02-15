@@ -1,6 +1,6 @@
-import { View, StyleSheet, FlatList, ListRenderItem } from 'react-native'
+import { View, StyleSheet, FlatList } from 'react-native'
 import React, { useCallback, useContext, useMemo } from 'react'
-import { Category, Outline, StorageKey_LocalFileVersion } from '../../constants/AppConstants'
+import { Category, NeedReloadReason, Outline, StorageKey_LocalFileVersion } from '../../constants/AppConstants'
 import useCheckAndDownloadRemoteFile from '../../hooks/useCheckAndDownloadRemoteFile'
 import { FunSound } from '../../constants/Types'
 import { TempDirName } from '../../handle/Utils'
@@ -8,10 +8,12 @@ import { GetRemoteFileConfigVersion } from '../../handle/AppConfigHandler'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { ThemeContext } from '../../constants/Colors'
-import { SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
+import { OpenStore, SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
 import FunSoundItem from './FunSoundItem'
 import { useAppSelector } from '../../redux/Store'
 import { IsValuableArrayOrString } from '../../handle/UtilsTS'
+import LoadingOrError from '../components/LoadingOrError'
+import { NetLord } from '../../handle/NetLord'
 
 
 const category = Category.FunSound
@@ -75,8 +77,24 @@ const FunSoundScreen = () => {
 
   useFocusEffect(useCallback(() => SaveCurrentScreenForLoadNextTime(navigation), []))
 
-  if (!Array.isArray(funSounds))
-    return undefined
+  // render loading or error
+
+  if (!Array.isArray(funSounds)) {
+    let reasonToReload = NeedReloadReason.None // loading
+
+    if (errorDownloadJson != undefined) {
+      if (NetLord.IsAvailableLastestCheck())
+        reasonToReload = NeedReloadReason.FailToGetContent
+      else
+        reasonToReload = NeedReloadReason.NoInternet
+    }
+
+    return (
+      <LoadingOrError reasonToReload={reasonToReload} onPressedReload={reUpdateData} />
+    )
+  }
+
+  // main render
 
   return (
     <View style={style.masterView}>
