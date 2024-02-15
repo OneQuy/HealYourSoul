@@ -11,17 +11,29 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 // @ts-ignore
 import SoundPlayer from 'react-native-sound-player'
 import { AlertNoInternet } from '../../handle/AppUtils'
+import { useAppDispatch } from '../../redux/Store'
+import { togglePinFunSound } from '../../redux/UserDataSlice'
 
 type FunSoundItemProps = {
     data: FunSound,
+    pinnedSounds: string[],
     index?: number,
 }
 
-const FunSoundItem = ({ data, index }: FunSoundItemProps) => {
+const FunSoundItem = ({
+    data,
+    pinnedSounds,
+    index }: FunSoundItemProps) => {
     const theme = useContext(ThemeContext);
     const [isHandling, setIsHandling] = useState(false);
+    const isPinned = pinnedSounds && pinnedSounds.includes(data.name)
+    const dispatch = useAppDispatch()
 
-    const onPressed = useCallback(async () => {
+    const onPressedPin = useCallback(async () => {
+        dispatch(togglePinFunSound(data.name))
+    }, [])
+
+    const onPressedPlay = useCallback(async () => {
         setIsHandling(true)
 
         try {
@@ -52,12 +64,13 @@ const FunSoundItem = ({ data, index }: FunSoundItemProps) => {
     useEffect(() => {
         const _onFinishedPlayingSubscription = SoundPlayer.addEventListener('FinishedPlaying', ({ success }) => {
             // console.log('finished playing', success)
+            setIsHandling(false)
         })
 
-        // const _onFinishedLoadingSubscription = SoundPlayer.addEventListener('FinishedLoading', ({ success }) => {
-        //     console.log('finished loading', success)
-        //     setIsHandling(false)
-        // })
+        const _onFinishedLoadingSubscription = SoundPlayer.addEventListener('FinishedLoading', ({ success }) => {
+            console.log('finished loading', success)
+            setIsHandling(false)
+        })
 
         const _onFinishedLoadingURLSubscription = SoundPlayer.addEventListener('FinishedLoadingURL', ({ success, url }) => {
             // console.log('finished loading url', success, url)
@@ -66,13 +79,13 @@ const FunSoundItem = ({ data, index }: FunSoundItemProps) => {
 
         return () => {
             _onFinishedPlayingSubscription.remove()
-            // _onFinishedLoadingSubscription.remove()
+            _onFinishedLoadingSubscription.remove()
             _onFinishedLoadingURLSubscription.remove()
         }
     }, [])
 
     return (
-        <TouchableOpacity onPress={onPressed} style={style.masterView}>
+        <TouchableOpacity onPress={onPressedPlay} style={style.masterView}>
             <View style={style.mainView}>
                 {
                     isHandling ?
@@ -81,9 +94,12 @@ const FunSoundItem = ({ data, index }: FunSoundItemProps) => {
                 }
             </View>
             <View style={style.btnBarView}>
-                <TouchableOpacity style={style.btnPinTO}>
-                    <MaterialCommunityIcons name={'pin'} color={theme.counterBackground} size={Size.IconTiny} />
+                {/* pin btn */}
+                <TouchableOpacity onPress={onPressedPin} style={style.btnPinTO}>
+                    <MaterialCommunityIcons name={'pin'} color={isPinned ? theme.counterPrimary : theme.counterBackground} size={Size.IconTiny} />
                 </TouchableOpacity>
+
+                {/* like btn */}
                 <TouchableOpacity style={style.btnLikeTO}>
                     <MaterialCommunityIcons name={!true ? "cards-heart-outline" : 'cards-heart'} color={theme.counterPrimary} size={Size.IconTiny} />
                     <Text numberOfLines={1} adjustsFontSizeToFit style={style.likeTxt}>{7}</Text>

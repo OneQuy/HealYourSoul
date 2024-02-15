@@ -1,6 +1,6 @@
 import { View, StyleSheet, FlatList, ListRenderItem } from 'react-native'
 import React, { useCallback, useContext, useMemo } from 'react'
-import { Category, StorageKey_LocalFileVersion } from '../../constants/AppConstants'
+import { Category, Outline, StorageKey_LocalFileVersion } from '../../constants/AppConstants'
 import useCheckAndDownloadRemoteFile from '../../hooks/useCheckAndDownloadRemoteFile'
 import { FunSound } from '../../constants/Types'
 import { TempDirName } from '../../handle/Utils'
@@ -10,6 +10,8 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { ThemeContext } from '../../constants/Colors'
 import { SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
 import FunSoundItem from './FunSoundItem'
+import { useAppSelector } from '../../redux/Store'
+import { IsValuableArrayOrString } from '../../handle/UtilsTS'
 
 
 const category = Category.FunSound
@@ -21,6 +23,7 @@ const numColumns = 5
 const FunSoundScreen = () => {
   const navigation = useNavigation();
   const theme = useContext(ThemeContext);
+  const pinnedSounds = useAppSelector((state) => state.userData.pinnedFunSoundNames)
 
   const [funSounds, errorDownloadJson, _, reUpdateData] = useCheckAndDownloadRemoteFile<FunSound[]>(
     fileURL,
@@ -36,13 +39,37 @@ const FunSoundScreen = () => {
     return StyleSheet.create({
       masterView: { flex: 1 },
       flatListContainer: { flex: 1, },
-      pinContainer: { flexDirection: 'row', backgroundColor: theme.primary },
+      pinContainer: { flexDirection: 'row' },
     })
   }, [theme])
 
+
+  const renderPinnedSounds = useMemo(() => {
+    if (!IsValuableArrayOrString(pinnedSounds) || !Array.isArray(funSounds))
+      return undefined
+
+    return (
+      <View style={style.pinContainer}>
+        {
+          pinnedSounds.map(item => {
+            const data = funSounds.find(i => i.name === item)
+
+            if (data)
+              return <FunSoundItem pinnedSounds={pinnedSounds} key={item} data={data} />
+            else
+              return undefined
+          })
+        }
+      </View>
+    )
+  }, [style, pinnedSounds, funSounds])
+
   const renderItem = useCallback(({ item, index }: { item: FunSound, index: number }) => {
-    return <FunSoundItem index={index} data={item} />
-  }, [])
+    return <FunSoundItem
+      pinnedSounds={pinnedSounds}
+      index={index}
+      data={item} />
+  }, [pinnedSounds])
 
   // save last visit category screen
 
@@ -54,14 +81,10 @@ const FunSoundScreen = () => {
   return (
     <View style={style.masterView}>
       {/* pin */}
-      <View style={style.pinContainer}>
-        {
-          funSounds.slice(0, numColumns).map(item => {
-            return <FunSoundItem key={item.name} data={item} />
-          })
-        }
-      </View>
-      
+      {
+        renderPinnedSounds
+      }
+
       {/* scroll view */}
       <View style={style.flatListContainer}>
         <FlatList
