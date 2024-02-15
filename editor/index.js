@@ -72,7 +72,7 @@ async function JustDoIt() {
     const tittle = GetParam('t')
     const fromImgURL = GetParam('wi')
     const fromVideoURL = GetParam('wv')
-    const smartAuthor = GetParam('sa')
+    const smartAuthor = GetParam('aa')
     const notDel = IsParamExist('nd')
     const onlyOverrideLatestMedia = IsParamExist('ol')
 
