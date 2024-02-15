@@ -358,7 +358,7 @@ export function ArrayRemove<T>(arr: T[], value: T): boolean {
 
 // string utils ---------------------------
 
-export function IsValuableArrayOrString(value: string | [], trimString: boolean = true) {
+export function IsValuableArrayOrString<T>(value: string | T[], trimString: boolean = true) {
     if (Array.isArray(value)) {
         return value.length > 0
     }
