@@ -4,6 +4,8 @@ import { ScreenName } from "../constants/AppConstants";
 
 export type UserDataState = {
     disableScreens: ScreenName[],
+    
+    pinnedFunSoundNames: string[],
 
     subscribedData: SubscribedData | undefined,
 
@@ -60,6 +62,8 @@ export type UserDataState = {
 
 const initialState: UserDataState = {
     disableScreens: [],
+    
+    pinnedFunSoundNames: [],
 
     subscribedData: undefined,
 
@@ -139,6 +143,16 @@ const slice = createSlice({
                 state.disableScreens = state.disableScreens.filter(screen => screen !== action.payload)
             else
                 state.disableScreens.push(action.payload)
+        },
+        
+        togglePinFunSound(state, action: PayloadAction<string>) {
+            if (!state.pinnedFunSoundNames)
+                state.pinnedFunSoundNames = []
+
+            if (state.pinnedFunSoundNames.includes(action.payload))
+                state.pinnedFunSoundNames = state.pinnedFunSoundNames.filter(item => item !== action.payload)
+            else
+                state.pinnedFunSoundNames.push(action.payload)
         },
 
         // award picture
@@ -464,6 +478,8 @@ export const {
 
     enableAllScreen,
     toggleDisableScreen,
+    
+    togglePinFunSound,
 
     setSubscribe,
 
