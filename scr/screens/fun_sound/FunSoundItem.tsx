@@ -68,7 +68,7 @@ const FunSoundItem = ({
         })
 
         const _onFinishedLoadingSubscription = SoundPlayer.addEventListener('FinishedLoading', ({ success }) => {
-            console.log('finished loading', success)
+            // console.log('finished loading', success)
             setIsHandling(false)
         })
 
