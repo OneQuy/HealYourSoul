@@ -34,33 +34,33 @@ async function JustDoIt() {
   else if (IsParamExist('push')) {
     let cat
 
-    if (IsParamExist('quote'))
+    if (IsParamExist('quote') || IsParamExist('qu'))
       cat = 'quote'
-    else if (IsParamExist('draw'))
+    else if (IsParamExist('draw') || IsParamExist('dr') || IsParamExist('wa'))
       cat = 'draw'
-    else if (IsParamExist('meme'))
+    else if (IsParamExist('meme') || IsParamExist('me'))
       cat = 'meme'
-    else if (IsParamExist('catdog'))
+    else if (IsParamExist('catdog') || IsParamExist('ca'))
       cat = 'catdog'
-    else if (IsParamExist('love'))
+    else if (IsParamExist('love') || IsParamExist('lo'))
       cat = 'love'
-    else if (IsParamExist('satisfying'))
+    else if (IsParamExist('satisfying') || IsParamExist('sa'))
       cat = 'satisfying'
-    else if (IsParamExist('nsfw'))
+    else if (IsParamExist('nsfw') || IsParamExist('ns'))
       cat = 'nsfw'
-    else if (IsParamExist('cute'))
+    else if (IsParamExist('cute') || IsParamExist('cu'))
       cat = 'cute'
-    else if (IsParamExist('art'))
+    else if (IsParamExist('art') || IsParamExist('ar'))
       cat = 'art'
-    else if (IsParamExist('sarcasm'))
+    else if (IsParamExist('sarcasm') || IsParamExist('sa'))
       cat = 'sarcasm'
-    else if (IsParamExist('awesome'))
+    else if (IsParamExist('awesome') || IsParamExist('aw'))
       cat = 'awesome'
-    else if (IsParamExist('typo'))
+    else if (IsParamExist('typo') || IsParamExist('ty'))
       cat = 'typo'
-    else if (IsParamExist('info'))
+    else if (IsParamExist('info') || IsParamExist('in'))
       cat = 'info'
-    else if (IsParamExist('sunset'))
+    else if (IsParamExist('sunset') || IsParamExist('su'))
       cat = 'sunset'
     else {
       LogRed('no specify the cat to upload');
@@ -72,7 +72,7 @@ async function JustDoIt() {
     const tittle = GetParam('t')
     const fromImgURL = GetParam('wi')
     const fromVideoURL = GetParam('wv')
-    const smartAuthor = GetParam('sa')
+    const smartAuthor = GetParam('aa')
     const notDel = IsParamExist('nd')
     const onlyOverrideLatestMedia = IsParamExist('ol')
 
