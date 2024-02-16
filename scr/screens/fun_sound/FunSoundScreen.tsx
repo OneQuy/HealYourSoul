@@ -1,5 +1,5 @@
 import { View, StyleSheet, FlatList } from 'react-native'
-import React, { useCallback, useContext, useMemo } from 'react'
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { Category, NeedReloadReason, Outline, StorageKey_LocalFileVersion } from '../../constants/AppConstants'
 import useCheckAndDownloadRemoteFile from '../../hooks/useCheckAndDownloadRemoteFile'
 import { FunSound } from '../../constants/Types'
@@ -8,13 +8,17 @@ import { GetRemoteFileConfigVersion } from '../../handle/AppConfigHandler'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { ThemeContext } from '../../constants/Colors'
-import { OpenStore, SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
+import { FillPathPattern, SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
 import FunSoundItem from './FunSoundItem'
-import { useAppSelector } from '../../redux/Store'
-import { IsValuableArrayOrString } from '../../handle/UtilsTS'
+import { useAppDispatch, useAppSelector } from '../../redux/Store'
+import { FilterOnlyLetterAndNumberFromString, IsValuableArrayOrString } from '../../handle/UtilsTS'
 import LoadingOrError from '../components/LoadingOrError'
 import { NetLord } from '../../handle/NetLord'
+import { FirebaseDatabase_GetValueAsync } from '../../firebase/FirebaseDatabase'
+import { addFunSoundFavoritedID, removeFunSoundFavoritedID } from '../../redux/UserDataSlice'
 
+const LikePathByID = 'user_data/post/@cat/@id/like';
+const LikePathAll = 'user_data/post/@cat';
 
 const category = Category.FunSound
 
@@ -26,6 +30,9 @@ const FunSoundScreen = () => {
   const navigation = useNavigation();
   const theme = useContext(ThemeContext);
   const pinnedSounds = useAppSelector((state) => state.userData.pinnedFunSoundNames)
+  const [likesObj, setLikesObj] = useState<{} | undefined>(undefined)
+  const dispatch = useAppDispatch()
+  const favoritedIDs = useAppSelector((state) => state.userData.funSoundFavoriteIDs)
 
   const [funSounds, errorDownloadJson, _, reUpdateData] = useCheckAndDownloadRemoteFile<FunSound[]>(
     fileURL,
@@ -37,6 +44,16 @@ const FunSoundScreen = () => {
     async () => AsyncStorage.getItem(StorageKey_LocalFileVersion(category)),
     async () => AsyncStorage.setItem(StorageKey_LocalFileVersion(category), GetRemoteFileConfigVersion('fun_sound').toString()))
 
+
+  const idOfSound = useCallback((item: FunSound) => {
+    return FilterOnlyLetterAndNumberFromString(item.name)
+  }, [])
+
+  const isFavorited = useCallback((item: FunSound) => {
+    const id = idOfSound(item)
+    return favoritedIDs && favoritedIDs.includes(id);
+  }, [favoritedIDs, idOfSound])
+
   const style = useMemo(() => {
     return StyleSheet.create({
       masterView: { flex: 1, gap: Outline.GapHorizontal, },
@@ -44,7 +61,6 @@ const FunSoundScreen = () => {
       pinContainer: { flexDirection: 'row' },
     })
   }, [theme])
-
 
   const renderPinnedSounds = useMemo(() => {
     if (!IsValuableArrayOrString(pinnedSounds) || !Array.isArray(funSounds))
@@ -57,7 +73,12 @@ const FunSoundScreen = () => {
             const data = funSounds.find(i => i.name === item)
 
             if (data)
-              return <FunSoundItem pinnedSounds={pinnedSounds} key={item} data={data} />
+              return <FunSoundItem
+                onPressedLike={onPressedFavorite}
+                pinnedSounds={pinnedSounds}
+                key={item}
+                isFavorited={isFavorited}
+                data={data} />
             else
               return undefined
           })
@@ -66,16 +87,38 @@ const FunSoundScreen = () => {
     )
   }, [style, pinnedSounds, funSounds])
 
+  const onPressedFavorite = useCallback(async (item: FunSound) => {
+    const nowIsLiked = isFavorited(item)
+
+    if (nowIsLiked) { // to dislike
+      dispatch(removeFunSoundFavoritedID(idOfSound(item)))
+    }
+    else { // to like
+      dispatch(addFunSoundFavoritedID(idOfSound(item)))
+    }
+  }, [likesObj, isFavorited, idOfSound])
+
   const renderItem = useCallback(({ item, index }: { item: FunSound, index: number }) => {
     return <FunSoundItem
       pinnedSounds={pinnedSounds}
       index={index}
+      isFavorited={isFavorited}
+      onPressedLike={onPressedFavorite}
       data={item} />
-  }, [pinnedSounds])
+  }, [pinnedSounds, isFavorited, onPressedFavorite])
 
   // save last visit category screen
 
   useFocusEffect(useCallback(() => SaveCurrentScreenForLoadNextTime(navigation), []))
+
+  // load likes
+
+  useEffect(() => {
+    (async () => {
+      const res = await fetchLikesAsync()
+      setLikesObj(res)
+    })()
+  }, [])
 
   // render loading or error
 
@@ -106,7 +149,7 @@ const FunSoundScreen = () => {
       {/* scroll view */}
       <View style={style.flatListContainer}>
         <FlatList
-          data={funSounds}
+          data={funSounds.slice(0, 10)}
           numColumns={numColumns}
           keyExtractor={(item) => item.name}
           renderItem={renderItem}
@@ -117,3 +160,25 @@ const FunSoundScreen = () => {
 }
 
 export default FunSoundScreen
+
+/**
+ * @returns {} (empty) or value if success
+ * @returns undefined if fail
+ */
+const fetchLikesAsync = async () => {
+  if (!NetLord.IsAvailableLastestCheck())
+    return undefined
+
+  const path = FillPathPattern(LikePathAll, category, 0)
+  const res = await FirebaseDatabase_GetValueAsync(path)
+
+  if (res.error === null) {  // fetch success
+    if (res.value === null) { // have no data
+      return {}
+    }
+    else
+      return res.value
+  }
+  else // fetch error
+    return undefined
+}

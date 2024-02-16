@@ -17,21 +17,29 @@ import { togglePinFunSound } from '../../redux/UserDataSlice'
 type FunSoundItemProps = {
     data: FunSound,
     pinnedSounds: string[],
+    onPressedLike: (item: FunSound) => void,
+    isFavorited: (item: FunSound) => boolean,
     index?: number,
 }
 
 const FunSoundItem = ({
     data,
     pinnedSounds,
+    onPressedLike,
+    isFavorited,
     index }: FunSoundItemProps) => {
     const theme = useContext(ThemeContext);
     const [isHandling, setIsHandling] = useState(false);
     const isPinned = pinnedSounds && pinnedSounds.includes(data.name)
     const dispatch = useAppDispatch()
 
+    const onPressedFavorite = useCallback(() => {
+        onPressedLike(data)
+    }, [data, onPressedLike])
+
     const onPressedPin = useCallback(async () => {
         dispatch(togglePinFunSound(data.name))
-    }, [])
+    }, [data])
 
     const onPressedPlay = useCallback(async () => {
         setIsHandling(true)
@@ -50,7 +58,8 @@ const FunSoundItem = ({
                 borderRadius: BorderRadius.BR8, flex: 1,
                 height: heightPercentageToDP(7),
                 backgroundColor: theme.primary,
-                margin: Outline.GapHorizontal / 2
+                margin: Outline.GapHorizontal / 2,
+                maxWidth: '20%',
             },
             mainView: { flex: 1, paddingHorizontal: Outline.GapHorizontal, justifyContent: 'center', },
             btnBarView: { flexDirection: 'row', flex: 1, },
@@ -100,8 +109,8 @@ const FunSoundItem = ({
                 </TouchableOpacity>
 
                 {/* like btn */}
-                <TouchableOpacity style={style.btnLikeTO}>
-                    <MaterialCommunityIcons name={!true ? "cards-heart-outline" : 'cards-heart'} color={theme.counterPrimary} size={Size.IconTiny} />
+                <TouchableOpacity onPress={onPressedFavorite} style={style.btnLikeTO}>
+                    <MaterialCommunityIcons name={!isFavorited(data) ? "cards-heart-outline" : 'cards-heart'} color={theme.counterPrimary} size={Size.IconTiny} />
                     <Text numberOfLines={1} adjustsFontSizeToFit style={style.likeTxt}>{7}</Text>
                 </TouchableOpacity>
             </View>
