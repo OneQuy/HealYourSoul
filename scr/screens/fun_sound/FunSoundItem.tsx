@@ -13,12 +13,14 @@ import SoundPlayer from 'react-native-sound-player'
 import { AlertNoInternet } from '../../handle/AppUtils'
 import { useAppDispatch } from '../../redux/Store'
 import { togglePinFunSound } from '../../redux/UserDataSlice'
+import { IsNumType } from '../../handle/UtilsTS'
 
 type FunSoundItemProps = {
     data: FunSound,
     pinnedSounds: string[],
     onPressedLike: (item: FunSound) => void,
     isFavorited: (item: FunSound) => boolean,
+    likeCount: (item: FunSound) => number,
     index?: number,
 }
 
@@ -27,11 +29,14 @@ const FunSoundItem = ({
     pinnedSounds,
     onPressedLike,
     isFavorited,
+    likeCount,
     index }: FunSoundItemProps) => {
     const theme = useContext(ThemeContext);
     const [isHandling, setIsHandling] = useState(false);
     const isPinned = pinnedSounds && pinnedSounds.includes(data.name)
     const dispatch = useAppDispatch()
+
+    const likes = likeCount(data)
 
     const onPressedFavorite = useCallback(() => {
         onPressedLike(data)
@@ -111,7 +116,11 @@ const FunSoundItem = ({
                 {/* like btn */}
                 <TouchableOpacity onPress={onPressedFavorite} style={style.btnLikeTO}>
                     <MaterialCommunityIcons name={!isFavorited(data) ? "cards-heart-outline" : 'cards-heart'} color={theme.counterPrimary} size={Size.IconTiny} />
-                    <Text numberOfLines={1} adjustsFontSizeToFit style={style.likeTxt}>{7}</Text>
+                    {
+                        !IsNumType(likes) ?
+                            undefined :
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={style.likeTxt}>{likes}</Text>
+                    }
                 </TouchableOpacity>
             </View>
         </TouchableOpacity>

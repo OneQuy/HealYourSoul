@@ -11,10 +11,10 @@ import { ThemeContext } from '../../constants/Colors'
 import { FillPathPattern, SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
 import FunSoundItem from './FunSoundItem'
 import { useAppDispatch, useAppSelector } from '../../redux/Store'
-import { FilterOnlyLetterAndNumberFromString, IsValuableArrayOrString } from '../../handle/UtilsTS'
+import { FilterOnlyLetterAndNumberFromString, IsValuableArrayOrString, ToCanPrint } from '../../handle/UtilsTS'
 import LoadingOrError from '../components/LoadingOrError'
 import { NetLord } from '../../handle/NetLord'
-import { FirebaseDatabase_GetValueAsync } from '../../firebase/FirebaseDatabase'
+import { FirebaseDatabase_GetValueAsync, FirebaseDatabase_SetValueAsync } from '../../firebase/FirebaseDatabase'
 import { addFunSoundFavoritedID, removeFunSoundFavoritedID } from '../../redux/UserDataSlice'
 
 const LikePathByID = 'user_data/post/@cat/@id/like';
@@ -44,10 +44,21 @@ const FunSoundScreen = () => {
     async () => AsyncStorage.getItem(StorageKey_LocalFileVersion(category)),
     async () => AsyncStorage.setItem(StorageKey_LocalFileVersion(category), GetRemoteFileConfigVersion('fun_sound').toString()))
 
-
   const idOfSound = useCallback((item: FunSound) => {
     return FilterOnlyLetterAndNumberFromString(item.name)
   }, [])
+
+  const likeCount = useCallback((item: FunSound) => {
+    if (!likesObj)
+      return Number.NaN
+
+    // @ts-ignore
+    if (likesObj[idOfSound(item)] && typeof likesObj[idOfSound(item)].like === 'number')
+      // @ts-ignore
+      return likesObj[idOfSound(item)].like
+    else
+      return 0
+  }, [likesObj, idOfSound])
 
   const isFavorited = useCallback((item: FunSound) => {
     const id = idOfSound(item)
@@ -77,6 +88,7 @@ const FunSoundScreen = () => {
                 onPressedLike={onPressedFavorite}
                 pinnedSounds={pinnedSounds}
                 key={item}
+                likeCount={likeCount}
                 isFavorited={isFavorited}
                 data={data} />
             else
@@ -88,24 +100,75 @@ const FunSoundScreen = () => {
   }, [style, pinnedSounds, funSounds])
 
   const onPressedFavorite = useCallback(async (item: FunSound) => {
+    let obj = likesObj
+
+    if (!obj) {
+      obj = await fetchLikesAsync()
+    }
+
     const nowIsLiked = isFavorited(item)
+    const id = idOfSound(item)
 
     if (nowIsLiked) { // to dislike
+      // update local
+
       dispatch(removeFunSoundFavoritedID(idOfSound(item)))
+
+      // update firebase
+
+      if (!obj)
+        return
+
+      // @ts-ignore
+      if (obj[id] && obj[id].like && obj[id].like > 0) {
+        // @ts-ignore
+        obj[id].like--
+      }
     }
     else { // to like
+      // update local
+
       dispatch(addFunSoundFavoritedID(idOfSound(item)))
+
+      // update firebase
+
+      if (!obj)
+        return
+
+      // @ts-ignore
+      if (obj[id] && obj[id].like) {
+        // @ts-ignore
+        obj[id].like++
+      }
+      else {
+        // @ts-ignore
+        obj[id] = {}
+
+        // @ts-ignore
+        obj[id].like = 1
+      }
     }
+
+    // @ts-ignore
+    const like = obj[id].like
+
+    const path = FillPathPattern(LikePathByID, category, id)
+    console.log(path, ToCanPrint(obj));
+
+    FirebaseDatabase_SetValueAsync(path, like)
+
+    setLikesObj(obj)
   }, [likesObj, isFavorited, idOfSound])
 
   const renderItem = useCallback(({ item, index }: { item: FunSound, index: number }) => {
     return <FunSoundItem
       pinnedSounds={pinnedSounds}
       index={index}
+      likeCount={likeCount}
       isFavorited={isFavorited}
       onPressedLike={onPressedFavorite}
       data={item} />
-  }, [pinnedSounds, isFavorited, onPressedFavorite])
+  }, [pinnedSounds, likeCount, isFavorited, onPressedFavorite])
 
   // save last visit category screen
 
