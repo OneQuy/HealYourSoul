@@ -120,7 +120,7 @@ const FunSoundScreen = () => {
         return
 
       // @ts-ignore
-      if (typeof obj[id]?.like === 'number') {
+      if (typeof obj[id]?.like === 'number' && obj[id].like > 0) {
         // @ts-ignore
         obj[id].like--
       }
