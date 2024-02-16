@@ -120,10 +120,12 @@ const FunSoundScreen = () => {
         return
 
       // @ts-ignore
-      if (obj[id] && obj[id].like && obj[id].like > 0) {
+      if (typeof obj[id]?.like === 'number') {
         // @ts-ignore
         obj[id].like--
       }
+      else
+        return
     }
     else { // to like
       // update local
