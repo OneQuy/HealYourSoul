@@ -114,7 +114,7 @@ const FunSoundItem = ({
             <View style={style.btnBarView}>
                 {/* pin btn */}
                 <TouchableOpacity onPress={onPressedPin} style={style.btnPinTO}>
-                    <MaterialCommunityIcons name={'pin'} color={isPinned ? theme.counterPrimary : theme.background} size={Size.IconTiny} />
+                    <MaterialCommunityIcons name={isPinned ? 'pin' : 'pin-outline'} color={theme.counterPrimary} size={Size.IconTiny} />
                 </TouchableOpacity>
 
                 {/* like btn */}
