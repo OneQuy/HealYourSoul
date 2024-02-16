@@ -14,7 +14,7 @@ import { ThemeContext } from '../../constants/Colors'
 import { FillPathPattern, SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
 import FunSoundItem from './FunSoundItem'
 import { useAppDispatch, useAppSelector } from '../../redux/Store'
-import { FilterOnlyLetterAndNumberFromString, IsValuableArrayOrString } from '../../handle/UtilsTS'
+import { FilterOnlyLetterAndNumberFromString, IsValuableArrayOrString, RandomColor } from '../../handle/UtilsTS'
 import LoadingOrError from '../components/LoadingOrError'
 import { NetLord } from '../../handle/NetLord'
 import { FirebaseDatabase_GetValueAsync, FirebaseDatabase_SetValueAsync } from '../../firebase/FirebaseDatabase'
@@ -77,6 +77,16 @@ const FunSoundScreen = () => {
 
     return maxPage
   }, [funSounds])
+
+  const onPressedTopPage = useCallback((isNext: boolean) => {
+    if (!Array.isArray(funSounds))
+      return
+
+    const idx = isNext ? maxPage - 1 : 0
+
+    setCurPageIdx(idx)
+    SetNumberAsync(StorageKey_CurPageFunSoundIdx, idx)
+  }, [curPageIdx, funSounds, maxPage])
 
   const onPressedNextPage = useCallback((isNext: boolean) => {
     if (!Array.isArray(funSounds))
@@ -280,12 +290,18 @@ const FunSoundScreen = () => {
 
       {/* navigation */}
       <View style={style.naviContainer}>
+        <TouchableOpacity onPress={() => onPressedTopPage(false)} style={style.naviTO}>
+          <MaterialCommunityIcons name={Icon.MaxLeft} color={theme.counterPrimary} size={Size.Icon} />
+        </TouchableOpacity>
         <TouchableOpacity onPress={() => onPressedNextPage(false)} style={style.naviTO}>
           <MaterialCommunityIcons name={Icon.Left} color={theme.counterPrimary} size={Size.Icon} />
         </TouchableOpacity>
         <Text style={style.pageTxt}>{curPageIdx + 1}/{maxPage}</Text>
         <TouchableOpacity onPress={() => onPressedNextPage(true)} style={style.naviTO}>
           <MaterialCommunityIcons name={Icon.Right} color={theme.counterPrimary} size={Size.Icon} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => onPressedTopPage(true)} style={style.naviTO}>
+          <MaterialCommunityIcons name={Icon.MaxRight} color={theme.counterPrimary} size={Size.Icon} />
         </TouchableOpacity>
       </View>
     </View>
