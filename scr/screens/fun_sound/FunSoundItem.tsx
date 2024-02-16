@@ -64,7 +64,7 @@ const FunSoundItem = ({
                 height: heightPercentageToDP(7),
                 backgroundColor: theme.primary,
                 margin: Outline.GapHorizontal / 2,
-                maxWidth: '20%',
+                // maxWidth: '40%',
             },
             mainView: { flex: 1, paddingHorizontal: Outline.GapHorizontal, justifyContent: 'center', },
             btnBarView: { flexDirection: 'row', flex: 1, },
@@ -110,7 +110,7 @@ const FunSoundItem = ({
             <View style={style.btnBarView}>
                 {/* pin btn */}
                 <TouchableOpacity onPress={onPressedPin} style={style.btnPinTO}>
-                    <MaterialCommunityIcons name={'pin'} color={isPinned ? theme.counterPrimary : theme.counterBackground} size={Size.IconTiny} />
+                    <MaterialCommunityIcons name={'pin'} color={isPinned ? theme.counterPrimary : theme.background} size={Size.IconTiny} />
                 </TouchableOpacity>
 
                 {/* like btn */}
