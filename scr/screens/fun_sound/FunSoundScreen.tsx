@@ -118,32 +118,6 @@ const FunSoundScreen = () => {
     })
   }, [theme, insets])
 
-  const renderPinnedSounds = useMemo(() => {
-    if (!IsValuableArrayOrString(pinnedSounds) || !Array.isArray(funSounds))
-      return undefined
-
-    return (
-      <View style={style.pinContainer}>
-        {
-          pinnedSounds.map(item => {
-            const data = funSounds.find(i => i.name === item)
-
-            if (data)
-              return <FunSoundItem
-                onPressedLike={onPressedFavorite}
-                pinnedSounds={pinnedSounds}
-                key={item}
-                likeCount={likeCount}
-                isFavorited={isFavorited}
-                data={data} />
-            else
-              return undefined
-          })
-        }
-      </View>
-    )
-  }, [style, pinnedSounds, funSounds])
-
   const onPressedFavorite = useCallback(async (item: FunSound) => {
     let obj = likesObj
 
@@ -206,6 +180,32 @@ const FunSoundScreen = () => {
 
     setLikesObj(obj)
   }, [likesObj, isFavorited, idOfSound])
+
+  const renderPinnedSounds = useMemo(() => {
+    if (!IsValuableArrayOrString(pinnedSounds) || !Array.isArray(funSounds))
+      return undefined
+
+    return (
+      <View style={style.pinContainer}>
+        {
+          pinnedSounds.map(item => {
+            const data = funSounds.find(i => i.name === item)
+
+            if (data)
+              return <FunSoundItem
+                onPressedLike={onPressedFavorite}
+                pinnedSounds={pinnedSounds}
+                key={item}
+                likeCount={likeCount}
+                isFavorited={isFavorited}
+                data={data} />
+            else
+              return undefined
+          })
+        }
+      </View>
+    )
+  }, [style, pinnedSounds, funSounds, onPressedFavorite])
 
   const renderItem = useCallback(({ item, index }: { item: FunSound, index: number }) => {
     return <FunSoundItem

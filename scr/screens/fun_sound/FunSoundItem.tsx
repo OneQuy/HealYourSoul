@@ -15,6 +15,8 @@ import { useAppDispatch } from '../../redux/Store'
 import { togglePinFunSound } from '../../redux/UserDataSlice'
 import { IsNumType } from '../../handle/UtilsTS'
 
+const limitPinsToShowLikeButton = 6
+
 type FunSoundItemProps = {
     data: FunSound,
     pinnedSounds: string[],
@@ -35,8 +37,8 @@ const FunSoundItem = ({
     const [isHandling, setIsHandling] = useState(false);
     const isPinned = pinnedSounds && pinnedSounds.includes(data.name)
     const dispatch = useAppDispatch()
-
     const likes = likeCount(data)
+    const showLikes = !isPinned || pinnedSounds.length <= 6
 
     const onPressedFavorite = useCallback(() => {
         onPressedLike(data)
@@ -114,14 +116,19 @@ const FunSoundItem = ({
                 </TouchableOpacity>
 
                 {/* like btn */}
-                <TouchableOpacity onPress={onPressedFavorite} style={style.btnLikeTO}>
-                    <MaterialCommunityIcons name={!isFavorited(data) ? "cards-heart-outline" : 'cards-heart'} color={theme.counterPrimary} size={Size.IconTiny} />
-                    {
-                        !IsNumType(likes) ?
-                            undefined :
-                            <Text numberOfLines={1} adjustsFontSizeToFit style={style.likeTxt}>{likes}</Text>
-                    }
-                </TouchableOpacity>
+
+                {
+                    !showLikes ?
+                        undefined :
+                        <TouchableOpacity onPress={onPressedFavorite} style={style.btnLikeTO}>
+                            <MaterialCommunityIcons name={!isFavorited(data) ? "cards-heart-outline" : 'cards-heart'} color={theme.counterPrimary} size={Size.IconTiny} />
+                            {
+                                !IsNumType(likes) ?
+                                    undefined :
+                                    <Text numberOfLines={1} adjustsFontSizeToFit style={style.likeTxt}>{likes}</Text>
+                            }
+                        </TouchableOpacity>
+                }
             </View>
         </TouchableOpacity>
     )
