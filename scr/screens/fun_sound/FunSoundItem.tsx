@@ -23,6 +23,7 @@ type FunSoundItemProps = {
     onPressedLike: (item: FunSound) => void,
     isFavorited: (item: FunSound) => boolean,
     likeCount: (item: FunSound) => number,
+    canHideLikes?: boolean,
     index?: number,
 }
 
@@ -32,13 +33,14 @@ const FunSoundItem = ({
     onPressedLike,
     isFavorited,
     likeCount,
+    canHideLikes,
     index }: FunSoundItemProps) => {
     const theme = useContext(ThemeContext);
     const [isHandling, setIsHandling] = useState(false);
     const isPinned = pinnedSounds && pinnedSounds.includes(data.name)
     const dispatch = useAppDispatch()
     const likes = likeCount(data)
-    const showLikes = !isPinned || pinnedSounds.length <= 6
+    const showLikes = canHideLikes !== true || pinnedSounds.length <= 6
 
     const onPressedFavorite = useCallback(() => {
         onPressedLike(data)

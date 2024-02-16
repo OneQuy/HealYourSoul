@@ -200,6 +200,7 @@ const FunSoundScreen = () => {
                 onPressedLike={onPressedFavorite}
                 pinnedSounds={pinnedSounds}
                 key={item}
+                canHideLikes={true}
                 likeCount={likeCount}
                 isFavorited={isFavorited}
                 data={data} />
