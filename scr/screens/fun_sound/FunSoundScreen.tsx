@@ -20,7 +20,7 @@ import { NetLord } from '../../handle/NetLord'
 import { FirebaseDatabase_GetValueAsync, FirebaseDatabase_SetValueAsync } from '../../firebase/FirebaseDatabase'
 import { addFunSoundFavoritedID, removeFunSoundFavoritedID } from '../../redux/UserDataSlice'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { GetNumberIntAsync } from '../../handle/AsyncStorageUtils';
+import { GetNumberIntAsync, SetNumberAsync } from '../../handle/AsyncStorageUtils';
 
 const LikePathByID = 'user_data/post/@cat/@id/like';
 const LikePathAll = 'user_data/post/@cat';
@@ -75,7 +75,6 @@ const FunSoundScreen = () => {
     const totalItemsPerPage = numColumns * numRowPerPage
     const maxPage = Math.ceil(funSounds.length / totalItemsPerPage)
 
-    console.log('max page', maxPage);
     return maxPage
   }, [funSounds])
 
@@ -83,14 +82,19 @@ const FunSoundScreen = () => {
     if (!Array.isArray(funSounds))
       return
 
+    let idx = curPageIdx
+
     if (isNext) {
       if (curPageIdx < maxPage - 1)
-        setCurPageIdx(curPageIdx + 1)
+        idx = curPageIdx + 1
     }
     else {
       if (curPageIdx > 0)
-        setCurPageIdx(curPageIdx - 1)
+        idx = curPageIdx - 1
     }
+
+    setCurPageIdx(idx)
+    SetNumberAsync(StorageKey_CurPageFunSoundIdx, idx)
   }, [curPageIdx, funSounds, maxPage])
 
   const isFavorited = useCallback((item: FunSound) => {
@@ -174,7 +178,7 @@ const FunSoundScreen = () => {
     const like = obj[id].like
 
     const path = FillPathPattern(LikePathByID, category, id)
-    console.log(path, ToCanPrint(obj));
+    // console.log(path, ToCanPrint(obj));
 
     FirebaseDatabase_SetValueAsync(path, like)
 
