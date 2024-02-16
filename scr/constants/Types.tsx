@@ -118,11 +118,6 @@ export type FunSound = {
     "name": string,
 }
 
-export type FunSoundLikes = {
-    "like": number,
-    "name": string,
-}
-
 export type FunWebsite = {
     "id": number,
     "url": string,

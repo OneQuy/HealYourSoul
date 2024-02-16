@@ -9,6 +9,8 @@ export type UserDataState = {
 
     subscribedData: SubscribedData | undefined,
 
+    funSoundFavoriteIDs: (number | string)[],
+
     shortFilmsFavoritedIDs: (number | string)[],
 
     awardPictureFavoritedIDs: (number | string)[],
@@ -64,6 +66,7 @@ const initialState: UserDataState = {
     disableScreens: [],
 
     pinnedFunSoundNames: [],
+    funSoundFavoriteIDs: [],
 
     subscribedData: undefined,
 
@@ -143,6 +146,23 @@ const slice = createSlice({
                 state.disableScreens = state.disableScreens.filter(screen => screen !== action.payload)
             else
                 state.disableScreens.push(action.payload)
+        },
+
+        // fun sound
+
+        addFunSoundFavoritedID(state, action: PayloadAction<number | string>) {
+            if (!state.funSoundFavoriteIDs)
+                state.funSoundFavoriteIDs = []
+
+            if (!state.funSoundFavoriteIDs.includes(action.payload))
+                state.funSoundFavoriteIDs.push(action.payload);
+        },
+
+        removeFunSoundFavoritedID(state, action: PayloadAction<number | string>) {
+            if (!state.funSoundFavoriteIDs)
+                state.funSoundFavoriteIDs = []
+
+            state.funSoundFavoriteIDs = state.funSoundFavoriteIDs.filter(i => i !== action.payload)
         },
 
         togglePinFunSound(state, action: PayloadAction<string>) {
@@ -549,6 +569,8 @@ export const {
     toggleDisableScreen,
 
     togglePinFunSound,
+    addFunSoundFavoritedID,
+    removeFunSoundFavoritedID,
 
     setSubscribe,
 
