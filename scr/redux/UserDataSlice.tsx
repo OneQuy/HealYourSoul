@@ -4,7 +4,7 @@ import { ScreenName } from "../constants/AppConstants";
 
 export type UserDataState = {
     disableScreens: ScreenName[],
-    
+
     pinnedFunSoundNames: string[],
 
     subscribedData: SubscribedData | undefined,
@@ -62,7 +62,7 @@ export type UserDataState = {
 
 const initialState: UserDataState = {
     disableScreens: [],
-    
+
     pinnedFunSoundNames: [],
 
     subscribedData: undefined,
@@ -144,7 +144,7 @@ const slice = createSlice({
             else
                 state.disableScreens.push(action.payload)
         },
-        
+
         togglePinFunSound(state, action: PayloadAction<string>) {
             if (!state.pinnedFunSoundNames)
                 state.pinnedFunSoundNames = []
@@ -166,6 +166,9 @@ const slice = createSlice({
         },
 
         removeAwardPictureFavoritedID(state, action: PayloadAction<number | string>) {
+            if (!state.awardPictureFavoritedIDs)
+                state.awardPictureFavoritedIDs = []
+
             state.awardPictureFavoritedIDs = state.awardPictureFavoritedIDs.filter(i => i !== action.payload)
         },
 
@@ -180,6 +183,9 @@ const slice = createSlice({
         },
 
         removeTopMovieFavoritedID(state, action: PayloadAction<number | string>) {
+            if (!state.topMovieFavoritesIDs)
+                state.topMovieFavoritesIDs = []
+
             state.topMovieFavoritesIDs = state.topMovieFavoritesIDs.filter(i => i !== action.payload)
         },
 
@@ -214,11 +220,17 @@ const slice = createSlice({
         // draw (warm)
 
         addDrawSeenID(state, action: PayloadAction<number | string>) {
+            if (!state.drawSeenIDs)
+                state.drawSeenIDs = []
+
             if (!state.drawSeenIDs.includes(action.payload))
                 state.drawSeenIDs.push(action.payload);
         },
 
         addDrawFavoritedID(state, action: PayloadAction<number | string>) {
+            if (!state.drawFavoritedIDs)
+                state.drawFavoritedIDs = []
+
             if (!state.drawFavoritedIDs.includes(action.payload))
                 state.drawFavoritedIDs.push(action.payload);
         },
@@ -230,11 +242,17 @@ const slice = createSlice({
         // meme
 
         addMemeSeenID(state, action: PayloadAction<number | string>) {
+            if (!state.memeSeenIDs)
+                state.memeSeenIDs = []
+
             if (!state.memeSeenIDs.includes(action.payload))
                 state.memeSeenIDs.push(action.payload);
         },
 
         addMemeFavoritedID(state, action: PayloadAction<number | string>) {
+            if (!state.memeFavoritedIDs)
+                state.memeFavoritedIDs = []
+
             if (!state.memeFavoritedIDs.includes(action.payload))
                 state.memeFavoritedIDs.push(action.payload);
         },
@@ -346,11 +364,17 @@ const slice = createSlice({
         // quote
 
         addQuoteSeenID(state, action: PayloadAction<number | string>) {
+            if (!state.quoteSeenIDs)
+                state.quoteSeenIDs = []
+
             if (!state.quoteSeenIDs.includes(action.payload))
                 state.quoteSeenIDs.push(action.payload);
         },
 
         addQuoteFavoritedID(state, action: PayloadAction<number | string>) {
+            if (!state.quoteFavoritedIDs)
+                state.quoteFavoritedIDs = []
+
             if (!state.quoteFavoritedIDs.includes(action.payload))
                 state.quoteFavoritedIDs.push(action.payload);
         },
@@ -362,11 +386,17 @@ const slice = createSlice({
         // love
 
         addLoveSeenID(state, action: PayloadAction<number | string>) {
+            if (!state.loveSeenIDs)
+                state.loveSeenIDs = []
+
             if (!state.loveSeenIDs.includes(action.payload))
                 state.loveSeenIDs.push(action.payload);
         },
 
         addLoveFavoritedID(state, action: PayloadAction<number | string>) {
+            if (!state.loveFavoritedIDs)
+                state.loveFavoritedIDs = []
+
             if (!state.loveFavoritedIDs.includes(action.payload))
                 state.loveFavoritedIDs.push(action.payload);
         },
@@ -378,11 +408,17 @@ const slice = createSlice({
         // nsfw
 
         addNSFWSeenID(state, action: PayloadAction<number | string>) {
+            if (!state.nsfwSeenIDs)
+                state.nsfwSeenIDs = []
+
             if (!state.nsfwSeenIDs.includes(action.payload))
                 state.nsfwSeenIDs.push(action.payload);
         },
 
         addNSFWFavoritedID(state, action: PayloadAction<number | string>) {
+            if (!state.nsfwFavoritedIDs)
+                state.nsfwFavoritedIDs = []
+
             if (!state.nsfwFavoritedIDs.includes(action.payload))
                 state.nsfwFavoritedIDs.push(action.payload);
         },
@@ -394,27 +430,42 @@ const slice = createSlice({
         // catdog
 
         addCatDogSeenID(state, action: PayloadAction<number | string>) {
+            if (!state.catdogSeenIDs)
+                state.catdogSeenIDs = []
+
             if (!state.catdogSeenIDs.includes(action.payload))
                 state.catdogSeenIDs.push(action.payload);
         },
 
         addCatDogFavoritedID(state, action: PayloadAction<number | string>) {
+            if (!state.catdogFavoritedIDs)
+                state.catdogFavoritedIDs = []
+
             if (!state.catdogFavoritedIDs.includes(action.payload))
                 state.catdogFavoritedIDs.push(action.payload);
         },
 
         removeCatDogFavoritedID(state, action: PayloadAction<number | string>) {
+            if (!state.catdogFavoritedIDs)
+                state.catdogFavoritedIDs = []
+
             state.catdogFavoritedIDs = state.catdogFavoritedIDs.filter(i => i !== action.payload)
         },
 
         // art
 
         addArtSeenID(state, action: PayloadAction<number | string>) {
+            if (!state.artSeenIDs)
+                state.artSeenIDs = []
+
             if (!state.artSeenIDs.includes(action.payload))
                 state.artSeenIDs.push(action.payload);
         },
 
         addArtFavoritedID(state, action: PayloadAction<number | string>) {
+            if (!state.artFavoritedIDs)
+                state.artFavoritedIDs = []
+
             if (!state.artFavoritedIDs.includes(action.payload))
                 state.artFavoritedIDs.push(action.payload);
         },
@@ -426,11 +477,17 @@ const slice = createSlice({
         // cute
 
         addCuteSeenID(state, action: PayloadAction<number | string>) {
+            if (!state.cuteSeenIDs)
+                state.cuteSeenIDs = []
+
             if (!state.cuteSeenIDs.includes(action.payload))
                 state.cuteSeenIDs.push(action.payload);
         },
 
         addCuteFavoritedID(state, action: PayloadAction<number | string>) {
+            if (!state.cuteFavoritedIDs)
+                state.cuteFavoritedIDs = []
+
             if (!state.cuteFavoritedIDs.includes(action.payload))
                 state.cuteFavoritedIDs.push(action.payload);
         },
@@ -442,11 +499,17 @@ const slice = createSlice({
         // sarcasm
 
         addSarcasmSeenID(state, action: PayloadAction<number | string>) {
+            if (!state.sarcasmSeenIDs)
+                state.sarcasmSeenIDs = []
+
             if (!state.sarcasmSeenIDs.includes(action.payload))
                 state.sarcasmSeenIDs.push(action.payload);
         },
 
         addSarcasmFavoritedID(state, action: PayloadAction<number | string>) {
+            if (!state.sarcasmFavoritedIDs)
+                state.sarcasmFavoritedIDs = []
+
             if (!state.sarcasmFavoritedIDs.includes(action.payload))
                 state.sarcasmFavoritedIDs.push(action.payload);
         },
@@ -458,11 +521,17 @@ const slice = createSlice({
         // satisfying
 
         addSatisfyingSeenID(state, action: PayloadAction<number | string>) {
+            if (!state.satisfyingSeenIDs)
+                state.satisfyingSeenIDs = []
+
             if (!state.satisfyingSeenIDs.includes(action.payload))
                 state.satisfyingSeenIDs.push(action.payload);
         },
 
         addSatisfyingFavoritedID(state, action: PayloadAction<number | string>) {
+            if (!state.satisfyingFavoritedIDs)
+                state.satisfyingFavoritedIDs = []
+
             if (!state.satisfyingFavoritedIDs.includes(action.payload))
                 state.satisfyingFavoritedIDs.push(action.payload);
         },
@@ -478,7 +547,7 @@ export const {
 
     enableAllScreen,
     toggleDisableScreen,
-    
+
     togglePinFunSound,
 
     setSubscribe,
