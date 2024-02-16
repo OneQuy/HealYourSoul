@@ -40,7 +40,7 @@ const FunSoundItem = ({
     const isPinned = pinnedSounds && pinnedSounds.includes(data.name)
     const dispatch = useAppDispatch()
     const likes = likeCount(data)
-    const showLikes = canHideLikes !== true || pinnedSounds.length <= 6
+    const showLikes = canHideLikes !== true || pinnedSounds.length <= limitPinsToShowLikeButton
 
     const onPressedFavorite = useCallback(() => {
         onPressedLike(data)

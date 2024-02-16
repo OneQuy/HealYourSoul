@@ -14,7 +14,7 @@ import { ThemeContext } from '../../constants/Colors'
 import { FillPathPattern, SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
 import FunSoundItem from './FunSoundItem'
 import { useAppDispatch, useAppSelector } from '../../redux/Store'
-import { FilterOnlyLetterAndNumberFromString, IsValuableArrayOrString, ToCanPrint } from '../../handle/UtilsTS'
+import { FilterOnlyLetterAndNumberFromString, IsValuableArrayOrString } from '../../handle/UtilsTS'
 import LoadingOrError from '../components/LoadingOrError'
 import { NetLord } from '../../handle/NetLord'
 import { FirebaseDatabase_GetValueAsync, FirebaseDatabase_SetValueAsync } from '../../firebase/FirebaseDatabase'
@@ -30,7 +30,7 @@ const category = Category.FunSound
 const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Ffun_sound.json?alt=media&token=61576a53-6c78-4428-a240-a1dd7a250825'
 
 const numColumns = 4
-const numRowPerPage = 10
+const numRowPerPage = 9
 
 const FunSoundScreen = () => {
   const navigation = useNavigation();
@@ -270,6 +270,7 @@ const FunSoundScreen = () => {
       {/* scroll view */}
       <View style={style.flatListContainer}>
         <FlatList
+          showsVerticalScrollIndicator={false}
           data={itemsToRender}
           numColumns={numColumns}
           keyExtractor={(item) => item.name}
