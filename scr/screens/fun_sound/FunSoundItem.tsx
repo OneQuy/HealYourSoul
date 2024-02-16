@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'rea
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { FunSound } from '../../constants/Types'
 import { ThemeContext } from '../../constants/Colors'
-import { BorderRadius, Outline, Size } from '../../constants/AppConstants'
+import { BorderRadius, Icon, Outline, Size } from '../../constants/AppConstants'
 import { heightPercentageToDP } from 'react-native-responsive-screen'
 
 // @ts-ignore
@@ -114,7 +114,7 @@ const FunSoundItem = ({
             <View style={style.btnBarView}>
                 {/* pin btn */}
                 <TouchableOpacity onPress={onPressedPin} style={style.btnPinTO}>
-                    <MaterialCommunityIcons name={isPinned ? 'pin' : 'pin-outline'} color={theme.counterPrimary} size={Size.IconTiny} />
+                    <MaterialCommunityIcons name={isPinned ? Icon.Pin : Icon.PinOutline} color={theme.counterPrimary} size={Size.IconTiny} />
                 </TouchableOpacity>
 
                 {/* like btn */}
