@@ -59,7 +59,6 @@ const DrawerSingleItem = ({
 }: Props) => {
     const theme = useContext(ThemeContext);
     const [isFocused, onPress] = useDrawerMenuItemUtils(route.name, masterProps)
-    const [layoutRect, setLayoutRect] = useState<LayoutRectangle>()
     const [showNewBadge, setShowNewBadge] = useState(false)
     const checkedInScreens = useAppSelector((state) => state.userData.checkedInScreens)
     const drawerStatus = useDrawerStatus()
@@ -71,7 +70,6 @@ const DrawerSingleItem = ({
 
     const onLayout = useCallback((e: LayoutChangeEvent) => {
         const ratio = e.nativeEvent.layout.width / e.nativeEvent.layout.height
-        setLayoutRect(e.nativeEvent.layout)
 
         if (ratio < idealRatio) {
             const h = e.nativeEvent.layout.width / idealRatio
@@ -128,19 +126,25 @@ const DrawerSingleItem = ({
 
             {/* new badge */}
             {
-                !layoutRect || !showNewBadge ?
+                !showNewBadge ?
                     undefined :
                     <View style={{
                         position: 'absolute',
-                        backgroundColor: theme.primary,
-                        width: layoutRect.width / 5,
-                        height: layoutRect.width / 10,
-                        left: layoutRect.width - layoutRect.width / 5,
-                        top: -layoutRect.width / 10 / 2,
-                        justifyContent: 'center', 
-                        alignItems: 'center',
+                        width: '100%',
+                        height: '100%',
+                        alignItems: 'flex-end',
                     }}>
-                        <Text adjustsFontSizeToFit numberOfLines={1} style={[style.labelText, { color: theme.counterPrimary }]}>{LocalText.new}</Text>
+                        <View style={{
+                            width: '25%',
+                            height: '30%',
+                            left: Outline.GapVertical,
+                            backgroundColor: theme.primary,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            padding: 1,
+                        }}>
+                            <Text adjustsFontSizeToFit numberOfLines={1} style={[{ color: theme.counterPrimary }]}>{LocalText.new}</Text>
+                        </View>
                     </View>
             }
         </TouchableOpacity>
@@ -162,6 +166,5 @@ const style = StyleSheet.create({
     labelText: {
         flex: 1,
         textAlign: 'center',
-        // fontSize: FontSize.Small,
     }
 })
