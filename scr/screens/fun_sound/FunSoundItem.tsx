@@ -66,16 +66,15 @@ const FunSoundItem = ({
             masterView: {
                 borderRadius: BorderRadius.BR8, flex: 1,
                 height: heightPercentageToDP(7),
-                backgroundColor: theme.primary,
+                backgroundColor: canHideLikes !== true ? theme.counterBackground : theme.primary,
                 margin: Outline.GapHorizontal / 2,
-                // maxWidth: '40%',
             },
             mainView: { flex: 1, paddingHorizontal: Outline.GapHorizontal, justifyContent: 'center', },
             btnBarView: { flexDirection: 'row', flex: 1, },
             btnPinTO: { flex: 1, justifyContent: 'center', alignItems: 'center' },
             btnLikeTO: { flexDirection: 'row', flex: 1, gap: Outline.GapHorizontal, justifyContent: 'center', alignItems: 'center' },
-            nameTxt: { color: theme.counterPrimary, textAlign: 'center', verticalAlign: 'middle' },
-            likeTxt: { color: theme.counterPrimary },
+            nameTxt: { color: canHideLikes !== true ? theme.background : theme.counterPrimary, textAlign: 'center', verticalAlign: 'middle' },
+            likeTxt: { color: canHideLikes !== true ? theme.background : theme.counterPrimary },
         })
     }, [theme])
 
@@ -114,7 +113,7 @@ const FunSoundItem = ({
             <View style={style.btnBarView}>
                 {/* pin btn */}
                 <TouchableOpacity onPress={onPressedPin} style={style.btnPinTO}>
-                    <MaterialCommunityIcons name={isPinned ? Icon.Pin : Icon.PinOutline} color={theme.counterPrimary} size={Size.IconTiny} />
+                    <MaterialCommunityIcons name={isPinned ? Icon.Pin : Icon.PinOutline} color={canHideLikes !== true ? theme.background : theme.counterPrimary} size={Size.IconTiny} />
                 </TouchableOpacity>
 
                 {/* like btn */}
@@ -123,7 +122,7 @@ const FunSoundItem = ({
                     !showLikes ?
                         undefined :
                         <TouchableOpacity onPress={onPressedFavorite} style={style.btnLikeTO}>
-                            <MaterialCommunityIcons name={!isFavorited(data) ? "cards-heart-outline" : 'cards-heart'} color={theme.counterPrimary} size={Size.IconTiny} />
+                            <MaterialCommunityIcons name={!isFavorited(data) ? "cards-heart-outline" : 'cards-heart'} color={canHideLikes !== true ? theme.background : theme.counterPrimary} size={Size.IconTiny} />
                             {
                                 !IsNumType(likes) ?
                                     undefined :
