@@ -64,7 +64,8 @@ const FunSoundItem = ({
     const style = useMemo(() => {
         return StyleSheet.create({
             masterView: {
-                borderRadius: BorderRadius.BR8, flex: 1,
+                borderRadius: BorderRadius.BR8,
+                flex: 1,
                 height: heightPercentageToDP(7),
                 backgroundColor: canHideLikes !== true ? theme.counterBackground : theme.primary,
                 margin: Outline.GapHorizontal / 2,
