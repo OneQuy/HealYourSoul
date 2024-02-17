@@ -79,6 +79,7 @@ const ScreenList: ScreenNamePair[] = [
   [ScreenName.Comic, ComicScreen], // warm
   [ScreenName.CatDog, CatDogScreen],
   [ScreenName.NSFW, NSFWScreen],
+  [ScreenName.FunSound, FunSoundScreen],
   [ScreenName.Quote, QuoteScreen], // movivation
   [ScreenName.Art, ArtScreen],
   [ScreenName.Awesome, AwesomeScreen],
@@ -99,7 +100,6 @@ const ScreenList: ScreenNamePair[] = [
   [ScreenName.AwardPicture, PicturesOfTheYearScreen],
   [ScreenName.Picture, PictureScreen],
   [ScreenName.TopMovie, TopMovieScreen],
-  [ScreenName.FunSound, FunSoundScreen],
 
   // app
 
