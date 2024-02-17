@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { SubscribedData } from "../constants/Types";
 import { ScreenName } from "../constants/AppConstants";
+import { refFromURL } from "firebase/database";
 
 export type UserDataState = {
     disableScreens: ScreenName[],
@@ -8,6 +9,8 @@ export type UserDataState = {
     pinnedFunSoundNames: string[],
 
     subscribedData: SubscribedData | undefined,
+
+    checkedInScreens: ScreenName[],
 
     funSoundFavoriteIDs: (number | string)[],
 
@@ -69,6 +72,8 @@ const initialState: UserDataState = {
     funSoundFavoriteIDs: [],
 
     subscribedData: undefined,
+
+    checkedInScreens: [],
 
     shortFilmsFavoritedIDs: [],
 
@@ -146,6 +151,14 @@ const slice = createSlice({
                 state.disableScreens = state.disableScreens.filter(screen => screen !== action.payload)
             else
                 state.disableScreens.push(action.payload)
+        },
+
+        checkInScreen(state, action: PayloadAction<ScreenName>) {
+            if (!state.checkedInScreens)
+                state.checkedInScreens = []
+
+            if (!state.checkedInScreens.includes(action.payload))
+                state.checkedInScreens.push(action.payload)
         },
 
         // fun sound
@@ -567,6 +580,8 @@ export const {
 
     enableAllScreen,
     toggleDisableScreen,
+
+    checkInScreen,
 
     togglePinFunSound,
     addFunSoundFavoritedID,

@@ -12,6 +12,10 @@ import { CachedValueOfCatelogry } from "../../constants/Types"
 export var location: IPLocation | undefined | string
 var cachedPressNextPost: CachedValueOfCatelogry[] | undefined = undefined
 
+var isNewlyInstall: boolean = false
+
+export const IsNewlyInstall = () => isNewlyInstall
+
 /**
  * on first useEffect of the app (freshly open) or first active state of the day
  * . ONLY track ONCE a day
@@ -32,8 +36,8 @@ export const track_FirstOpenOfTheDayAsync = async () => {
     const firstTimeInstallTick = await GetDateAsync(StorageKey_FirstTimeInstallTick)
 
     if (firstTimeInstallTick === undefined) {
-        //  newly install
-
+        isNewlyInstall  = true
+        
         SetDateAsync_Now(StorageKey_FirstTimeInstallTick)
 
         let event = 'newly_install'
