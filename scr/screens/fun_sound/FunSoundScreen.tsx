@@ -86,7 +86,17 @@ const FunSoundScreen = () => {
 
     setCurPageIdx(idx)
     SetNumberAsync(StorageKey_CurPageFunSoundIdx, idx)
-  }, [curPageIdx, funSounds, maxPage])
+  }, [funSounds, maxPage])
+
+  const onPressedMiddlePage = useCallback(() => {
+    if (!Array.isArray(funSounds))
+      return
+
+    const idx = Math.floor(maxPage / 2)
+
+    setCurPageIdx(idx)
+    SetNumberAsync(StorageKey_CurPageFunSoundIdx, idx)
+  }, [funSounds, maxPage])
 
   const onPressedNextPage = useCallback((isNext: boolean) => {
     if (!Array.isArray(funSounds))
@@ -296,7 +306,7 @@ const FunSoundScreen = () => {
         <TouchableOpacity onPress={() => onPressedNextPage(false)} style={style.naviTO}>
           <MaterialCommunityIcons name={Icon.Left} color={theme.counterPrimary} size={Size.Icon} />
         </TouchableOpacity>
-        <Text style={style.pageTxt}>{curPageIdx + 1}/{maxPage}</Text>
+        <Text onPress={onPressedMiddlePage} style={style.pageTxt}>{curPageIdx + 1}/{maxPage}</Text>
         <TouchableOpacity onPress={() => onPressedNextPage(true)} style={style.naviTO}>
           <MaterialCommunityIcons name={Icon.Right} color={theme.counterPrimary} size={Size.Icon} />
         </TouchableOpacity>
