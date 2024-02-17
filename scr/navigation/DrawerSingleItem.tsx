@@ -141,7 +141,6 @@ const DrawerSingleItem = ({
                             backgroundColor: theme.primary,
                             justifyContent: 'center',
                             alignItems: 'center',
-                            padding: 1,
                         }}>
                             <Text adjustsFontSizeToFit numberOfLines={1} style={[{ color: theme.counterPrimary }]}>{LocalText.new}</Text>
                         </View>
