@@ -256,6 +256,7 @@ const SettingView = () => {
           !showRateInApp ? undefined :
             <>
               <Text style={style.titleText}>{LocalText.rate_app}</Text>
+              <Text style={style.contentTxt}>{LocalText.rate_in_app_text}:</Text>
 
               <View style={style.rateContainerView}>
                 {

@@ -339,6 +339,7 @@ export const LocalText = {
   thank_you: 'Your subscription means the world to me! It really makes my day. Thank you for supporting my app.',
 
   rate_in_app_5star_content: 'Thank you so much! Your support means a lot to me. Would you consider rating Gooday on the App Store as well? Your feedback can help the app reach a wider audience!',
+  rate_in_app_text: 'Tap the star you want to rate Gooday',
 
   difficulty: 'Difficulty',
   all: 'All',
