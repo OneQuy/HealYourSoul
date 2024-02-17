@@ -22,6 +22,7 @@ import { addFunSoundFavoritedID, removeFunSoundFavoritedID } from '../../redux/U
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { GetNumberIntAsync, SetNumberAsync } from '../../handle/AsyncStorageUtils';
 import HeaderSettingButton from '../components/HeaderSettingButton';
+import { track_PressFavorite, track_PressNextPost } from '../../handle/tracking/GoodayTracking';
 
 const LikePathByID = 'user_data/post/@cat/@id/like';
 const LikePathAll = 'user_data/post/@cat';
@@ -116,6 +117,8 @@ const FunSoundScreen = () => {
 
     setCurPageIdx(idx)
     SetNumberAsync(StorageKey_CurPageFunSoundIdx, idx)
+
+    track_PressNextPost(true, category, isNext)
   }, [curPageIdx, funSounds, maxPage])
 
   const isFavorited = useCallback((item: FunSound) => {
@@ -152,6 +155,8 @@ const FunSoundScreen = () => {
 
     const nowIsLiked = isFavorited(item)
     const id = idOfSound(item)
+
+    track_PressFavorite(category, !nowIsLiked)
 
     if (nowIsLiked) { // to dislike
       // update local
@@ -220,6 +225,7 @@ const FunSoundScreen = () => {
               return <FunSoundItem
                 onPressedLike={onPressedFavorite}
                 pinnedSounds={pinnedSounds}
+                idOfSound={idOfSound}
                 key={item}
                 canHideLikes={true}
                 likeCount={likeCount}
@@ -236,7 +242,7 @@ const FunSoundScreen = () => {
   const renderItem = useCallback(({ item, index }: { item: FunSound, index: number }) => {
     return <FunSoundItem
       pinnedSounds={pinnedSounds}
-      index={index}
+      idOfSound={idOfSound}
       likeCount={likeCount}
       isFavorited={isFavorited}
       onPressedLike={onPressedFavorite}

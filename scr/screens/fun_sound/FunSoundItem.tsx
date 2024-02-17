@@ -14,6 +14,7 @@ import { AlertNoInternet } from '../../handle/AppUtils'
 import { useAppDispatch } from '../../redux/Store'
 import { togglePinFunSound } from '../../redux/UserDataSlice'
 import { IsNumType } from '../../handle/UtilsTS'
+import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking'
 
 const limitPinsToShowLikeButton = 6
 
@@ -23,8 +24,8 @@ type FunSoundItemProps = {
     onPressedLike: (item: FunSound) => void,
     isFavorited: (item: FunSound) => boolean,
     likeCount: (item: FunSound) => number,
+    idOfSound: (item: FunSound) => string,
     canHideLikes?: boolean,
-    index?: number,
 }
 
 const FunSoundItem = ({
@@ -34,7 +35,8 @@ const FunSoundItem = ({
     isFavorited,
     likeCount,
     canHideLikes,
-    index }: FunSoundItemProps) => {
+    idOfSound,
+}: FunSoundItemProps) => {
     const theme = useContext(ThemeContext);
     const [isHandling, setIsHandling] = useState(false);
     const isPinned = pinnedSounds && pinnedSounds.includes(data.name)
@@ -48,7 +50,10 @@ const FunSoundItem = ({
 
     const onPressedPin = useCallback(async () => {
         dispatch(togglePinFunSound(data.name))
-    }, [data])
+
+        if (!isPinned)
+            track_SimpleWithParam('pin_fun_sound', idOfSound(data))
+    }, [data, idOfSound, isPinned])
 
     const onPressedPlay = useCallback(async () => {
         setIsHandling(true)
