@@ -7,7 +7,7 @@ import { Icon, ScreenName, Size } from '../../constants/AppConstants';
 import { ThemeContext } from '../../constants/Colors';
 import { useNavigation } from '@react-navigation/native';
 
-const HeaderSettingButton = ({ onPress }: { onPress: () => {} }) => {
+const HeaderSettingButton = ({ onPress }: { onPress?: () => {} }) => {
     const theme = useContext(ThemeContext);
     const navigation = useNavigation()
 

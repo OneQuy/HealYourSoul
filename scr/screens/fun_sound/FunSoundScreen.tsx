@@ -21,6 +21,7 @@ import { FirebaseDatabase_GetValueAsync, FirebaseDatabase_SetValueAsync } from '
 import { addFunSoundFavoritedID, removeFunSoundFavoritedID } from '../../redux/UserDataSlice'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { GetNumberIntAsync, SetNumberAsync } from '../../handle/AsyncStorageUtils';
+import HeaderSettingButton from '../components/HeaderSettingButton';
 
 const LikePathByID = 'user_data/post/@cat/@id/like';
 const LikePathAll = 'user_data/post/@cat';
@@ -259,6 +260,14 @@ const FunSoundScreen = () => {
 
       setCurPageIdx(await GetNumberIntAsync(StorageKey_CurPageFunSoundIdx, 0))
     })()
+  }, [])
+
+  // on change theme
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => <HeaderSettingButton />
+    });
   }, [])
 
   // render loading or error
