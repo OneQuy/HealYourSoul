@@ -14,6 +14,36 @@ import { GetIconOfScreen } from '../handle/AppUtils'
 
 const idealRatio = 2.5
 
+const firstVersionScreens: ScreenName[] = [
+    ScreenName.Comic,
+    ScreenName.Meme,
+    ScreenName.Awesome,
+    ScreenName.Typo,
+    ScreenName.Info,
+    ScreenName.Sunset,
+    ScreenName.Quote,
+    ScreenName.CatDog,
+    ScreenName.Love,
+    ScreenName.Satisfying,
+    ScreenName.NSFW,
+    ScreenName.Art,
+    ScreenName.Cute,
+    ScreenName.Sarcasm,
+    ScreenName.IAPPage,
+    ScreenName.WikiFact,
+    ScreenName.ShortFact,
+    ScreenName.Picture,
+    ScreenName.Joke,
+    ScreenName.QuoteText,
+    ScreenName.Trivia,
+    ScreenName.AwardPicture,
+    ScreenName.FunWebsite,
+    ScreenName.TopMovie,
+    ScreenName.BestShortFilms,
+    ScreenName.RandomMeme,
+    ScreenName.Setting,
+] as const
+
 type Props = {
     route: DrawerContentComponentProps['state']['routes'][number],
     masterProps: DrawerContentComponentProps,
@@ -34,7 +64,7 @@ const DrawerSingleItem = ({
 
     const onLayout = useCallback((e: LayoutChangeEvent) => {
         const ratio = e.nativeEvent.layout.width / e.nativeEvent.layout.height
-        
+
         // console.log(ratio);
 
         if (ratio < idealRatio) {
