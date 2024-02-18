@@ -112,7 +112,7 @@ const checkAndFireOnActiveOrOnceUseEffectWithCheckDuplicateAsync = async () => {
     }
 }
 
-const ResetScreens = async () => {
+const ResetNavigation = async () => {
     if (!navigation)
         return
 
@@ -145,7 +145,7 @@ const onActiveAsync = async () => {
 
     onActiveOrOnceUseEffectAsync()
 
-    ResetScreens()
+    ResetNavigation()
 }
 
 const onBackgroundAsync = async () => {
