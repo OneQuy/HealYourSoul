@@ -8,7 +8,7 @@ import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedRelo
 import Share from 'react-native-share';
 import { NetLord } from '../../handle/NetLord'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
-import { HandleError, SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
+import { HandleError, SaveCurrentScreenForLoadNextTime, ToastNewItemsAsync } from '../../handle/AppUtils'
 import ViewShot from 'react-native-view-shot'
 import { CommonStyles } from '../../constants/CommonConstants'
 import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
@@ -300,6 +300,9 @@ const BestShortFilmsScreen = () => {
         if (shortFilms) { // downloaded success
             setHandling(false)
             onPressNext(-1, 'none')
+
+            if (Array.isArray(shortFilms))
+                ToastNewItemsAsync(category, LocalText.new_item_short_film, shortFilms, theme)
         }
         else if (errorDownloadJson) { // download failed
             setHandling(false)
