@@ -40,7 +40,8 @@ const Onboarding = () => {
     }, [theme])
 
     const onPressed = useCallback((type: 'light' | 'dark' | 'color' | 'enter') => {
-        track_SimpleWithParam('onboarding', type)
+        if (type !== 'enter')
+            track_SimpleWithParam('onboarding', type)
 
         if (type === 'color')
             setShowThemes(val => !val)
