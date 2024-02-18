@@ -86,16 +86,6 @@ export const track_FirstOpenOfTheDayAsync = async () => {
     }
 }
 
-export const track_AppStateActive = (isActive: boolean) => {
-    const event = isActive ? 'app_state_active' : 'app_state_inactive'
-
-    MainTrack(event,
-        [
-            `total/${event}`,
-            `events/${event}/#d`,
-        ])
-}
-
 /**
  * freshly open app
  */
