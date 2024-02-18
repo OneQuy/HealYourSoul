@@ -23,6 +23,8 @@ import { GetNumberIntAsync, SetBooleanAsync, SetNumberAsync } from '../handle/As
 import { toast } from '@baronha/ting';
 import { IsDev } from '../handle/IsDev';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
+import { useNavigation } from '@react-navigation/native';
+import { setNavigation } from '../handle/GoodayAppState';
 
 const premiumBGs = [
   [require(`../../assets/images/premium_btn/0.jpg`), '#1c1c1c'],
@@ -49,6 +51,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
   const [catItemHeight, setCatItemHeight] = useState(Math.max(50, heightPercentageToDP(7.5)))
   const [showRateAppOrShare, setShowRateAppOrShare] = useState(true)
   const isDrawerOpen = useDrawerStatus()
+  const navigation = useNavigation()
 
   const [notice, onPressNotice] = useMemo(() => {
     const data = GetAppConfig()?.notice
@@ -175,8 +178,11 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
       setShowRateAppOrShare(val => !val)
   }, [isDrawerOpen])
 
+  // init once
+
   useEffect(() => {
     changePremiumBtnBg()
+    setNavigation(navigation)
   }, [])
 
   const colorSettingText = !isFocusSetting ? theme.background : theme.primary

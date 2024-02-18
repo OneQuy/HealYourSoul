@@ -1,3 +1,5 @@
+import { CommonActions } from '@react-navigation/native';
+
 import { AppStateStatus } from "react-native"
 import { RegisterOnChangedState, UnregisterOnChangedState } from "./AppStateMan"
 import { HandleAppConfigAsync } from "./AppConfigHandler"
@@ -5,15 +7,29 @@ import { HandleStartupAlertAsync } from "./StartupAlert"
 import { startFreshlyOpenAppTick } from "./AppUtils"
 import { SaveCachedPressNextPostAsync, checkAndTrackLocation, track_AppStateActive, track_FirstOpenOfTheDayAsync, track_OnUseEffectOnceEnterAppAsync, track_OpenAppOfDayCount } from "./tracking/GoodayTracking"
 import { StorageKey_LastTimeCheckAndReloadAppConfig, StorageKey_LastTimeCheckFirstOpenAppOfTheDay, StorageKey_OpenAppOfDayCount, StorageKey_OpenAppOfDayCountForDate } from "../constants/AppConstants"
-import { GetDateAsync, GetDateAsync_IsValueExistedAndIsToday, GetNumberIntAsync, SetDateAsync, SetDateAsync_Now, SetNumberAsync } from "./AsyncStorageUtils"
+import { GetDateAsync, GetDateAsync_IsValueExistedAndIsToday, GetNumberIntAsync, SetDateAsync_Now, SetNumberAsync } from "./AsyncStorageUtils"
 import { NetLord } from "./NetLord"
 import { HandldAlertUpdateAppAsync } from "./HandleAlertUpdateApp"
 import { CheckAndPrepareDataForNotificationAsync, setNotificationAsync } from "./GoodayNotification"
 import { IsToday } from "./UtilsTS"
+import { NavigationProp } from "@react-navigation/native"
 
 const HowLongInMinutesToCount2TimesUseAppSeparately = 20
 
 var lastFireOnActiveOrOnceUseEffectWithCheckDuplicate = 0
+
+type NavigationType = NavigationProp<ReactNavigation.RootParamList>
+
+var navigation: NavigationType | undefined = undefined
+
+export const setNavigation = (navi: NavigationType) => {
+    if (navi === navigation) {
+        console.log('already set navi');
+        return
+    }
+
+    navigation = navi
+}
 
 /** only reload if app re-active after a period 1 day */
 const checkAndReloadAppConfigAsync = async () => {
@@ -48,7 +64,6 @@ const onAppConfigReloadedAsync = async () => {
 
     await HandldAlertUpdateAppAsync() // alert_priority 2 (doc)
 }
-
 
 /**
  * will be called at 2 cases:
@@ -97,6 +112,22 @@ const checkAndFireOnActiveOrOnceUseEffectWithCheckDuplicateAsync = async () => {
     }
 }
 
+const ResetScreens = async () => {
+    if (!navigation)
+        return
+
+    const curScreen = navigation.getState().routeNames[navigation.getState().index]
+
+    navigation.dispatch(
+        CommonActions.reset({
+            index: 0,
+            routes: [
+                { name: curScreen },
+            ],
+        })
+    );
+}
+
 const onActiveAsync = async () => {
     // check to show warning alert
 
@@ -113,6 +144,8 @@ const onActiveAsync = async () => {
     // onActiveOrOnceUseEffectAsync
 
     onActiveOrOnceUseEffectAsync()
+
+    ResetScreens()
 }
 
 const onBackgroundAsync = async () => {
