@@ -203,20 +203,6 @@ export const track_ToggleNotification = (type: string, toggle: boolean) => {
     )
 }
 
-// export const track_Theme = (theme: string) => {
-//     const event = 'theme'
-
-//     MainTrack(event,
-//         [
-//             `total/${event}/` + theme,
-//             `total/${event}/all`,
-//         ],
-//         {
-//             theme
-//         }
-//     )
-// }
-
 export const track_SimpleWithCat = (category: Category, event: string, trackDate: boolean = true) => {
     const fbArr = [
         `total/${event}/total`,
