@@ -310,6 +310,8 @@ export const LocalText = {
   fun_websites: 'Fun Websites',
   top_movies: 'Top 250 Movies',
   best_short_films: 'Best Short Films',
+  new_item_website: '# new fun website(s) added to the list!!',
+  new_item_short_film: '# new short film(s) added to the list!!',
 
   premium_benefit: 'Hi there, I am @onequy, an indie developer from Vietnam. I developed this app to spread fun, useful information, and positive things to everyone around the world. I am trying my best to keep the app free. However, I would be really happy and grateful if you subscribe and want to:',
   subscribe_for: 'Subscribe for',
@@ -384,6 +386,7 @@ export const LocalText = {
 export const StorageKey_AwardPictureLastSeenIdxOfYear = (year: number) => 'award_picture_last_seen_idx_' + year
 export const StorageKey_LocalFileVersion = (cat: Category) => 'local_file_version_' + cat
 export const StorageKey_ShowedIntroduceCat = (cat: Category) => 'introduce_' + cat
+export const StorageKey_ItemCountCat = (cat: Category) => 'item_count_' + cat
 
 export const StorageKey_NinjaFact_ToggleNoti = 'ninja_fact_ToggleNoti'
 export const StorageKey_NinjaJoke_ToggleNoti = 'ninja_joke_ToggleNoti'

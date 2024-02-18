@@ -8,7 +8,7 @@ import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedRelo
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { NetLord } from '../../handle/NetLord'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
-import { CopyAndToast, SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
+import { CopyAndToast, SaveCurrentScreenForLoadNextTime, ToastNewItemsAsync } from '../../handle/AppUtils'
 import ViewShot from 'react-native-view-shot'
 import { CommonStyles } from '../../constants/CommonConstants'
 import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
@@ -251,6 +251,9 @@ const FunWebsitesScreen = () => {
         if (funWebsites) { // downloaded success
             setHandling(false)
             onPressNext(-1, 'none')
+
+            if (Array.isArray(funWebsites))
+                ToastNewItemsAsync(category, LocalText.new_item_website, funWebsites, theme)
         }
         else if (errorDownloadJson) { // download failed
             setHandling(false)

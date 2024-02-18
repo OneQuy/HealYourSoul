@@ -1,5 +1,5 @@
 import { Alert, Share as RNShare, Linking, Platform, ShareContent } from "react-native";
-import { Category, FirebaseDBPath, FirebasePath, Icon, LocalPath, LocalText, NeedReloadReason, ScreenName, StorageKey_Rated, StorageKey_ScreenToInit, shareAppText } from "../constants/AppConstants";
+import { Category, FirebaseDBPath, FirebasePath, Icon, LocalPath, LocalText, NeedReloadReason, ScreenName, StorageKey_ItemCountCat, StorageKey_Rated, StorageKey_ScreenToInit, shareAppText } from "../constants/AppConstants";
 import { ThemeColor } from "../constants/Colors";
 import { FileList, MediaType, PostMetadata } from "../constants/Types";
 import { FirebaseStorage_DownloadAndReadJsonAsync } from "../firebase/FirebaseStorage";
@@ -15,7 +15,7 @@ import { NavigationProp } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CheckDuplicateAndDownloadAsync } from "../firebase/FirebaseStorageDownloadManager";
 import { track_HandleError, track_Simple, track_SimpleWithParam } from "./tracking/GoodayTracking";
-import { GetBooleanAsync, SetBooleanAsync } from "./AsyncStorageUtils";
+import { GetBooleanAsync, GetNumberIntAsync, SetBooleanAsync, SetNumberAsync } from "./AsyncStorageUtils";
 import { CheckAndShowInAppReviewAsync } from "./InAppReview";
 
 const today = new Date()
@@ -378,6 +378,29 @@ export const CopyAndToast = (s: string, theme: ThemeColor) => {
 
     const options: ToastOptions = {
         title: LocalText.copied,
+        ...ToastTheme(theme, 'done')
+    };
+
+    toast(options);
+}
+
+
+export const ToastNewItemsAsync = async (cat: Category, text: string, list: any[], theme: ThemeColor) => {
+    const lastCount = await GetNumberIntAsync(StorageKey_ItemCountCat(cat))
+    SetNumberAsync(StorageKey_ItemCountCat(cat), list.length)
+    
+    if (Number.isNaN(lastCount))
+        return
+
+    const newItemCount = list.length - lastCount
+
+    if (newItemCount <= 0)
+        return
+
+    text = text.replace('#', newItemCount.toString())
+
+    const options: ToastOptions = {
+        title: text,
         ...ToastTheme(theme, 'done')
     };
 
