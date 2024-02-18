@@ -10,6 +10,13 @@ import { Cheat } from "../Cheat";
 
 export type SignalType = ReturnType<typeof useTelemetryDeck>['signal']
 
+const aptabaseIgnoredEventNames: string[] = [
+    'press_next_post_x5',
+    'press_random',
+    'press_drawer_item',
+    'press_previous_post'
+] as const
+
 const isLog = Cheat('IsLog_Tracking')
 
 var inited = false
@@ -58,7 +65,7 @@ export const MainTrack = (
 
     const appConfig = GetAppConfig()
 
-    const shouldTrackAptabase = !appConfig || appConfig.tracking.enableAptabase
+    const shouldTrackAptabase = (!appConfig || appConfig.tracking.enableAptabase) && (!aptabaseIgnoredEventNames.includes(eventName))
     const shouldTrackFirebase = !appConfig || appConfig.tracking.enableFirebase
     const shouldTrackTelemetry = !appConfig || appConfig.tracking.enableTelemetry
 
