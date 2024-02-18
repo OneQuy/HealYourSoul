@@ -1,5 +1,5 @@
 import { Alert, Share as RNShare, Linking, Platform, ShareContent } from "react-native";
-import { Category, FirebaseDBPath, FirebasePath, Icon, LocalPath, LocalText, NeedReloadReason, ScreenName, StorageKey_Rated, shareAppText } from "../constants/AppConstants";
+import { Category, FirebaseDBPath, FirebasePath, Icon, LocalPath, LocalText, NeedReloadReason, ScreenName, StorageKey_Rated, StorageKey_ScreenToInit, shareAppText } from "../constants/AppConstants";
 import { ThemeColor } from "../constants/Colors";
 import { FileList, MediaType, PostMetadata } from "../constants/Types";
 import { FirebaseStorage_DownloadAndReadJsonAsync } from "../firebase/FirebaseStorage";
@@ -601,7 +601,7 @@ export const IsContentScreen = (screen: ScreenName) => {
 export const SaveCurrentScreenForLoadNextTime = (navigation: NavigationProp<ReactNavigation.RootParamList>) => {
     const state = navigation.getState();
     const screenName = state.routeNames[state.index];
-    AsyncStorage.setItem('categoryScreenToOpenFirst', screenName);
+    AsyncStorage.setItem(StorageKey_ScreenToInit, screenName);
 }
 
 export const GetApiDataItemFromCached = async <T extends (string | {})>(key: string): Promise<T | undefined> => {

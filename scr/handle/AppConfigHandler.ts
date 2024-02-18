@@ -28,6 +28,10 @@ export function GetRemoteFileConfigVersion(file: string) {
         return Number.NaN
 }
 
+/**
+ * 
+ * @returns true if download success
+ */
 export async function HandleAppConfigAsync(): Promise<boolean> {
     const result = await FirebaseDatabase_GetValueAsync(FirebaseDBPath)
 

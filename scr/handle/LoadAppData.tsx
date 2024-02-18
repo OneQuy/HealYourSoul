@@ -8,7 +8,7 @@ import { IsInternetAvailableAsync, NetLord } from "./NetLord";
 import { HandleAppConfigAsync } from "./AppConfigHandler";
 import { HandleStartupAlertAsync } from "./StartupAlert";
 import { toast } from "@baronha/ting";
-import { LocalText } from "../constants/AppConstants";
+import { LocalText, StorageKey_ScreenToInit } from "../constants/AppConstants";
 import { ToastTheme } from "./AppUtils";
 import { InitTrackingAsync } from "./tracking/Tracking";
 import { HandldAlertUpdateAppAsync } from "./HandleAlertUpdateApp";
@@ -80,7 +80,7 @@ export async function LoadAppData(theme: ThemeColor): Promise<LoadAppDataResult>
 
     // load screen to open
 
-    const categoryScreenToOpenFirst = await AsyncStorage.getItem('categoryScreenToOpenFirst');
+    const categoryScreenToOpenFirst = await AsyncStorage.getItem(StorageKey_ScreenToInit);
 
     // teleletry
 

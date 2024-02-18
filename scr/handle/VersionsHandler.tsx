@@ -25,14 +25,18 @@ export type Versions = {
 
 export var versions: Versions;
 
-export async function HandleVersionsFileAsync() {
+/**
+ * 
+ * @returns true if dl success
+ */
+export async function HandleVersionsFileAsync() : Promise<boolean> {
     let time = new Date();
    
-    const isInternet = await IsInternetAvailableAsync();
+    // const isInternet = await IsInternetAvailableAsync();
 
-    if (!isInternet) {
-        return;
-    }
+    // if (!isInternet) {
+    //     return;
+    // }
 
     const result = await FirebaseDatabase_GetValueAsync(FirebaseDBAppVersionsPath);
 
@@ -40,7 +44,7 @@ export async function HandleVersionsFileAsync() {
 
     if (result.error) {
         HandleError('HandleVersions', result.error)
-        return;
+        return false
     }
 
     // success
@@ -51,4 +55,6 @@ export async function HandleVersionsFileAsync() {
         let now = new Date();
         console.log('time version: ' + (now.valueOf() - time.valueOf()));
     }
+
+    return true
 }

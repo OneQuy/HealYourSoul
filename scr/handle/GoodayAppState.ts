@@ -1,18 +1,19 @@
 import { CommonActions } from '@react-navigation/native';
-
 import { AppStateStatus } from "react-native"
 import { RegisterOnChangedState, UnregisterOnChangedState } from "./AppStateMan"
 import { HandleAppConfigAsync } from "./AppConfigHandler"
 import { HandleStartupAlertAsync } from "./StartupAlert"
 import { startFreshlyOpenAppTick } from "./AppUtils"
 import { SaveCachedPressNextPostAsync, checkAndTrackLocation, track_AppStateActive, track_FirstOpenOfTheDayAsync, track_OnUseEffectOnceEnterAppAsync, track_OpenAppOfDayCount } from "./tracking/GoodayTracking"
-import { StorageKey_LastTimeCheckAndReloadAppConfig, StorageKey_LastTimeCheckFirstOpenAppOfTheDay, StorageKey_OpenAppOfDayCount, StorageKey_OpenAppOfDayCountForDate } from "../constants/AppConstants"
-import { GetDateAsync, GetDateAsync_IsValueExistedAndIsToday, GetNumberIntAsync, SetDateAsync_Now, SetNumberAsync } from "./AsyncStorageUtils"
+import { StorageKey_LastTimeCheckAndReloadAppConfig, StorageKey_LastTimeCheckFirstOpenAppOfTheDay, StorageKey_OpenAppOfDayCount, StorageKey_OpenAppOfDayCountForDate, StorageKey_ScreenToInit } from "../constants/AppConstants"
+import { GetDateAsync, GetDateAsync_IsValueExistedAndIsToday, GetDateAsync_IsValueExistedAndIsTodayAndSameHour, GetNumberIntAsync, SetDateAsync_Now, SetNumberAsync } from "./AsyncStorageUtils"
 import { NetLord } from "./NetLord"
 import { HandldAlertUpdateAppAsync } from "./HandleAlertUpdateApp"
 import { CheckAndPrepareDataForNotificationAsync, setNotificationAsync } from "./GoodayNotification"
 import { IsToday } from "./UtilsTS"
 import { NavigationProp } from "@react-navigation/native"
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { HandleVersionsFileAsync } from './VersionsHandler';
 
 const HowLongInMinutesToCount2TimesUseAppSeparately = 20
 
@@ -31,10 +32,17 @@ export const setNavigation = (navi: NavigationType) => {
     navigation = navi
 }
 
-/** only reload if app re-active after a period 1 day */
-const checkAndReloadAppConfigAsync = async () => {
-    if (await GetDateAsync_IsValueExistedAndIsToday(StorageKey_LastTimeCheckAndReloadAppConfig)) {
-        console.log('[checkAndReloadAppConfigAsync] no check cuz checked today');
+/** reload (app config + file version) if app re-active after a period 1 HOUR */
+const checkAndReloadAppAsync = async () => {
+    // const d = await GetDateAsync(StorageKey_LastTimeCheckAndReloadAppConfig)
+
+    // if (d !== undefined && d.getMinutes() === new Date().getMinutes()) {
+    //     console.log('[checkAndReloadAppAsync] no check cuz checked this minnnnn');
+    //     return
+    // }
+
+    if (await GetDateAsync_IsValueExistedAndIsTodayAndSameHour(StorageKey_LastTimeCheckAndReloadAppConfig)) {
+        console.log('[checkAndReloadAppAsync] no check cuz checked this hour');
         return
     }
 
@@ -45,17 +53,36 @@ const checkAndReloadAppConfigAsync = async () => {
         return
     }
 
-    const success = await HandleAppConfigAsync()
+    // download
 
-    if (!success)
-        return
+    const [successDownloadAppConfig, successDownloadFileVersion] = await Promise.all([
+        await HandleAppConfigAsync(),
+        await HandleVersionsFileAsync()
+    ])
 
-    SetDateAsync_Now(StorageKey_LastTimeCheckAndReloadAppConfig)
+    console.log('successDownloadAppConfig', successDownloadAppConfig);
+    console.log('successDownloadFileVersion', successDownloadFileVersion);
 
-    await onAppConfigReloadedAsync()
+    // handle app config
+
+    if (successDownloadAppConfig)
+        await onAppConfigReloadedAsync()
+
+    // handle file version
+
+    if (successDownloadFileVersion) { // reset screen
+        ResetNavigation()
+    }
+
+    // set tick
+
+    if (successDownloadAppConfig || successDownloadFileVersion)
+        SetDateAsync_Now(StorageKey_LastTimeCheckAndReloadAppConfig)
 }
 
 const onAppConfigReloadedAsync = async () => {
+    console.log('[onAppConfigReloadedAsync]')
+
     // startup alert
 
     await HandleStartupAlertAsync() // alert_priority 1 (doc)
@@ -116,22 +143,31 @@ const ResetNavigation = async () => {
     if (!navigation)
         return
 
-    const curScreen = navigation.getState().routeNames[navigation.getState().index]
+    console.log('[ResetNavigation]')
 
-    navigation.dispatch(
-        CommonActions.reset({
-            index: 0,
-            routes: [
-                { name: curScreen },
-            ],
-        })
-    );
+    try {
+        const curScreen = await AsyncStorage.getItem(StorageKey_ScreenToInit);
+
+        if (!curScreen)
+            return
+
+        navigation.dispatch(
+            CommonActions.reset({
+                index: 0,
+                routes: [
+                    { name: curScreen },
+                ],
+            })
+        )
+    }
+    catch {
+    }
 }
 
 const onActiveAsync = async () => {
     // check to show warning alert
 
-    checkAndReloadAppConfigAsync()
+    checkAndReloadAppAsync()
 
     // first Open App Of The Day
 
@@ -144,8 +180,6 @@ const onActiveAsync = async () => {
     // onActiveOrOnceUseEffectAsync
 
     onActiveOrOnceUseEffectAsync()
-
-    ResetNavigation()
 }
 
 const onBackgroundAsync = async () => {

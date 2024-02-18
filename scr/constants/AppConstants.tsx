@@ -427,6 +427,7 @@ export const StorageKey_DidRateInApp = 'did_rate_in_app'
 export const StorageKey_CachedIAP= 'cached_iap'
 export const StorageKey_CachedPressNextPost = 'cached_press_next_post'
 export const StorageKey_CurPageFunSoundIdx = 'cur_page_idx_sound_fun'
+export const StorageKey_ScreenToInit = 'categoryScreenToOpenFirst'
 
 export const StorageKey_OpenAppOfDayCount = 'open_app_count'
 export const StorageKey_OpenAppOfDayCountForDate = 'open_app_count_date'
