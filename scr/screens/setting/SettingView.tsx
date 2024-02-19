@@ -36,6 +36,7 @@ const SettingView = () => {
   const [isAnimLoadMedia, setIsAnimLoadMedia] = useState(true)
   const [installDate, setInstallDate] = useState('')
   const [feedbackText, setFeedbackText] = useState('')
+  const [userContactText, setuserContactText] = useState('')
   const [isSendingFeedback, setIsSendingFeedback] = useState(false)
   const [showRateInApp, setShowRateInApp] = useState(false)
   const scrollRef = useRef()
@@ -50,6 +51,7 @@ const SettingView = () => {
       rateContainerView: { flexDirection: 'row', gap: Outline.GapHorizontal, justifyContent: 'center', alignItems: 'center' },
       checkbox: { flexDirection: 'row', gap: Outline.GapHorizontal, alignItems: 'center', justifyContent: 'space-between' },
       textInputConView: { height: heightPercentageToDP(20), padding: Outline.GapVertical, borderColor: theme.primary, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth },
+      textInputUserContactConView: { height: heightPercentageToDP(5), padding: Outline.GapVertical, borderColor: theme.primary, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth },
       emailCopyTO: { justifyContent: 'center', alignItems: 'center' },
       communityIconTO: { paddingHorizontal: Outline.GapVertical, flex: 1, flexDirection: 'row', gap: Outline.GapHorizontal, backgroundColor: theme.primary, paddingVertical: Outline.GapVertical, borderRadius: BorderRadius.BR8, justifyContent: 'center', alignItems: 'center' },
       communitiyTOTxt: { flex: 1, textAlign: 'center', color: theme.counterPrimary, fontSize: FontSize.Small_L },
@@ -372,6 +374,21 @@ const SettingView = () => {
             onFocus={(e) => onFocusInput()}
           />
         </View>
+
+        <Text style={style.descNotiText}>{LocalText.feedback_user_contact}</Text>
+
+        <View style={style.textInputUserContactConView}>
+          <TextInput
+            style={style.sendFeedbackInput}
+            maxLength={limitFeedback}
+            value={userContactText}
+            onChangeText={setuserContactText}
+            onFocus={(e) => onFocusInput()}
+            placeholder='your_email@gmail.com'
+            placeholderTextColor={theme.counterBackground}
+          />
+        </View>
+        
         <TouchableOpacity onPress={onPressSendFeedback} style={style.sendFeedbackTO}>
           {
             isSendingFeedback ?

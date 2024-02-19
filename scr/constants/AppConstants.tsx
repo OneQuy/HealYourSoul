@@ -271,6 +271,7 @@ export const LocalText = {
   community_content: "Follow to get latest news about Gooday",
   feedback: "Feedback",
   feedback_info: "You can report issues or suggest features to me here. I really appreciate it!",
+  feedback_user_contact: "Please provide me with your email, or if you prefer, your contact information on WhatsApp, Twitter, Facebook, Instagram, etc. This will allow me to reach out to you if needed to address the issue. (Optional)",
   error: "Error",
   credit_to_author: 'Credit to the author.',
   credit_to: 'Credit to',

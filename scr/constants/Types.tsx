@@ -113,6 +113,16 @@ export type ShortFilm = {
     "url": string,
 }
 
+export interface UserInfo {
+    userId: string,
+    platform: string,
+    country: string,
+    version: number,
+    time: number,
+    installedDate: number,
+    extra: string,
+}
+
 export type FunSound = {
     "mp3": string,
     "name": string,
