@@ -119,7 +119,7 @@ export interface UserInfo {
     country: string,
     version: number,
     time: number,
-    installedDate: number,
+    installedDate: string,
     extra: string,
 }
 

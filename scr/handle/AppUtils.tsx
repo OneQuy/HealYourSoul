@@ -1,13 +1,13 @@
 import { Alert, Share as RNShare, Linking, Platform, ShareContent } from "react-native";
-import { Category, FirebaseDBPath, FirebasePath, Icon, LocalPath, LocalText, NeedReloadReason, ScreenName, StorageKey_ItemCountCat, StorageKey_Rated, StorageKey_ScreenToInit, shareAppText } from "../constants/AppConstants";
+import { Category, FirebaseDBPath, FirebasePath, Icon, LocalPath, LocalText, NeedReloadReason, ScreenName, StorageKey_FirstTimeInstallTick, StorageKey_ItemCountCat, StorageKey_LastTrackCountryName, StorageKey_Rated, StorageKey_ScreenToInit, shareAppText } from "../constants/AppConstants";
 import { ThemeColor } from "../constants/Colors";
-import { FileList, MediaType, PostMetadata } from "../constants/Types";
+import { FileList, MediaType, PostMetadata, UserInfo } from "../constants/Types";
 import { FirebaseStorage_DownloadAndReadJsonAsync } from "../firebase/FirebaseStorage";
 import { Cheat } from "./Cheat";
 import { DeleteFileAsync, DeleteTempDirAsync, GetFLPFromRLP, IsExistedAsync, ReadTextAsync } from "./FileUtils";
 import { versions } from "./VersionsHandler";
 import { ToastOptions, toast } from "@baronha/ting";
-import { ColorNameToHex, ToCanPrint, VersionToNumber } from "./UtilsTS";
+import { ColorNameToHex, SafeDateString, ToCanPrint, VersionToNumber } from "./UtilsTS";
 import RNFS, { DownloadProgressCallbackResult, ReadDirItem } from "react-native-fs";
 import { IsInternetAvailableAsync } from "./NetLord";
 import Clipboard from "@react-native-clipboard/clipboard";
@@ -15,8 +15,9 @@ import { NavigationProp } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CheckDuplicateAndDownloadAsync } from "../firebase/FirebaseStorageDownloadManager";
 import { track_HandleError, track_Simple, track_SimpleWithParam } from "./tracking/GoodayTracking";
-import { GetBooleanAsync, GetNumberIntAsync, SetBooleanAsync, SetNumberAsync } from "./AsyncStorageUtils";
+import { GetBooleanAsync, GetDateAsync, GetNumberIntAsync, SetBooleanAsync, SetNumberAsync } from "./AsyncStorageUtils";
 import { CheckAndShowInAppReviewAsync } from "./InAppReview";
+import { UserID } from "./UserID";
 
 const today = new Date()
 export const todayString = 'd' + today.getDate() + '_m' + (today.getMonth() + 1) + '_' + today.getFullYear()
@@ -384,11 +385,32 @@ export const CopyAndToast = (s: string, theme: ThemeColor) => {
     toast(options);
 }
 
+export const CreateUserInfoObjectAsync = async (extra: string) : Promise<UserInfo> => {
+    let installedDate = ''
+
+    const firstTimeInstallTick = await GetDateAsync(StorageKey_FirstTimeInstallTick)
+
+    if (firstTimeInstallTick !== undefined) {
+        installedDate = SafeDateString(firstTimeInstallTick, '_')
+    }
+
+    let lastTrackCountry = await AsyncStorage.getItem(StorageKey_LastTrackCountryName)
+
+    return {
+        userId: UserID(),
+        platform: Platform.OS,
+        country: lastTrackCountry,
+        version: versionAsNumber,
+        time: Date.now(),
+        installedDate,
+        extra,
+    } as UserInfo
+}
 
 export const ToastNewItemsAsync = async (cat: Category, text: string, list: any[], theme: ThemeColor) => {
     const lastCount = await GetNumberIntAsync(StorageKey_ItemCountCat(cat))
     SetNumberAsync(StorageKey_ItemCountCat(cat), list.length)
-    
+
     if (Number.isNaN(lastCount))
         return
 
