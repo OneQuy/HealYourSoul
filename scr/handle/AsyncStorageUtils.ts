@@ -1,5 +1,4 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import { IsTodayAndSameHour } from "./UtilsTS"
 
 // boolean =================
 
@@ -58,7 +57,7 @@ export const SetNumberAsync = async (key: string, value: number): Promise<void> 
     await AsyncStorage.setItem(key, value.toString())
 }
 
-export const IncreaseNumberAsync = async (key: string, startAt: number = 0, incUnit: number = 1): Promise<int> => {
+export const IncreaseNumberAsync = async (key: string, startAt: number = 0, incUnit: number = 1): Promise<number> => {
     const cur = await GetNumberIntAsync(key, startAt)
     await SetNumberAsync(key, cur + incUnit)
     return cur + incUnit
@@ -108,6 +107,15 @@ export const SetDateAsync_Now = async (key: string): Promise<void> => {
 
 const IsToday = (date: Date): boolean => {
     return IsSameDateMonthYear(date, new Date())
+}
+
+export const IsTodayAndSameHour = (date: Date): boolean => {
+    if (!IsToday(date))
+        return false
+
+    const now = new Date()
+
+    return date.getHours() === now.getHours()
 }
 
 const IsSameDateMonthYear = (a: Date, b: Date): boolean => {
