@@ -20,6 +20,8 @@ var lastFireOnActiveOrOnceUseEffectWithCheckDuplicate = 0
 
 type NavigationType = NavigationProp<ReactNavigation.RootParamList>
 
+var isHandling_CheckAndTriggerFirstOpenAppOfTheDayAsync = false
+
 var navigation: NavigationType | undefined = undefined
 
 export const setNavigation = (navi: NavigationType) => {
@@ -198,12 +200,21 @@ const onStateChanged = (state: AppStateStatus) => {
  * on freshly open app or first active of the day
  */
 export const CheckAndTriggerFirstOpenAppOfTheDayAsync = async () => {
+    if (isHandling_CheckAndTriggerFirstOpenAppOfTheDayAsync) {
+        return
+    }
+
+    isHandling_CheckAndTriggerFirstOpenAppOfTheDayAsync = true
+
     const lastDateTrack = await GetDateAsync(StorageKey_LastTimeCheckFirstOpenAppOfTheDay)
 
-    if (lastDateTrack !== undefined && IsToday(lastDateTrack))
+    if (lastDateTrack !== undefined && IsToday(lastDateTrack)) {
+        isHandling_CheckAndTriggerFirstOpenAppOfTheDayAsync = false
         return
+    }
 
-    SetDateAsync_Now(StorageKey_LastTimeCheckFirstOpenAppOfTheDay)
+    await SetDateAsync_Now(StorageKey_LastTimeCheckFirstOpenAppOfTheDay)
+    isHandling_CheckAndTriggerFirstOpenAppOfTheDayAsync = false
 
     // handles
 
