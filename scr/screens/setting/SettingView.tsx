@@ -9,7 +9,7 @@ import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } 
 import { ThemeContext } from '../../constants/Colors';
 import { BorderRadius, FontSize, FontWeight, Icon, LocalText, Outline, Size, StorageKey_DidRateInApp, StorageKey_FirstTimeInstallTick, StorageKey_IsAnimLoadMedia, StorageKey_LastTickSendFeedback, StorageKey_NinjaFact_ToggleNoti, StorageKey_NinjaJoke_ToggleNoti, StorageKey_Quote_ToggleNoti } from '../../constants/AppConstants';
 import { ScrollView } from 'react-native-gesture-handler';
-import { CopyAndToast, OpenStore, RateApp, ShareApp } from '../../handle/AppUtils';
+import { CopyAndToast, CreateUserInfoObjectAsync, OpenStore, RateApp, ShareApp } from '../../handle/AppUtils';
 import { location, track_RateInApp, track_Simple, track_SimpleWithParam, track_ToggleNotification } from '../../handle/tracking/GoodayTracking';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { GetBooleanAsync, GetDateAsync, GetDateAsync_IsValueExistedAndIsTodayAndSameHour, SetBooleanAsync, SetDateAsync_Now } from '../../handle/AsyncStorageUtils';
@@ -127,8 +127,16 @@ const SettingView = () => {
       return
     }
 
+    const feedback = `[${feedbackText}][${userContactText}]`
+
+    const userinfo = await CreateUserInfoObjectAsync(feedback)
+
+    const sendText = JSON.stringify(userinfo)
+
     setIsSendingFeedback(true)
-    const res = await FirebaseDatabase_SetValueAsync('feedback/t' + Date.now(), feedbackText)
+
+    const res = await FirebaseDatabase_SetValueAsync('feedback/t' + Date.now(), sendText)
+
     setIsSendingFeedback(false)
 
     if (res === null) { // success
@@ -388,7 +396,7 @@ const SettingView = () => {
             placeholderTextColor={theme.counterBackground}
           />
         </View>
-        
+
         <TouchableOpacity onPress={onPressSendFeedback} style={style.sendFeedbackTO}>
           {
             isSendingFeedback ?
