@@ -295,23 +295,32 @@ const BestShortFilmsScreen = () => {
     // for load data first time
 
     useEffect(() => {
-        reasonToReload.current = NeedReloadReason.None
+        (async () => {
+            reasonToReload.current = NeedReloadReason.None
 
-        if (shortFilms) { // downloaded success
-            setHandling(false)
-            onPressNext(-1, 'none')
+            if (shortFilms) { // downloaded success
+                setHandling(false)
 
-            if (Array.isArray(shortFilms))
-                ToastNewItemsAsync(category, LocalText.new_item_short_film, shortFilms, theme)
-        }
-        else if (errorDownloadJson) { // download failed
-            setHandling(false)
+                if (Array.isArray(shortFilms)) {
+                    const res = await ToastNewItemsAsync(category, LocalText.new_item_short_film, shortFilms, theme)
 
-            if (NetLord.IsAvailableLastestCheck())
-                reasonToReload.current = NeedReloadReason.FailToGetContent
-            else
-                reasonToReload.current = NeedReloadReason.NoInternet
-        }
+                    if (res)
+                        onPressNext(0, 'none')
+                    else
+                        onPressNext(-1, 'none')
+                }
+                else
+                    onPressNext(-1, 'none')
+            }
+            else if (errorDownloadJson) { // download failed
+                setHandling(false)
+
+                if (NetLord.IsAvailableLastestCheck())
+                    reasonToReload.current = NeedReloadReason.FailToGetContent
+                else
+                    reasonToReload.current = NeedReloadReason.NoInternet
+            }
+        })()
     }, [shortFilms, errorDownloadJson])
 
     // on init once
