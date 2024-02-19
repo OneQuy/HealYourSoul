@@ -51,7 +51,7 @@ const SettingView = () => {
       rateContainerView: { flexDirection: 'row', gap: Outline.GapHorizontal, justifyContent: 'center', alignItems: 'center' },
       checkbox: { flexDirection: 'row', gap: Outline.GapHorizontal, alignItems: 'center', justifyContent: 'space-between' },
       textInputConView: { height: heightPercentageToDP(20), padding: Outline.GapVertical, borderColor: theme.primary, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth },
-      textInputUserContactConView: { height: heightPercentageToDP(5), padding: Outline.GapVertical, borderColor: theme.primary, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth },
+      textInputUserContactConView: { height: heightPercentageToDP(5), paddingHorizontal: Outline.GapVertical, borderColor: theme.primary, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth },
       emailCopyTO: { justifyContent: 'center', alignItems: 'center' },
       communityIconTO: { paddingHorizontal: Outline.GapVertical, flex: 1, flexDirection: 'row', gap: Outline.GapHorizontal, backgroundColor: theme.primary, paddingVertical: Outline.GapVertical, borderRadius: BorderRadius.BR8, justifyContent: 'center', alignItems: 'center' },
       communitiyTOTxt: { flex: 1, textAlign: 'center', color: theme.counterPrimary, fontSize: FontSize.Small_L },
@@ -64,6 +64,7 @@ const SettingView = () => {
       sendFeedbackTO: { backgroundColor: theme.primary, minWidth: 100, alignSelf: 'center', paddingVertical: Outline.GapVertical, paddingHorizontal: Outline.GapVertical_2, borderRadius: BorderRadius.BR8 },
       shareTO: { backgroundColor: theme.primary, flexDirection: 'row', justifyContent: 'center', gap: Outline.GapHorizontal, flex: 1, alignSelf: 'center', paddingVertical: Outline.GapVertical, paddingHorizontal: Outline.GapVertical_2, borderRadius: BorderRadius.BR8, },
       sendFeedbackInput: { color: theme.counterBackground, textAlignVertical: 'top', textAlign: 'left', width: '100%', height: '100%' },
+      sendFeedbackInput_UserContact: { color: theme.counterBackground, textAlignVertical: 'center', textAlign: 'left', width: '100%', height: '100%' },
     })
   }, [theme, insets])
 
@@ -108,9 +109,19 @@ const SettingView = () => {
     Alert.alert('Location', ToCanPrint(location))
   }, [])
 
-  const onFocusInput = useCallback(async () => {
-    // @ts-ignore
-    scrollRef?.current?.scrollToEnd({ animated: true })
+  const onFocusInput = useCallback(async (scrollToPercent?: number) => {
+    if (scrollToPercent === undefined) {
+      // @ts-ignore
+      scrollRef?.current?.scrollToEnd({ animated: true })
+    }
+    else {
+      // @ts-ignore
+      scrollRef?.current?.scrollTo({
+        x: 0,
+        y: heightPercentageToDP(scrollToPercent),
+        animated: true,
+      })
+    }
   }, [])
 
   const onPressSendFeedback = useCallback(async () => {
@@ -260,7 +271,7 @@ const SettingView = () => {
         ref={scrollRef}
         showsVerticalScrollIndicator={false} contentContainerStyle={style.scrollView}>
 
-        {/* rate app */}
+        {/* rate in app */}
 
         {
           !showRateInApp ? undefined :
@@ -379,9 +390,12 @@ const SettingView = () => {
             multiline={true}
             value={feedbackText}
             onChangeText={setFeedbackText}
-            onFocus={(e) => onFocusInput()}
+            onFocus={(e) => onFocusInput(90)}
           />
         </View>
+
+        <View />
+        <View />
 
         <Text style={style.descNotiText}>{LocalText.feedback_user_contact}</Text>
 
@@ -453,7 +467,7 @@ const SettingView = () => {
             <Text style={[{ color: theme.counterBackground, fontSize: FontSize.Small_L }]}>{`(${location.city_name ?? location.region_name} - ${location.country_name})`}</Text>
         }
       </ScrollView>
-    </View>
+    </View >
   )
 }
 
