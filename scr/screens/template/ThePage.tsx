@@ -822,7 +822,7 @@ const ThePage = ({ category }: ThePageProps) => {
             {/* title */}
             {
                 post.current === null || !post.current.title ? null :
-                    <Text numberOfLines={3} style={style.titleTxt}>{post.current.title}</Text>
+                    <Text numberOfLines={3} adjustsFontSizeToFit style={style.titleTxt}>{post.current.title}</Text>
             }
 
             {/* media view */}
