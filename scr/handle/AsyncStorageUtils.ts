@@ -58,6 +58,12 @@ export const SetNumberAsync = async (key: string, value: number): Promise<void> 
     await AsyncStorage.setItem(key, value.toString())
 }
 
+export const IncreaseNumberAsync = async (key: string, startAt: number = 0, incUnit: number = 1): Promise<int> => {
+    const cur = await GetNumberIntAsync(key, startAt)
+    await SetNumberAsync(key, cur + incUnit)
+    return cur + incUnit
+}
+
 // date =================
 
 export const GetDateAsync = async (key: string): Promise<Date | undefined> => {

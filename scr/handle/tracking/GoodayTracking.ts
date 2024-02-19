@@ -1,4 +1,4 @@
-import { Category, StorageKey_CachedPressNextPost, StorageKey_FirstTimeInstallTick, StorageKey_LastInstalledVersion, StorageKey_LastTickTrackLocation, StorageKey_LastTrackCountryName } from "../../constants/AppConstants"
+import { Category, StorageKey_CachedPressNextPost, StorageKey_FirstTimeInstallTick, StorageKey_LastInstalledVersion, StorageKey_LastTickTrackLocation, StorageKey_LastTrackCountryName, StorageKey_OpenAppTotalCount } from "../../constants/AppConstants"
 import { GetDateAsync, GetDateAsync_IsValueExistedAndIsToday, GetNumberIntAsync, SetDateAsync_Now, SetNumberAsync } from "../AsyncStorageUtils"
 import { MainTrack, TrackErrorOnFirebase } from "./Tracking"
 import { versionAsNumber } from "../AppUtils"
@@ -36,8 +36,8 @@ export const track_NewlyInstallOrFirstOpenOfTheDayOldUserAsync = async () => {
     const firstTimeInstallTick = await GetDateAsync(StorageKey_FirstTimeInstallTick)
 
     if (firstTimeInstallTick === undefined) {
-        isNewlyInstall  = true
-        
+        isNewlyInstall = true
+
         SetDateAsync_Now(StorageKey_FirstTimeInstallTick)
 
         let event = 'newly_install'
@@ -75,13 +75,15 @@ export const track_NewlyInstallOrFirstOpenOfTheDayOldUserAsync = async () => {
 
     else {
         let event = 'first_open_of_day_old_user'
+        const totalOpenAppCount = await GetNumberIntAsync(StorageKey_OpenAppTotalCount, 0)
 
         MainTrack(event,
             [
                 `events/${event}/#d`,
             ],
             {
-                installedDaysCount: DistanceFrom2Dates(Date.now(), firstTimeInstallTick).toFixed(1)
+                installedDaysCount: DistanceFrom2Dates(Date.now(), firstTimeInstallTick).toFixed(1),
+                totalOpenAppCount,
             })
     }
 }
@@ -92,6 +94,7 @@ export const track_NewlyInstallOrFirstOpenOfTheDayOldUserAsync = async () => {
 export const track_OnUseEffectOnceEnterAppAsync = async (startFreshlyOpenAppTick: number) => {
     let event = 'freshly_open_app'
     const elapsedOpenAppTime = Date.now() - startFreshlyOpenAppTick
+    const totalOpenAppCount = await GetNumberIntAsync(StorageKey_OpenAppTotalCount, 0)
 
     MainTrack(event,
         [
@@ -99,7 +102,8 @@ export const track_OnUseEffectOnceEnterAppAsync = async (startFreshlyOpenAppTick
             `events/${event}/#d`,
         ],
         {
-            floatValue: elapsedOpenAppTime
+            floatValue: elapsedOpenAppTime,
+            totalOpenAppCount,
         }
     )
 
