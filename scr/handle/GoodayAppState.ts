@@ -103,6 +103,7 @@ const onActiveOrOnceUseEffectAsync = async () => {
 }
 
 /**
+ * use to count open app times
  * will be called at 2 cases:
  * 1. whenever freshly open app
  * 2. onAppActive (but at least 20p after the last call this method)
