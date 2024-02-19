@@ -147,7 +147,7 @@ const SettingView = () => {
     else { // fail
       Alert.alert(LocalText.popup_title_error, LocalText.popup_content_error + '\n\n' + ToCanPrint(res))
     }
-  }, [feedbackText, isSendingFeedback])
+  }, [feedbackText, userContactText, isSendingFeedback])
 
   const onPressRateStarAsync = useCallback(async (starIdx: number) => {
     setShowRateInApp(false)
@@ -394,6 +394,7 @@ const SettingView = () => {
             onFocus={(e) => onFocusInput()}
             placeholder='your_email@gmail.com'
             placeholderTextColor={theme.counterBackground}
+            autoCapitalize={'none'}
           />
         </View>
 
