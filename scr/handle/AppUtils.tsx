@@ -385,7 +385,7 @@ export const CopyAndToast = (s: string, theme: ThemeColor) => {
     toast(options);
 }
 
-export const CreateUserInfoObjectAsync = async (extra: string) : Promise<UserInfo> => {
+export const CreateUserInfoObjectAsync = async (extra: string): Promise<UserInfo> => {
     let installedDate = ''
 
     const firstTimeInstallTick = await GetDateAsync(StorageKey_FirstTimeInstallTick)
@@ -407,17 +407,21 @@ export const CreateUserInfoObjectAsync = async (extra: string) : Promise<UserInf
     } as UserInfo
 }
 
-export const ToastNewItemsAsync = async (cat: Category, text: string, list: any[], theme: ThemeColor) => {
+/**
+ * 
+ * @returns true if have new items
+ */
+export const ToastNewItemsAsync = async (cat: Category, text: string, list: any[], theme: ThemeColor): Promise<boolean> => {
     const lastCount = await GetNumberIntAsync(StorageKey_ItemCountCat(cat))
     SetNumberAsync(StorageKey_ItemCountCat(cat), list.length)
 
     if (Number.isNaN(lastCount))
-        return
+        return false
 
     const newItemCount = list.length - lastCount
 
     if (newItemCount <= 0)
-        return
+        return false
 
     text = text.replace('#', newItemCount.toString())
 
@@ -426,7 +430,9 @@ export const ToastNewItemsAsync = async (cat: Category, text: string, list: any[
         ...ToastTheme(theme, 'done')
     };
 
-    toast(options);
+    toast(options)
+
+    return true
 }
 
 export const HandleError = (methodName: string, error: any, keepSilentForUser?: boolean) => {

@@ -246,23 +246,32 @@ const FunWebsitesScreen = () => {
     // for load data first time
 
     useEffect(() => {
-        reasonToReload.current = NeedReloadReason.None
+        (async () => {
+            reasonToReload.current = NeedReloadReason.None
 
-        if (funWebsites) { // downloaded success
-            setHandling(false)
-            onPressNext(-1, 'none')
+            if (funWebsites) { // downloaded success
+                setHandling(false)
 
-            if (Array.isArray(funWebsites))
-                ToastNewItemsAsync(category, LocalText.new_item_website, funWebsites, theme)
-        }
-        else if (errorDownloadJson) { // download failed
-            setHandling(false)
+                if (Array.isArray(funWebsites)) {
+                    const res = await ToastNewItemsAsync(category, LocalText.new_item_website, funWebsites, theme)
 
-            if (NetLord.IsAvailableLastestCheck())
-                reasonToReload.current = NeedReloadReason.FailToGetContent
-            else
-                reasonToReload.current = NeedReloadReason.NoInternet
-        }
+                    if (res)
+                        onPressNext(funWebsites[0].id, 'none')
+                    else
+                        onPressNext(-1, 'none')
+                }
+                else
+                    onPressNext(-1, 'none')
+            }
+            else if (errorDownloadJson) { // download failed
+                setHandling(false)
+
+                if (NetLord.IsAvailableLastestCheck())
+                    reasonToReload.current = NeedReloadReason.FailToGetContent
+                else
+                    reasonToReload.current = NeedReloadReason.NoInternet
+            }
+        })()
     }, [funWebsites, errorDownloadJson])
 
     // on init once
