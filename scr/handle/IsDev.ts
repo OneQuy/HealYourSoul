@@ -11,7 +11,7 @@ var inited = false
 export const IsDev = () => {
     if (!inited)
         throw new Error('[IsDev] not inited yet.')
-    
+
     return isDev
 }
 
@@ -31,7 +31,8 @@ export const CheckIsDevAsync = async (): Promise<void> => {
         if (!config) {
             isDev = false
         }
-        else
-            isDev = config.force_dev
+        else {
+            isDev = config.force_dev_01 === 1
+        }
     }
 }

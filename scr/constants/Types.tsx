@@ -32,7 +32,7 @@ export type LatestVersionConfig = {
 export type AppConfig = {
     net_url: string,
     remote_files: object,
-    force_dev: boolean,
+    force_dev_01: number,
     latest_version: {
         android: LatestVersionConfig,
         ios: LatestVersionConfig,
