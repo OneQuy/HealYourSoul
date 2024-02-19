@@ -23,7 +23,7 @@ var inited = false
 
 var signal: SignalType | undefined = undefined
 
-const prefixFbTrackPath = () => IsDev() ? 'tracking/dev/' : 'tracking/production/'
+export const prefixFbTrackPath = () => IsDev() ? 'tracking/dev/' : 'tracking/production/'
 
 export const SetSignal = (sig: SignalType) => signal = sig
 

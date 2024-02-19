@@ -9,11 +9,13 @@ import { Product } from 'react-native-iap';
 import IAPPage_Subscribed from './IAPPage_Subscribed';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { setSubscribe } from '../../redux/UserDataSlice';
-import { GetExpiredDateAndDaysLeft, HandleError } from '../../handle/AppUtils';
+import { CreateUserInfoObjectAsync, GetExpiredDateAndDaysLeft, HandleError, todayString } from '../../handle/AppUtils';
 import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 import { ThemeContext } from '../../constants/Colors';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { prefixFbTrackPath } from '../../handle/tracking/Tracking';
+import { FirebaseDatabase_SetValueAsync } from '../../firebase/FirebaseDatabase';
 
 const ids = [
   {
@@ -80,8 +82,18 @@ const IAPPage = () => {
     setProcessingId('')
 
     if (res === undefined) { // success
-      track_SimpleWithParam('iap_resulted', 'successssss_' + id)
+      // track count
 
+      track_SimpleWithParam('iap_resulted', 'successssss_' + id)
+      
+      // track detail
+
+      const pathFb = prefixFbTrackPath() + 'iap_success/' + todayString + '/' + Date.now()
+      const trackText = JSON.stringify(await CreateUserInfoObjectAsync(id))
+      FirebaseDatabase_SetValueAsync(pathFb, trackText)
+
+      // dispatch
+      
       dispatch(setSubscribe(id))
 
       Alert.alert(LocalText.you_are_awesome, LocalText.thank_iap)
