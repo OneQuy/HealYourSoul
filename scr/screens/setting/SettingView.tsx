@@ -192,7 +192,7 @@ const SettingView = () => {
       CopyAndToast('onequy@gmail.com', theme)
     }
     else if (type === 'twitter') {
-      Linking.openURL('https://twitter.com/warm_goodday')
+      Linking.openURL('https://twitter.com/Gooday279911')
     }
     else if (type === 'facebook') {
       Linking.openURL('https://www.facebook.com/GoodayMakeYourDayGood')
