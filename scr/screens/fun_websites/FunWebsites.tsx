@@ -107,14 +107,14 @@ const FunWebsitesScreen = () => {
 
         if (id < 0) {
             id = await getSelectingIdAsync()
-            id++
+            id--
         }
 
         let web = funWebsites.find(w => w.id === id)
 
         if (!web) {
-            web = funWebsites[0]
-            id = 0
+            web = funWebsites[funWebsites.length - 1]
+            id = web.id
         }
 
         setSelectingIdAsync(id)
