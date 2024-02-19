@@ -20,16 +20,16 @@ export const IsNewlyInstall = () => isNewlyInstall
  * on first useEffect of the app (freshly open) or first active state of the day
  * . ONLY track ONCE a day
  */
-export const track_FirstOpenOfTheDayAsync = async () => {
-    // first_open_app_of_day
+export const track_NewlyInstallOrFirstOpenOfTheDayOldUserAsync = async () => {
+    // // first_open_app_of_day
 
-    let event = 'first_open_app_of_day'
+    // let event = 'first_open_app_of_day'
 
-    MainTrack(event,
-        [
-            `total/${event}`,
-            `events/${event}/#d`,
-        ])
+    // MainTrack(event,
+    //     [
+    //         `total/${event}`,
+    //         `events/${event}/#d`,
+    //     ])
 
     // newly_install
 
