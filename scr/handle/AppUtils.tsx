@@ -71,6 +71,8 @@ export const GetListFileRLP = (cat: Category, localOrFb: boolean) => {
     if (!localOrFb) {
         if (cat === Category.Draw)
             return FirebasePath.ListFile_Draw;
+        if (cat === Category.Tune)
+            return FirebasePath.ListFile_Tune;
         else if (cat === Category.Meme)
             return FirebasePath.ListFile_Meme;
         else if (cat === Category.Quote)
@@ -129,6 +131,8 @@ export const GetListFileRLP = (cat: Category, localOrFb: boolean) => {
             return LocalPath.ListFile_Awesome;
         else if (cat === Category.Sunset)
             return LocalPath.ListFile_Sunset;
+        else if (cat === Category.Tune)
+            return LocalPath.ListFile_Tune;
         else
             throw new Error('GetListFileRLP: ' + cat);
     }
@@ -163,6 +167,8 @@ export const GetDBVersionPath = (cat: Category) => {
         return FirebaseDBPath.Version_Info;
     else if (cat === Category.Awesome)
         return FirebaseDBPath.Version_Awesome;
+    else if (cat === Category.Tune)
+        return FirebaseDBPath.Version_Tune;
     else
         throw new Error('GetDBPath: ' + cat);
 }
@@ -228,6 +234,8 @@ export async function CheckAndGetFileListAsync(cat: Category): Promise<FileList 
         needDownload = true;
     else if (cat === Category.Info && localVersion < versions.info)
         needDownload = true;
+    else if (cat === Category.Tune && localVersion < versions.tune)
+        needDownload = true;
 
     if (!needDownload && localFileList !== null) {
         if (Cheat('IsLog_LoadFileList')) {
@@ -275,6 +283,8 @@ const GetMediaFullPath = (localOrFb: boolean, cat: Category, postID: number, med
         path = `awesome/data/${postID}/${mediaIdx}`;
     else if (cat === Category.Sunset)
         path = `sunset/data/${postID}/${mediaIdx}`;
+    else if (cat === Category.Tune)
+        path = `tune/data/${postID}/${mediaIdx}`;
     else
         throw new Error('GetDataFullPath: ' + cat);
 
@@ -315,6 +325,8 @@ export const GetAllSavedLocalPostIDsListAsync = async (cat: Category) => {
         path = `art/data`;
     else if (cat === Category.Awesome)
         path = `awesome/data`;
+    else if (cat === Category.Tune)
+        path = `tune/data`;
     else if (cat === Category.Typo)
         path = `typo/data`;
     else if (cat === Category.Info)
@@ -636,6 +648,8 @@ export const GetIconOfScreen = (screen: ScreenName) => {
         return 'format-letter-ends-with'
     else if (screen === ScreenName.Info)
         return 'information'
+    else if (screen === ScreenName.Tune)
+        return 'music-note'
     else
         return Icon.HeartBroken
 }

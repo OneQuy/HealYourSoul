@@ -18,7 +18,7 @@ import { CheckAndGetFileListAsync, CheckLocalFileAndGetURIAsync, CopyAndToast, G
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { PickRandomElement, RoundNumber, SecondsToHourMinuteSecondString } from '../../handle/Utils';
-import { addDrawSeenID, addQuoteSeenID, addMemeSeenID, addLoveSeenID, addSatisfyingSeenID, addCatDogSeenID, addNSFWSeenID, addCuteSeenID, addArtSeenID, addSarcasmSeenID, addTypoSeenID, addSunsetSeenID, addInfoSeenID, addAwesomeSeenID } from '../../redux/UserDataSlice';
+import { addDrawSeenID, addQuoteSeenID, addMemeSeenID, addLoveSeenID, addSatisfyingSeenID, addCatDogSeenID, addNSFWSeenID, addCuteSeenID, addArtSeenID, addSarcasmSeenID, addTypoSeenID, addSunsetSeenID, addInfoSeenID, addAwesomeSeenID, addTuneSeenID } from '../../redux/UserDataSlice';
 import { setMutedVideo } from '../../redux/MiscSlice';
 import { ColorNameToRgb, HexToRgb, ToCanPrint } from '../../handle/UtilsTS';
 import { ToastOptions, toast } from '@baronha/ting';
@@ -100,6 +100,8 @@ const ThePage = ({ category }: ThePageProps) => {
             return state.userData.sunsetSeenIDs;
         else if (category === Category.Awesome)
             return state.userData.awesomeSeenIDs;
+        else if (category === Category.Tune)
+            return state.userData.tuneSeenIDs;
         else
             throw new Error('not implement cat: ' + category);
     });
@@ -574,6 +576,8 @@ const ThePage = ({ category }: ThePageProps) => {
                 dispatch(addInfoSeenID(post.current.id));
             else if (category === Category.Awesome)
                 dispatch(addAwesomeSeenID(post.current.id));
+            else if (category === Category.Tune)
+                dispatch(addTuneSeenID(post.current.id));
             else
                 throw new Error('NI cat: ' + category);
         }

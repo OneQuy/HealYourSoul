@@ -13,15 +13,23 @@ export const CuteScreen = () => {
 export const ArtScreen = () => {
   return <ThePage category={Category.Art} />;
 }
+
 export const AwesomeScreen = () => {
   return <ThePage category={Category.Awesome} />;
 }
+
 export const SunsetScreen = () => {
   return <ThePage category={Category.Sunset} />;
 }
+
 export const InfoScreen = () => {
   return <ThePage category={Category.Info} />;
 }
+
+export const TuneScreen = () => {
+  return <ThePage category={Category.Tune} />;
+}
+
 export const TypoScreen = () => {
   return <ThePage category={Category.Typo} />;
 }

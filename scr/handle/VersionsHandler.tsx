@@ -21,6 +21,7 @@ export type Versions = {
     typo: number,
     sunset: number,
     info: number,
+    tune: number,
 }
 
 export var versions: Versions;

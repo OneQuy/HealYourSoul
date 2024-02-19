@@ -16,6 +16,7 @@ import { checkInScreen } from '../redux/UserDataSlice'
 
 const idealRatio = 2.5
 
+// NOTE: NOT add new item to this array.
 const firstVersionScreens: ScreenName[] = [
     ScreenName.Comic,
     ScreenName.Meme,

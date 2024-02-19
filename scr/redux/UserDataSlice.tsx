@@ -25,6 +25,9 @@ export type UserDataState = {
     awesomeSeenIDs: (number | string)[],
     awesomeFavoritedIDs: (number | string)[],
 
+    tuneSeenIDs: (number | string)[],
+    tuneFavoritedIDs: (number | string)[],
+
     infoSeenIDs: (number | string)[],
     infoFavoritedIDs: (number | string)[],
 
@@ -88,6 +91,9 @@ const initialState: UserDataState = {
 
     memeSeenIDs: [],
     memeFavoritedIDs: [],
+
+    tuneSeenIDs: [],
+    tuneFavoritedIDs: [],
 
     sunsetSeenIDs: [],
     sunsetFavoritedIDs: [],
@@ -317,6 +323,31 @@ const slice = createSlice({
                 state.infoFavoritedIDs = []
 
             state.infoFavoritedIDs = state.infoFavoritedIDs.filter(i => i !== action.payload)
+        },
+
+        // tune
+
+        addTuneSeenID(state, action: PayloadAction<number | string>) {
+            if (!state.tuneSeenIDs)
+                state.tuneSeenIDs = []
+
+            if (!state.tuneSeenIDs.includes(action.payload))
+                state.tuneSeenIDs.push(action.payload);
+        },
+
+        addTuneFavoritedID(state, action: PayloadAction<number | string>) {
+            if (!state.tuneFavoritedIDs)
+                state.tuneFavoritedIDs = []
+
+            if (!state.tuneFavoritedIDs.includes(action.payload))
+                state.tuneFavoritedIDs.push(action.payload);
+        },
+
+        removeTuneFavoritedID(state, action: PayloadAction<number | string>) {
+            if (!state.tuneFavoritedIDs)
+                state.tuneFavoritedIDs = []
+
+            state.tuneFavoritedIDs = state.tuneFavoritedIDs.filter(i => i !== action.payload)
         },
 
         // typo
@@ -655,7 +686,11 @@ export const {
     removeTopMovieFavoritedID,
 
     addShortFilmsFavoritedID,
-    removeShortFilmsFavoritedID
+    removeShortFilmsFavoritedID,
+
+    addTuneSeenID,
+    addTuneFavoritedID,
+    removeTuneFavoritedID
 } = slice.actions;
 
 export default slice.reducer;

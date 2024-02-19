@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Category } from "../constants/AppConstants";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/Store";
-import { addDrawFavoritedID, addQuoteFavoritedID, addMemeFavoritedID, removeDrawFavoritedID, removeQuoteFavoritedID, removeMemeFavoritedID, removeLoveFavoritedID, addLoveFavoritedID, removeSatisfyingFavoritedID, addSatisfyingFavoritedID, removeCatDogFavoritedID, addCatDogFavoritedID, removeNSFWFavoritedID, addNSFWFavoritedID, removeCuteFavoritedID, addCuteFavoritedID, removeArtFavoritedID, addArtFavoritedID, removeSarcasmFavoritedID, addSarcasmFavoritedID, removeAwardPictureFavoritedID, addAwardPictureFavoritedID, removeFunWebsiteFavoritedID, addFunWebsiteFavoritedID, removeTopMovieFavoritedID, addTopMovieFavoritedID, removeShortFilmsFavoritedID, addShortFilmsFavoritedID, removeSunsetFavoritedID, addSunsetFavoritedID, removeTypoFavoritedID, addTypoFavoritedID, removeAwesomeFavoritedID, addAwesomeFavoritedID, removeInfoFavoritedID, addInfoFavoritedID } from '../redux/UserDataSlice'
+import { addDrawFavoritedID, addQuoteFavoritedID, addMemeFavoritedID, removeDrawFavoritedID, removeQuoteFavoritedID, removeMemeFavoritedID, removeLoveFavoritedID, addLoveFavoritedID, removeSatisfyingFavoritedID, addSatisfyingFavoritedID, removeCatDogFavoritedID, addCatDogFavoritedID, removeNSFWFavoritedID, addNSFWFavoritedID, removeCuteFavoritedID, addCuteFavoritedID, removeArtFavoritedID, addArtFavoritedID, removeSarcasmFavoritedID, addSarcasmFavoritedID, removeAwardPictureFavoritedID, addAwardPictureFavoritedID, removeFunWebsiteFavoritedID, addFunWebsiteFavoritedID, removeTopMovieFavoritedID, addTopMovieFavoritedID, removeShortFilmsFavoritedID, addShortFilmsFavoritedID, removeSunsetFavoritedID, addSunsetFavoritedID, removeTypoFavoritedID, addTypoFavoritedID, removeAwesomeFavoritedID, addAwesomeFavoritedID, removeInfoFavoritedID, addInfoFavoritedID, removeTuneFavoritedID, addTuneFavoritedID } from '../redux/UserDataSlice'
 import { GetPostLikeCountAsync, LikePostAsync } from "../handle/LikeCountHandler";
 
 export default function useIsFavorited(category: Category, id: number | string | undefined)
     : readonly [isFavorited: boolean, likeCount: number, onPressFavorite: () => void] {
-    const dispatch = useAppDispatch()    
+    const dispatch = useAppDispatch()
     const [likeCount, setLikeCount] = useState<number>(Number.NaN);
 
     const favoritedIDs = useAppSelector((state: RootState) => {
@@ -46,10 +46,12 @@ export default function useIsFavorited(category: Category, id: number | string |
             return state.userData.sunsetFavoritedIDs;
         else if (category === Category.Awesome)
             return state.userData.awesomeFavoritedIDs;
+        else if (category === Category.Tune)
+            return state.userData.tuneFavoritedIDs;
         else
             throw new Error('NI cat: ' + Category[category]);
     })
-    
+
     const isFavorited: boolean = useMemo(() => {
         if (id === undefined)
             return false
@@ -71,6 +73,11 @@ export default function useIsFavorited(category: Category, id: number | string |
                 dispatch(removeDrawFavoritedID(id));
             else
                 dispatch(addDrawFavoritedID(id));
+        } else if (category === Category.Tune) {
+            if (isFavorited)
+                dispatch(removeTuneFavoritedID(id));
+            else
+                dispatch(addTuneFavoritedID(id));
         }
         else if (category === Category.Meme) {
             if (isFavorited)
@@ -177,7 +184,7 @@ export default function useIsFavorited(category: Category, id: number | string |
     useEffect(() => {
         if (id === undefined)
             setLikeCount(Number.NaN)
-        else{
+        else {
             setLikeCount(Number.NaN)
             GetPostLikeCountAsync(category, id, (likes) => setLikeCount(likes))
         }

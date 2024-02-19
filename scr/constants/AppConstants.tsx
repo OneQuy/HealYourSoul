@@ -6,6 +6,7 @@ export enum ScreenName {
   Comic = 'Warm', // draw
   Meme = 'Meme',
   Awesome = 'Awesome',
+  Tune = 'Tune',
   Typo = 'Typography',
   Info = 'Infographic',
   Sunset = 'Nature',
@@ -48,6 +49,7 @@ export enum LocalPath {
   ListFile_Art = LocalPath.MasterDirName + '/art/list.json',
   ListFile_Sarcasm = LocalPath.MasterDirName + '/sarcasm/list.json',
   ListFile_Awesome = LocalPath.MasterDirName + '/awesome/list.json',
+  ListFile_Tune = LocalPath.MasterDirName + '/tune/list.json',
   ListFile_Typo = LocalPath.MasterDirName + '/typo/list.json',
   ListFile_Info = LocalPath.MasterDirName + '/info/list.json',
   ListFile_Sunset = LocalPath.MasterDirName + '/sunset/list.json',
@@ -65,6 +67,7 @@ export enum FirebasePath {
   ListFile_Cute = 'cute/list.json',
   ListFile_Sarcasm = 'sarcasm/list.json',
   ListFile_Awesome = 'awesome/list.json',
+  ListFile_Tune = 'tune/list.json',
   ListFile_Info = 'info/list.json',
   ListFile_Typo = 'typo/list.json',
   ListFile_Sunset = 'sunset/list.json',
@@ -84,6 +87,7 @@ export enum FirebaseDBPath {
   Version_Sunset = 'app/versions/sunset',
   Version_Typo = 'app/versions/typo',
   Version_Info = 'app/versions/info',
+  Version_Tune = 'app/versions/tune',
   Version_Awesome = 'app/versions/awesome',
 }
 
@@ -117,6 +121,7 @@ export enum Category {
   Info = 24,
   Sunset = 25,
   FunSound = 26,
+  Tune = 27,
 }
 
 // margin / padding
