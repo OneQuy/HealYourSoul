@@ -3,12 +3,11 @@ import { FirebaseInit } from "../firebase/Firebase";
 import { CheckAndClearAllLocalFileBeforeLoadApp } from "./AppUtils";
 import { HandleVersionsFileAsync } from "./VersionsHandler";
 import { DrawerParamList } from "../navigation/Navigator";
-import { ThemeColor } from "../constants/Colors";
 import { NetLord } from "./NetLord";
 import { HandleAppConfigAsync } from "./AppConfigHandler";
 import { HandleStartupAlertAsync } from "./StartupAlert";
 import { StorageKey_ScreenToInit } from "../constants/AppConstants";
-import { InitTracking } from "./tracking/Tracking";
+import { InitAptabase } from "./tracking/Tracking";
 import { HandldAlertUpdateAppAsync } from "./HandleAlertUpdateApp";
 import { initNotificationAsync } from "./Nofitication";
 import { CheckIsDevAsync, IsDev } from "./IsDev";
@@ -47,9 +46,9 @@ export async function LoadAppData(): Promise<LoadAppDataResult> {
 
     await CheckIsDevAsync()
 
-    // init tracking (must after app config)
+    // init aptabase tracking (must after app config)
 
-    InitTracking()
+    InitAptabase()
 
     // handle alert (must after app config)
 

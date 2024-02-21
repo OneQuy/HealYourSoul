@@ -19,7 +19,7 @@ const aptabaseIgnoredEventNames: string[] = [
 
 const isLog = Cheat('IsLog_Tracking')
 
-var inited = false
+var initedAptabase = false
 
 var signal: SignalType | undefined = undefined
 
@@ -27,11 +27,11 @@ export const prefixFbTrackPath = () => IsDev() ? 'tracking/dev/' : 'tracking/pro
 
 export const SetSignal = (sig: SignalType) => signal = sig
 
-export const InitTracking = () => {
-    if (inited)
+export const InitAptabase = () => {
+    if (initedAptabase)
         return
 
-    inited = true
+    initedAptabase = true
 
     const appConfig = GetAppConfig()
 
@@ -44,28 +44,21 @@ export const InitTracking = () => {
 }
 
 export const TrackErrorOnFirebase = (error: string) => {
-    if (!inited) {
-        console.error('not inited tracking yet')
-        return
-    }
-
     const path = prefixFbTrackPath() + 'errors/' + Date.now()
     FirebaseDatabase_SetValueAsync(path, error)
-    console.log('track error: ', path, ', ' + error);
+    console.log('track error firebase: ', path, ', ' + error);
 }
 
 export const MainTrack = (
     eventName: string,
     fbPaths: (string | undefined)[],
     trackingValuesObject?: Record<string, string | number | boolean>) => {
-    if (!inited) {
-        console.error('not inited tracking yet')
-        return
-    }
-
     const appConfig = GetAppConfig()
 
-    const shouldTrackAptabase = (!appConfig || appConfig.tracking.enableAptabase) && (!aptabaseIgnoredEventNames.includes(eventName))
+    const shouldTrackAptabase = initedAptabase &&
+        (!appConfig || appConfig.tracking.enableAptabase) &&
+        (!aptabaseIgnoredEventNames.includes(eventName))
+        
     const shouldTrackFirebase = !appConfig || appConfig.tracking.enableFirebase
     const shouldTrackTelemetry = !appConfig || appConfig.tracking.enableTelemetry
 
