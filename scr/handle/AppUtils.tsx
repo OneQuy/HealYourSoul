@@ -448,7 +448,7 @@ export const ToastNewItemsAsync = async (cat: Category, text: string, list: any[
 }
 
 /**
- * can call whenever needed, even splashscreen
+ * can call whenever needed, even splashscreen (after init IsDev())
  */
 export const HandleError = (methodName: string, error: any, keepSilentForUser?: boolean) => {
     track_HandleError(methodName, error)
