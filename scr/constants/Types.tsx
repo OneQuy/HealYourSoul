@@ -29,6 +29,13 @@ export type LatestVersionConfig = {
     release_note: string,
 }
 
+export type DiversityItem = {
+    cat: Category,
+    id: string | number,
+    url: string,
+    extra: string,
+}
+
 export type AppConfig = {
     net_url: string,
     remote_files: object,
