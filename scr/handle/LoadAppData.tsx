@@ -42,7 +42,7 @@ export async function LoadAppData(): Promise<LoadAppDataResult> {
 
     await HandleAppConfigAsync()
 
-    // check is dev (must after app config)
+    // check is dev (must after HandleAppConfigAsync)
 
     await CheckIsDevAsync()
 
@@ -50,7 +50,7 @@ export async function LoadAppData(): Promise<LoadAppDataResult> {
 
     InitAptabase()
 
-    // handle alert (must after app config)
+    // handle alert (must after HandleAppConfigAsync)
 
     await HandleStartupAlertAsync() // alert_priority 1 (doc)
 
