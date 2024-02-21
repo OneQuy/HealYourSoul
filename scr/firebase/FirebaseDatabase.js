@@ -1,6 +1,7 @@
 // MUST FirebaseInit() first
 
 import { getDatabase, ref, onValue, set, get, remove } from 'firebase/database';
+import { ExecuteWithTimeoutAsync, TimeOutError } from '../handle/UtilsTS';
 
 var db = null;
 
@@ -49,12 +50,36 @@ export function FirebaseDatabase_OnValue(relativePath, callback) {
     });
 }
 
+
 /**
  * @returns Object {
- *      value: value or null if has no data,
- *      error: error or null if success }
+ *      value: value. Or null if has no data,
+ *      error: error. Or null if success }
  */
-export async function FirebaseDatabase_GetValueAsync(relativePath) {
+export async function FirebaseDatabase_GetValueAsync(relativePath, timeout) { // sub 
+    const res = await ExecuteWithTimeoutAsync(
+        async () => await FirebaseDatabase_GetValueAsync(relativePath),
+        timeout)
+
+    if (res.isTimeOut || res.result === undefined) {
+        // handle time out or other error here
+        return {
+            value: null,
+            error: new Error(TimeOutError)
+        }
+    }
+    else {
+        // handle susccess here
+        return res.result
+    }
+}
+
+/**
+ * @returns Object {
+ *      value: value. Or null if has no data,
+ *      error: error. Or null if success }
+ */
+export async function FirebaseDatabase_GetValueAsync(relativePath) { // main 
     CheckAndInit();
 
     try {
@@ -75,13 +100,13 @@ export async function FirebaseDatabase_GetValueAsync(relativePath) {
 
 /**
  * @returns Object {
- *      value: value or null if has no data,
- *      error: error or null if success }
+ *      value: value. or null if has no data,
+ *      error: error. nor null if success }
  */
-export async function FirebaseDatabase_IncreaseNumberAsync(
-    relativePath, 
-    startValue = -1, 
-    incNum = 1, 
+export async function FirebaseDatabase_IncreaseNumberAsync( // main 
+    relativePath,
+    startValue = -1,
+    incNum = 1,
     callback = undefined,
     minValue = Number.NEGATIVE_INFINITY) {
     CheckAndInit();
