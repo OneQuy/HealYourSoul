@@ -43,11 +43,11 @@ export async function LoadAppData(): Promise<LoadAppDataResult> {
 
     await HandleAppConfigAsync()
 
-    // check is dev (must after )
+    // check is dev (must after app config)
 
     await CheckIsDevAsync()
 
-    // init tracking
+    // init tracking (must after app config)
 
     InitTracking()
 
