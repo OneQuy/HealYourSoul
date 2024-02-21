@@ -271,7 +271,7 @@ const ThePage = ({ category }: ThePageProps) => {
         let foundPost: PostMetadata | undefined;
 
         if (isNext) {
-            if (!NetLord.IsAvailableLastestCheck()) { // offline mode
+            if (!NetLord.IsAvailableLatestCheck()) { // offline mode
                 const offlineID = getPostIDForOffline();
 
                 if (typeof offlineID === 'number')
@@ -438,7 +438,7 @@ const ThePage = ({ category }: ThePageProps) => {
     }, []);
 
     const onInternetChanged = useCallback(() => {
-        const isNet = NetLord.IsAvailableLastestCheck();
+        const isNet = NetLord.IsAvailableLatestCheck();
         setIsInternetAvailable(isNet);
 
         if (isNet && reasonToReload.current !== NeedReloadReason.None && globalCurrentCategory === category)
@@ -668,8 +668,8 @@ const ThePage = ({ category }: ThePageProps) => {
         const Init = async () => {
             // set net state
 
-            if (isInternetAvailable !== NetLord.IsAvailableLastestCheck())
-                setIsInternetAvailable(NetLord.IsAvailableLastestCheck());
+            if (isInternetAvailable !== NetLord.IsAvailableLatestCheck())
+                setIsInternetAvailable(NetLord.IsAvailableLatestCheck());
 
             // subscribe net
 
@@ -709,7 +709,7 @@ const ThePage = ({ category }: ThePageProps) => {
 
             // refresh if last time is offline
 
-            if (NetLord.IsAvailableLastestCheck() &&
+            if (NetLord.IsAvailableLatestCheck() &&
                 reasonToReload.current !== NeedReloadReason.None &&
                 globalCurrentCategory === category)
                 onPressReloadAsync();

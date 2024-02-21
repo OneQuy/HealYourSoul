@@ -315,7 +315,7 @@ const BestShortFilmsScreen = () => {
             else if (errorDownloadJson) { // download failed
                 setHandling(false)
 
-                if (NetLord.IsAvailableLastestCheck())
+                if (NetLord.IsAvailableLatestCheck())
                     reasonToReload.current = NeedReloadReason.FailToGetContent
                 else
                     reasonToReload.current = NeedReloadReason.NoInternet

@@ -282,7 +282,7 @@ const FunSoundScreen = () => {
     let reasonToReload = NeedReloadReason.None // loading
 
     if (errorDownloadJson != undefined) {
-      if (NetLord.IsAvailableLastestCheck())
+      if (NetLord.IsAvailableLatestCheck())
         reasonToReload = NeedReloadReason.FailToGetContent
       else
         reasonToReload = NeedReloadReason.NoInternet
@@ -340,7 +340,7 @@ export default FunSoundScreen
  * @returns undefined if fail
  */
 const fetchLikesAsync = async () => {
-  if (!NetLord.IsAvailableLastestCheck())
+  if (!NetLord.IsAvailableLatestCheck())
     return undefined
 
   const path = FillPathPattern(LikePathAll, category, 0)

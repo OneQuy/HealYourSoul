@@ -47,11 +47,11 @@ export class NetLord {
             this.OnChangedStatus();
     }
 
-    static IsAvailableLastestCheck = () => {
+    static IsAvailableLatestCheck = (valueReturnIfNotInitedyet: boolean = true) => {
         if (!this.isInited)
-            throw 'NetLord not inited yet.'
-
-        return this.isAvailableLastestCheck;
+            return valueReturnIfNotInitedyet
+        else
+            return this.isAvailableLastestCheck;
     }
 
     static InitAsync = async () => {

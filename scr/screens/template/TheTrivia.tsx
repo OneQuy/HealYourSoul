@@ -101,7 +101,7 @@ const TheTrivia = ({
         else { // fail
             setAllAnswer(undefined)
 
-            if (NetLord.IsAvailableLastestCheck())
+            if (NetLord.IsAvailableLatestCheck())
                 reasonToReload.current = NeedReloadReason.FailToGetContent
             else
                 reasonToReload.current = NeedReloadReason.NoInternet

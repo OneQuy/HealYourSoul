@@ -181,7 +181,7 @@ const PicturesOfTheYearScreen = () => {
     const onImageError = useCallback((_: NativeSyntheticEvent<ImageErrorEventData>) => {
         setShowLoadImageIndicator(false)
 
-        if (NetLord.IsAvailableLastestCheck())
+        if (NetLord.IsAvailableLatestCheck())
             setReasonToReload(NeedReloadReason.FailToGetContent)
         else
             setReasonToReload(NeedReloadReason.NoInternet)

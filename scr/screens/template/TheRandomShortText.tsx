@@ -68,7 +68,7 @@ const TheRandomShortText = ({
             SetStreakAsync(Category[category], -1)
         }
         else { // fail
-            if (NetLord.IsAvailableLastestCheck())
+            if (NetLord.IsAvailableLatestCheck())
                 reasonToReload.current = NeedReloadReason.FailToGetContent
             else
                 reasonToReload.current = NeedReloadReason.NoInternet
