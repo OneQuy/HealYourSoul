@@ -613,8 +613,10 @@ export const AlertNoInternet = () => {
 export const GetIconOfScreen = (screen: ScreenName) => {
     if (screen === ScreenName.FunSound)
         return 'volume-high'
-    if (screen === ScreenName.Meme)
+    else if (screen === ScreenName.Meme)
         return 'emoticon-poop'
+    else if (screen === ScreenName.Vocabulary)
+        return 'translate'
     else if (screen === ScreenName.Comic)
         return 'fire'
     else if (screen === ScreenName.CatDog)
