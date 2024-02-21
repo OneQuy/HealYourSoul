@@ -93,6 +93,8 @@ export const GetListFileRLP = (cat: Category, localOrFb: boolean) => {
             return FirebasePath.ListFile_Sarcasm;
         else if (cat === Category.Sunset)
             return FirebasePath.ListFile_Sunset;
+        else if (cat === Category.Vocabulary)
+            return FirebasePath.ListFile_Vocabulary;
         else if (cat === Category.Typo)
             return FirebasePath.ListFile_Typo;
         else if (cat === Category.Info)
@@ -131,6 +133,8 @@ export const GetListFileRLP = (cat: Category, localOrFb: boolean) => {
             return LocalPath.ListFile_Awesome;
         else if (cat === Category.Sunset)
             return LocalPath.ListFile_Sunset;
+        else if (cat === Category.Vocabulary)
+            return LocalPath.ListFile_Vocabulary;
         else if (cat === Category.Tune)
             return LocalPath.ListFile_Tune;
         else
@@ -161,6 +165,8 @@ export const GetDBVersionPath = (cat: Category) => {
         return FirebaseDBPath.Version_Sarcasm;
     else if (cat === Category.Sunset)
         return FirebaseDBPath.Version_Sunset;
+    else if (cat === Category.Vocabulary)
+        return FirebaseDBPath.Version_Vocabulary;
     else if (cat === Category.Typo)
         return FirebaseDBPath.Version_Typo;
     else if (cat === Category.Info)
@@ -232,6 +238,8 @@ export async function CheckAndGetFileListAsync(cat: Category): Promise<FileList 
         needDownload = true;
     else if (cat === Category.Sunset && localVersion < versions.sunset)
         needDownload = true;
+    else if (cat === Category.Vocabulary && localVersion < versions.vocabulary)
+        needDownload = true;
     else if (cat === Category.Info && localVersion < versions.info)
         needDownload = true;
     else if (cat === Category.Tune && localVersion < versions.tune)
@@ -283,6 +291,8 @@ const GetMediaFullPath = (localOrFb: boolean, cat: Category, postID: number, med
         path = `awesome/data/${postID}/${mediaIdx}`;
     else if (cat === Category.Sunset)
         path = `sunset/data/${postID}/${mediaIdx}`;
+    else if (cat === Category.Vocabulary)
+        path = `vocabulary/data/${postID}/${mediaIdx}`;
     else if (cat === Category.Tune)
         path = `tune/data/${postID}/${mediaIdx}`;
     else
@@ -333,6 +343,8 @@ export const GetAllSavedLocalPostIDsListAsync = async (cat: Category) => {
         path = `info/data`;
     else if (cat === Category.Sunset)
         path = `sunset/data`;
+    else if (cat === Category.Vocabulary)
+        path = `vocabulary/data`;
     else
         throw new Error('GetDataFullPath: ' + cat);
 

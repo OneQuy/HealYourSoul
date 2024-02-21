@@ -62,6 +62,8 @@ async function JustDoIt() {
       cat = 'info'
     else if (IsParamExist('sunset') || IsParamExist('su'))
       cat = 'sunset'
+    else if (IsParamExist('vo'))
+      cat = 'vocabulary'
     else if (IsParamExist('tu'))
       cat = 'tune'
     else {

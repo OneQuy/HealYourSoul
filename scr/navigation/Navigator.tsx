@@ -12,7 +12,7 @@ import LoveScreen from '../screens/love/LoveScreen';
 import { CustomDrawerContent } from './CustomDrawer';
 import NSFWScreen from '../screens/nsfw/NSFWScreen';
 import IAPPage from '../screens/IAP/IAPPage';
-import { ArtScreen, AwesomeScreen, CuteScreen, InfoScreen, QuoteTextScreen, RandomMemeScreen, SarcasmScreen, SunsetScreen, TuneScreen, TypoScreen, } from '../screens/other_thepage_screens/Index';
+import { ArtScreen, AwesomeScreen, CuteScreen, InfoScreen, QuoteTextScreen, RandomMemeScreen, SarcasmScreen, SunsetScreen, TuneScreen, TypoScreen, VocabularyScreen, } from '../screens/other_thepage_screens/Index';
 import NinjaFactScreen from '../screens/ninja_fact/NinjaFactScreen';
 import PictureScreen from '../screens/picture/PictureScreen';
 import NinjaJokeScreen from '../screens/ninja_fact/NinjaJokeScreen';
@@ -36,6 +36,7 @@ import FunSoundScreen from '../screens/fun_sound/FunSoundScreen';
 
 export type DrawerParamList = {
   [ScreenName.Meme]: undefined,
+  [ScreenName.Vocabulary]: undefined,
   [ScreenName.FunSound]: undefined,
   [ScreenName.RandomMeme]: undefined,
   [ScreenName.Tune]: undefined,
@@ -99,6 +100,7 @@ const ScreenList: ScreenNamePair[] = [
   [ScreenName.QuoteText, QuoteTextScreen],
   [ScreenName.BestShortFilms, BestShortFilmsScreen],
   [ScreenName.FunWebsite, FunWebsitesScreen],
+  [ScreenName.Vocabulary, VocabularyScreen],
   [ScreenName.AwardPicture, PicturesOfTheYearScreen],
   [ScreenName.Picture, PictureScreen],
   [ScreenName.TopMovie, TopMovieScreen],

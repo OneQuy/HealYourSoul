@@ -34,6 +34,10 @@ export const TypoScreen = () => {
   return <ThePage category={Category.Typo} />;
 }
 
+export const VocabularyScreen = () => {
+  return <ThePage category={Category.Vocabulary} />;
+}
+
 export const SarcasmScreen = () => {
   return <ThePage category={Category.Sarcasm} />;
 }

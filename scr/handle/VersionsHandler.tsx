@@ -22,6 +22,7 @@ export type Versions = {
     sunset: number,
     info: number,
     tune: number,
+    vocabulary: number,
 }
 
 export var versions: Versions;

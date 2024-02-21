@@ -1,7 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { SubscribedData } from "../constants/Types";
 import { ScreenName } from "../constants/AppConstants";
-import { refFromURL } from "firebase/database";
 
 export type UserDataState = {
     disableScreens: ScreenName[],
@@ -30,6 +29,9 @@ export type UserDataState = {
 
     infoSeenIDs: (number | string)[],
     infoFavoritedIDs: (number | string)[],
+
+    vocabularySeenIDs: (number | string)[],
+    vocabularyFavoritedIDs: (number | string)[],
 
     typoSeenIDs: (number | string)[],
     typoFavoritedIDs: (number | string)[],
@@ -91,6 +93,9 @@ const initialState: UserDataState = {
 
     memeSeenIDs: [],
     memeFavoritedIDs: [],
+
+    vocabularySeenIDs: [],
+    vocabularyFavoritedIDs: [],
 
     tuneSeenIDs: [],
     tuneFavoritedIDs: [],
@@ -276,6 +281,31 @@ const slice = createSlice({
 
         removeDrawFavoritedID(state, action: PayloadAction<number | string>) {
             state.drawFavoritedIDs = state.drawFavoritedIDs.filter(i => i !== action.payload)
+        },
+
+        // vocabulary
+
+        addVocabularySeenID(state, action: PayloadAction<number | string>) {
+            if (!state.vocabularySeenIDs)
+                state.vocabularySeenIDs = []
+
+            if (!state.vocabularySeenIDs.includes(action.payload))
+                state.vocabularySeenIDs.push(action.payload);
+        },
+
+        addVocabularyFavoritedID(state, action: PayloadAction<number | string>) {
+            if (!state.vocabularyFavoritedIDs)
+                state.vocabularyFavoritedIDs = []
+
+            if (!state.vocabularyFavoritedIDs.includes(action.payload))
+                state.vocabularyFavoritedIDs.push(action.payload);
+        },
+
+        removeVocabularyFavoritedID(state, action: PayloadAction<number | string>) {
+            if (!state.vocabularyFavoritedIDs)
+                state.vocabularyFavoritedIDs = []
+
+            state.vocabularyFavoritedIDs = state.vocabularyFavoritedIDs.filter(i => i !== action.payload)
         },
 
         // meme
@@ -690,7 +720,11 @@ export const {
 
     addTuneSeenID,
     addTuneFavoritedID,
-    removeTuneFavoritedID
+    removeTuneFavoritedID,
+
+    addVocabularySeenID,
+    addVocabularyFavoritedID,
+    removeVocabularyFavoritedID
 } = slice.actions;
 
 export default slice.reducer;

@@ -12,6 +12,7 @@ export enum ScreenName {
   Typo = 'Typography',
   Info = 'Infographic',
   Sunset = 'Nature',
+  Vocabulary = 'Vocabulary',
   Quote = 'Motivation',
   CatDog = 'Animal',
   Love = 'Love',
@@ -55,6 +56,7 @@ export enum LocalPath {
   ListFile_Typo = LocalPath.MasterDirName + '/typo/list.json',
   ListFile_Info = LocalPath.MasterDirName + '/info/list.json',
   ListFile_Sunset = LocalPath.MasterDirName + '/sunset/list.json',
+  ListFile_Vocabulary = LocalPath.MasterDirName + '/vocabulary/list.json',
 }
 
 export enum FirebasePath {
@@ -73,6 +75,7 @@ export enum FirebasePath {
   ListFile_Info = 'info/list.json',
   ListFile_Typo = 'typo/list.json',
   ListFile_Sunset = 'sunset/list.json',
+  ListFile_Vocabulary = 'vocabulary/list.json',
 }
 
 export enum FirebaseDBPath {
@@ -91,6 +94,7 @@ export enum FirebaseDBPath {
   Version_Info = 'app/versions/info',
   Version_Tune = 'app/versions/tune',
   Version_Awesome = 'app/versions/awesome',
+  Version_Vocabulary = 'app/versions/vocabulary',
 }
 
 // category
@@ -124,6 +128,7 @@ export enum Category {
   Sunset = 25,
   FunSound = 26,
   Tune = 27,
+  Vocabulary = 28,
 }
 
 // margin / padding

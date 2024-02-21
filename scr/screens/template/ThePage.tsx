@@ -18,7 +18,7 @@ import { CheckAndGetFileListAsync, CheckLocalFileAndGetURIAsync, CopyAndToast, G
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { PickRandomElement, RoundNumber, SecondsToHourMinuteSecondString } from '../../handle/Utils';
-import { addDrawSeenID, addQuoteSeenID, addMemeSeenID, addLoveSeenID, addSatisfyingSeenID, addCatDogSeenID, addNSFWSeenID, addCuteSeenID, addArtSeenID, addSarcasmSeenID, addTypoSeenID, addSunsetSeenID, addInfoSeenID, addAwesomeSeenID, addTuneSeenID } from '../../redux/UserDataSlice';
+import { addDrawSeenID, addQuoteSeenID, addMemeSeenID, addLoveSeenID, addSatisfyingSeenID, addCatDogSeenID, addNSFWSeenID, addCuteSeenID, addArtSeenID, addSarcasmSeenID, addTypoSeenID, addSunsetSeenID, addInfoSeenID, addAwesomeSeenID, addTuneSeenID, addVocabularySeenID } from '../../redux/UserDataSlice';
 import { setMutedVideo } from '../../redux/MiscSlice';
 import { ColorNameToRgb, HexToRgb, ToCanPrint } from '../../handle/UtilsTS';
 import { ToastOptions, toast } from '@baronha/ting';
@@ -98,6 +98,8 @@ const ThePage = ({ category }: ThePageProps) => {
             return state.userData.typoSeenIDs;
         else if (category === Category.Sunset)
             return state.userData.sunsetSeenIDs;
+        else if (category === Category.Vocabulary)
+            return state.userData.vocabularySeenIDs;
         else if (category === Category.Awesome)
             return state.userData.awesomeSeenIDs;
         else if (category === Category.Tune)
@@ -572,6 +574,8 @@ const ThePage = ({ category }: ThePageProps) => {
                 dispatch(addTypoSeenID(post.current.id));
             else if (category === Category.Sunset)
                 dispatch(addSunsetSeenID(post.current.id));
+            else if (category === Category.Vocabulary)
+                dispatch(addVocabularySeenID(post.current.id));
             else if (category === Category.Info)
                 dispatch(addInfoSeenID(post.current.id));
             else if (category === Category.Awesome)
