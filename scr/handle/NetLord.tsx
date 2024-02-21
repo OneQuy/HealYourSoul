@@ -18,7 +18,7 @@ export class NetLord {
     private static startTick: number = 0;
     private static listSubscribers: (() => void)[] = [];
     private static isInited: boolean = false;
-    private static isAvailableLastestCheck: boolean = false;
+    private static isAvailableLatestCheck: boolean = false;
 
     private static LoopAsync = async () => {
         this.startTick = Date.now();
@@ -40,8 +40,8 @@ export class NetLord {
     }
 
     private static SetStatus(yes: boolean) {
-        const changed = this.isAvailableLastestCheck !== yes;
-        this.isAvailableLastestCheck = yes;
+        const changed = this.isAvailableLatestCheck !== yes;
+        this.isAvailableLatestCheck = yes;
 
         if (changed)
             this.OnChangedStatus();
@@ -51,7 +51,7 @@ export class NetLord {
         if (!this.isInited)
             return valueReturnIfNotInitedyet
         else
-            return this.isAvailableLastestCheck;
+            return this.isAvailableLatestCheck;
     }
 
     static InitAsync = async () => {
