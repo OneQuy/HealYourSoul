@@ -56,7 +56,7 @@ export function FirebaseDatabase_OnValue(relativePath, callback) {
  *      value: value. Or null if has no data,
  *      error: error. Or null if success }
  */
-export async function FirebaseDatabase_GetValueAsync(relativePath, timeout) { // sub 
+export async function FirebaseDatabase_GetValueAsyncWithTimeOut(relativePath, timeout) { // sub 
     const res = await ExecuteWithTimeoutAsync(
         async () => await FirebaseDatabase_GetValueAsync(relativePath),
         timeout)
