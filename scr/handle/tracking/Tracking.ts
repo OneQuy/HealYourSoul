@@ -27,7 +27,7 @@ export const prefixFbTrackPath = () => IsDev() ? 'tracking/dev/' : 'tracking/pro
 
 export const SetSignal = (sig: SignalType) => signal = sig
 
-export const InitTrackingAsync = async () => {
+export const InitTracking = () => {
     if (inited)
         return
 

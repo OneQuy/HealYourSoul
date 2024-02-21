@@ -8,7 +8,7 @@ import { NetLord } from "./NetLord";
 import { HandleAppConfigAsync } from "./AppConfigHandler";
 import { HandleStartupAlertAsync } from "./StartupAlert";
 import { StorageKey_ScreenToInit } from "../constants/AppConstants";
-import { InitTrackingAsync } from "./tracking/Tracking";
+import { InitTracking } from "./tracking/Tracking";
 import { HandldAlertUpdateAppAsync } from "./HandleAlertUpdateApp";
 import { initNotificationAsync } from "./Nofitication";
 import { CheckIsDevAsync, IsDev } from "./IsDev";
@@ -49,7 +49,7 @@ export async function LoadAppData(): Promise<LoadAppDataResult> {
 
     // init tracking
 
-    await InitTrackingAsync()
+    InitTracking()
 
     // handle alert (must after app config)
 
