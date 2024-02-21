@@ -34,7 +34,7 @@ export function GetRemoteFileConfigVersion(file: string) {
  * @returns true if download success
  */
 export async function HandleAppConfigAsync(): Promise<boolean> {
-    const tick = Date.now()
+    // const tick = Date.now()
 
     const res = await ExecuteWithTimeoutAsync(
         async () => await FirebaseDatabase_GetValueAsync(FirebaseDBPath),
