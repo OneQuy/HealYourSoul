@@ -1,6 +1,6 @@
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-native-responsive-screen";
 
-export const DownloadConfigTimeOutMs = 5000
+export const FirebaseDatabaseTimeOutMs = 5000
 
 // screen names
 

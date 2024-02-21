@@ -3,7 +3,7 @@ import { HandleError } from "./AppUtils";
 import { SetNetLordFetchUrl } from "./NetLord";
 import { AppConfig } from "../constants/Types";
 import { SetDateAsync_Now } from "./AsyncStorageUtils";
-import { DownloadConfigTimeOutMs, StorageKey_LastTimeCheckAndReloadAppConfig } from "../constants/AppConstants";
+import { FirebaseDatabaseTimeOutMs, StorageKey_LastTimeCheckAndReloadAppConfig } from "../constants/AppConstants";
 import { ExecuteWithTimeoutAsync } from "./UtilsTS";
 
 const FirebaseDBPath = 'app/config';
@@ -38,7 +38,7 @@ export async function HandleAppConfigAsync(): Promise<boolean> {
 
     const res = await ExecuteWithTimeoutAsync(
         async () => await FirebaseDatabase_GetValueAsync(FirebaseDBPath),
-        DownloadConfigTimeOutMs)
+        FirebaseDatabaseTimeOutMs)
 
     // fail time out
 

@@ -1,7 +1,7 @@
 import { FirebaseDatabase_GetValueAsync } from "../firebase/FirebaseDatabase";
 import { HandleError } from "./AppUtils";
 import { ExecuteWithTimeoutAsync } from "./UtilsTS";
-import { DownloadConfigTimeOutMs, LocalText } from "../constants/AppConstants";
+import { FirebaseDatabaseTimeOutMs, LocalText } from "../constants/AppConstants";
 import { toast } from "@baronha/ting";
 
 const FirebaseDBAppVersionsPath = 'app/versions';
@@ -35,7 +35,7 @@ export async function HandleVersionsFileAsync(): Promise<boolean> {
 
     const res = await ExecuteWithTimeoutAsync(
         async () => await FirebaseDatabase_GetValueAsync(FirebaseDBAppVersionsPath),
-        DownloadConfigTimeOutMs)
+        FirebaseDatabaseTimeOutMs)
 
     // fail time out
 
