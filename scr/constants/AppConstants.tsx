@@ -34,6 +34,7 @@ export enum ScreenName {
   BestShortFilms = 'Good Short Film',
   RandomMeme = 'Random Meme',
   Setting = 'Setting',
+  Saved = 'Saved',
   FunSound = 'Meme Sounds',
 }
 

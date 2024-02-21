@@ -672,7 +672,8 @@ export const GetIconOfScreen = (screen: ScreenName) => {
 export const IsContentScreen = (screen: ScreenName) => {
     const notContentScreen: ScreenName[] = [
         ScreenName.IAPPage,
-        ScreenName.Setting
+        ScreenName.Setting,
+        // ScreenName.Saved
     ]
 
     return !notContentScreen.includes(screen)

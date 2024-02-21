@@ -33,6 +33,7 @@ import Onboarding from '../screens/onboarding/Onboarding';
 import { RootState, useAppSelector } from '../redux/Store';
 import { OnBlurSettingView } from '../screens/setting/SettingView';
 import FunSoundScreen from '../screens/fun_sound/FunSoundScreen';
+import SavedScreen from '../screens/saved/SavedScreen';
 
 export type DrawerParamList = {
   [ScreenName.Meme]: undefined,
@@ -65,6 +66,7 @@ export type DrawerParamList = {
   [ScreenName.Typo]: undefined,
   [ScreenName.IAPPage]: undefined,
   [ScreenName.Setting]: undefined,
+  [ScreenName.Saved]: undefined,
 }
 
 type MainNavigatorProps = {
@@ -109,6 +111,7 @@ const ScreenList: ScreenNamePair[] = [
 
   [ScreenName.IAPPage, IAPPage],
   [ScreenName.Setting, SettingScreen],
+  [ScreenName.Saved, SavedScreen],
 ]
 
 const Navigator = ({ initialRouteName }: MainNavigatorProps) => {
