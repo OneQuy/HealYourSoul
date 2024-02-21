@@ -46,7 +46,7 @@ export async function LoadAppData(): Promise<LoadAppDataResult> {
 
     await CheckIsDevAsync()
 
-    // init aptabase tracking (must after app config)
+    // init aptabase tracking (must after HandleAppConfigAsync & CheckIsDevAsync)
 
     InitAptabase()
 
