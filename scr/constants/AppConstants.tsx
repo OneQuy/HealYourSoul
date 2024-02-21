@@ -1,5 +1,7 @@
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-native-responsive-screen";
 
+export const DownloadConfigTimeOutMs = 3000
+
 // screen names
 
 export enum ScreenName {

@@ -27,7 +27,7 @@ const App = () => {
 const AppRender = () => {
   const themeType = useAppSelector((state: RootState) => state.misc.themeType);
   const theme = GetColors(themeType);
-  const { handled, result } = useAsyncHandle(async () => LoadAppData(theme));
+  const { handled, result } = useAsyncHandle(async () => LoadAppData());
   const dispatch = useAppDispatch();
 
   // init once

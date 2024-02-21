@@ -4,12 +4,10 @@ import { CheckAndClearAllLocalFileBeforeLoadApp } from "./AppUtils";
 import { HandleVersionsFileAsync } from "./VersionsHandler";
 import { DrawerParamList } from "../navigation/Navigator";
 import { ThemeColor } from "../constants/Colors";
-import { IsInternetAvailableAsync, NetLord } from "./NetLord";
+import { NetLord } from "./NetLord";
 import { HandleAppConfigAsync } from "./AppConfigHandler";
 import { HandleStartupAlertAsync } from "./StartupAlert";
-import { toast } from "@baronha/ting";
-import { LocalText, StorageKey_ScreenToInit } from "../constants/AppConstants";
-import { ToastTheme } from "./AppUtils";
+import { StorageKey_ScreenToInit } from "../constants/AppConstants";
 import { InitTrackingAsync } from "./tracking/Tracking";
 import { HandldAlertUpdateAppAsync } from "./HandleAlertUpdateApp";
 import { initNotificationAsync } from "./Nofitication";
@@ -24,10 +22,14 @@ export type LoadAppDataResult = {
     telemetryDeckClient: TelemetryDeck,
 }
 
-export async function LoadAppData(theme: ThemeColor): Promise<LoadAppDataResult> {
+export async function LoadAppData(): Promise<LoadAppDataResult> {
     // firebase init
 
     FirebaseInit();
+
+    // init net checker
+
+    NetLord.InitAsync();
 
     // cheat clear all local file
 
@@ -37,24 +39,11 @@ export async function LoadAppData(theme: ThemeColor): Promise<LoadAppDataResult>
 
     await InitUserIDAsync()
 
-    // init net checker
+    // handle: app config
 
-    await NetLord.InitAsync();
+    await HandleAppConfigAsync()
 
-    // handle: app config (must be first after init NetLord)
-
-    const isInternet = await IsInternetAvailableAsync()
-
-    if (!isInternet) {
-        toast({
-            title: LocalText.offline_mode,
-            ...ToastTheme(theme, 'none')
-        })
-    }
-    else
-        await HandleAppConfigAsync()
-
-    // check is dev
+    // check is dev (must after )
 
     await CheckIsDevAsync()
 

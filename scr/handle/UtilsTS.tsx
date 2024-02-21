@@ -331,14 +331,6 @@ export const IsNumType = (o: any) => {
 
 // array utils ---------------------------
 
-export function IsValuableStringOrArray<T>(arr: T[] | string): boolean {
-    if (typeof arr === 'string') {
-        return arr.length > 0
-    }
-    else
-        return Array.isArray(arr) && arr.length > 0
-}
-
 export function ShuffleArray<T>(arr: T[]): void {
     if (!Array.isArray(arr))
         return
@@ -757,5 +749,42 @@ export const GetIPAsync = async (): Promise<string | undefined | any> => {
     }
     catch (e) {
         return e
+    }
+}
+
+/**
+ * @usage:
+    const res = await ExecuteWithTimeoutAsync(
+        async () => await FirebaseDatabase_GetValueAsync(...),
+        3000)
+
+    if (res.isTimeOut || res.result === undefined) {
+        // handle time out or other error here
+        return false
+    }
+    else {
+        // handle susccess here
+        // result = res.result
+    }
+ */
+export async function ExecuteWithTimeoutAsync<T>(asyncFunction: () => Promise<T>, timeoutMs: number) {
+    const timeoutPromise = new Promise((_, reject) => {
+        setTimeout(() => {
+            reject(new Error(TimeOutError));
+        }, timeoutMs);
+    });
+
+    try {
+        const result = await Promise.race([asyncFunction(), timeoutPromise]);
+
+        return {
+            result: result as T,
+            isTimeOut: false,
+        }
+    } catch (error) {
+        return {
+            result: undefined,
+            isTimeOut: error instanceof Error && error.message === TimeOutError
+        }
     }
 }

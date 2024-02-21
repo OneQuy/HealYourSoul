@@ -1,8 +1,8 @@
 import { FirebaseDatabase_GetValueAsync } from "../firebase/FirebaseDatabase";
 import { HandleError } from "./AppUtils";
-import { Cheat } from "./Cheat";
-import { ThemeColor } from "../constants/Colors";
-import { IsInternetAvailableAsync } from "./NetLord";
+import { ExecuteWithTimeoutAsync } from "./UtilsTS";
+import { DownloadConfigTimeOutMs, LocalText } from "../constants/AppConstants";
+import { toast } from "@baronha/ting";
 
 const FirebaseDBAppVersionsPath = 'app/versions';
 
@@ -30,18 +30,26 @@ export var versions: Versions;
  * 
  * @returns true if dl success
  */
-export async function HandleVersionsFileAsync() : Promise<boolean> {
-    let time = new Date();
-   
-    // const isInternet = await IsInternetAvailableAsync();
+export async function HandleVersionsFileAsync(): Promise<boolean> {
+    let tick = Date.now()
 
-    // if (!isInternet) {
-    //     return;
-    // }
+    const res = await ExecuteWithTimeoutAsync(
+        async () => await FirebaseDatabase_GetValueAsync(FirebaseDBAppVersionsPath),
+        DownloadConfigTimeOutMs)
 
-    const result = await FirebaseDatabase_GetValueAsync(FirebaseDBAppVersionsPath);
+    // fail time out
 
-    // fail
+    if (res.isTimeOut || res.result === undefined) {
+        HandleError('HandleVersions', 'TimeOut-' + (Date.now() - tick))
+
+        toast({ title: LocalText.offline_mode }) // toast offline
+
+        return false
+    }
+
+    const result = res.result
+
+    // fail firebase
 
     if (result.error) {
         HandleError('HandleVersions', result.error)
@@ -50,12 +58,7 @@ export async function HandleVersionsFileAsync() : Promise<boolean> {
 
     // success
 
-    versions = result.value as Versions;
-
-    if (Cheat('IsLog_TimeVersion')) {
-        let now = new Date();
-        console.log('time version: ' + (now.valueOf() - time.valueOf()));
-    }
+    versions = result.value as Versions
 
     return true
 }
