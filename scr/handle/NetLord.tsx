@@ -1,4 +1,4 @@
-import { TimeOutError } from "./UtilsTS"
+import { IsValuableArrayOrString, RegexUrl, TimeOutError } from "./UtilsTS"
 
 const IntervalCheckTime = 500;
 const ThresholdFetchTime = 2000;
@@ -93,6 +93,9 @@ myHeaders.append('cache-control', 'no-cache');
 var alterFetchUrl: string | undefined = undefined
 
 export function SetNetLordFetchUrl(url: string) {
+    if (!RegexUrl(url))
+        return
+
     alterFetchUrl = url
 }
 
@@ -100,7 +103,7 @@ export async function IsInternetAvailableAsync(): Promise<boolean> {
     // const start = Date.now();
 
     const url = alterFetchUrl ? alterFetchUrl : FetchURL
-    
+
     const res = await Promise.any([
         fetch(url, { headers: myHeaders }),
         new Promise(resolve => setTimeout(resolve, ThresholdFetchTime, TimeOutError))
@@ -118,7 +121,7 @@ export async function IsInternetAvailableAsync(): Promise<boolean> {
 
         // console.log('time', passedTime, 'avg', totalTime / count, 'max', max, 'min', min, 'count', count);
         // console.log(res);
-        
+
         const respone = res as Response;
         return respone && respone.status >= 200 && respone.status < 300;
     }
