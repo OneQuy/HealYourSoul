@@ -7,6 +7,7 @@ import { useTelemetryDeck } from "@typedigital/telemetrydeck-react";
 import { GetAppConfig } from "../AppConfigHandler";
 import { IsValuableArrayOrString } from "../UtilsTS";
 import { Cheat } from "../Cheat";
+import { NetLord } from "../NetLord";
 
 export type SignalType = ReturnType<typeof useTelemetryDeck>['signal']
 
@@ -56,9 +57,10 @@ export const MainTrack = (
     const appConfig = GetAppConfig()
 
     const shouldTrackAptabase = initedAptabase &&
+        (!__DEV__ || NetLord.IsAvailableLatestCheck()) &&
         (!appConfig || appConfig.tracking.enableAptabase) &&
         (!aptabaseIgnoredEventNames.includes(eventName))
-        
+
     const shouldTrackFirebase = !appConfig || appConfig.tracking.enableFirebase
     const shouldTrackTelemetry = !appConfig || appConfig.tracking.enableTelemetry
 
