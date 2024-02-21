@@ -1,4 +1,4 @@
-import { IsValuableArrayOrString, RegexUrl, TimeOutError } from "./UtilsTS"
+import { RegexUrl, TimeOutError } from "./UtilsTS"
 
 const IntervalCheckTime = 500;
 const ThresholdFetchTime = 2000;
