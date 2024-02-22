@@ -207,6 +207,15 @@ const ThePage = ({ category }: ThePageProps) => {
     const activePreviousPostButton: boolean = previousPostIDs.current.length > 0 && post.current !== null && previousPostIDs.current.indexOf(post.current.id) !== 0;
     const hasCredit: boolean = post.current !== null && post.current.author != null && post.current.author.length > 0;
 
+    // param
+
+    const params = useMemo(() => {
+        const index = navigation.getState().index
+        return navigation.getState().routes[index].params
+    }, [navigation])
+    
+    console.log(params);
+
     // handles
 
     const onBeginLoadNextOrPreviousPostAsync = useCallback(async () => {

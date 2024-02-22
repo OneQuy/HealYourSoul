@@ -1,25 +1,29 @@
 // @ts-ignore
 import Video from 'react-native-video';
 
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { DiversityItemType, MediaType } from '../../constants/Types'
 import { ThemeContext } from '../../constants/Colors'
 import ImageBackgroundWithLoading from './ImageBackgroundWithLoading'
 import { CheckLocalFileAndGetURIAsync } from '../../handle/AppUtils'
 import { CheckAndGetFileListAsync } from '../../handle/ThePageFileListManager'
-import { NeedReloadReason } from '../../constants/AppConstants'
+import { NeedReloadReason, ScreenName } from '../../constants/AppConstants'
 import LoadingOrError from './LoadingOrError'
+import { useNavigation } from '@react-navigation/native';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
+import { DrawerParamList } from '../../navigation/Navigator';
 
 type DiversityItemProps = {
     item: DiversityItemType,
-    onPressed: (item: DiversityItemType) => void,
+    // onPressed: (item: DiversityItemType) => void,
 }
 
 const DiversityItem = ({
     item,
-    onPressed,
+    // onPressed,
 }: DiversityItemProps) => {
+    const navigation = useNavigation<DrawerNavigationProp<DrawerParamList>>();
     const theme = useContext(ThemeContext);
     const [isHandling, setIsHandling] = useState(true)
     const [imgUri, setImgUri] = useState('')
@@ -78,6 +82,10 @@ const DiversityItem = ({
         setError(NeedReloadReason.FailToGetContent)
     }, [item]);
 
+    const onPressed = useCallback(() => {
+        navigation.navigate(ScreenName.AwardPicture, { item });
+    }, [navigation, item])
+
     useEffect(() => {
         (async () => {
             loadItemAsync()
@@ -87,6 +95,7 @@ const DiversityItem = ({
     const style = useMemo(() => {
         return StyleSheet.create({
             masterView: { flex: 1, aspectRatio: 1 },
+            percent100: { width: '100%', height: '100%' },
             centerView: { flex: 1, aspectRatio: 1, alignItems: 'center', justifyContent: 'center' },
             // noItemTxt: { fontSize: FontSize.Normal, color: theme.counterBackground, },
         })
@@ -106,9 +115,11 @@ const DiversityItem = ({
 
     if (imgUri) {
         return (
-            <ImageBackgroundWithLoading source={{ uri: imgUri }} style={style.masterView} >
-                <Text>DiversityItem</Text>
-            </ImageBackgroundWithLoading>
+            <TouchableOpacity onPress={onPressed} style={style.masterView}>
+                <ImageBackgroundWithLoading source={{ uri: imgUri }} style={style.percent100} >
+                    <Text>DiversityItem</Text>
+                </ImageBackgroundWithLoading>
+            </TouchableOpacity>
         )
     }
 
