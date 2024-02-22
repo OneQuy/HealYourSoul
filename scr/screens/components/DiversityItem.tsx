@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native'
-import React, { useContext, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { DiversityItemType } from '../../constants/Types'
 import { ThemeContext } from '../../constants/Colors'
 import ImageBackgroundWithLoading from './ImageBackgroundWithLoading'
@@ -22,41 +22,52 @@ const DiversityItem = ({
     const [imgUri, setImgUri] = useState('')
     const [error, setError] = useState<NeedReloadReason>(NeedReloadReason.None)
 
+    const itemType = useMemo(() => {
+        if (item.id !== undefined)
+            return 'ThePage'
+        else
+            return '[ne]'
+    }, [item])
+
+    const loadItem_ThePageAsync = useCallback(async () => {
+        const fileList = await CheckAndGetFileListAsync(item.cat)
+
+        if (typeof fileList === 'object') { // success get filetlist
+            const post = fileList.posts.find(p => p.id === item.id)
+
+            if (!post) { // not found post in filelist
+                setError(NeedReloadReason.FailToGetContent)
+                return
+            }
+
+            const uriOrReasonToReload = await CheckLocalFileAndGetURIAsync(item.cat, post, 0, (_) => { })
+
+            if (typeof uriOrReasonToReload === 'string') { // success uri
+                setImgUri(uriOrReasonToReload)
+            }
+            else { // fail get img uri
+                setError(uriOrReasonToReload)
+            }
+        }
+        else { // error get filelist
+            setError(fileList)
+        }
+    }, [item])
+
+    const loadItemAsync = useCallback(async () => {
+        setIsHandling(true)
+
+        if (itemType === 'ThePage')
+            await loadItem_ThePageAsync()
+        else
+            console.error('[ne]', itemType);
+
+        setIsHandling(false)
+    }, [itemType, loadItem_ThePageAsync])
+
     useEffect(() => {
         (async () => {
-            setIsHandling(true)
-
-            const id = item.id
-
-            if (id !== undefined) { // ThePage item
-                const fileList = await CheckAndGetFileListAsync(item.cat)
-
-                if (typeof fileList === 'object') { // success get filetlist
-                    const forPost = fileList.posts.find(p => p.id === item.id)
-
-                    if (!forPost) { // not found post in filelist
-                        setError(NeedReloadReason.FailToGetContent)
-                        setIsHandling(false)
-                        return
-                    }
-
-                    const uriOrReasonToReload = await CheckLocalFileAndGetURIAsync(item.cat, forPost, 0, (_) => { })
-
-                    if (typeof uriOrReasonToReload === 'string') { // success uri
-                        setImgUri(uriOrReasonToReload)
-                    }
-                    else { // fail get img uri
-                        setError(uriOrReasonToReload)
-                    }
-
-                    setIsHandling(false)
-                }
-                else { // error get filelist
-                    setError(fileList)
-                    setIsHandling(false)
-                }
-
-            }
+            loadItem_ThePageAsync()
         })()
     }, [item])
 
@@ -70,20 +81,10 @@ const DiversityItem = ({
 
     // error
 
-    if (error !== NeedReloadReason.None) {
+    if (error !== NeedReloadReason.None || isHandling) {
         return (
             <View style={style.centerView} >
                 <LoadingOrError reasonToReload={error} onPressedReload={() => { }} />
-            </View>
-        )
-    }
-
-    // loading
-
-    if (isHandling) {
-        return (
-            <View style={style.centerView} >
-                <ActivityIndicator color={theme.counterBackground} />
             </View>
         )
     }
