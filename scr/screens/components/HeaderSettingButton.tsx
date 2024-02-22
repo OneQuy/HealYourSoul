@@ -7,7 +7,12 @@ import { Icon, Outline, ScreenName, Size } from '../../constants/AppConstants';
 import { ThemeContext } from '../../constants/Colors';
 import { useNavigation } from '@react-navigation/native';
 
-const HeaderSettingButton = ({ onPress }: { onPress?: () => {} }) => {
+const HeaderSettingButton = (
+    {
+        onPressSaved,
+    }: {
+        onPressSaved?: () => {},
+    }) => {
     const theme = useContext(ThemeContext);
     const navigation = useNavigation()
 
@@ -24,9 +29,15 @@ const HeaderSettingButton = ({ onPress }: { onPress?: () => {} }) => {
 
     return (
         <View style={style.master}>
-            <TouchableOpacity onPress={onPressPremium} style={style.iconTO}>
-                <MaterialCommunityIcons name={Icon.Bookmark} color={theme.primary} size={Size.Icon} />
-            </TouchableOpacity>
+            {/* saved btn */}
+            {
+                !onPressSaved ? undefined :
+                    <TouchableOpacity onPress={onPressSaved} style={style.iconTO}>
+                        <MaterialCommunityIcons name={Icon.Bookmark} color={theme.primary} size={Size.Icon} />
+                    </TouchableOpacity>
+            }
+
+            {/* premium btn */}
             <TouchableOpacity onPress={onPressPremium} style={style.iconTO}>
                 <MaterialCommunityIcons name={Icon.Star} color={theme.primary} size={Size.Icon} />
             </TouchableOpacity>

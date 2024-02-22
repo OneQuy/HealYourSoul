@@ -474,14 +474,17 @@ const ThePage = ({ category }: ThePageProps) => {
         }
     }, []);
 
-    const onPressHeaderOption = useCallback(async () => {
-        if (streakData)
-            setStreakData(undefined)
-        else {
-            const streak = await GetStreakAsync(Category[category])
-            setStreakData(streak)
-        }
-    }, [streakData])
+    // const onPressHeaderOption = useCallback(async () => {
+    //     if (streakData)
+    //         setStreakData(undefined)
+    //     else {
+    //         const streak = await GetStreakAsync(Category[category])
+    //         setStreakData(streak)
+    //     }
+    // }, [streakData])
+
+    const onPressSaved = useCallback(async () => {
+    }, [])
 
     const onPressNextMedia = useCallback(async (isNext: boolean) => {
         if (!post.current)
@@ -733,13 +736,13 @@ const ThePage = ({ category }: ThePageProps) => {
     useEffect(() => {
         navigation.setOptions({
             headerRight: !handling ?
-                () => <HeaderSettingButton onPress={onPressHeaderOption} />
+                () => <HeaderSettingButton onPressSaved={onPressSaved} />
                 :
                 () => (
                     <ActivityIndicator color={theme.primary} style={style.headerOptionTO} />
                 )
         });
-    }, [handling, theme, onPressHeaderOption]);
+    }, [handling, theme, onPressSaved]);
 
     // load post
 
