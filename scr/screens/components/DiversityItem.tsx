@@ -34,7 +34,7 @@ const DiversityItem = ({
                 if (typeof fileList === 'object') { // success get filetlist
                     const forPost = fileList.posts.find(p => p.id === item.id)
 
-                    if (!forPost) { // error get filelist
+                    if (!forPost) { // not found post in filelist
                         setError(NeedReloadReason.FailToGetContent)
                         setIsHandling(false)
                         return
@@ -45,7 +45,7 @@ const DiversityItem = ({
                     if (typeof uriOrReasonToReload === 'string') { // success uri
                         setImgUri(uriOrReasonToReload)
                     }
-                    else {
+                    else { // fail get img uri
                         setError(uriOrReasonToReload)
                     }
 
