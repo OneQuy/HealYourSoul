@@ -23,8 +23,8 @@ const LoadingOrError = ({
                     // need to reload
                     <TouchableOpacity onPress={onPressedReload} style={{ flex: 1, justifyContent: 'center', alignItems: 'center', gap: Outline.GapVertical }} >
                         <MaterialCommunityIcons name={reasonToReload === NeedReloadReason.NoInternet ? 'access-point-network-off' : 'heart-broken'} color={theme.counterBackground} size={Size.IconMedium} />
-                        <Text style={{ fontSize: FontSize.Normal, color: theme.counterBackground }}>{reasonToReload === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
-                        <Text style={{ fontSize: FontSize.Small_L, color: theme.counterBackground }}>{LocalText.tap_to_retry}</Text>
+                        <Text adjustsFontSizeToFit numberOfLines={1} style={{ fontSize: FontSize.Normal, color: theme.counterBackground }}>{reasonToReload === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
+                        <Text adjustsFontSizeToFit numberOfLines={1} style={{ fontSize: FontSize.Small_L, color: theme.counterBackground }}>{LocalText.tap_to_retry}</Text>
                     </TouchableOpacity> :
 
                     // loading
