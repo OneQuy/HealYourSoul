@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { DiversityItemType, SubscribedData } from "../constants/Types";
 import { ScreenName } from "../constants/AppConstants";
+import { ArrayRemove } from "../handle/UtilsTS";
 
 export type UserDataState = {
     disableScreens: ScreenName[],
@@ -172,8 +173,10 @@ const slice = createSlice({
             if (!state.savedItems)
                 state.savedItems = []
 
-            if (state.savedItems.includes(action.payload))
-                state.savedItems = state.savedItems.filter(screen => screen !== action.payload)
+            const idx = state.savedItems.findIndex(i => JSON.stringify(i) === JSON.stringify(action.payload))
+
+            if (idx >= 0)
+                ArrayRemove(state.savedItems, state.savedItems[idx])
             else
                 state.savedItems.push(action.payload)
         },
@@ -659,7 +662,7 @@ export const {
     checkInScreen,
 
     toggleSavedItem,
-    
+
     togglePinFunSound,
     addFunSoundFavoritedID,
     removeFunSoundFavoritedID,
