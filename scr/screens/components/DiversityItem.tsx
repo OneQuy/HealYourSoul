@@ -1,6 +1,9 @@
-import { View, Text, StyleSheet, ActivityIndicator } from 'react-native'
+// @ts-ignore
+import Video from 'react-native-video';
+
+import { View, Text, StyleSheet, ActivityIndicator, Alert } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { DiversityItemType } from '../../constants/Types'
+import { DiversityItemType, MediaType } from '../../constants/Types'
 import { ThemeContext } from '../../constants/Colors'
 import ImageBackgroundWithLoading from './ImageBackgroundWithLoading'
 import { CheckLocalFileAndGetURIAsync } from '../../handle/AppUtils'
@@ -18,8 +21,9 @@ const DiversityItem = ({
     onPressed,
 }: DiversityItemProps) => {
     const theme = useContext(ThemeContext);
-    const [isHandling, setIsHandling] = useState(false)
+    const [isHandling, setIsHandling] = useState(true)
     const [imgUri, setImgUri] = useState('')
+    const [videoUri, setVideoUri] = useState('')
     const [error, setError] = useState<NeedReloadReason>(NeedReloadReason.None)
 
     const itemType = useMemo(() => {
@@ -43,7 +47,12 @@ const DiversityItem = ({
             const uriOrReasonToReload = await CheckLocalFileAndGetURIAsync(item.cat, post, 0, (_) => { })
 
             if (typeof uriOrReasonToReload === 'string') { // success uri
-                setImgUri(uriOrReasonToReload)
+                const currentMediaIsImage: boolean = post.media[0] === MediaType.Image;
+
+                if (currentMediaIsImage)
+                    setImgUri(uriOrReasonToReload)
+                else
+                    setVideoUri(uriOrReasonToReload)
             }
             else { // fail get img uri
                 setError(uriOrReasonToReload)
@@ -65,9 +74,13 @@ const DiversityItem = ({
         setIsHandling(false)
     }, [itemType, loadItem_ThePageAsync])
 
+    const onVideoError = useCallback((_: any) => {
+        setError(NeedReloadReason.FailToGetContent)
+    }, [item]);
+
     useEffect(() => {
         (async () => {
-            loadItem_ThePageAsync()
+            loadItemAsync()
         })()
     }, [item])
 
@@ -79,7 +92,7 @@ const DiversityItem = ({
         })
     }, [theme])
 
-    // error
+    // error | loading
 
     if (error !== NeedReloadReason.None || isHandling) {
         return (
@@ -96,6 +109,22 @@ const DiversityItem = ({
             <ImageBackgroundWithLoading source={{ uri: imgUri }} style={style.masterView} >
                 <Text>DiversityItem</Text>
             </ImageBackgroundWithLoading>
+        )
+    }
+
+    // video
+
+    if (videoUri) {
+        console.log(videoUri);
+        
+        return (
+            <Video
+                onError={onVideoError}
+                source={{ uri: videoUri }}
+                resizeMode={'cover'}
+                muted={true}
+                paused={true}
+                style={style.masterView} />
         )
     }
 
