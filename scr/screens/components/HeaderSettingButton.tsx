@@ -9,8 +9,10 @@ import { useNavigation } from '@react-navigation/native';
 
 const HeaderSettingButton = (
     {
+        isSaved,
         onPressSaved,
     }: {
+        isSaved?: boolean,
         onPressSaved?: () => {},
     }) => {
     const theme = useContext(ThemeContext);
@@ -33,7 +35,7 @@ const HeaderSettingButton = (
             {
                 !onPressSaved ? undefined :
                     <TouchableOpacity onPress={onPressSaved} style={style.iconTO}>
-                        <MaterialCommunityIcons name={Icon.Bookmark} color={theme.primary} size={Size.Icon} />
+                        <MaterialCommunityIcons name={isSaved === true ? Icon.Bookmark : Icon.BookmarkOutline} color={theme.primary} size={Size.Icon} />
                     </TouchableOpacity>
             }
 
