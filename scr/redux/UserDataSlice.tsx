@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
-import { SubscribedData } from "../constants/Types";
+import { DiversityItemType, SubscribedData } from "../constants/Types";
 import { ScreenName } from "../constants/AppConstants";
 
 export type UserDataState = {
@@ -8,6 +8,8 @@ export type UserDataState = {
     pinnedFunSoundNames: string[],
 
     subscribedData: SubscribedData | undefined,
+
+    savedItems: DiversityItemType[],
 
     checkedInScreens: ScreenName[],
 
@@ -79,6 +81,8 @@ const initialState: UserDataState = {
     subscribedData: undefined,
 
     checkedInScreens: [],
+
+    savedItems: [],
 
     shortFilmsFavoritedIDs: [],
 
@@ -162,6 +166,16 @@ const slice = createSlice({
                 state.disableScreens = state.disableScreens.filter(screen => screen !== action.payload)
             else
                 state.disableScreens.push(action.payload)
+        },
+
+        toggleSavedItem(state, action: PayloadAction<DiversityItemType>) {
+            if (!state.savedItems)
+                state.savedItems = []
+
+            if (state.savedItems.includes(action.payload))
+                state.savedItems = state.savedItems.filter(screen => screen !== action.payload)
+            else
+                state.savedItems.push(action.payload)
         },
 
         checkInScreen(state, action: PayloadAction<ScreenName>) {
@@ -644,6 +658,8 @@ export const {
 
     checkInScreen,
 
+    toggleSavedItem,
+    
     togglePinFunSound,
     addFunSoundFavoritedID,
     removeFunSoundFavoritedID,
