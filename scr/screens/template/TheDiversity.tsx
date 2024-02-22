@@ -38,7 +38,7 @@ const TheDiversity = (
     const navigation = useNavigation();
     const theme = useContext(ThemeContext);
     const [curPageIdx, setCurPageIdx] = useState(0)
-    const dispatch = useAppDispatch()
+    // const dispatch = useAppDispatch()
     const insets = useSafeAreaInsets()
 
     const maxPage = useMemo(() => {
