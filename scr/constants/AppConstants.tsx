@@ -333,7 +333,7 @@ export const LocalText = {
   warning_premium: 'These subscriptions are non-renewable. If you no longer wish to subscribe, it will be automatically canceled at the end of the period.',
   thank_you_premium: "Any purchase is greatly appreciated. Thank you 💛",
 
-  saved_no_items: "You have no saved item.",
+  diversity_no_items: "You have no item.",
 
   // ad_free: 'Ad-free',
   // no_ad_anymore: 'No ad during your subscription time.\n',

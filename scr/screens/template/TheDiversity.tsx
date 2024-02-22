@@ -135,7 +135,7 @@ const TheDiversity = (
         return (
             <View style={style.masterView}>
                 <View style={style.centerView}>
-                    <Text style={style.noItemTxt}>{LocalText.saved_no_items}</Text>
+                    <Text style={style.noItemTxt}>{LocalText.diversity_no_items}</Text>
                 </View>
             </View>
         )
