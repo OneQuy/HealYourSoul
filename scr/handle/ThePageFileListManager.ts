@@ -13,12 +13,12 @@ export function Cached(cat: Category, fileList: FileList) {
     const cached = cachedFileLists.find(i => i[0] === cat)
 
     if (cached === undefined) {
-        console.log('cacheddd', cat);
+        console.log('cacheddd', Category[cat]);
 
         cachedFileLists.push([cat, fileList])
     }
     else {
-        console.log('update cacheddd', cat);
+        console.log('update cacheddd', Category[cat]);
         cached[1] = fileList
     }
 }
@@ -27,7 +27,7 @@ export function GetCached(cat: Category) {
     const f = cachedFileLists.find(i => i[0] === cat)
 
     if (f) {
-        console.log('get cacheddd ok', cat);
+        console.log('get cacheddd ok', Category[cat]);
         return f[1]
     }
     else
