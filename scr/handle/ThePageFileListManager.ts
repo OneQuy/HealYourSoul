@@ -27,7 +27,7 @@ function GetCached(cat: Category) {
     const f = cachedFileLists.find(i => i[0] === cat)
 
     if (f) {
-        console.log('get cacheddd ok', Category[cat]);
+        // console.log('get cacheddd ok', Category[cat]);
         return f[1]
     }
     else
