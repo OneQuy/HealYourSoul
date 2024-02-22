@@ -3,7 +3,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import { View, StyleSheet, FlatList, TouchableOpacity, Text } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { BorderRadius, Category, FontSize, Icon, NeedReloadReason, Outline, Size, StorageKey_CurPageFunSoundIdx, StorageKey_LocalFileVersion } from '../../constants/AppConstants'
+import { BorderRadius, Category, FontSize, Icon, LocalText, NeedReloadReason, Outline, Size, StorageKey_CurPageFunSoundIdx, StorageKey_LocalFileVersion } from '../../constants/AppConstants'
 import useCheckAndDownloadRemoteFile from '../../hooks/useCheckAndDownloadRemoteFile'
 import { DiversityItemType, FunSound } from '../../constants/Types'
 import { TempDirName } from '../../handle/Utils'
@@ -103,12 +103,13 @@ const TheDiversity = (
 
     const style = useMemo(() => {
         return StyleSheet.create({
-            masterView: { flex: 1, gap: Outline.GapHorizontal, },
-            flatListContainer: { flex: 1, },
-            pinContainer: { flexDirection: 'row' },
-            naviContainer: { backgroundColor: theme.primary, borderRadius: BorderRadius.BR, marginBottom: insets.bottom + Outline.GapHorizontal, marginHorizontal: Outline.GapVertical, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' },
-            naviTO: { padding: Outline.GapVertical_2, flex: 1, alignItems: 'center', justifyContent: 'center', },
-            pageTxt: { fontSize: FontSize.Normal, color: theme.counterPrimary, },
+            masterView: { flex: 1, paddingBottom: insets.bottom, gap: Outline.GapHorizontal, },
+            centerView: { flex: 1, justifyContent: 'center', alignItems: 'center' },
+            // flatListContainer: { flex: 1, },
+            // pinContainer: { flexDirection: 'row' },
+            // naviContainer: { backgroundColor: theme.primary, borderRadius: BorderRadius.BR, marginBottom: insets.bottom + Outline.GapHorizontal, marginHorizontal: Outline.GapVertical, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' },
+            // naviTO: { padding: Outline.GapVertical_2, flex: 1, alignItems: 'center', justifyContent: 'center', },
+            noItemTxt: { fontSize: FontSize.Normal, color: theme.counterBackground, },
         })
     }, [theme, insets])
 
@@ -130,10 +131,12 @@ const TheDiversity = (
 
     // render list is empty
 
-    if (!Array.isArray(allItems)) {
+    if (!IsValuableArrayOrString(itemsToRender)) {
         return (
-            <View>
-
+            <View style={style.masterView}>
+                <View style={style.centerView}>
+                    <Text style={style.noItemTxt}>{LocalText.saved_no_items}</Text>
+                </View>
             </View>
         )
     }
