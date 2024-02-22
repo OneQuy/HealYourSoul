@@ -5,6 +5,8 @@ import { ThemeContext } from '../../constants/Colors'
 import ImageBackgroundWithLoading from './ImageBackgroundWithLoading'
 import { CheckLocalFileAndGetURIAsync } from '../../handle/AppUtils'
 import { CheckAndGetFileListAsync } from '../../handle/ThePageFileListManager'
+import { NeedReloadReason } from '../../constants/AppConstants'
+import LoadingOrError from './LoadingOrError'
 
 type DiversityItemProps = {
     item: DiversityItemType,
@@ -18,6 +20,7 @@ const DiversityItem = ({
     const theme = useContext(ThemeContext);
     const [isHandling, setIsHandling] = useState(false)
     const [imgUri, setImgUri] = useState('')
+    const [error, setError] = useState<NeedReloadReason>(NeedReloadReason.None)
 
     useEffect(() => {
         (async () => {
@@ -26,18 +29,33 @@ const DiversityItem = ({
             const id = item.id
 
             if (id !== undefined) { // ThePage item
-                // const fileList = await CheckAndGetFileListAsync(item.cat)
+                const fileList = await CheckAndGetFileListAsync(item.cat)
 
-                // const uriOrReasonToReload = await CheckLocalFileAndGetURIAsync(item.cat, forPost, 0, fileList.current, (process: DownloadProgressCallbackResult) => {
-                //     const percent = RoundNumber(process.bytesWritten / process.contentLength * 100, 0);
-                //     setDownloadPercent(percent);
-                // });
+                if (typeof fileList === 'object') { // success get filetlist
+                    const forPost = fileList.posts.find(p => p.id === item.id)
 
-                // if (typeof uriOrReasonToReload === 'string') { // success
-                //     // update media
+                    if (!forPost) { // error get filelist
+                        setError(NeedReloadReason.FailToGetContent)
+                        setIsHandling(false)
+                        return
+                    }
 
-                //     mediaURI.current = uriOrReasonToReload;
-                // }
+                    const uriOrReasonToReload = await CheckLocalFileAndGetURIAsync(item.cat, forPost, 0, (_) => { })
+
+                    if (typeof uriOrReasonToReload === 'string') { // success uri
+                        setImgUri(uriOrReasonToReload)
+                    }
+                    else {
+                        setError(uriOrReasonToReload)
+                    }
+
+                    setIsHandling(false)
+                }
+                else { // error get filelist
+                    setError(fileList)
+                    setIsHandling(false)
+                }
+
             }
         })()
     }, [item])
@@ -49,6 +67,16 @@ const DiversityItem = ({
             // noItemTxt: { fontSize: FontSize.Normal, color: theme.counterBackground, },
         })
     }, [theme])
+
+    // error
+
+    if (error !== NeedReloadReason.None) {
+        return (
+            <View style={style.centerView} >
+                <LoadingOrError reasonToReload={error} onPressedReload={() => { }} />
+            </View>
+        )
+    }
 
     // loading
 

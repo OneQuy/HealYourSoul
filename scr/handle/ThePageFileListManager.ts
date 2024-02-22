@@ -13,7 +13,7 @@ function Cached(cat: Category, fileList: FileList) {
     const cached = cachedFileLists.find(i => i[0] === cat)
 
     if (cached === undefined) {
-        console.log('cacheddd', Category[cat]);
+        // console.log('cacheddd', Category[cat]);
 
         cachedFileLists.push([cat, fileList])
     }
