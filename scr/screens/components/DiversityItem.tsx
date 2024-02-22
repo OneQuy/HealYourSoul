@@ -115,8 +115,6 @@ const DiversityItem = ({
     // video
 
     if (videoUri) {
-        console.log(videoUri);
-        
         return (
             <Video
                 onError={onVideoError}
