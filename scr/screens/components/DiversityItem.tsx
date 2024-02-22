@@ -1,7 +1,7 @@
 // @ts-ignore
 import Video from 'react-native-video';
 
-import { View, Text, StyleSheet, ActivityIndicator, Alert } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { DiversityItemType, MediaType } from '../../constants/Types'
 import { ThemeContext } from '../../constants/Colors'
