@@ -18,7 +18,7 @@ function Cached(cat: Category, fileList: FileList) {
         cachedFileLists.push([cat, fileList])
     }
     else {
-        console.log('update cacheddd', Category[cat]);
+        // console.log('update cacheddd', Category[cat]);
         cached[1] = fileList
     }
 }
