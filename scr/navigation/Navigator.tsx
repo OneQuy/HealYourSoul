@@ -111,7 +111,7 @@ const ScreenList: ScreenNamePair[] = [
 
   [ScreenName.IAPPage, IAPPage],
   [ScreenName.Setting, SettingScreen],
-  // [ScreenName.Saved, SavedScreen],
+  [ScreenName.Saved, SavedScreen],
 ]
 
 const Navigator = ({ initialRouteName }: MainNavigatorProps) => {

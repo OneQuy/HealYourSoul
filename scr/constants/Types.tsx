@@ -29,7 +29,7 @@ export type LatestVersionConfig = {
     release_note: string,
 }
 
-export type DiversityItem = {
+export type DiversityItemType = {
     cat: Category,
     id: string | number,
     url: string,

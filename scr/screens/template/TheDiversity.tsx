@@ -5,7 +5,7 @@ import { View, StyleSheet, FlatList, TouchableOpacity, Text } from 'react-native
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { BorderRadius, Category, FontSize, Icon, NeedReloadReason, Outline, Size, StorageKey_CurPageFunSoundIdx, StorageKey_LocalFileVersion } from '../../constants/AppConstants'
 import useCheckAndDownloadRemoteFile from '../../hooks/useCheckAndDownloadRemoteFile'
-import { DiversityItem, FunSound } from '../../constants/Types'
+import { DiversityItemType, FunSound } from '../../constants/Types'
 import { TempDirName } from '../../handle/Utils'
 import { GetRemoteFileConfigVersion } from '../../handle/AppConfigHandler'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -21,12 +21,14 @@ import { addFunSoundFavoritedID, removeFunSoundFavoritedID } from '../../redux/U
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { GetNumberIntAsync, SetNumberAsync } from '../../handle/AsyncStorageUtils';
 import HeaderSettingButton from '../components/HeaderSettingButton';
+import { track_PressNextPost } from '../../handle/tracking/GoodayTracking';
+import DiversityItem from '../components/DiversityItem';
 
 const numColumns = 4
 const numRowPerPage = 9
 
 type TheDiversityProps = {
-    allItems: DiversityItem[] | undefined,
+    allItems: DiversityItemType[] | undefined,
 }
 
 const TheDiversity = (
@@ -69,104 +71,75 @@ const TheDiversity = (
         SetNumberAsync(StorageKey_CurPageFunSoundIdx, idx)
     }, [allItems, maxPage])
 
-    // const onPressedNextPage = useCallback((isNext: boolean) => {
-    //     if (!Array.isArray(allItems))
-    //         return
+    const onPressedNextPage = useCallback((isNext: boolean) => {
+        if (!Array.isArray(allItems))
+            return
 
-    //     let idx = curPageIdx
+        let idx = curPageIdx
 
-    //     if (isNext) {
-    //         if (curPageIdx < maxPage - 1)
-    //             idx = curPageIdx + 1
-    //     }
-    //     else {
-    //         if (curPageIdx > 0)
-    //             idx = curPageIdx - 1
-    //     }
+        if (isNext) {
+            if (curPageIdx < maxPage - 1)
+                idx = curPageIdx + 1
+        }
+        else {
+            if (curPageIdx > 0)
+                idx = curPageIdx - 1
+        }
 
-    //     setCurPageIdx(idx)
-    //     SetNumberAsync(StorageKey_CurPageFunSoundIdx, idx)
+        setCurPageIdx(idx)
+        SetNumberAsync(StorageKey_CurPageFunSoundIdx, idx)
 
-    //     track_PressNextPost(true, category, isNext)
-    // }, [curPageIdx, allItems, maxPage])
+        // track_PressNextPost(true, category, isNext)
+    }, [curPageIdx, allItems, maxPage])
 
-    // const itemsToRender = useMemo(() => {
-    //     if (!Array.isArray(allItems))
-    //         return []
+    const itemsToRender = useMemo(() => {
+        if (!Array.isArray(allItems))
+            return []
 
-    //     const totalItemsPerPage = numColumns * numRowPerPage
+        const totalItemsPerPage = numColumns * numRowPerPage
 
-    //     return allItems.slice(curPageIdx * totalItemsPerPage, curPageIdx * totalItemsPerPage + totalItemsPerPage)
-    // }, [curPageIdx, allItems])
+        return allItems.slice(curPageIdx * totalItemsPerPage, curPageIdx * totalItemsPerPage + totalItemsPerPage)
+    }, [curPageIdx, allItems])
 
-    // const style = useMemo(() => {
-    //     return StyleSheet.create({
-    //         masterView: { flex: 1, gap: Outline.GapHorizontal, },
-    //         flatListContainer: { flex: 1, },
-    //         pinContainer: { flexDirection: 'row' },
-    //         naviContainer: { backgroundColor: theme.primary, borderRadius: BorderRadius.BR, marginBottom: insets.bottom + Outline.GapHorizontal, marginHorizontal: Outline.GapVertical, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' },
-    //         naviTO: { padding: Outline.GapVertical_2, flex: 1, alignItems: 'center', justifyContent: 'center', },
-    //         pageTxt: { fontSize: FontSize.Normal, color: theme.counterPrimary, },
-    //     })
-    // }, [theme, insets])
+    const style = useMemo(() => {
+        return StyleSheet.create({
+            masterView: { flex: 1, gap: Outline.GapHorizontal, },
+            flatListContainer: { flex: 1, },
+            pinContainer: { flexDirection: 'row' },
+            naviContainer: { backgroundColor: theme.primary, borderRadius: BorderRadius.BR, marginBottom: insets.bottom + Outline.GapHorizontal, marginHorizontal: Outline.GapVertical, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' },
+            naviTO: { padding: Outline.GapVertical_2, flex: 1, alignItems: 'center', justifyContent: 'center', },
+            pageTxt: { fontSize: FontSize.Normal, color: theme.counterPrimary, },
+        })
+    }, [theme, insets])
 
-    // const renderItem = useCallback(({ item, index }: { item: FunSound, index: number }) => {
-    //     return <FunSoundItem
-    //         pinnedSounds={pinnedSounds}
-    //         idOfSound={idOfSound}
-    //         likeCount={likeCount}
-    //         isFavorited={isFavorited}
-    //         onPressedLike={onPressedFavorite}
-    //         data={item} />
-    // }, [pinnedSounds, likeCount, isFavorited, onPressedFavorite])
+    const renderItem = useCallback(({ item, index }: { item: DiversityItemType, index: number }) => {
+        return <DiversityItem
+            onPressed={() => { }}
+            data={item} />
+    }, [])
 
-    // // save last visit category screen
+    // init
 
-    // useFocusEffect(useCallback(() => SaveCurrentScreenForLoadNextTime(navigation), []))
+    useEffect(() => {
+        (async () => {
+            navigation.setOptions({
+                headerRight: () => <HeaderSettingButton />
+            });
+        })()
+    }, [])
 
-    // // init
+    // render list is empty
 
-    // useEffect(() => {
-    //     (async () => {
-    //         // load likes
+    if (!Array.isArray(allItems)) {
+        return (
+            <View>
 
-    //         const res = await fetchLikesAsync()
-    //         setLikesObj(res)
-
-    //         // load cur page idx
-
-    //         setCurPageIdx(await GetNumberIntAsync(StorageKey_CurPageFunSoundIdx, 0))
-    //     })()
-    // }, [])
-
-    // // on change theme
-
-    // useEffect(() => {
-    //     navigation.setOptions({
-    //         headerRight: () => <HeaderSettingButton />
-    //     });
-    // }, [])
-
-    // // render loading or error
-
-    // if (!Array.isArray(allItems)) {
-    //     let reasonToReload = NeedReloadReason.None // loading
-
-    //     if (errorDownloadJson != undefined) {
-    //         if (NetLord.IsAvailableLatestCheck())
-    //             reasonToReload = NeedReloadReason.FailToGetContent
-    //         else
-    //             reasonToReload = NeedReloadReason.NoInternet
-    //     }
-
-    //     return (
-    //         <LoadingOrError reasonToReload={reasonToReload} onPressedReload={reUpdateData} />
-    //     )
-    // }
+            </View>
+        )
+    }
 
     // main render
 
-    return undefined
     // return (
     //     <View style={style.masterView}>
     //         {/* pin */}
