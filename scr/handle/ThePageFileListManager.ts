@@ -7,19 +7,55 @@ import { versions } from "./VersionsHandler";
 import { IsInternetAvailableAsync } from "./NetLord";
 import { AlertNoInternet, GetListFileRLP, HandleError } from "./AppUtils";
 
-export async function CheckAndGetFileListAsync(cat: Category): Promise<FileList | NeedReloadReason> {
-    const localRLP = GetListFileRLP(cat, true);
-    const readLocalRes = await ReadTextAsync(localRLP, true);
-    let localFileList: FileList | null = null;
+const cachedFileLists: [Category, FileList][] = []
 
-    if (typeof readLocalRes.text === 'string') {
-        localFileList = JSON.parse(readLocalRes.text) as FileList;
+export function Cached(cat: Category, fileList: FileList) {
+    const cached = cachedFileLists.find(i => i[0] === cat)
+
+    if (cached === undefined) {
+        console.log('cacheddd', cat);
+
+        cachedFileLists.push([cat, fileList])
+    }
+    else {
+        console.log('update cacheddd', cat);
+        cached[1] = fileList
+    }
+}
+
+export function GetCached(cat: Category) {
+    const f = cachedFileLists.find(i => i[0] === cat)
+
+    if (f) {
+        console.log('get cacheddd ok', cat);
+        return f[1]
+    }
+    else
+        return undefined
+}
+
+export async function CheckAndGetFileListAsync(cat: Category): Promise<FileList | NeedReloadReason> {
+    // load from cached first
+
+    let fileList: FileList | undefined = GetCached(cat)
+
+    // or load from local
+
+    if (fileList === undefined) {
+        const localRLP = GetListFileRLP(cat, true);
+        const readLocalRes = await ReadTextAsync(localRLP, true);
+
+        if (typeof readLocalRes.text === 'string') {
+            fileList = JSON.parse(readLocalRes.text) as FileList;
+        }
     }
 
-    const localVersion: number = localFileList === null ? -1 : localFileList.version;
+    // check if need to download
+
+    const localVersion: number = fileList === undefined ? -1 : fileList.version;
     let needDownload = false;
 
-    if (localFileList === null)
+    if (fileList === undefined)
         needDownload = true;
     else if (!versions) { } // offline mode
     else if (cat === Category.Draw && localVersion < versions.draw)
@@ -55,19 +91,30 @@ export async function CheckAndGetFileListAsync(cat: Category): Promise<FileList 
     else if (cat === Category.Tune && localVersion < versions.tune)
         needDownload = true;
 
-    if (!needDownload && localFileList !== null) {
+    // not need to dl
+
+    if (!needDownload && fileList !== undefined) {
         if (Cheat('IsLog_LoadFileList')) {
-            console.log(Category[cat], 'Loaded FileList from local');
+            console.log(Category[cat], 'Loaded FileList from local or cached');
         }
 
-        return localFileList;
+        Cached(cat, fileList)
+        return fileList;
     }
+
+    // need dl
 
     if (Cheat('IsLog_LoadFileList')) {
         console.log(Category[cat], 'Loaded FileList from FB');
     }
 
-    return await DownloadAndSaveFileListAsync(cat);
+    const res = await DownloadAndSaveFileListAsync(cat)
+
+    if (typeof res === 'object') {
+        Cached(cat, res)
+    }
+
+    return res
 }
 
 async function DownloadAndSaveFileListAsync(cat: Category): Promise<FileList | NeedReloadReason> {
