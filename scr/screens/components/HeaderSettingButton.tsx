@@ -34,7 +34,7 @@ const HeaderSettingButton = (
         <View style={style.master}>
             {/* saved btn */}
             {
-                !onPressSaved ? undefined :
+                !diversityItem ? undefined :
                     <TouchableOpacity onPress={onPressSaved} style={style.iconTO}>
                         <MaterialCommunityIcons name={isSaved ? Icon.Bookmark : Icon.BookmarkOutline} color={theme.primary} size={Size.Icon} />
                     </TouchableOpacity>

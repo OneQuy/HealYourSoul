@@ -105,7 +105,7 @@ const TheDiversity = (
         return StyleSheet.create({
             masterView: { flex: 1, paddingBottom: insets.bottom, gap: Outline.GapHorizontal, },
             centerView: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-            // flatListContainer: { flex: 1, },
+            flatListContainer: { flex: 1, },
             // pinContainer: { flexDirection: 'row' },
             // naviContainer: { backgroundColor: theme.primary, borderRadius: BorderRadius.BR, marginBottom: insets.bottom + Outline.GapHorizontal, marginHorizontal: Outline.GapVertical, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' },
             // naviTO: { padding: Outline.GapVertical_2, flex: 1, alignItems: 'center', justifyContent: 'center', },
@@ -143,42 +143,37 @@ const TheDiversity = (
 
     // main render
 
-    // return (
-    //     <View style={style.masterView}>
-    //         {/* pin */}
-    //         {
-    //             renderPinnedSounds
-    //         }
+    return (
+        <View style={style.masterView}>
+            {/* scroll view */}
+            <View style={style.flatListContainer}>
+                <FlatList
+                    showsVerticalScrollIndicator={false}
+                    data={itemsToRender}
+                    numColumns={numColumns}
+                    keyExtractor={(item, index) => index.toString()}
+                    renderItem={renderItem}
+                />
+            </View>
 
-    //         {/* scroll view */}
-    //         <View style={style.flatListContainer}>
-    //             <FlatList
-    //                 showsVerticalScrollIndicator={false}
-    //                 data={itemsToRender}
-    //                 numColumns={numColumns}
-    //                 keyExtractor={(item) => item.name}
-    //                 renderItem={renderItem}
-    //             />
-    //         </View>
-
-    //         {/* navigation */}
-    //         <View style={style.naviContainer}>
-    //             <TouchableOpacity onPress={() => onPressedTopPage(false)} style={style.naviTO}>
-    //                 <MaterialCommunityIcons name={Icon.MaxLeft} color={theme.counterPrimary} size={Size.Icon} />
-    //             </TouchableOpacity>
-    //             <TouchableOpacity onPress={() => onPressedNextPage(false)} style={style.naviTO}>
-    //                 <MaterialCommunityIcons name={Icon.Left} color={theme.counterPrimary} size={Size.Icon} />
-    //             </TouchableOpacity>
-    //             <Text onPress={onPressedMiddlePage} style={style.pageTxt}>{curPageIdx + 1}/{maxPage}</Text>
-    //             <TouchableOpacity onPress={() => onPressedNextPage(true)} style={style.naviTO}>
-    //                 <MaterialCommunityIcons name={Icon.Right} color={theme.counterPrimary} size={Size.Icon} />
-    //             </TouchableOpacity>
-    //             <TouchableOpacity onPress={() => onPressedTopPage(true)} style={style.naviTO}>
-    //                 <MaterialCommunityIcons name={Icon.MaxRight} color={theme.counterPrimary} size={Size.Icon} />
-    //             </TouchableOpacity>
-    //         </View>
-    //     </View>
-    // )
+            {/* navigation */}
+            {/* <View style={style.naviContainer}>
+                <TouchableOpacity onPress={() => onPressedTopPage(false)} style={style.naviTO}>
+                    <MaterialCommunityIcons name={Icon.MaxLeft} color={theme.counterPrimary} size={Size.Icon} />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => onPressedNextPage(false)} style={style.naviTO}>
+                    <MaterialCommunityIcons name={Icon.Left} color={theme.counterPrimary} size={Size.Icon} />
+                </TouchableOpacity>
+                <Text onPress={onPressedMiddlePage} style={style.pageTxt}>{curPageIdx + 1}/{maxPage}</Text>
+                <TouchableOpacity onPress={() => onPressedNextPage(true)} style={style.naviTO}>
+                    <MaterialCommunityIcons name={Icon.Right} color={theme.counterPrimary} size={Size.Icon} />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => onPressedTopPage(true)} style={style.naviTO}>
+                    <MaterialCommunityIcons name={Icon.MaxRight} color={theme.counterPrimary} size={Size.Icon} />
+                </TouchableOpacity>
+            </View> */}
+        </View>
+    )
 }
 
 export default TheDiversity

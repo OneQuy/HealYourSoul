@@ -13,7 +13,7 @@ import React, { useCallback, useLayoutEffect, useContext, useEffect, useMemo, us
 import { BorderRadius, Category, FontSize, Icon, LocalText, NeedReloadReason, Opacity, Outline, Size } from '../../constants/AppConstants';
 import { ThemeContext } from '../../constants/Colors';
 import { heightPercentageToDP as hp, } from "react-native-responsive-screen";
-import { DiversityItemType, FileList, MediaType, PostMetadata, Streak } from '../../constants/Types';
+import { FileList, MediaType, PostMetadata, Streak } from '../../constants/Types';
 import { CheckAndGetFileListAsync, CheckLocalFileAndGetURIAsync, CopyAndToast, GetAllSavedLocalPostIDsListAsync, HandleError, PreDownloadPosts, SaveCurrentScreenForLoadNextTime, ToastTheme } from '../../handle/AppUtils';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
@@ -27,7 +27,7 @@ import { DownloadProgressCallbackResult } from 'react-native-fs';
 import { NetLord } from '../../handle/NetLord';
 import { SaveToGalleryAsync } from '../../handle/CameraRoll';
 import { Cheat } from '../../handle/Cheat';
-import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
+import { SetStreakAsync } from '../../handle/Streak';
 import StreakPopup from '../components/StreakPopup';
 import { track_PressNextPost, track_PressNextPostMedia, track_PressSaveMedia, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
