@@ -116,7 +116,7 @@ const TheDiversity = (
     const renderItem = useCallback(({ item, index }: { item: DiversityItemType, index: number }) => {
         return <DiversityItem
             onPressed={() => { }}
-            data={item} />
+            item={item} />
     }, [])
 
     // init

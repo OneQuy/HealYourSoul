@@ -14,7 +14,7 @@ import { BorderRadius, Category, FontSize, Icon, LocalText, NeedReloadReason, Op
 import { ThemeContext } from '../../constants/Colors';
 import { heightPercentageToDP as hp, } from "react-native-responsive-screen";
 import { FileList, MediaType, PostMetadata, Streak } from '../../constants/Types';
-import { CheckAndGetFileListAsync, CheckLocalFileAndGetURIAsync, CopyAndToast, GetAllSavedLocalPostIDsListAsync, HandleError, PreDownloadPosts, SaveCurrentScreenForLoadNextTime, ToastTheme } from '../../handle/AppUtils';
+import { CheckLocalFileAndGetURIAsync, CopyAndToast, GetAllSavedLocalPostIDsListAsync, HandleError, PreDownloadPosts, SaveCurrentScreenForLoadNextTime, ToastTheme } from '../../handle/AppUtils';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { PickRandomElement, RoundNumber, SecondsToHourMinuteSecondString } from '../../handle/Utils';
@@ -35,6 +35,7 @@ import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
 import HeaderSettingButton from '../components/HeaderSettingButton';
 import useIntroduceCat from '../components/IntroduceCat';
+import { CheckAndGetFileListAsync } from '../../handle/ThePageFileListManager';
 
 const videoNumbSize = 10;
 const videoTouchEffectRadius = 100;
