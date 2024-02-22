@@ -1,9 +1,9 @@
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { TouchableOpacity, StyleSheet } from 'react-native'
+import { TouchableOpacity, StyleSheet, View } from 'react-native'
 import React, { useCallback, useContext, useMemo } from 'react'
-import { Icon, ScreenName, Size } from '../../constants/AppConstants';
+import { Icon, Outline, ScreenName, Size } from '../../constants/AppConstants';
 import { ThemeContext } from '../../constants/Colors';
 import { useNavigation } from '@react-navigation/native';
 
@@ -17,14 +17,20 @@ const HeaderSettingButton = ({ onPress }: { onPress?: () => {} }) => {
 
     const style = useMemo(() => {
         return StyleSheet.create({
-            headerOptionTO: { marginRight: 15 },
+            master: { gap: Outline.GapHorizontal, flexDirection: 'row', marginRight: 15 },
+            iconTO: {},
         })
     }, [])
 
     return (
-        <TouchableOpacity onPress={onPressPremium} style={style.headerOptionTO}>
-            <MaterialCommunityIcons name={Icon.Star} color={theme.primary} size={Size.Icon} />
-        </TouchableOpacity>
+        <View style={style.master}>
+            <TouchableOpacity onPress={onPressPremium} style={style.iconTO}>
+                <MaterialCommunityIcons name={Icon.Bookmark} color={theme.primary} size={Size.Icon} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={onPressPremium} style={style.iconTO}>
+                <MaterialCommunityIcons name={Icon.Star} color={theme.primary} size={Size.Icon} />
+            </TouchableOpacity>
+        </View>
     )
 }
 

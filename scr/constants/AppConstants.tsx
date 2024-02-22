@@ -201,6 +201,8 @@ export enum Icon {
   // MaterialCommunityIcons
 
   ShareText = 'share',
+  BookmarkOutline = 'bookmark-outline',
+  Bookmark = 'bookmark',
   Youtube = 'youtube',
   ShareImage = 'share-variant-outline',
   ThreeDots = 'dots-horizontal',
