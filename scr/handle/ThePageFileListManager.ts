@@ -9,7 +9,7 @@ import { AlertNoInternet, GetListFileRLP, HandleError } from "./AppUtils";
 
 const cachedFileLists: [Category, FileList][] = []
 
-export function Cached(cat: Category, fileList: FileList) {
+function Cached(cat: Category, fileList: FileList) {
     const cached = cachedFileLists.find(i => i[0] === cat)
 
     if (cached === undefined) {
@@ -23,7 +23,7 @@ export function Cached(cat: Category, fileList: FileList) {
     }
 }
 
-export function GetCached(cat: Category) {
+function GetCached(cat: Category) {
     const f = cachedFileLists.find(i => i[0] === cat)
 
     if (f) {
