@@ -470,7 +470,7 @@ async function DownloadMedia(cat: Category, post: PostMetadata, mediaIdx: number
     return uri;
 }
 
-export async function CheckLocalFileAndGetURIAsync(cat: Category, post: PostMetadata, mediaIdx: number, fileList: FileList, progress: (p: DownloadProgressCallbackResult) => void): Promise<string | NeedReloadReason> {
+export async function CheckLocalFileAndGetURIAsync(cat: Category, post: PostMetadata, mediaIdx: number, progress: (p: DownloadProgressCallbackResult) => void): Promise<string | NeedReloadReason> {
     // check local 
 
     const uri = GetMediaFullPath(true, cat, post.id, mediaIdx, post.media[mediaIdx]);
@@ -482,20 +482,6 @@ export async function CheckLocalFileAndGetURIAsync(cat: Category, post: PostMeta
 
         return uri;
     }
-
-    // // need to download, download a bunch first
-
-    // await CheckAndPullBunchMediaAsync(cat, fileList)
-
-    // // check local again
-
-    // if (await IsExistedAsync(uri, false)) {
-    //     if (Cheat('IsLog_LoadMedia')) {
-    //         console.log(Category[cat], 'loaded media from LOCAL', 'post: ' + post.id, 'media idx: ' + mediaIdx);
-    //     }
-
-    //     return uri;
-    // }
 
     // dl for sure
 

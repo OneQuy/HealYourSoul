@@ -237,7 +237,7 @@ const ThePage = ({ category }: ThePageProps) => {
 
         mediaURI.current = ''
 
-        const uriOrReasonToReload = await CheckLocalFileAndGetURIAsync(category, forPost, curMediaIdx.current, fileList.current, (process: DownloadProgressCallbackResult) => {
+        const uriOrReasonToReload = await CheckLocalFileAndGetURIAsync(category, forPost, curMediaIdx.current, (process: DownloadProgressCallbackResult) => {
             const percent = RoundNumber(process.bytesWritten / process.contentLength * 100, 0);
             setDownloadPercent(percent);
         });
