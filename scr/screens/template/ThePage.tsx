@@ -13,7 +13,7 @@ import React, { useCallback, useLayoutEffect, useContext, useEffect, useMemo, us
 import { BorderRadius, Category, FontSize, Icon, LocalText, NeedReloadReason, Opacity, Outline, Size } from '../../constants/AppConstants';
 import { ThemeContext } from '../../constants/Colors';
 import { heightPercentageToDP as hp, } from "react-native-responsive-screen";
-import { FileList, MediaType, PostMetadata, Streak } from '../../constants/Types';
+import { DiversityItemType, FileList, MediaType, PostMetadata, Streak } from '../../constants/Types';
 import { CheckAndGetFileListAsync, CheckLocalFileAndGetURIAsync, CopyAndToast, GetAllSavedLocalPostIDsListAsync, HandleError, PreDownloadPosts, SaveCurrentScreenForLoadNextTime, ToastTheme } from '../../handle/AppUtils';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
@@ -733,7 +733,9 @@ const ThePage = ({ category }: ThePageProps) => {
     useEffect(() => {
         navigation.setOptions({
             headerRight: !handling ?
-                () => <HeaderSettingButton cat={category} thePagePost={post.current} />
+                () => <HeaderSettingButton
+                    diversityItem={{ cat: category, id: post.current?.id }}
+                />
                 :
                 () => (
                     <ActivityIndicator color={theme.primary} style={style.headerOptionTO} />
