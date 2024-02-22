@@ -32,8 +32,12 @@ export type LatestVersionConfig = {
 export type DiversityItemType = {
     cat: Category,
     id: string | number,
-    url: string,
-    extra: string,
+} | {
+    cat: Category,
+    image: RandomImage,
+} | {
+    cat: Category,
+    text: string,
 }
 
 export type AppConfig = {
@@ -64,7 +68,7 @@ export type AppConfig = {
     tracking: {
         enableFirebase: boolean,
         enableTelemetry: boolean,
-        
+
         enableAptabase: boolean,
         aptabaseProductionKey: string,
     }
