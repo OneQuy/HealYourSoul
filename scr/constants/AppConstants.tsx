@@ -116,7 +116,6 @@ export enum Category {
   NinjaJoke = 12,
   Trivia = 13,
   Quotetext = 14,
-  RedditMeme = 15,
   AwardPicture = 16,
   Wikipedia = 17,
   FunWebsites = 18,

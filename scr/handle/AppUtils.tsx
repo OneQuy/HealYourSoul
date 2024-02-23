@@ -29,6 +29,37 @@ const postPredownloadLimit = 10
 
 export const startFreshlyOpenAppTick = Date.now()
 
+const pairCatAndScreenName: [Category, ScreenName][] = [
+    [Category.Draw, ScreenName.Comic],
+    [Category.Meme, ScreenName.Meme],
+    [Category.Quote, ScreenName.Quote],
+    [Category.CatDog, ScreenName.CatDog],
+    [Category.Love, ScreenName.Love],
+    [Category.Satisfying, ScreenName.Satisfying],
+    [Category.NSFW, ScreenName.NSFW],
+    [Category.Cute, ScreenName.Cute],
+    [Category.Sarcasm, ScreenName.Sarcasm],
+    [Category.Art, ScreenName.Art],
+    [Category.NinjaFact, ScreenName.ShortFact],
+    [Category.Picture, ScreenName.Picture],
+    [Category.NinjaJoke, ScreenName.Joke],
+    [Category.Trivia, ScreenName.Trivia],
+    [Category.Quotetext, ScreenName.QuoteText],
+    [Category.AwardPicture, ScreenName.AwardPicture],
+    [Category.Wikipedia, ScreenName.WikiFact],
+    [Category.FunWebsites, ScreenName.FunWebsite],
+    [Category.TopMovie, ScreenName.TopMovie],
+    [Category.BestShortFilms, ScreenName.BestShortFilms],
+    [Category.RandomMeme, ScreenName.RandomMeme],
+    [Category.Awesome, ScreenName.Awesome],
+    [Category.Typo, ScreenName.Typo],
+    [Category.Info, ScreenName.Info],
+    [Category.Sunset, ScreenName.Sunset],
+    [Category.FunSound, ScreenName.FunSound],
+    [Category.Tune, ScreenName.Tune],
+    [Category.Vocabulary, ScreenName.Vocabulary],
+] as const
+
 /**
  * cheat clear whole folder data
  */
@@ -140,6 +171,15 @@ export const GetListFileRLP = (cat: Category, localOrFb: boolean) => {
         else
             throw new Error('GetListFileRLP: ' + cat);
     }
+}
+
+export const CatToScreenName = (cat: Category): ScreenName | undefined => {
+    const f = pairCatAndScreenName.find(i => i[0] === cat)
+
+    if (f)
+        return f[1]
+    else
+        return undefined
 }
 
 export const GetDBVersionPath = (cat: Category) => {
