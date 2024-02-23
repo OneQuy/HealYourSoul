@@ -218,12 +218,6 @@ const ThePage = ({ category }: ThePageProps) => {
 
     // handles
 
-    const onBeginLoadNextOrPreviousPostAsync = useCallback(async () => {
-        if (!post.current)
-            return
-
-    }, [])
-
     const loadNextMediaAsync = useCallback(async (isNext: boolean, forPost: PostMetadata, isNextPost: NeedLoadPostType) => {
         if (!fileList.current)
             return
@@ -321,15 +315,11 @@ const ThePage = ({ category }: ThePageProps) => {
         post.current = foundPost;
         loadNextMediaAsync(true, foundPost, isNext ? 'next' : 'previous');
 
-        // load likes
-
-        onBeginLoadNextOrPreviousPostAsync()
-
         // predownload
 
         if (fileList.current)
             PreDownloadPosts(category, seenIDs, post.current, fileList.current)
-    }, [seenIDs, loadNextMediaAsync, onBeginLoadNextOrPreviousPostAsync]);
+    }, [seenIDs, loadNextMediaAsync]);
 
     const onVideoLoaded = useCallback((e: any) => {
         videoWholeDuration.current = e.duration;
