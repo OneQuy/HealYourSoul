@@ -277,7 +277,7 @@ const ThePage = ({ category }: ThePageProps) => {
         let foundPost: PostMetadata | undefined;
 
         if (diversityItem) { // load diversity Item mode
-            console.log('load saved item', diversityItem);
+            console.log('load diversity item', diversityItem);
 
             foundPost = fileList.current?.posts.find(post => post.id === diversityItem.id);
         }
@@ -708,7 +708,7 @@ const ThePage = ({ category }: ThePageProps) => {
 
     useEffect(() => {
         if (diversityItem && post.current && diversityItem.id !== post.current.id) { // already open this screen before => reload saved post
-            console.log('load another saved item', diversityItem);
+            console.log('load another diversity item', diversityItem);
 
             loadNextPostAsync(true)
         }
