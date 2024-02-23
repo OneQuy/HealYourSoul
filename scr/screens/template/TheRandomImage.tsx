@@ -160,7 +160,7 @@ const TheRandomImage = ({
 
     useEffect(() => {
         navigation.setOptions({
-            headerRight: () => <HeaderSettingButton onPress={onPressHeaderOption} />
+            headerRight: () => <HeaderSettingButton />
         });
     }, [onPressHeaderOption])
 

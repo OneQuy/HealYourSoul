@@ -16,6 +16,8 @@ import { track_HandleError, track_Simple, track_SimpleWithParam } from "./tracki
 import { GetBooleanAsync, GetDateAsync, GetNumberIntAsync, SetBooleanAsync, SetNumberAsync } from "./AsyncStorageUtils";
 import { CheckAndShowInAppReviewAsync } from "./InAppReview";
 import { UserID } from "./UserID";
+import { DrawerNavigationProp } from "@react-navigation/drawer";
+import { DrawerParamList } from "../navigation/Navigator";
 
 const today = new Date()
 export const todayString = 'd' + today.getDate() + '_m' + (today.getMonth() + 1) + '_' + today.getFullYear()
@@ -584,7 +586,7 @@ export const IsContentScreen = (screen: ScreenName) => {
     return !notContentScreen.includes(screen)
 }
 
-export const SaveCurrentScreenForLoadNextTime = (navigation: NavigationProp<ReactNavigation.RootParamList>) => {
+export const SaveCurrentScreenForLoadNextTime = (navigation: NavigationProp<ReactNavigation.RootParamList> | DrawerNavigationProp<DrawerParamList>) => {
     const state = navigation.getState();
     const screenName = state.routeNames[state.index];
     AsyncStorage.setItem(StorageKey_ScreenToInit, screenName);
