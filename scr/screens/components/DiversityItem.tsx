@@ -6,9 +6,9 @@ import React, { useCallback, useContext, useEffect, useMemo, useState } from 're
 import { DiversityItemType, MediaType } from '../../constants/Types'
 import { ThemeContext } from '../../constants/Colors'
 import ImageBackgroundWithLoading from './ImageBackgroundWithLoading'
-import { CheckLocalFileAndGetURIAsync } from '../../handle/AppUtils'
+import { CatToScreenName, CheckLocalFileAndGetURIAsync } from '../../handle/AppUtils'
 import { CheckAndGetFileListAsync } from '../../handle/ThePageFileListManager'
-import { NeedReloadReason, ScreenName } from '../../constants/AppConstants'
+import { NeedReloadReason } from '../../constants/AppConstants'
 import LoadingOrError from './LoadingOrError'
 import { useNavigation } from '@react-navigation/native';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
@@ -84,7 +84,10 @@ const DiversityItem = ({
     }, [item]);
 
     const onPressed = useCallback(() => {
-        navigation.navigate(ScreenName.AwardPicture, { item });
+        const screen = CatToScreenName(item.cat)
+
+        if (screen) // @ts-ignore
+            navigation.navigate(screen, { item });
     }, [navigation, item])
 
     useEffect(() => {

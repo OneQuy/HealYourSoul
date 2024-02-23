@@ -22,7 +22,7 @@ import { addDrawSeenID, addQuoteSeenID, addMemeSeenID, addLoveSeenID, addSatisfy
 import { setMutedVideo } from '../../redux/MiscSlice';
 import { ColorNameToRgb, HexToRgb, ToCanPrint } from '../../handle/UtilsTS';
 import { ToastOptions, toast } from '@baronha/ting';
-import { useDrawerStatus } from '@react-navigation/drawer';
+import { DrawerNavigationProp, useDrawerStatus } from '@react-navigation/drawer';
 import { DownloadProgressCallbackResult } from 'react-native-fs';
 import { NetLord } from '../../handle/NetLord';
 import { SaveToGalleryAsync } from '../../handle/CameraRoll';
@@ -36,6 +36,7 @@ import BottomBar, { BottomBarItem } from '../others/BottomBar';
 import HeaderSettingButton from '../components/HeaderSettingButton';
 import useIntroduceCat from '../components/IntroduceCat';
 import { CheckAndGetFileListAsync } from '../../handle/ThePageFileListManager';
+import { DrawerParamList } from '../../navigation/Navigator';
 
 const videoNumbSize = 10;
 const videoTouchEffectRadius = 100;
@@ -57,7 +58,7 @@ const ThePage = ({ category }: ThePageProps) => {
     // general state
 
     const dispatch = useAppDispatch();
-    const navigation = useNavigation();
+    const navigation = useNavigation<DrawerNavigationProp<DrawerParamList>>();
     const drawerStatus = useDrawerStatus();
     const theme = useContext(ThemeContext);
     const [handling, setHandling] = useState(false);
@@ -209,10 +210,10 @@ const ThePage = ({ category }: ThePageProps) => {
 
     // param
 
-    // const params = useMemo(() => {
-    //     const index = navigation.getState().index
-    //     return navigation.getState().routes[index].params
-    // }, [navigation])
+    const params = useMemo(() => {
+        const index = navigation.getState().index
+        return navigation.getState().routes[index].params
+    }, [navigation])
 
     // console.log(params);
 
