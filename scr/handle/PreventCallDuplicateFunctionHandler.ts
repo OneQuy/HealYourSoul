@@ -1,5 +1,12 @@
 import { DelayAsync } from "./Utils"
 
+/**
+ * USAGE:
+ * ____
+ * const funcPrevent = new PreventCallDuplicateFunctionHandler(async () => await YourFuncAsync(...))
+ * ____
+ * const res = await funcPrevent.ExcecuteAsync()
+ */
 export class PreventCallDuplicateFunctionHandler<T> {
     private funcAsync: () => Promise<T>
     private isHandling: boolean = false
