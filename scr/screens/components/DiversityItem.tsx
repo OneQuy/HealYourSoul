@@ -13,6 +13,7 @@ import LoadingOrError from './LoadingOrError'
 import { useNavigation } from '@react-navigation/native';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { DrawerParamList } from '../../navigation/Navigator';
+import { widthPercentageToDP } from 'react-native-responsive-screen';
 
 type DiversityItemProps = {
     item: DiversityItemType,
@@ -94,9 +95,9 @@ const DiversityItem = ({
 
     const style = useMemo(() => {
         return StyleSheet.create({
-            masterView: { flex: 1, aspectRatio: 1 },
+            masterView: { flex: 1, aspectRatio: 1, maxWidth: widthPercentageToDP(25) },
+            centerView: { flex: 1, aspectRatio: 1, maxWidth: widthPercentageToDP(25), alignItems: 'center', justifyContent: 'center' },
             percent100: { width: '100%', height: '100%' },
-            centerView: { flex: 1, aspectRatio: 1, alignItems: 'center', justifyContent: 'center' },
             // noItemTxt: { fontSize: FontSize.Normal, color: theme.counterBackground, },
         })
     }, [theme])
