@@ -17,7 +17,6 @@ import { widthPercentageToDP } from 'react-native-responsive-screen';
 
 type DiversityItemProps = {
     item: DiversityItemType,
-    // onPressed: (item: DiversityItemType) => void,
 }
 
 const DiversityItem = ({
