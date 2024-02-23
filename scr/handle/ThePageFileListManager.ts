@@ -6,6 +6,7 @@ import { ReadTextAsync } from "./FileUtils";
 import { versions } from "./VersionsHandler";
 import { IsInternetAvailableAsync } from "./NetLord";
 import { AlertNoInternet, GetListFileRLP, HandleError } from "./AppUtils";
+import { PreventCallDuplicateFunctionHandler } from "./PreventCallDuplicateFunctionHandler";
 
 const cachedFileLists: [Category, FileList][] = []
 
@@ -34,7 +35,29 @@ function GetCached(cat: Category) {
         return undefined
 }
 
+const preventCallDuplicateFunctionHandlers: [Category, PreventCallDuplicateFunctionHandler<FileList | NeedReloadReason>][] = []
+
 export async function CheckAndGetFileListAsync(cat: Category): Promise<FileList | NeedReloadReason> {
+    const funcPreventByCat = preventCallDuplicateFunctionHandlers.find(i => i[0] === cat)
+
+    let funcPrevent: PreventCallDuplicateFunctionHandler<FileList | NeedReloadReason>
+
+    if (funcPreventByCat) {
+        funcPrevent = funcPreventByCat[1]
+    }
+    else {
+        funcPrevent = new PreventCallDuplicateFunctionHandler(async () => await CheckAndGetFileListAsync_Core(cat))
+
+        preventCallDuplicateFunctionHandlers.push([
+            cat,
+            funcPrevent
+        ])
+    }
+
+    return await funcPrevent.ExcecuteAsync()
+}
+
+async function CheckAndGetFileListAsync_Core(cat: Category): Promise<FileList | NeedReloadReason> {
     // load from cached first
 
     let fileList: FileList | undefined = GetCached(cat)
