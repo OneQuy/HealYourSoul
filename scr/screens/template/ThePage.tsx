@@ -15,7 +15,7 @@ import { ThemeContext } from '../../constants/Colors';
 import { heightPercentageToDP as hp, } from "react-native-responsive-screen";
 import { FileList, MediaType, PostMetadata, Streak } from '../../constants/Types';
 import { CheckLocalFileAndGetURIAsync, CopyAndToast, GetAllSavedLocalPostIDsListAsync, HandleError, PreDownloadPosts, SaveCurrentScreenForLoadNextTime, ToastTheme } from '../../handle/AppUtils';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { RouteProp, useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { PickRandomElement, RoundNumber, SecondsToHourMinuteSecondString } from '../../handle/Utils';
 import { addDrawSeenID, addQuoteSeenID, addMemeSeenID, addLoveSeenID, addSatisfyingSeenID, addCatDogSeenID, addNSFWSeenID, addCuteSeenID, addArtSeenID, addSarcasmSeenID, addTypoSeenID, addSunsetSeenID, addInfoSeenID, addAwesomeSeenID, addTuneSeenID, addVocabularySeenID } from '../../redux/UserDataSlice';
@@ -210,12 +210,11 @@ const ThePage = ({ category }: ThePageProps) => {
 
     // param
 
-    const params = useMemo(() => {
-        const index = navigation.getState().index
-        return navigation.getState().routes[index].params
-    }, [navigation])
+    const route = useRoute<RouteProp<DrawerParamList>>();
 
-    // console.log(params);
+    const diversityItem = useMemo(() => {
+        return route.params?.item
+    }, [route.params?.item])
 
     // handles
 
@@ -277,7 +276,12 @@ const ThePage = ({ category }: ThePageProps) => {
         reasonToReload.current = NeedReloadReason.None;
         let foundPost: PostMetadata | undefined;
 
-        if (isNext) {
+        if (diversityItem) { // load diversity Item mode
+            console.log('load saved item', diversityItem);
+
+            foundPost = fileList.current?.posts.find(post => post.id === diversityItem.id);
+        }
+        else if (isNext) {
             if (!NetLord.IsAvailableLatestCheck()) { // offline mode
                 const offlineID = getPostIDForOffline();
 
@@ -320,7 +324,7 @@ const ThePage = ({ category }: ThePageProps) => {
 
         if (fileList.current)
             PreDownloadPosts(category, seenIDs, post.current, fileList.current)
-    }, [seenIDs, loadNextMediaAsync]);
+    }, [seenIDs, loadNextMediaAsync, diversityItem]);
 
     const onVideoLoaded = useCallback((e: any) => {
         videoWholeDuration.current = e.duration;
@@ -537,7 +541,7 @@ const ThePage = ({ category }: ThePageProps) => {
             await loadNextMediaAsync(true, post.current, 'none');
             return;
         }
-    }, [checkAndLoadFileListAndStartShowPostAsync]);
+    }, [checkAndLoadFileListAndStartShowPostAsync, loadNextPostAsync]);
 
     const onPressNextPost = useCallback(async (isNext: boolean, shouldTracking: boolean) => {
         if (!activePreviousPostButton && !isNext)
@@ -699,6 +703,18 @@ const ThePage = ({ category }: ThePageProps) => {
             NetLord.Unsubscribe(onInternetChanged)
         }
     }, []);
+
+    // load diversity item
+
+    useEffect(() => {
+        if (diversityItem && post.current && diversityItem.id !== post.current.id) { // already open this screen before => reload saved post
+            console.log('load another saved item', diversityItem);
+
+            loadNextPostAsync(true)
+        }
+
+        // console.log('currr', post.current, savedItem)
+    }, [diversityItem])
 
     // on focus
 
