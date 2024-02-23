@@ -209,12 +209,12 @@ const ThePage = ({ category }: ThePageProps) => {
 
     // param
 
-    const params = useMemo(() => {
-        const index = navigation.getState().index
-        return navigation.getState().routes[index].params
-    }, [navigation])
-    
-    console.log(params);
+    // const params = useMemo(() => {
+    //     const index = navigation.getState().index
+    //     return navigation.getState().routes[index].params
+    // }, [navigation])
+
+    // console.log(params);
 
     // handles
 
