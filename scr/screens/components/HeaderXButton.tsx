@@ -5,7 +5,7 @@ import { TouchableOpacity, StyleSheet, View } from 'react-native'
 import React, { useCallback, useContext, useMemo } from 'react'
 import { Icon, Outline, ScreenName, Size } from '../../constants/AppConstants';
 import { ThemeContext } from '../../constants/Colors';
-import { useNavigation } from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { DrawerParamList } from '../../navigation/Navigator';
 import { ClearDisversityModeCurrentScreen } from '../template/TheDiversity';
@@ -40,7 +40,9 @@ const HeaderXButton = () => {
     )
 }
 
-export const UpdateHeaderXButton = (navigation: DrawerNavigationProp<DrawerParamList>, savedMode: boolean) => {
+export const UpdateHeaderXButton = (
+    navigation: DrawerNavigationProp<DrawerParamList> | NavigationProp<ReactNavigation.RootParamList>,
+    savedMode: boolean) => {
     navigation.setOptions({
         headerLeft: savedMode ? () => <HeaderXButton /> : undefined,
     })

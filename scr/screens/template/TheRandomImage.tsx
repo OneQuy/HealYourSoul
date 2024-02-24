@@ -8,7 +8,7 @@ import RNFS from "react-native-fs";
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { NetLord } from '../../handle/NetLord'
-import { useFocusEffect, useNavigation } from '@react-navigation/native'
+import { RouteProp, useFocusEffect, useNavigation, useRoute } from '@react-navigation/native'
 import { TempDirName } from '../../handle/Utils'
 import { SaveCurrentScreenForLoadNextTime, ToastTheme } from '../../handle/AppUtils'
 import { CommonStyles } from '../../constants/CommonConstants'
@@ -25,6 +25,8 @@ import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
 import HeaderRightButtons from '../components/HeaderRightButtons';
+import { DrawerParamList } from '../../navigation/Navigator';
+import { UpdateHeaderXButton } from '../components/HeaderXButton';
 
 interface TheRandomImageProps {
     category: Category,
@@ -46,6 +48,14 @@ const TheRandomImage = ({
 
     const mediaViewScaleAnimRef = useRef(new Animated.Value(1)).current
 
+    // param
+
+    const route = useRoute<RouteProp<DrawerParamList>>();
+
+    const diversityItem = useMemo(() => {
+        return route.params?.item
+    }, [route.params?.item])
+
     // play loaded media anim
 
     const onLoadedImage = useCallback((_: NativeSyntheticEvent<ImageLoadEventData>) => {
@@ -56,7 +66,9 @@ const TheRandomImage = ({
         reasonToReload.current = NeedReloadReason.None
         setHandling(true)
 
-        const item = await getImageAsync()
+        const item = diversityItem ?
+            diversityItem.randomImage :
+            await getImageAsync()
 
         if (item) { // success
             SetStreakAsync(Category[category], -1)
@@ -73,7 +85,7 @@ const TheRandomImage = ({
         setCurrentItem(item)
         setHandling(false)
 
-    }, [])
+    }, [diversityItem])
 
     // const onPressHeaderOption = useCallback(async () => {
     //     if (streakData)
@@ -145,7 +157,7 @@ const TheRandomImage = ({
         if (result.primaryDirectionIsHorizontalOrVertical && !result.primaryDirectionIsPositive) {
             onPressRandom(true)
         }
-    }, [])
+    }, [onPressRandom])
 
     const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(undefined, undefined, onSwiped)
 
@@ -155,6 +167,20 @@ const TheRandomImage = ({
         SetStreakAsync(Category[category])
         onPressRandom(false)
     }, [])
+
+    // handle diversity item
+
+    useEffect(() => {
+        if (diversityItem && diversityItem.randomImage) { // diversity mode
+            if (currentItem && diversityItem.randomImage.uri !== currentItem.uri) { // already open this screen before => reload saved post
+                onPressRandom(false)
+            }
+        }
+
+        // update x button
+
+        UpdateHeaderXButton(navigation, diversityItem !== undefined)
+    }, [diversityItem])
 
     // on change theme
 
