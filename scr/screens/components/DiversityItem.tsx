@@ -21,7 +21,6 @@ type DiversityItemProps = {
 
 const DiversityItem = ({
     item,
-    // onPressed,
 }: DiversityItemProps) => {
     const navigation = useNavigation<DrawerNavigationProp<DrawerParamList>>();
     const theme = useContext(ThemeContext);
