@@ -37,6 +37,7 @@ import HeaderSettingButton from '../components/HeaderSettingButton';
 import useIntroduceCat from '../components/IntroduceCat';
 import { CheckAndGetFileListAsync } from '../../handle/ThePageFileListManager';
 import { DrawerParamList } from '../../navigation/Navigator';
+import { UpdateHeaderLeftButton } from '../components/HeaderLeftButton';
 
 const videoNumbSize = 10;
 const videoTouchEffectRadius = 100;
@@ -707,13 +708,18 @@ const ThePage = ({ category }: ThePageProps) => {
     // load diversity item
 
     useEffect(() => {
-        if (diversityItem && post.current && diversityItem.id !== post.current.id) { // already open this screen before => reload saved post
-            console.log('load another diversity item', diversityItem);
+        if (diversityItem) { // diversity mode
+            if (post.current && diversityItem.id !== post.current.id) { // already open this screen before => reload saved post
+                console.log('load another diversity item', diversityItem);
 
-            loadNextPostAsync(true)
+                loadNextPostAsync(true)
+            }
+        }
+        else { // back to normal mode (no diversity)
+
         }
 
-        // console.log('currr', post.current, savedItem)
+        UpdateHeaderLeftButton(navigation, diversityItem !== undefined)
     }, [diversityItem])
 
     // on focus

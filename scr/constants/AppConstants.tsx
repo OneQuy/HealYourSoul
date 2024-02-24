@@ -221,6 +221,7 @@ export enum Icon {
   Link = 'link-variant',
   Eye = 'eye-outline',
   Star = 'star',
+  Close = 'close',
   StarOutline = 'star-outline',
   Coffee = 'coffee',
   CheckBox_Yes = 'checkbox-marked-outline',
