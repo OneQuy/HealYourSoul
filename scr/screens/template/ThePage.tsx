@@ -216,7 +216,7 @@ const ThePage = ({ category }: ThePageProps) => {
         return route.params?.item
     }, [route.params?.item])
 
-    console.log('current diver item', diversityItem);
+    // console.log('current diver item', diversityItem);
 
     // handles
 
@@ -279,7 +279,7 @@ const ThePage = ({ category }: ThePageProps) => {
         let foundPost: PostMetadata | undefined;
 
         if (diversityItem) { // load diversity Item mode
-            console.log('load diversity item', diversityItem);
+            // console.log('load diversity item', diversityItem);
 
             foundPost = fileList.current?.posts.find(post => post.id === diversityItem.id);
         }
@@ -711,7 +711,7 @@ const ThePage = ({ category }: ThePageProps) => {
     useEffect(() => {
         if (diversityItem) { // diversity mode
             if (post.current && diversityItem.id !== post.current.id) { // already open this screen before => reload saved post
-                console.log('load another diversity item', diversityItem);
+                // console.log('load another diversity item', diversityItem);
 
                 loadNextPostAsync(true)
             }
