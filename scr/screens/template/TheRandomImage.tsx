@@ -24,7 +24,7 @@ import { track_PressRandom, track_PressSaveMedia, track_SimpleWithCat } from '..
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
-import HeaderSettingButton from '../components/HeaderSettingButton';
+import HeaderRightButtons from '../components/HeaderRightButtons';
 
 interface TheRandomImageProps {
     category: Category,
@@ -160,7 +160,7 @@ const TheRandomImage = ({
 
     useEffect(() => {
         navigation.setOptions({
-            headerRight: () => <HeaderSettingButton />
+            headerRight: () => <HeaderRightButtons />
         });
     }, [onPressHeaderOption])
 

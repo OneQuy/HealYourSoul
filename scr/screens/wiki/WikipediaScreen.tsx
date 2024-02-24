@@ -29,7 +29,7 @@ import { track_PressRandom, track_SimpleWithCat } from '../../handle/tracking/Go
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
-import HeaderSettingButton from '../components/HeaderSettingButton';
+import HeaderRightButtons from '../components/HeaderRightButtons';
 import useIntroduceCat from '../components/IntroduceCat';
 
 const category = Category.Wikipedia
@@ -253,7 +253,7 @@ const WikipediaScreen = () => {
 
     useEffect(() => {
         navigation.setOptions({
-            headerRight: () => <HeaderSettingButton onPress={onPressHeaderOption} />
+            headerRight: () => <HeaderRightButtons onPress={onPressHeaderOption} />
         });
     }, [onPressHeaderOption])
 

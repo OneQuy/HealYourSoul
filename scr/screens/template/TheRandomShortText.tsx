@@ -22,7 +22,7 @@ import { track_PressRandom, track_SimpleWithCat } from '../../handle/tracking/Go
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
-import HeaderSettingButton from '../components/HeaderSettingButton';
+import HeaderRightButtons from '../components/HeaderRightButtons';
 
 interface TheRandomShortTextProps {
     category: Category,
@@ -177,7 +177,7 @@ const TheRandomShortText = ({
 
     useEffect(() => {
         navigation.setOptions({
-            headerRight: () => <HeaderSettingButton onPress={onPressHeaderOption} />
+            headerRight: () => <HeaderRightButtons onPress={onPressHeaderOption} />
         });
     }, [onPressHeaderOption])
 

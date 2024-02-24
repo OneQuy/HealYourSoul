@@ -18,7 +18,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { track_PressRandom, track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
-import HeaderSettingButton from '../components/HeaderSettingButton';
+import HeaderRightButtons from '../components/HeaderRightButtons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const TOAnim = Animated.createAnimatedComponent(TouchableOpacity)
@@ -171,7 +171,7 @@ const TheTrivia = ({
 
     useEffect(() => {
         navigation.setOptions({
-            headerRight: () => <HeaderSettingButton onPress={onPressHeaderOption} />
+            headerRight: () => <HeaderRightButtons onPress={onPressHeaderOption} />
         });
     }, [onPressHeaderOption])
 

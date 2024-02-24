@@ -9,7 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 import { DiversityItemType } from '../../constants/Types';
 import { useSaved } from '../../hooks/useSaved';
 
-const HeaderSettingButton = (
+const HeaderRightButtons = (
     {
         diversityItem,
     }: {
@@ -48,4 +48,4 @@ const HeaderSettingButton = (
     )
 }
 
-export default HeaderSettingButton
+export default HeaderRightButtons

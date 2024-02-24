@@ -24,7 +24,7 @@ import { track_PressNextPost, track_PressSaveMedia, track_PressYearOfAwardPictur
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
-import HeaderSettingButton from '../components/HeaderSettingButton';
+import HeaderRightButtons from '../components/HeaderRightButtons';
 import useIntroduceCat from '../components/IntroduceCat';
 
 const BGAnim = Animated.createAnimatedComponent(ImageBackground)
@@ -302,7 +302,7 @@ const PicturesOfTheYearScreen = () => {
 
     useEffect(() => {
         navigation.setOptions({
-            headerRight: () => <HeaderSettingButton />
+            headerRight: () => <HeaderRightButtons />
         });
     }, [onPressHeaderOption])
 

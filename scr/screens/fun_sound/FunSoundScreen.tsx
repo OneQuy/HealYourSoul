@@ -21,7 +21,7 @@ import { FirebaseDatabase_GetValueAsync, FirebaseDatabase_SetValueAsync } from '
 import { addFunSoundFavoritedID, removeFunSoundFavoritedID } from '../../redux/UserDataSlice'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { GetNumberIntAsync, SetNumberAsync } from '../../handle/AsyncStorageUtils';
-import HeaderSettingButton from '../components/HeaderSettingButton';
+import HeaderRightButtons from '../components/HeaderRightButtons';
 import { track_PressFavorite, track_PressNextPost } from '../../handle/tracking/GoodayTracking';
 
 const LikePathByID = 'user_data/post/@cat/@id/like';
@@ -272,7 +272,7 @@ const FunSoundScreen = () => {
 
   useEffect(() => {
     navigation.setOptions({
-      headerRight: () => <HeaderSettingButton />
+      headerRight: () => <HeaderRightButtons />
     });
   }, [])
 

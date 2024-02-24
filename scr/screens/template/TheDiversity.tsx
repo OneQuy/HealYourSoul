@@ -7,7 +7,7 @@ import { ThemeContext } from '../../constants/Colors'
 import { IsValuableArrayOrString } from '../../handle/UtilsTS'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { SetNumberAsync } from '../../handle/AsyncStorageUtils';
-import HeaderSettingButton from '../components/HeaderSettingButton';
+import HeaderRightButtons from '../components/HeaderRightButtons';
 import DiversityItem from '../components/DiversityItem';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { DrawerParamList } from '../../navigation/Navigator';
@@ -112,7 +112,7 @@ const TheDiversity = (
     useEffect(() => {
         (async () => {
             navigation.setOptions({
-                headerRight: () => <HeaderSettingButton />
+                headerRight: () => <HeaderRightButtons />
             });
         })()
     }, [])

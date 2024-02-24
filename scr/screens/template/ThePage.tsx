@@ -33,7 +33,7 @@ import { track_PressNextPost, track_PressNextPostMedia, track_PressSaveMedia, tr
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
-import HeaderSettingButton from '../components/HeaderSettingButton';
+import HeaderRightButtons from '../components/HeaderRightButtons';
 import useIntroduceCat from '../components/IntroduceCat';
 import { CheckAndGetFileListAsync } from '../../handle/ThePageFileListManager';
 import { DrawerParamList } from '../../navigation/Navigator';
@@ -759,7 +759,7 @@ const ThePage = ({ category }: ThePageProps) => {
     useEffect(() => {
         navigation.setOptions({
             headerRight: !handling ?
-                () => <HeaderSettingButton
+                () => <HeaderRightButtons
                     diversityItem={{ cat: category, id: post.current?.id }}
                 />
                 :
