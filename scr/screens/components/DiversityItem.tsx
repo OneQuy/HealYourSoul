@@ -27,7 +27,7 @@ const DiversityItem = ({
     const [isHandling, setIsHandling] = useState(true)
     const [imgUri, setImgUri] = useState('')
     const [videoUri, setVideoUri] = useState('')
-    const [text, setText] = useState('Bourbon was first made by a Baptist minsister from Bourbon County in Kentucky in 1789. That is where it got its name')
+    const [text, setText] = useState('')
     const [error, setError] = useState<NeedReloadReason>(NeedReloadReason.None)
 
     // load funcs ------------------------------
@@ -124,7 +124,7 @@ const DiversityItem = ({
             masterView: { flex: 1, aspectRatio: 1, maxWidth: widthPercentageToDP(25) },
             centerView: { flex: 1, aspectRatio: 1, maxWidth: widthPercentageToDP(25), alignItems: 'center', justifyContent: 'center' },
             percent100: { width: '100%', height: '100%' },
-            text: { margin: Outline.GapHorizontal, fontSize: FontSize.Small, color: theme.counterBackground, },
+            text: { borderColor: theme.primary, borderWidth: StyleSheet.hairlineWidth, width: '100%', height: '100%', padding: Outline.GapHorizontal, fontSize: FontSize.Small, color: theme.counterBackground, },
         })
     }, [theme])
 

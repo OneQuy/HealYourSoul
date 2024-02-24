@@ -18,6 +18,7 @@ import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
 import HeaderRightButtons from '../components/HeaderRightButtons';
+import useDiversityItem from '../../hooks/useDiversityItem';
 
 interface TheRandomShortTextProps {
     category: Category,
@@ -35,6 +36,8 @@ const TheRandomShortText = ({
     const [handling, setHandling] = useState(false);
     const [streakData, setStreakData] = useState<Streak | undefined>(undefined);
     const viewShotRef = useRef<LegacyRef<ViewShot> | undefined>();
+
+    const diversityItem = useDiversityItem(() => onPressRandom(false), undefined, undefined, text)
 
     // animation
 
@@ -55,7 +58,10 @@ const TheRandomShortText = ({
 
         let text: string | undefined
 
-        text = await getTextAsync()
+        if (diversityItem && diversityItem.text)
+            text = diversityItem.text
+        else
+            text = await getTextAsync()
 
         setText(text)
 
@@ -72,7 +78,7 @@ const TheRandomShortText = ({
         track_PressRandom(shouldTracking, category, text !== undefined)
 
         setHandling(false)
-    }, [])
+    }, [diversityItem])
 
     const onPressCopy = useCallback(() => {
         if (!text)
@@ -132,7 +138,7 @@ const TheRandomShortText = ({
         if (result.primaryDirectionIsHorizontalOrVertical && !result.primaryDirectionIsPositive) {
             onPressRandom(true)
         }
-    }, [])
+    }, [onPressRandom])
 
     const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(undefined, undefined, onSwiped)
 
@@ -172,9 +178,14 @@ const TheRandomShortText = ({
 
     useEffect(() => {
         navigation.setOptions({
-            headerRight: () => <HeaderRightButtons />
+            headerRight: () => <HeaderRightButtons
+                diversityItem={{
+                    cat: category,
+                    text: text
+                }}
+            />
         });
-    }, [onPressHeaderOption])
+    }, [onPressHeaderOption, text])
 
     // save last visit category screen
 

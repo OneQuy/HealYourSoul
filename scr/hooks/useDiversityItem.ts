@@ -8,6 +8,7 @@ const useDiversityItem = (
     reload: () => void,
     post?: PostMetadata | null,
     randomImage?: RandomImage,
+    text?: string,
 ) => {
     const route = useRoute<RouteProp<DrawerParamList>>()
     const navigation = useNavigation()
@@ -32,6 +33,9 @@ const useDiversityItem = (
             needReload = true
         }
         else if (randomImage && diversityItem.randomImage && diversityItem.randomImage.uri !== randomImage.uri) {
+            needReload = true
+        }
+        else if (text && diversityItem.text && diversityItem.text !== text) {
             needReload = true
         }
 
