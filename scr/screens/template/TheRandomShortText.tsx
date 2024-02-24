@@ -217,7 +217,7 @@ const TheRandomShortText = ({
                                             <Text style={{ fontSize: FontSize.Small_L, color: theme.counterBackground }}>{LocalText.tap_to_retry}</Text>
                                         </TouchableOpacity>
                                         :
-                                        <Text adjustsFontSizeToFit numberOfLines={20} selectable style={{ verticalAlign: 'middle', marginHorizontal: Outline.Horizontal, color: theme.counterBackground, fontSize: FontSize.Big }}>{text}</Text>
+                                        <Text adjustsFontSizeToFit numberOfLines={20} selectable style={{ verticalAlign: 'middle', marginHorizontal: Outline.Horizontal, color: theme.counterBackground, fontSize: FontSize.Big }}>{text ? text : ''}</Text>
                                 }
                             </Animated.View>
                     }
