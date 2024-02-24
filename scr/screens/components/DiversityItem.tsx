@@ -14,6 +14,7 @@ import { useNavigation } from '@react-navigation/native';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { DrawerParamList } from '../../navigation/Navigator';
 import { widthPercentageToDP } from 'react-native-responsive-screen';
+import { UpdateHeaderXButton } from './HeaderXButton';
 
 type DiversityItemProps = {
     item: DiversityItemType,
@@ -84,9 +85,18 @@ const DiversityItem = ({
     const onPressed = useCallback(() => {
         const screen = CatToScreenName(item.cat)
 
-        if (screen) // @ts-ignore
-            navigation.navigate(screen, { item });
-    }, [navigation, item])
+        // switch screen
+
+        if (!screen)
+            return
+
+        // @ts-ignore
+        navigation.navigate(screen, { item });
+
+        // show x button
+
+        UpdateHeaderXButton(navigation, true)
+    }, [item])
 
     useEffect(() => {
         (async () => {

@@ -1,28 +1,16 @@
-// @ts-ignore
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
-import { View, StyleSheet, FlatList, TouchableOpacity, Text } from 'react-native'
+import { View, StyleSheet, FlatList, Text } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { BorderRadius, Category, FontSize, Icon, LocalText, NeedReloadReason, Outline, Size, StorageKey_CurPageFunSoundIdx, StorageKey_LocalFileVersion } from '../../constants/AppConstants'
-import useCheckAndDownloadRemoteFile from '../../hooks/useCheckAndDownloadRemoteFile'
-import { DiversityItemType, FunSound } from '../../constants/Types'
-import { TempDirName } from '../../handle/Utils'
-import { GetRemoteFileConfigVersion } from '../../handle/AppConfigHandler'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { useFocusEffect, useNavigation } from '@react-navigation/native'
+import { FontSize, LocalText, Outline, StorageKey_CurPageFunSoundIdx } from '../../constants/AppConstants'
+import { DiversityItemType } from '../../constants/Types'
+import { useNavigation } from '@react-navigation/native'
 import { ThemeContext } from '../../constants/Colors'
-import { FillPathPattern, SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
-import { useAppDispatch, useAppSelector } from '../../redux/Store'
-import { FilterOnlyLetterAndNumberFromString, IsValuableArrayOrString, RandomColor } from '../../handle/UtilsTS'
-import LoadingOrError from '../components/LoadingOrError'
-import { NetLord } from '../../handle/NetLord'
-import { FirebaseDatabase_GetValueAsync, FirebaseDatabase_SetValueAsync } from '../../firebase/FirebaseDatabase'
-import { addFunSoundFavoritedID, removeFunSoundFavoritedID } from '../../redux/UserDataSlice'
+import { IsValuableArrayOrString } from '../../handle/UtilsTS'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { GetNumberIntAsync, SetNumberAsync } from '../../handle/AsyncStorageUtils';
+import { SetNumberAsync } from '../../handle/AsyncStorageUtils';
 import HeaderSettingButton from '../components/HeaderSettingButton';
-import { track_PressNextPost } from '../../handle/tracking/GoodayTracking';
 import DiversityItem from '../components/DiversityItem';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
+import { DrawerParamList } from '../../navigation/Navigator';
 
 const numColumns = 4
 const numRowPerPage = 9
@@ -177,3 +165,7 @@ const TheDiversity = (
 }
 
 export default TheDiversity
+
+export const ClearDisversityModeCurrentScreen = (navigation: DrawerNavigationProp<DrawerParamList>) => {
+    navigation.setParams({ item: undefined })
+}
