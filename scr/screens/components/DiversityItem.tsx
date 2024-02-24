@@ -14,7 +14,6 @@ import { useNavigation } from '@react-navigation/native';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { DrawerParamList } from '../../navigation/Navigator';
 import { widthPercentageToDP } from 'react-native-responsive-screen';
-import { UpdateHeaderXButton } from './HeaderXButton';
 
 type DiversityItemProps = {
     item: DiversityItemType,
