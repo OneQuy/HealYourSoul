@@ -8,7 +8,7 @@ import { ThemeContext } from '../../constants/Colors'
 import ImageBackgroundWithLoading from './ImageBackgroundWithLoading'
 import { CatToScreenName, CheckLocalFileAndGetURIAsync } from '../../handle/AppUtils'
 import { CheckAndGetFileListAsync } from '../../handle/ThePageFileListManager'
-import { NeedReloadReason } from '../../constants/AppConstants'
+import { Category, NeedReloadReason } from '../../constants/AppConstants'
 import LoadingOrError from './LoadingOrError'
 import { useNavigation } from '@react-navigation/native';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
@@ -18,6 +18,8 @@ import { widthPercentageToDP } from 'react-native-responsive-screen';
 type DiversityItemProps = {
     item: DiversityItemType,
 }
+
+type DiversityShowType = 'ThePage' | 'RandomImage' | 'ne'
 
 const DiversityItem = ({
     item,
@@ -29,12 +31,16 @@ const DiversityItem = ({
     const [videoUri, setVideoUri] = useState('')
     const [error, setError] = useState<NeedReloadReason>(NeedReloadReason.None)
 
-    const itemType = useMemo(() => {
+    const itemType: DiversityShowType = useMemo(() => {
         if (item.id !== undefined)
             return 'ThePage'
+        else if (item.randomImage !== undefined)
+            return 'RandomImage'
         else
-            return '[ne]'
+            return 'ne'
     }, [item])
+
+    // load funcs ------------------------------
 
     const loadItem_ThePageAsync = useCallback(async () => {
         const fileList = await CheckAndGetFileListAsync(item.cat)
@@ -66,16 +72,30 @@ const DiversityItem = ({
         }
     }, [item])
 
+    const loadItem_RandomImageAsync = useCallback(async () => {
+        if (!item.randomImage)
+            return
+
+        setImgUri(item.randomImage.uri)
+    }, [item])
+
     const loadItemAsync = useCallback(async () => {
         setIsHandling(true)
 
         if (itemType === 'ThePage')
             await loadItem_ThePageAsync()
+        else if (itemType === 'RandomImage')
+            await loadItem_RandomImageAsync()
         else
             console.error('[ne]', itemType);
 
         setIsHandling(false)
-    }, [itemType, loadItem_ThePageAsync])
+    }, [
+        itemType,
+        loadItem_ThePageAsync,
+        loadItem_RandomImageAsync])
+
+    // load funcs (end) ------------------------------
 
     const onVideoError = useCallback((_: any) => {
         setError(NeedReloadReason.FailToGetContent)
@@ -124,7 +144,6 @@ const DiversityItem = ({
         return (
             <TouchableOpacity onPress={onPressed} style={style.masterView}>
                 <ImageBackgroundWithLoading source={{ uri: imgUri }} style={style.percent100} >
-                    <Text>DiversityItem</Text>
                 </ImageBackgroundWithLoading>
             </TouchableOpacity>
         )
