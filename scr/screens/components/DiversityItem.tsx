@@ -16,6 +16,7 @@ import { DrawerParamList } from '../../navigation/Navigator';
 import { widthPercentageToDP } from 'react-native-responsive-screen';
 import { GetThumbUriFromWikipediaObject, GetTitleFromWikipediaObject } from '../wiki/WikipediaScreen';
 import { HexToRgb } from '../../handle/UtilsTS';
+import DiversityItem_ImageAndText from './DiversityItem_ImageAndText';
 
 type DiversityItemProps = {
     item: DiversityItemType,
@@ -138,7 +139,6 @@ const DiversityItem = ({
             centerView: { flex: 1, aspectRatio: 1, maxWidth: widthPercentageToDP(25), alignItems: 'center', justifyContent: 'center' },
             percent100: { width: '100%', height: '100%' },
             text: { borderColor: theme.primary, borderWidth: StyleSheet.hairlineWidth, width: '100%', height: '100%', padding: Outline.GapHorizontal, fontSize: FontSize.Small, color: theme.counterBackground, },
-            titleWiki: { padding: Outline.GapHorizontal, fontSize: FontSize.Small_L, backgroundColor: HexToRgb(theme.background, 0.8), color: theme.counterBackground, },
         })
     }, [theme])
 
@@ -160,9 +160,7 @@ const DiversityItem = ({
 
         return (
             <TouchableOpacity onPress={onPressed} style={style.masterView}>
-                <ImageBackgroundWithLoading source={{ uri: imgUri }} style={style.percent100} >
-                    <Text numberOfLines={2} adjustsFontSizeToFit style={style.titleWiki}>{title}</Text>
-                </ImageBackgroundWithLoading>
+               <DiversityItem_ImageAndText imgUri={imgUri} text={title} />
             </TouchableOpacity>
         )
     }
