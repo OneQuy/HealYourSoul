@@ -14,6 +14,7 @@ import { useNavigation } from '@react-navigation/native';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { DrawerParamList } from '../../navigation/Navigator';
 import { widthPercentageToDP } from 'react-native-responsive-screen';
+import { GetThumbUriFromWikipediaObject, GetTitleFromWikipediaObject } from '../wiki/WikipediaScreen';
 
 type DiversityItemProps = {
     item: DiversityItemType,
@@ -25,9 +26,10 @@ const DiversityItem = ({
     const navigation = useNavigation<DrawerNavigationProp<DrawerParamList>>();
     const theme = useContext(ThemeContext);
     const [isHandling, setIsHandling] = useState(true)
-    const [imgUri, setImgUri] = useState('')
-    const [videoUri, setVideoUri] = useState('')
-    const [text, setText] = useState('')
+    const [imgUri, setImgUri] = useState('') // random image
+    const [videoUri, setVideoUri] = useState('') // the page
+    const [text, setText] = useState('') // short text
+    const [wikipediaObject, setWikipediaObject] = useState<object | undefined>(undefined) // wikipedia,...
     const [error, setError] = useState<NeedReloadReason>(NeedReloadReason.None)
 
     // load funcs ------------------------------
@@ -76,6 +78,13 @@ const DiversityItem = ({
         setText(item.text)
     }, [item])
 
+    const loadItem_WikiAsync = useCallback(async () => {
+        if (!item.wikipediaObject)
+            return
+
+        setWikipediaObject(item.wikipediaObject)
+    }, [item])
+
     const loadItemAsync = useCallback(async () => {
         setIsHandling(true)
 
@@ -83,6 +92,8 @@ const DiversityItem = ({
             await loadItem_RandomImageAsync()
         else if (item.text)
             await loadItem_TextAsync()
+        else if (item.wikipediaObject)
+            await loadItem_WikiAsync()
         else if (item.id)
             await loadItem_ThePageAsync()
         else
@@ -93,6 +104,7 @@ const DiversityItem = ({
         item,
         loadItem_ThePageAsync,
         loadItem_TextAsync,
+        loadItem_WikiAsync,
         loadItem_RandomImageAsync])
 
     // load funcs (end) ------------------------------
@@ -125,6 +137,7 @@ const DiversityItem = ({
             centerView: { flex: 1, aspectRatio: 1, maxWidth: widthPercentageToDP(25), alignItems: 'center', justifyContent: 'center' },
             percent100: { width: '100%', height: '100%' },
             text: { borderColor: theme.primary, borderWidth: StyleSheet.hairlineWidth, width: '100%', height: '100%', padding: Outline.GapHorizontal, fontSize: FontSize.Small, color: theme.counterBackground, },
+            titleWiki: { width: '100%', height: '100%', padding: Outline.GapHorizontal, fontSize: FontSize.Small, color: theme.counterBackground, },
         })
     }, [theme])
 
@@ -135,6 +148,21 @@ const DiversityItem = ({
             <View style={style.centerView} >
                 <LoadingOrError reasonToReload={error} onPressedReload={() => { }} />
             </View>
+        )
+    }
+
+    // object (wiki,...)
+
+    if (wikipediaObject) {
+        const imgUri = GetThumbUriFromWikipediaObject(wikipediaObject)
+        const title = GetTitleFromWikipediaObject(widthPercentageToDP)
+
+        return (
+            <TouchableOpacity onPress={onPressed} style={style.masterView}>
+                <ImageBackgroundWithLoading source={{ uri: imgUri }} style={style.percent100} >
+                    <Text style={style.titleWiki}>{title}</Text>
+                </ImageBackgroundWithLoading>
+            </TouchableOpacity>
         )
     }
 

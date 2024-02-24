@@ -3,12 +3,14 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { DrawerParamList } from '../navigation/Navigator';
 import { UpdateHeaderXButton } from '../screens/components/HeaderXButton';
 import { PostMetadata, RandomImage } from '../constants/Types';
+import { GetThumbUriFromWikipediaObject } from '../screens/wiki/WikipediaScreen';
 
 const useDiversityItem = (
     reload: () => void,
     post?: PostMetadata | null,
     randomImage?: RandomImage,
     text?: string,
+    wikipediaObject?: object,
 ) => {
     const route = useRoute<RouteProp<DrawerParamList>>()
     const navigation = useNavigation()
@@ -36,6 +38,12 @@ const useDiversityItem = (
             needReload = true
         }
         else if (text && diversityItem.text && diversityItem.text !== text) {
+            needReload = true
+        }
+        else if (
+            wikipediaObject && 
+            diversityItem.wikipediaObject && 
+            GetThumbUriFromWikipediaObject(diversityItem.wikipediaObject) !== GetThumbUriFromWikipediaObject(wikipediaObject)) {
             needReload = true
         }
 

@@ -1,12 +1,10 @@
-import { Share as RNShare, View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, ShareContent, Alert, Linking, Animated } from 'react-native'
-import React, { LegacyRef, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import { Share as RNShare, View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, ShareContent, Linking, Animated } from 'react-native'
+import React, { LegacyRef, useCallback, useContext, useDebugValue, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
-import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
-import Share from 'react-native-share';
+import { Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
 
 
 // @ts-ignore
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -23,7 +21,6 @@ import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { ScrollView } from 'react-native-gesture-handler';
 import WebView from 'react-native-webview';
 import { ShareOptions } from 'react-native-share';
-import { ToCanPrint } from '../../handle/UtilsTS';
 import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading';
 import { track_PressRandom, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
@@ -31,6 +28,7 @@ import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
 import HeaderRightButtons from '../components/HeaderRightButtons';
 import useIntroduceCat from '../components/IntroduceCat';
+import useDiversityItem from '../../hooks/useDiversityItem';
 
 const category = Category.Wikipedia
 
@@ -45,6 +43,8 @@ const WikipediaScreen = () => {
     const viewShotRef = useRef<LegacyRef<ViewShot> | undefined>();
     const [showIntroduceCat, renderShowIntroduceCat] = useIntroduceCat(category)
     const mediaViewScaleAnimRef = useRef(new Animated.Value(1)).current
+
+    const diversityItem = useDiversityItem(() => onPressRandom(false), undefined, undefined, undefined, data)
 
     const onImageLoaded = useCallback(() => {
         playAnimLoadedMedia(mediaViewScaleAnimRef)
@@ -67,26 +67,14 @@ const WikipediaScreen = () => {
         if (typeof data !== 'object')
             return undefined
 
-        // @ts-ignore
-        const text = data.title
-
-        if (typeof text === 'string')
-            return text
-        else
-            return undefined
+        return GetTitleFromWikipediaObject(data)
     }, [data])
 
     const currentThumbUri = useMemo(() => {
         if (typeof data !== 'object')
             return undefined
 
-        // @ts-ignore
-        const text = data.thumbnail?.source
-
-        if (typeof text === 'string')
-            return text
-        else
-            return undefined
+        return GetThumbUriFromWikipediaObject(data)
     }, [data])
 
     const currentLink = useMemo(() => {
@@ -120,7 +108,12 @@ const WikipediaScreen = () => {
         setHandling(true)
         setShowFull(false)
 
-        const res = await GetWikiAsync()
+        let res: object | undefined
+
+        if (diversityItem && diversityItem.wikipediaObject)
+            res = diversityItem.wikipediaObject
+        else
+            res = await GetWikiAsync()
 
         setData(res)
 
@@ -137,7 +130,7 @@ const WikipediaScreen = () => {
         track_PressRandom(shouldTracking, category, res !== undefined)
 
         setHandling(false)
-    }, [])
+    }, [diversityItem])
 
     const onPressCopy = useCallback(() => {
         if (!currentContent)
@@ -149,14 +142,14 @@ const WikipediaScreen = () => {
         CopyAndToast(message, theme)
     }, [currentTitle, currentLink, currentContent, theme])
 
-    const onPressHeaderOption = useCallback(async () => {
-        if (streakData)
-            setStreakData(undefined)
-        else {
-            const streak = await GetStreakAsync(Category[category])
-            setStreakData(streak)
-        }
-    }, [streakData])
+    // const onPressHeaderOption = useCallback(async () => {
+    //     if (streakData)
+    //         setStreakData(undefined)
+    //     else {
+    //         const streak = await GetStreakAsync(Category[category])
+    //         setStreakData(streak)
+    //     }
+    // }, [streakData])
 
     const onPressInAppWeb = useCallback(() => {
         if (!showFull)
@@ -208,7 +201,7 @@ const WikipediaScreen = () => {
         if (result.primaryDirectionIsHorizontalOrVertical && !result.primaryDirectionIsPositive) {
             onPressRandom(true)
         }
-    }, [])
+    }, [onPressRandom])
 
     const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(undefined, undefined, onSwiped)
 
@@ -240,7 +233,7 @@ const WikipediaScreen = () => {
                 icon: Icon.ShareText,
             },
         ] as BottomBarItem[]
-    }, [onPressInAppWeb, onPressShareText, showFull, onPressCopy])
+    }, [onPressRandom, onPressInAppWeb, onPressShareText, showFull, onPressCopy])
 
     // on init once (for load first post)
 
@@ -253,9 +246,16 @@ const WikipediaScreen = () => {
 
     useEffect(() => {
         navigation.setOptions({
-            headerRight: () => <HeaderRightButtons onPress={onPressHeaderOption} />
+            headerRight: () => <HeaderRightButtons
+                diversityItem={handling ?
+                    undefined :
+                    {
+                        cat: category,
+                        wikipediaObject: data,
+                    }}
+            />
         });
-    }, [onPressHeaderOption])
+    }, [handling, data])
 
     // save last visit category screen
 
@@ -341,3 +341,23 @@ const styleSheet = StyleSheet.create({
     titleView: { fontSize: FontSize.Normal, fontWeight: FontWeight.B500 },
     titleTO: { marginHorizontal: Outline.GapVertical_2, flexDirection: 'row', justifyContent: 'space-between' }
 })
+
+export const GetTitleFromWikipediaObject = (data: object) => {
+    // @ts-ignore
+    const text = data.title
+
+    if (typeof text === 'string')
+        return text
+    else
+        return undefined
+}
+
+export const GetThumbUriFromWikipediaObject = (data: object) => {
+    // @ts-ignore
+    const text = data.thumbnail?.source
+
+    if (typeof text === 'string')
+        return text
+    else
+        return undefined
+}

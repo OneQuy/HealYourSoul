@@ -31,9 +31,10 @@ export type LatestVersionConfig = {
 
 export type DiversityItemType = {
     cat: Category,
-    id?: string | number,
+    id?: string | number, // the page
     randomImage?: RandomImage,
-    text?: string,
+    text?: string, // short text
+    wikipediaObject?: object,
 }
 
 export type AppConfig = {
