@@ -145,8 +145,14 @@ const TheDiversity = (
             </View>
 
             {/* navigation */}
-           
-           {/* <PageNavigatorBar /> */}
+
+            <PageNavigatorBar
+                onPressedMiddlePage={onPressedMiddlePage}
+                onPressedNextPage={onPressedNextPage}
+                onPressedTopPage={onPressedTopPage}
+                curPageIdx={curPageIdx}
+                maxPage={maxPage}
+            />
         </View>
     )
 }
