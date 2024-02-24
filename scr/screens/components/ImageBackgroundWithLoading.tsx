@@ -38,7 +38,7 @@ const ImageBackgroundWithLoading = (props: Props) => {
             {...props}
             style={[props.style, { justifyContent: 'center', alignItems: 'center' }]} >
             {
-                !showIndicator ? undefined :
+                !showIndicator ? props.children :
                     <ActivityIndicator {...props.indicatorProps} />
             }
         </ImageBackground>
