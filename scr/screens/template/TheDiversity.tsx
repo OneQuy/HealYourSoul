@@ -13,7 +13,7 @@ import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { DrawerParamList } from '../../navigation/Navigator';
 
 const numColumns = 4
-const numRowPerPage = 9
+const numRowPerPage = 10
 
 type TheDiversityProps = {
     allItems: DiversityItemType[] | undefined,
@@ -26,7 +26,6 @@ const TheDiversity = (
     const navigation = useNavigation();
     const theme = useContext(ThemeContext);
     const [curPageIdx, setCurPageIdx] = useState(0)
-    // const dispatch = useAppDispatch()
     const insets = useSafeAreaInsets()
 
     const maxPage = useMemo(() => {
