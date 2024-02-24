@@ -17,6 +17,7 @@ import { widthPercentageToDP } from 'react-native-responsive-screen';
 import { GetThumbUriFromWikipediaObject, GetTitleFromWikipediaObject } from '../wiki/WikipediaScreen';
 import { HexToRgb } from '../../handle/UtilsTS';
 import DiversityItem_ImageAndText from './DiversityItem_ImageAndText';
+import { NetLord } from '../../handle/NetLord';
 
 type DiversityItemProps = {
     item: DiversityItemType,
@@ -111,9 +112,12 @@ const DiversityItem = ({
 
     // load funcs (end) ------------------------------
 
-    const onVideoError = useCallback((_: any) => {
-        setError(NeedReloadReason.FailToGetContent)
-    }, [item]);
+    const onLoadError = useCallback((_: any) => {
+        if (NetLord.IsAvailableLatestCheck())
+            setError(NeedReloadReason.FailToGetContent)
+        else
+            setError(NeedReloadReason.NoInternet)
+    }, []);
 
     const onPressed = useCallback(() => {
         const screen = CatToScreenName(item.cat)
@@ -147,7 +151,7 @@ const DiversityItem = ({
     if (error !== NeedReloadReason.None || isHandling) {
         return (
             <View style={style.centerView} >
-                <LoadingOrError reasonToReload={error} onPressedReload={() => { }} />
+                <LoadingOrError reasonToReload={error} onPressedReload={loadItemAsync} />
             </View>
         )
     }
@@ -160,7 +164,7 @@ const DiversityItem = ({
 
         return (
             <TouchableOpacity onPress={onPressed} style={style.masterView}>
-               <DiversityItem_ImageAndText imgUri={imgUri} text={title} />
+                <DiversityItem_ImageAndText onLoadError={onLoadError} imgUri={imgUri} text={title} />
             </TouchableOpacity>
         )
     }
@@ -180,8 +184,7 @@ const DiversityItem = ({
     if (imgUri) {
         return (
             <TouchableOpacity onPress={onPressed} style={style.masterView}>
-                <ImageBackgroundWithLoading source={{ uri: imgUri }} style={style.percent100} >
-                </ImageBackgroundWithLoading>
+                <ImageBackgroundWithLoading onError={onLoadError} source={{ uri: imgUri }} style={style.percent100} />
             </TouchableOpacity>
         )
     }
@@ -191,7 +194,7 @@ const DiversityItem = ({
     if (videoUri) {
         return (
             <Video
-                onError={onVideoError}
+                onError={onLoadError}
                 source={{ uri: videoUri }}
                 resizeMode={'cover'}
                 muted={true}

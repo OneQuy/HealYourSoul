@@ -6,9 +6,11 @@ import { FontSize, Outline } from '../../constants/AppConstants'
 import { HexToRgb } from '../../handle/UtilsTS'
 
 const DiversityItem_ImageAndText = ({
+    onLoadError,
     imgUri,
     text,
 }: {
+    onLoadError: (_: any) => void,
     imgUri?: string,
     text?: string,
 }) => {
@@ -27,7 +29,7 @@ const DiversityItem_ImageAndText = ({
     }, [theme])
 
     return (
-        <ImageBackgroundWithLoading source={{ uri: imgUri }} style={style.percent100} >
+        <ImageBackgroundWithLoading onError={onLoadError} source={{ uri: imgUri }} style={style.percent100} >
             <Text numberOfLines={2} adjustsFontSizeToFit style={style.text}>{text}</Text>
         </ImageBackgroundWithLoading>
     )
