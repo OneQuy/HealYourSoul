@@ -91,11 +91,7 @@ const DiversityItem = ({
             return
 
         // @ts-ignore
-        navigation.navigate(screen, { item });
-
-        // show x button
-
-        UpdateHeaderXButton(navigation, true)
+        navigation.navigate(screen, { item })
     }, [item])
 
     useEffect(() => {

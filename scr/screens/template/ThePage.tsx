@@ -37,6 +37,7 @@ import HeaderSettingButton from '../components/HeaderSettingButton';
 import useIntroduceCat from '../components/IntroduceCat';
 import { CheckAndGetFileListAsync } from '../../handle/ThePageFileListManager';
 import { DrawerParamList } from '../../navigation/Navigator';
+import { UpdateHeaderXButton } from '../components/HeaderXButton';
 
 const videoNumbSize = 10;
 const videoTouchEffectRadius = 100;
@@ -278,7 +279,7 @@ const ThePage = ({ category }: ThePageProps) => {
         reasonToReload.current = NeedReloadReason.None;
         let foundPost: PostMetadata | undefined;
 
-        if (diversityItem) { // load diversity Item mode
+        if (diversityItem) { // load diversity item mode
             // console.log('load diversity item', diversityItem);
 
             foundPost = fileList.current?.posts.find(post => post.id === diversityItem.id);
@@ -718,6 +719,10 @@ const ThePage = ({ category }: ThePageProps) => {
         }
         else { // back to normal mode (no diversity)
         }
+
+        // show x button
+
+        UpdateHeaderXButton(navigation, diversityItem !== undefined)
     }, [diversityItem])
 
     // on focus
