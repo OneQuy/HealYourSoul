@@ -6,7 +6,7 @@ import { PostMetadata, RandomImage } from '../constants/Types';
 
 const useDiversityItem = (
     reload: () => void,
-    post?: PostMetadata,
+    post?: PostMetadata | null,
     randomImage?: RandomImage,
 ) => {
     const route = useRoute<RouteProp<DrawerParamList>>()
@@ -26,11 +26,17 @@ const useDiversityItem = (
 
         // already open this screen before => load this new selected diversity post
 
-        if (diversityItem.randomImage) {
-            if (randomImage && diversityItem.randomImage.uri !== randomImage.uri) {
-                reload()
-            }
+        let needReload = false
+
+        if (post && diversityItem.id !== post.id) {
+            needReload = true
         }
+        else if (randomImage && diversityItem.randomImage && diversityItem.randomImage.uri !== randomImage.uri) {
+            needReload = true
+        }
+
+        if (needReload)
+            reload()
     }, [diversityItem])
 
     return diversityItem

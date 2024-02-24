@@ -8,11 +8,11 @@ import RNFS from "react-native-fs";
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { NetLord } from '../../handle/NetLord'
-import { RouteProp, useFocusEffect, useNavigation, useRoute } from '@react-navigation/native'
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { TempDirName } from '../../handle/Utils'
 import { SaveCurrentScreenForLoadNextTime, ToastTheme } from '../../handle/AppUtils'
 import { CommonStyles } from '../../constants/CommonConstants'
-import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
+import { SetStreakAsync } from '../../handle/Streak';
 import { DiversityItemType, RandomImage, Streak } from '../../constants/Types';
 import StreakPopup from '../components/StreakPopup';
 import { ToCanPrint } from '../../handle/UtilsTS';
@@ -25,8 +25,6 @@ import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
 import HeaderRightButtons from '../components/HeaderRightButtons';
-import { DrawerParamList } from '../../navigation/Navigator';
-import { UpdateHeaderXButton } from '../components/HeaderXButton';
 import useDiversityItem from '../../hooks/useDiversityItem';
 
 interface TheRandomImageProps {

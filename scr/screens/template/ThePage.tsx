@@ -38,6 +38,7 @@ import useIntroduceCat from '../components/IntroduceCat';
 import { CheckAndGetFileListAsync } from '../../handle/ThePageFileListManager';
 import { DrawerParamList } from '../../navigation/Navigator';
 import { UpdateHeaderXButton } from '../components/HeaderXButton';
+import useDiversityItem from '../../hooks/useDiversityItem';
 
 const videoNumbSize = 10;
 const videoTouchEffectRadius = 100;
@@ -209,15 +210,9 @@ const ThePage = ({ category }: ThePageProps) => {
     const activePreviousPostButton: boolean = previousPostIDs.current.length > 0 && post.current !== null && previousPostIDs.current.indexOf(post.current.id) !== 0;
     const hasCredit: boolean = post.current !== null && post.current.author != null && post.current.author.length > 0;
 
-    // param
+    // diversityItem
 
-    const route = useRoute<RouteProp<DrawerParamList>>();
-
-    const diversityItem = useMemo(() => {
-        return route.params?.item
-    }, [route.params?.item])
-
-    // console.log('current diver item', diversityItem);
+    const diversityItem = useDiversityItem(() => loadNextPostAsync(true), post.current, undefined)
 
     // handles
 
@@ -327,7 +322,7 @@ const ThePage = ({ category }: ThePageProps) => {
 
         if (fileList.current)
             PreDownloadPosts(category, seenIDs, post.current, fileList.current)
-    }, [seenIDs, loadNextMediaAsync, diversityItem]);
+    }, [seenIDs, loadNextMediaAsync, diversityItem])
 
     const onVideoLoaded = useCallback((e: any) => {
         videoWholeDuration.current = e.duration;
@@ -705,25 +700,7 @@ const ThePage = ({ category }: ThePageProps) => {
         return () => {
             NetLord.Unsubscribe(onInternetChanged)
         }
-    }, []);
-
-    // handle diversity item
-
-    useEffect(() => {
-        if (diversityItem) { // diversity mode
-            if (post.current && diversityItem.id !== post.current.id) { // already open this screen before => reload saved post
-                // console.log('load another diversity item', diversityItem);
-
-                loadNextPostAsync(true)
-            }
-        }
-        else { // back to normal mode (no diversity)
-        }
-
-        // show x button
-
-        UpdateHeaderXButton(navigation, diversityItem !== undefined)
-    }, [diversityItem])
+    }, [])
 
     // on focus
 
