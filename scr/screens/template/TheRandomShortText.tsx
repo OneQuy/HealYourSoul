@@ -1,14 +1,10 @@
-import { View, Text, TouchableOpacity, ActivityIndicator, Share as RNShare, ShareContent, ShareOptions, Alert, StyleSheet, TouchableWithoutFeedback, Animated, ScrollView } from 'react-native'
-import React, { LegacyRef, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
-import { ThemeContext } from '../../constants/Colors'
-import { BorderRadius, Category, FontSize, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
-import Share from 'react-native-share';
-
-// @ts-ignore
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
+import { View, Text, TouchableOpacity, ActivityIndicator, Share as RNShare, ShareContent, ShareOptions, StyleSheet, Animated } from 'react-native'
+import React, { LegacyRef, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { ThemeContext } from '../../constants/Colors'
+import { Category, FontSize, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
 import { NetLord } from '../../handle/NetLord'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { CopyAndToast, SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
@@ -17,7 +13,6 @@ import { CommonStyles } from '../../constants/CommonConstants'
 import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
 import { Streak } from '../../constants/Types';
 import StreakPopup from '../components/StreakPopup';
-import { ToCanPrint } from '../../handle/UtilsTS';
 import { track_PressRandom, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
@@ -177,7 +172,7 @@ const TheRandomShortText = ({
 
     useEffect(() => {
         navigation.setOptions({
-            headerRight: () => <HeaderRightButtons onPress={onPressHeaderOption} />
+            headerRight: () => <HeaderRightButtons />
         });
     }, [onPressHeaderOption])
 

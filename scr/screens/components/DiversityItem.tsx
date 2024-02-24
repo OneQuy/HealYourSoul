@@ -1,14 +1,14 @@
 // @ts-ignore
 import Video from 'react-native-video';
 
-import { View, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, TouchableOpacity, Text } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { DiversityItemType, MediaType } from '../../constants/Types'
 import { ThemeContext } from '../../constants/Colors'
 import ImageBackgroundWithLoading from './ImageBackgroundWithLoading'
 import { CatToScreenName, CheckLocalFileAndGetURIAsync } from '../../handle/AppUtils'
 import { CheckAndGetFileListAsync } from '../../handle/ThePageFileListManager'
-import { NeedReloadReason } from '../../constants/AppConstants'
+import { FontSize, NeedReloadReason, Outline } from '../../constants/AppConstants'
 import LoadingOrError from './LoadingOrError'
 import { useNavigation } from '@react-navigation/native';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
@@ -19,8 +19,6 @@ type DiversityItemProps = {
     item: DiversityItemType,
 }
 
-type DiversityShowType = 'ThePage' | 'RandomImage' | 'ne'
-
 const DiversityItem = ({
     item,
 }: DiversityItemProps) => {
@@ -29,16 +27,8 @@ const DiversityItem = ({
     const [isHandling, setIsHandling] = useState(true)
     const [imgUri, setImgUri] = useState('')
     const [videoUri, setVideoUri] = useState('')
+    const [text, setText] = useState('Bourbon was first made by a Baptist minsister from Bourbon County in Kentucky in 1789. That is where it got its name')
     const [error, setError] = useState<NeedReloadReason>(NeedReloadReason.None)
-
-    const itemType: DiversityShowType = useMemo(() => {
-        if (item.id !== undefined)
-            return 'ThePage'
-        else if (item.randomImage !== undefined)
-            return 'RandomImage'
-        else
-            return 'ne'
-    }, [item])
 
     // load funcs ------------------------------
 
@@ -79,20 +69,30 @@ const DiversityItem = ({
         setImgUri(item.randomImage.uri)
     }, [item])
 
+    const loadItem_TextAsync = useCallback(async () => {
+        if (!item.text)
+            return
+
+        setText(item.text)
+    }, [item])
+
     const loadItemAsync = useCallback(async () => {
         setIsHandling(true)
 
-        if (itemType === 'ThePage')
-            await loadItem_ThePageAsync()
-        else if (itemType === 'RandomImage')
+        if (item.randomImage)
             await loadItem_RandomImageAsync()
+        else if (item.text)
+            await loadItem_TextAsync()
+        else if (item.id)
+            await loadItem_ThePageAsync()
         else
-            console.error('[ne]', itemType);
+            console.error('[ne]', item);
 
         setIsHandling(false)
     }, [
-        itemType,
+        item,
         loadItem_ThePageAsync,
+        loadItem_TextAsync,
         loadItem_RandomImageAsync])
 
     // load funcs (end) ------------------------------
@@ -124,7 +124,7 @@ const DiversityItem = ({
             masterView: { flex: 1, aspectRatio: 1, maxWidth: widthPercentageToDP(25) },
             centerView: { flex: 1, aspectRatio: 1, maxWidth: widthPercentageToDP(25), alignItems: 'center', justifyContent: 'center' },
             percent100: { width: '100%', height: '100%' },
-            // noItemTxt: { fontSize: FontSize.Normal, color: theme.counterBackground, },
+            text: { margin: Outline.GapHorizontal, fontSize: FontSize.Small, color: theme.counterBackground, },
         })
     }, [theme])
 
@@ -135,6 +135,16 @@ const DiversityItem = ({
             <View style={style.centerView} >
                 <LoadingOrError reasonToReload={error} onPressedReload={() => { }} />
             </View>
+        )
+    }
+
+    // text
+
+    if (text) {
+        return (
+            <TouchableOpacity onPress={onPressed} style={style.masterView}>
+                <Text style={style.text}>{text}</Text>
+            </TouchableOpacity>
         )
     }
 
