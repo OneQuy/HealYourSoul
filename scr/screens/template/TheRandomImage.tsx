@@ -27,6 +27,7 @@ import BottomBar, { BottomBarItem } from '../others/BottomBar';
 import HeaderRightButtons from '../components/HeaderRightButtons';
 import { DrawerParamList } from '../../navigation/Navigator';
 import { UpdateHeaderXButton } from '../components/HeaderXButton';
+import useDiversityItem from '../../hooks/useDiversityItem';
 
 interface TheRandomImageProps {
     category: Category,
@@ -48,13 +49,7 @@ const TheRandomImage = ({
 
     const mediaViewScaleAnimRef = useRef(new Animated.Value(1)).current
 
-    // param
-
-    const route = useRoute<RouteProp<DrawerParamList>>();
-
-    const diversityItem = useMemo(() => {
-        return route.params?.item
-    }, [route.params?.item])
+    const diversityItem = useDiversityItem(() => onPressRandom(false), undefined, currentItem)
 
     // play loaded media anim
 
@@ -170,17 +165,7 @@ const TheRandomImage = ({
 
     // handle diversity item
 
-    useEffect(() => {
-        if (diversityItem && diversityItem.randomImage) { // diversity mode
-            if (currentItem && diversityItem.randomImage.uri !== currentItem.uri) { // already open this screen before => reload saved post
-                onPressRandom(false)
-            }
-        }
-
-        // update x button
-
-        UpdateHeaderXButton(navigation, diversityItem !== undefined)
-    }, [diversityItem])
+   
 
     // on change theme
 
