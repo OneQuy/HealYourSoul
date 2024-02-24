@@ -13,7 +13,7 @@ import { TempDirName } from '../../handle/Utils'
 import { SaveCurrentScreenForLoadNextTime, ToastTheme } from '../../handle/AppUtils'
 import { CommonStyles } from '../../constants/CommonConstants'
 import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
-import { RandomImage, Streak } from '../../constants/Types';
+import { DiversityItemType, RandomImage, Streak } from '../../constants/Types';
 import StreakPopup from '../components/StreakPopup';
 import { ToCanPrint } from '../../handle/UtilsTS';
 import { DownloadFileAsync, GetFLPFromRLP } from '../../handle/FileUtils';
@@ -159,10 +159,19 @@ const TheRandomImage = ({
     // on change theme
 
     useEffect(() => {
+        let diversityItem: DiversityItemType | undefined
+
+        if (currentItem) {
+            diversityItem = {
+                cat: category,
+                randomImage: currentItem
+            }
+        }
+
         navigation.setOptions({
-            headerRight: () => <HeaderRightButtons />
-        });
-    }, [onPressHeaderOption])
+            headerRight: () => <HeaderRightButtons diversityItem={diversityItem} />
+        })
+    }, [onPressHeaderOption, currentItem])
 
     // save last visit category screen
 
