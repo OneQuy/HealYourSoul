@@ -11,6 +11,7 @@ import HeaderRightButtons from '../components/HeaderRightButtons';
 import DiversityItem from '../components/DiversityItem';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { DrawerParamList } from '../../navigation/Navigator';
+import PageNavigatorBar from '../fun_sound/PageNavigatorBar'
 
 const numColumns = 4
 const numRowPerPage = 10
@@ -144,21 +145,8 @@ const TheDiversity = (
             </View>
 
             {/* navigation */}
-            {/* <View style={style.naviContainer}>
-                <TouchableOpacity onPress={() => onPressedTopPage(false)} style={style.naviTO}>
-                    <MaterialCommunityIcons name={Icon.MaxLeft} color={theme.counterPrimary} size={Size.Icon} />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => onPressedNextPage(false)} style={style.naviTO}>
-                    <MaterialCommunityIcons name={Icon.Left} color={theme.counterPrimary} size={Size.Icon} />
-                </TouchableOpacity>
-                <Text onPress={onPressedMiddlePage} style={style.pageTxt}>{curPageIdx + 1}/{maxPage}</Text>
-                <TouchableOpacity onPress={() => onPressedNextPage(true)} style={style.naviTO}>
-                    <MaterialCommunityIcons name={Icon.Right} color={theme.counterPrimary} size={Size.Icon} />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => onPressedTopPage(true)} style={style.naviTO}>
-                    <MaterialCommunityIcons name={Icon.MaxRight} color={theme.counterPrimary} size={Size.Icon} />
-                </TouchableOpacity>
-            </View> */}
+           
+           {/* <PageNavigatorBar /> */}
         </View>
     )
 }

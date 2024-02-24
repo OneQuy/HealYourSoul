@@ -23,6 +23,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { GetNumberIntAsync, SetNumberAsync } from '../../handle/AsyncStorageUtils';
 import HeaderRightButtons from '../components/HeaderRightButtons';
 import { track_PressFavorite, track_PressNextPost } from '../../handle/tracking/GoodayTracking';
+import PageNavigatorBar from './PageNavigatorBar';
 
 const LikePathByID = 'user_data/post/@cat/@id/like';
 const LikePathAll = 'user_data/post/@cat';
@@ -140,9 +141,6 @@ const FunSoundScreen = () => {
       masterView: { flex: 1, gap: Outline.GapHorizontal, },
       flatListContainer: { flex: 1, },
       pinContainer: { flexDirection: 'row' },
-      naviContainer: { backgroundColor: theme.primary, borderRadius: BorderRadius.BR, marginBottom: insets.bottom + Outline.GapHorizontal, marginHorizontal: Outline.GapVertical, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' },
-      naviTO: { padding: Outline.GapVertical_2, flex: 1, alignItems: 'center', justifyContent: 'center', },
-      pageTxt: { fontSize: FontSize.Normal, color: theme.counterPrimary, },
     })
   }, [theme, insets])
 
@@ -314,21 +312,14 @@ const FunSoundScreen = () => {
       </View>
 
       {/* navigation */}
-      <View style={style.naviContainer}>
-        <TouchableOpacity onPress={() => onPressedTopPage(false)} style={style.naviTO}>
-          <MaterialCommunityIcons name={Icon.MaxLeft} color={theme.counterPrimary} size={Size.Icon} />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => onPressedNextPage(false)} style={style.naviTO}>
-          <MaterialCommunityIcons name={Icon.Left} color={theme.counterPrimary} size={Size.Icon} />
-        </TouchableOpacity>
-        <Text onPress={onPressedMiddlePage} style={style.pageTxt}>{curPageIdx + 1}/{maxPage}</Text>
-        <TouchableOpacity onPress={() => onPressedNextPage(true)} style={style.naviTO}>
-          <MaterialCommunityIcons name={Icon.Right} color={theme.counterPrimary} size={Size.Icon} />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => onPressedTopPage(true)} style={style.naviTO}>
-          <MaterialCommunityIcons name={Icon.MaxRight} color={theme.counterPrimary} size={Size.Icon} />
-        </TouchableOpacity>
-      </View>
+
+      <PageNavigatorBar
+        onPressedMiddlePage={onPressedMiddlePage}
+        onPressedNextPage={onPressedNextPage}
+        onPressedTopPage={onPressedTopPage}
+        curPageIdx={curPageIdx}
+        maxPage={maxPage}
+      />
     </View>
   )
 }
