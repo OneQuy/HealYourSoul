@@ -75,14 +75,14 @@ const TheRandomImage = ({
 
     }, [])
 
-    const onPressHeaderOption = useCallback(async () => {
-        if (streakData)
-            setStreakData(undefined)
-        else {
-            const streak = await GetStreakAsync(Category[category])
-            setStreakData(streak)
-        }
-    }, [streakData])
+    // const onPressHeaderOption = useCallback(async () => {
+    //     if (streakData)
+    //         setStreakData(undefined)
+    //     else {
+    //         const streak = await GetStreakAsync(Category[category])
+    //         setStreakData(streak)
+    //     }
+    // }, [streakData])
 
     const onPressSaveToPhoto = useCallback(async () => {
         if (!currentItem) {
@@ -159,9 +159,9 @@ const TheRandomImage = ({
     // on change theme
 
     useEffect(() => {
-        let diversityItem: DiversityItemType | undefined
+        let diversityItem: DiversityItemType | undefined = undefined
 
-        if (currentItem) {
+        if (currentItem && !handling) {
             diversityItem = {
                 cat: category,
                 randomImage: currentItem
@@ -171,7 +171,7 @@ const TheRandomImage = ({
         navigation.setOptions({
             headerRight: () => <HeaderRightButtons diversityItem={diversityItem} />
         })
-    }, [onPressHeaderOption, currentItem])
+    }, [handling, currentItem])
 
     // save last visit category screen
 
