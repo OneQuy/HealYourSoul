@@ -32,7 +32,7 @@ export type LatestVersionConfig = {
 export type DiversityItemType = {
     cat: Category,
     id?: string | number,
-    image?: RandomImage,
+    randomImage?: RandomImage,
     text?: string,
 }
 
