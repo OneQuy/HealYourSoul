@@ -156,7 +156,7 @@ const DiversityItem = ({
         )
     }
 
-    // object (wiki,...)
+    // wikipedia
 
     if (wikipediaObject) {
         const imgUri = GetThumbUriFromWikipediaObject(wikipediaObject)
@@ -193,13 +193,15 @@ const DiversityItem = ({
 
     if (videoUri) {
         return (
-            <Video
-                onError={onLoadError}
-                source={{ uri: videoUri }}
-                resizeMode={'cover'}
-                muted={true}
-                paused={true}
-                style={style.masterView} />
+            <TouchableOpacity onPress={onPressed} style={style.masterView}>
+                <Video
+                    onError={onLoadError}
+                    source={{ uri: videoUri }}
+                    resizeMode={'cover'}
+                    muted={true}
+                    paused={true}
+                    style={style.percent100} />
+            </TouchableOpacity>
         )
     }
 
