@@ -217,6 +217,8 @@ const ThePage = ({ category }: ThePageProps) => {
         return route.params?.item
     }, [route.params?.item])
 
+    console.log('current diver item', diversityItem);
+
     // handles
 
     const loadNextMediaAsync = useCallback(async (isNext: boolean, forPost: PostMetadata, isNextPost: NeedLoadPostType) => {
@@ -718,6 +720,7 @@ const ThePage = ({ category }: ThePageProps) => {
         else { // back to normal mode (no diversity)
 
         }
+console.log('updte header', diversityItem);
 
         UpdateHeaderLeftButton(navigation, diversityItem !== undefined)
     }, [diversityItem])
