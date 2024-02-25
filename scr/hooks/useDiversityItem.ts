@@ -1,5 +1,5 @@
-import { useEffect, useMemo } from 'react'
-import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { useCallback, useEffect, useMemo } from 'react'
+import { RouteProp, useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
 import { DrawerParamList } from '../navigation/Navigator';
 import { UpdateHeaderXButton } from '../screens/components/HeaderXButton';
 import { PostMetadata, RandomImage } from '../constants/Types';
@@ -19,11 +19,15 @@ const useDiversityItem = (
         return route.params?.item
     }, [route.params?.item])
 
-    useEffect(() => {
-        // update x button
+    // update x button
 
+    useFocusEffect(useCallback(() => {
         UpdateHeaderXButton(navigation, diversityItem !== undefined)
+    }, [diversityItem]))
 
+    // check to reload if have another diversity
+
+    useEffect(() => {
         if (!diversityItem)
             return
 
@@ -41,8 +45,8 @@ const useDiversityItem = (
             needReload = true
         }
         else if (
-            wikipediaObject && 
-            diversityItem.wikipediaObject && 
+            wikipediaObject &&
+            diversityItem.wikipediaObject &&
             GetThumbUriFromWikipediaObject(diversityItem.wikipediaObject) !== GetThumbUriFromWikipediaObject(wikipediaObject)) {
             needReload = true
         }
