@@ -38,6 +38,7 @@ import useIntroduceCat from '../components/IntroduceCat';
 import { CheckAndGetFileListAsync } from '../../handle/ThePageFileListManager';
 import { DrawerParamList } from '../../navigation/Navigator';
 import useDiversityItem from '../../hooks/useDiversityItem';
+import { OnPressedNextItemDiversity } from './TheDiversity';
 
 const videoNumbSize = 10;
 const videoTouchEffectRadius = 100;
@@ -788,7 +789,9 @@ const ThePage = ({ category }: ThePageProps) => {
             },
             {
                 text: LocalText.previous,
-                onPress: () => onPressNextPost(false, true),
+                onPress: diversityItem ?
+                    () => OnPressedNextItemDiversity(false, diversityItem) :
+                    () => onPressNextPost(false, true),
                 icon: Icon.Left,
                 scaleIcon: 1.5,
             },
@@ -801,7 +804,9 @@ const ThePage = ({ category }: ThePageProps) => {
             },
             {
                 text: LocalText.next,
-                onPress: () => onPressNextPost(true, true),
+                onPress: diversityItem ?
+                    () => OnPressedNextItemDiversity(true, diversityItem) :
+                    () => onPressNextPost(true, true),
                 icon: Icon.Right,
                 scaleIcon: 1.5,
             },
@@ -811,7 +816,7 @@ const ThePage = ({ category }: ThePageProps) => {
                 icon: Icon.Download
             },
         ] as BottomBarItem[]
-    }, [onPressNextPost, post.current?.id, onPressDownloadMedia])
+    }, [onPressNextPost, post.current?.id, onPressDownloadMedia, diversityItem])
 
     // introduce cat
 
