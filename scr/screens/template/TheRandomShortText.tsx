@@ -19,6 +19,7 @@ import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
 import HeaderRightButtons from '../components/HeaderRightButtons';
 import useDiversityItem from '../../hooks/useDiversityItem';
+import { OnPressedNextItemDiversity } from './TheDiversity';
 
 interface TheRandomShortTextProps {
     category: Category,
@@ -143,7 +144,7 @@ const TheRandomShortText = ({
     const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(undefined, undefined, onSwiped)
 
     const bottomBarItems = useMemo(() => {
-        return [
+        const btns = [
             // {
             //     text: LocalText.share_image,
             //     onPress: onPressShareImage,
@@ -165,7 +166,34 @@ const TheRandomShortText = ({
                 icon: Icon.ShareText,
             },
         ] as BottomBarItem[]
-    }, [onPressRandom, onPressShareText, onPressCopy])
+
+        // add navi btns when diversity mode
+
+        if (diversityItem) {
+            const naviBtns = [
+                {
+                    text: LocalText.previous,
+                    onPress: () => OnPressedNextItemDiversity(false, diversityItem),
+                    icon: Icon.Left,
+                    scaleIcon: 1.5,
+                },
+                {
+                    text: LocalText.next,
+                    onPress: () => OnPressedNextItemDiversity(true, diversityItem),
+                    icon: Icon.Right,
+                    scaleIcon: 1.5,
+                },
+            ] as BottomBarItem[]
+
+            const idxRandom = btns.findIndex(i => i.text === LocalText.random)
+
+            btns.splice(idxRandom, 1, ...naviBtns)
+        }
+
+        // return 
+
+        return btns
+    }, [onPressRandom, onPressShareText, onPressCopy, diversityItem])
 
     // on init once (for load first post)
 
