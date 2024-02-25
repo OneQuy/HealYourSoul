@@ -268,6 +268,7 @@ export const LocalText = {
   close: "Close",
   rate_app: "Rate app",
   Contact: "Contact",
+  saved: "Saved",
   lights_mode: "Light mode",
   darks_mode: "Dark mode",
   specials_theme: "Special theme",

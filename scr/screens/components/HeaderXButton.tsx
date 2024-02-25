@@ -3,12 +3,13 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import { TouchableOpacity, StyleSheet, View } from 'react-native'
 import React, { useCallback, useContext, useMemo } from 'react'
-import { Icon, Outline, ScreenName, Size } from '../../constants/AppConstants';
+import { Icon, LocalText, Outline, ScreenName, Size } from '../../constants/AppConstants';
 import { ThemeContext } from '../../constants/Colors';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { DrawerParamList } from '../../navigation/Navigator';
 import { ClearDisversityModeCurrentScreen } from '../template/TheDiversity';
+import { IsDev } from '../../handle/IsDev';
 
 const HeaderXButton = () => {
     const theme = useContext(ThemeContext);
@@ -43,7 +44,20 @@ const HeaderXButton = () => {
 export const UpdateHeaderXButton = (
     navigation: DrawerNavigationProp<DrawerParamList> | NavigationProp<ReactNavigation.RootParamList>,
     savedMode: boolean) => {
+    const index = navigation.getState().index
+    const screen = navigation.getState().routes[index].name
+
+    let title: string = screen
+
+    if (savedMode) {
+        if (IsDev())
+            title += ' (Saved)'
+        else
+            title = LocalText.saved
+    }
+
     navigation.setOptions({
         headerLeft: savedMode ? () => <HeaderXButton /> : undefined,
+        headerTitle: title,
     })
 }
