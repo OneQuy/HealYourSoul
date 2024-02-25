@@ -101,7 +101,7 @@ const TheDiversity = (
         })
     }, [theme, insets])
 
-    const renderItem = useCallback(({ item, index }: { item: DiversityItemType, index: number }) => {
+    const renderItem = useCallback(({ item }: { item: DiversityItemType }) => {
         return <DiversityItem
             item={item} />
     }, [])
