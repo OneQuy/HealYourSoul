@@ -2,7 +2,7 @@ import { View, StyleSheet, FlatList, Text } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { FontSize, LocalText, Outline, StorageKey_CurPageFunSoundIdx } from '../../constants/AppConstants'
 import { DiversityItemType } from '../../constants/Types'
-import { useNavigation } from '@react-navigation/native'
+import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { ThemeContext } from '../../constants/Colors'
 import { IsValuableArrayOrString } from '../../handle/UtilsTS'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -12,12 +12,36 @@ import DiversityItem from '../components/DiversityItem';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { DrawerParamList } from '../../navigation/Navigator';
 import PageNavigatorBar from '../fun_sound/PageNavigatorBar'
+import { CatToScreenName } from '../../handle/AppUtils'
 
 const numColumns = 4
 const numRowPerPage = 10
 
 type TheDiversityProps = {
     allItems: DiversityItemType[] | undefined,
+}
+
+var onPressedNextItemDiversityGlobalFunc: undefined | ((isNext: boolean, curItem: DiversityItemType) => void) = undefined
+
+export const OnPressedNextItemDiversity = (isNext: boolean, curItem: DiversityItemType) => {
+    if (!onPressedNextItemDiversityGlobalFunc)
+        return
+
+    onPressedNextItemDiversityGlobalFunc(isNext, curItem)
+}
+
+export const OnPressedDeversityItem = (
+    navigation: DrawerNavigationProp<DrawerParamList> | NavigationProp<ReactNavigation.RootParamList>,
+    item: DiversityItemType) => {
+    const screen = CatToScreenName(item.cat)
+
+    // switch screen
+
+    if (!screen)
+        return
+
+    // @ts-ignore
+    navigation.navigate(screen, { item })
 }
 
 const TheDiversity = (
@@ -88,6 +112,33 @@ const TheDiversity = (
 
         return allItems.slice(curPageIdx * totalItemsPerPage, curPageIdx * totalItemsPerPage + totalItemsPerPage)
     }, [curPageIdx, allItems])
+
+    onPressedNextItemDiversityGlobalFunc = useCallback((isNext: boolean, curItem: DiversityItemType) => {
+        if (!allItems)
+            return
+
+        const curIdx = allItems.findIndex(i => JSON.stringify(i) === JSON.stringify(curItem))
+
+        if (curIdx < 0)
+            return
+
+        let goToIdx = curIdx
+
+        if (isNext) {
+            if (curIdx < allItems.length - 1)
+                goToIdx = curIdx + 1
+        }
+        else {
+            if (curIdx > 0) {
+                goToIdx = curIdx - 1
+            }
+        }
+
+        if (curIdx === goToIdx)
+            return
+
+        OnPressedDeversityItem(navigation, allItems[goToIdx])
+    }, [allItems])
 
     const style = useMemo(() => {
         return StyleSheet.create({

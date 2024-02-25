@@ -6,7 +6,7 @@ import React, { useCallback, useContext, useEffect, useMemo, useState } from 're
 import { DiversityItemType, MediaType } from '../../constants/Types'
 import { ThemeContext } from '../../constants/Colors'
 import ImageBackgroundWithLoading from './ImageBackgroundWithLoading'
-import { CatToScreenName, CheckLocalFileAndGetURIAsync } from '../../handle/AppUtils'
+import { CheckLocalFileAndGetURIAsync } from '../../handle/AppUtils'
 import { CheckAndGetFileListAsync } from '../../handle/ThePageFileListManager'
 import { FontSize, NeedReloadReason, Outline } from '../../constants/AppConstants'
 import LoadingOrError from './LoadingOrError'
@@ -17,6 +17,7 @@ import { widthPercentageToDP } from 'react-native-responsive-screen';
 import { GetThumbUriFromWikipediaObject, GetTitleFromWikipediaObject } from '../wiki/WikipediaScreen';
 import DiversityItem_ImageAndText from './DiversityItem_ImageAndText';
 import { NetLord } from '../../handle/NetLord';
+import { OnPressedDeversityItem } from '../template/TheDiversity';
 
 type DiversityItemProps = {
     item: DiversityItemType,
@@ -119,15 +120,7 @@ const DiversityItem = ({
     }, []);
 
     const onPressed = useCallback(() => {
-        const screen = CatToScreenName(item.cat)
-
-        // switch screen
-
-        if (!screen)
-            return
-
-        // @ts-ignore
-        navigation.navigate(screen, { item })
+       OnPressedDeversityItem(navigation, item)
     }, [item])
 
     useEffect(() => {
