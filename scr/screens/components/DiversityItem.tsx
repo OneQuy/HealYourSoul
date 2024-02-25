@@ -15,7 +15,6 @@ import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { DrawerParamList } from '../../navigation/Navigator';
 import { widthPercentageToDP } from 'react-native-responsive-screen';
 import { GetThumbUriFromWikipediaObject, GetTitleFromWikipediaObject } from '../wiki/WikipediaScreen';
-import { HexToRgb } from '../../handle/UtilsTS';
 import DiversityItem_ImageAndText from './DiversityItem_ImageAndText';
 import { NetLord } from '../../handle/NetLord';
 
