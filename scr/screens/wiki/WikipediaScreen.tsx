@@ -29,6 +29,7 @@ import BottomBar, { BottomBarItem } from '../others/BottomBar';
 import HeaderRightButtons from '../components/HeaderRightButtons';
 import useIntroduceCat from '../components/IntroduceCat';
 import useDiversityItem from '../../hooks/useDiversityItem';
+import { OnPressedNextItemDiversity } from '../template/TheDiversity';
 
 const category = Category.Wikipedia
 
@@ -206,7 +207,7 @@ const WikipediaScreen = () => {
     const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(undefined, undefined, onSwiped)
 
     const bottomBarItems = useMemo(() => {
-        return [
+        const btns = [
             // {
             //     text: LocalText.share_image,
             //     onPress: onPressShareImage,
@@ -233,7 +234,38 @@ const WikipediaScreen = () => {
                 icon: Icon.ShareText,
             },
         ] as BottomBarItem[]
-    }, [onPressRandom, onPressInAppWeb, onPressShareText, showFull, onPressCopy])
+
+        // add navi btns when diversity mode
+
+        if (diversityItem) {
+            const naviBtns = [
+                {
+                    text: LocalText.previous,
+                    onPress: () => OnPressedNextItemDiversity(false, diversityItem),
+                    icon: Icon.Left,
+                    scaleIcon: 1.5,
+                },
+                {
+                    text: LocalText.next,
+                    onPress: () => OnPressedNextItemDiversity(true, diversityItem),
+                    icon: Icon.Right,
+                    scaleIcon: 1.5,
+                },
+            ] as BottomBarItem[]
+
+            const idxRandom = btns.findIndex(i => i.text === LocalText.random)
+
+            btns.splice(idxRandom, 1, ...naviBtns)
+
+            const readFull = btns[1]
+            btns[1] = btns[2]
+            btns[2] = readFull
+         }
+
+        // return 
+
+        return btns
+    }, [onPressRandom, diversityItem, onPressInAppWeb, onPressShareText, showFull, onPressCopy])
 
     // on init once (for load first post)
 
