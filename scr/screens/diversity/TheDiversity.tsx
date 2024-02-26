@@ -19,8 +19,9 @@ import { CatToScreenName } from '../../handle/AppUtils'
 import { widthPercentageToDP } from 'react-native-responsive-screen';
 import FilterDiversityPopup from './FilterDiversityPopup';
 
-const numColumns = 4
-const numRowPerPage = 4
+export const numColumnsDiversity = 3
+
+const numRowPerPage = 10
 
 type TheDiversityProps = {
     allItems: DiversityItemType[] | undefined,
@@ -131,7 +132,7 @@ const TheDiversity = (
         if (!Array.isArray(filterItems))
             return 0
 
-        const totalItemsPerPage = numColumns * numRowPerPage
+        const totalItemsPerPage = numColumnsDiversity * numRowPerPage
         const maxPage = Math.ceil(filterItems.length / totalItemsPerPage)
 
         return maxPage
@@ -187,7 +188,7 @@ const TheDiversity = (
         if (!Array.isArray(filterItems))
             return []
 
-        const totalItemsPerPage = numColumns * numRowPerPage
+        const totalItemsPerPage = numColumnsDiversity * numRowPerPage
 
         return filterItems.slice(curPageIdx * totalItemsPerPage, curPageIdx * totalItemsPerPage + totalItemsPerPage)
     }, [curPageIdx, filterItems])
@@ -277,7 +278,7 @@ const TheDiversity = (
                 <FlatList
                     showsVerticalScrollIndicator={false}
                     data={itemsToRender}
-                    numColumns={numColumns}
+                    numColumns={numColumnsDiversity}
                     keyExtractor={(_, index) => index.toString()}
                     renderItem={renderItem}
                 />

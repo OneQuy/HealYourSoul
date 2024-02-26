@@ -17,7 +17,7 @@ import { widthPercentageToDP } from 'react-native-responsive-screen';
 import { GetThumbUriFromWikipediaObject, GetTitleFromWikipediaObject } from '../wiki/WikipediaScreen';
 import DiversityItem_ImageAndText from './DiversityItem_ImageAndText';
 import { NetLord } from '../../handle/NetLord';
-import { OnPressedDeversityItem } from './TheDiversity';
+import { OnPressedDeversityItem, numColumnsDiversity } from './TheDiversity';
 
 type DiversityItemProps = {
     item: DiversityItemType,
@@ -145,8 +145,8 @@ const DiversityItem = ({
 
     const style = useMemo(() => {
         return StyleSheet.create({
-            masterView: { flex: 1, aspectRatio: 1, maxWidth: widthPercentageToDP(25) },
-            centerView: { flex: 1, aspectRatio: 1, maxWidth: widthPercentageToDP(25), alignItems: 'center', justifyContent: 'center' },
+            masterView: { flex: 1, aspectRatio: 1, maxWidth: widthPercentageToDP(100 / numColumnsDiversity) },
+            centerView: { flex: 1, aspectRatio: 1, maxWidth: widthPercentageToDP(100 / numColumnsDiversity), alignItems: 'center', justifyContent: 'center' },
             percent100: { width: '100%', height: '100%' },
             text: { borderColor: theme.primary, borderWidth: StyleSheet.hairlineWidth, width: '100%', height: '100%', padding: Outline.GapHorizontal, fontSize: FontSize.Small, color: theme.counterBackground, },
         })
