@@ -9,6 +9,7 @@ import { ColorNameToRgb } from '../../handle/UtilsTS';
 import { BorderRadius, ScreenName, FontSize, FontWeight, Icon, LocalText, Outline, Size } from '../../constants/AppConstants';
 import { GetAllContentScreens, GetIconOfScreen } from '../../handle/AppUtils';
 import { useNavigation } from '@react-navigation/native';
+import HairLine from '../components/HairLine';
 
 const listPopupIconSize = Size.IconBig
 const listPopupGap = Outline.GapVertical
@@ -28,16 +29,26 @@ const FilterDiversityPopup = ({
         return GetAllContentScreens(navigation)
     }, [])
 
-    const renderItem = useCallback(({ item, index }: { item: ScreenName, index: number }) => {
-        const isSelecting = !curFilters || curFilters.includes(item)
+    const renderItem = useCallback(({ item, index }: { item: ScreenName | undefined, index: number }) => {
+        const isAllItem = item === undefined
         const textColor = theme.counterBackground
+        const icon = !isAllItem ? GetIconOfScreen(item) : Icon.Bookmark
+
+        let isSelecting
+
+        if (isAllItem) {
+            isSelecting = !curFilters || curFilters.length === listScreen.length
+        }
+        else {
+            isSelecting = !curFilters || (item && curFilters.includes(item))
+        }
 
         return <TouchableOpacity onPress={undefined} style={[styleSheet.itemTO]}>
-            <MaterialCommunityIcons name={GetIconOfScreen(item)} color={theme.counterBackground} size={Size.Icon} />
-            <Text style={[styleSheet.text, { color: textColor }]}>{item}</Text>
+            <MaterialCommunityIcons name={icon} color={isAllItem ? theme.background : theme.counterBackground} size={Size.Icon} />
+            <Text style={[styleSheet.text, { color: textColor, fontWeight: isAllItem ? FontWeight.Bold : 'normal' }]}>{isAllItem ? LocalText.all : item}</Text>
             <MaterialCommunityIcons name={isSelecting ? Icon.CheckBox_Yes : Icon.CheckBox_No} color={theme.counterBackground} size={Size.Icon} />
         </TouchableOpacity>
-    }, [curFilters, theme])
+    }, [curFilters, theme, listScreen])
 
     useEffect(() => {
         (async () => {
@@ -56,11 +67,25 @@ const FilterDiversityPopup = ({
             <View style={[{ backgroundColor: theme.background, }, styleSheet.bgView]}>
                 <View style={[{ flexDirection: 'row' }, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
                     <MaterialCommunityIcons name={Icon.ThreeDots} color={theme.background} size={Size.Icon} />
-                    <Text style={[{ color: theme.counterBackground, }, styleSheet.name]}>{LocalText.best_short_films}</Text>
+                    <Text style={[{ color: theme.counterBackground, }, styleSheet.name]}>{LocalText.filter}</Text>
                     <TouchableOpacity onPress={() => setFilters(curFilters)}>
                         <MaterialCommunityIcons name={Icon.X} color={theme.counterBackground} size={Size.Icon} />
                     </TouchableOpacity>
                 </View>
+
+                {/* all */}
+
+                {
+                    renderItem({
+                        item: undefined,
+                        index: 0
+                    })
+                }
+
+                <HairLine />
+
+                {/* list */}
+
                 <FlatList
                     // @ts-ignore
                     ref={flatlistRef}
