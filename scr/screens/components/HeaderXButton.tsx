@@ -21,9 +21,7 @@ const HeaderXButton = () => {
     }, [])
 
     const onPressX = useCallback(() => {
-        // go to diversity screen
-
-        navigation.navigate(ScreenName.Saved);
+        OnPressedXInDiversityMode(navigation)
     }, [])
 
     return (
@@ -34,6 +32,13 @@ const HeaderXButton = () => {
             </TouchableOpacity>
         </View>
     )
+}
+
+export const OnPressedXInDiversityMode = (
+    navigation: DrawerNavigationProp<DrawerParamList> | NavigationProp<ReactNavigation.RootParamList>) => {
+    // go to diversity screen
+    // @ts-ignore
+    navigation.navigate(ScreenName.Saved);
 }
 
 export const UpdateHeaderXButton = (
