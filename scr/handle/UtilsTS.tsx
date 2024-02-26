@@ -373,16 +373,18 @@ export function ArrayRemove<T>(arr: T[], value: T): boolean {
 
 // string utils ---------------------------
 
-export function IsValuableArrayOrString<T>(value: string | T[], trimString: boolean = true) {
+export function IsValuableArrayOrString(value: any, trimString: boolean = true) {
     if (Array.isArray(value)) {
         return value.length > 0
     }
-    else {
+    else if (typeof value === 'string') {
         if (trimString && value)
             value = value.trim()
 
         return value && value.length > 0
     }
+    else
+        return false
 }
 
 export function RegexUrl(url: string) {

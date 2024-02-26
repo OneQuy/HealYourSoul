@@ -106,7 +106,6 @@ const TheDiversity = (
 
         return screenNames
     }, [allItems])
-    console.log(allScreensOfThisDivesity);
 
     const maxPage = useMemo(() => {
         if (!Array.isArray(filterItems))
@@ -229,7 +228,7 @@ const TheDiversity = (
 
     // render list is empty
 
-    if (!IsValuableArrayOrString(itemsToRender) || !allScreensOfThisDivesity) {
+    if (!IsValuableArrayOrString(itemsToRender) || !allScreensOfThisDivesity || !IsValuableArrayOrString(allScreensOfThisDivesity)) {
         return (
             <View style={style.masterView}>
                 <View style={style.centerView}>
