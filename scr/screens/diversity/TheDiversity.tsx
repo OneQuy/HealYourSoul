@@ -58,7 +58,7 @@ const TheDiversity = (
     const [curPageIdx, setCurPageIdx] = useState(0)
     const [curFilters, setCurFilters] = useState<undefined | ScreenName[]>(undefined) // undefined means ALL
     const insets = useSafeAreaInsets()
-    const [isShowFilterPopup, setIsShowFilterPopup] = useState(true)
+    const [isShowFilterPopup, setIsShowFilterPopup] = useState(false)
 
     const maxPage = useMemo(() => {
         if (!Array.isArray(allItems))

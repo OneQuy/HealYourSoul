@@ -10,7 +10,6 @@ import { BorderRadius, ScreenName, FontSize, FontWeight, Icon, LocalText, Outlin
 import { GetAllContentScreens, GetIconOfScreen } from '../../handle/AppUtils';
 import { useNavigation } from '@react-navigation/native';
 import HairLine from '../components/HairLine';
-import { widthPercentageToDP } from 'react-native-responsive-screen';
 
 const FilterDiversityPopup = ({
     curFiltersParam,
@@ -22,7 +21,7 @@ const FilterDiversityPopup = ({
     const theme = useContext(ThemeContext)
     const navigation = useNavigation()
     const flatlistRef = useRef()
-    const [curFilters, setFilters] = useState<undefined | ScreenName[]>(curFiltersParam)
+    const [curFilters, setFilters] = useState<undefined | ScreenName[]>(curFiltersParam?.slice(0))
 
     const listScreen = useMemo(() => {
         return GetAllContentScreens(navigation)
@@ -33,7 +32,7 @@ const FilterDiversityPopup = ({
             setFiltersParam(curFilters)
         else
             setFiltersParam(curFiltersParam)
-    }, [setFiltersParam, curFilters, curFiltersParam])
+    }, [setFiltersParam, curFiltersParam, curFilters])
 
     const onPressedToggle = useCallback((item: ScreenName | undefined) => {
         if (item === undefined) { // press all
