@@ -107,6 +107,25 @@ const TheDiversity = (
         return screenNames
     }, [allItems])
 
+    const titleFilter = useMemo(() => {
+        if (!curFilters)
+            return LocalText.show_all
+
+        let s = ''
+
+        for (let i = 0; i < 5 && i < curFilters.length; i++) {
+            if (s.length > 0)
+                s += ', '
+
+            s += curFilters[i]
+        }
+
+        if (curFilters.length > 5)
+            s += ',...'
+
+        return s
+    }, [curFilters])
+
     const maxPage = useMemo(() => {
         if (!Array.isArray(filterItems))
             return 0
@@ -203,10 +222,10 @@ const TheDiversity = (
         return StyleSheet.create({
             masterView: { flex: 1, paddingBottom: insets.bottom, gap: Outline.GapHorizontal, },
             centerView: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-            filterView: { justifyContent: 'center', alignItems: 'center', },
-            filterTO: { borderRadius: BorderRadius.BR8, justifyContent: 'center', alignItems: 'center', gap: Outline.GapHorizontal, padding: Outline.GapHorizontal, minWidth: widthPercentageToDP(20), flexDirection: 'row', backgroundColor: theme.primary },
+            filterView: { marginHorizontal: Outline.GapVertical, justifyContent: 'center', alignItems: 'center', },
+            filterTO: { maxWidth: '100%', paddingHorizontal: 20,  borderRadius: BorderRadius.BR8, justifyContent: 'center', alignItems: 'center', gap: Outline.GapHorizontal, padding: Outline.GapHorizontal, minWidth: widthPercentageToDP(20), flexDirection: 'row', backgroundColor: theme.primary },
             flatListContainer: { flex: 1, },
-            filterCatTxt: { fontSize: FontSize.Normal, color: theme.counterPrimary, },
+            filterCatTxt: { maxWidth: '100%', fontSize: FontSize.Normal, color: theme.counterPrimary, },
             noItemTxt: { fontSize: FontSize.Normal, color: theme.counterBackground, },
         })
     }, [theme, insets])
@@ -247,7 +266,7 @@ const TheDiversity = (
             <View style={style.filterView}>
                 <TouchableOpacity onPress={() => setIsShowFilterPopup(true)} style={style.filterTO}>
                     <MaterialCommunityIcons name={Icon.Bookmark} color={theme.counterPrimary} size={Size.Icon} />
-                    <Text style={style.filterCatTxt}>All</Text>
+                    <Text adjustsFontSizeToFit numberOfLines={1} style={style.filterCatTxt}>{titleFilter}</Text>
                 </TouchableOpacity>
             </View>
 
