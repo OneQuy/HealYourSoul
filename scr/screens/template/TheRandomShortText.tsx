@@ -136,10 +136,16 @@ const TheRandomShortText = ({
     // }, [text, theme])
 
     const onSwiped = useCallback((result: SwipeResult) => {
-        if (result.primaryDirectionIsHorizontalOrVertical && !result.primaryDirectionIsPositive) {
+        if (!result.primaryDirectionIsHorizontalOrVertical)
+            return
+
+        const isNext = !result.primaryDirectionIsPositive
+
+        if (diversityItem)
+            OnPressedNextItemDiversity(isNext, diversityItem)
+        else if (isNext)
             onPressRandom(true)
-        }
-    }, [onPressRandom])
+    }, [onPressRandom, diversityItem])
 
     const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(undefined, undefined, onSwiped)
 

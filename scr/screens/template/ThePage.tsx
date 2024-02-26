@@ -626,8 +626,13 @@ const ThePage = ({ category }: ThePageProps) => {
         if (!result.primaryDirectionIsHorizontalOrVertical)
             return
 
-        onPressNextPost(!result.primaryDirectionIsPositive, true)
-    }, [onPressNextPost])
+        const isNext = !result.primaryDirectionIsPositive
+
+        if (diversityItem)
+            OnPressedNextItemDiversity(isNext, diversityItem)
+        else
+            onPressNextPost(isNext, true)
+    }, [onPressNextPost, diversityItem])
 
     const onLongPressed = useCallback(() => {
         console.log('long pressed');

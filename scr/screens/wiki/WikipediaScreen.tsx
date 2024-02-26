@@ -199,10 +199,16 @@ const WikipediaScreen = () => {
     // }, [currentTitle, currentContent, currentLink, theme])
 
     const onSwiped = useCallback((result: SwipeResult) => {
-        if (result.primaryDirectionIsHorizontalOrVertical && !result.primaryDirectionIsPositive) {
+        if (!result.primaryDirectionIsHorizontalOrVertical)
+            return
+
+        const isNext = !result.primaryDirectionIsPositive
+
+        if (diversityItem)
+            OnPressedNextItemDiversity(isNext, diversityItem)
+        else if (isNext)
             onPressRandom(true)
-        }
-    }, [onPressRandom])
+    }, [onPressRandom, diversityItem])
 
     const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(undefined, undefined, onSwiped)
 
@@ -260,7 +266,7 @@ const WikipediaScreen = () => {
             const readFull = btns[1]
             btns[1] = btns[2]
             btns[2] = readFull
-         }
+        }
 
         // return 
 
