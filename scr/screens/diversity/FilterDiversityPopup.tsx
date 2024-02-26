@@ -28,6 +28,13 @@ const FilterDiversityPopup = ({
         return GetAllContentScreens(navigation)
     }, [])
 
+    const onPressedClose = useCallback((apply: boolean) => {
+        if (apply)
+            setFiltersParam(curFilters)
+        else
+            setFiltersParam(curFiltersParam)
+    }, [setFiltersParam, curFilters, curFiltersParam])
+
     const onPressedToggle = useCallback((item: ScreenName | undefined) => {
         if (item === undefined) { // press all
             if (curFilters) // to all
@@ -61,8 +68,8 @@ const FilterDiversityPopup = ({
         }
 
         return <TouchableOpacity onPress={() => onPressedToggle(item)} style={[styleSheet.itemTO]}>
-            <MaterialCommunityIcons name={icon} color={isAllItem ? theme.background : theme.counterBackground} size={Size.IconSmaller} />
-            <Text style={[styleSheet.text, { fontSize: FontSize.Normal, color: textColor, fontWeight: isAllItem ? FontWeight.Bold : 'normal' }]}>{isAllItem ? LocalText.all : item}</Text>
+            <MaterialCommunityIcons name={icon} color={theme.counterBackground} size={Size.IconSmaller} />
+            <Text style={[styleSheet.text, { fontSize: FontSize.Normal, color: textColor, fontWeight: isAllItem ? FontWeight.Bold : 'normal' }]}>{isAllItem ? LocalText.show_all : item}</Text>
             <MaterialCommunityIcons name={isSelecting ? Icon.CheckBox_Yes : Icon.CheckBox_No} color={theme.counterBackground} size={Size.Icon} />
         </TouchableOpacity>
     }, [curFilters, onPressedToggle, theme, listScreen])
@@ -70,7 +77,7 @@ const FilterDiversityPopup = ({
     const style = useMemo(() => {
         return StyleSheet.create({
             filterView: { justifyContent: 'center', alignItems: 'center', },
-            filterTO: { borderRadius: BorderRadius.BR8, justifyContent: 'center', alignItems: 'center', gap: Outline.GapHorizontal, padding: Outline.GapVertical, minWidth: widthPercentageToDP(20), flexDirection: 'row', backgroundColor: theme.primary },
+            filterTO: { borderRadius: BorderRadius.BR, justifyContent: 'center', alignItems: 'center', gap: Outline.GapHorizontal, padding: Outline.GapVertical, width: '80%', flexDirection: 'row', backgroundColor: theme.primary },
             filterCatTxt: { fontSize: FontSize.Normal, color: theme.counterPrimary, },
         })
     }, [theme])
@@ -93,7 +100,7 @@ const FilterDiversityPopup = ({
                 <View style={[{ flexDirection: 'row' }, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
                     <MaterialCommunityIcons name={Icon.ThreeDots} color={theme.background} size={Size.Icon} />
                     <Text style={[{ color: theme.counterBackground, }, styleSheet.name]}>{LocalText.filter}</Text>
-                    <TouchableOpacity onPress={() => setFilters(curFilters)}>
+                    <TouchableOpacity onPress={() => onPressedClose(false)}>
                         <MaterialCommunityIcons name={Icon.X} color={theme.counterBackground} size={Size.Icon} />
                     </TouchableOpacity>
                 </View>
@@ -123,7 +130,7 @@ const FilterDiversityPopup = ({
 
             </View>
 
-            <TouchableOpacity style={style.filterTO}>
+            <TouchableOpacity onPress={() => onPressedClose(true)} style={style.filterTO}>
                 <Text style={style.filterCatTxt}>OK</Text>
             </TouchableOpacity>
         </View>

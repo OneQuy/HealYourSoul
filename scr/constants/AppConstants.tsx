@@ -338,6 +338,7 @@ export const LocalText = {
   thank_you_premium: "Any purchase is greatly appreciated. Thank you 💛",
 
   diversity_no_items: "You have no item.",
+  show_all: "Show all",
 
   // ad_free: 'Ad-free',
   // no_ad_anymore: 'No ad during your subscription time.\n',

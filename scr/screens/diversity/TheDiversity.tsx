@@ -70,6 +70,11 @@ const TheDiversity = (
         return maxPage
     }, [allItems])
 
+    const setFilterAndClosePopup = useCallback((filters: undefined | ScreenName[]) => {
+        setCurFilters(filters)
+        setIsShowFilterPopup(false)
+    }, [])
+
     const onPressedTopPage = useCallback((isNext: boolean) => {
         if (!Array.isArray(allItems))
             return
@@ -193,7 +198,7 @@ const TheDiversity = (
             {/* filter button */}
 
             <View style={style.filterView}>
-                <TouchableOpacity style={style.filterTO}>
+                <TouchableOpacity onPress={() => setIsShowFilterPopup(true)} style={style.filterTO}>
                     <MaterialCommunityIcons name={Icon.Bookmark} color={theme.counterPrimary} size={Size.Icon} />
                     <Text style={style.filterCatTxt}>All</Text>
                 </TouchableOpacity>
@@ -224,7 +229,7 @@ const TheDiversity = (
             {/* filter popup */}
 
             {
-                isShowFilterPopup ? (<FilterDiversityPopup curFiltersParam={curFilters} setFiltersParam={setCurFilters} />) : undefined
+                isShowFilterPopup ? (<FilterDiversityPopup curFiltersParam={curFilters} setFiltersParam={setFilterAndClosePopup} />) : undefined
             }
         </View>
     )
