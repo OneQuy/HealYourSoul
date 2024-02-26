@@ -60,15 +60,33 @@ const TheDiversity = (
     const insets = useSafeAreaInsets()
     const [isShowFilterPopup, setIsShowFilterPopup] = useState(false)
 
+    const filterItems: DiversityItemType[] | undefined = useMemo(() => {
+        if (!allItems)
+            return undefined
+
+        return allItems.filter(item => {
+            if (!curFilters)// show all
+                return true
+            else {
+                const screenOfCat = CatToScreenName(item.cat)
+
+                if (!screenOfCat)
+                    return true
+                else
+                    return curFilters.includes(screenOfCat)
+            }
+        })
+    }, [allItems, curFilters])
+
     const maxPage = useMemo(() => {
-        if (!Array.isArray(allItems))
+        if (!Array.isArray(filterItems))
             return 0
 
         const totalItemsPerPage = numColumns * numRowPerPage
-        const maxPage = Math.ceil(allItems.length / totalItemsPerPage)
+        const maxPage = Math.ceil(filterItems.length / totalItemsPerPage)
 
         return maxPage
-    }, [allItems])
+    }, [filterItems])
 
     const setFilterAndClosePopup = useCallback((filters: undefined | ScreenName[]) => {
         setCurFilters(filters)
@@ -76,27 +94,27 @@ const TheDiversity = (
     }, [])
 
     const onPressedTopPage = useCallback((isNext: boolean) => {
-        if (!Array.isArray(allItems))
+        if (!Array.isArray(filterItems))
             return
 
         const idx = isNext ? maxPage - 1 : 0
 
         setCurPageIdx(idx)
         SetNumberAsync(StorageKey_CurPageFunSoundIdx, idx)
-    }, [allItems, maxPage])
+    }, [filterItems, maxPage])
 
     const onPressedMiddlePage = useCallback(() => {
-        if (!Array.isArray(allItems))
+        if (!Array.isArray(filterItems))
             return
 
         const idx = Math.floor(maxPage / 2)
 
         setCurPageIdx(idx)
         SetNumberAsync(StorageKey_CurPageFunSoundIdx, idx)
-    }, [allItems, maxPage])
+    }, [filterItems, maxPage])
 
     const onPressedNextPage = useCallback((isNext: boolean) => {
-        if (!Array.isArray(allItems))
+        if (!Array.isArray(filterItems))
             return
 
         let idx = curPageIdx
@@ -114,22 +132,22 @@ const TheDiversity = (
         SetNumberAsync(StorageKey_CurPageFunSoundIdx, idx)
 
         // track_PressNextPost(true, category, isNext)
-    }, [curPageIdx, allItems, maxPage])
+    }, [curPageIdx, filterItems, maxPage])
 
     const itemsToRender = useMemo(() => {
-        if (!Array.isArray(allItems))
+        if (!Array.isArray(filterItems))
             return []
 
         const totalItemsPerPage = numColumns * numRowPerPage
 
-        return allItems.slice(curPageIdx * totalItemsPerPage, curPageIdx * totalItemsPerPage + totalItemsPerPage)
-    }, [curPageIdx, allItems])
+        return filterItems.slice(curPageIdx * totalItemsPerPage, curPageIdx * totalItemsPerPage + totalItemsPerPage)
+    }, [curPageIdx, filterItems])
 
     onPressedNextItemDiversityGlobalFunc = useCallback((isNext: boolean, curItem: DiversityItemType) => {
-        if (!allItems)
+        if (!filterItems)
             return
 
-        const curIdx = allItems.findIndex(i => JSON.stringify(i) === JSON.stringify(curItem))
+        const curIdx = filterItems.findIndex(i => JSON.stringify(i) === JSON.stringify(curItem))
 
         if (curIdx < 0)
             return
@@ -137,7 +155,7 @@ const TheDiversity = (
         let goToIdx = curIdx
 
         if (isNext) {
-            if (curIdx < allItems.length - 1)
+            if (curIdx < filterItems.length - 1)
                 goToIdx = curIdx + 1
         }
         else {
@@ -149,8 +167,8 @@ const TheDiversity = (
         if (curIdx === goToIdx)
             return
 
-        OnPressedDeversityItem(navigation, allItems[goToIdx])
-    }, [allItems])
+        OnPressedDeversityItem(navigation, filterItems[goToIdx])
+    }, [filterItems])
 
     const style = useMemo(() => {
         return StyleSheet.create({
