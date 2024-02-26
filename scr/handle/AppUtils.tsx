@@ -616,6 +616,19 @@ export const GetIconOfScreen = (screen: ScreenName) => {
         return Icon.HeartBroken
 }
 
+export const GetAllContentScreens = (
+    navigation: DrawerNavigationProp<DrawerParamList> | NavigationProp<ReactNavigation.RootParamList>,
+    disableScreens: ScreenName[] | undefined,
+): ScreenName[] => {
+    const routes = navigation.getState().routes.filter(i => {
+        const name = i.name as ScreenName
+
+        return IsContentScreen(name) &&
+            (!disableScreens || !disableScreens.includes(name))
+    })
+
+    return routes.map(i => i.name)
+}
 export const IsContentScreen = (screen: ScreenName) => {
     const notContentScreen: ScreenName[] = [
         ScreenName.IAPPage,
