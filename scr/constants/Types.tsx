@@ -1,4 +1,4 @@
-import { Category } from "./AppConstants"
+import { Category, ScreenName } from "./AppConstants"
 
 export enum MediaType {
     Image = 0,
@@ -28,6 +28,8 @@ export type LatestVersionConfig = {
     force_update: boolean,
     release_note: string,
 }
+
+export type DiversityItemFilter = 'All' | ScreenName
 
 export type DiversityItemType = {
     cat: Category,

@@ -3,8 +3,8 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import { View, StyleSheet, FlatList, Text, TouchableOpacity } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { BorderRadius, FontSize, Icon, LocalText, Outline, Size, StorageKey_CurPageFunSoundIdx } from '../../constants/AppConstants'
-import { DiversityItemType } from '../../constants/Types'
+import { BorderRadius, FontSize, Icon, LocalText, Outline, ScreenName, Size, StorageKey_CurPageFunSoundIdx } from '../../constants/AppConstants'
+import { DiversityItemFilter, DiversityItemType } from '../../constants/Types'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { ThemeContext } from '../../constants/Colors'
 import { IsValuableArrayOrString } from '../../handle/UtilsTS'
@@ -17,6 +17,7 @@ import { DrawerParamList } from '../../navigation/Navigator';
 import PageNavigatorBar from '../fun_sound/PageNavigatorBar'
 import { CatToScreenName } from '../../handle/AppUtils'
 import { widthPercentageToDP } from 'react-native-responsive-screen';
+import FilterDiversityPopup from './FilterDiversityPopup';
 
 const numColumns = 4
 const numRowPerPage = 10
@@ -55,7 +56,9 @@ const TheDiversity = (
     const navigation = useNavigation();
     const theme = useContext(ThemeContext);
     const [curPageIdx, setCurPageIdx] = useState(0)
+    const [curFilter, setCurFilter] = useState<DiversityItemFilter>('All')
     const insets = useSafeAreaInsets()
+    const [isShowFilterPopup, setIsShowFilterPopup] = useState(true)
 
     const maxPage = useMemo(() => {
         if (!Array.isArray(allItems))
@@ -217,6 +220,12 @@ const TheDiversity = (
                 curPageIdx={curPageIdx}
                 maxPage={maxPage}
             />
+
+            {/* filter popup */}
+
+            {
+                isShowFilterPopup ? (<FilterDiversityPopup curFilter={curFilter} setFilter={setCurFilter} />) : undefined
+            }
         </View>
     )
 }

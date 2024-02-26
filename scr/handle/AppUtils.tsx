@@ -618,7 +618,7 @@ export const GetIconOfScreen = (screen: ScreenName) => {
 
 export const GetAllContentScreens = (
     navigation: DrawerNavigationProp<DrawerParamList> | NavigationProp<ReactNavigation.RootParamList>,
-    disableScreens: ScreenName[] | undefined,
+    disableScreens?: ScreenName[],
 ): ScreenName[] => {
     const routes = navigation.getState().routes.filter(i => {
         const name = i.name as ScreenName
