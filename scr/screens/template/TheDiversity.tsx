@@ -1,6 +1,9 @@
-import { View, StyleSheet, FlatList, Text } from 'react-native'
+// @ts-ignore
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
+import { View, StyleSheet, FlatList, Text, TouchableOpacity } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { FontSize, LocalText, Outline, StorageKey_CurPageFunSoundIdx } from '../../constants/AppConstants'
+import { BorderRadius, FontSize, Icon, LocalText, Outline, Size, StorageKey_CurPageFunSoundIdx } from '../../constants/AppConstants'
 import { DiversityItemType } from '../../constants/Types'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { ThemeContext } from '../../constants/Colors'
@@ -13,6 +16,7 @@ import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { DrawerParamList } from '../../navigation/Navigator';
 import PageNavigatorBar from '../fun_sound/PageNavigatorBar'
 import { CatToScreenName } from '../../handle/AppUtils'
+import { widthPercentageToDP } from 'react-native-responsive-screen';
 
 const numColumns = 4
 const numRowPerPage = 10
@@ -144,10 +148,10 @@ const TheDiversity = (
         return StyleSheet.create({
             masterView: { flex: 1, paddingBottom: insets.bottom, gap: Outline.GapHorizontal, },
             centerView: { flex: 1, justifyContent: 'center', alignItems: 'center' },
+            filterView: { justifyContent: 'center', alignItems: 'center', },
+            filterTO: { borderRadius: BorderRadius.BR8, justifyContent: 'center', alignItems: 'center', gap: Outline.GapHorizontal, padding: Outline.GapHorizontal, minWidth: widthPercentageToDP(20), flexDirection: 'row', backgroundColor: theme.primary },
             flatListContainer: { flex: 1, },
-            // pinContainer: { flexDirection: 'row' },
-            // naviContainer: { backgroundColor: theme.primary, borderRadius: BorderRadius.BR, marginBottom: insets.bottom + Outline.GapHorizontal, marginHorizontal: Outline.GapVertical, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' },
-            // naviTO: { padding: Outline.GapVertical_2, flex: 1, alignItems: 'center', justifyContent: 'center', },
+            filterCatTxt: { fontSize: FontSize.Normal, color: theme.counterPrimary, },
             noItemTxt: { fontSize: FontSize.Normal, color: theme.counterBackground, },
         })
     }, [theme, insets])
@@ -183,13 +187,23 @@ const TheDiversity = (
 
     return (
         <View style={style.masterView}>
+            {/* filter */}
+
+            <View style={style.filterView}>
+                <TouchableOpacity style={style.filterTO}>
+                    <MaterialCommunityIcons name={Icon.Bookmark} color={theme.counterPrimary} size={Size.Icon} />
+                    <Text style={style.filterCatTxt}>All</Text>
+                </TouchableOpacity>
+            </View>
+
             {/* scroll view */}
+
             <View style={style.flatListContainer}>
                 <FlatList
                     showsVerticalScrollIndicator={false}
                     data={itemsToRender}
                     numColumns={numColumns}
-                    keyExtractor={(item, index) => index.toString()}
+                    keyExtractor={(_, index) => index.toString()}
                     renderItem={renderItem}
                 />
             </View>
