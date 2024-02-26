@@ -29,8 +29,6 @@ export type LatestVersionConfig = {
     release_note: string,
 }
 
-export type DiversityItemFilter = 'All' | ScreenName
-
 export type DiversityItemType = {
     cat: Category,
     id?: string | number, // the page

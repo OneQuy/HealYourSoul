@@ -9,17 +9,16 @@ import { ColorNameToRgb } from '../../handle/UtilsTS';
 import { BorderRadius, ScreenName, FontSize, FontWeight, Icon, LocalText, Outline, Size } from '../../constants/AppConstants';
 import { GetAllContentScreens, GetIconOfScreen } from '../../handle/AppUtils';
 import { useNavigation } from '@react-navigation/native';
-import { DiversityItemFilter } from '../../constants/Types';
 
 const listPopupIconSize = Size.IconBig
 const listPopupGap = Outline.GapVertical
 
 const FilterDiversityPopup = ({
-    curFilter,
-    setFilter
+    curFilters,
+    setFilters
 }: {
-    curFilter: DiversityItemFilter,
-    setFilter: (filter: DiversityItemFilter) => void,
+    curFilters: undefined | ScreenName[],
+    setFilters: (filter: undefined | ScreenName[]) => void,
 }) => {
     const theme = useContext(ThemeContext)
     const navigation = useNavigation()
@@ -30,14 +29,14 @@ const FilterDiversityPopup = ({
     }, [])
 
     const renderItem = useCallback(({ item, index }: { item: ScreenName, index: number }) => {
-        const isSelecting = item === curFilter
+        const isSelecting = !curFilters || curFilters.includes(item)
         const textColor = isSelecting ? theme.counterPrimary : theme.counterBackground
 
         return <TouchableOpacity onPress={undefined} style={[{ backgroundColor: isSelecting ? theme.primary : undefined, borderRadius: isSelecting ? BorderRadius.BR8 : 0, borderWidth: isSelecting ? 1 : 0 }, styleSheet.itemTO]}>
-            <MaterialCommunityIcons name={GetIconOfScreen(item)} color={theme.background} size={Size.Icon} />
+            <MaterialCommunityIcons name={GetIconOfScreen(item)} color={theme.counterBackground} size={Size.Icon} />
             <Text style={[styleSheet.text, { color: textColor }]}>{item}</Text>
         </TouchableOpacity>
-    }, [curFilter, theme])
+    }, [curFilters, theme])
 
     useEffect(() => {
         (async () => {
@@ -57,7 +56,7 @@ const FilterDiversityPopup = ({
                 <View style={[{ flexDirection: 'row' }, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
                     <MaterialCommunityIcons name={Icon.ThreeDots} color={theme.background} size={Size.Icon} />
                     <Text style={[{ color: theme.counterBackground, }, styleSheet.name]}>{LocalText.best_short_films}</Text>
-                    <TouchableOpacity onPress={() => setFilter(curFilter)}>
+                    <TouchableOpacity onPress={() => setFilters(curFilters)}>
                         <MaterialCommunityIcons name={Icon.X} color={theme.counterBackground} size={Size.Icon} />
                     </TouchableOpacity>
                 </View>
