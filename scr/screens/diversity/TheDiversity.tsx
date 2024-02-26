@@ -81,6 +81,8 @@ const TheDiversity = (
         if (!arr || arr.length === 0)
             setCurFilters(undefined)
 
+        setCurPageIdx(0)
+
         return arr
     }, [allItems, curFilters])
 
@@ -223,7 +225,7 @@ const TheDiversity = (
             masterView: { flex: 1, paddingBottom: insets.bottom, gap: Outline.GapHorizontal, },
             centerView: { flex: 1, justifyContent: 'center', alignItems: 'center' },
             filterView: { marginHorizontal: Outline.GapVertical, justifyContent: 'center', alignItems: 'center', },
-            filterTO: { maxWidth: '100%', paddingHorizontal: 20,  borderRadius: BorderRadius.BR8, justifyContent: 'center', alignItems: 'center', gap: Outline.GapHorizontal, padding: Outline.GapHorizontal, minWidth: widthPercentageToDP(20), flexDirection: 'row', backgroundColor: theme.primary },
+            filterTO: { maxWidth: '100%', paddingHorizontal: 20, borderRadius: BorderRadius.BR8, justifyContent: 'center', alignItems: 'center', gap: Outline.GapHorizontal, padding: Outline.GapHorizontal, minWidth: widthPercentageToDP(20), flexDirection: 'row', backgroundColor: theme.primary },
             flatListContainer: { flex: 1, },
             filterCatTxt: { maxWidth: '100%', fontSize: FontSize.Normal, color: theme.counterPrimary, },
             noItemTxt: { fontSize: FontSize.Normal, color: theme.counterBackground, },
