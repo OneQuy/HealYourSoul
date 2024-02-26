@@ -29,6 +29,9 @@ const DiversityItem = ({
     const navigation = useNavigation<DrawerNavigationProp<DrawerParamList>>();
     const theme = useContext(ThemeContext);
     const [isHandling, setIsHandling] = useState(true)
+
+    // should add to resetAll()
+    
     const [imgUri, setImgUri] = useState('') // random image
     const [videoUri, setVideoUri] = useState('') // the page
     const [text, setText] = useState('') // short text
@@ -88,7 +91,17 @@ const DiversityItem = ({
         setWikipediaObject(item.wikipediaObject)
     }, [item])
 
+    const resetAll = useCallback(() => {
+        setImgUri('')
+        setVideoUri('')
+        setText('')
+        setWikipediaObject(undefined)
+        setError(NeedReloadReason.None)
+    }, [])
+
     const loadItemAsync = useCallback(async () => {
+        resetAll()
+
         setIsHandling(true)
 
         if (item.randomImage)
@@ -105,6 +118,7 @@ const DiversityItem = ({
         setIsHandling(false)
     }, [
         item,
+        resetAll,
         loadItem_ThePageAsync,
         loadItem_TextAsync,
         loadItem_WikiAsync,
@@ -120,7 +134,7 @@ const DiversityItem = ({
     }, []);
 
     const onPressed = useCallback(() => {
-       OnPressedDeversityItem(navigation, item)
+        OnPressedDeversityItem(navigation, item)
     }, [item])
 
     useEffect(() => {
