@@ -30,11 +30,12 @@ const FilterDiversityPopup = ({
 
     const renderItem = useCallback(({ item, index }: { item: ScreenName, index: number }) => {
         const isSelecting = !curFilters || curFilters.includes(item)
-        const textColor = isSelecting ? theme.counterPrimary : theme.counterBackground
+        const textColor = theme.counterBackground
 
-        return <TouchableOpacity onPress={undefined} style={[{ backgroundColor: isSelecting ? theme.primary : undefined, borderRadius: isSelecting ? BorderRadius.BR8 : 0, borderWidth: isSelecting ? 1 : 0 }, styleSheet.itemTO]}>
+        return <TouchableOpacity onPress={undefined} style={[styleSheet.itemTO]}>
             <MaterialCommunityIcons name={GetIconOfScreen(item)} color={theme.counterBackground} size={Size.Icon} />
             <Text style={[styleSheet.text, { color: textColor }]}>{item}</Text>
+            <MaterialCommunityIcons name={isSelecting ? Icon.CheckBox_Yes : Icon.CheckBox_No} color={theme.counterBackground} size={Size.Icon} />
         </TouchableOpacity>
     }, [curFilters, theme])
 
