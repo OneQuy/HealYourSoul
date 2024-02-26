@@ -2,10 +2,10 @@
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native'
-import React, { useCallback, useContext, useEffect, useMemo, useRef } from 'react'
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors';
 import { CommonStyles } from '../../constants/CommonConstants';
-import { ColorNameToRgb } from '../../handle/UtilsTS';
+import { AddOrRemoveItemInArray, ColorNameToRgb } from '../../handle/UtilsTS';
 import { BorderRadius, ScreenName, FontSize, FontWeight, Icon, LocalText, Outline, Size } from '../../constants/AppConstants';
 import { GetAllContentScreens, GetIconOfScreen } from '../../handle/AppUtils';
 import { useNavigation } from '@react-navigation/native';
@@ -13,19 +13,38 @@ import HairLine from '../components/HairLine';
 import { widthPercentageToDP } from 'react-native-responsive-screen';
 
 const FilterDiversityPopup = ({
-    curFilters,
-    setFilters
+    curFiltersParam,
+    setFiltersParam
 }: {
-    curFilters: undefined | ScreenName[],
-    setFilters: (filter: undefined | ScreenName[]) => void,
+    curFiltersParam: undefined | ScreenName[],
+    setFiltersParam: (filter: undefined | ScreenName[]) => void,
 }) => {
     const theme = useContext(ThemeContext)
     const navigation = useNavigation()
     const flatlistRef = useRef()
+    const [curFilters, setFilters] = useState<undefined | ScreenName[]>(curFiltersParam)
 
     const listScreen = useMemo(() => {
         return GetAllContentScreens(navigation)
     }, [])
+
+    const onPressedToggle = useCallback((item: ScreenName | undefined) => {
+        if (item === undefined) { // press all
+            if (curFilters) // to all
+                setFilters(undefined)
+            else // to empty
+                setFilters([])
+        }
+        else {
+            let arr = curFilters
+
+            if (!arr)
+                arr = []
+
+            AddOrRemoveItemInArray(arr, item)
+            setFilters([...arr])
+        }
+    }, [curFilters, listScreen])
 
     const renderItem = useCallback(({ item, index }: { item: ScreenName | undefined, index: number }) => {
         const isAllItem = item === undefined
@@ -41,12 +60,12 @@ const FilterDiversityPopup = ({
             isSelecting = !curFilters || (item && curFilters.includes(item))
         }
 
-        return <TouchableOpacity onPress={undefined} style={[styleSheet.itemTO]}>
+        return <TouchableOpacity onPress={() => onPressedToggle(item)} style={[styleSheet.itemTO]}>
             <MaterialCommunityIcons name={icon} color={isAllItem ? theme.background : theme.counterBackground} size={Size.IconSmaller} />
             <Text style={[styleSheet.text, { fontSize: FontSize.Normal, color: textColor, fontWeight: isAllItem ? FontWeight.Bold : 'normal' }]}>{isAllItem ? LocalText.all : item}</Text>
             <MaterialCommunityIcons name={isSelecting ? Icon.CheckBox_Yes : Icon.CheckBox_No} color={theme.counterBackground} size={Size.Icon} />
         </TouchableOpacity>
-    }, [curFilters, theme, listScreen])
+    }, [curFilters, onPressedToggle, theme, listScreen])
 
     const style = useMemo(() => {
         return StyleSheet.create({

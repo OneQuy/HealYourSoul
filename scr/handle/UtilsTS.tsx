@@ -331,6 +331,23 @@ export const IsNumType = (o: any) => {
 
 // array utils ---------------------------
 
+/**
+ * 
+ * @param arr 
+ * @param item 
+ * @returns true if have the item in arr after handling
+ */
+export function AddOrRemoveItemInArray<T>(arr: T[], item: T): boolean {
+    if (arr.includes(item)) {
+        ArrayRemove(arr, item)
+        return false
+    }
+    else {
+        arr.push(item)
+        return true
+    }
+}
+
 export function ShuffleArray<T>(arr: T[]): void {
     if (!Array.isArray(arr))
         return
@@ -338,6 +355,12 @@ export function ShuffleArray<T>(arr: T[]): void {
     arr.sort((_, __) => Math.random() > 0.5 ? 1 : -1)
 }
 
+/**
+ * 
+ * @param arr 
+ * @param value 
+ * @returns true if did remove item
+ */
 export function ArrayRemove<T>(arr: T[], value: T): boolean {
     const idx = arr.indexOf(value)
 

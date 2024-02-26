@@ -56,7 +56,7 @@ const TheDiversity = (
     const navigation = useNavigation();
     const theme = useContext(ThemeContext);
     const [curPageIdx, setCurPageIdx] = useState(0)
-    const [curFilters, setCurFilters] = useState<undefined | ScreenName[]>(undefined)
+    const [curFilters, setCurFilters] = useState<undefined | ScreenName[]>(undefined) // undefined means ALL
     const insets = useSafeAreaInsets()
     const [isShowFilterPopup, setIsShowFilterPopup] = useState(true)
 
@@ -224,7 +224,7 @@ const TheDiversity = (
             {/* filter popup */}
 
             {
-                isShowFilterPopup ? (<FilterDiversityPopup curFilters={curFilters} setFilters={setCurFilters} />) : undefined
+                isShowFilterPopup ? (<FilterDiversityPopup curFiltersParam={curFilters} setFiltersParam={setCurFilters} />) : undefined
             }
         </View>
     )
