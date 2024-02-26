@@ -10,6 +10,7 @@ import { BorderRadius, ScreenName, FontSize, FontWeight, Icon, LocalText, Outlin
 import { GetAllContentScreens, GetIconOfScreen } from '../../handle/AppUtils';
 import { useNavigation } from '@react-navigation/native';
 import HairLine from '../components/HairLine';
+import { widthPercentageToDP } from 'react-native-responsive-screen';
 
 const FilterDiversityPopup = ({
     curFilters,
@@ -41,11 +42,19 @@ const FilterDiversityPopup = ({
         }
 
         return <TouchableOpacity onPress={undefined} style={[styleSheet.itemTO]}>
-            <MaterialCommunityIcons name={icon} color={isAllItem ? theme.background : theme.counterBackground} size={Size.Icon} />
+            <MaterialCommunityIcons name={icon} color={isAllItem ? theme.background : theme.counterBackground} size={Size.IconSmaller} />
             <Text style={[styleSheet.text, { fontSize: FontSize.Normal, color: textColor, fontWeight: isAllItem ? FontWeight.Bold : 'normal' }]}>{isAllItem ? LocalText.all : item}</Text>
             <MaterialCommunityIcons name={isSelecting ? Icon.CheckBox_Yes : Icon.CheckBox_No} color={theme.counterBackground} size={Size.Icon} />
         </TouchableOpacity>
     }, [curFilters, theme, listScreen])
+
+    const style = useMemo(() => {
+        return StyleSheet.create({
+            filterView: { justifyContent: 'center', alignItems: 'center', },
+            filterTO: { borderRadius: BorderRadius.BR8, justifyContent: 'center', alignItems: 'center', gap: Outline.GapHorizontal, padding: Outline.GapVertical, minWidth: widthPercentageToDP(20), flexDirection: 'row', backgroundColor: theme.primary },
+            filterCatTxt: { fontSize: FontSize.Normal, color: theme.counterPrimary, },
+        })
+    }, [theme])
 
     useEffect(() => {
         (async () => {
@@ -90,8 +99,14 @@ const FilterDiversityPopup = ({
                     keyExtractor={(item) => item.toString()}
                     contentContainerStyle={styleSheet.flatlist}
                     renderItem={renderItem}
+                    showsVerticalScrollIndicator={false}
                 />
+
             </View>
+
+            <TouchableOpacity style={style.filterTO}>
+                <Text style={style.filterCatTxt}>OK</Text>
+            </TouchableOpacity>
         </View>
     )
 }
@@ -99,11 +114,10 @@ const FilterDiversityPopup = ({
 export default FilterDiversityPopup
 
 const styleSheet = StyleSheet.create({
-    masterView: { backgroundColor: ColorNameToRgb('black', 0.8), width: '100%', height: '100%', position: 'absolute' },
+    masterView: { gap: Outline.GapHorizontal, backgroundColor: ColorNameToRgb('black', 0.8), width: '100%', height: '100%', position: 'absolute' },
     bgView: { gap: Outline.GapVertical, padding: Outline.GapVertical, width: '80%', height: '70%', borderRadius: BorderRadius.BR },
     itemTO: { flexDirection: 'row', alignItems: 'center', gap: Outline.GapHorizontal },
-    image: { width: Size.Icon, height: Size.Icon, borderRadius: BorderRadius.BR8, overflow: 'hidden' },
-    flatlist: { gap: Outline.GapHorizontal },
+    flatlist: { gap: Outline.GapVertical },
     text: { fontSize: FontSize.Small_L, flex: 1 },
     name: { flex: 1, textAlign: 'center', fontWeight: FontWeight.B600, fontSize: FontSize.Big },
 })
