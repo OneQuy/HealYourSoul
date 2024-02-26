@@ -5,6 +5,7 @@ import { useCallback } from "react";
 export default function useDrawerMenuItemUtils(
     routeName: string,
     masterProps: DrawerContentComponentProps,
+    params?: object,
 ): readonly [isFocused: boolean, onPress: () => void] {
     const focusingRoute = masterProps.state.routes[masterProps.state.index];
     const route = masterProps.state.routes.find(r => r.name === routeName)
@@ -25,11 +26,15 @@ export default function useDrawerMenuItemUtils(
             navigation.dispatch({
                 ...(isFocused
                     ? DrawerActions.closeDrawer()
-                    : CommonActions.navigate({ name: route.name, merge: true })),
+                    : CommonActions.navigate({
+                        name: route.name,
+                        merge: true,
+                        params
+                    })),
                 target: masterProps.state.key,
             })
         }
-    }, [masterProps])
+    }, [masterProps, params])
 
     return [isFocused, onPress] as const
 }

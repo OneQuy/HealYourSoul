@@ -53,13 +53,15 @@ type Props = {
     setHeight: (value: number) => void,
 }
 
+const defaultParam = { item: undefined }
+
 const DrawerSingleItem = ({
     route,
     masterProps,
     setHeight,
 }: Props) => {
     const theme = useContext(ThemeContext);
-    const [isFocused, onPress] = useDrawerMenuItemUtils(route.name, masterProps)
+    const [isFocused, onPress] = useDrawerMenuItemUtils(route.name, masterProps, defaultParam)
     const [showNewBadge, setShowNewBadge] = useState(false)
     const checkedInScreens = useAppSelector((state) => state.userData.checkedInScreens)
     const drawerStatus = useDrawerStatus()
