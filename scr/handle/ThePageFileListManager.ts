@@ -46,7 +46,7 @@ export async function CheckAndGetFileListAsync(cat: Category): Promise<FileList 
         funcPrevent = funcPreventByCat[1]
     }
     else {
-        funcPrevent = new PreventCallDuplicateFunctionHandler(async () => await CheckAndGetFileListAsync_Core(cat))
+        funcPrevent = new PreventCallDuplicateFunctionHandler(async () => await CheckAndGetFileListAsync_Core(cat), 200)
 
         preventCallDuplicateFunctionHandlers.push([
             cat,
