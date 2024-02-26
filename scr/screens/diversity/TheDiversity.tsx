@@ -18,7 +18,6 @@ import PageNavigatorBar from '../fun_sound/PageNavigatorBar'
 import { CatToScreenName } from '../../handle/AppUtils'
 import { widthPercentageToDP } from 'react-native-responsive-screen';
 import FilterDiversityPopup from './FilterDiversityPopup';
-import { ArrayGroupElements } from '../../handle/Utils';
 
 const numColumns = 4
 const numRowPerPage = 4
