@@ -398,6 +398,7 @@ export const LocalText = {
 
   popup_title_error: 'Ooops!',
   popup_content_error: "Uh-oh! Something went wrong. We're fixing it. Thanks for your patience!",
+  popup_content_error_empty: "The list is empty. Please pick at least 1 item!",
 
   popup_content_sent_feedback: 'Thank you for taking the time to provide feedback! Your input is valuable and helps us improve.',
   popup_content_sent_feedback_error_hour: 'You just sent feedback recently. Please send another one at least in the next hour. Thank you!',

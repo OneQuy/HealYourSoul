@@ -1,7 +1,7 @@
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors';
 import { CommonStyles } from '../../constants/CommonConstants';
@@ -25,8 +25,13 @@ const FilterDiversityPopup = ({
     const [curFilters, setFilters] = useState<undefined | ScreenName[]>(curFiltersParam?.slice(0))
 
     const onPressedClose = useCallback((apply: boolean) => {
-        if (apply)
-            setFiltersParam(curFilters)
+        if (apply) {
+            if (curFilters && curFilters.length === 0) {
+                Alert.alert(LocalText.popup_title_error, LocalText.popup_content_error_empty)
+            }
+            else
+                setFiltersParam(curFilters)
+        }
         else
             setFiltersParam(curFiltersParam)
     }, [setFiltersParam, curFiltersParam, curFilters])
