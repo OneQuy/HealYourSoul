@@ -13,19 +13,16 @@ import HairLine from '../components/HairLine';
 
 const FilterDiversityPopup = ({
     curFiltersParam,
-    setFiltersParam
+    setFiltersParam,
+    listScreen,
 }: {
     curFiltersParam: undefined | ScreenName[],
     setFiltersParam: (filter: undefined | ScreenName[]) => void,
+    listScreen: ScreenName[]
 }) => {
     const theme = useContext(ThemeContext)
-    const navigation = useNavigation()
     const flatlistRef = useRef()
     const [curFilters, setFilters] = useState<undefined | ScreenName[]>(curFiltersParam?.slice(0))
-
-    const listScreen = useMemo(() => {
-        return GetAllContentScreens(navigation)
-    }, [])
 
     const onPressedClose = useCallback((apply: boolean) => {
         if (apply)

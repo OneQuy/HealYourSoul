@@ -3,7 +3,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import { View, StyleSheet, FlatList, Text, TouchableOpacity } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { BorderRadius, FontSize, Icon, LocalText, Outline, ScreenName, Size, StorageKey_CurPageFunSoundIdx } from '../../constants/AppConstants'
+import { BorderRadius, Category, FontSize, Icon, LocalText, Outline, ScreenName, Size, StorageKey_CurPageFunSoundIdx } from '../../constants/AppConstants'
 import { DiversityItemType } from '../../constants/Types'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { ThemeContext } from '../../constants/Colors'
@@ -18,6 +18,7 @@ import PageNavigatorBar from '../fun_sound/PageNavigatorBar'
 import { CatToScreenName } from '../../handle/AppUtils'
 import { widthPercentageToDP } from 'react-native-responsive-screen';
 import FilterDiversityPopup from './FilterDiversityPopup';
+import { ArrayGroupElements } from '../../handle/Utils';
 
 const numColumns = 4
 const numRowPerPage = 4
@@ -61,10 +62,10 @@ const TheDiversity = (
     const [isShowFilterPopup, setIsShowFilterPopup] = useState(false)
 
     const filterItems: DiversityItemType[] | undefined = useMemo(() => {
-        if (!allItems)
+        if (!allItems || !IsValuableArrayOrString(allItems))
             return undefined
 
-        return allItems.filter(item => {
+        const arr = allItems.filter(item => {
             if (!curFilters)// show all
                 return true
             else {
@@ -76,7 +77,36 @@ const TheDiversity = (
                     return curFilters.includes(screenOfCat)
             }
         })
+
+        if (!arr || arr.length === 0)
+            setCurFilters(undefined)
+
+        return arr
     }, [allItems, curFilters])
+
+    const allScreensOfThisDivesity: ScreenName[] | undefined = useMemo(() => {
+        if (!allItems)
+            return undefined
+
+        const arr: Category[] = []
+
+        for (let i = 0; i < allItems.length; i++) {
+            if (!arr.includes(allItems[i].cat))
+                arr.push(allItems[i].cat)
+        }
+
+        const screenNames: ScreenName[] = []
+
+        for (let i = 0; i < arr.length; i++) {
+            const screen = CatToScreenName(arr[i])
+
+            if (screen)
+                screenNames.push(screen)
+        }
+
+        return screenNames
+    }, [allItems])
+    console.log(allScreensOfThisDivesity);
 
     const maxPage = useMemo(() => {
         if (!Array.isArray(filterItems))
@@ -199,7 +229,7 @@ const TheDiversity = (
 
     // render list is empty
 
-    if (!IsValuableArrayOrString(itemsToRender)) {
+    if (!IsValuableArrayOrString(itemsToRender) || !allScreensOfThisDivesity) {
         return (
             <View style={style.masterView}>
                 <View style={style.centerView}>
@@ -247,7 +277,7 @@ const TheDiversity = (
             {/* filter popup */}
 
             {
-                isShowFilterPopup ? (<FilterDiversityPopup curFiltersParam={curFilters} setFiltersParam={setFilterAndClosePopup} />) : undefined
+                isShowFilterPopup ? (<FilterDiversityPopup listScreen={allScreensOfThisDivesity} curFiltersParam={curFilters} setFiltersParam={setFilterAndClosePopup} />) : undefined
             }
         </View>
     )
