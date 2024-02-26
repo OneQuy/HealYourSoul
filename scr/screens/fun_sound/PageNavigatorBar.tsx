@@ -25,9 +25,10 @@ const PageNavigatorBar = ({
 
   const style = useMemo(() => {
     return StyleSheet.create({
-      naviContainer: { backgroundColor: theme.primary, borderRadius: BorderRadius.BR, marginBottom: insets.bottom + Outline.GapHorizontal, marginHorizontal: Outline.GapVertical, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' },
+      naviContainer: { backgroundColor: theme.primary, borderRadius: BorderRadius.BR, marginBottom: insets.bottom + Outline.GapHorizontal, marginHorizontal: Outline.GapVertical, flexDirection: 'row', alignItems: 'center' },
       naviTO: { padding: Outline.GapVertical_2, flex: 1, alignItems: 'center', justifyContent: 'center', },
-      pageTxt: { fontSize: FontSize.Normal, color: theme.counterPrimary, },
+      pageView: { flex: 1,  height: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' },
+      pageTxt: { fontSize: FontSize.Normal, color: theme.counterPrimary, verticalAlign: 'middle'},
     })
   }, [theme, insets])
 
@@ -41,7 +42,9 @@ const PageNavigatorBar = ({
       <TouchableOpacity onPress={() => onPressedNextPage(false)} style={style.naviTO}>
         <MaterialCommunityIcons name={Icon.Left} color={theme.counterPrimary} size={Size.Icon} />
       </TouchableOpacity>
-      <Text onPress={onPressedMiddlePage} style={style.pageTxt}>{curPageIdx + 1}/{maxPage}</Text>
+      <View style={style.pageView}>
+        <Text onPress={onPressedMiddlePage} style={style.pageTxt}>{curPageIdx + 1}/{maxPage}</Text>
+      </View>
       <TouchableOpacity onPress={() => onPressedNextPage(true)} style={style.naviTO}>
         <MaterialCommunityIcons name={Icon.Right} color={theme.counterPrimary} size={Size.Icon} />
       </TouchableOpacity>
