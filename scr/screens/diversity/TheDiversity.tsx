@@ -190,7 +190,7 @@ const TheDiversity = (
 
     return (
         <View style={style.masterView}>
-            {/* filter */}
+            {/* filter button */}
 
             <View style={style.filterView}>
                 <TouchableOpacity style={style.filterTO}>

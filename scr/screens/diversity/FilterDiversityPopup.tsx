@@ -11,9 +11,6 @@ import { GetAllContentScreens, GetIconOfScreen } from '../../handle/AppUtils';
 import { useNavigation } from '@react-navigation/native';
 import HairLine from '../components/HairLine';
 
-const listPopupIconSize = Size.IconBig
-const listPopupGap = Outline.GapVertical
-
 const FilterDiversityPopup = ({
     curFilters,
     setFilters
@@ -45,7 +42,7 @@ const FilterDiversityPopup = ({
 
         return <TouchableOpacity onPress={undefined} style={[styleSheet.itemTO]}>
             <MaterialCommunityIcons name={icon} color={isAllItem ? theme.background : theme.counterBackground} size={Size.Icon} />
-            <Text style={[styleSheet.text, { color: textColor, fontWeight: isAllItem ? FontWeight.Bold : 'normal' }]}>{isAllItem ? LocalText.all : item}</Text>
+            <Text style={[styleSheet.text, { fontSize: FontSize.Normal, color: textColor, fontWeight: isAllItem ? FontWeight.Bold : 'normal' }]}>{isAllItem ? LocalText.all : item}</Text>
             <MaterialCommunityIcons name={isSelecting ? Icon.CheckBox_Yes : Icon.CheckBox_No} color={theme.counterBackground} size={Size.Icon} />
         </TouchableOpacity>
     }, [curFilters, theme, listScreen])
@@ -93,9 +90,6 @@ const FilterDiversityPopup = ({
                     keyExtractor={(item) => item.toString()}
                     contentContainerStyle={styleSheet.flatlist}
                     renderItem={renderItem}
-                    getItemLayout={(_, index) => {
-                        return { length: listPopupIconSize, offset: listPopupIconSize * index + listPopupGap * (index) - listPopupIconSize * 3, index }
-                    }}
                 />
             </View>
         </View>
@@ -108,8 +102,8 @@ const styleSheet = StyleSheet.create({
     masterView: { backgroundColor: ColorNameToRgb('black', 0.8), width: '100%', height: '100%', position: 'absolute' },
     bgView: { gap: Outline.GapVertical, padding: Outline.GapVertical, width: '80%', height: '70%', borderRadius: BorderRadius.BR },
     itemTO: { flexDirection: 'row', alignItems: 'center', gap: Outline.GapHorizontal },
-    image: { width: listPopupIconSize, height: listPopupIconSize, borderRadius: BorderRadius.BR8, overflow: 'hidden' },
-    flatlist: { gap: listPopupGap },
+    image: { width: Size.Icon, height: Size.Icon, borderRadius: BorderRadius.BR8, overflow: 'hidden' },
+    flatlist: { gap: Outline.GapHorizontal },
     text: { fontSize: FontSize.Small_L, flex: 1 },
     name: { flex: 1, textAlign: 'center', fontWeight: FontWeight.B600, fontSize: FontSize.Big },
 })

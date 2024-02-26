@@ -53,7 +53,7 @@ export const UpdateHeaderXButton = (
         if (IsDev())
             title += ' (Saved)'
         else
-            title = LocalText.saved
+            title = LocalText.saved_2
     }
 
     navigation.setOptions({
