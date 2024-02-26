@@ -47,7 +47,7 @@ const FilterDiversityPopup = ({
             let arr = curFilters
 
             if (!arr)
-                arr = []
+                arr = listScreen.slice()
 
             AddOrRemoveItemInArray(arr, item)
             setFilters([...arr])
