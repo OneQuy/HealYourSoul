@@ -306,7 +306,3 @@ const TheDiversity = (
 }
 
 export default TheDiversity
-
-export const ClearDisversityModeCurrentScreen = (navigation: DrawerNavigationProp<DrawerParamList>) => {
-    navigation.setParams({ item: undefined })
-}
