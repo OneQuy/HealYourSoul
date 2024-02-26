@@ -227,7 +227,7 @@ const TheDiversity = (
             filterView: { marginHorizontal: Outline.GapVertical, justifyContent: 'center', alignItems: 'center', },
             filterTO: { maxWidth: '100%', paddingHorizontal: 20, borderRadius: BorderRadius.BR8, justifyContent: 'center', alignItems: 'center', gap: Outline.GapHorizontal, padding: Outline.GapHorizontal, minWidth: widthPercentageToDP(20), flexDirection: 'row', backgroundColor: theme.primary },
             flatListContainer: { flex: 1, },
-            filterCatTxt: { maxWidth: '100%', fontSize: FontSize.Normal, color: theme.counterPrimary, },
+            filterCatTxt: { maxWidth: '100%', fontSize: FontSize.Small_L, color: theme.counterPrimary, },
             noItemTxt: { fontSize: FontSize.Normal, color: theme.counterBackground, },
         })
     }, [theme, insets])
@@ -267,7 +267,7 @@ const TheDiversity = (
 
             <View style={style.filterView}>
                 <TouchableOpacity onPress={() => setIsShowFilterPopup(true)} style={style.filterTO}>
-                    <MaterialCommunityIcons name={Icon.Bookmark} color={theme.counterPrimary} size={Size.Icon} />
+                    <MaterialCommunityIcons name={Icon.Bookmark} color={theme.counterPrimary} size={Size.IconSmaller} />
                     <Text adjustsFontSizeToFit numberOfLines={1} style={style.filterCatTxt}>{titleFilter}</Text>
                 </TouchableOpacity>
             </View>
@@ -286,13 +286,16 @@ const TheDiversity = (
 
             {/* navigation */}
 
-            <PageNavigatorBar
-                onPressedMiddlePage={onPressedMiddlePage}
-                onPressedNextPage={onPressedNextPage}
-                onPressedTopPage={onPressedTopPage}
-                curPageIdx={curPageIdx}
-                maxPage={maxPage}
-            />
+            {
+                maxPage > 1 &&
+                <PageNavigatorBar
+                    onPressedMiddlePage={onPressedMiddlePage}
+                    onPressedNextPage={onPressedNextPage}
+                    onPressedTopPage={onPressedTopPage}
+                    curPageIdx={curPageIdx}
+                    maxPage={maxPage}
+                />
+            }
 
             {/* filter popup */}
 
