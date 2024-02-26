@@ -29,7 +29,7 @@ import BottomBar, { BottomBarItem } from '../others/BottomBar';
 import HeaderRightButtons from '../components/HeaderRightButtons';
 import useIntroduceCat from '../components/IntroduceCat';
 import useDiversityItem from '../../hooks/useDiversityItem';
-import { OnPressedNextItemDiversity } from '../template/TheDiversity';
+import { OnPressedNextItemDiversity } from '../diversity/TheDiversity';
 
 const category = Category.Wikipedia
 

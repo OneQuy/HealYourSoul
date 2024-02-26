@@ -1,5 +1,5 @@
 import React from 'react'
-import TheDiversity from '../template/TheDiversity'
+import TheDiversity from '../diversity/TheDiversity'
 import { useAppSelector } from '../../redux/Store'
 
 const SavedScreen = () => {

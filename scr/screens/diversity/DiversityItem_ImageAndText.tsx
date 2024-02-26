@@ -1,6 +1,6 @@
 import { StyleSheet, Text } from 'react-native'
 import React, { useContext, useMemo } from 'react'
-import ImageBackgroundWithLoading from './ImageBackgroundWithLoading'
+import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading'
 import { ThemeContext } from '../../constants/Colors'
 import { FontSize, Outline } from '../../constants/AppConstants'
 import { HexToRgb } from '../../handle/UtilsTS'

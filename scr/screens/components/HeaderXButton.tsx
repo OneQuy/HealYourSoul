@@ -8,7 +8,7 @@ import { ThemeContext } from '../../constants/Colors';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { DrawerParamList } from '../../navigation/Navigator';
-import { ClearDisversityModeCurrentScreen } from '../template/TheDiversity';
+import { ClearDisversityModeCurrentScreen } from '../diversity/TheDiversity';
 import { IsDev } from '../../handle/IsDev';
 
 const HeaderXButton = () => {

@@ -11,7 +11,7 @@ import { IsValuableArrayOrString } from '../../handle/UtilsTS'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { SetNumberAsync } from '../../handle/AsyncStorageUtils';
 import HeaderRightButtons from '../components/HeaderRightButtons';
-import DiversityItem from '../components/DiversityItem';
+import DiversityItem from './DiversityItem';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { DrawerParamList } from '../../navigation/Navigator';
 import PageNavigatorBar from '../fun_sound/PageNavigatorBar'

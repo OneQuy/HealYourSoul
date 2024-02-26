@@ -38,7 +38,7 @@ import useIntroduceCat from '../components/IntroduceCat';
 import { CheckAndGetFileListAsync } from '../../handle/ThePageFileListManager';
 import { DrawerParamList } from '../../navigation/Navigator';
 import useDiversityItem from '../../hooks/useDiversityItem';
-import { OnPressedNextItemDiversity } from './TheDiversity';
+import { OnPressedNextItemDiversity } from '../diversity/TheDiversity';
 
 const videoNumbSize = 10;
 const videoTouchEffectRadius = 100;

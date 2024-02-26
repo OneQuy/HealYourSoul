@@ -5,11 +5,11 @@ import { View, StyleSheet, TouchableOpacity, Text } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { DiversityItemType, MediaType } from '../../constants/Types'
 import { ThemeContext } from '../../constants/Colors'
-import ImageBackgroundWithLoading from './ImageBackgroundWithLoading'
+import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading'
 import { CheckLocalFileAndGetURIAsync } from '../../handle/AppUtils'
 import { CheckAndGetFileListAsync } from '../../handle/ThePageFileListManager'
 import { FontSize, NeedReloadReason, Outline } from '../../constants/AppConstants'
-import LoadingOrError from './LoadingOrError'
+import LoadingOrError from '../components/LoadingOrError'
 import { useNavigation } from '@react-navigation/native';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { DrawerParamList } from '../../navigation/Navigator';
@@ -17,7 +17,7 @@ import { widthPercentageToDP } from 'react-native-responsive-screen';
 import { GetThumbUriFromWikipediaObject, GetTitleFromWikipediaObject } from '../wiki/WikipediaScreen';
 import DiversityItem_ImageAndText from './DiversityItem_ImageAndText';
 import { NetLord } from '../../handle/NetLord';
-import { OnPressedDeversityItem } from '../template/TheDiversity';
+import { OnPressedDeversityItem } from './TheDiversity';
 
 type DiversityItemProps = {
     item: DiversityItemType,

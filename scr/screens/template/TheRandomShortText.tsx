@@ -19,7 +19,7 @@ import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
 import HeaderRightButtons from '../components/HeaderRightButtons';
 import useDiversityItem from '../../hooks/useDiversityItem';
-import { OnPressedNextItemDiversity } from './TheDiversity';
+import { OnPressedNextItemDiversity } from '../diversity/TheDiversity';
 
 interface TheRandomShortTextProps {
     category: Category,
