@@ -21,6 +21,7 @@ import FilterDiversityPopup from './FilterDiversityPopup';
 import { iapBg_1 } from '../IAP/IAPPage';
 import { CommonStyles } from '../../constants/CommonConstants';
 import { GoToPremiumScreen } from '../components/HeaderXButton';
+import { usePremium } from '../../hooks/usePremium';
 
 export const numColumnsDiversity = 3
 
@@ -65,8 +66,8 @@ const TheDiversity = (
     const theme = useContext(ThemeContext);
     const [curPageIdx, setCurPageIdx] = useState(0)
     const [curFilters, setCurFilters] = useState<undefined | ScreenName[]>(undefined) // undefined means ALL
-    const insets = useSafeAreaInsets()
     const [isShowFilterPopup, setIsShowFilterPopup] = useState(false)
+    const { isPremium } = usePremium()
 
     const filterItems: DiversityItemType[] | undefined = useMemo(() => {
         if (!allItems || !IsValuableArrayOrString(allItems))
@@ -229,9 +230,9 @@ const TheDiversity = (
 
     const style = useMemo(() => {
         return StyleSheet.create({
-            masterView: { flex: 1, paddingBottom: insets.bottom, gap: Outline.GapHorizontal, },
+            masterView: { flex: 1, paddingBottom: Outline.GapHorizontal, gap: Outline.GapHorizontal, },
             centerView: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-            plsSubView: { gap: Outline.GapHorizontal, margin: Outline.GapVertical_2, padding: Outline.GapVertical, borderRadius: BorderRadius.BR, borderWidth: StyleSheet.hairlineWidth, borderColor: theme.counterBackground, justifyContent: 'center', alignItems: 'center' },
+            plsSubView: { gap: Outline.GapHorizontal, margin: Outline.GapVertical, padding: Outline.GapVertical, borderRadius: BorderRadius.BR, borderWidth: StyleSheet.hairlineWidth, borderColor: theme.counterBackground, justifyContent: 'center', alignItems: 'center' },
             filterView: { marginHorizontal: Outline.GapVertical, justifyContent: 'center', alignItems: 'center', },
             premiumIB: { padding: Outline.GapVertical, minWidth: widthPercentageToDP(30), borderRadius: BorderRadius.BR, overflow: 'hidden', justifyContent: 'center', alignItems: 'center', },
             filterTO: { maxWidth: '100%', paddingHorizontal: 20, borderRadius: BorderRadius.BR8, justifyContent: 'center', alignItems: 'center', gap: Outline.GapHorizontal, padding: Outline.GapHorizontal, minWidth: widthPercentageToDP(20), flexDirection: 'row', backgroundColor: theme.primary },
@@ -241,7 +242,7 @@ const TheDiversity = (
             subscribeTxt: { textAlign: 'center', fontSize: FontSize.Small_L, color: theme.counterBackground, },
             premiumText: { fontSize: FontSize.Small_L, color: 'black' },
         })
-    }, [theme, insets])
+    }, [theme])
 
     const onPressedUpgrade = useCallback(() => {
         GoToPremiumScreen(navigation)
@@ -253,9 +254,12 @@ const TheDiversity = (
     }, [])
 
     const renderPleaseSubscribe = useCallback(() => {
+        if (isPremium)
+            return undefined
+
         return (
             <View style={style.plsSubView}>
-                <Text style={style.subscribeTxt}>{LocalText.limit_saved_desc}</Text>
+                <Text adjustsFontSizeToFit numberOfLines={2} style={style.subscribeTxt}>{LocalText.limit_saved_desc}</Text>
                 <TouchableOpacity onPress={onPressedUpgrade}>
                     <ImageBackground resizeMode="cover" source={iapBg_1} style={style.premiumIB}>
                         <Text numberOfLines={1} adjustsFontSizeToFit style={style.premiumText}>{LocalText.upgrade}</Text>
@@ -263,7 +267,7 @@ const TheDiversity = (
                 </TouchableOpacity>
             </View>
         )
-    }, [onPressedUpgrade, style])
+    }, [onPressedUpgrade, style, isPremium])
 
     // init
 
@@ -317,6 +321,8 @@ const TheDiversity = (
                 />
             </View>
 
+            {/* please subscribe */}
+
             {
                 itemsToRender.length <= numColumnsDiversity * 2 &&
                 renderPleaseSubscribe()
@@ -325,7 +331,7 @@ const TheDiversity = (
             {/* navigation */}
 
             {
-                maxPage > 1 &&
+                // maxPage > 1 &&
                 <PageNavigatorBar
                     onPressedMiddlePage={onPressedMiddlePage}
                     onPressedNextPage={onPressedNextPage}
