@@ -342,6 +342,8 @@ export const LocalText = {
   diversity_empty_saved: "You have no item.\n\nSimply tap the Save icon on the header of the post you'd like to watch later, and it will be saved here for your convenience.",
   limit_saved_desc: "In the free version, you can save up to ## posts. Upgrade to a subscription to enjoy unlimited savings.",
   show_all: "Show all",
+  full_saved: "Upgrade for Unlimited Saves",
+  full_saved_desc: "You've reached the limit of ## items, which is the maximum quantity allowed in the free version. Please subscribe to save an unlimited number of items.",
 
   // ad_free: 'Ad-free',
   // no_ad_anymore: 'No ad during your subscription time.\n',
