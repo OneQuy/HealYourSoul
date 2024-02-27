@@ -16,6 +16,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { prefixFbTrackPath } from '../../handle/tracking/Tracking';
 import { FirebaseDatabase_SetValueAsync } from '../../firebase/FirebaseDatabase';
+import { usePremium } from '../../hooks/usePremium';
 
 export const iapBg_1 = require('../../../assets/images/btn_bg_1.jpeg')
 
@@ -68,11 +69,11 @@ const reasonItems = [
 
 const IAPPage = () => {
   const [fetchedProducts, setFetchedProducts] = useState<Product[]>([])
-  const subscribedData = useAppSelector((state: RootState) => state.userData.subscribedData);
   const dispatch = useAppDispatch();
   const [processingId, setProcessingId] = useState('')
   const theme = useContext(ThemeContext)
   const insets = useSafeAreaInsets()
+  const { isPremium, subscribedData } = usePremium()
 
   const onPressed_Buy = async (id: string) => {
     track_SimpleWithParam('click_iap', id)
@@ -128,7 +129,7 @@ const IAPPage = () => {
     let resInitIAP: Awaited<ReturnType<typeof InitIAPAsync>> = undefined
 
     const hanldeAsync = async () => {
-      if (subscribedData)
+      if (isPremium)
         return
 
       // init IAP
@@ -138,8 +139,8 @@ const IAPPage = () => {
         async (s: string) => AsyncStorage.setItem(StorageKey_CachedIAP, s),
         async () => AsyncStorage.getItem(StorageKey_CachedIAP))
 
-      if (resInitIAP === undefined) {
-        console.error('IAP init fail')
+      if (resInitIAP !== undefined) {
+        HandleError('InitIAPAsync', resInitIAP, true)
         return
       }
 
@@ -154,9 +155,9 @@ const IAPPage = () => {
       if (resInitIAP)
         resInitIAP()
     }
-  }, [subscribedData])
+  }, [isPremium])
 
-  if (subscribedData) {
+  if (isPremium && subscribedData) {
     return <IAPPage_Subscribed subscribedData={subscribedData} />
   }
 

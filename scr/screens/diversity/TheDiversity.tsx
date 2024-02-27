@@ -316,6 +316,11 @@ const TheDiversity = (
                 />
             </View>
 
+            {
+                itemsToRender.length <= numColumnsDiversity * 2 &&
+                renderPleaseSubscribe()
+            }
+
             {/* navigation */}
 
             {
