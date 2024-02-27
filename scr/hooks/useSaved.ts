@@ -6,11 +6,13 @@ import { GoToPremiumScreen, OnPressedXInDiversityMode } from "../screens/compone
 import { useNavigation } from "@react-navigation/native";
 import { LimitSaved, LocalText } from "../constants/AppConstants";
 import { Alert } from "react-native";
+import { usePremium } from "./usePremium";
 
 export const useSaved = (itemData?: DiversityItemType, diversityMode?: boolean) => {
     const allSavedItems = useAppSelector((state) => state.userData.savedItems)
     const dispatch = useAppDispatch()
     const navigation = useNavigation()
+    const { isPremium } = usePremium()
 
     const isSaved = useMemo(() => {
         if (itemData && allSavedItems)
@@ -26,7 +28,7 @@ export const useSaved = (itemData?: DiversityItemType, diversityMode?: boolean) 
         let shouldDispatch = true
 
         if (!isSaved) { // to save
-            if (allSavedItems.length >= LimitSaved) { // reached limit
+            if (!isPremium && allSavedItems.length >= LimitSaved) { // reached limit
                 shouldDispatch = false
 
                 Alert.alert(
@@ -46,7 +48,7 @@ export const useSaved = (itemData?: DiversityItemType, diversityMode?: boolean) 
 
         if (itemData && shouldDispatch)
             dispatch(toggleSavedItem(itemData))
-    }, [itemData, isSaved, diversityMode, allSavedItems, navigation])
+    }, [itemData, isSaved, isPremium, diversityMode, allSavedItems, navigation])
 
     return [isSaved, onPressSaved] as const
 }
