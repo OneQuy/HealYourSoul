@@ -27,8 +27,8 @@ const PageNavigatorBar = ({
     return StyleSheet.create({
       naviContainer: { backgroundColor: theme.primary, borderRadius: BorderRadius.BR, marginBottom: insets.bottom + Outline.GapHorizontal, marginHorizontal: Outline.GapVertical, flexDirection: 'row', alignItems: 'center' },
       naviTO: { padding: Outline.GapVertical_2, flex: 1, alignItems: 'center', justifyContent: 'center', },
-      pageView: { flex: 1,  height: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' },
-      pageTxt: { fontSize: FontSize.Normal, color: theme.counterPrimary, verticalAlign: 'middle'},
+      pageView: { flex: 1, height: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' },
+      pageTxt: { fontSize: FontSize.Normal, color: theme.counterPrimary, verticalAlign: 'middle' },
     })
   }, [theme, insets])
 
@@ -42,9 +42,9 @@ const PageNavigatorBar = ({
       <TouchableOpacity onPress={() => onPressedNextPage(false)} style={style.naviTO}>
         <MaterialCommunityIcons name={Icon.Left} color={theme.counterPrimary} size={Size.Icon} />
       </TouchableOpacity>
-      <View style={style.pageView}>
-        <Text onPress={onPressedMiddlePage} style={style.pageTxt}>{curPageIdx + 1}/{maxPage}</Text>
-      </View>
+      <TouchableOpacity onPress={onPressedMiddlePage} style={style.pageView}>
+        <Text adjustsFontSizeToFit numberOfLines={1} style={style.pageTxt}>{curPageIdx + 1}/{maxPage}</Text>
+      </TouchableOpacity>
       <TouchableOpacity onPress={() => onPressedNextPage(true)} style={style.naviTO}>
         <MaterialCommunityIcons name={Icon.Right} color={theme.counterPrimary} size={Size.Icon} />
       </TouchableOpacity>
