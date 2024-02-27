@@ -8,7 +8,6 @@ import { ThemeContext } from '../../constants/Colors';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { DrawerParamList } from '../../navigation/Navigator';
-import { IsDev } from '../../handle/IsDev';
 
 const HeaderXButton = () => {
     const theme = useContext(ThemeContext);
@@ -50,10 +49,7 @@ export const UpdateHeaderXButton = (
     let title: string = screen
 
     if (savedMode) {
-        if (IsDev())
-            title += ' (Saved)'
-        else
-            title = LocalText.saved_2
+        title += ` (${LocalText.saved_2})`
     }
 
     navigation.setOptions({
