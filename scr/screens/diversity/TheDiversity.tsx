@@ -238,7 +238,7 @@ const TheDiversity = (
             flatListContainer: { flex: 1, },
             filterCatTxt: { maxWidth: '100%', fontSize: FontSize.Small_L, color: theme.counterPrimary, },
             noItemTxt: { textAlign: 'center', marginHorizontal: Outline.GapVertical, fontSize: FontSize.Normal, color: theme.counterBackground, },
-            premiumText: { fontSize: FontSize.Normal, color: 'black' },
+            premiumText: { fontSize: FontSize.Small_L, color: 'black' },
         })
     }, [theme, insets])
 
