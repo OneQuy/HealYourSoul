@@ -8,6 +8,7 @@ import { ThemeContext } from '../../constants/Colors';
 import { useNavigation } from '@react-navigation/native';
 import { DiversityItemType } from '../../constants/Types';
 import { useSaved } from '../../hooks/useSaved';
+import { GoToPremiumScreen } from './HeaderXButton';
 
 const HeaderRightButtons = (
     {
@@ -22,7 +23,7 @@ const HeaderRightButtons = (
     const [isSaved, onPressSaved] = useSaved(diversityItemData, diversityMode)
 
     const onPressPremium = useCallback(() => {
-        navigation.navigate(ScreenName.IAPPage as never)
+        GoToPremiumScreen(navigation)
     }, [navigation])
 
     const style = useMemo(() => {

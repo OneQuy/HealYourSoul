@@ -1,7 +1,7 @@
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { View, StyleSheet, FlatList, Text, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, FlatList, Text, TouchableOpacity, ImageBackground } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { BorderRadius, Category, FontSize, Icon, LocalText, Outline, ScreenName, Size, StorageKey_CurPageFunSoundIdx } from '../../constants/AppConstants'
 import { DiversityItemType } from '../../constants/Types'
@@ -18,6 +18,9 @@ import PageNavigatorBar from '../fun_sound/PageNavigatorBar'
 import { CatToScreenName } from '../../handle/AppUtils'
 import { widthPercentageToDP } from 'react-native-responsive-screen';
 import FilterDiversityPopup from './FilterDiversityPopup';
+import { iapBg_1 } from '../IAP/IAPPage';
+import { CommonStyles } from '../../constants/CommonConstants';
+import { GoToPremiumScreen } from '../components/HeaderXButton';
 
 export const numColumnsDiversity = 3
 
@@ -228,18 +231,38 @@ const TheDiversity = (
         return StyleSheet.create({
             masterView: { flex: 1, paddingBottom: insets.bottom, gap: Outline.GapHorizontal, },
             centerView: { flex: 1, justifyContent: 'center', alignItems: 'center' },
+            plsSubView: { gap: Outline.GapHorizontal, margin: Outline.GapVertical_2, padding: Outline.GapVertical, borderRadius: BorderRadius.BR, borderWidth: StyleSheet.hairlineWidth, borderColor: theme.counterBackground, justifyContent: 'center', alignItems: 'center' },
             filterView: { marginHorizontal: Outline.GapVertical, justifyContent: 'center', alignItems: 'center', },
+            premiumIB: { padding: Outline.GapVertical, minWidth: widthPercentageToDP(30), borderRadius: BorderRadius.BR, overflow: 'hidden', justifyContent: 'center', alignItems: 'center', },
             filterTO: { maxWidth: '100%', paddingHorizontal: 20, borderRadius: BorderRadius.BR8, justifyContent: 'center', alignItems: 'center', gap: Outline.GapHorizontal, padding: Outline.GapHorizontal, minWidth: widthPercentageToDP(20), flexDirection: 'row', backgroundColor: theme.primary },
             flatListContainer: { flex: 1, },
             filterCatTxt: { maxWidth: '100%', fontSize: FontSize.Small_L, color: theme.counterPrimary, },
             noItemTxt: { textAlign: 'center', marginHorizontal: Outline.GapVertical, fontSize: FontSize.Normal, color: theme.counterBackground, },
+            premiumText: { fontSize: FontSize.Normal, color: 'black' },
         })
     }, [theme, insets])
+
+    const onPressedUpgrade = useCallback(() => {
+        GoToPremiumScreen(navigation)
+    }, [navigation])
 
     const renderItem = useCallback(({ item }: { item: DiversityItemType }) => {
         return <DiversityItem
             item={item} />
     }, [])
+
+    const renderPleaseSubscribe = useCallback(() => {
+        return (
+            <View style={style.plsSubView}>
+                <Text style={style.noItemTxt}>{LocalText.limit_saved_desc}</Text>
+                <TouchableOpacity onPress={onPressedUpgrade}>
+                    <ImageBackground resizeMode="cover" source={iapBg_1} style={style.premiumIB}>
+                        <Text numberOfLines={1} adjustsFontSizeToFit style={style.premiumText}>{LocalText.upgrade}</Text>
+                    </ImageBackground>
+                </TouchableOpacity>
+            </View>
+        )
+    }, [onPressedUpgrade, style])
 
     // init
 
@@ -259,6 +282,10 @@ const TheDiversity = (
                 <View style={style.centerView}>
                     <MaterialCommunityIcons name={emptyIcon} color={theme.primary} size={Size.IconMedium} />
                     <Text style={style.noItemTxt}>{emptyText}</Text>
+
+                    {
+                        renderPleaseSubscribe()
+                    }
                 </View>
             </View>
         )

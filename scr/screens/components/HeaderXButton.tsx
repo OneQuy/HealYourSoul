@@ -33,6 +33,11 @@ const HeaderXButton = () => {
     )
 }
 
+export const GoToPremiumScreen = (navigation: DrawerNavigationProp<DrawerParamList> | NavigationProp<ReactNavigation.RootParamList>) => {
+    // @ts-ignore
+    navigation.navigate(ScreenName.IAPPage)
+}
+
 export const OnPressedXInDiversityMode = (
     navigation: DrawerNavigationProp<DrawerParamList> | NavigationProp<ReactNavigation.RootParamList>) => {
     // go to diversity screen

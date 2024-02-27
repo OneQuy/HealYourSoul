@@ -17,10 +17,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { prefixFbTrackPath } from '../../handle/tracking/Tracking';
 import { FirebaseDatabase_SetValueAsync } from '../../firebase/FirebaseDatabase';
 
+export const iapBg_1 = require('../../../assets/images/btn_bg_1.jpeg')
+
 const ids = [
   {
     month: 1,
-    imgUrl: require('../../../assets/images/btn_bg_1.jpeg'),
+    imgUrl: iapBg_1,
     product: {
       sku: 'gooday_month_1',
       isConsumable: true,
@@ -85,7 +87,7 @@ const IAPPage = () => {
       // track count
 
       track_SimpleWithParam('iap_resulted', 'successssss_' + id)
-      
+
       // track detail
 
       const pathFb = prefixFbTrackPath() + 'iap_success/' + todayString + '/' + Date.now()
@@ -93,7 +95,7 @@ const IAPPage = () => {
       FirebaseDatabase_SetValueAsync(pathFb, trackText)
 
       // dispatch
-      
+
       dispatch(setSubscribe(id))
 
       Alert.alert(LocalText.you_are_awesome, LocalText.thank_iap)

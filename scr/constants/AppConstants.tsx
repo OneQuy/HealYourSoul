@@ -344,6 +344,7 @@ export const LocalText = {
   // ad_free: 'Ad-free',
   // no_ad_anymore: 'No ad during your subscription time.\n',
 
+  upgrade: 'Upgrade',
   support_me: 'Support app',
   support_me_info: "Support me in covering the monthly costs of the operation and data server.",
 
