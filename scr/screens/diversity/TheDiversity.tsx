@@ -3,13 +3,13 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import { View, StyleSheet, FlatList, Text, TouchableOpacity, ImageBackground } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { BorderRadius, Category, FontSize, Icon, LocalText, Outline, ScreenName, Size, StorageKey_CurPageFunSoundIdx } from '../../constants/AppConstants'
+import { BorderRadius, Category, FontSize, Icon, LocalText, Outline, ScreenName, Size, StorageKey_CurPageFunSoundIdx, StorageKey_IsUserPressedClosePleaseSubscribe } from '../../constants/AppConstants'
 import { DiversityItemType } from '../../constants/Types'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { ThemeContext } from '../../constants/Colors'
 import { IsValuableArrayOrString } from '../../handle/UtilsTS'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { SetNumberAsync } from '../../handle/AsyncStorageUtils';
+import { GetBooleanAsync, SetBooleanAsync, SetNumberAsync } from '../../handle/AsyncStorageUtils';
 import HeaderRightButtons from '../components/HeaderRightButtons';
 import DiversityItem from './DiversityItem';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
@@ -67,6 +67,7 @@ const TheDiversity = (
     const [curPageIdx, setCurPageIdx] = useState(0)
     const [curFilters, setCurFilters] = useState<undefined | ScreenName[]>(undefined) // undefined means ALL
     const [isShowFilterPopup, setIsShowFilterPopup] = useState(false)
+    const [isUserPressedClosePleaseSubscribe, setIsUserPressedClosePleaseSubscribe] = useState(false)
     const { isPremium } = usePremium()
     const insets = useSafeAreaInsets()
 
@@ -234,8 +235,10 @@ const TheDiversity = (
             masterView: { flex: 1, paddingBottom: Outline.GapHorizontal, gap: Outline.GapHorizontal, },
             centerView: { flex: 1, justifyContent: 'center', alignItems: 'center' },
             plsSubView: { gap: Outline.GapHorizontal, margin: Outline.GapVertical, marginBottom: insets.bottom + Outline.GapHorizontal, padding: Outline.GapVertical, borderRadius: BorderRadius.BR, borderWidth: StyleSheet.hairlineWidth, borderColor: theme.counterBackground, justifyContent: 'center', alignItems: 'center' },
+            plsSubBtnsView: { gap: Outline.GapHorizontal, flexDirection: 'row' },
             filterView: { marginHorizontal: Outline.GapVertical, justifyContent: 'center', alignItems: 'center', },
             premiumIB: { padding: Outline.GapVertical, minWidth: widthPercentageToDP(30), borderRadius: BorderRadius.BR, overflow: 'hidden', justifyContent: 'center', alignItems: 'center', },
+            gotItBtn: { padding: Outline.GapVertical, minWidth: widthPercentageToDP(30), borderRadius: BorderRadius.BR, borderWidth: StyleSheet.hairlineWidth, justifyContent: 'center', alignItems: 'center', },
             filterTO: { maxWidth: '100%', paddingHorizontal: 20, borderRadius: BorderRadius.BR8, justifyContent: 'center', alignItems: 'center', gap: Outline.GapHorizontal, padding: Outline.GapHorizontal, minWidth: widthPercentageToDP(20), flexDirection: 'row', backgroundColor: theme.primary },
             flatListContainer: { flex: 1, },
             filterCatTxt: { maxWidth: '100%', fontSize: FontSize.Small_L, color: theme.counterPrimary, },
@@ -244,6 +247,11 @@ const TheDiversity = (
             premiumText: { fontSize: FontSize.Small_L, color: 'black' },
         })
     }, [theme])
+
+    const onPressedClosePlsSubscribe = useCallback(() => {
+        SetBooleanAsync(StorageKey_IsUserPressedClosePleaseSubscribe, true)
+        setIsUserPressedClosePleaseSubscribe(true)
+    }, [])
 
     const onPressedUpgrade = useCallback(() => {
         GoToPremiumScreen(navigation)
@@ -255,28 +263,39 @@ const TheDiversity = (
     }, [])
 
     const renderPleaseSubscribe = useCallback(() => {
-        if (isPremium)
+        if (isPremium || isUserPressedClosePleaseSubscribe)
             return undefined
 
         return (
             <View style={style.plsSubView}>
                 <Text adjustsFontSizeToFit numberOfLines={2} style={style.subscribeTxt}>{LocalText.limit_saved_desc}</Text>
-                <TouchableOpacity onPress={onPressedUpgrade}>
-                    <ImageBackground resizeMode="cover" source={iapBg_1} style={style.premiumIB}>
-                        <Text numberOfLines={1} adjustsFontSizeToFit style={style.premiumText}>{LocalText.upgrade}</Text>
-                    </ImageBackground>
-                </TouchableOpacity>
+
+                <View style={style.plsSubBtnsView}>
+                    <TouchableOpacity onPress={onPressedClosePlsSubscribe}>
+                        <View style={style.gotItBtn}>
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={style.premiumText}>{LocalText.got_it}</Text>
+                        </View>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={onPressedUpgrade}>
+                        <ImageBackground resizeMode="cover" source={iapBg_1} style={style.premiumIB}>
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={style.premiumText}>{LocalText.upgrade}</Text>
+                        </ImageBackground>
+                    </TouchableOpacity>
+                </View>
             </View>
         )
-    }, [onPressedUpgrade, style, isPremium])
+    }, [onPressedUpgrade, style, isUserPressedClosePleaseSubscribe, isPremium])
 
     // init
 
     useEffect(() => {
         (async () => {
+            setIsUserPressedClosePleaseSubscribe(await GetBooleanAsync(StorageKey_IsUserPressedClosePleaseSubscribe, false))
+
             navigation.setOptions({
                 headerRight: () => <HeaderRightButtons />
-            });
+            })
         })()
     }, [])
 
@@ -325,7 +344,6 @@ const TheDiversity = (
             {/* please subscribe */}
 
             {
-                itemsToRender.length <= numColumnsDiversity * 2 &&
                 renderPleaseSubscribe()
             }
 
