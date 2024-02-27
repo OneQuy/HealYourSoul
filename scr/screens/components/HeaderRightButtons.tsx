@@ -26,7 +26,6 @@ const HeaderRightButtons = (
     const style = useMemo(() => {
         return StyleSheet.create({
             master: { gap: Outline.GapHorizontal, flexDirection: 'row', marginRight: 15 },
-            iconTO: {},
         })
     }, [])
 
@@ -35,13 +34,13 @@ const HeaderRightButtons = (
             {/* saved btn */}
             {
                 !diversityItem ? undefined :
-                    <TouchableOpacity onPress={onPressSaved} style={style.iconTO}>
+                    <TouchableOpacity onPress={onPressSaved}>
                         <MaterialCommunityIcons name={isSaved ? Icon.Bookmark : Icon.BookmarkOutline} color={theme.primary} size={Size.Icon} />
                     </TouchableOpacity>
             }
 
             {/* premium btn */}
-            <TouchableOpacity onPress={onPressPremium} style={style.iconTO}>
+            <TouchableOpacity onPress={onPressPremium} >
                 <MaterialCommunityIcons name={Icon.Star} color={theme.primary} size={Size.Icon} />
             </TouchableOpacity>
         </View>
