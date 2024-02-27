@@ -28,7 +28,7 @@ export const useSaved = (itemData?: DiversityItemType, diversityMode?: boolean) 
         let shouldDispatch = true
 
         if (!isSaved) { // to save
-            if (!isPremium && allSavedItems.length >= LimitSaved) { // reached limit
+            if (!isPremium && allSavedItems && allSavedItems.length >= LimitSaved) { // reached limit
                 shouldDispatch = false
 
                 Alert.alert(

@@ -10,7 +10,7 @@ export type UserDataState = {
 
     subscribedData: SubscribedData | undefined,
 
-    savedItems: DiversityItemType[],
+    savedItems: DiversityItemType[] | undefined,
 
     checkedInScreens: ScreenName[],
 
