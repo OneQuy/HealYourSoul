@@ -46,7 +46,10 @@ export const useSimpleGesture = (
     const lastTapTickRef = useRef(0)
 
     const onTouchStart = useCallback((e: GestureResponderEvent) => {
-        startTouchNativeEventRef.current = e.nativeEvent;
+        if (e.nativeEvent.touches.length > 1)
+            startTouchNativeEventRef.current = null
+        else
+            startTouchNativeEventRef.current = e.nativeEvent;
     }, []);
 
     const triggerTapCounted = useCallback((e: GestureResponderEvent['nativeEvent']) => {
@@ -76,7 +79,6 @@ export const useSimpleGesture = (
 
     const onTouchEnd = useCallback((e: GestureResponderEvent) => {
         if (!startTouchNativeEventRef.current) {
-            console.error('startTouchNativeEventRef.current is null')
             return
         }
 
