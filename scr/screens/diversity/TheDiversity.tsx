@@ -25,6 +25,8 @@ const numRowPerPage = 10
 
 type TheDiversityProps = {
     allItems: DiversityItemType[] | undefined,
+    emptyText: string,
+    emptyIcon: string,
 }
 
 var onPressedNextItemDiversityGlobalFunc: undefined | ((isNext: boolean, curItem: DiversityItemType) => void) = undefined
@@ -53,6 +55,8 @@ export const OnPressedDeversityItem = (
 const TheDiversity = (
     {
         allItems,
+        emptyText,
+        emptyIcon,
     }: TheDiversityProps) => {
     const navigation = useNavigation();
     const theme = useContext(ThemeContext);
@@ -228,7 +232,7 @@ const TheDiversity = (
             filterTO: { maxWidth: '100%', paddingHorizontal: 20, borderRadius: BorderRadius.BR8, justifyContent: 'center', alignItems: 'center', gap: Outline.GapHorizontal, padding: Outline.GapHorizontal, minWidth: widthPercentageToDP(20), flexDirection: 'row', backgroundColor: theme.primary },
             flatListContainer: { flex: 1, },
             filterCatTxt: { maxWidth: '100%', fontSize: FontSize.Small_L, color: theme.counterPrimary, },
-            noItemTxt: { fontSize: FontSize.Normal, color: theme.counterBackground, },
+            noItemTxt: { textAlign: 'center', marginHorizontal: Outline.GapVertical, fontSize: FontSize.Normal, color: theme.counterBackground, },
         })
     }, [theme, insets])
 
@@ -253,7 +257,8 @@ const TheDiversity = (
         return (
             <View style={style.masterView}>
                 <View style={style.centerView}>
-                    <Text style={style.noItemTxt}>{LocalText.diversity_no_items}</Text>
+                    <MaterialCommunityIcons name={emptyIcon} color={theme.primary} size={Size.IconMedium} />
+                    <Text style={style.noItemTxt}>{emptyText}</Text>
                 </View>
             </View>
         )

@@ -337,7 +337,7 @@ export const LocalText = {
   warning_premium: 'These subscriptions are non-renewable. If you no longer wish to subscribe, it will be automatically canceled at the end of the period.',
   thank_you_premium: "Any purchase is greatly appreciated. Thank you 💛",
 
-  diversity_no_items: "You have no item.",
+  diversity_empty_saved: "You have no item.\nSimply tap the Save icon on the post you'd like to watch later, and it will be saved here for your convenience.",
   show_all: "Show all",
 
   // ad_free: 'Ad-free',
