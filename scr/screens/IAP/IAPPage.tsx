@@ -150,11 +150,6 @@ const IAPPage = () => {
     }
 
     hanldeAsync()
-
-    return () => {
-      if (resInitIAP)
-        resInitIAP()
-    }
   }, [isPremium])
 
   if (isPremium && subscribedData) {
