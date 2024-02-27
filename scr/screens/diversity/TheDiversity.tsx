@@ -19,7 +19,6 @@ import { CatToScreenName } from '../../handle/AppUtils'
 import { widthPercentageToDP } from 'react-native-responsive-screen';
 import FilterDiversityPopup from './FilterDiversityPopup';
 import { iapBg_1 } from '../IAP/IAPPage';
-import { CommonStyles } from '../../constants/CommonConstants';
 import { GoToPremiumScreen } from '../components/HeaderXButton';
 import { usePremium } from '../../hooks/usePremium';
 
