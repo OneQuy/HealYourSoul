@@ -7,7 +7,7 @@ import { FetchListroductsAsync, IAPProduct, InitIAPAsync, PurchaseAsync } from '
 import { SafeDateString, ToCanPrintError } from '../../handle/UtilsTS';
 import { Product } from 'react-native-iap';
 import IAPPage_Subscribed from './IAPPage_Subscribed';
-import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
+import { useAppDispatch } from '../../redux/Store';
 import { setSubscribe } from '../../redux/UserDataSlice';
 import { CreateUserInfoObjectAsync, GetExpiredDateAndDaysLeft, HandleError, todayString } from '../../handle/AppUtils';
 import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
@@ -48,11 +48,11 @@ const ids = [
 ]
 
 const reasonItems = [
-  // {
-  //   icon: require('../../../assets/images/ad-free-icon.png'),
-  //   title: LocalText.ad_free,
-  //   content: LocalText.no_ad_anymore
-  // },
+  {
+    icon: require('../../../assets/images/premium_icon.png'),
+    title: LocalText.unlock_all,
+    content: LocalText.unlock_all_info
+  },
 
   {
     icon: require('../../../assets/images/love-icon.png'),
