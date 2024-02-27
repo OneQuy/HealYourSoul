@@ -3,7 +3,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import { View, StyleSheet, FlatList, Text, TouchableOpacity, ImageBackground } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { BorderRadius, Category, FontSize, Icon, LocalText, Outline, ScreenName, Size, StorageKey_CurPageFunSoundIdx, StorageKey_IsUserPressedClosePleaseSubscribe } from '../../constants/AppConstants'
+import { BorderRadius, Category, FontSize, Icon, LimitSaved, LocalText, Outline, ScreenName, Size, StorageKey_CurPageFunSoundIdx, StorageKey_IsUserPressedClosePleaseSubscribe } from '../../constants/AppConstants'
 import { DiversityItemType } from '../../constants/Types'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { ThemeContext } from '../../constants/Colors'
@@ -268,7 +268,7 @@ const TheDiversity = (
 
         return (
             <View style={style.plsSubView}>
-                <Text adjustsFontSizeToFit numberOfLines={2} style={style.subscribeTxt}>{LocalText.limit_saved_desc}</Text>
+                <Text adjustsFontSizeToFit numberOfLines={2} style={style.subscribeTxt}>{LocalText.limit_saved_desc.replace('##', LimitSaved.toString())}</Text>
 
                 <View style={style.plsSubBtnsView}>
                     <TouchableOpacity onPress={onPressedClosePlsSubscribe}>
