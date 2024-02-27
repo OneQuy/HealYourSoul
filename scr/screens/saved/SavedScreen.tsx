@@ -5,7 +5,6 @@ import { Icon, LocalText } from '../../constants/AppConstants'
 
 const SavedScreen = () => {
   const allSavedItems = useAppSelector((state) => state.userData.savedItems)
-  // console.log(allSavedItems);
 
   return (
     <TheDiversity
