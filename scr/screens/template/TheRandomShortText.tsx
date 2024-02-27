@@ -213,7 +213,8 @@ const TheRandomShortText = ({
     useEffect(() => {
         navigation.setOptions({
             headerRight: () => <HeaderRightButtons
-                diversityItem={handling ?
+                diversityMode={diversityItem !== undefined}
+                diversityItemData={handling ?
                     undefined :
                     {
                         cat: category,
@@ -221,7 +222,7 @@ const TheRandomShortText = ({
                     }}
             />
         });
-    }, [onPressHeaderOption, text, handling])
+    }, [onPressHeaderOption, text, handling, diversityItem])
 
     // save last visit category screen
 

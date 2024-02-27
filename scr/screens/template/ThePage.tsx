@@ -742,14 +742,15 @@ const ThePage = ({ category }: ThePageProps) => {
         navigation.setOptions({
             headerRight: !handling ?
                 () => <HeaderRightButtons
-                    diversityItem={{ cat: category, id: post.current?.id }}
+                    diversityItemData={{ cat: category, id: post.current?.id }}
+                    diversityMode={diversityItem !== undefined}
                 />
                 :
                 () => (
                     <ActivityIndicator color={theme.primary} style={style.headerOptionTO} />
                 )
         });
-    }, [handling, theme, post.current]);
+    }, [handling, theme, post.current, diversityItem]);
 
     // load post
 

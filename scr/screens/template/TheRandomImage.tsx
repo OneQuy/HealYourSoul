@@ -161,26 +161,25 @@ const TheRandomImage = ({
         onPressRandom(false)
     }, [])
 
-    // handle diversity item
-
-   
-
     // on change theme
 
     useEffect(() => {
-        let diversityItem: DiversityItemType | undefined = undefined
+        let diversityItemData: DiversityItemType | undefined = undefined
 
         if (currentItem && !handling) {
-            diversityItem = {
+            diversityItemData = {
                 cat: category,
                 randomImage: currentItem
             }
         }
 
         navigation.setOptions({
-            headerRight: () => <HeaderRightButtons diversityItem={diversityItem} />
+            headerRight: () => <HeaderRightButtons
+                diversityItemData={diversityItemData}
+                diversityMode={diversityItem !== undefined}
+            />
         })
-    }, [handling, currentItem])
+    }, [handling, currentItem, diversityItem])
 
     // save last visit category screen
 

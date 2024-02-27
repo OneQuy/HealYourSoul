@@ -11,13 +11,15 @@ import { useSaved } from '../../hooks/useSaved';
 
 const HeaderRightButtons = (
     {
-        diversityItem,
+        diversityItemData,
+        diversityMode,
     }: {
-        diversityItem?: DiversityItemType,
+        diversityItemData?: DiversityItemType,
+        diversityMode?: boolean,
     }) => {
     const theme = useContext(ThemeContext);
     const navigation = useNavigation()
-    const [isSaved, onPressSaved] = useSaved(diversityItem)
+    const [isSaved, onPressSaved] = useSaved(diversityItemData, diversityMode)
 
     const onPressPremium = useCallback(() => {
         navigation.navigate(ScreenName.IAPPage as never)
@@ -33,10 +35,10 @@ const HeaderRightButtons = (
         <View style={style.master}>
             {/* saved btn */}
             {
-                !diversityItem ? undefined :
-                    <TouchableOpacity onPress={onPressSaved}>
-                        <MaterialCommunityIcons name={isSaved ? Icon.Bookmark : Icon.BookmarkOutline} color={theme.primary} size={Size.Icon} />
-                    </TouchableOpacity>
+                diversityItemData &&
+                <TouchableOpacity onPress={onPressSaved}>
+                    <MaterialCommunityIcons name={isSaved ? Icon.Bookmark : Icon.BookmarkOutline} color={theme.primary} size={Size.Icon} />
+                </TouchableOpacity>
             }
 
             {/* premium btn */}

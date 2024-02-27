@@ -285,7 +285,8 @@ const WikipediaScreen = () => {
     useEffect(() => {
         navigation.setOptions({
             headerRight: () => <HeaderRightButtons
-                diversityItem={handling ?
+                diversityMode={diversityItem !== undefined}
+                diversityItemData={handling ?
                     undefined :
                     {
                         cat: category,
@@ -293,7 +294,7 @@ const WikipediaScreen = () => {
                     }}
             />
         });
-    }, [handling, data])
+    }, [handling, data, diversityItem])
 
     // save last visit category screen
 
