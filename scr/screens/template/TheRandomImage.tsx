@@ -26,6 +26,7 @@ import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
 import HeaderRightButtons from '../components/HeaderRightButtons';
 import useDiversityItem from '../../hooks/useDiversityItem';
+import { OnPressedNextItemDiversity } from '../diversity/TheDiversity';
 
 interface TheRandomImageProps {
     category: Category,
@@ -186,7 +187,7 @@ const TheRandomImage = ({
     useFocusEffect(useCallback(() => SaveCurrentScreenForLoadNextTime(navigation), []))
 
     const bottomBarItems = useMemo(() => {
-        return [
+        const btns = [
             {
                 text: LocalText.share,
                 onPress: onPressShareImage,
@@ -203,7 +204,32 @@ const TheRandomImage = ({
                 icon: Icon.Download
             },
         ] as BottomBarItem[]
-    }, [onPressRandom, onPressSaveToPhoto, onPressShareImage])
+
+        // add navi btns when diversity mode
+
+        if (diversityItem) {
+            const naviBtns = [
+                {
+                    text: LocalText.previous,
+                    onPress: () => OnPressedNextItemDiversity(false, diversityItem),
+                    icon: Icon.Left,
+                    scaleIcon: 1.5,
+                },
+                {
+                    text: LocalText.next,
+                    onPress: () => OnPressedNextItemDiversity(true, diversityItem),
+                    icon: Icon.Right,
+                    scaleIcon: 1.5,
+                },
+            ] as BottomBarItem[]
+
+            const idxRandom = btns.findIndex(i => i.text === LocalText.random)
+
+            btns.splice(idxRandom, 1, ...naviBtns)
+        }
+
+        return btns
+    }, [onPressRandom, onPressSaveToPhoto, onPressShareImage, diversityItem])
 
     const styleSheet = useMemo(() => {
         return StyleSheet.create({
