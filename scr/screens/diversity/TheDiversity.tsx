@@ -238,13 +238,14 @@ const TheDiversity = (
             plsSubBtnsView: { gap: Outline.GapHorizontal, flexDirection: 'row' },
             filterView: { marginHorizontal: Outline.GapVertical, justifyContent: 'center', alignItems: 'center', },
             premiumIB: { padding: Outline.GapVertical, minWidth: widthPercentageToDP(30), borderRadius: BorderRadius.BR, overflow: 'hidden', justifyContent: 'center', alignItems: 'center', },
-            gotItBtn: { padding: Outline.GapVertical, minWidth: widthPercentageToDP(30), borderRadius: BorderRadius.BR, borderWidth: StyleSheet.hairlineWidth, justifyContent: 'center', alignItems: 'center', },
+            gotItBtn: { padding: Outline.GapVertical, minWidth: widthPercentageToDP(30), borderColor: theme.counterBackground, borderRadius: BorderRadius.BR, borderWidth: StyleSheet.hairlineWidth, justifyContent: 'center', alignItems: 'center', },
             filterTO: { maxWidth: '100%', paddingHorizontal: 20, borderRadius: BorderRadius.BR8, justifyContent: 'center', alignItems: 'center', gap: Outline.GapHorizontal, padding: Outline.GapHorizontal, minWidth: widthPercentageToDP(20), flexDirection: 'row', backgroundColor: theme.primary },
             flatListContainer: { flex: 1, },
             filterCatTxt: { maxWidth: '100%', fontSize: FontSize.Small_L, color: theme.counterPrimary, },
             noItemTxt: { textAlign: 'center', marginHorizontal: Outline.GapVertical, fontSize: FontSize.Normal, color: theme.counterBackground, },
             subscribeTxt: { textAlign: 'center', fontSize: FontSize.Small_L, color: theme.counterBackground, },
             premiumText: { fontSize: FontSize.Small_L, color: 'black' },
+            gotItText: { fontSize: FontSize.Small_L, color: theme.counterBackground },
         })
     }, [theme])
 
@@ -273,7 +274,7 @@ const TheDiversity = (
                 <View style={style.plsSubBtnsView}>
                     <TouchableOpacity onPress={onPressedClosePlsSubscribe}>
                         <View style={style.gotItBtn}>
-                            <Text numberOfLines={1} adjustsFontSizeToFit style={style.premiumText}>{LocalText.got_it}</Text>
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={style.gotItText}>{LocalText.got_it}</Text>
                         </View>
                     </TouchableOpacity>
 
