@@ -49,13 +49,14 @@ var fetchedProductsFromCached: Product[] | undefined = undefined
 export var fetchedProducts: Product[] = []
 
 /**
- * @returns unsubscribe method () => void if success, otherwise undefined (can not init)
+ * @returns success: return undefined
+ * @returns failed: new Error('...')
  */
 export const InitIAPAsync = async (
     products: IAPProduct[],
     cachedProductsListSetterAsync?: (text: string) => Promise<void>,
     cachedProductsListGetterAsync?: () => Promise<string | null>,
-): Promise<(() => void) | undefined> => {
+): Promise<Error | undefined> => {
     if (isInited) {
         console.warn('IAP already inited')
         return undefined
@@ -64,7 +65,7 @@ export const InitIAPAsync = async (
     const canIAP = await initConnection()
 
     if (!canIAP) {
-        return undefined
+        return new Error('[IAP] can not initConnection')
     }
 
     isInited = true
@@ -112,7 +113,7 @@ export const InitIAPAsync = async (
         finishTransaction({ purchase, isConsumable: product.isConsumable })
     })
 
-    return () => { }
+    return undefined
 }
 
 const LoadFetchedProductsFromCachedAsync = async (): Promise<Product[]> => {
