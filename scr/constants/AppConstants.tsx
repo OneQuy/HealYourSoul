@@ -338,6 +338,7 @@ export const LocalText = {
   thank_you_premium: "Any purchase is greatly appreciated. Thank you 💛",
 
   diversity_empty_saved: "You have no item.\n\nSimply tap the Save icon on the header of the post you'd like to watch later, and it will be saved here for your convenience.",
+  limit_saved_desc: "In the free version, you can save up to 50 posts. Upgrade to a subscription to enjoy unlimited savings.",
   show_all: "Show all",
 
   // ad_free: 'Ad-free',
