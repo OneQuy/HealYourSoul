@@ -68,6 +68,7 @@ const TheDiversity = (
     const [curFilters, setCurFilters] = useState<undefined | ScreenName[]>(undefined) // undefined means ALL
     const [isShowFilterPopup, setIsShowFilterPopup] = useState(false)
     const { isPremium } = usePremium()
+    const insets = useSafeAreaInsets()
 
     const filterItems: DiversityItemType[] | undefined = useMemo(() => {
         if (!allItems || !IsValuableArrayOrString(allItems))
@@ -232,7 +233,7 @@ const TheDiversity = (
         return StyleSheet.create({
             masterView: { flex: 1, paddingBottom: Outline.GapHorizontal, gap: Outline.GapHorizontal, },
             centerView: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-            plsSubView: { gap: Outline.GapHorizontal, margin: Outline.GapVertical, padding: Outline.GapVertical, borderRadius: BorderRadius.BR, borderWidth: StyleSheet.hairlineWidth, borderColor: theme.counterBackground, justifyContent: 'center', alignItems: 'center' },
+            plsSubView: { gap: Outline.GapHorizontal, margin: Outline.GapVertical, marginBottom: insets.bottom + Outline.GapHorizontal, padding: Outline.GapVertical, borderRadius: BorderRadius.BR, borderWidth: StyleSheet.hairlineWidth, borderColor: theme.counterBackground, justifyContent: 'center', alignItems: 'center' },
             filterView: { marginHorizontal: Outline.GapVertical, justifyContent: 'center', alignItems: 'center', },
             premiumIB: { padding: Outline.GapVertical, minWidth: widthPercentageToDP(30), borderRadius: BorderRadius.BR, overflow: 'hidden', justifyContent: 'center', alignItems: 'center', },
             filterTO: { maxWidth: '100%', paddingHorizontal: 20, borderRadius: BorderRadius.BR8, justifyContent: 'center', alignItems: 'center', gap: Outline.GapHorizontal, padding: Outline.GapHorizontal, minWidth: widthPercentageToDP(20), flexDirection: 'row', backgroundColor: theme.primary },
@@ -331,7 +332,7 @@ const TheDiversity = (
             {/* navigation */}
 
             {
-                // maxPage > 1 &&
+                maxPage > 1 &&
                 <PageNavigatorBar
                     onPressedMiddlePage={onPressedMiddlePage}
                     onPressedNextPage={onPressedNextPage}
