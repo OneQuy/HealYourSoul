@@ -238,6 +238,7 @@ const TheDiversity = (
             flatListContainer: { flex: 1, },
             filterCatTxt: { maxWidth: '100%', fontSize: FontSize.Small_L, color: theme.counterPrimary, },
             noItemTxt: { textAlign: 'center', marginHorizontal: Outline.GapVertical, fontSize: FontSize.Normal, color: theme.counterBackground, },
+            subscribeTxt: { textAlign: 'center', fontSize: FontSize.Small_L, color: theme.counterBackground, },
             premiumText: { fontSize: FontSize.Small_L, color: 'black' },
         })
     }, [theme, insets])
@@ -254,7 +255,7 @@ const TheDiversity = (
     const renderPleaseSubscribe = useCallback(() => {
         return (
             <View style={style.plsSubView}>
-                <Text style={style.noItemTxt}>{LocalText.limit_saved_desc}</Text>
+                <Text style={style.subscribeTxt}>{LocalText.limit_saved_desc}</Text>
                 <TouchableOpacity onPress={onPressedUpgrade}>
                     <ImageBackground resizeMode="cover" source={iapBg_1} style={style.premiumIB}>
                         <Text numberOfLines={1} adjustsFontSizeToFit style={style.premiumText}>{LocalText.upgrade}</Text>
