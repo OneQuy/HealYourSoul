@@ -26,7 +26,6 @@ var navigation: NavigationType | undefined = undefined
 
 export const setNavigation = (navi: NavigationType) => {
     if (navi === navigation) {
-        console.log('already set navi');
         return
     }
 
