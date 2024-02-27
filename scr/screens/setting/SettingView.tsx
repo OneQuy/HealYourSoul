@@ -125,8 +125,6 @@ const SettingView = () => {
   }, [])
 
   const onPressSendFeedback = useCallback(async () => {
-    track_Simple('press_send_feedback')
-
     if (isSendingFeedback)
       return
 
@@ -137,6 +135,10 @@ const SettingView = () => {
       Alert.alert(LocalText.popup_title_error, LocalText.popup_content_sent_feedback_error_hour)
       return
     }
+
+    // send!
+
+    track_Simple('press_send_feedback')
 
     const feedback = `[${feedbackText}][${userContactText}]`
 
