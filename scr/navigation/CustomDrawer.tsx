@@ -44,6 +44,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
   const pressLogoCountRef = useRef(0)
   const [_, onPressPremium] = useDrawerMenuItemUtils(ScreenName.IAPPage, props)
   const [isFocusSetting, onPressSetting] = useDrawerMenuItemUtils(ScreenName.Setting, props)
+  const [isFocusSaved, onPressSaved] = useDrawerMenuItemUtils(ScreenName.Saved, props)
   const safeAreaInsets = useSafeAreaInsets()
   const theme = useContext(ThemeContext);
   const disableScreens = useAppSelector((state: RootState) => state.userData.disableScreens)
@@ -168,6 +169,11 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
     onPressPremium()
   }, [onPressPremium])
 
+  const onPressSavedButton = useCallback(() => {
+    track_PressDrawerItem(FilterOnlyLetterAndNumberFromString(ScreenName.Saved))
+    onPressSaved()
+  }, [onPressSaved])
+
   const onPressSettingButton = useCallback(() => {
     track_PressDrawerItem(FilterOnlyLetterAndNumberFromString(ScreenName.Setting))
     onPressSetting()
@@ -186,6 +192,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
   }, [])
 
   const colorSettingText = !isFocusSetting ? theme.background : theme.primary
+  const colorSavedText = !isFocusSaved ? theme.background : theme.primary
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.background }}>
@@ -207,6 +214,15 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
             <Text numberOfLines={1} adjustsFontSizeToFit style={[style.premiumText, { color: premiumBg[1] }]}>{LocalText.donate_me}</Text>
           </ImageBackground>
         </TouchableOpacity>
+
+        {/* saved button,... */}
+        <View style={style.settingContainer}>
+          {/* saved */}
+          <TouchableOpacity onPress={onPressSavedButton} style={[style.settingBtnView, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter, { borderColor: theme.background, backgroundColor: isFocusSaved ? theme.background : theme.primary }]}>
+            <MaterialIcons name={Icon.Bookmark} color={colorSavedText} size={Size.IconTiny} />
+            <Text style={[{ color: colorSavedText }]}>{LocalText.saved_2}</Text>
+          </TouchableOpacity>
+        </View>
 
         {/* setting & rating */}
         <View style={style.settingContainer}>

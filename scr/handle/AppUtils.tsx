@@ -633,7 +633,7 @@ export const IsContentScreen = (screen: ScreenName) => {
     const notContentScreen: ScreenName[] = [
         ScreenName.IAPPage,
         ScreenName.Setting,
-        // ScreenName.Saved
+        ScreenName.Saved
     ]
 
     return !notContentScreen.includes(screen)
