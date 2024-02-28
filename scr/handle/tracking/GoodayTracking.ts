@@ -1,8 +1,8 @@
-import { Category, StorageKey_CachedPressNextPost, StorageKey_FirstTimeInstallTick, StorageKey_LastInstalledVersion, StorageKey_LastTickTrackLocation, StorageKey_LastTrackCountryName, StorageKey_OpenAppOfDayCount, StorageKey_OpenAppTotalCount } from "../../constants/AppConstants"
+import { Category, StorageKey_CachedPressNextPost, StorageKey_FirstTimeInstallTick, StorageKey_LastFreshlyOpenApp, StorageKey_LastInstalledVersion, StorageKey_LastTickTrackLocation, StorageKey_LastTrackCountryName, StorageKey_OpenAppOfDayCount, StorageKey_OpenAppTotalCount } from "../../constants/AppConstants"
 import { GetDateAsync, GetDateAsync_IsValueExistedAndIsToday, GetNumberIntAsync, SetDateAsync_Now, SetNumberAsync } from "../AsyncStorageUtils"
 import { MainTrack, TrackErrorOnFirebase } from "./Tracking"
 import { versionAsNumber } from "../AppUtils"
-import { DistanceFrom2Dates, FilterOnlyLetterAndNumberFromString, IsValuableArrayOrString, ToCanPrint } from "../UtilsTS"
+import { DistanceFrom2Dates, FilterOnlyLetterAndNumberFromString, GetDayHourMinSecFromMs_ToString, IsValuableArrayOrString, ToCanPrint } from "../UtilsTS"
 import { UserID } from "../UserID"
 import { Dimensions, Platform } from "react-native"
 import { GetIPLocationAsync, IPLocation } from "../../hooks/useCountryFromIP"
@@ -97,6 +97,20 @@ export const track_OnUseEffectOnceEnterAppAsync = async (startFreshlyOpenAppTick
     const totalOpenAppCount = await GetNumberIntAsync(StorageKey_OpenAppTotalCount, 0)
     const openTodaySoFar = await GetNumberIntAsync(StorageKey_OpenAppOfDayCount, 0)
 
+    const lastFreshlyOpenAppTick = await GetDateAsync(StorageKey_LastFreshlyOpenApp)
+    SetDateAsync_Now(StorageKey_LastFreshlyOpenApp)
+    
+    let lastFreshlyOpenAppToNowMs = 0
+
+    if (lastFreshlyOpenAppTick !== undefined) {
+        lastFreshlyOpenAppToNowMs = Date.now() - lastFreshlyOpenAppTick.getTime()
+    }
+
+    let lastFreshlyOpenAppToNowText = GetDayHourMinSecFromMs_ToString(lastFreshlyOpenAppToNowMs)
+
+    if (!IsValuableArrayOrString(lastFreshlyOpenAppToNowText))
+        lastFreshlyOpenAppToNowText = 'new_user'
+
     MainTrack(event,
         [
             `total/${event}`,
@@ -106,6 +120,7 @@ export const track_OnUseEffectOnceEnterAppAsync = async (startFreshlyOpenAppTick
             floatValue: elapsedOpenAppTime,
             totalOpenAppCount,
             openTodaySoFar,
+            lastFreshlyOpenAppToNowText,
         }
     )
 
