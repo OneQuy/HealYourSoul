@@ -8,6 +8,7 @@ import { ThemeContext } from '../../constants/Colors';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { DrawerParamList } from '../../navigation/Navigator';
+import { track_Simple } from '../../handle/tracking/GoodayTracking';
 
 const HeaderXButton = () => {
     const theme = useContext(ThemeContext);
@@ -34,6 +35,8 @@ const HeaderXButton = () => {
 }
 
 export const GoToPremiumScreen = (navigation: DrawerNavigationProp<DrawerParamList> | NavigationProp<ReactNavigation.RootParamList>) => {
+    track_Simple('pressed_go_to_premium')
+    
     // @ts-ignore
     navigation.navigate(ScreenName.IAPPage)
 }
