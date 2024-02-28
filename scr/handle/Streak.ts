@@ -7,7 +7,6 @@ import { StorageKey_Streak } from "../constants/AppConstants";
 var data: Streak[] | undefined = undefined
 
 /**
- * enter screen is counted streak
  * @param countUniquePost. countUniquePost = 0 for not set, < 0 for 1++, > 0 for inc this
  */
 export async function SetStreakAsync(id: string, countUniquePost: number = 0) {
