@@ -25,6 +25,8 @@ var isHandling_CheckAndTriggerFirstOpenAppOfTheDayAsync = false
 
 var navigation: NavigationType | undefined = undefined
 
+var calledOnUseEffectOnceEnterApp = false
+
 export const setNavigation = (navi: NavigationType) => {
     if (navi === navigation) {
         return
@@ -238,6 +240,12 @@ export const CheckAndTriggerFirstOpenAppOfTheDayAsync = async () => {
  * freshly open app
  */
 export const OnUseEffectOnceEnterApp = () => {
+    if (calledOnUseEffectOnceEnterApp) {
+        return
+    }
+
+    calledOnUseEffectOnceEnterApp = true
+
     track_OnUseEffectOnceEnterAppAsync(startFreshlyOpenAppTick)
 
     CheckAndTriggerFirstOpenAppOfTheDayAsync()
