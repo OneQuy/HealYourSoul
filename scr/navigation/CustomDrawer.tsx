@@ -233,7 +233,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
           </TouchableOpacity>
           
           {/* upload */}
-          <TouchableOpacity onPress={onPressUpload} style={[style.settingBtnView, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter, { borderColor: theme.background, backgroundColor: isFocusUpload ? theme.background : theme.primary }]}>
+          <TouchableOpacity onPress={onPressUploadButton} style={[style.settingBtnView, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter, { borderColor: theme.background, backgroundColor: isFocusUpload ? theme.background : theme.primary }]}>
             <MaterialIcons name={Icon.Upload} color={colorUploadText} size={Size.IconTiny} />
             <Text style={[{ color: colorUploadText }]}>{LocalText.upload}</Text>
           </TouchableOpacity>
