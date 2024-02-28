@@ -17,6 +17,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { prefixFbTrackPath } from '../../handle/tracking/Tracking';
 import { FirebaseDatabase_SetValueAsync } from '../../firebase/FirebaseDatabase';
 import { usePremium } from '../../hooks/usePremium';
+import { Cheat } from '../../handle/Cheat';
 
 export const iapBg_1 = require('../../../assets/images/btn_bg_1.jpeg')
 
@@ -88,7 +89,15 @@ const IAPPage = () => {
     track_SimpleWithParam('click_iap', id)
     setProcessingId(id)
 
-    const res = await PurchaseAsync(id)
+
+    let res
+
+    if (!__DEV__ || !Cheat('IAPSuccess')) // release mode
+      res = await PurchaseAsync(id)
+    else { // cheat
+      res = undefined
+    }
+
     // const res = undefined
 
     setProcessingId('')
