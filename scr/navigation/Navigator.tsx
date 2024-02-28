@@ -140,6 +140,8 @@ const Navigator = ({ initialRouteName }: MainNavigatorProps) => {
   }, [signal])
 
   useEffect(() => {
+    console.log(111);
+    
     setAppUtilsTheme(theme)
   }, [theme])
 

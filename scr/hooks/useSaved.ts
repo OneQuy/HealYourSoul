@@ -7,6 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 import { LimitSaved, LocalText } from "../constants/AppConstants";
 import { Alert } from "react-native";
 import { usePremium } from "./usePremium";
+import { GoodayToast } from "../handle/AppUtils";
 
 export const useSaved = (itemData?: DiversityItemType, diversityMode?: boolean) => {
     const allSavedItems = useAppSelector((state) => state.userData.savedItems)
@@ -43,6 +44,9 @@ export const useSaved = (itemData?: DiversityItemType, diversityMode?: boolean) 
                             onPress: () => GoToPremiumScreen(navigation),
                         },
                     ])
+            }
+            else { // can save
+                GoodayToast(LocalText.saved_2)
             }
         }
 
