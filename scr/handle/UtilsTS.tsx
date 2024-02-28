@@ -609,8 +609,45 @@ export const MonthName = (monthIndex: number, fullNameOr3Char: boolean): string 
     return monthNames[monthIndex].substring(0, fullNameOr3Char ? 100 : 3)
 }
 
-export const GetHourMinSecFromMs = (ms: number): [number, number, number] => {
+export const GetDayHourMinSecFromMs_ToString = (ms: number, separator = '_', removeZeroElement = true): string => {
+    let s = ''
+
+    const arr = GetDayHourMinSecFromMs(ms)
+
+    if (arr[0] > 0 || !removeZeroElement) {
+        s += arr[0] + 'd'
+    }
+
+    if (arr[1] > 0 || !removeZeroElement) {
+        if (s.length > 0)
+            s += separator
+
+        s += arr[1] + 'h'
+    }
+    
+    if (arr[2] > 0 || !removeZeroElement) {
+        if (s.length > 0)
+            s += separator
+
+        s += arr[2] + 'm'
+    }
+    
+    if (arr[3] > 0 || !removeZeroElement) {
+        if (s.length > 0)
+            s += separator
+
+        s += arr[3] + 's'
+    }
+
+    return s
+}
+
+export const GetDayHourMinSecFromMs = (ms: number): [number, number, number, number] => {
     let sec = ms / 1000
+
+    const day = Math.floor(sec / 3600 / 24)
+
+    sec = sec - day * 3600 * 24
 
     const hour = Math.floor(sec / 3600)
 
@@ -620,7 +657,7 @@ export const GetHourMinSecFromMs = (ms: number): [number, number, number] => {
 
     sec = Math.floor(sec - min * 60)
 
-    return [hour, min, sec]
+    return [day, hour, min, sec]
 }
 
 // number ---------------------------
