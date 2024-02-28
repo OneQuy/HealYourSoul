@@ -5,7 +5,7 @@ import { HandleAppConfigAsync } from "./AppConfigHandler"
 import { HandleStartupAlertAsync } from "./StartupAlert"
 import { GoodayToast, startFreshlyOpenAppTick } from "./AppUtils"
 import { SaveCachedPressNextPostAsync, checkAndTrackLocation, track_NewlyInstallOrFirstOpenOfTheDayOldUserAsync, track_OnUseEffectOnceEnterAppAsync, track_OpenAppOfDayCount } from "./tracking/GoodayTracking"
-import { StorageKey_LastTimeCheckAndReloadAppConfig, StorageKey_LastTimeCheckFirstOpenAppOfTheDay, StorageKey_OpenAppOfDayCount, StorageKey_OpenAppOfDayCountForDate, StorageKey_OpenAppTotalCount, StorageKey_ScreenToInit } from "../constants/AppConstants"
+import { LocalText, StorageKey_LastTimeCheckAndReloadAppConfig, StorageKey_LastTimeCheckFirstOpenAppOfTheDay, StorageKey_OpenAppOfDayCount, StorageKey_OpenAppOfDayCountForDate, StorageKey_OpenAppTotalCount, StorageKey_ScreenToInit } from "../constants/AppConstants"
 import { GetDateAsync, GetDateAsync_IsValueExistedAndIsToday, GetDateAsync_IsValueExistedAndIsTodayAndSameHour, GetNumberIntAsync, IncreaseNumberAsync, SetDateAsync_Now, SetNumberAsync } from "./AsyncStorageUtils"
 import { HandldAlertUpdateAppAsync } from "./HandleAlertUpdateApp"
 import { CheckAndPrepareDataForNotificationAsync, setNotificationAsync } from "./GoodayNotification"
@@ -266,8 +266,8 @@ export const HandleGoodayStreakAsync = async () => {
         return
 
     if (data.currentStreak > 1)
-        GoodayToast(`You have a ${data.currentStreak}-Gooday streak in a row!`)
+        GoodayToast(LocalText.gooday_streak_2.replaceAll('##', data.currentStreak.toString()))
     else
-        GoodayToast(`First day of Gooday streak!`)
+        GoodayToast(LocalText.gooday_streak_1)
 
 }

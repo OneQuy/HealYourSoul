@@ -377,6 +377,9 @@ export const LocalText = {
 
   rate_in_app_5star_content: 'Thank you so much! Your support means a lot to me. Would you consider rating Gooday on the App Store as well? Your feedback can help the app reach a wider audience!',
   rate_in_app_text: 'Tap the star you want to rate Gooday',
+  
+  gooday_streak_1: 'First day of Gooday streak!',
+  gooday_streak_2: 'You have a ##-Gooday streak in a row!',
 
   difficulty: 'Difficulty',
   all: 'All',
