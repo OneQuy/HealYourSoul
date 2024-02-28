@@ -20,7 +20,12 @@ import { usePremium } from '../../hooks/usePremium';
 
 export const iapBg_1 = require('../../../assets/images/btn_bg_1.jpeg')
 
-const ids = [
+const lifetimeProduct: IAPProduct = {
+  sku: 'gooday_lifetime',
+  isConsumable: true,
+} as const
+
+const subscriptions = [
   {
     month: 1,
     imgUrl: iapBg_1,
@@ -45,7 +50,11 @@ const ids = [
       isConsumable: true,
     } as IAPProduct
   },
-]
+] as const
+
+const allProducts: IAPProduct[] = [lifetimeProduct, ...subscriptions.map(i => i.product)] as const
+
+const allIds = allProducts.map(i => i.sku)
 
 const reasonItems = [
   {
@@ -116,7 +125,7 @@ const IAPPage = () => {
   }
 
   const renderLifetime = useCallback(() => {
-    const sku = 'gooday_lifetime'
+    const sku = lifetimeProduct.sku
     const productFetched = fetchedProducts.find(i => i.productId === sku)
     const price = productFetched ? productFetched.localizedPrice : '$ 29.99'
 
@@ -132,10 +141,10 @@ const IAPPage = () => {
         </TouchableOpacity>
         <Text selectable style={{ color: theme.counterBackground, fontSize: FontSize.Small, }}>{LocalText.lifetime_desc_2}</Text>
       </View>)
-  }, [theme, fetchedProducts])
+  }, [theme, fetchedProducts, processingId])
 
   const fetchLocalPriceAsync = useCallback(async () => {
-    const items = await FetchListroductsAsync(ids.map(i => i.product.sku))
+    const items = await FetchListroductsAsync(allIds)
 
     if (items.length > 0)
       setFetchedProducts(items)
@@ -154,7 +163,7 @@ const IAPPage = () => {
       // init IAP
 
       resInitIAP = await InitIAPAsync(
-        ids.map(i => i.product),
+        allProducts,
         async (s: string) => AsyncStorage.setItem(StorageKey_CachedIAP, s),
         async () => AsyncStorage.getItem(StorageKey_CachedIAP))
 
@@ -211,7 +220,7 @@ const IAPPage = () => {
       <Text selectable style={{ color: theme.counterBackground, fontSize: FontSize.Small_L, }}>{LocalText.subscriptions}:</Text>
 
       {
-        ids.map(({ month, imgUrl, product }) => {
+        subscriptions.map(({ month, imgUrl, product }) => {
           const { sku } = product
           const productFetched = fetchedProducts.find(i => i.productId === sku)
           const price = productFetched ? productFetched.localizedPrice : '...'
