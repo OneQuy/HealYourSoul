@@ -6,6 +6,8 @@ import { StorageKey_Streak } from "../constants/AppConstants";
 var data: Streak[] | undefined = undefined
 
 /**
+ * @returns true if handled.
+ * @returns false if already handled today.
  * @param countUniquePost. countUniquePost = 0 for not set, < 0 for 1++, > 0 for inc this
  */
 export async function SetStreakAsync(id: string) {
@@ -39,8 +41,10 @@ export async function SetStreakAsync(id: string) {
     // set streak
 
     const lastDate = new Date(item.lastDateTick)
+    let recorded = false
 
     if (!IsToday(lastDate)) {
+        recorded = true
         item.lastDateTick = Date.now()
         const isStreak = IsYesterday(lastDate)
 
@@ -58,6 +62,8 @@ export async function SetStreakAsync(id: string) {
 
     AsyncStorage.setItem(StorageKey_Streak, JSON.stringify(data))
     // console.log(JSON.stringify(data, null, 1));
+
+    return recorded
 }
 
 export async function GetStreakAsync(id: string) {

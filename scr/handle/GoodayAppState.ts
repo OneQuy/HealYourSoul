@@ -3,7 +3,7 @@ import { AppStateStatus } from "react-native"
 import { RegisterOnChangedState, UnregisterOnChangedState } from "./AppStateMan"
 import { HandleAppConfigAsync } from "./AppConfigHandler"
 import { HandleStartupAlertAsync } from "./StartupAlert"
-import { startFreshlyOpenAppTick } from "./AppUtils"
+import { GoodayToast, startFreshlyOpenAppTick } from "./AppUtils"
 import { SaveCachedPressNextPostAsync, checkAndTrackLocation, track_NewlyInstallOrFirstOpenOfTheDayOldUserAsync, track_OnUseEffectOnceEnterAppAsync, track_OpenAppOfDayCount } from "./tracking/GoodayTracking"
 import { StorageKey_LastTimeCheckAndReloadAppConfig, StorageKey_LastTimeCheckFirstOpenAppOfTheDay, StorageKey_OpenAppOfDayCount, StorageKey_OpenAppOfDayCountForDate, StorageKey_OpenAppTotalCount, StorageKey_ScreenToInit } from "../constants/AppConstants"
 import { GetDateAsync, GetDateAsync_IsValueExistedAndIsToday, GetDateAsync_IsValueExistedAndIsTodayAndSameHour, GetNumberIntAsync, IncreaseNumberAsync, SetDateAsync_Now, SetNumberAsync } from "./AsyncStorageUtils"
@@ -13,6 +13,7 @@ import { IsToday } from "./UtilsTS"
 import { NavigationProp } from "@react-navigation/native"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { HandleVersionsFileAsync } from './VersionsHandler';
+import { GetStreakAsync, SetStreakAsync } from './Streak';
 
 const HowLongInMinutesToCount2TimesUseAppSeparately = 20
 
@@ -227,6 +228,10 @@ export const CheckAndTriggerFirstOpenAppOfTheDayAsync = async () => {
     // track location
 
     checkAndTrackLocation()
+
+    // gooday streak
+
+    HandleGoodayStreakAsync()
 }
 
 /**
@@ -245,4 +250,24 @@ export const RegisterGoodayAppState = (isRegister: boolean) => {
         RegisterOnChangedState(onStateChanged)
     else
         UnregisterOnChangedState(onStateChanged)
+}
+
+export const HandleGoodayStreakAsync = async () => {
+    const id = 'gooday'
+
+    const handled = await SetStreakAsync(id)
+
+    if (!handled) // already showed
+        return
+
+    const data = await GetStreakAsync(id)
+
+    if (!data)
+        return
+
+    if (data.currentStreak > 1)
+        GoodayToast(`You have a ${data.currentStreak}-Gooday streak in a row!`)
+    else
+        GoodayToast(`First day of Gooday streak!`)
+
 }
