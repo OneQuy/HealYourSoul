@@ -1,6 +1,6 @@
 import { Alert, Share as RNShare, Linking, Platform, ShareContent } from "react-native";
 import { Category, FirebaseDBPath, FirebasePath, Icon, LocalPath, LocalText, NeedReloadReason, ScreenName, StorageKey_FirstTimeInstallTick, StorageKey_ItemCountCat, StorageKey_LastTrackCountryName, StorageKey_Rated, StorageKey_ScreenToInit, shareAppText } from "../constants/AppConstants";
-import { ThemeColor } from "../constants/Colors";
+import { GetColors, ThemeColor } from "../constants/Colors";
 import { FileList, MediaType, PostMetadata, UserInfo } from "../constants/Types";
 import { Cheat } from "./Cheat";
 import { DeleteFileAsync, DeleteTempDirAsync, GetFLPFromRLP, IsExistedAsync } from "./FileUtils";
@@ -59,6 +59,10 @@ const pairCatAndScreenName: [Category, ScreenName][] = [
     [Category.Tune, ScreenName.Tune],
     [Category.Vocabulary, ScreenName.Vocabulary],
 ] as const
+
+var appUtilsTheme: ThemeColor = GetColors('default_dark')
+
+export const setAppUtilsTheme = (th: ThemeColor) => appUtilsTheme = th
 
 /**
  * cheat clear whole folder data
@@ -355,6 +359,15 @@ export const RateApp = async () => {
     if (typeof res !== 'boolean') {
         HandleError('RateApp', ToCanPrint(res), true)
     }
+}
+
+export const GoodayToast = (s: string) => {
+    const options: ToastOptions = {
+        title: s,
+        ...ToastTheme(appUtilsTheme, 'done')
+    };
+
+    toast(options);
 }
 
 export const CopyAndToast = (s: string, theme: ThemeColor) => {

@@ -35,6 +35,7 @@ import { OnBlurSettingView } from '../screens/setting/SettingView';
 import FunSoundScreen from '../screens/fun_sound/FunSoundScreen';
 import SavedScreen from '../screens/saved/SavedScreen';
 import { DiversityItemType } from '../constants/Types';
+import { setAppUtilsTheme } from '../handle/AppUtils';
 
 export type DrawerParamList = {
   [ScreenName.Meme]: { item: DiversityItemType } | undefined,
@@ -137,6 +138,10 @@ const Navigator = ({ initialRouteName }: MainNavigatorProps) => {
   useEffect(() => {
     SetSignal(signal)
   }, [signal])
+
+  useEffect(() => {
+    setAppUtilsTheme(theme)
+  }, [theme])
 
   useEffect(() => {
     // init app state
