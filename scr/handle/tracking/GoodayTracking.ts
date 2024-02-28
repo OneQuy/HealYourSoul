@@ -1,4 +1,4 @@
-import { Category, StorageKey_CachedPressNextPost, StorageKey_FirstTimeInstallTick, StorageKey_LastInstalledVersion, StorageKey_LastTickTrackLocation, StorageKey_LastTrackCountryName, StorageKey_OpenAppTotalCount } from "../../constants/AppConstants"
+import { Category, StorageKey_CachedPressNextPost, StorageKey_FirstTimeInstallTick, StorageKey_LastInstalledVersion, StorageKey_LastTickTrackLocation, StorageKey_LastTrackCountryName, StorageKey_OpenAppOfDayCount, StorageKey_OpenAppTotalCount } from "../../constants/AppConstants"
 import { GetDateAsync, GetDateAsync_IsValueExistedAndIsToday, GetNumberIntAsync, SetDateAsync_Now, SetNumberAsync } from "../AsyncStorageUtils"
 import { MainTrack, TrackErrorOnFirebase } from "./Tracking"
 import { versionAsNumber } from "../AppUtils"
@@ -95,6 +95,7 @@ export const track_OnUseEffectOnceEnterAppAsync = async (startFreshlyOpenAppTick
     let event = 'freshly_open_app'
     const elapsedOpenAppTime = Date.now() - startFreshlyOpenAppTick
     const totalOpenAppCount = await GetNumberIntAsync(StorageKey_OpenAppTotalCount, 0)
+    const openTodaySoFar = await GetNumberIntAsync(StorageKey_OpenAppOfDayCount, 0)
 
     MainTrack(event,
         [
@@ -104,6 +105,7 @@ export const track_OnUseEffectOnceEnterAppAsync = async (startFreshlyOpenAppTick
         {
             floatValue: elapsedOpenAppTime,
             totalOpenAppCount,
+            openTodaySoFar,
         }
     )
 
