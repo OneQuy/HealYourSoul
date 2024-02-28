@@ -25,6 +25,7 @@ import { IsDev } from '../handle/IsDev';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { useNavigation } from '@react-navigation/native';
 import { setNavigation } from '../handle/GoodayAppState';
+import { usePremium } from '../hooks/usePremium';
 
 const premiumBGs = [
   [require(`../../assets/images/premium_btn/0.jpg`), '#1c1c1c'],
@@ -43,11 +44,11 @@ const premiumBGs = [
 export function CustomDrawerContent(props: DrawerContentComponentProps) {
   const pressLogoCountRef = useRef(0)
   const [_, onPressPremium] = useDrawerMenuItemUtils(ScreenName.IAPPage, props)
-  
+
   const [isFocusSetting, onPressSetting] = useDrawerMenuItemUtils(ScreenName.Setting, props)
   const [isFocusSaved, onPressSaved] = useDrawerMenuItemUtils(ScreenName.Saved, props)
   const [isFocusUpload, onPressUpload] = useDrawerMenuItemUtils(ScreenName.Upload, props)
-  
+
   const safeAreaInsets = useSafeAreaInsets()
   const theme = useContext(ThemeContext);
   const disableScreens = useAppSelector((state: RootState) => state.userData.disableScreens)
@@ -56,6 +57,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
   const [showRateAppOrShare, setShowRateAppOrShare] = useState(true)
   const isDrawerOpen = useDrawerStatus()
   const navigation = useNavigation()
+  const { isPremium, isLifetimed } = usePremium()
 
   const [notice, onPressNotice] = useMemo(() => {
     const data = GetAppConfig()?.notice
@@ -176,7 +178,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
     track_PressDrawerItem(FilterOnlyLetterAndNumberFromString(ScreenName.Saved))
     onPressSaved()
   }, [onPressSaved])
- 
+
   const onPressUploadButton = useCallback(() => {
     track_PressDrawerItem(FilterOnlyLetterAndNumberFromString(ScreenName.Upload))
     onPressUpload()
@@ -215,14 +217,17 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
       }
       <View style={[style.bottomMasterView, { backgroundColor: theme.primary }]}>
         {/* premium btn */}
-        <TouchableOpacity onPress={onPressPremiumButton}>
-          {/* @ts-ignore */}
-          <ImageBackground resizeMode="cover" source={premiumBg[0]} style={[style.premiumIB, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
-            {/* <ImageBackground resizeMode="cover" source={{ uri: urlbg }} style={[style.premiumIB, CommonStyles.justifyContentCenter_AlignItemsCenter]}> */}
-            <MaterialCommunityIcons name={Icon.Coffee} color={premiumBg[1]} size={Size.Icon} />
-            <Text numberOfLines={1} adjustsFontSizeToFit style={[style.premiumText, { color: premiumBg[1] }]}>{LocalText.donate_me}</Text>
-          </ImageBackground>
-        </TouchableOpacity>
+
+        {
+          !isLifetimed &&
+          <TouchableOpacity onPress={onPressPremiumButton}>
+            {/* @ts-ignore */}
+            <ImageBackground resizeMode="cover" source={premiumBg[0]} style={[style.premiumIB, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
+              <MaterialCommunityIcons name={Icon.Coffee} color={premiumBg[1]} size={Size.Icon} />
+              <Text numberOfLines={1} adjustsFontSizeToFit style={[style.premiumText, { color: premiumBg[1] }]}>{isPremium ? LocalText.you_vip : LocalText.donate_me}</Text>
+            </ImageBackground>
+          </TouchableOpacity>
+        }
 
         {/* saved button,... */}
         <View style={style.settingContainer}>
@@ -231,7 +236,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
             <MaterialIcons name={Icon.Bookmark} color={colorSavedText} size={Size.IconTiny} />
             <Text style={[{ color: colorSavedText }]}>{LocalText.saved_2}</Text>
           </TouchableOpacity>
-          
+
           {/* upload */}
           <TouchableOpacity onPress={onPressUploadButton} style={[style.settingBtnView, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter, { borderColor: theme.background, backgroundColor: isFocusUpload ? theme.background : theme.primary }]}>
             <MaterialIcons name={Icon.Upload} color={colorUploadText} size={Size.IconTiny} />

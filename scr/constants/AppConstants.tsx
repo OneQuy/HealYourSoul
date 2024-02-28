@@ -307,6 +307,7 @@ export const LocalText = {
   done: 'Done!',
   you_are_awesome: 'You are awsome!!',
   donate_me: 'Buy me a coffee',
+  you_vip: 'You are VIP',
   theme: 'Theme',
   great: 'Great!!',
   you_rock: 'You rock!!',
