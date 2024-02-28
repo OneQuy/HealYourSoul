@@ -10,9 +10,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { TempDirName } from '../../handle/Utils'
 import { SaveCurrentScreenForLoadNextTime, ToastTheme } from '../../handle/AppUtils'
 import { CommonStyles } from '../../constants/CommonConstants'
-import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
-import { PhotosOfTheYear, Streak } from '../../constants/Types';
-import StreakPopup from '../components/StreakPopup';
+import { PhotosOfTheYear } from '../../constants/Types';
 import { ToCanPrint } from '../../handle/UtilsTS';
 import { DownloadFileAsync, GetFLPFromRLP } from '../../handle/FileUtils';
 import { SaveToGalleryAsync } from '../../handle/CameraRoll';
@@ -38,7 +36,6 @@ const PicturesOfTheYearScreen = () => {
     const navigation = useNavigation();
     const theme = useContext(ThemeContext);
     const [reasonToReload, setReasonToReload] = useState(NeedReloadReason.None);
-    const [streakData, setStreakData] = useState<Streak | undefined>(undefined);
     const [selectingYear, setSelectingYear] = useState(dataOfYears[dataOfYears.length - 1].year)
     const [selectingPhotoIndex, setSelectingPhotoIndex] = useState(0)
     const [isShowAwardList, setIsShowLisShowAwardList] = useState(false)
@@ -124,15 +121,6 @@ const PicturesOfTheYearScreen = () => {
         if (isShowAwardList)
             setIsShowLisShowAwardList(false)
     }, [selectingYear, selectingPhotoIndex, isShowAwardList])
-
-    const onPressHeaderOption = useCallback(async () => {
-        if (streakData)
-            setStreakData(undefined)
-        else {
-            const streak = await GetStreakAsync(Category[category])
-            setStreakData(streak)
-        }
-    }, [streakData])
 
     const onPressSaveToPhoto = useCallback(async () => {
         if (!selectingPhoto) {
@@ -292,19 +280,13 @@ const PicturesOfTheYearScreen = () => {
         })()
     }, [selectingYear])
 
-    // on init once (for streak)
-
-    useEffect(() => {
-        SetStreakAsync(Category[category])
-    }, [])
-
     // update header setting btn
 
     useEffect(() => {
         navigation.setOptions({
             headerRight: () => <HeaderRightButtons />
         });
-    }, [onPressHeaderOption])
+    }, [])
 
     // save last visit category screen
 
@@ -395,9 +377,6 @@ const PicturesOfTheYearScreen = () => {
 
             {
                 isShowAwardList ? <SelectAward setIdx={(idx: number) => onPressNext(idx, 'menu')} year={selectingYear} selectIdx={selectingPhotoIndex} /> : undefined
-            }
-            {
-                streakData ? <StreakPopup streak={streakData} /> : undefined
             }
         </View>
     )

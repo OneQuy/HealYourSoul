@@ -12,9 +12,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { TempDirName } from '../../handle/Utils'
 import { SaveCurrentScreenForLoadNextTime, ToastTheme } from '../../handle/AppUtils'
 import { CommonStyles } from '../../constants/CommonConstants'
-import { SetStreakAsync } from '../../handle/Streak';
-import { DiversityItemType, RandomImage, Streak } from '../../constants/Types';
-import StreakPopup from '../components/StreakPopup';
+import { DiversityItemType, RandomImage } from '../../constants/Types';
 import { ToCanPrint } from '../../handle/UtilsTS';
 import { DownloadFileAsync, GetFLPFromRLP } from '../../handle/FileUtils';
 import { SaveToGalleryAsync } from '../../handle/CameraRoll';
@@ -42,7 +40,6 @@ const TheRandomImage = ({
     const reasonToReload = useRef<NeedReloadReason>(NeedReloadReason.None);
     const theme = useContext(ThemeContext);
     const [handling, setHandling] = useState(false);
-    const [streakData, setStreakData] = useState<Streak | undefined>(undefined);
 
     // animation
 
@@ -65,7 +62,6 @@ const TheRandomImage = ({
             await getImageAsync()
 
         if (item) { // success
-            SetStreakAsync(Category[category], -1)
         }
         else { // fail
             if (NetLord.IsAvailableLatestCheck())
@@ -80,15 +76,6 @@ const TheRandomImage = ({
         setHandling(false)
 
     }, [diversityItem])
-
-    // const onPressHeaderOption = useCallback(async () => {
-    //     if (streakData)
-    //         setStreakData(undefined)
-    //     else {
-    //         const streak = await GetStreakAsync(Category[category])
-    //         setStreakData(streak)
-    //     }
-    // }, [streakData])
 
     const onPressSaveToPhoto = useCallback(async () => {
         if (!currentItem) {
@@ -164,7 +151,6 @@ const TheRandomImage = ({
     // on init once (for load first post)
 
     useEffect(() => {
-        SetStreakAsync(Category[category])
         onPressRandom(false)
     }, [])
 
@@ -294,9 +280,6 @@ const TheRandomImage = ({
             </View>
             {/* main btn part */}
             <BottomBar items={bottomBarItems} />
-            {
-                streakData ? <StreakPopup streak={streakData} /> : undefined
-            }
         </View>
     )
 }

@@ -8,9 +8,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { SaveCurrentScreenForLoadNextTime, ToastTheme } from '../../handle/AppUtils'
 import { CommonStyles } from '../../constants/CommonConstants'
-import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
-import { Streak, Trivia, TriviaAnswerType, TriviaDifficulty } from '../../constants/Types';
-import StreakPopup from '../components/StreakPopup';
+import { Trivia, TriviaAnswerType, TriviaDifficulty } from '../../constants/Types';
 import { NetLord } from '../../handle/NetLord';
 import { ToastOptions, toast } from '@baronha/ting';
 import { PickRandomElement } from '../../handle/Utils';
@@ -49,7 +47,6 @@ const TheTrivia = ({
     const reasonToReload = useRef<NeedReloadReason>(NeedReloadReason.None);
     const theme = useContext(ThemeContext);
     const [handling, setHandling] = useState(false);
-    const [streakData, setStreakData] = useState<Streak | undefined>(undefined);
     const [userChosenAnswer, setUserChosenAnswer] = useState<string | undefined>(undefined);
     const [difficulty, setDifficulty] = useState<TriviaDifficulty>('all');
     const [type, setType] = useState<TriviaAnswerType>('all');
@@ -95,8 +92,6 @@ const TheTrivia = ({
             const arr = res.incorrectAnswer.concat(res.answer)
             arr.sort()
             setAllAnswer(arr)
-
-            SetStreakAsync(Category[category], -1)
         }
         else { // fail
             setAllAnswer(undefined)
@@ -111,15 +106,6 @@ const TheTrivia = ({
 
         setHandling(false)
     }, [])
-
-    const onPressHeaderOption = useCallback(async () => {
-        if (streakData)
-            setStreakData(undefined)
-        else {
-            const streak = await GetStreakAsync(Category[category])
-            setStreakData(streak)
-        }
-    }, [streakData])
 
     const onPressAnwser = useCallback((answer: string) => {
         if (userChosenAnswer) // already pick answer
@@ -152,7 +138,6 @@ const TheTrivia = ({
 
     useEffect(() => {
         const handle = async () => {
-            SetStreakAsync(Category[category])
             onPressRandom(false)
 
             const diff = await AsyncStorage.getItem(StorageKey_TriviaDifficulty)
@@ -171,9 +156,9 @@ const TheTrivia = ({
 
     useEffect(() => {
         navigation.setOptions({
-            headerRight: () => <HeaderRightButtons onPress={onPressHeaderOption} />
+            headerRight: () => <HeaderRightButtons />
         });
-    }, [onPressHeaderOption])
+    }, [])
 
     // save last visit category screen
 
@@ -258,9 +243,6 @@ const TheTrivia = ({
                     <Text style={{ color: theme.counterPrimary, fontSize: FontSize.Normal }}>{LocalText.random}</Text>
                 </TouchableOpacity>
             </View>
-            {
-                streakData ? <StreakPopup streak={streakData} /> : undefined
-            }
         </View>
     )
 }

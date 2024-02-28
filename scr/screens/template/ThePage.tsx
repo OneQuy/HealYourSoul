@@ -13,7 +13,7 @@ import React, { useCallback, useLayoutEffect, useContext, useEffect, useMemo, us
 import { BorderRadius, Category, FontSize, Icon, LocalText, NeedReloadReason, Opacity, Outline, Size } from '../../constants/AppConstants';
 import { ThemeContext } from '../../constants/Colors';
 import { heightPercentageToDP as hp, } from "react-native-responsive-screen";
-import { FileList, MediaType, PostMetadata, Streak } from '../../constants/Types';
+import { FileList, MediaType, PostMetadata } from '../../constants/Types';
 import { CheckLocalFileAndGetURIAsync, CopyAndToast, GetAllSavedLocalPostIDsListAsync, HandleError, PreDownloadPosts, SaveCurrentScreenForLoadNextTime, ToastTheme } from '../../handle/AppUtils';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
@@ -27,8 +27,6 @@ import { DownloadProgressCallbackResult } from 'react-native-fs';
 import { NetLord } from '../../handle/NetLord';
 import { SaveToGalleryAsync } from '../../handle/CameraRoll';
 import { Cheat } from '../../handle/Cheat';
-import { SetStreakAsync } from '../../handle/Streak';
-import StreakPopup from '../components/StreakPopup';
 import { track_PressNextPost, track_PressNextPostMedia, track_PressSaveMedia, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
@@ -72,7 +70,6 @@ const ThePage = ({ category }: ThePageProps) => {
     const previousPostIDs = useRef<number[]>([]);
     const allSavedLocalPostIdsRef = useRef<number[] | undefined>(undefined);
     const favoriteCallbackRef = useRef<(() => void) | undefined>(undefined);
-    const [streakData, setStreakData] = useState<Streak | undefined>(undefined);
     const [showIntroduceCat, renderShowIntroduceCat] = useIntroduceCat(category)
 
     const seenIDs = useAppSelector((state: RootState) => {
@@ -475,16 +472,7 @@ const ThePage = ({ category }: ThePageProps) => {
 
             toast(options);
         }
-    }, []);
-
-    // const onPressHeaderOption = useCallback(async () => {
-    //     if (streakData)
-    //         setStreakData(undefined)
-    //     else {
-    //         const streak = await GetStreakAsync(Category[category])
-    //         setStreakData(streak)
-    //     }
-    // }, [streakData])
+    }, [])
 
     const onPressNextMedia = useCallback(async (isNext: boolean) => {
         if (!post.current)
@@ -693,11 +681,7 @@ const ThePage = ({ category }: ThePageProps) => {
 
             // start load
 
-            onPressReloadAsync();
-
-            // set streak
-
-            SetStreakAsync(Category[category])
+            onPressReloadAsync()
         }
 
         Init();
@@ -768,12 +752,6 @@ const ThePage = ({ category }: ThePageProps) => {
             })
         }
     }, [needLoadPost]);
-
-    // set streak
-
-    useEffect(() => {
-        SetStreakAsync(Category[category], seenIDs && typeof seenIDs.length === 'number' ? seenIDs.length : 0)
-    }, [seenIDs]);
 
     const style = useMemo(() => {
         return StyleSheet.create({
@@ -978,11 +956,6 @@ const ThePage = ({ category }: ThePageProps) => {
 
             {/* main btn part */}
             <BottomBar items={bottomBarItems} />
-
-            {/* streak */}
-            {
-                streakData ? <StreakPopup streak={streakData} /> : undefined
-            }
         </View>
     )
 }

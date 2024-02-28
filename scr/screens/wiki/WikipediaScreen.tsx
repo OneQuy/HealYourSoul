@@ -13,9 +13,6 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { CopyAndToast, SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
 import ViewShot from 'react-native-view-shot'
 import { CommonStyles } from '../../constants/CommonConstants'
-import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
-import { Streak } from '../../constants/Types';
-import StreakPopup from '../components/StreakPopup';
 import { GetWikiAsync } from '../../handle/services/Wikipedia';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -38,7 +35,6 @@ const WikipediaScreen = () => {
     const reasonToReload = useRef<NeedReloadReason>(NeedReloadReason.None);
     const theme = useContext(ThemeContext);
     const [handling, setHandling] = useState(false);
-    const [streakData, setStreakData] = useState<Streak | undefined>(undefined);
     const [data, setData] = useState<object | undefined>(undefined);
     const [showFull, setShowFull] = useState(false);
     const viewShotRef = useRef<LegacyRef<ViewShot> | undefined>();
@@ -119,7 +115,6 @@ const WikipediaScreen = () => {
         setData(res)
 
         if (typeof res === 'object') { // success
-            SetStreakAsync(Category[category], -1)
         }
         else { // fail
             if (NetLord.IsAvailableLatestCheck())
@@ -142,15 +137,6 @@ const WikipediaScreen = () => {
         const message = currentTitle + '\n\n' + currentContent + '\n\nLink: ' + currentLink
         CopyAndToast(message, theme)
     }, [currentTitle, currentLink, currentContent, theme])
-
-    // const onPressHeaderOption = useCallback(async () => {
-    //     if (streakData)
-    //         setStreakData(undefined)
-    //     else {
-    //         const streak = await GetStreakAsync(Category[category])
-    //         setStreakData(streak)
-    //     }
-    // }, [streakData])
 
     const onPressInAppWeb = useCallback(() => {
         if (!showFull)
@@ -276,7 +262,6 @@ const WikipediaScreen = () => {
     // on init once (for load first post)
 
     useEffect(() => {
-        SetStreakAsync(Category[category])
         onPressRandom(false)
     }, [])
 
@@ -360,10 +345,6 @@ const WikipediaScreen = () => {
 
             {/* main btns */}
             <BottomBar items={bottomBarItems} />
-
-            {
-                streakData ? <StreakPopup streak={streakData} /> : undefined
-            }
         </View>
     )
 }

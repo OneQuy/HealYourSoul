@@ -10,9 +10,6 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { CopyAndToast, SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
 import ViewShot from 'react-native-view-shot'
 import { CommonStyles } from '../../constants/CommonConstants'
-import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
-import { Streak } from '../../constants/Types';
-import StreakPopup from '../components/StreakPopup';
 import { track_PressRandom, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
@@ -35,7 +32,6 @@ const TheRandomShortText = ({
     const reasonToReload = useRef<NeedReloadReason>(NeedReloadReason.None);
     const theme = useContext(ThemeContext);
     const [handling, setHandling] = useState(false);
-    const [streakData, setStreakData] = useState<Streak | undefined>(undefined);
     const viewShotRef = useRef<LegacyRef<ViewShot> | undefined>();
 
     const diversityItem = useDiversityItem(() => onPressRandom(false), undefined, undefined, text)
@@ -67,7 +63,6 @@ const TheRandomShortText = ({
         setText(text)
 
         if (text) { // success
-            SetStreakAsync(Category[category], -1)
         }
         else { // fail
             if (NetLord.IsAvailableLatestCheck())
@@ -89,15 +84,6 @@ const TheRandomShortText = ({
 
         CopyAndToast(text, theme)
     }, [text, theme])
-
-    const onPressHeaderOption = useCallback(async () => {
-        if (streakData)
-            setStreakData(undefined)
-        else {
-            const streak = await GetStreakAsync(Category[category])
-            setStreakData(streak)
-        }
-    }, [streakData])
 
     const onPressShareText = useCallback(() => {
         if (!text)
@@ -204,7 +190,6 @@ const TheRandomShortText = ({
     // on init once (for load first post)
 
     useEffect(() => {
-        SetStreakAsync(Category[category])
         onPressRandom(false)
     }, [])
 
@@ -222,7 +207,7 @@ const TheRandomShortText = ({
                     }}
             />
         });
-    }, [onPressHeaderOption, text, handling, diversityItem])
+    }, [text, handling, diversityItem])
 
     // save last visit category screen
 
@@ -265,10 +250,6 @@ const TheRandomShortText = ({
             }
 
             <BottomBar items={bottomBarItems} />
-
-            {
-                streakData ? <StreakPopup streak={streakData} /> : undefined
-            }
         </View>
     )
 }

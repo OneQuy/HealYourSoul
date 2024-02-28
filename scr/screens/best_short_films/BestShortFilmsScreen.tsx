@@ -11,9 +11,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { HandleError, SaveCurrentScreenForLoadNextTime, ToastNewItemsAsync } from '../../handle/AppUtils'
 import ViewShot from 'react-native-view-shot'
 import { CommonStyles } from '../../constants/CommonConstants'
-import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
-import { Streak, ShortFilm } from '../../constants/Types';
-import StreakPopup from '../components/StreakPopup';
+import { ShortFilm } from '../../constants/Types';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 import { ScrollView } from 'react-native-gesture-handler';
 import { ToCanPrint, IsChar, IsNumChar, OpenYoutubeAsync } from '../../handle/UtilsTS';
@@ -40,7 +38,6 @@ const BestShortFilmsScreen = () => {
     const reasonToReload = useRef<NeedReloadReason>(NeedReloadReason.None);
     const theme = useContext(ThemeContext);
     const [handling, setHandling] = useState(true)
-    const [streakData, setStreakData] = useState<Streak | undefined>(undefined)
     const [selectingItem, setSelectingItem] = useState<ShortFilm | undefined>(undefined)
     const [isShowList, setIsShowList] = useState(false)
     const viewShotRef = useRef<LegacyRef<ViewShot> | undefined>();
@@ -121,8 +118,6 @@ const BestShortFilmsScreen = () => {
         setSelectingIdxAsync(idx)
 
         setSelectingItem(movie)
-
-        SetStreakAsync(Category[category], -1)
     }, [shortFilms, reUpdateData])
 
     const onPressOpenYoutubeApp = useCallback(async () => {
@@ -158,15 +153,6 @@ const BestShortFilmsScreen = () => {
 
         onPressNext(RandomInt(0, shortFilms.length - 1), 'none')
     }, [shortFilms, onPressNext])
-
-    const onPressHeaderOption = useCallback(async () => {
-        if (streakData)
-            setStreakData(undefined)
-        else {
-            const streak = await GetStreakAsync(Category[category])
-            setStreakData(streak)
-        }
-    }, [streakData])
 
     const onPressInAppWeb = useCallback(() => {
         if (!showFull)
@@ -323,19 +309,13 @@ const BestShortFilmsScreen = () => {
         })()
     }, [shortFilms, errorDownloadJson])
 
-    // on init once
-
-    useEffect(() => {
-        SetStreakAsync(Category[category])
-    }, [])
-
     // update header setting btn
 
     useEffect(() => {
         navigation.setOptions({
             headerRight: () => <HeaderRightButtons />
         });
-    }, [onPressHeaderOption])
+    }, [])
 
     // save last visit category screen
 
@@ -411,9 +391,6 @@ const BestShortFilmsScreen = () => {
 
             {
                 isShowList && Array.isArray(shortFilms) ? <ListMovie getSelectingIdAsync={getSelectingIdxAsync} setIdx={(idx: number) => onPressNext(idx, 'menu')} list={shortFilms} /> : undefined
-            }
-            {
-                streakData ? <StreakPopup streak={streakData} /> : undefined
             }
         </View>
     )

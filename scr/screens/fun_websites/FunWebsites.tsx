@@ -2,7 +2,6 @@ import { Share as RNShare, View, Text, TouchableOpacity, ActivityIndicator, Styl
 import React, { LegacyRef, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size, StorageKey_LocalFileVersion, StorageKey_SelectingFunWebsiteId } from '../../constants/AppConstants'
-// import Share from 'react-native-share';
 
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -11,9 +10,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { CopyAndToast, SaveCurrentScreenForLoadNextTime, ToastNewItemsAsync } from '../../handle/AppUtils'
 import ViewShot from 'react-native-view-shot'
 import { CommonStyles } from '../../constants/CommonConstants'
-import { GetStreakAsync, SetStreakAsync } from '../../handle/Streak';
-import { FunWebsite, Streak } from '../../constants/Types';
-import StreakPopup from '../components/StreakPopup';
+import { FunWebsite } from '../../constants/Types';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 import { ScrollView } from 'react-native-gesture-handler';
 import WebView from 'react-native-webview';
@@ -39,7 +36,6 @@ const FunWebsitesScreen = () => {
     const reasonToReload = useRef<NeedReloadReason>(NeedReloadReason.None);
     const theme = useContext(ThemeContext);
     const [handling, setHandling] = useState(true)
-    const [streakData, setStreakData] = useState<Streak | undefined>(undefined)
     const [showFull, setShowFull] = useState(false)
     const [selectingItem, setSelectingItem] = useState<FunWebsite | undefined>(undefined)
     const [isShowList, setIsShowList] = useState(false)
@@ -121,8 +117,6 @@ const FunWebsitesScreen = () => {
 
         setSelectingItem(web)
         setShowFull(false)
-
-        SetStreakAsync(Category[category], -1)
     }, [funWebsites, reUpdateData])
 
     const onPressCopy = useCallback(() => {
@@ -134,15 +128,6 @@ const FunWebsitesScreen = () => {
         const message = selectingItem.desc + '\n\n' + selectingItem.url
         CopyAndToast(message, theme)
     }, [selectingItem, theme])
-
-    const onPressHeaderOption = useCallback(async () => {
-        if (streakData)
-            setStreakData(undefined)
-        else {
-            const streak = await GetStreakAsync(Category[category])
-            setStreakData(streak)
-        }
-    }, [streakData])
 
     const onPressShareText = useCallback(() => {
         if (!selectingItem)
@@ -274,19 +259,13 @@ const FunWebsitesScreen = () => {
         })()
     }, [funWebsites, errorDownloadJson])
 
-    // on init once
-
-    useEffect(() => {
-        SetStreakAsync(Category[category])
-    }, [])
-
     // update header setting btn
 
     useEffect(() => {
         navigation.setOptions({
             headerRight: () => <HeaderRightButtons />
         });
-    }, [onPressHeaderOption])
+    }, [])
 
     // save last visit category screen
 
@@ -367,9 +346,6 @@ const FunWebsitesScreen = () => {
 
             {
                 isShowList && Array.isArray(funWebsites) ? <ListWebsite getSelectingIdAsync={getSelectingIdAsync} setIdx={(idx: number) => onPressNext(idx, 'menu')} list={funWebsites} /> : undefined
-            }
-            {
-                streakData ? <StreakPopup streak={streakData} /> : undefined
             }
         </View>
     )
