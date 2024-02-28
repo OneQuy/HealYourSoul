@@ -99,17 +99,17 @@ export const track_OnUseEffectOnceEnterAppAsync = async (startFreshlyOpenAppTick
 
     const lastFreshlyOpenAppTick = await GetDateAsync(StorageKey_LastFreshlyOpenApp)
     SetDateAsync_Now(StorageKey_LastFreshlyOpenApp)
-    
+
     let lastFreshlyOpenAppToNowMs = 0
 
     if (lastFreshlyOpenAppTick !== undefined) {
         lastFreshlyOpenAppToNowMs = Date.now() - lastFreshlyOpenAppTick.getTime()
     }
 
-    let lastFreshlyOpenAppToNowText = GetDayHourMinSecFromMs_ToString(lastFreshlyOpenAppToNowMs)
+    let lastFreshlyOpenAppToNow = GetDayHourMinSecFromMs_ToString(lastFreshlyOpenAppToNowMs)
 
-    if (!IsValuableArrayOrString(lastFreshlyOpenAppToNowText))
-        lastFreshlyOpenAppToNowText = 'new_user'
+    if (!IsValuableArrayOrString(lastFreshlyOpenAppToNow))
+        lastFreshlyOpenAppToNow = 'new_user'
 
     MainTrack(event,
         [
@@ -120,7 +120,7 @@ export const track_OnUseEffectOnceEnterAppAsync = async (startFreshlyOpenAppTick
             floatValue: elapsedOpenAppTime,
             totalOpenAppCount,
             openTodaySoFar,
-            lastFreshlyOpenAppToNowText,
+            lastFreshlyOpenAppToNow,
         }
     )
 
