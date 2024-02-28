@@ -18,6 +18,7 @@ import { prefixFbTrackPath } from '../../handle/tracking/Tracking';
 import { FirebaseDatabase_SetValueAsync } from '../../firebase/FirebaseDatabase';
 import { usePremium } from '../../hooks/usePremium';
 import { Cheat } from '../../handle/Cheat';
+import { ResetNavigation } from '../../handle/GoodayAppState';
 
 export const iapBg_1 = require('../../../assets/images/btn_bg_1.jpeg')
 
@@ -118,6 +119,10 @@ const IAPPage = () => {
       dispatch(setSubscribe(id))
 
       Alert.alert(LocalText.you_are_awesome, LocalText.thank_iap)
+
+      if (id === lifetimeProduct.sku) { // lifetimed
+        ResetNavigation()
+      }
     }
     else if (res === null) { // user cancelled
       track_SimpleWithParam('iap_resulted', 'canceled')

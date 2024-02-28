@@ -145,7 +145,7 @@ const checkAndFireOnActiveOrOnceUseEffectWithCheckDuplicateAsync = async () => {
     await IncreaseNumberAsync(StorageKey_OpenAppTotalCount)
 }
 
-const ResetNavigation = async () => {
+export const ResetNavigation = async () => {
     if (!navigation)
         return
 
