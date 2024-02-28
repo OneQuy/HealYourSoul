@@ -115,6 +115,25 @@ const IAPPage = () => {
     }
   }
 
+  const renderLifetime = useCallback(() => {
+    const sku = 'gooday_lifetime'
+    const productFetched = fetchedProducts.find(i => i.productId === sku)
+    const price = productFetched ? productFetched.localizedPrice : '$ 29.99'
+
+    return (
+      <View key={sku} style={{ gap: Outline.VerticalMini }}>
+        <TouchableOpacity onPress={() => onPressed_Buy(sku)} style={{ borderRadius: BorderRadius.BR, overflow: 'hidden' }}>
+          <View
+            style={{ borderRadius: BorderRadius.BR, borderWidth: Outline.GapHorizontal / 2, borderColor: theme.primary, alignItems: 'center', padding: Outline.GapVertical_2, justifyContent: 'center', }}>
+            <Text adjustsFontSizeToFit numberOfLines={1} style={{ textAlign: 'center', color: theme.primary, fontSize: FontSize.Normal, fontWeight: FontWeight.B600 }}>{LocalText.lifetime}</Text>
+            <Text adjustsFontSizeToFit numberOfLines={1} style={{ textAlign: 'center', color: theme.primary, fontSize: FontSize.Normal, fontWeight: FontWeight.B600 }}>{LocalText.lifetime_desc}</Text>
+            <Text style={{ color: theme.primary, fontSize: FontSize.Normal, }}>{price}{processingId === sku ? '  ' : ''}{processingId === sku ? <ActivityIndicator color={theme.counterBackground} size={'small'} /> : undefined}</Text>
+          </View>
+        </TouchableOpacity>
+        <Text selectable style={{ color: theme.counterBackground, fontSize: FontSize.Small, }}>{LocalText.lifetime_desc_2}</Text>
+      </View>)
+  }, [theme, fetchedProducts])
+
   const fetchLocalPriceAsync = useCallback(async () => {
     const items = await FetchListroductsAsync(ids.map(i => i.product.sku))
 
@@ -159,6 +178,9 @@ const IAPPage = () => {
   return (
     <ScrollView contentContainerStyle={{ backgroundColor: theme.background, padding: Outline.Horizontal, paddingBottom: insets.bottom + Outline.VerticalMini, gap: Outline.GapVertical_2 }}>
       <Text selectable style={{ color: theme.counterBackground, fontSize: FontSize.Small_L, }}>{LocalText.premium_benefit}</Text>
+
+      {/* reasons */}
+
       {
         reasonItems.map(({ icon, title, content }) => {
           return (
@@ -171,6 +193,19 @@ const IAPPage = () => {
             </View>)
         })
       }
+
+      <View style={{ backgroundColor: theme.counterBackground, width: '100%', height: StyleSheet.hairlineWidth }} />
+
+      {/* lifetime */}
+
+      {
+        renderLifetime()
+      }
+
+      <View style={{ backgroundColor: theme.counterBackground, width: '100%', height: StyleSheet.hairlineWidth }} />
+
+      {/* btns month */}
+
       {
         ids.map(({ month, imgUrl, product }) => {
           const { sku } = product
@@ -193,8 +228,11 @@ const IAPPage = () => {
             </View>)
         })
       }
+
       <View style={{ backgroundColor: theme.counterBackground, width: '100%', height: StyleSheet.hairlineWidth }} />
+
       <Text selectable style={{ color: theme.counterBackground, fontSize: FontSize.Small_L, }}>{LocalText.warning_premium}</Text>
+
       <Text selectable numberOfLines={1} adjustsFontSizeToFit style={{ color: theme.counterBackground, fontSize: FontSize.Small_L, }}>{LocalText.thank_you_premium}</Text>
     </ScrollView>
   )
