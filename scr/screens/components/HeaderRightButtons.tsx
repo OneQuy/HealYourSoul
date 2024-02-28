@@ -9,6 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 import { DiversityItemType } from '../../constants/Types';
 import { useSaved } from '../../hooks/useSaved';
 import { GoToPremiumScreen } from './HeaderXButton';
+import { usePremium } from '../../hooks/usePremium';
 
 const HeaderRightButtons = (
     {
@@ -21,6 +22,7 @@ const HeaderRightButtons = (
     const theme = useContext(ThemeContext);
     const navigation = useNavigation()
     const [isSaved, onPressSaved] = useSaved(diversityItemData, diversityMode)
+    const { isPremium } = usePremium()
 
     const onPressPremium = useCallback(() => {
         GoToPremiumScreen(navigation)
@@ -43,9 +45,13 @@ const HeaderRightButtons = (
             }
 
             {/* premium btn */}
-            <TouchableOpacity onPress={onPressPremium} >
-                <MaterialCommunityIcons name={Icon.Star} color={theme.primary} size={Size.Icon} />
-            </TouchableOpacity>
+
+            {
+                !isPremium &&
+                <TouchableOpacity onPress={onPressPremium} >
+                    <MaterialCommunityIcons name={Icon.Star} color={theme.primary} size={Size.Icon} />
+                </TouchableOpacity>
+            }
         </View>
     )
 }

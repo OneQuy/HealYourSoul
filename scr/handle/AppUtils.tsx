@@ -101,10 +101,9 @@ export async function CheckAndClearAllLocalFileBeforeLoadApp() {
  * ]
  */
 export const GetExpiredDateAndDaysLeft = (startDayTick: number, month: number, endIsValidOrExpired: boolean = false): [Date, number] => {
-    if (Number.isNaN(month)) {
+    if (Number.isNaN(month)) { // lifetimed
         const d = new Date()
         d.setFullYear(5000)
-        console.log(d);
         
         return [d, Number.NaN]
     }
