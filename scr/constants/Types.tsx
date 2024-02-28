@@ -88,7 +88,6 @@ export type Trivia = {
 
 export type Streak = {
     id: string,
-    uniquePostSeen: number,
     bestStreak: number,
     currentStreak: number,
     lastDateTick: number,

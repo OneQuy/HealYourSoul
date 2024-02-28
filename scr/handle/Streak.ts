@@ -3,13 +3,12 @@ import { Streak } from "../constants/Types";
 import { IsToday, IsYesterday } from "./UtilsTS";
 import { StorageKey_Streak } from "../constants/AppConstants";
 
-
 var data: Streak[] | undefined = undefined
 
 /**
  * @param countUniquePost. countUniquePost = 0 for not set, < 0 for 1++, > 0 for inc this
  */
-export async function SetStreakAsync(id: string, countUniquePost: number = 0) {
+export async function SetStreakAsync(id: string) {
     // check load data
 
     if (data === undefined) {
@@ -36,13 +35,6 @@ export async function SetStreakAsync(id: string, countUniquePost: number = 0) {
 
         data.push(item)
     }
-
-    // inc count
-
-    if (countUniquePost < 0)
-        item.uniquePostSeen++
-    else if (countUniquePost > 0)
-        item.uniquePostSeen = countUniquePost
 
     // set streak
 
