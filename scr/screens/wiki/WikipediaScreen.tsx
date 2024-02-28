@@ -100,6 +100,34 @@ const WikipediaScreen = () => {
         Linking.openURL(currentLink)
     }, [currentLink])
 
+    const extractDataFromRawObject = useCallback((data: object | undefined) => {
+        if (data === undefined)
+            return undefined
+
+        return {
+            // @ts-ignore
+            extract: data.extract,
+            // @ts-ignore
+            title: data.title,
+
+            thumbnail: {
+                // @ts-ignore
+                source: data.thumbnail?.source
+            },
+
+            content_urls: {
+                mobile: {
+                    // @ts-ignore
+                    page: data.content_urls?.mobile?.page
+                },
+                desktop: {
+                    // @ts-ignore
+                    page: data.content_urls?.desktop?.page
+                }
+            }
+        }
+    }, [])
+
     const onPressRandom = useCallback(async (shouldTracking: boolean) => {
         reasonToReload.current = NeedReloadReason.None
         setHandling(true)
@@ -109,8 +137,10 @@ const WikipediaScreen = () => {
 
         if (diversityItem && diversityItem.wikipediaObject)
             res = diversityItem.wikipediaObject
-        else
-            res = await GetWikiAsync()
+        else {
+            const raw = await GetWikiAsync()
+            res = extractDataFromRawObject(raw)
+        }
 
         setData(res)
 
