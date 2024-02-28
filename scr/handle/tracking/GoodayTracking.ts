@@ -376,3 +376,16 @@ export const track_OpenAppOfDayCount = (count: number) => {
         }
     )
 }
+
+export const track_MaxSavedCount = (count: number) => {
+    const event = 'max_saved'
+
+    MainTrack(event,
+        [
+            `total/${event}/${count}_saved`,
+        ],
+        {
+            floatValue: count
+        }
+    )
+}

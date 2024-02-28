@@ -15,7 +15,9 @@ const aptabaseIgnoredEventNames: string[] = [
     'press_next_post_x5',
     'press_random',
     'press_drawer_item',
-    'press_previous_post'
+    'press_previous_post',
+    'saved',
+    'max_saved',
 ] as const
 
 const isLog = Cheat('IsLog_Tracking')

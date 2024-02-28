@@ -4,11 +4,12 @@ import { useAppDispatch, useAppSelector } from "../redux/Store";
 import { toggleSavedItem } from "../redux/UserDataSlice";
 import { GoToPremiumScreen, OnPressedXInDiversityMode } from "../screens/components/HeaderXButton";
 import { useNavigation } from "@react-navigation/native";
-import { LimitSaved, LocalText } from "../constants/AppConstants";
+import { LimitSaved, LocalText, StorageKey_MaxSavedCount } from "../constants/AppConstants";
 import { Alert } from "react-native";
 import { usePremium } from "./usePremium";
 import { GoodayToast } from "../handle/AppUtils";
-import { track_SimpleWithCat } from "../handle/tracking/GoodayTracking";
+import { track_MaxSavedCount, track_SimpleWithCat } from "../handle/tracking/GoodayTracking";
+import { GetNumberIntAsync, SetNumberAsync } from "../handle/AsyncStorageUtils";
 
 export const useSaved = (itemData?: DiversityItemType, diversityMode?: boolean) => {
     const allSavedItems = useAppSelector((state) => state.userData.savedItems)
@@ -23,7 +24,7 @@ export const useSaved = (itemData?: DiversityItemType, diversityMode?: boolean) 
             return false
     }, [allSavedItems, itemData])
 
-    const trackingSaved = useCallback(() => {
+    const trackingSaved = useCallback(async () => {
         if (!itemData)
             return
 
@@ -31,7 +32,18 @@ export const useSaved = (itemData?: DiversityItemType, diversityMode?: boolean) 
             itemData.cat,
             'saved',
             false)
-    }, [itemData])
+
+        // track count saved
+
+        const curCount = allSavedItems ? allSavedItems.length : 0
+
+        const maxCountTracked = await GetNumberIntAsync(StorageKey_MaxSavedCount, 0)
+
+        if (curCount > maxCountTracked) {
+            track_MaxSavedCount(curCount)
+            SetNumberAsync(StorageKey_MaxSavedCount, curCount)
+        }
+    }, [itemData, allSavedItems])
 
     const onPressSaved = useCallback(async () => {
         if (isSaved && diversityMode)
