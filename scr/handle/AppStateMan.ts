@@ -22,6 +22,11 @@ export const RegisterOnChangedState = (callback: AppStateCallback) => {
     // if (!inited)
     //     throw new Error('Not InitAppStateMan yet')
 
+    const idx = arrCallbacks.indexOf(callback)
+
+    if (idx >= 0)
+        return
+
     arrCallbacks.push(callback)
 }
 
