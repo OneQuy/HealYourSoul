@@ -8,6 +8,7 @@ import { LimitSaved, LocalText } from "../constants/AppConstants";
 import { Alert } from "react-native";
 import { usePremium } from "./usePremium";
 import { GoodayToast } from "../handle/AppUtils";
+import { track_SimpleWithCat } from "../handle/tracking/GoodayTracking";
 
 export const useSaved = (itemData?: DiversityItemType, diversityMode?: boolean) => {
     const allSavedItems = useAppSelector((state) => state.userData.savedItems)
@@ -21,6 +22,16 @@ export const useSaved = (itemData?: DiversityItemType, diversityMode?: boolean) 
         else
             return false
     }, [allSavedItems, itemData])
+
+    const trackingSaved = useCallback(() => {
+        if (!itemData)
+            return
+
+        track_SimpleWithCat(
+            itemData.cat,
+            'saved',
+            false)
+    }, [itemData])
 
     const onPressSaved = useCallback(async () => {
         if (isSaved && diversityMode)
@@ -47,12 +58,13 @@ export const useSaved = (itemData?: DiversityItemType, diversityMode?: boolean) 
             }
             else { // can save
                 GoodayToast(LocalText.saved_2)
+                trackingSaved()
             }
         }
 
         if (itemData && shouldDispatch)
             dispatch(toggleSavedItem(itemData))
-    }, [itemData, isSaved, isPremium, diversityMode, allSavedItems, navigation])
+    }, [itemData, trackingSaved, isSaved, isPremium, diversityMode, allSavedItems, navigation])
 
     return [isSaved, onPressSaved] as const
 }
