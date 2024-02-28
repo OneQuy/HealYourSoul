@@ -43,8 +43,11 @@ const premiumBGs = [
 export function CustomDrawerContent(props: DrawerContentComponentProps) {
   const pressLogoCountRef = useRef(0)
   const [_, onPressPremium] = useDrawerMenuItemUtils(ScreenName.IAPPage, props)
+  
   const [isFocusSetting, onPressSetting] = useDrawerMenuItemUtils(ScreenName.Setting, props)
   const [isFocusSaved, onPressSaved] = useDrawerMenuItemUtils(ScreenName.Saved, props)
+  const [isFocusUpload, onPressUpload] = useDrawerMenuItemUtils(ScreenName.Upload, props)
+  
   const safeAreaInsets = useSafeAreaInsets()
   const theme = useContext(ThemeContext);
   const disableScreens = useAppSelector((state: RootState) => state.userData.disableScreens)
@@ -173,6 +176,11 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
     track_PressDrawerItem(FilterOnlyLetterAndNumberFromString(ScreenName.Saved))
     onPressSaved()
   }, [onPressSaved])
+ 
+  const onPressUploadButton = useCallback(() => {
+    track_PressDrawerItem(FilterOnlyLetterAndNumberFromString(ScreenName.Upload))
+    onPressUpload()
+  }, [onPressUpload])
 
   const onPressSettingButton = useCallback(() => {
     track_PressDrawerItem(FilterOnlyLetterAndNumberFromString(ScreenName.Setting))
@@ -193,6 +201,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
 
   const colorSettingText = !isFocusSetting ? theme.background : theme.primary
   const colorSavedText = !isFocusSaved ? theme.background : theme.primary
+  const colorUploadText = !isFocusUpload ? theme.background : theme.primary
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.background }}>
@@ -221,6 +230,12 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
           <TouchableOpacity onPress={onPressSavedButton} style={[style.settingBtnView, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter, { borderColor: theme.background, backgroundColor: isFocusSaved ? theme.background : theme.primary }]}>
             <MaterialIcons name={Icon.Bookmark} color={colorSavedText} size={Size.IconTiny} />
             <Text style={[{ color: colorSavedText }]}>{LocalText.saved_2}</Text>
+          </TouchableOpacity>
+          
+          {/* upload */}
+          <TouchableOpacity onPress={onPressUpload} style={[style.settingBtnView, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter, { borderColor: theme.background, backgroundColor: isFocusUpload ? theme.background : theme.primary }]}>
+            <MaterialIcons name={Icon.Upload} color={colorUploadText} size={Size.IconTiny} />
+            <Text style={[{ color: colorUploadText }]}>{LocalText.upload}</Text>
           </TouchableOpacity>
         </View>
 

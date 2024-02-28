@@ -60,6 +60,13 @@ const pairCatAndScreenName: [Category, ScreenName][] = [
     [Category.Vocabulary, ScreenName.Vocabulary],
 ] as const
 
+const notContentScreen: ScreenName[] = [
+    ScreenName.IAPPage,
+    ScreenName.Setting,
+    ScreenName.Upload,
+    ScreenName.Saved
+] as const
+
 var appUtilsTheme: ThemeColor = GetColors('default_dark')
 
 export const setAppUtilsTheme = (th: ThemeColor) => appUtilsTheme = th
@@ -642,13 +649,8 @@ export const GetAllContentScreens = (
 
     return routes.map(i => i.name)
 }
-export const IsContentScreen = (screen: ScreenName) => {
-    const notContentScreen: ScreenName[] = [
-        ScreenName.IAPPage,
-        ScreenName.Setting,
-        ScreenName.Saved
-    ]
 
+export const IsContentScreen = (screen: ScreenName) => {
     return !notContentScreen.includes(screen)
 }
 

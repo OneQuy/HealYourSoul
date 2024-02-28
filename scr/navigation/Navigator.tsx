@@ -36,6 +36,7 @@ import FunSoundScreen from '../screens/fun_sound/FunSoundScreen';
 import SavedScreen from '../screens/saved/SavedScreen';
 import { DiversityItemType } from '../constants/Types';
 import { setAppUtilsTheme } from '../handle/AppUtils';
+import UploadScreen from '../screens/upload/UploadScreen';
 
 export type DrawerParamList = {
   [ScreenName.Meme]: { item: DiversityItemType } | undefined,
@@ -70,6 +71,7 @@ export type DrawerParamList = {
   [ScreenName.IAPPage]: undefined,
   [ScreenName.Setting]: undefined,
   [ScreenName.Saved]: undefined,
+  [ScreenName.Upload]: undefined,
 }
 
 type MainNavigatorProps = {
@@ -115,6 +117,7 @@ const ScreenList: ScreenNamePair[] = [
   [ScreenName.IAPPage, IAPPage],
   [ScreenName.Setting, SettingScreen],
   [ScreenName.Saved, SavedScreen],
+  [ScreenName.Upload, UploadScreen],
 ]
 
 const Navigator = ({ initialRouteName }: MainNavigatorProps) => {

@@ -38,6 +38,7 @@ export enum ScreenName {
   Setting = 'Setting',
   Saved = 'Saved',
   FunSound = 'Meme Sounds',
+  Upload = 'Upload',
 }
 
 // dir / file
@@ -204,6 +205,7 @@ export enum Icon {
   ShareText = 'share',
   BookmarkOutline = 'bookmark-outline',
   Bookmark = 'bookmark',
+  Upload = 'upload',
   Youtube = 'youtube',
   ShareImage = 'share-variant-outline',
   ThreeDots = 'dots-horizontal',
@@ -271,6 +273,7 @@ export const LocalText = {
   rate_app: "Rate app",
   Contact: "Contact",
   saved_2: "Saved",
+  upload: "Upload",
   lights_mode: "Light mode",
   darks_mode: "Dark mode",
   specials_theme: "Special theme",
