@@ -76,13 +76,16 @@ export const track_NewlyInstallOrFirstOpenOfTheDayOldUserAsync = async () => {
     else {
         let event = 'first_open_of_day_old_user'
         const totalOpenAppCount = await GetNumberIntAsync(StorageKey_OpenAppTotalCount, 0)
+        
+        const installedDaysCountDiff = Date.now() - firstTimeInstallTick.getTime()
+        const installedDaysCount = GetDayHourMinSecFromMs_ToString(installedDaysCountDiff)
 
         MainTrack(event,
             [
                 `events/${event}/#d`,
             ],
             {
-                installedDaysCount: DistanceFrom2Dates(Date.now(), firstTimeInstallTick).toFixed(1),
+                installedDaysCount,
                 totalOpenAppCount,
             })
     }
