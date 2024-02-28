@@ -19,15 +19,15 @@ export const InitAppStateMan = () => {
 }
 
 export const RegisterOnChangedState = (callback: AppStateCallback) => {
-    if (!inited)
-        throw new Error('Not InitAppStateMan yet')
+    // if (!inited)
+    //     throw new Error('Not InitAppStateMan yet')
 
     arrCallbacks.push(callback)
 }
 
 export const UnregisterOnChangedState = (callback: AppStateCallback) => {
-    if (!inited)
-        throw new Error('Not InitAppStateMan yet')
+    // if (!inited)
+    //     throw new Error('Not InitAppStateMan yet')
 
     const idx = arrCallbacks.indexOf(callback)
 
