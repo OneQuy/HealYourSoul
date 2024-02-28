@@ -185,8 +185,11 @@ const slice = createSlice({
             if (!state.checkedInScreens)
                 state.checkedInScreens = []
 
-            if (!state.checkedInScreens.includes(action.payload))
+            if (!state.checkedInScreens.includes(action.payload)) {
                 state.checkedInScreens.push(action.payload)
+                
+                console.log('checkedInScreens', action.payload)
+            }
         },
 
         // fun sound
