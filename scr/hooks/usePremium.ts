@@ -8,7 +8,7 @@ export const usePremium = () => {
 
     const [expiredDate, dayLeft] = useMemo(() => {
         if (subscribedData) {
-            const monthNum = SplitNumberInText(subscribedData.id)
+            const monthNum: number = SplitNumberInText(subscribedData.id)
             return GetExpiredDateAndDaysLeft(subscribedData.tick, monthNum)
         }
         else
@@ -19,6 +19,7 @@ export const usePremium = () => {
         expiredDate,
         dayLeft,
         subscribedData,
-        isPremium: dayLeft > 0
+        isPremium: Number.isNaN(dayLeft) || dayLeft > 0, // is subscribed or lifetimed
+        isLifetimed: Number.isNaN(dayLeft)
     } as const
 }

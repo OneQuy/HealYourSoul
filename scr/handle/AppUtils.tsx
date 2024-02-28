@@ -93,7 +93,22 @@ export async function CheckAndClearAllLocalFileBeforeLoadApp() {
         console.log('COMPLETELY DELETED Temp Dir!');
 }
 
+/**
+ * 
+ * @returns [
+ * @date: if month is NaN (lifetimed) => year 5000. month is true number => date that expired
+ * @number: if month is NaN (lifetimed) => NaN. month is true number => dayLefts
+ * ]
+ */
 export const GetExpiredDateAndDaysLeft = (startDayTick: number, month: number, endIsValidOrExpired: boolean = false): [Date, number] => {
+    if (Number.isNaN(month)) {
+        const d = new Date()
+        d.setFullYear(5000)
+        console.log(d);
+        
+        return [d, Number.NaN]
+    }
+
     const subDate = new Date(startDayTick)
 
     const expiredDate = new Date(startDayTick)

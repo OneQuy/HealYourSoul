@@ -124,7 +124,7 @@ const IAPPage = () => {
     }
   }
 
-  const renderLifetime = useCallback(() => {
+  const renderLifetimeButton = useCallback(() => {
     const sku = lifetimeProduct.sku
     const productFetched = fetchedProducts.find(i => i.productId === sku)
     const price = productFetched ? productFetched.localizedPrice : '$ 29.99'
@@ -210,7 +210,7 @@ const IAPPage = () => {
       <Text selectable style={{ color: theme.counterBackground, fontSize: FontSize.Small_L, }}>{LocalText.one_time_purchase}:</Text>
 
       {
-        renderLifetime()
+        renderLifetimeButton()
       }
 
       <View style={{ backgroundColor: theme.counterBackground, width: '100%', height: StyleSheet.hairlineWidth }} />

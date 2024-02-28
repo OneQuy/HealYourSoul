@@ -1,24 +1,12 @@
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { View, StyleSheet, FlatList, Text, TouchableOpacity, ImageBackground } from 'react-native'
-import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { BorderRadius, Category, FontSize, FontWeight, Icon, LimitSaved, LocalText, Outline, ScreenName, Size, StorageKey_CurPageFunSoundIdx, StorageKey_IsUserPressedClosePleaseSubscribe } from '../../constants/AppConstants'
-import { DiversityItemType } from '../../constants/Types'
-import { NavigationProp, useNavigation } from '@react-navigation/native'
+import { View, StyleSheet, Text } from 'react-native'
+import React, { useContext, useMemo } from 'react'
+import { BorderRadius, FontSize, FontWeight, Icon, Outline, Size } from '../../constants/AppConstants'
 import { ThemeContext } from '../../constants/Colors'
-import { IsValuableArrayOrString } from '../../handle/UtilsTS'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { GetBooleanAsync, SetBooleanAsync, SetNumberAsync } from '../../handle/AsyncStorageUtils';
-import HeaderRightButtons from '../components/HeaderRightButtons';
-import { DrawerNavigationProp } from '@react-navigation/drawer';
-import { DrawerParamList } from '../../navigation/Navigator';
-import PageNavigatorBar from '../fun_sound/PageNavigatorBar'
-import { CatToScreenName } from '../../handle/AppUtils'
 import { widthPercentageToDP } from 'react-native-responsive-screen';
-import { iapBg_1 } from '../IAP/IAPPage';
-import { GoToPremiumScreen } from '../components/HeaderXButton';
-import { usePremium } from '../../hooks/usePremium';
 
 const UploadScreen = () => {
     const theme = useContext(ThemeContext);
