@@ -198,6 +198,8 @@ const IAPPage = () => {
 
       {/* lifetime */}
 
+      <Text selectable style={{ color: theme.counterBackground, fontSize: FontSize.Small_L, }}>{LocalText.one_time_purchase}:</Text>
+
       {
         renderLifetime()
       }
@@ -205,6 +207,8 @@ const IAPPage = () => {
       <View style={{ backgroundColor: theme.counterBackground, width: '100%', height: StyleSheet.hairlineWidth }} />
 
       {/* btns month */}
+
+      <Text selectable style={{ color: theme.counterBackground, fontSize: FontSize.Small_L, }}>{LocalText.subscriptions}:</Text>
 
       {
         ids.map(({ month, imgUrl, product }) => {
