@@ -7,8 +7,7 @@ import { ThemeContext } from '../../constants/Colors';
 import { CommonStyles } from '../../constants/CommonConstants';
 import { AddOrRemoveItemInArray, ColorNameToRgb } from '../../handle/UtilsTS';
 import { BorderRadius, ScreenName, FontSize, FontWeight, Icon, LocalText, Outline, Size } from '../../constants/AppConstants';
-import { GetAllContentScreens, GetIconOfScreen } from '../../handle/AppUtils';
-import { useNavigation } from '@react-navigation/native';
+import { GetIconOfScreen } from '../../handle/AppUtils';
 import HairLine from '../components/HairLine';
 
 const FilterDiversityPopup = ({
@@ -78,7 +77,7 @@ const FilterDiversityPopup = ({
     const style = useMemo(() => {
         return StyleSheet.create({
             filterView: { justifyContent: 'center', alignItems: 'center', },
-            filterTO: { borderRadius: BorderRadius.BR, justifyContent: 'center', alignItems: 'center', gap: Outline.GapHorizontal, padding: Outline.GapVertical, width: '80%', flexDirection: 'row', backgroundColor: theme.primary },
+            filterTO: { borderRadius: BorderRadius.BR, justifyContent: 'center', alignItems: 'center', gap: Outline.GapHorizontal, padding: Outline.GapVertical, minWidth: '40%', flexDirection: 'row', backgroundColor: theme.primary },
             filterCatTxt: { fontSize: FontSize.Normal, color: theme.counterPrimary, },
         })
     }, [theme])
