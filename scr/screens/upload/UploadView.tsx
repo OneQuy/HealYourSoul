@@ -1,7 +1,7 @@
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, Text, Image, TouchableOpacity, ActivityIndicator } from 'react-native'
 import React, { useContext, useMemo, useState } from 'react'
 import { BorderRadius, FontSize, Icon, LocalText, Outline, Size } from '../../constants/AppConstants'
 import { ThemeContext } from '../../constants/Colors'
@@ -10,12 +10,14 @@ const UploadView = () => {
     const theme = useContext(ThemeContext);
     const [mediaUri, setMediaUri] = useState('https://images7.memedroid.com/images/UPLOADED809/5c32f47214be6.jpeg')
     const [toggleRules, setToggleRules] = useState(false)
+    const [isUploading, setIsUploading] = useState(false)
 
     const style = useMemo(() => {
         return StyleSheet.create({
             masterView: { flex: 1, justifyContent: 'center', alignItems: 'center', gap: Outline.GapHorizontal, },
             rectEmptyView: { width: '70%', height: '50%', borderColor: theme.counterBackground, borderWidth: StyleSheet.hairlineWidth, borderRadius: BorderRadius.BR, justifyContent: 'center', alignItems: 'center' },
             bottomBtnsView: { marginTop: Outline.Vertical, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: Outline.GapHorizontal },
+            uploadingView: { gap: Outline.GapHorizontal },
             image: { width: '70%', height: '50%', },
             checkboxTO: { marginHorizontal: Outline.GapVertical_2, flexDirection: 'row', alignItems: 'center', gap: Outline.GapHorizontal },
             readRuleTO: { marginTop: Outline.Vertical, borderRadius: BorderRadius.BR, borderColor: theme.counterBackground, borderWidth: StyleSheet.hairlineWidth, padding: Outline.GapVertical, alignItems: 'center', },
@@ -50,29 +52,47 @@ const UploadView = () => {
 
             <Image resizeMode='contain' source={{ uri: mediaUri }} style={style.image} />
 
+            {/* uploading indicator */}
+
+            {
+                isUploading &&
+                <View style={style.uploadingView}>
+                    <ActivityIndicator color={theme.primary} />
+                    <Text style={style.text}>{LocalText.uploading}</Text>
+                </View>
+            }
+
             {/* read rules btn */}
 
-            <TouchableOpacity onPress={() => setToggleRules(i => !i)} style={[style.readRuleTO]}>
-                <Text style={style.text}>{LocalText.read_rules}</Text>
-            </TouchableOpacity>
+            {
+                !isUploading &&
+                <TouchableOpacity onPress={() => setToggleRules(i => !i)} style={[style.readRuleTO]}>
+                    <Text style={style.text}>{LocalText.read_rules}</Text>
+                </TouchableOpacity>
+            }
 
             {/* toggle rule */}
 
-            <TouchableOpacity onPress={() => setToggleRules(i => !i)} style={[style.checkboxTO]}>
-                <MaterialCommunityIcons name={toggleRules ? Icon.CheckBox_Yes : Icon.CheckBox_No} color={theme.counterBackground} size={Size.Icon} />
-                <Text style={style.text}>{LocalText.follow_rules_upload}</Text>
-            </TouchableOpacity>
-
-            {/* read rules btn */}
-
-            <View style={style.bottomBtnsView}>
-                <TouchableOpacity onPress={() => setToggleRules(i => !i)} style={[style.bottomBtn]}>
-                    <Text style={style.text}>{LocalText.cancel}</Text>
+            {
+                !isUploading &&
+                <TouchableOpacity onPress={() => setToggleRules(i => !i)} style={[style.checkboxTO]}>
+                    <MaterialCommunityIcons name={toggleRules ? Icon.CheckBox_Yes : Icon.CheckBox_No} color={theme.counterBackground} size={Size.Icon} />
+                    <Text style={style.text}>{LocalText.follow_rules_upload}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => setToggleRules(i => !i)} style={[style.bottomBtn_Highlight]}>
-                    <Text style={style.bottomBtnTxt_Highlight}>{LocalText.upload}</Text>
-                </TouchableOpacity>
-            </View>
+            }
+            {/* bottom btns */}
+
+            {
+                !isUploading &&
+                <View style={style.bottomBtnsView}>
+                    <TouchableOpacity onPress={() => setToggleRules(i => !i)} style={[style.bottomBtn]}>
+                        <Text style={style.text}>{LocalText.cancel}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => setToggleRules(i => !i)} style={[style.bottomBtn_Highlight]}>
+                        <Text style={style.bottomBtnTxt_Highlight}>{LocalText.upload}</Text>
+                    </TouchableOpacity>
+                </View>
+            }
         </View>
     )
 }

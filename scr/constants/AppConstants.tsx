@@ -274,6 +274,7 @@ export const LocalText = {
   Contact: "Contact",
   saved_2: "Saved",
   upload: "Upload",
+  uploading: "Uploading...",
   cancel: "Cancel",
   lights_mode: "Light mode",
   lifetime: "Gooday Lifetime",
