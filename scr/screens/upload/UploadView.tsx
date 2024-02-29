@@ -1,16 +1,62 @@
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { View, StyleSheet, Text, Image, TouchableOpacity, ActivityIndicator } from 'react-native'
-import React, { useContext, useMemo, useState } from 'react'
+import { View, StyleSheet, Text, Image, TouchableOpacity, ActivityIndicator, Platform, Alert } from 'react-native'
+import React, { useCallback, useContext, useMemo, useState } from 'react'
 import { BorderRadius, FontSize, Icon, LocalText, Outline, Size } from '../../constants/AppConstants'
 import { ThemeContext } from '../../constants/Colors'
+import { openPicker } from '@baronha/react-native-multiple-image-picker';
+import { MediaType } from '../../constants/Types';
+import { GetFileExtensionByFilepath } from '../../handle/UtilsTS';
 
 const UploadView = () => {
     const theme = useContext(ThemeContext);
-    const [mediaUri, setMediaUri] = useState('https://images7.memedroid.com/images/UPLOADED809/5c32f47214be6.jpeg')
+
+    const [mediaUri, setMediaUri] = useState('')
     const [toggleRules, setToggleRules] = useState(false)
     const [isUploading, setIsUploading] = useState(false)
+
+    const reset = useCallback(async () => {
+        setMediaUri('')
+        setToggleRules(false)
+    }, [])
+
+    const onPressPickImage = useCallback(async () => {
+        let response
+
+        try {
+            response = await openPicker({
+                maxSelectedAssets: 1,
+                usedCameraButton: false,
+            })
+        }
+        catch { }
+
+        if (!response || response.length == 0)
+            return
+
+        let path: string
+
+        if (Platform.OS === 'android')
+            path = 'file://' + response[0].realPath;
+        else
+            path = response[0].path;
+
+        if (!IsSupportURI(path)) {
+            Alert.alert(
+                LocalText.unsupport_file,
+                LocalText.unsupport_file_desc + '\n\nPath: ' + path)
+
+            return
+        }
+
+        // file size
+
+        // video? 
+
+
+        setMediaUri(path)
+    }, [])
 
     const style = useMemo(() => {
         return StyleSheet.create({
@@ -29,17 +75,17 @@ const UploadView = () => {
         })
     }, [theme])
 
-    // render list is empty
+    // not pick image yet
 
     if (!mediaUri) {
         return (
             <View style={style.masterView}>
                 {/* rect emtpy */}
 
-                <View style={style.rectEmptyView}>
+                <TouchableOpacity onPress={onPressPickImage} style={style.rectEmptyView}>
                     <MaterialCommunityIcons name={Icon.Upload} color={theme.primary} size={Size.IconMedium} />
                     <Text style={style.pickMediaTxt}>{LocalText.pick_image}</Text>
-                </View>
+                </TouchableOpacity>
             </View>
         )
     }
@@ -85,7 +131,7 @@ const UploadView = () => {
             {
                 !isUploading &&
                 <View style={style.bottomBtnsView}>
-                    <TouchableOpacity onPress={() => setToggleRules(i => !i)} style={[style.bottomBtn]}>
+                    <TouchableOpacity onPress={reset} style={[style.bottomBtn]}>
                         <Text style={style.text}>{LocalText.cancel}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => setToggleRules(i => !i)} style={[style.bottomBtn_Highlight]}>
@@ -98,3 +144,23 @@ const UploadView = () => {
 }
 
 export default UploadView
+
+function GetMediaTypeByFileExtension(extension: string): MediaType | undefined {
+    extension = extension.toLowerCase();
+
+    if (extension == 'jpg' ||
+        extension == 'jpeg' ||
+        extension == 'gif' ||
+        extension == 'bmp' ||
+        extension == 'webp' ||
+        extension == 'png')
+        return MediaType.Image;
+    else if (extension == 'mp4')
+        return MediaType.Video;
+    else
+        return undefined
+}
+
+function IsSupportURI(flp: string): boolean {
+    return GetMediaTypeByFileExtension(GetFileExtensionByFilepath(flp)) !== undefined
+}

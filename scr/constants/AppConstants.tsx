@@ -341,7 +341,9 @@ export const LocalText = {
   filter: 'Filter',
   new_item_website: '# new fun website(s) added to the list!!',
   new_item_short_film: '# new short film(s) added to the list!!',
-  pick_image: 'Pick media.',
+  pick_image: 'Pick your image.',
+  unsupport_file: 'Unsupport file',
+  unsupport_file_desc: 'This file type is not supported currently. Please pick another file.',
 
   one_time_purchase: 'You can choose between a one-time purchase',
   subscriptions: 'Or a subscription',
