@@ -3,22 +3,31 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import { View, StyleSheet, Text, Image, TouchableOpacity, ActivityIndicator, Platform, Alert } from 'react-native'
 import React, { useCallback, useContext, useMemo, useState } from 'react'
-import { BorderRadius, FontSize, Icon, LocalText, Outline, Size } from '../../constants/AppConstants'
+import { BorderRadius, FileSizeLimitUploadInMb_Image, FileSizeLimitUploadInMb_Video, FontSize, Icon, LocalText, Outline, Size } from '../../constants/AppConstants'
 import { ThemeContext } from '../../constants/Colors'
 import { openPicker } from '@baronha/react-native-multiple-image-picker';
 import { MediaType } from '../../constants/Types';
-import { GetFileExtensionByFilepath } from '../../handle/UtilsTS';
+import { GetFileExtensionByFilepath, ToCanPrint } from '../../handle/UtilsTS';
+import { usePremium } from '../../hooks/usePremium';
+import { FileSizeInMB } from '../../handle/FileUtils';
+import { UserID } from '../../handle/UserID';
+import { FirebaseStorage_UploadAsync } from '../../firebase/FirebaseStorage';
+import { IsErrorObject_Empty } from '../../handle/Utils';
+import { NetLord } from '../../handle/NetLord';
+import { AlertNoInternet, AlertWithError } from '../../handle/AppUtils';
 
 const UploadView = () => {
     const theme = useContext(ThemeContext);
 
     const [mediaUri, setMediaUri] = useState('')
     const [toggleRules, setToggleRules] = useState(false)
-    const [isUploading, setIsUploading] = useState(false)
+    const [uploadingStatusText, setUploadingStatusText] = useState('')
+    const { isPremium } = usePremium()
 
     const reset = useCallback(async () => {
         setMediaUri('')
         setToggleRules(false)
+        setUploadingStatusText('')
     }, [])
 
     const onPressPickImage = useCallback(async () => {
@@ -42,7 +51,9 @@ const UploadView = () => {
         else
             path = response[0].path;
 
-        if (!IsSupportURI(path)) {
+        const type = GetMediaTypeByFileExtension(GetFileExtensionByFilepath(path))
+
+        if (type === undefined) { // unsupported file ext
             Alert.alert(
                 LocalText.unsupport_file,
                 LocalText.unsupport_file_desc + '\n\nPath: ' + path)
@@ -50,13 +61,76 @@ const UploadView = () => {
             return
         }
 
+        // video only for premium
+
+        if (type === MediaType.Video && !isPremium) {
+            Alert.alert(
+                LocalText.popup_title_error,
+                LocalText.unsupport_video_for_premium)
+
+            return
+        }
+
         // file size
 
-        // video? 
+        const sizeMBOrError = await FileSizeInMB(path, false)
 
+        if (sizeMBOrError instanceof Error) { // error get file size
+            Alert.alert(
+                LocalText.popup_title_error,
+                ToCanPrint(sizeMBOrError))
+
+            return
+        }
+        else if ((type === MediaType.Image && sizeMBOrError > FileSizeLimitUploadInMb_Image) ||
+            (type === MediaType.Video && sizeMBOrError > FileSizeLimitUploadInMb_Video)) { // exceed limit file size
+            Alert.alert(
+                LocalText.unsupport_filesize_over_limit,
+                `Limit: ${type === MediaType.Image ? FileSizeLimitUploadInMb_Image : FileSizeLimitUploadInMb_Video} MB\nYour file size: ${sizeMBOrError.toFixed(1)} MB`)
+
+            return
+        }
 
         setMediaUri(path)
-    }, [])
+    }, [isPremium])
+
+    const onPressUpload = useCallback(async () => {
+        setUploadingStatusText(LocalText.uploading)
+
+        // check user permission here
+
+        if (!NetLord.IsAvailableLatestCheck()) {
+            AlertNoInternet()
+            setUploadingStatusText('')
+            return
+        }
+
+        // start upload
+
+        const fileName = `${Date.now()}_${UserID()}.${GetFileExtensionByFilepath(mediaUri)}`
+
+
+        var fbpath = 'user_upload/' + fileName
+
+        const uploadRes = await FirebaseStorage_UploadAsync(fbpath, mediaUri);
+
+        if (IsErrorObject_Empty(uploadRes)) { // step upload file success
+            console.log('step upload file done: ' + fbpath)
+        }
+        else { // upload failed
+            AlertWithError(uploadRes)
+            setUploadingStatusText('')
+            return
+        }
+
+        // setIsUploadingText(LocalText.update_info)
+
+        // const versionRes = await FirebaseDatabase_SetValueAsync(GetDBPath(category), fileList.version);
+        
+        // success!!
+
+        reset()
+    }, [mediaUri])
 
     const style = useMemo(() => {
         return StyleSheet.create({
@@ -101,17 +175,17 @@ const UploadView = () => {
             {/* uploading indicator */}
 
             {
-                isUploading &&
+                uploadingStatusText &&
                 <View style={style.uploadingView}>
                     <ActivityIndicator color={theme.primary} />
-                    <Text style={style.text}>{LocalText.uploading}</Text>
+                    <Text style={style.text}>{uploadingStatusText}</Text>
                 </View>
             }
 
             {/* read rules btn */}
 
             {
-                !isUploading &&
+                !uploadingStatusText &&
                 <TouchableOpacity onPress={() => setToggleRules(i => !i)} style={[style.readRuleTO]}>
                     <Text style={style.text}>{LocalText.read_rules}</Text>
                 </TouchableOpacity>
@@ -120,21 +194,22 @@ const UploadView = () => {
             {/* toggle rule */}
 
             {
-                !isUploading &&
+                !uploadingStatusText &&
                 <TouchableOpacity onPress={() => setToggleRules(i => !i)} style={[style.checkboxTO]}>
                     <MaterialCommunityIcons name={toggleRules ? Icon.CheckBox_Yes : Icon.CheckBox_No} color={theme.counterBackground} size={Size.Icon} />
                     <Text style={style.text}>{LocalText.follow_rules_upload}</Text>
                 </TouchableOpacity>
             }
+
             {/* bottom btns */}
 
             {
-                !isUploading &&
+                !uploadingStatusText &&
                 <View style={style.bottomBtnsView}>
                     <TouchableOpacity onPress={reset} style={[style.bottomBtn]}>
                         <Text style={style.text}>{LocalText.cancel}</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => setToggleRules(i => !i)} style={[style.bottomBtn_Highlight]}>
+                    <TouchableOpacity onPress={onPressUpload} style={[style.bottomBtn_Highlight]}>
                         <Text style={style.bottomBtnTxt_Highlight}>{LocalText.upload}</Text>
                     </TouchableOpacity>
                 </View>
@@ -145,6 +220,10 @@ const UploadView = () => {
 
 export default UploadView
 
+/**
+ * 
+ * @returns MediaType if this file is supported. Otherwise undefined
+ */
 function GetMediaTypeByFileExtension(extension: string): MediaType | undefined {
     extension = extension.toLowerCase();
 
@@ -161,6 +240,6 @@ function GetMediaTypeByFileExtension(extension: string): MediaType | undefined {
         return undefined
 }
 
-function IsSupportURI(flp: string): boolean {
-    return GetMediaTypeByFileExtension(GetFileExtensionByFilepath(flp)) !== undefined
-}
+// function IsSupportURI(flp: string): boolean {
+//     return GetMediaTypeByFileExtension(GetFileExtensionByFilepath(flp)) !== undefined
+// }

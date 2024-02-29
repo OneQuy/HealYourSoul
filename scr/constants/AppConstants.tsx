@@ -2,7 +2,13 @@ import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-nat
 
 export const LimitSaved = 50
 
+/**
+ * time out handle firebase db: config & version
+ */ 
 export const FirebaseDatabaseTimeOutMs = 5000
+
+export const FileSizeLimitUploadInMb_Image = 2
+export const FileSizeLimitUploadInMb_Video = 5
 
 // screen names
 
@@ -274,7 +280,8 @@ export const LocalText = {
   Contact: "Contact",
   saved_2: "Saved",
   upload: "Upload",
-  uploading: "Uploading...",
+  uploading: "Uploading file...",
+  update_info: "Updating info...",
   cancel: "Cancel",
   lights_mode: "Light mode",
   lifetime: "Gooday Lifetime",
@@ -341,9 +348,12 @@ export const LocalText = {
   filter: 'Filter',
   new_item_website: '# new fun website(s) added to the list!!',
   new_item_short_film: '# new short film(s) added to the list!!',
+  
   pick_image: 'Pick your image.',
   unsupport_file: 'Unsupport file',
   unsupport_file_desc: 'This file type is not supported currently. Please pick another file.',
+  unsupport_video_for_premium: 'Video uploads are exclusive to subscribed users only. Please subscribe to enable uploading.',
+  unsupport_filesize_over_limit: 'File size exceeds the limit!',
 
   one_time_purchase: 'You can choose between a one-time purchase',
   subscriptions: 'Or a subscription',
@@ -428,6 +438,7 @@ export const LocalText = {
   popup_title_error: 'Ooops!',
   popup_content_error: "Uh-oh! Something went wrong. We're fixing it. Thanks for your patience!",
   popup_content_error_empty: "The list is empty. Please pick at least 1 item!",
+  popup_content_error_common: "Uh-oh! Something went wrong.",
 
   popup_content_sent_feedback: 'Thank you for taking the time to provide feedback! Your input is valuable and helps us improve.',
   popup_content_sent_feedback_error_hour: 'You just sent feedback recently. Please send another one at least in the next hour. Thank you!',

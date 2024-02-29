@@ -582,6 +582,12 @@ export function ToastTheme_Error(): ToastOptions {
     }
 }
 
+export const AlertWithError = (error: any) => {
+    Alert.alert(
+        LocalText.popup_title_error,
+        `${LocalText.popup_content_error_common}\n\n${ToCanPrint(error)}`
+    );
+}
 export const AlertNoInternet = () => {
     Alert.alert(
         LocalText.popup_title_need_internet,

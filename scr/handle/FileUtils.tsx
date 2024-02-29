@@ -4,9 +4,10 @@
 // npm install react-native-fs
 // npx pod-install ios
 
-import RNFS, { DownloadProgressCallbackResult } from "react-native-fs";
+import RNFS, { DownloadProgressCallbackResult, StatResult } from "react-native-fs";
 import { LoadJsonFromURLAsync, TempDirName } from "./Utils";
 import { Platform } from "react-native";
+import { ToCanPrint } from "./UtilsTS";
 
 /**
  * @returns null if success, otherwise error
@@ -23,6 +24,52 @@ async function CheckAndMkDirOfFilepathAsync(fullFilepath: string): Promise<null 
     return null;
   } catch (e) {
     return e;
+  }
+}
+
+/**
+ * 
+ * @returns Error {} if file not existed or something error
+ */
+export async function FileStat(path: string, isRLP: boolean = true): Promise<StatResult | Error> {
+  path = isRLP ? RNFS.DocumentDirectoryPath + '/' + path : path
+
+  if (!await IsExistedAsync(path, false))
+    return new Error('File not found: ' + path)
+
+  try {
+    return await RNFS.stat(path)
+  }
+  catch (e) {
+    if (e instanceof Error)
+      return e
+    else
+      return new Error(ToCanPrint(e))
+  }
+}
+
+/**
+ * 
+ * @returns Error {} if file not existed or something error
+ */
+export async function FileSizeInMB(path: string, isRLP: boolean = true): Promise<number | Error> {
+  path = isRLP ? RNFS.DocumentDirectoryPath + '/' + path : path
+
+  if (!await IsExistedAsync(path, false))
+    return new Error('File not found: ' + path)
+
+  try {
+    const stat = await RNFS.stat(path)
+
+    const sizeBytes = stat.size
+
+    return sizeBytes / 1024 / 1024
+  }
+  catch (e) {
+    if (e instanceof Error)
+      return e
+    else
+      return new Error(ToCanPrint(e))
   }
 }
 
@@ -46,7 +93,7 @@ export async function WriteTextAsync(path: string, text: string | null, isRLP: b
       throw 'can not write file, error when CheckAndMkDirOfFilepathAsync: ' + res;
 
     // write
-    
+
     await RNFS.writeFile(path, text ? text : '', encode);
 
     return null;
@@ -161,11 +208,11 @@ export async function DownloadFileAsync(
       throw 'can not download file, error when CheckAndMkDirOfFilepathAsync: ' + res;
 
     // download
-    
+
     res = await RNFS.downloadFile({
       fromUrl: url,
       toFile: saveLocalPath,
-      begin: () => {},
+      begin: () => { },
       progress
     }).promise;
 
