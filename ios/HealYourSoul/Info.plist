@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Please accept the permission to pick your meme for uploading to Gooday</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -46,9 +44,9 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>To download these media to your Gallery please accept this request</string>
+	<string>To download these media to your Gallery please accept this permission.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>To download these media to your Gallery please accept this request</string>
+	<string>Please accept the permission to pick your meme for uploading to Gooday.</string>
 	<key>NSUserNotificationsUsageDescription</key>
 	<string>This identifier will be used to send fact, quote and joke that you registered to get notification everyday.</string>
 	<key>UIAppFonts</key>
