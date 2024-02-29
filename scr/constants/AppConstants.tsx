@@ -442,6 +442,9 @@ export const LocalText = {
 
   popup_content_sent_feedback: 'Thank you for taking the time to provide feedback! Your input is valuable and helps us improve.',
   popup_content_sent_feedback_error_hour: 'You just sent feedback recently. Please send another one at least in the next hour. Thank you!',
+
+  upload_success: "Uploaded successfully",
+  upload_success_desc: "Thank you for uploading to Gooday. I will try to review it as soon as possible. If it is approved, Gooday will notify you in the app. Stay tuned!",
 }
 
 // storage

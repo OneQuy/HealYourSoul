@@ -29,6 +29,23 @@ export type LatestVersionConfig = {
     release_note: string,
 }
 
+export type UserUploadPostStatus = 'approved' | '' | 'rejected' | 'banned'
+
+export type User = {
+    uploadBannedReason: string,
+    uploadExpirdedDate: number,
+}
+
+export type UserUploadInfo = {
+    /**
+     * with ext
+     */
+    filename: string,
+
+    isPremium: boolean,
+    status: UserUploadPostStatus,
+}
+
 export type DiversityItemType = {
     cat: Category,
     id?: string | number, // the page

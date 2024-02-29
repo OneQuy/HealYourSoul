@@ -6,7 +6,7 @@ import React, { useCallback, useContext, useMemo, useState } from 'react'
 import { BorderRadius, FileSizeLimitUploadInMb_Image, FileSizeLimitUploadInMb_Video, FontSize, Icon, LocalText, Outline, Size } from '../../constants/AppConstants'
 import { ThemeContext } from '../../constants/Colors'
 import { openPicker } from '@baronha/react-native-multiple-image-picker';
-import { MediaType } from '../../constants/Types';
+import { MediaType, UserUploadInfo } from '../../constants/Types';
 import { GetFileExtensionByFilepath, ToCanPrint } from '../../handle/UtilsTS';
 import { usePremium } from '../../hooks/usePremium';
 import { FileSizeInMB } from '../../handle/FileUtils';
@@ -15,6 +15,7 @@ import { FirebaseStorage_UploadAsync } from '../../firebase/FirebaseStorage';
 import { IsErrorObject_Empty } from '../../handle/Utils';
 import { NetLord } from '../../handle/NetLord';
 import { AlertNoInternet, AlertWithError } from '../../handle/AppUtils';
+import { FirebaseDatabase_SetValueAsync } from '../../firebase/FirebaseDatabase';
 
 const UploadView = () => {
     const theme = useContext(ThemeContext);
@@ -105,16 +106,17 @@ const UploadView = () => {
             return
         }
 
-        // start upload
+        // upload!
 
-        const fileName = `${Date.now()}_${UserID()}.${GetFileExtensionByFilepath(mediaUri)}`
+        const filename = `${Date.now()}_${UserID()}.${GetFileExtensionByFilepath(mediaUri)}`
 
+        var fbpath = 'user_upload/' + filename
 
-        var fbpath = 'user_upload/' + fileName
+        // upload file to firebase
 
         const uploadRes = await FirebaseStorage_UploadAsync(fbpath, mediaUri);
 
-        if (IsErrorObject_Empty(uploadRes)) { // step upload file success
+        if (uploadRes === null) { // step upload file success
             console.log('step upload file done: ' + fbpath)
         }
         else { // upload failed
@@ -123,14 +125,38 @@ const UploadView = () => {
             return
         }
 
-        // setIsUploadingText(LocalText.update_info)
+        // update info db: user_data/uploads
 
-        // const versionRes = await FirebaseDatabase_SetValueAsync(GetDBPath(category), fileList.version);
-        
+        setUploadingStatusText(LocalText.update_info)
+
+        const infoDbPath = `user_data/uploads/${UserID()}/t${Date.now()}`
+
+        const info: UserUploadInfo = {
+            filename,
+            isPremium,
+            status: '',
+        }
+
+        const res = await FirebaseDatabase_SetValueAsync(infoDbPath, info)
+
+        if (res === null) { // step update info success
+            console.log('step update info success: ' + infoDbPath, info)
+        }
+        else { // upload failed
+            AlertWithError(res)
+            setUploadingStatusText('')
+            return
+        }
+
         // success!!
 
+        Alert.alert(
+            LocalText.upload_success,
+            LocalText.upload_success_desc
+        )
+
         reset()
-    }, [mediaUri])
+    }, [mediaUri, isPremium])
 
     const style = useMemo(() => {
         return StyleSheet.create({
