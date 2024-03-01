@@ -64,7 +64,8 @@ const notContentScreen: ScreenName[] = [
     ScreenName.IAPPage,
     ScreenName.Setting,
     ScreenName.Upload,
-    ScreenName.Saved
+    ScreenName.Saved,
+    ScreenName.Inbox,
 ] as const
 
 var appUtilsTheme: ThemeColor = GetColors('default_dark')

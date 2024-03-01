@@ -50,6 +50,7 @@ export enum ScreenName {
   Saved = 'Saved',
   FunSound = 'Meme Sounds',
   Upload = 'Upload',
+  Inbox = 'Inbox',
 }
 
 // dir / file
