@@ -850,3 +850,10 @@ export async function ExecuteWithTimeoutAsync<T>(asyncFunction: () => Promise<T>
         }
     }
 }
+
+export const CreateError = (anything: any): Error => {
+    if (anything instanceof Error)
+        return anything
+    else
+        return new Error(ToCanPrint(anything))
+}
