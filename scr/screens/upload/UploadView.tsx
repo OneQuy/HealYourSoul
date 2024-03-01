@@ -454,7 +454,7 @@ export const GetCanNotUploadReasonAsync = async (isPremium: boolean): Promise<
 
     const interval = appConfig.userUploadLimit.intervalInMinute
 
-    if (!(await GetDateAsync_IsValueNotExistedOrEqualOverMinFromNow(StorageKey_LastTimeUpload, interval))) {
+    if (!__DEV__ && !(await GetDateAsync_IsValueNotExistedOrEqualOverMinFromNow(StorageKey_LastTimeUpload, interval))) {
         return {
             reason: LocalText.reached_limit_uploads_interval.replaceAll('##', interval.toString()),
         }
