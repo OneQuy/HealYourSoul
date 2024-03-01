@@ -57,6 +57,18 @@ export const CreateDefaultUser = (): User => ({
     }
 })
 
+export type Message = {
+    msg: string,
+    title?: string,
+    imgUri?: string,
+    
+    primaryBtnTxt?: string,
+    primaryBtnUrl?: string,
+    primaryBtnGoToScreen?: string,
+    
+    diversityItem?: DiversityItemType,
+}
+
 export type UserUploadInfo = {
     /**
      * with ext
