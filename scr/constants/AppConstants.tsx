@@ -377,7 +377,9 @@ export const LocalText = {
   read_rules: "Rules and guidelines",
   
   can_not_get_app_config: "Can not get app config. Please check your internet.",
-  can_not_get_user: "Can not get user info. Please check your internet.",
+  can_not_get_user: "Can not get info. Please check your internet.",
+  reached_limit_uploads: "Reached limit upload times.",
+  reached_limit_uploads_interval: "You can upload another one in at least ## minutes.",
 
   // ad_free: 'Ad-free',
   // no_ad_anymore: 'No ad during your subscription time.\n',
@@ -511,3 +513,5 @@ export const StorageKey_LastFreshlyOpenApp = 'last_freshly_open_app'
 export const StorageKey_OpenAppOfDayCountForDate = 'open_app_count_date'
 export const StorageKey_IsUserPressedClosePleaseSubscribe = 'isUserPressedClosePleaseSubscribe'
 export const StorageKey_MaxSavedCount = 'max_saved_count'
+export const StorageKey_TodayUploadsCount = 'today_uploads_count'
+export const StorageKey_LastTimeUpload = 'last_time_upload'

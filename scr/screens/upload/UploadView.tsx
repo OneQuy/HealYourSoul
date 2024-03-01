@@ -1,22 +1,23 @@
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { View, StyleSheet, Text, Image, TouchableOpacity, ActivityIndicator, Platform, Alert } from 'react-native'
+import { View, StyleSheet, Text, Image, TouchableOpacity, ActivityIndicator, Platform, Alert, AppConfig } from 'react-native'
 import React, { useCallback, useContext, useMemo, useState } from 'react'
-import { BorderRadius, FileSizeLimitUploadInMb_Image, FileSizeLimitUploadInMb_Video, FontSize, Icon, LocalText, Outline, Size } from '../../constants/AppConstants'
+import { BorderRadius, FileSizeLimitUploadInMb_Image, FileSizeLimitUploadInMb_Video, FontSize, Icon, LocalText, NotLimitUploadsValue, Outline, Size, StorageKey_LastTimeUpload, StorageKey_TodayUploadsCount } from '../../constants/AppConstants'
 import { ThemeContext } from '../../constants/Colors'
 import { openPicker } from '@baronha/react-native-multiple-image-picker';
-import { MediaType, UserUploadInfo } from '../../constants/Types';
-import { CreateError, GetFileExtensionByFilepath, ToCanPrint } from '../../handle/UtilsTS';
+import { LocalTextType, MediaType, User, UserUploadInfo } from '../../constants/Types';
+import { DateDiff_InMinute, DistanceFrom2Dates, GetFileExtensionByFilepath, IsValuableArrayOrString, SafeValue, ToCanPrint } from '../../handle/UtilsTS';
 import { usePremium } from '../../hooks/usePremium';
 import { FileSizeInMB } from '../../handle/FileUtils';
 import { UserID } from '../../handle/UserID';
 import { FirebaseStorage_UploadAsync } from '../../firebase/FirebaseStorage';
-import { IsErrorObject_Empty } from '../../handle/Utils';
-import { NetLord } from '../../handle/NetLord';
-import { AlertNoInternet, AlertWithError } from '../../handle/AppUtils';
+import { AlertWithError } from '../../handle/AppUtils';
 import { FirebaseDatabase_SetValueAsync } from '../../firebase/FirebaseDatabase';
+import { DoubleCheckGetAppConfigAsync } from '../../handle/AppConfigHandler';
 import { GetUserAsync } from '../../handle/tracking/UserMan';
+import { GetDateAsync_IsValueNotExistedOrEqualOverMinFromNow, GetNumberIntAsync_WithCheckAndResetNewDay } from '../../handle/AsyncStorageUtils';
+
 
 const UploadView = () => {
     const theme = useContext(ThemeContext);
@@ -33,6 +34,8 @@ const UploadView = () => {
     }, [])
 
     const onPressPickImage = useCallback(async () => {
+        GetCanNotUploadReasonAsync(isPremium)
+        return
         let response
 
         try {
@@ -99,13 +102,11 @@ const UploadView = () => {
     const onPressUpload = useCallback(async () => {
         setUploadingStatusText(LocalText.uploading)
 
-        // const user = await GetUserAsync()
-
         // check user permission here
 
-        if (!NetLord.IsAvailableLatestCheck()) {
-            AlertNoInternet()
-            setUploadingStatusText('')
+        const allowedUpload = await GetCanNotUploadReasonAsync(isPremium)
+
+        if (allowedUpload) {
             return
         }
 
@@ -267,6 +268,101 @@ function GetMediaTypeByFileExtension(extension: string): MediaType | undefined {
         return MediaType.Video;
     else
         return undefined
+}
+
+/**
+ * 
+ * @returns undefined if can upload
+ * @returns '{...}' if can not
+ */
+export const GetCanNotUploadReasonAsync = async (isPremium: boolean): Promise<
+    {
+        reason: string,
+        canUploadDate?: number,
+        limit?: number,
+        currentCount?: number,
+        expiredBannedDate?: number,
+    } | undefined> => {
+
+    const [appConfig, user] = await Promise.all([
+        DoubleCheckGetAppConfigAsync(),
+        GetUserAsync()])
+
+    // error get config
+
+    if (appConfig === undefined) {
+        return {
+            reason: LocalText.can_not_get_app_config
+        }
+    }
+
+    // error get user
+
+    if (user instanceof Error) {
+        return {
+            reason: LocalText.can_not_get_user
+        }
+    }
+
+    // check ban (user info)
+
+    const banned = SafeValue(user?.uploadLimit?.uploadBannedReason, '')
+
+    if (IsValuableArrayOrString(banned)) {
+        const expiredBannedDate = SafeValue(user?.uploadLimit?.uploadExpirdedDate, -1)
+
+        if (expiredBannedDate >= 0 && Date.now() >= expiredBannedDate) { } // expired banned, can upload now hihi
+        else {
+            return {
+                reason: banned,
+                expiredBannedDate,
+            }
+        }
+    }
+
+    // check limit per day
+
+    const limitUploadsPerDay_AppConfig = appConfig.userUploadLimit.freeUserUploadsPerDay
+    const limitUploadsPerDay_User = SafeValue(user?.uploadLimit?.uploadsPerDay, NotLimitUploadsValue)
+
+    let limitUploadsPerDay_Final: number
+
+    if (isPremium) { // premium user only restricted user limit
+        if (limitUploadsPerDay_User !== NotLimitUploadsValue)
+            limitUploadsPerDay_Final = limitUploadsPerDay_User
+        else
+            limitUploadsPerDay_Final = NotLimitUploadsValue
+    }
+    else {
+        if (limitUploadsPerDay_User === NotLimitUploadsValue)
+            limitUploadsPerDay_Final = limitUploadsPerDay_AppConfig
+        else
+            limitUploadsPerDay_Final = limitUploadsPerDay_User
+    }
+
+    const currentUploadsCount = await GetNumberIntAsync_WithCheckAndResetNewDay(StorageKey_TodayUploadsCount)
+
+    if (currentUploadsCount >= limitUploadsPerDay_Final) {
+        return {
+            reason: LocalText.reached_limit_uploads,
+            limit: limitUploadsPerDay_Final,
+            currentCount: currentUploadsCount,
+        }
+    }
+
+    // check interval (app config)
+
+    const interval = appConfig.userUploadLimit.intervalInMinute
+
+    if (!(await GetDateAsync_IsValueNotExistedOrEqualOverMinFromNow(StorageKey_LastTimeUpload, interval))) {
+        return {
+            reason: LocalText.reached_limit_uploads_interval.replaceAll('##', interval.toString()),
+        }
+    }
+
+    // allowed upload
+
+    return undefined
 }
 
 // function IsSupportURI(flp: string): boolean {

@@ -32,10 +32,16 @@ export type LatestVersionConfig = {
 export type UserUploadPostStatus = 'approved' | '' | 'rejected' | 'banned'
 
 export type User = {
-    uploadLimit: {
-        uploadBannedReason: string,
-        uploadsPerDay: number,
-        uploadExpirdedDate: number,
+    uploadLimit?: {
+        uploadBannedReason?: string,
+
+        /**
+         * + only valuable if uploadBannedReason is valuable. 
+         * + uploadExpirdedDate = -1 or undefined if banned permanented
+         * + uploadExpirdedDate >= 0 if is a exp banned
+         */
+        uploadExpirdedDate?: number,
+        uploadsPerDay?: number,
     }
 }
 
