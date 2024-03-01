@@ -6,7 +6,7 @@ import UploadView from './UploadView';
 import UploadRulesView from './RulesView';
 import { GetBooleanAsync, SetBooleanAsync } from '../../handle/AsyncStorageUtils';
 
-type SubView = 'upload' | 'approved' | 'rules'
+export type SubView = 'upload' | 'approved' | 'rules'
 
 const UploadScreen = () => {
     const theme = useContext(ThemeContext);
@@ -65,7 +65,7 @@ const UploadScreen = () => {
 
             {
                 subview === 'upload' &&
-                <UploadView />
+                <UploadView setSubView={setSubView} />
             }
             {
                 subview === 'rules' &&

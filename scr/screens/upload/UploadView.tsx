@@ -2,7 +2,7 @@
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { View, StyleSheet, Text, Image, TouchableOpacity, ActivityIndicator, Platform, Alert, AlertButton, ImageBackground } from 'react-native'
-import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useContext, useMemo, useState } from 'react'
 import { BorderRadius, FileSizeLimitUploadInMb_Image, FileSizeLimitUploadInMb_Video, FontSize, Icon, LocalText, NotLimitUploadsValue, Outline, Size, StorageKey_LastTimeUpload, StorageKey_TodayUploadsCount } from '../../constants/AppConstants'
 import { ThemeContext } from '../../constants/Colors'
 import { openPicker } from '@baronha/react-native-multiple-image-picker';
@@ -22,9 +22,10 @@ import { FileSizeInMB } from '../../handle/FileUtils';
 import { widthPercentageToDP } from 'react-native-responsive-screen';
 import { iapBg_1 } from '../IAP/IAPPage';
 import { Cheat } from '../../handle/Cheat';
+import { SubView } from './UploadScreen';
 
 
-const UploadView = () => {
+const UploadView = ({ setSubView }: { setSubView: (view: SubView) => void }) => {
     const theme = useContext(ThemeContext);
 
     const [mediaUri, setMediaUri] = useState('')
@@ -313,7 +314,7 @@ const UploadView = () => {
 
             {
                 !uploadingStatusText &&
-                <TouchableOpacity onPress={() => setToggleRules(i => !i)} style={[style.readRuleTO]}>
+                <TouchableOpacity onPress={() => setSubView('rules')} style={[style.readRuleTO]}>
                     <Text style={style.text}>{LocalText.read_rules}</Text>
                 </TouchableOpacity>
             }
