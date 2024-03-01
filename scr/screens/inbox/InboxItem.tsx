@@ -84,7 +84,7 @@ const InboxItem = ({
                 {/* mark as read */}
 
                 <TouchableOpacity onPress={onPressMarkAsRead} style={style.btnTO}>
-                    <Text adjustsFontSizeToFit numberOfLines={1} style={style.btnTxt}>{LocalText.mark_read}</Text>
+                    <Text adjustsFontSizeToFit numberOfLines={1} style={style.btnTxt}>{LocalText.clear}</Text>
                 </TouchableOpacity>
 
                 {/* primary */}
