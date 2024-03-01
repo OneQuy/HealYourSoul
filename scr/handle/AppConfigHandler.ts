@@ -43,7 +43,6 @@ export async function HandleAppConfigAsync(): Promise<boolean> {
     // fail time out
 
     if (res.isTimeOut || res.result === undefined) {
-        // HandleError('HandleAppConfig', 'Is timeout? ' + res.isTimeOut + ', ElapsedTimeMs-' + (Date.now() - tick))
         return false
     }
 
@@ -52,7 +51,6 @@ export async function HandleAppConfigAsync(): Promise<boolean> {
     // fail firebase
 
     if (result.error) {
-        // HandleError('HandleAppConfig', result.error)
         return false
     }
 
