@@ -28,6 +28,19 @@ export function GetRemoteFileConfigVersion(file: string) {
 }
 
 /**
+ * if not get app config yet, re-fetch it.
+ */
+export async function DoubleCheckGetAppConfigAsync(): Promise<AppConfig | undefined> {
+    if (GetAppConfig()) {
+        return GetAppConfig()
+    }
+
+    await HandleAppConfigAsync()
+
+    return GetAppConfig()
+}
+
+/**
  * 
  * @returns true if download success
  */
