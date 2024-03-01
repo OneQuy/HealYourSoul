@@ -57,12 +57,12 @@ export const CreateDefaultUser = (): User => ({
     }
 })
 
-export type Message = {
+export type Inbox = {
     msg: string,
     title?: string,
     imgUri?: string,
     
-    primaryBtnTxt?: string,
+    primaryBtnTxt?: string, // must valuable to show btn
     primaryBtnUrl?: string,
     primaryBtnGoToScreen?: string,
     
