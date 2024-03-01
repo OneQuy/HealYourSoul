@@ -32,9 +32,20 @@ export type LatestVersionConfig = {
 export type UserUploadPostStatus = 'approved' | '' | 'rejected' | 'banned'
 
 export type User = {
-    uploadBannedReason: string,
-    uploadExpirdedDate: number,
+    uploadLimit: {
+        uploadBannedReason: string,
+        uploadsPerDay: number,
+        uploadExpirdedDate: number,
+    }
 }
+
+export const CreateDefaultUser = (): User => ({
+    uploadLimit: {
+        uploadBannedReason: '',
+        uploadExpirdedDate: -1,
+        uploadsPerDay: -1,
+    }
+})
 
 export type UserUploadInfo = {
     /**
@@ -58,6 +69,10 @@ export type AppConfig = {
     net_url: string,
     remote_files: object,
     force_dev_01: number,
+    userUploadLimit: {
+        freeUserUploadsPerDay: number,
+        intervalInMinute: number,
+    },
     latest_version: {
         android: LatestVersionConfig,
         ios: LatestVersionConfig,

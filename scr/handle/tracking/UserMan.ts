@@ -1,7 +1,8 @@
 import { FirebaseDatabaseTimeOutMs } from "../../constants/AppConstants"
-import { User } from "../../constants/Types"
-import { FirebaseDatabase_GetValueAsync, FirebaseDatabase_GetValueAsyncWithTimeOut } from "../../firebase/FirebaseDatabase"
+import { CreateDefaultUser, User } from "../../constants/Types"
+import { FirebaseDatabase_GetValueAsyncWithTimeOut } from "../../firebase/FirebaseDatabase"
 import { UserID } from "../UserID"
+import { CreateError } from "../UtilsTS"
 
 const GetUserFirebasePath = () => {
     return `user_data/users/${UserID()}`
@@ -12,12 +13,15 @@ const GetUserFirebasePath = () => {
  * @returns if success: User or null (no data)
  * @returns if fail: error (not null value)
  */
-export const GetUserAsync = async (): Promise<User | null | any> => {
+export const GetUserAsync = async (): Promise<User | Error> => {
     const userRes = await FirebaseDatabase_GetValueAsyncWithTimeOut(GetUserFirebasePath(), FirebaseDatabaseTimeOutMs)
 
     if (userRes.error !== null) {
-        return userRes.error
+        return CreateError(userRes.error)
     }
 
-    return userRes.value
+    if (!userRes.value) // empty data user
+        return CreateDefaultUser()
+    else
+        return userRes.value as User
 }

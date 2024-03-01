@@ -7,7 +7,7 @@ import { BorderRadius, FileSizeLimitUploadInMb_Image, FileSizeLimitUploadInMb_Vi
 import { ThemeContext } from '../../constants/Colors'
 import { openPicker } from '@baronha/react-native-multiple-image-picker';
 import { MediaType, UserUploadInfo } from '../../constants/Types';
-import { GetFileExtensionByFilepath, ToCanPrint } from '../../handle/UtilsTS';
+import { CreateError, GetFileExtensionByFilepath, ToCanPrint } from '../../handle/UtilsTS';
 import { usePremium } from '../../hooks/usePremium';
 import { FileSizeInMB } from '../../handle/FileUtils';
 import { UserID } from '../../handle/UserID';
