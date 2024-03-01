@@ -387,6 +387,7 @@ export const LocalText = {
   // no_ad_anymore: 'No ad during your subscription time.\n',
 
   upgrade: 'Upgrade',
+  refresh: 'Refresh',
 
   unlock_all: 'Unlock features',
   unlock_all_info: "Save an unlimited number of posts. Subcribe now for the best experience",

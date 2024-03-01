@@ -1,8 +1,8 @@
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { View, StyleSheet, Text, Image, TouchableOpacity, ActivityIndicator, Platform, Alert, AlertButton } from 'react-native'
-import React, { useCallback, useContext, useMemo, useState } from 'react'
+import { View, StyleSheet, Text, Image, TouchableOpacity, ActivityIndicator, Platform, Alert, AlertButton, ImageBackground } from 'react-native'
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { BorderRadius, FileSizeLimitUploadInMb_Image, FileSizeLimitUploadInMb_Video, FontSize, Icon, LocalText, NotLimitUploadsValue, Outline, Size, StorageKey_LastTimeUpload, StorageKey_TodayUploadsCount } from '../../constants/AppConstants'
 import { ThemeContext } from '../../constants/Colors'
 import { openPicker } from '@baronha/react-native-multiple-image-picker';
@@ -15,10 +15,12 @@ import { AlertWithError } from '../../handle/AppUtils';
 import { FirebaseDatabase_SetValueAsync } from '../../firebase/FirebaseDatabase';
 import { DoubleCheckGetAppConfigAsync } from '../../handle/AppConfigHandler';
 import { GetUserAsync } from '../../handle/tracking/UserMan';
-import { GetDateAsync_IsValueNotExistedOrEqualOverMinFromNow, GetNumberIntAsync_WithCheckAndResetNewDay } from '../../handle/AsyncStorageUtils';
+import { GetDateAsync_IsValueNotExistedOrEqualOverMinFromNow, GetNumberIntAsync_WithCheckAndResetNewDay, IncreaseNumberAsync_WithCheckAndResetNewDay, SetDateAsync_Now } from '../../handle/AsyncStorageUtils';
 import { GoToPremiumScreen } from '../components/HeaderXButton';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { FileSizeInMB } from '../../handle/FileUtils';
+import { widthPercentageToDP } from 'react-native-responsive-screen';
+import { iapBg_1 } from '../IAP/IAPPage';
 
 
 const UploadView = () => {
@@ -27,6 +29,7 @@ const UploadView = () => {
     const [mediaUri, setMediaUri] = useState('')
     const [toggleRules, setToggleRules] = useState(false)
     const [uploadingStatusText, setUploadingStatusText] = useState('')
+    const [reasonCanNotUpload, setReasonCanNotUpload] = useState<undefined | { reason: string, showSubscribeButton?: boolean }>(undefined)
     const { isPremium } = usePremium()
     const navigation = useNavigation()
 
@@ -100,21 +103,26 @@ const UploadView = () => {
         setMediaUri(path)
     }, [isPremium])
 
+    const refreshReasonCanNotUpload = useCallback(async () => {
+        setReasonCanNotUpload(await GetCanNotUploadReasonAsync(isPremium))
+    }, [isPremium])
+
     const onPressUpload = useCallback(async () => {
         // check user permission here
 
         setUploadingStatusText(LocalText.checking)
 
-        const reasonCanNotUpload = await GetCanNotUploadReasonAsync(isPremium)
+        const reason = await GetCanNotUploadReasonAsync(isPremium)
+        setReasonCanNotUpload(reason)
 
-        if (reasonCanNotUpload) { // can not upload
+        if (reason) { // can not upload
             const btns: AlertButton[] = [
                 {
                     text: 'OK'
                 }
             ]
 
-            if (reasonCanNotUpload.showSubscribeButton === true) {
+            if (reason.showSubscribeButton === true) {
                 btns.push({
                     text: LocalText.subscribe,
                     onPress: () => GoToPremiumScreen(navigation)
@@ -123,7 +131,7 @@ const UploadView = () => {
 
             Alert.alert(
                 LocalText.popup_title_error,
-                reasonCanNotUpload.reason,
+                reason.reason,
                 btns
             )
 
@@ -184,6 +192,9 @@ const UploadView = () => {
         )
 
         reset()
+
+        IncreaseNumberAsync_WithCheckAndResetNewDay(StorageKey_TodayUploadsCount)
+        SetDateAsync_Now(StorageKey_LastTimeUpload)
     }, [mediaUri, isPremium, navigation])
 
     const style = useMemo(() => {
@@ -200,8 +211,48 @@ const UploadView = () => {
             text: { color: theme.counterBackground, fontSize: FontSize.Small_L, },
             bottomBtnTxt_Highlight: { color: theme.counterPrimary, fontSize: FontSize.Small_L, },
             pickMediaTxt: { marginTop: Outline.GapVertical, textAlign: 'center', fontSize: FontSize.Normal, color: theme.counterBackground, },
+
+            reasonTxt: { margin: Outline.Vertical, textAlign: 'center', fontSize: FontSize.Normal, color: theme.counterBackground, },
+            plsSubBtnsView: { gap: Outline.GapHorizontal, flexDirection: 'row' },
+            premiumIB: { padding: Outline.GapVertical, minWidth: widthPercentageToDP(30), borderRadius: BorderRadius.BR, overflow: 'hidden', justifyContent: 'center', alignItems: 'center', },
+            refreshBtn: { padding: Outline.GapVertical, minWidth: widthPercentageToDP(30), borderColor: theme.counterBackground, borderRadius: BorderRadius.BR, borderWidth: StyleSheet.hairlineWidth, justifyContent: 'center', alignItems: 'center', },
+            premiumText: { fontSize: FontSize.Small_L, color: 'black' },
+            refreshTxt: { fontSize: FontSize.Small_L, color: theme.counterBackground },
         })
     }, [theme])
+
+    useFocusEffect(useCallback(() => {
+        refreshReasonCanNotUpload()
+    }, []))
+
+    // can not upload now
+
+    if (reasonCanNotUpload) {
+        return (
+            <View style={style.masterView}>
+                {/* rect emtpy */}
+
+                <Text style={style.reasonTxt}>{reasonCanNotUpload.reason}</Text>
+
+                <View style={style.plsSubBtnsView}>
+                    <TouchableOpacity onPress={refreshReasonCanNotUpload}>
+                        <View style={style.refreshBtn}>
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={style.refreshTxt}>{LocalText.refresh}</Text>
+                        </View>
+                    </TouchableOpacity>
+
+                    {
+                        reasonCanNotUpload.showSubscribeButton === true &&
+                        <TouchableOpacity onPress={() => GoToPremiumScreen(navigation)}>
+                            <ImageBackground resizeMode="cover" source={iapBg_1} style={style.premiumIB}>
+                                <Text numberOfLines={1} adjustsFontSizeToFit style={style.premiumText}>{LocalText.upgrade}</Text>
+                            </ImageBackground>
+                        </TouchableOpacity>
+                    }
+                </View>
+            </View>
+        )
+    }
 
     // not pick image yet
 
