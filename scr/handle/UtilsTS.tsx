@@ -851,6 +851,18 @@ export async function ExecuteWithTimeoutAsync<T>(asyncFunction: () => Promise<T>
     }
 }
 
+/**
+ * 
+ * @returns if anything === undefined => defaultValue
+ * @returns if anything !== undefined => anythhing
+ */
+export function SafeValue<T>(anything: undefined | T, defaultValue: T) : T {
+    if (anything !== undefined)
+        return anything
+    else 
+        return defaultValue
+}
+
 export const CreateError = (anything: any): Error => {
     if (anything instanceof Error)
         return anything

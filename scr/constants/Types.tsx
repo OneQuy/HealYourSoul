@@ -1,4 +1,4 @@
-import { Category, ScreenName } from "./AppConstants"
+import { Category, LocalText, ScreenName } from "./AppConstants"
 
 export enum MediaType {
     Image = 0,
@@ -64,6 +64,8 @@ export type DiversityItemType = {
     text?: string, // short text
     wikipediaObject?: object,
 }
+
+export type LocalTextType = keyof typeof LocalText
 
 export type AppConfig = {
     net_url: string,
