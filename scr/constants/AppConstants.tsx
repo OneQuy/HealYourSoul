@@ -7,7 +7,7 @@ export const LimitSaved = 50
  * + app config
  * + file versions
  * + get user info
- */ 
+ */
 export const FirebaseDatabaseTimeOutMs = 5000
 
 export const FileSizeLimitUploadInMb_Image = 2
@@ -351,7 +351,7 @@ export const LocalText = {
   filter: 'Filter',
   new_item_website: '# new fun website(s) added to the list!!',
   new_item_short_film: '# new short film(s) added to the list!!',
-  
+
   one_time_purchase: 'You can choose between a one-time purchase',
   subscriptions: 'Or a subscription',
   subscribe: 'Subscribe',
@@ -365,10 +365,10 @@ export const LocalText = {
   limit_saved_desc: "In the free version, you can save up to ## posts. Upgrade to a subscription to enjoy unlimited savings.",
   show_all: "Show all",
   full_saved: "Upgrade for Unlimited Saves",
-  
+
   follow_rules_upload: "I have read and agree to abide by the rules and guidelines",
   read_rules: "Rules and guidelines",
-  
+
   approved: 'Approved',
   rules: 'Rules',
   pick_image: 'Pick your image.',
@@ -385,6 +385,35 @@ export const LocalText = {
   reached_limit_uploads_interval: "You can upload another one in ## minutes.",
   agree_rules: 'Please agree the rules and guidelines before uploading.',
   banned_with_exp: "@@\n\nTime you can upload:##",
+
+  // ---------
+  Upload_Guidelines: 'Upload Guidelines.',
+  guidelines_desc: 'To ensure a positive and enjoyable experience for everyone, please adhere to the following rules when uploading memes:',
+
+  Image_Content: 'Image Content:',
+  Image_Content_desc: 'Only upload funny memes, wholesome, cute, or positive images.',
+
+  Forbidden_Content: 'Forbidden Content:',
+  Forbidden_Content_desc: 'Your images must NOT contain:',
+  content_no: `1. Pornographic material
+2. Violence or gory content,
+3. Hate speech and bullying,
+4. Spamming and manipulation,
+5. Deceptive content,
+6. Illegal activities,
+7. Impersonation`,
+
+  Failure_to_comply: 'Failure to comply with these rules may result in:',
+  Failure_to_comply_desc: 'Temporary or permanent bans, depending on the severity of the violation. If banned, you can still use Gooday normally, but the upload feature will be disabled.',
+
+  Other_Restrictions: 'Other Restrictions:',
+  Other_Restrictions_desc: `1. Free users can upload a limited number of posts per day, currently set at @@ or maybe another number (adjusted by Gooday).
+2. Subscribed users enjoy unlimited daily uploads.
+3. Both free and subscribed users must adhere to a minimum posting interval of ## minutes/post. This interval may be subject to updates by Gooday.`,
+
+  By_following_these: 'By following these guidelines, you contribute to making Gooday a fun and safe community for meme enthusiasts. Happy memeing!',
+
+  // --------
 
   upgrade: 'Upgrade',
   refresh: 'Refresh',
@@ -413,7 +442,7 @@ export const LocalText = {
 
   rate_in_app_5star_content: 'Thank you so much! Your support means a lot to me. Would you consider rating Gooday on the App Store as well? Your feedback can help the app reach a wider audience!',
   rate_in_app_text: 'Tap the star you want to rate Gooday',
-  
+
   gooday_streak_1: 'First day of Gooday streak!',
   gooday_streak_2: 'You have a ##-Gooday streak in a row!',
 

@@ -3,6 +3,7 @@ import React, { useCallback, useContext, useMemo, useState } from 'react'
 import { BorderRadius, FontSize, FontWeight, LocalText, Outline } from '../../constants/AppConstants'
 import { ThemeContext } from '../../constants/Colors';
 import UploadView from './UploadView';
+import UploadRulesView from './RulesView';
 
 type SubView = 'upload' | 'approved' | 'rules'
 
@@ -41,6 +42,10 @@ const UploadScreen = () => {
             {
                 subview === 'upload' &&
                 <UploadView />
+            }
+            {
+                subview === 'rules' &&
+                <UploadRulesView />
             }
         </View>
     )
