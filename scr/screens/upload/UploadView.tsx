@@ -123,6 +123,12 @@ const UploadView = () => {
     }, [refreshReasonCanNotUpload])
 
     const onPressUpload = useCallback(async () => {
+        if (!toggleRules) {
+            AlertWithError(LocalText.agree_rules)
+            setUploadingStatusText('')
+            return
+        }
+
         // check user permission here
 
         setUploadingStatusText(LocalText.checking)
@@ -446,13 +452,13 @@ export const GetCanNotUploadReasonAsync = async (isPremium: boolean): Promise<
 
     // check interval (app config)
 
-    const interval = appConfig.userUploadLimit.intervalInMinute
+    // const interval = appConfig.userUploadLimit.intervalInMinute
 
-    if (!(await GetDateAsync_IsValueNotExistedOrEqualOverMinFromNow(StorageKey_LastTimeUpload, interval))) {
-        return {
-            reason: LocalText.reached_limit_uploads_interval.replaceAll('##', interval.toString()),
-        }
-    }
+    // if (!(await GetDateAsync_IsValueNotExistedOrEqualOverMinFromNow(StorageKey_LastTimeUpload, interval))) {
+    //     return {
+    //         reason: LocalText.reached_limit_uploads_interval.replaceAll('##', interval.toString()),
+    //     }
+    // }
 
     // allowed upload
 

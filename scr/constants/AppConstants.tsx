@@ -381,6 +381,7 @@ export const LocalText = {
   can_not_get_user: "Can not get info. Please check your internet.",
   reached_limit_uploads: "You reached limit upload times.\nLimit per day: ##\nYou uploaded: @@\n\nPlease come back tomorrow, or subscribe to Gooday for unlimited uploads.",
   reached_limit_uploads_interval: "You can upload another one in ## minutes.",
+  agree_rules: 'Please agree the rules and guidelines before uploading.',
   banned_with_exp: "@@\n\nTime you can upload:##",
 
   upgrade: 'Upgrade',
