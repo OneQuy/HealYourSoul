@@ -383,9 +383,6 @@ export const LocalText = {
   reached_limit_uploads_interval: "You can upload another one in ## minutes.",
   banned_with_exp: "@@\n\nTime you can upload:##",
 
-  // ad_free: 'Ad-free',
-  // no_ad_anymore: 'No ad during your subscription time.\n',
-
   upgrade: 'Upgrade',
   refresh: 'Refresh',
 
