@@ -1,15 +1,23 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useCallback, useContext, useMemo, useState } from 'react'
-import { BorderRadius, FontSize, FontWeight, LocalText, Outline } from '../../constants/AppConstants'
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { BorderRadius, FontSize, FontWeight, LocalText, Outline, StorageKey_ReadRulesUpload } from '../../constants/AppConstants'
 import { ThemeContext } from '../../constants/Colors';
 import UploadView from './UploadView';
 import UploadRulesView from './RulesView';
+import { GetBooleanAsync, SetBooleanAsync } from '../../handle/AsyncStorageUtils';
 
 type SubView = 'upload' | 'approved' | 'rules'
 
 const UploadScreen = () => {
     const theme = useContext(ThemeContext);
     const [subview, setSubView] = useState<SubView>('upload')
+    const [readRules, setReadRules] = useState(false)
+
+    const onSetReadRule = useCallback(() => {
+        SetBooleanAsync(StorageKey_ReadRulesUpload, true)
+        setReadRules(true)
+        setSubView('upload')
+    }, [])
 
     const onPressView = useCallback((view: SubView) => {
         setSubView(view)
@@ -26,26 +34,42 @@ const UploadScreen = () => {
         })
     }, [theme])
 
+    useEffect(() => {
+        (async () => {
+            const readed = await GetBooleanAsync(StorageKey_ReadRulesUpload, false)
+
+            setReadRules(readed)
+
+            if (!readRules)
+                setSubView('rules')
+        })()
+    }, [])
+
     return (
         <View style={style.masterView}>
-            <View style={style.topButtonContainerView}>
-                <TouchableOpacity onPress={() => onPressView('upload')} style={subview === 'upload' ? style.topButtonTO : style.topButtonTO_Inactive}>
-                    <Text adjustsFontSizeToFit numberOfLines={1} style={subview === 'upload' ? style.topButtonText : style.topButtonText_Inactive}>{LocalText.upload}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => onPressView('approved')} style={subview === 'approved' ? style.topButtonTO : style.topButtonTO_Inactive}>
-                    <Text adjustsFontSizeToFit numberOfLines={1} style={subview === 'approved' ? style.topButtonText : style.topButtonText_Inactive}>{LocalText.approved}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => onPressView('rules')} style={subview === 'rules' ? style.topButtonTO : style.topButtonTO_Inactive}>
-                    <Text adjustsFontSizeToFit numberOfLines={1} style={subview === 'rules' ? style.topButtonText : style.topButtonText_Inactive}>{LocalText.rules}</Text>
-                </TouchableOpacity>
-            </View>
+
+            {
+                readRules &&
+                <View style={style.topButtonContainerView}>
+                    <TouchableOpacity onPress={() => onPressView('upload')} style={subview === 'upload' ? style.topButtonTO : style.topButtonTO_Inactive}>
+                        <Text adjustsFontSizeToFit numberOfLines={1} style={subview === 'upload' ? style.topButtonText : style.topButtonText_Inactive}>{LocalText.upload}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => onPressView('approved')} style={subview === 'approved' ? style.topButtonTO : style.topButtonTO_Inactive}>
+                        <Text adjustsFontSizeToFit numberOfLines={1} style={subview === 'approved' ? style.topButtonText : style.topButtonText_Inactive}>{LocalText.approved}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => onPressView('rules')} style={subview === 'rules' ? style.topButtonTO : style.topButtonTO_Inactive}>
+                        <Text adjustsFontSizeToFit numberOfLines={1} style={subview === 'rules' ? style.topButtonText : style.topButtonText_Inactive}>{LocalText.rules}</Text>
+                    </TouchableOpacity>
+                </View>
+            }
+
             {
                 subview === 'upload' &&
                 <UploadView />
             }
             {
                 subview === 'rules' &&
-                <UploadRulesView />
+                <UploadRulesView setReadRule={onSetReadRule} />
             }
         </View>
     )

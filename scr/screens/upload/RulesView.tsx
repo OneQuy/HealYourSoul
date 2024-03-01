@@ -14,7 +14,7 @@ import { widthPercentageToDP } from 'react-native-responsive-screen';
 
 const HairMarginVertical = 10
 
-const UploadRulesView = () => {
+const UploadRulesView = ({ setReadRule }: { setReadRule: () => void }) => {
     const theme = useContext(ThemeContext);
     const insets = useSafeAreaInsets()
     const [limitPerDay, setLimitPerDay] = useState(5)
@@ -35,12 +35,6 @@ const UploadRulesView = () => {
             agreeTxt: { fontSize: FontSize.Small_L, color: theme.counterBackground },
         })
     }, [theme, insets])
-
-    // can not upload now
-
-    const onPressAgree = useCallback(async () => {
-
-    }, [])
 
     const fetchAppConfig = useCallback(async () => {
         const config = await DoubleCheckGetAppConfigAsync()
@@ -82,7 +76,7 @@ const UploadRulesView = () => {
             </ScrollView>
 
             <View style={style.plsSubBtnsView}>
-                <TouchableOpacity onPress={onPressAgree}>
+                <TouchableOpacity onPress={setReadRule}>
                     <View style={style.agreeBtn}>
                         <Text numberOfLines={1} adjustsFontSizeToFit style={style.agreeTxt}>{LocalText.agree}</Text>
                     </View>

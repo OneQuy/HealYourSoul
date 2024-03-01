@@ -548,3 +548,4 @@ export const StorageKey_IsUserPressedClosePleaseSubscribe = 'isUserPressedCloseP
 export const StorageKey_MaxSavedCount = 'max_saved_count'
 export const StorageKey_TodayUploadsCount = 'today_uploads_count'
 export const StorageKey_LastTimeUpload = 'last_time_upload'
+export const StorageKey_ReadRulesUpload = 'read_rules_upload'
