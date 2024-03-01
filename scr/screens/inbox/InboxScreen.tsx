@@ -27,11 +27,10 @@ const listInboxes: Inbox[] = [
 const InboxScreen = () => {
     const theme = useContext(ThemeContext);
     const insets = useSafeAreaInsets()
-    const navigation = useNavigation()
 
     const style = useMemo(() => {
         return StyleSheet.create({
-            masterView: { marginBottom: insets.bottom + Outline.GapHorizontal, marginHorizontal: Outline.GapVertical_2, flex: 1, gap: Outline.GapHorizontal, },
+            masterView: { marginTop: Outline.GapHorizontal, marginBottom: insets.bottom + Outline.GapHorizontal, marginHorizontal: Outline.GapVertical_2, flex: 1, gap: Outline.GapHorizontal, },
             scrollViewContainer: { flex: 1 },
             scrollView: { gap: Outline.GapVertical_2 },
         })
