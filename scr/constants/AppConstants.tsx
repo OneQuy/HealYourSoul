@@ -13,6 +13,8 @@ export const FirebaseDatabaseTimeOutMs = 5000
 export const FileSizeLimitUploadInMb_Image = 2
 export const FileSizeLimitUploadInMb_Video = 5
 
+export const NotLimitUploadsValue = -1
+
 // screen names
 
 export enum ScreenName {
@@ -373,6 +375,9 @@ export const LocalText = {
   
   follow_rules_upload: "I have read and agree to abide by the rules and guidelines",
   read_rules: "Rules and guidelines",
+  
+  can_not_get_app_config: "Can not get app config. Please check your internet.",
+  can_not_get_user: "Can not get user info. Please check your internet.",
 
   // ad_free: 'Ad-free',
   // no_ad_anymore: 'No ad during your subscription time.\n',

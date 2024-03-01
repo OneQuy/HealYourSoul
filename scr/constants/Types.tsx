@@ -1,4 +1,4 @@
-import { Category, LocalText, ScreenName } from "./AppConstants"
+import { Category, LocalText, NotLimitUploadsValue, ScreenName } from "./AppConstants"
 
 export enum MediaType {
     Image = 0,
@@ -43,7 +43,7 @@ export const CreateDefaultUser = (): User => ({
     uploadLimit: {
         uploadBannedReason: '',
         uploadExpirdedDate: -1,
-        uploadsPerDay: -1,
+        uploadsPerDay: NotLimitUploadsValue,
     }
 })
 

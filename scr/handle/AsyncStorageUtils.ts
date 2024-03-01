@@ -1,3 +1,4 @@
+// @ts-ignore
 import AsyncStorage from "@react-native-async-storage/async-storage"
 
 // boolean =================
@@ -37,6 +38,43 @@ export const GetNumberFloatAsync = async (key: string, defaultValue?: number): P
 
 /**
  * 
+ * @returns lastest saved value (value that after increasing)
+ */
+export const IncreaseNumberAsync_WithCheckAndResetNewDay = async (key: string, valueNewDay: number = 0, incUnit: number = 1): Promise<number> => {
+    let num = await GetNumberIntAsync_WithCheckAndResetNewDay(key, valueNewDay)
+    num += incUnit
+
+    const s = `${Date.now()}_${num}`
+    await AsyncStorage.setItem(key, s)
+    return num
+}
+
+export const GetNumberIntAsync_WithCheckAndResetNewDay = async (key: string, valueNewDay: number = 0): Promise<number> => {
+    const s = await AsyncStorage.getItem(key)
+
+    if (!s)
+        return valueNewDay
+
+    const arr = s.split('_')
+
+    if (!Array.isArray(arr) || arr.length !== 2)
+        return valueNewDay
+
+    try {
+        const date = new Date(parseInt(arr[0]))
+
+        if (!IsToday(date))
+            return valueNewDay
+
+        return parseInt(arr[1])
+    }
+    catch {
+        return valueNewDay
+    }
+}
+
+/**
+ * 
  * @return number or NaN
  */
 export const GetNumberIntAsync = async (key: string, defaultValue?: number): Promise<number> => {
@@ -57,6 +95,10 @@ export const SetNumberAsync = async (key: string, value: number): Promise<void> 
     await AsyncStorage.setItem(key, value.toString())
 }
 
+/**
+ * 
+ * @returns lastest saved value (value that after increasing)
+ */
 export const IncreaseNumberAsync = async (key: string, startAt: number = 0, incUnit: number = 1): Promise<number> => {
     const cur = await GetNumberIntAsync(key, startAt)
     await SetNumberAsync(key, cur + incUnit)
