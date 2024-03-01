@@ -369,6 +369,8 @@ export const LocalText = {
   follow_rules_upload: "I have read and agree to abide by the rules and guidelines",
   read_rules: "Rules and guidelines",
   
+  approved: 'Approved',
+  rules: 'Rules',
   pick_image: 'Pick your image.',
   unsupport_file: 'Unsupport file',
   unsupport_file_desc: 'This file type is not supported currently. Please pick another file.',

@@ -1,44 +1,48 @@
-// @ts-ignore
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
-import { View, StyleSheet, Text } from 'react-native'
-import React, { useContext, useMemo } from 'react'
-import { FontSize, FontWeight, Icon, Outline, Size } from '../../constants/AppConstants'
-import { ThemeContext } from '../../constants/Colors'
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, { useCallback, useContext, useMemo, useState } from 'react'
+import { BorderRadius, FontSize, FontWeight, LocalText, Outline } from '../../constants/AppConstants'
+import { ThemeContext } from '../../constants/Colors';
 import UploadView from './UploadView';
+
+type SubView = 'upload' | 'approved' | 'rules'
 
 const UploadScreen = () => {
     const theme = useContext(ThemeContext);
-    const insets = useSafeAreaInsets()
+    const [subview, setSubView] = useState<SubView>('upload')
 
-    // const style = useMemo(() => {
-    //     return StyleSheet.create({
-    //         masterView: { flex: 1, paddingBottom: Outline.GapHorizontal, gap: Outline.GapHorizontal, },
-    //         centerView: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-    //         noItemTxt: { marginTop: Outline.GapVertical, textAlign: 'center', marginHorizontal: Outline.GapVertical, fontSize: FontSize.Normal, color: theme.counterBackground, },
-    //         commingSoonTxt: { fontWeight: FontWeight.B600, fontSize: FontSize.Big, color: theme.counterBackground },
-    //     })
-    // }, [theme])
+    const onPressView = useCallback((view: SubView) => {
+        setSubView(view)
+    }, [])
 
-    // // render list is empty
-
-    // if (true) {
-    //     return (
-    //         <View style={style.masterView}>
-    //             <View style={style.centerView}>
-    //                 <MaterialCommunityIcons name={Icon.Upload} color={theme.primary} size={Size.IconMedium} />
-    //                 <Text style={style.commingSoonTxt}>Coming Soon</Text>
-    //                 <Text style={style.noItemTxt}>You can upload your own memes (or other category images) for Gooday here. This feature will be available in the next version!</Text>
-    //             </View>
-    //         </View>
-    //     )
-    // }
-
-    // main render
+    const style = useMemo(() => {
+        return StyleSheet.create({
+            masterView: { flex: 1, backgroundColor: theme.background, gap: Outline.GapHorizontal },
+            topButtonContainerView: { padding: Outline.GapVertical, paddingHorizontal: Outline.GapVertical_2, gap: Outline.GapHorizontal, flexDirection: 'row' },
+            topButtonTO: { borderColor: theme.primary, borderWidth: StyleSheet.hairlineWidth, padding: Outline.GapVertical, borderRadius: BorderRadius.BR8, flex: 1, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center' },
+            topButtonTO_Inactive: { borderColor: theme.primary, borderWidth: StyleSheet.hairlineWidth, padding: Outline.GapVertical, borderRadius: BorderRadius.BR8, flex: 1, justifyContent: 'center', alignItems: 'center' },
+            topButtonText: { color: theme.counterPrimary, fontWeight: FontWeight.B600, fontSize: FontSize.Small },
+            topButtonText_Inactive: { color: theme.counterBackground, fontWeight: FontWeight.B600, fontSize: FontSize.Small },
+        })
+    }, [theme])
 
     return (
-        <UploadView />
+        <View style={style.masterView}>
+            <View style={style.topButtonContainerView}>
+                <TouchableOpacity onPress={() => onPressView('upload')} style={subview === 'upload' ? style.topButtonTO : style.topButtonTO_Inactive}>
+                    <Text adjustsFontSizeToFit numberOfLines={1} style={subview === 'upload' ? style.topButtonText : style.topButtonText_Inactive}>{LocalText.upload}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => onPressView('approved')} style={subview === 'approved' ? style.topButtonTO : style.topButtonTO_Inactive}>
+                    <Text adjustsFontSizeToFit numberOfLines={1} style={subview === 'approved' ? style.topButtonText : style.topButtonText_Inactive}>{LocalText.approved}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => onPressView('rules')} style={subview === 'rules' ? style.topButtonTO : style.topButtonTO_Inactive}>
+                    <Text adjustsFontSizeToFit numberOfLines={1} style={subview === 'rules' ? style.topButtonText : style.topButtonText_Inactive}>{LocalText.rules}</Text>
+                </TouchableOpacity>
+            </View>
+            {
+                subview === 'upload' &&
+                <UploadView />
+            }
+        </View>
     )
 }
 
