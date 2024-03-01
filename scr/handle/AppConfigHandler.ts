@@ -1,9 +1,7 @@
 import { FirebaseDatabase_GetValueAsync } from "../firebase/FirebaseDatabase";
-import { HandleError } from "./AppUtils";
 import { SetNetLordFetchUrl } from "./NetLord";
 import { AppConfig } from "../constants/Types";
-import { SetDateAsync_Now } from "./AsyncStorageUtils";
-import { FirebaseDatabaseTimeOutMs, StorageKey_LastTimeCheckAndReloadAppConfig } from "../constants/AppConstants";
+import { FirebaseDatabaseTimeOutMs } from "../constants/AppConstants";
 import { ExecuteWithTimeoutAsync } from "./UtilsTS";
 
 const FirebaseDBPath = 'app/config';
@@ -55,8 +53,6 @@ export async function HandleAppConfigAsync(): Promise<boolean> {
     }
 
     // success
-
-    SetDateAsync_Now(StorageKey_LastTimeCheckAndReloadAppConfig)
 
     appConfig = result.value as AppConfig
 

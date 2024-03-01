@@ -79,7 +79,7 @@ const checkAndReloadAppAsync = async () => {
 
     // set tick
 
-    if (successDownloadAppConfig || successDownloadFileVersion)
+    if (successDownloadAppConfig && successDownloadFileVersion)
         SetDateAsync_Now(StorageKey_LastTimeCheckAndReloadAppConfig)
 }
 

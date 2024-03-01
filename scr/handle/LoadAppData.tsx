@@ -6,7 +6,7 @@ import { DrawerParamList } from "../navigation/Navigator";
 import { NetLord } from "./NetLord";
 import { HandleAppConfigAsync } from "./AppConfigHandler";
 import { HandleStartupAlertAsync } from "./StartupAlert";
-import { StorageKey_ScreenToInit } from "../constants/AppConstants";
+import { StorageKey_LastTimeCheckAndReloadAppConfig, StorageKey_ScreenToInit } from "../constants/AppConstants";
 import { InitAptabase } from "./tracking/Tracking";
 import { HandldAlertUpdateAppAsync } from "./HandleAlertUpdateApp";
 import { initNotificationAsync } from "./Nofitication";
@@ -15,6 +15,7 @@ import { InitUserIDAsync, UserID } from "./UserID";
 import TelemetryDeck from "@telemetrydeck/sdk";
 import { createTelemetryDeckClient } from "./TelemetryDeck/TelemetryDeck";
 import { TELEMETRY_DECK_KEY } from "../../keys";
+import { SetDateAsync_Now } from "./AsyncStorageUtils";
 
 export type LoadAppDataResult = {
     categoryScreenToOpenFirst: keyof DrawerParamList | null,
@@ -40,7 +41,7 @@ export async function LoadAppData(): Promise<LoadAppDataResult> {
 
     // handle: app config
 
-    await HandleAppConfigAsync()
+    const successHandleAppConfig = await HandleAppConfigAsync()
 
     // check is dev (must after HandleAppConfigAsync)
 
@@ -64,7 +65,11 @@ export async function LoadAppData(): Promise<LoadAppDataResult> {
 
     // handle: versions file
 
-    await HandleVersionsFileAsync();
+    const successHandleFileVersions = await HandleVersionsFileAsync();
+
+    if (successHandleAppConfig && successHandleFileVersions) {
+        await SetDateAsync_Now(StorageKey_LastTimeCheckAndReloadAppConfig)
+    }
 
     // load screen to open
 
