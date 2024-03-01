@@ -380,7 +380,7 @@ export const LocalText = {
   can_not_get_app_config: "Can not get app config. Please check your internet.",
   can_not_get_user: "Can not get info. Please check your internet.",
   reached_limit_uploads: "You reached limit upload times.\nLimit per day: ##\nYou uploaded: @@\n\nPlease come back tomorrow, or subscribe to Gooday for unlimited uploads.",
-  reached_limit_uploads_interval: "You can upload another one in at least ## minutes.",
+  reached_limit_uploads_interval: "You can upload another one in ## minutes.",
   banned_with_exp: "@@\n\nTime you can upload:##",
 
   // ad_free: 'Ad-free',

@@ -30,6 +30,7 @@ const UploadView = () => {
     const [toggleRules, setToggleRules] = useState(false)
     const [uploadingStatusText, setUploadingStatusText] = useState('')
     const [reasonCanNotUpload, setReasonCanNotUpload] = useState<undefined | { reason: string, showSubscribeButton?: boolean }>(undefined)
+    const [isHandling, setIsHandling] = useState(true)
     const { isPremium } = usePremium()
     const navigation = useNavigation()
 
@@ -104,8 +105,22 @@ const UploadView = () => {
     }, [isPremium])
 
     const refreshReasonCanNotUpload = useCallback(async () => {
+        setIsHandling(true)
         setReasonCanNotUpload(await GetCanNotUploadReasonAsync(isPremium))
+        setIsHandling(false)
     }, [isPremium])
+
+    const onUploadedSuccess = useCallback(async () => {
+        IncreaseNumberAsync_WithCheckAndResetNewDay(StorageKey_TodayUploadsCount)
+        SetDateAsync_Now(StorageKey_LastTimeUpload)
+
+        Alert.alert(
+            LocalText.upload_success,
+            LocalText.upload_success_desc)
+
+        reset()
+        refreshReasonCanNotUpload()
+    }, [refreshReasonCanNotUpload])
 
     const onPressUpload = useCallback(async () => {
         // check user permission here
@@ -186,16 +201,8 @@ const UploadView = () => {
 
         // success!!
 
-        Alert.alert(
-            LocalText.upload_success,
-            LocalText.upload_success_desc
-        )
-
-        reset()
-
-        IncreaseNumberAsync_WithCheckAndResetNewDay(StorageKey_TodayUploadsCount)
-        SetDateAsync_Now(StorageKey_LastTimeUpload)
-    }, [mediaUri, isPremium, navigation])
+        onUploadedSuccess()
+    }, [onUploadedSuccess, mediaUri, isPremium, navigation])
 
     const style = useMemo(() => {
         return StyleSheet.create({
@@ -225,13 +232,21 @@ const UploadView = () => {
         refreshReasonCanNotUpload()
     }, []))
 
+    // handling something
+
+    if (isHandling) {
+        return (
+            <View style={style.masterView}>
+                <ActivityIndicator color={theme.primary} />
+            </View>
+        )
+    }
+
     // can not upload now
 
     if (reasonCanNotUpload) {
         return (
             <View style={style.masterView}>
-                {/* rect emtpy */}
-
                 <Text style={style.reasonTxt}>{reasonCanNotUpload.reason}</Text>
 
                 <View style={style.plsSubBtnsView}>
