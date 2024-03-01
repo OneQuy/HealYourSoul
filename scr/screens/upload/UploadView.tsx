@@ -168,7 +168,7 @@ const UploadView = () => {
         const uploadRes = await FirebaseStorage_UploadAsync(fbpath, mediaUri);
 
         if (uploadRes === null) { // step upload file success
-            console.log('step upload file done: ' + fbpath)
+            // console.log('step upload file done: ' + fbpath)
         }
         else { // upload failed
             AlertWithError(uploadRes)
@@ -191,7 +191,7 @@ const UploadView = () => {
         const res = await FirebaseDatabase_SetValueAsync(infoDbPath, info)
 
         if (res === null) { // step update info success
-            console.log('step update info success: ' + infoDbPath, info)
+            // console.log('step update info success: ' + infoDbPath, info)
         }
         else { // upload failed
             AlertWithError(res)
