@@ -210,7 +210,7 @@ const UploadView = ({ setSubView }: { setSubView: (view: SubView) => void }) => 
         // success!!
 
         onUploadedSuccess()
-    }, [onUploadedSuccess, mediaUri, isPremium, navigation])
+    }, [onUploadedSuccess, toggleRules, mediaUri, isPremium, navigation])
 
     const style = useMemo(() => {
         return StyleSheet.create({
