@@ -16,6 +16,7 @@ import { IsErrorObject_Empty } from '../../handle/Utils';
 import { NetLord } from '../../handle/NetLord';
 import { AlertNoInternet, AlertWithError } from '../../handle/AppUtils';
 import { FirebaseDatabase_SetValueAsync } from '../../firebase/FirebaseDatabase';
+import { GetUserAsync } from '../../handle/tracking/UserMan';
 
 const UploadView = () => {
     const theme = useContext(ThemeContext);
@@ -97,6 +98,8 @@ const UploadView = () => {
 
     const onPressUpload = useCallback(async () => {
         setUploadingStatusText(LocalText.uploading)
+
+        // const user = await GetUserAsync()
 
         // check user permission here
 

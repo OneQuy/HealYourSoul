@@ -3,7 +3,10 @@ import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-nat
 export const LimitSaved = 50
 
 /**
- * time out handle firebase db: config & version
+ * time out handle firebase db: 
+ * + app config
+ * + file versions
+ * + get user info
  */ 
 export const FirebaseDatabaseTimeOutMs = 5000
 
