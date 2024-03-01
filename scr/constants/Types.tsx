@@ -65,8 +65,6 @@ export type DiversityItemType = {
     wikipediaObject?: object,
 }
 
-export type LocalTextType = keyof typeof LocalText
-
 export type AppConfig = {
     net_url: string,
     remote_files: object,

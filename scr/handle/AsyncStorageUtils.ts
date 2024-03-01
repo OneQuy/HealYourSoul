@@ -1,5 +1,6 @@
 // @ts-ignore
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import { DateDiff_InHour, DateDiff_InMinute, IsToday, IsTodayAndSameHour } from "./UtilsTS"
 
 // boolean =================
 
@@ -130,6 +131,25 @@ export const GetDateAsync_IsValueExistedAndIsToday = async (key: string): Promis
     return IsToday(d)
 }
 
+export const GetDateAsync_IsValueNotExistedOrEqualOverMinFromNow = async (key: string, min: number): Promise<boolean> => {
+    const d = await GetDateAsync(key)
+
+    if (d === undefined)
+        return true
+
+    return DateDiff_InMinute(Date.now(), d) >= min
+}
+
+
+export const GetDateAsync_IsValueNotExistedOrEqualOverHourFromNow = async (key: string, hour: number): Promise<boolean> => {
+    const d = await GetDateAsync(key)
+
+    if (d === undefined)
+        return true
+
+    return DateDiff_InHour(Date.now(), d) >= hour
+}
+
 export const GetDateAsync_IsValueExistedAndIsTodayAndSameHour = async (key: string): Promise<boolean> => {
     const d = await GetDateAsync(key)
 
@@ -145,27 +165,4 @@ export const SetDateAsync = async (key: string, value: number): Promise<void> =>
 
 export const SetDateAsync_Now = async (key: string): Promise<void> => {
     await SetDateAsync(key, Date.now())
-}
-
-const IsToday = (date: Date): boolean => {
-    return IsSameDateMonthYear(date, new Date())
-}
-
-export const IsTodayAndSameHour = (date: Date): boolean => {
-    if (!IsToday(date))
-        return false
-
-    const now = new Date()
-
-    return date.getHours() === now.getHours()
-}
-
-const IsSameDateMonthYear = (a: Date, b: Date): boolean => {
-    if (a.getDate() === b.getDate() &&
-        a.getMonth() === b.getMonth() &&
-        a.getFullYear() === b.getFullYear()) {
-        return true
-    }
-    else
-        return false
 }
