@@ -1,15 +1,14 @@
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { View, StyleSheet, Text, Image, TouchableOpacity, ActivityIndicator, Platform, Alert, AppConfig } from 'react-native'
+import { View, StyleSheet, Text, Image, TouchableOpacity, ActivityIndicator, Platform, Alert, AlertButton } from 'react-native'
 import React, { useCallback, useContext, useMemo, useState } from 'react'
 import { BorderRadius, FileSizeLimitUploadInMb_Image, FileSizeLimitUploadInMb_Video, FontSize, Icon, LocalText, NotLimitUploadsValue, Outline, Size, StorageKey_LastTimeUpload, StorageKey_TodayUploadsCount } from '../../constants/AppConstants'
 import { ThemeContext } from '../../constants/Colors'
 import { openPicker } from '@baronha/react-native-multiple-image-picker';
-import { LocalTextType, MediaType, User, UserUploadInfo } from '../../constants/Types';
-import { DateDiff_InMinute, DistanceFrom2Dates, GetFileExtensionByFilepath, IsValuableArrayOrString, SafeValue, ToCanPrint } from '../../handle/UtilsTS';
+import { MediaType, UserUploadInfo } from '../../constants/Types';
+import { GetFileExtensionByFilepath, IsValuableArrayOrString, SafeValue, ToCanPrint } from '../../handle/UtilsTS';
 import { usePremium } from '../../hooks/usePremium';
-import { FileSizeInMB } from '../../handle/FileUtils';
 import { UserID } from '../../handle/UserID';
 import { FirebaseStorage_UploadAsync } from '../../firebase/FirebaseStorage';
 import { AlertWithError } from '../../handle/AppUtils';
@@ -17,6 +16,9 @@ import { FirebaseDatabase_SetValueAsync } from '../../firebase/FirebaseDatabase'
 import { DoubleCheckGetAppConfigAsync } from '../../handle/AppConfigHandler';
 import { GetUserAsync } from '../../handle/tracking/UserMan';
 import { GetDateAsync_IsValueNotExistedOrEqualOverMinFromNow, GetNumberIntAsync_WithCheckAndResetNewDay } from '../../handle/AsyncStorageUtils';
+import { GoToPremiumScreen } from '../components/HeaderXButton';
+import { useNavigation } from '@react-navigation/native';
+import { FileSizeInMB } from '../../handle/FileUtils';
 
 
 const UploadView = () => {
@@ -26,6 +28,7 @@ const UploadView = () => {
     const [toggleRules, setToggleRules] = useState(false)
     const [uploadingStatusText, setUploadingStatusText] = useState('')
     const { isPremium } = usePremium()
+    const navigation = useNavigation()
 
     const reset = useCallback(async () => {
         setMediaUri('')
@@ -34,8 +37,6 @@ const UploadView = () => {
     }, [])
 
     const onPressPickImage = useCallback(async () => {
-        GetCanNotUploadReasonAsync(isPremium)
-        return
         let response
 
         try {
@@ -87,7 +88,7 @@ const UploadView = () => {
 
             return
         }
-        else if ((type === MediaType.Image && sizeMBOrError > FileSizeLimitUploadInMb_Image) ||
+        else if ((sizeMBOrError > FileSizeLimitUploadInMb_Image && type === MediaType.Image) ||
             (type === MediaType.Video && sizeMBOrError > FileSizeLimitUploadInMb_Video)) { // exceed limit file size
             Alert.alert(
                 LocalText.unsupport_filesize_over_limit,
@@ -100,17 +101,40 @@ const UploadView = () => {
     }, [isPremium])
 
     const onPressUpload = useCallback(async () => {
-        setUploadingStatusText(LocalText.uploading)
-
         // check user permission here
 
-        const allowedUpload = await GetCanNotUploadReasonAsync(isPremium)
+        setUploadingStatusText(LocalText.checking)
 
-        if (allowedUpload) {
+        const reasonCanNotUpload = await GetCanNotUploadReasonAsync(isPremium)
+
+        if (reasonCanNotUpload) { // can not upload
+            const btns: AlertButton[] = [
+                {
+                    text: 'OK'
+                }
+            ]
+
+            if (reasonCanNotUpload.showSubscribeButton === true) {
+                btns.push({
+                    text: LocalText.subscribe,
+                    onPress: () => GoToPremiumScreen(navigation)
+                })
+            }
+
+            Alert.alert(
+                LocalText.popup_title_error,
+                reasonCanNotUpload.reason,
+                btns
+            )
+
+            setUploadingStatusText('')
+
             return
         }
 
         // upload!
+
+        setUploadingStatusText(LocalText.uploading)
 
         const filename = `${Date.now()}_${UserID()}.${GetFileExtensionByFilepath(mediaUri)}`
 
@@ -160,7 +184,7 @@ const UploadView = () => {
         )
 
         reset()
-    }, [mediaUri, isPremium])
+    }, [mediaUri, isPremium, navigation])
 
     const style = useMemo(() => {
         return StyleSheet.create({
@@ -278,10 +302,7 @@ function GetMediaTypeByFileExtension(extension: string): MediaType | undefined {
 export const GetCanNotUploadReasonAsync = async (isPremium: boolean): Promise<
     {
         reason: string,
-        canUploadDate?: number,
-        limit?: number,
-        currentCount?: number,
-        expiredBannedDate?: number,
+        showSubscribeButton?: boolean,
     } | undefined> => {
 
     const [appConfig, user] = await Promise.all([
@@ -313,9 +334,17 @@ export const GetCanNotUploadReasonAsync = async (isPremium: boolean): Promise<
 
         if (expiredBannedDate >= 0 && Date.now() >= expiredBannedDate) { } // expired banned, can upload now hihi
         else {
-            return {
-                reason: banned,
-                expiredBannedDate,
+            if (expiredBannedDate < 0) { //permanented
+                return {
+                    reason: banned,
+                }
+            }
+            else { // with exp date
+                return {
+                    reason: LocalText.banned_with_exp
+                        .replaceAll('@@', banned)
+                        .replaceAll('##', new Date(expiredBannedDate).toLocaleString())
+                }
             }
         }
     }
@@ -327,13 +356,10 @@ export const GetCanNotUploadReasonAsync = async (isPremium: boolean): Promise<
 
     let limitUploadsPerDay_Final: number
 
-    if (isPremium) { // premium user only restricted user limit
-        if (limitUploadsPerDay_User !== NotLimitUploadsValue)
-            limitUploadsPerDay_Final = limitUploadsPerDay_User
-        else
-            limitUploadsPerDay_Final = NotLimitUploadsValue
+    if (isPremium) { // premium user not limit
+        limitUploadsPerDay_Final = NotLimitUploadsValue
     }
-    else {
+    else { // free user
         if (limitUploadsPerDay_User === NotLimitUploadsValue)
             limitUploadsPerDay_Final = limitUploadsPerDay_AppConfig
         else
@@ -342,11 +368,13 @@ export const GetCanNotUploadReasonAsync = async (isPremium: boolean): Promise<
 
     const currentUploadsCount = await GetNumberIntAsync_WithCheckAndResetNewDay(StorageKey_TodayUploadsCount)
 
-    if (currentUploadsCount >= limitUploadsPerDay_Final) {
+    if (limitUploadsPerDay_Final !== NotLimitUploadsValue && currentUploadsCount >= limitUploadsPerDay_Final) {
         return {
-            reason: LocalText.reached_limit_uploads,
-            limit: limitUploadsPerDay_Final,
-            currentCount: currentUploadsCount,
+            reason: LocalText.reached_limit_uploads
+                .replaceAll('##', limitUploadsPerDay_Final.toString())
+                .replaceAll('@@', currentUploadsCount.toString()),
+
+            showSubscribeButton: true,
         }
     }
 

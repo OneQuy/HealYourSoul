@@ -41,6 +41,10 @@ export type User = {
          * + uploadExpirdedDate >= 0 if is a exp banned
          */
         uploadExpirdedDate?: number,
+
+        /**
+         * only for free user
+         */
         uploadsPerDay?: number,
     }
 }
@@ -77,7 +81,7 @@ export type AppConfig = {
     force_dev_01: number,
     userUploadLimit: {
         freeUserUploadsPerDay: number,
-        intervalInMinute: number,
+        intervalInMinute: number, // for both user free and premium.
     },
     latest_version: {
         android: LatestVersionConfig,
