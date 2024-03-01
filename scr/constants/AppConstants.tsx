@@ -354,6 +354,7 @@ export const LocalText = {
   filter: 'Filter',
   new_item_website: '# new fun website(s) added to the list!!',
   new_item_short_film: '# new short film(s) added to the list!!',
+  mark_read: 'Mark as read',
 
   one_time_purchase: 'You can choose between a one-time purchase',
   subscriptions: 'Or a subscription',
@@ -416,11 +417,11 @@ export const LocalText = {
 3. Both free and subscribed users must adhere to a minimum posting interval of ## minutes/post. This interval may be subject to updates by Gooday.`,
 
   By_following_these: 'By following these guidelines, you contribute to making Gooday a fun and safe community for meme enthusiasts. Happy memeing!',
-
+  
   // --------
-
-  upgrade: 'Upgrade',
-  refresh: 'Refresh',
+  
+    upgrade: 'Upgrade',
+    refresh: 'Refresh',
 
   unlock_all: 'Unlock features',
   unlock_all_info: "Save an unlimited number of posts. Subcribe now for the best experience",

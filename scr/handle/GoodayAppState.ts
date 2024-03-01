@@ -151,7 +151,10 @@ export const GoToScreen = (screen: ScreenName | string) => {
 
     track_SimpleWithParam('goto_screen', screen)
 
-    navigation.navigate(screen as never)
+    try {
+        navigation.navigate(screen as never)
+    }
+    catch { }
 }
 
 export const ResetNavigation = async () => {

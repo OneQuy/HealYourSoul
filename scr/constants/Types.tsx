@@ -62,11 +62,14 @@ export type Inbox = {
     title?: string,
     imgUri?: string,
     
-    primaryBtnTxt?: string, // must valuable to show btn
+    /**
+     *  must valuable to show btn and (primaryBtnUrl | primaryBtnGoToScreen) is valuable
+     */
+    primaryBtnTxt?: string,
     primaryBtnUrl?: string,
     primaryBtnGoToScreen?: string,
     
-    diversityItem?: DiversityItemType,
+    goToScreenParamObj?: object,
 }
 
 export type UserUploadInfo = {
