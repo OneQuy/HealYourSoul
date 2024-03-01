@@ -21,6 +21,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { FileSizeInMB } from '../../handle/FileUtils';
 import { widthPercentageToDP } from 'react-native-responsive-screen';
 import { iapBg_1 } from '../IAP/IAPPage';
+import { Cheat } from '../../handle/Cheat';
 
 
 const UploadView = () => {
@@ -454,7 +455,7 @@ export const GetCanNotUploadReasonAsync = async (isPremium: boolean): Promise<
 
     const interval = appConfig.userUploadLimit.intervalInMinute
 
-    if (!__DEV__ && !(await GetDateAsync_IsValueNotExistedOrEqualOverMinFromNow(StorageKey_LastTimeUpload, interval))) {
+    if (!Cheat('NotLimitUpload') && !(await GetDateAsync_IsValueNotExistedOrEqualOverMinFromNow(StorageKey_LastTimeUpload, interval))) {
         return {
             reason: LocalText.reached_limit_uploads_interval.replaceAll('##', interval.toString()),
         }
