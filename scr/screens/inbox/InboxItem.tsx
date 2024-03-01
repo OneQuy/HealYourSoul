@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, TouchableOpacity, Linking } from 'react-native'
-import React, { useCallback, useContext, useMemo } from 'react'
+import React, { useCallback, useContext, useMemo, useState } from 'react'
 import { Inbox } from '../../constants/Types'
 import { ThemeContext } from '../../constants/Colors';
 import { BorderRadius, FontSize, FontWeight, LocalText, Outline } from '../../constants/AppConstants';
@@ -19,6 +19,11 @@ const InboxItem = ({
     }
 }: { inbox: Inbox }) => {
     const theme = useContext(ThemeContext);
+    const [minimal, setMinimal] = useState(true)
+
+    const onPressImage = useCallback(() => {
+        setMinimal(i => !i)
+    }, [])
 
     const onPressMarkAsRead = useCallback(() => {
 
@@ -44,7 +49,8 @@ const InboxItem = ({
             btnTxt: { color: theme.counterBackground, fontSize: FontSize.Small, },
             contentTxt: { color: theme.counterBackground, fontSize: FontSize.Small, },
             titleTxt: { fontWeight: FontWeight.B600, color: theme.counterBackground, fontSize: FontSize.Small_L, },
-            imageStyle: { height: heightPercentageToDP(20), aspectRatio: 1 }
+            imageStyle: { height: heightPercentageToDP(20), aspectRatio: 1 },
+            imageStyleFull: { height: heightPercentageToDP(60), width: '100%' }
         })
     }, [theme])
 
@@ -63,9 +69,9 @@ const InboxItem = ({
 
             {
                 imgUri &&
-                <View style={style.centerView}>
-                    <ImageBackgroundWithLoading resizeMode='contain' style={style.imageStyle} source={{ uri: imgUri }} />
-                </View>
+                <TouchableOpacity onPress={onPressImage} style={style.centerView}>
+                    <ImageBackgroundWithLoading resizeMode='contain' style={minimal ? style.imageStyle : style.imageStyleFull} source={{ uri: imgUri }} />
+                </TouchableOpacity>
             }
 
             {/* content */}

@@ -15,11 +15,12 @@ const listInboxes: Inbox[] = [
     },
 
     {
+        title: 'This is the title',
         msg: 'Subscribe to unlock new features and if eligible, receive a share of ads revenue.',
         // imgUri: 'https://i.pinimg.com/236x/6b/eb/9c/6beb9c44d9cfed918fbb82568acd051b.jpg',
         primaryBtnTxt: 'Go!',
-        primaryBtnGoToScreen: 'Cute',
-        
+        // primaryBtnGoToScreen: 'Cute',
+        primaryBtnUrl: 'https://i.pinimg.com/236x/6b/eb/9c/6beb9c44d9cfed918fbb82568acd051b.jpg',
     }
 ]
 
