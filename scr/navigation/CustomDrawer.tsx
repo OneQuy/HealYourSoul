@@ -26,6 +26,7 @@ import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { useNavigation } from '@react-navigation/native';
 import { setNavigation } from '../handle/GoodayAppState';
 import { usePremium } from '../hooks/usePremium';
+import MessageButton from '../screens/message/MessageButton';
 
 const premiumBGs = [
   [require(`../../assets/images/premium_btn/0.jpg`), '#1c1c1c'],
@@ -207,10 +208,11 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.background }}>
-      {/* logo & app name */}
-      <View onTouchEnd={onPressLogo} style={[style.topMasterView, CommonStyles.justifyContentCenter_AlignItemsCenter, { marginTop: safeAreaInsets.top }]}>
+      {/* message && logo & app name */}
+      <View style={[style.topMasterView, CommonStyles.justifyContentCenter_AlignItemsCenter, { marginTop: safeAreaInsets.top }]}>
         <Image source={logoScr} resizeMode='contain' style={[style.logoImg]} />
-        <Text style={[style.appNameText, { color: theme.counterBackground }]}>Gooday{IsDev() ? '.' : ''}</Text>
+        <Text onPress={onPressLogo} style={[style.appNameText, { color: theme.counterBackground }]}>Gooday{IsDev() ? '.' : ''}</Text>
+        <MessageButton />
       </View>
       {
         renderCategoryButtons()

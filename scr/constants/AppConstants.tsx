@@ -241,6 +241,8 @@ export enum Icon {
   Coffee = 'coffee',
   CheckBox_Yes = 'checkbox-marked-outline',
   CheckBox_No = 'checkbox-blank-outline',
+  BellNewMsg = 'bell-badge',
+  BellNoMsg = 'bell-outline',
 
   // MaterialIcons
 
