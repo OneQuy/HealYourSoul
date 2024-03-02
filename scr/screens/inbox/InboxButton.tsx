@@ -41,6 +41,7 @@ const InboxButton = () => {
                 return
             }
         }
+
         // fetch!
 
         fetchNewInboxesStatus.current = 'fetching'
