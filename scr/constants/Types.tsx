@@ -80,7 +80,7 @@ export type Inbox = {
     primaryBtnUrl: string | null,
     primaryBtnGoToScreen: string | null,
 
-    goToScreenParamObj: object | null,
+    // goToScreenParamObj: object | null,
 
     approvedUploadedDiversity?: DiversityItemType,
     
