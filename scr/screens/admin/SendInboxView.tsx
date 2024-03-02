@@ -10,6 +10,8 @@ import { IsValuableArrayOrString, RemoveEmptyAndFalsyFromObject } from '../../ha
 import { InboxUserAsync } from '../../handle/tracking/UserMan';
 import { UserID } from '../../handle/UserID';
 import { AlertWithError, GoodayToast } from '../../handle/AppUtils';
+import Clipboard from '@react-native-clipboard/clipboard';
+import { Clipboard_AppendLine } from '../../handle/ClipboardMan';
 
 const SendInboxView = () => {
   const theme = useContext(ThemeContext)
@@ -32,15 +34,17 @@ const SendInboxView = () => {
       scrollView: { gap: Outline.GapHorizontal },
       btnText: { textAlign: 'center', color: theme.counterPrimary, fontSize: FontSize.Small_L, fontWeight: FontWeight.B500 },
       textInputConView: { height: heightPercentageToDP(20), padding: Outline.GapVertical, borderColor: theme.primary, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth },
-      textInputUserContactConView: { height: heightPercentageToDP(5), paddingHorizontal: Outline.GapVertical, borderColor: theme.primary, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth },
+      textInputUserContactConView: { flexDirection: 'row', height: heightPercentageToDP(5), paddingHorizontal: Outline.GapVertical, borderColor: theme.primary, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth },
       titleText: { color: theme.primary, fontSize: FontSize.Small_L, fontWeight: FontWeight.B600 },
-      descNotiText: { color: theme.counterBackground, fontSize: FontSize.Small },
       contentTxt: { color: theme.counterBackground, fontSize: FontSize.Small_L },
       sendFeedbackTO: { backgroundColor: theme.primary, minWidth: 100, alignSelf: 'center', paddingVertical: Outline.GapVertical, paddingHorizontal: Outline.GapVertical_2, borderRadius: BorderRadius.BR8 },
-      sendFeedbackInput: { color: theme.counterBackground, textAlignVertical: 'top', textAlign: 'left', width: '100%', height: '100%' },
+      sendFeedbackInput: { flex: 1, color: theme.counterBackground, textAlignVertical: 'top', textAlign: 'left', height: '100%' },
     })
   }, [theme, insets])
 
+  const paste = async (set: (s: string) => void) => {
+    set(await Clipboard.getString())
+  }
   const send = async () => {
     if (!IsValuableArrayOrString(msg))
       return
@@ -68,10 +72,10 @@ const SendInboxView = () => {
     }
   }
 
-  useEffect(() => {
-    (async () => {
-    })()
-  }, [])
+  // useEffect(() => {
+  //   (async () => {
+  //   })()
+  // }, [])
 
   return (
     <View style={style.masterView}>
@@ -90,6 +94,9 @@ const SendInboxView = () => {
             placeholderTextColor={theme.counterBackground}
             autoCapitalize={'none'}
           />
+          <TouchableOpacity onPress={() => paste(setUserId)}>
+            <Text style={style.contentTxt}>paste</Text>
+          </TouchableOpacity>
         </View>
 
         {/* content */}
@@ -103,6 +110,9 @@ const SendInboxView = () => {
             value={msg}
             onChangeText={setContentText}
           />
+          <TouchableOpacity onPress={() => paste(setContentText)}>
+            <Text style={style.contentTxt}>paste</Text>
+          </TouchableOpacity>
         </View>
 
         {/* title */}
@@ -117,6 +127,9 @@ const SendInboxView = () => {
             placeholderTextColor={theme.counterBackground}
             autoCapitalize={'none'}
           />
+          <TouchableOpacity onPress={() => paste(setTitleText)}>
+            <Text style={style.contentTxt}>paste</Text>
+          </TouchableOpacity>
         </View>
 
         {/* image uri */}
@@ -131,6 +144,9 @@ const SendInboxView = () => {
             placeholderTextColor={theme.counterBackground}
             autoCapitalize={'none'}
           />
+          <TouchableOpacity onPress={() => paste(setimageurlText)}>
+            <Text style={style.contentTxt}>paste</Text>
+          </TouchableOpacity>
         </View>
 
         {/* primaryBtnTxt */}
@@ -145,6 +161,9 @@ const SendInboxView = () => {
             placeholderTextColor={theme.counterBackground}
             autoCapitalize={'none'}
           />
+          <TouchableOpacity onPress={() => paste(setbtnText)}>
+            <Text style={style.contentTxt}>paste</Text>
+          </TouchableOpacity>
         </View>
 
         {/* primaryBtnUrl */}
@@ -159,6 +178,9 @@ const SendInboxView = () => {
             placeholderTextColor={theme.counterBackground}
             autoCapitalize={'none'}
           />
+          <TouchableOpacity onPress={() => paste(setbtnUrl)}>
+            <Text style={style.contentTxt}>paste</Text>
+          </TouchableOpacity>
         </View>
 
         {/* primaryBtnGoToScreen */}
@@ -173,6 +195,9 @@ const SendInboxView = () => {
             placeholderTextColor={theme.counterBackground}
             autoCapitalize={'none'}
           />
+          <TouchableOpacity onPress={() => paste(setbtnScreen)}>
+            <Text style={style.contentTxt}>paste</Text>
+          </TouchableOpacity>
         </View>
 
         {/* goToScreenParamObj */}
@@ -187,6 +212,9 @@ const SendInboxView = () => {
             placeholderTextColor={theme.counterBackground}
             autoCapitalize={'none'}
           />
+          <TouchableOpacity onPress={() => paste(setparam)}>
+            <Text style={style.contentTxt}>paste</Text>
+          </TouchableOpacity>
         </View>
 
         {/* send */}
