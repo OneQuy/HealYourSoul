@@ -2,7 +2,7 @@
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native'
-import React, { useCallback, useContext, useMemo } from 'react'
+import React, { useCallback, useContext, useMemo, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { BorderRadius, FontSize, Icon, LocalText, Outline, Size } from '../../constants/AppConstants'
@@ -10,12 +10,15 @@ import InboxItem from './InboxItem'
 import { widthPercentageToDP } from 'react-native-responsive-screen'
 import { useAppDispatch, useAppSelector } from '../../redux/Store'
 import { clearAllInboxes } from '../../redux/UserDataSlice'
+import { Inbox } from '../../constants/Types';
+import { useFocusEffect } from '@react-navigation/native';
 
 const InboxScreen = () => {
     const theme = useContext(ThemeContext);
     const insets = useSafeAreaInsets()
     const allInboxes = useAppSelector(state => state.userData.inboxes)
     const dispatch = useAppDispatch()
+    const [sortedAllInboxes, setSortedAllInboxes] = useState<Inbox[] | undefined>(undefined)
 
     const onPressClearAll = useCallback(() => {
         dispatch(clearAllInboxes())
@@ -33,9 +36,24 @@ const InboxScreen = () => {
         })
     }, [theme, insets])
 
+    useFocusEffect(useCallback(() => {
+        if (!allInboxes) {
+            setSortedAllInboxes(undefined)
+            return
+        }
+
+        let arr = allInboxes.slice()
+
+        arr = arr.sort((a, b) => {
+            return a.didRead === true ? 1 : -1
+        })
+
+        setSortedAllInboxes(arr)
+    }, [allInboxes]))
+
     // render list is empty
 
-    if (!allInboxes || allInboxes.length === 0) {
+    if (!sortedAllInboxes || sortedAllInboxes.length === 0) {
         return (
             <View style={style.masterView}>
                 <View style={style.centerView}>
@@ -51,7 +69,7 @@ const InboxScreen = () => {
             <View style={style.scrollViewContainer}>
                 <ScrollView contentContainerStyle={style.scrollView}>
                     {
-                        allInboxes.map((inbox, index) => {
+                        sortedAllInboxes.map((inbox, index) => {
                             return (
                                 <InboxItem key={index} inbox={inbox} />
                             )
