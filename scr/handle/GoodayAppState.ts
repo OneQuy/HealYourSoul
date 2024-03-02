@@ -37,13 +37,6 @@ export const setNavigation = (navi: NavigationType) => {
 
 /** reload (app config + file version) if app re-active after a period 1 HOUR */
 const checkAndReloadAppAsync = async () => {
-    // const d = await GetDateAsync(StorageKey_LastTimeCheckAndReloadAppConfig)
-
-    // if (d !== undefined && d.getMinutes() === new Date().getMinutes()) {
-    //     console.log('[checkAndReloadAppAsync] no check cuz checked this minnnnn');
-    //     return
-    // }
-
     if (await GetDateAsync_IsValueExistedAndIsTodayAndSameHour(StorageKey_LastTimeCheckAndReloadAppConfig)) {
         console.log('[checkAndReloadAppAsync] no check cuz checked this hour');
         return
