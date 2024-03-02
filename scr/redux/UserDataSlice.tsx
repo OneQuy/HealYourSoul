@@ -152,6 +152,8 @@ const slice = createSlice({
     reducers: {
         clearAllUserData: () => initialState,
 
+        // inbox
+
         setDidReadInbox: (state, action: PayloadAction<number>) => {
             if (!state.inboxes)
                 return
@@ -163,7 +165,7 @@ const slice = createSlice({
 
             inb.didRead = true
         },
-        
+
         addInboxes: (state, action: PayloadAction<Inbox[]>) => {
             if (!state.inboxes)
                 state.inboxes = []
@@ -182,10 +184,36 @@ const slice = createSlice({
 
             ArrayRemove(state.inboxes, inb)
         },
+        
+        toggleMarkAsReadInbox: (state, action: PayloadAction<number>) => {
+            if (!state.inboxes)
+                return
+
+            const inb = state.inboxes.find(i => i.tickAsId === action.payload)
+
+            if (!inb)
+                return
+
+            inb.didRead = !inb.didRead
+        },
+        
+        toggleLovedInbox: (state, action: PayloadAction<number>) => {
+            if (!state.inboxes)
+                return
+
+            const inb = state.inboxes.find(i => i.tickAsId === action.payload)
+
+            if (!inb)
+                return
+
+            inb.isLoved = !inb.isLoved
+        },
 
         clearAllInboxes: (state) => {
             state.inboxes = undefined
         },
+
+        // subscribed
 
         setSubscribe: (state, action: PayloadAction<string>) => {
             state.subscribedData = {
@@ -791,6 +819,8 @@ export const {
     clearInbox,
     setDidReadInbox,
     addInboxes,
+    toggleLovedInbox,
+    toggleMarkAsReadInbox,
 } = slice.actions;
 
 export default slice.reducer;

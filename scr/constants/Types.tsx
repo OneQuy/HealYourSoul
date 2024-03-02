@@ -86,6 +86,11 @@ export type Inbox = {
      *  client set only
      */
     didRead?: boolean
+    
+    /**
+     *  client set only
+     */
+    isLoved?: boolean
 }
 
 export type UserUploadInfo = {

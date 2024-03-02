@@ -13,7 +13,7 @@ import { CopyAndToast, CreateUserInfoObjectAsync, OpenStore, RateApp, ShareApp }
 import { location, track_RateInApp, track_Simple, track_SimpleWithParam, track_ToggleNotification } from '../../handle/tracking/GoodayTracking';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { GetBooleanAsync, GetDateAsync, GetDateAsync_IsValueExistedAndIsTodayAndSameHour, SetBooleanAsync, SetDateAsync_Now } from '../../handle/AsyncStorageUtils';
-import { IsValuableStringOrArray, SafeDateString, ToCanPrint } from '../../handle/UtilsTS';
+import { IsValuableArrayOrString, SafeDateString, ToCanPrint } from '../../handle/UtilsTS';
 import { onPressTestNoti, timeInHour24hNoti_Fact, timeInHour24hNoti_Joke, timeInHour24hNoti_Quote } from '../../handle/GoodayNotification';
 import { StorageLog_GetAsync } from '../../handle/StorageLog';
 import Clipboard from '@react-native-clipboard/clipboard';
@@ -133,7 +133,7 @@ const SettingView = () => {
     if (isSendingFeedback)
       return
 
-    if (!IsValuableStringOrArray(feedbackText))
+    if (!IsValuableArrayOrString(feedbackText))
       return
 
     if (await GetDateAsync_IsValueExistedAndIsTodayAndSameHour(StorageKey_LastTickSendFeedback)) {
