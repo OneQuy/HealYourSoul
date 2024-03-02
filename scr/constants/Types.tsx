@@ -70,17 +70,17 @@ export type Inbox = {
      */
     msg: string,
     
-    title?: string,
-    imgUri?: string,
+    title: string | null,
+    imgUri: string | null,
 
     /**
      *  must valuable to show btn and (primaryBtnUrl | primaryBtnGoToScreen) is valuable
      */
-    primaryBtnTxt?: string,
-    primaryBtnUrl?: string,
-    primaryBtnGoToScreen?: string,
+    primaryBtnTxt: string | null,
+    primaryBtnUrl: string | null,
+    primaryBtnGoToScreen: string | null,
 
-    goToScreenParamObj?: object,
+    goToScreenParamObj: object | null,
 
     /**
      *  client set only

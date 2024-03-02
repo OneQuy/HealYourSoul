@@ -5,21 +5,26 @@ import { BorderRadius, FontSize, FontWeight, LocalText, Outline } from '../../co
 import { ScrollView } from 'react-native-gesture-handler';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Inbox } from '../../constants/Types';
+import { IsValuableArrayOrString, RemoveEmptyAndFalsyFromObject } from '../../handle/UtilsTS';
+import { InboxUserAsync } from '../../handle/tracking/UserMan';
+import { UserID } from '../../handle/UserID';
+import { AlertWithError, GoodayToast } from '../../handle/AppUtils';
 
 const SendInboxView = () => {
   const theme = useContext(ThemeContext)
-  
-  const [titleText, setTitleText] = useState('')
-  const [contentText, setContentText] = useState('')
-  const [imageurlText, setimageurlText] = useState('')
+
+  const [userIdText, setUserId] = useState('')
+  const [title, setTitleText] = useState('')
+  const [msg, setContentText] = useState('')
+  const [imgUri, setimageurlText] = useState('')
   const [btnText, setbtnText] = useState('')
   const [btnUrl, setbtnUrl] = useState('')
   const [btnScreen, setbtnScreen] = useState('')
   const [param, setparam] = useState('')
-  
+
   const [isSendingFeedback, setIsSendingFeedback] = useState(false)
   const insets = useSafeAreaInsets()
-  // const dispatch = useAppDispatch()
 
   const style = useMemo(() => {
     return StyleSheet.create({
@@ -36,8 +41,32 @@ const SendInboxView = () => {
     })
   }, [theme, insets])
 
-  const send = useCallback(() => {
-  }, [])
+  const send = async () => {
+    if (!IsValuableArrayOrString(msg))
+      return
+
+    const inbox: Inbox = {
+      tickAsId: Date.now(),
+      msg,
+
+      title,
+      imgUri,
+      primaryBtnTxt: btnText,
+      primaryBtnGoToScreen: btnScreen,
+      primaryBtnUrl: btnUrl,
+      goToScreenParamObj: null
+    }
+
+    const obj = RemoveEmptyAndFalsyFromObject(inbox) as Inbox
+    const res = await InboxUserAsync(obj, userIdText)
+
+    if (res === null) {
+      GoodayToast('success')
+    }
+    else {
+      AlertWithError(res)
+    }
+  }
 
   useEffect(() => {
     (async () => {
@@ -49,15 +78,15 @@ const SendInboxView = () => {
       <ScrollView
         showsVerticalScrollIndicator={false} contentContainerStyle={style.scrollView}>
 
-        {/* title */}
+        {/* user id */}
 
-        <Text style={style.titleText}>title</Text>
+        <Text style={style.titleText}>user id</Text>
 
         <View style={style.textInputUserContactConView}>
           <TextInput
             style={style.sendFeedbackInput}
-            value={titleText}
-            onChangeText={setTitleText}
+            value={userIdText}
+            onChangeText={setUserId}
             placeholderTextColor={theme.counterBackground}
             autoCapitalize={'none'}
           />
@@ -65,14 +94,28 @@ const SendInboxView = () => {
 
         {/* content */}
 
-        <Text style={style.titleText}>content</Text>
+        <Text style={style.titleText}>content***</Text>
 
         <View style={style.textInputConView}>
           <TextInput
             style={style.sendFeedbackInput}
             multiline={true}
-            value={contentText}
+            value={msg}
             onChangeText={setContentText}
+          />
+        </View>
+
+        {/* title */}
+
+        <Text style={style.titleText}>title</Text>
+
+        <View style={style.textInputUserContactConView}>
+          <TextInput
+            style={style.sendFeedbackInput}
+            value={title}
+            onChangeText={setTitleText}
+            placeholderTextColor={theme.counterBackground}
+            autoCapitalize={'none'}
           />
         </View>
 
@@ -83,7 +126,7 @@ const SendInboxView = () => {
         <View style={style.textInputUserContactConView}>
           <TextInput
             style={style.sendFeedbackInput}
-            value={imageurlText}
+            value={imgUri}
             onChangeText={setimageurlText}
             placeholderTextColor={theme.counterBackground}
             autoCapitalize={'none'}

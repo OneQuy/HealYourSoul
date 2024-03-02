@@ -3,14 +3,14 @@ import { CreateDefaultUser, Inbox, User } from "../../constants/Types"
 import { FirebaseDatabase_GetValueAsyncWithTimeOut, FirebaseDatabase_SetValueAsync } from "../../firebase/FirebaseDatabase"
 import { HandleError } from "../AppUtils"
 import { UserID } from "../UserID"
-import { CreateError } from "../UtilsTS"
+import { CreateError, IsValuableArrayOrString } from "../UtilsTS"
 
 const GetUserFirebasePath = () => {
     return `user_data/users/${UserID()}`
 }
 
 const GetUserFirebasePath_AllInboxes = (userId?: string) => {
-    return `user_data/users/${userId ?? UserID()}/inboxes`
+    return `user_data/users/${IsValuableArrayOrString(userId) ? userId : UserID()}/inboxes`
 }
 
 /**
@@ -48,6 +48,15 @@ export const GetUserInboxesAsync = async (userId?: string): Promise<Inbox[] | nu
         return null
     
     return Object.values(userRes.value)
+}
+
+/**
+ * @returns null if SUCCESS, error if error.
+ */
+export const InboxUserAsync = async (inbox: Inbox, userId?: string): Promise<any> => {
+    const path = GetUserFirebasePath_AllInboxes(userId) + '/t' + inbox.tickAsId
+
+    return await FirebaseDatabase_SetValueAsync(path, inbox)
 }
 
 export const ClearAllUserInboxesInFirebaseAsync = async (userId?: string): Promise<void> => {

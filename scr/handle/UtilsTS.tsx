@@ -747,6 +747,17 @@ export const IsPointInRect = ( // main
         return false
 }
 
+export function RemoveEmptyAndFalsyFromObject(obj: object) {
+    /**
+     * Creates a new object with empty strings, null, and undefined properties removed.
+     * @param {Object} obj The object to filter.
+     * @returns {Object} A new object with filtered properties.
+     */
+    return Object.fromEntries(
+        Object.entries(obj).filter(([key, value]) => value !== null && value !== undefined && value !== '')
+    );
+}
+
 export const ToCanPrintError = (erroObj: any) => {
     const err: string = erroObj?.code
     const msg: string = erroObj?.message
