@@ -355,15 +355,14 @@ export function ArrayAddWithCheckDuplicate<T>(
     pushOrUnshift = true): boolean {
     const arrToAdd = Array.isArray(itemsToAdd) ? itemsToAdd : [itemsToAdd]
     let added = false
+    const property = propertyForCompareIfTypeIsObject as keyof T
 
     for (let i = 0; i < arrToAdd.length; i++) {
         const curItemToAdd = arrToAdd[i]
 
         const foundIdx = arr.findIndex(f => {
             if (propertyForCompareIfTypeIsObject && typeof curItemToAdd === 'object') {
-                console.log('sameeee');
-
-                return curItemToAdd[propertyForCompareIfTypeIsObject] === f[propertyForCompareIfTypeIsObject]
+                return curItemToAdd[property] === f[property]
             }
             else
                 return f === curItemToAdd

@@ -1,6 +1,6 @@
 import { FirebaseDatabaseTimeOutMs } from "../../constants/AppConstants"
 import { CreateDefaultUser, Inbox, User } from "../../constants/Types"
-import { FirebaseDatabase_GetValueAsyncWithTimeOut } from "../../firebase/FirebaseDatabase"
+import { FirebaseDatabase_GetValueAsyncWithTimeOut, FirebaseDatabase_SetValueAsync } from "../../firebase/FirebaseDatabase"
 import { HandleError } from "../AppUtils"
 import { UserID } from "../UserID"
 import { CreateError } from "../UtilsTS"
@@ -48,4 +48,8 @@ export const GetUserInboxesAsync = async (userId?: string): Promise<Inbox[] | nu
         return null
     
     return Object.values(userRes.value)
+}
+
+export const ClearUserInboxesInFirebaseAsync = async (userId?: string): Promise<void> => {
+    await FirebaseDatabase_SetValueAsync(GetUserFirebasePath_AllInboxes(userId), undefined)
 }

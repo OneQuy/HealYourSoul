@@ -11,7 +11,7 @@ import { FilterOnlyLetterAndNumberFromString } from '../../handle/UtilsTS';
 import { useNavigation } from '@react-navigation/native';
 import { useAppDispatch, useAppSelector } from '../../redux/Store';
 import { Inbox } from '../../constants/Types';
-import { GetUserInboxesAsync } from '../../handle/tracking/UserMan';
+import { ClearUserInboxesInFirebaseAsync, GetUserInboxesAsync } from '../../handle/tracking/UserMan';
 import { addInboxes } from '../../redux/UserDataSlice';
 import { useDrawerStatus } from '@react-navigation/drawer';
 
@@ -41,15 +41,28 @@ const InboxButton = () => {
 
         const inboxes = await GetUserInboxesAsync()
 
+        // error 
+
         if (inboxes instanceof Error) {
             fetchNewInboxesStatus.current = 'not_fetched_yet'
             return
         }
 
+        // success
+
         fetchNewInboxesStatus.current = 'fetched'
 
-        if (inboxes)
+        // have new inboxes
+
+        if (inboxes) {
+            // save to local
+
             dispatch(addInboxes(inboxes))
+
+            // clear on firebase
+            
+            ClearUserInboxesInFirebaseAsync()
+        }
     }, [])
 
     const onPress = useCallback(() => {

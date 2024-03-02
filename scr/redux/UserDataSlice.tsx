@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { DiversityItemType, Inbox, SubscribedData } from "../constants/Types";
 import { ScreenName } from "../constants/AppConstants";
-import { ArrayRemove } from "../handle/UtilsTS";
+import { ArrayAddWithCheckDuplicate, ArrayRemove } from "../handle/UtilsTS";
 
 export type UserDataState = {
     inboxes: Inbox[] | undefined,
@@ -168,7 +168,7 @@ const slice = createSlice({
             if (!state.inboxes)
                 state.inboxes = []
 
-            state.inboxes.unshift(...action.payload)
+            ArrayAddWithCheckDuplicate(state.inboxes, action.payload, 'tickAsId', false)
         },
 
         clearInbox: (state, action: PayloadAction<number>) => {
