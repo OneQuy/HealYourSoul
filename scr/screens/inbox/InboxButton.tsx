@@ -105,7 +105,7 @@ const InboxButton = () => {
     }, [drawerStatus])
 
     useEffect(() => {
-        if (!allInboxes)
+        if (!allInboxes || allInboxes.length === 0)
             setStatus('hide')
         else {
             const unread = allInboxes.findIndex(inb => !inb.didRead) >= 0
