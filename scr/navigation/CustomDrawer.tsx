@@ -218,13 +218,18 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
     <View style={{ flex: 1, backgroundColor: theme.background }}>
       {/* message && logo & app name */}
       <View style={[style.topMasterView, CommonStyles.justifyContentCenter_AlignItemsCenter, { marginTop: safeAreaInsets.top }]}>
-        <Image source={logoScr} resizeMode='contain' style={[style.logoImg]} />
-        <Text onPress={onPressLogo} style={[style.appNameText, { color: theme.counterBackground }]}>Gooday{IsDev() ? '.' : ''}</Text>
+        <View style={{ width: Size.IconSmaller, height: Size.IconSmaller, }} />
+        <View style={[CommonStyles.justifyContentCenter_AlignItemsCenter, { gap: Outline.GapVertical, flex: 1, flexDirection: 'row', }]}>
+          <Image source={logoScr} resizeMode='contain' style={[style.logoImg]} />
+          <Text onPress={onPressLogo} style={[style.appNameText, { color: theme.counterBackground }]}>Gooday{IsDev() ? '.' : ''}</Text>
+        </View>
         <InboxButton />
       </View>
+
       {
         renderCategoryButtons()
       }
+
       <View style={[style.bottomMasterView, { backgroundColor: theme.primary }]}>
         {/* premium btn */}
 
@@ -294,7 +299,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
 }
 
 const style = StyleSheet.create({
-  topMasterView: { flexDirection: 'row', gap: Outline.GapVertical, marginBottom: Outline.GapVertical, },
+  topMasterView: { marginHorizontal: Outline.GapVertical, flexDirection: 'row', marginBottom: Outline.GapVertical, },
   logoImg: { width: Size.IconBig, height: Size.IconBig },
   appNameText: { fontSize: FontSize.Normal, fontWeight: FontWeight.Bold },
   bottomMasterView: { borderTopRightRadius: BorderRadius.BR, borderTopLeftRadius: BorderRadius.BR, paddingVertical: Outline.Horizontal, gap: Outline.GapVertical },
