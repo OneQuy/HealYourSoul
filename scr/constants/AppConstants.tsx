@@ -396,7 +396,7 @@ export const LocalText = {
   reached_limit_uploads_interval: "You can upload another one in ## minutes.",
   agree_rules: 'Please agree the rules and guidelines before uploading.',
   agree: 'Agree rules',
-  banned_with_exp: "@@\n\nTime you can upload:##",
+  banned_with_exp: "@@\n\nTime you can upload: ##",
 
   // ---------
   Upload_Guidelines: 'Upload Guidelines.',
