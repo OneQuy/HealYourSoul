@@ -50,18 +50,19 @@ export const OnPressedXInDiversityMode = () => {
 
 export const UpdateHeaderXButton = (
     navigation: DrawerNavigationProp<DrawerParamList> | NavigationProp<ReactNavigation.RootParamList>,
-    savedMode: boolean) => {
+    replaceByXButton: boolean
+) => {
     const index = navigation.getState().index
     const screen = navigation.getState().routes[index].name
 
     let title: string = screen
 
-    if (savedMode) {
-        title += ` (${LocalText.saved_2})`
+    if (replaceByXButton) {
+        title += ` (${GetScreenBackWhenPressXGlobal()})`
     }
 
     navigation.setOptions({
-        headerLeft: savedMode ? () => <HeaderXButton /> : undefined,
+        headerLeft: replaceByXButton ? () => <HeaderXButton /> : undefined,
         headerTitle: title,
     })
 }
