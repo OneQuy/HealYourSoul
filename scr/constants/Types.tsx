@@ -60,8 +60,16 @@ export const CreateDefaultUser = (): User => ({
 })
 
 export type Inbox = {
+    /**
+     * required
+     */
     tickAsId: number,
+
+    /**
+     * required
+     */
     msg: string,
+    
     title?: string,
     imgUri?: string,
 

@@ -6,7 +6,7 @@ export const LimitSaved = 50
  * time out handle firebase db: 
  * + app config
  * + file versions
- * + get user info
+ * + get user info, user inboxes,...
  */
 export const FirebaseDatabaseTimeOutMs = 5000
 
