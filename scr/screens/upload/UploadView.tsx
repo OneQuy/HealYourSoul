@@ -23,6 +23,7 @@ import { widthPercentageToDP } from 'react-native-responsive-screen';
 import { iapBg_1 } from '../IAP/IAPPage';
 import { Cheat } from '../../handle/Cheat';
 import { SubView } from './UploadScreen';
+import { DelayAsync } from '../../handle/Utils';
 
 
 const UploadView = ({ setSubView }: { setSubView: (view: SubView) => void }) => {
@@ -60,6 +61,8 @@ const UploadView = ({ setSubView }: { setSubView: (view: SubView) => void }) => 
         if (!response || response.length == 0)
             return
 
+        await DelayAsync(500)
+
         let path: string
         if (Platform.OS === 'android')
             path = 'file://' + response[0].realPath;
@@ -81,7 +84,16 @@ const UploadView = ({ setSubView }: { setSubView: (view: SubView) => void }) => 
         if (type === MediaType.Video && !isPremium) {
             Alert.alert(
                 LocalText.popup_title_error,
-                LocalText.unsupport_video_for_premium)
+                LocalText.unsupport_video_for_premium,
+                [
+                    {
+                        text: LocalText.subscribe,
+                        onPress: () => GoToPremiumScreen(navigation)
+                    },
+                    {
+                        text: 'OK'
+                    }
+                ])
 
             return
         }
