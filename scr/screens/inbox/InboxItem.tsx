@@ -90,7 +90,7 @@ const InboxItem = ({
             primaryBtnTxt: { color: HexToRgb(theme.counterPrimary, didRead ? DidReadOpacity : 1), fontSize: FontSize.Small, },
             btnTxt: { color: HexToRgb(theme.counterBackground, didRead ? DidReadOpacity : 1), fontSize: FontSize.Small, },
             titleTxt: { fontWeight: FontWeight.B600, color: HexToRgb(theme.counterBackground, didRead ? DidReadOpacity : 1), fontSize: FontSize.Small_L, },
-            contentTxt: { color: HexToRgb(theme.counterBackground, didRead ? DidReadOpacity : 1), fontSize: FontSize.Small, },
+            contentTxt: { color: HexToRgb(theme.counterBackground, didRead ? DidReadOpacity : 1), fontSize: FontSize.Small_L, },
             imageStyle: { height: heightPercentageToDP(20), aspectRatio: 1 },
             imageStyleFull: { height: heightPercentageToDP(60), width: '100%' }
         })
