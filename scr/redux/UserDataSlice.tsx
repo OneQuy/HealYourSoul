@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { DiversityItemType, Inbox, SubscribedData } from "../constants/Types";
 import { ScreenName } from "../constants/AppConstants";
-import { ArrayAddWithCheckDuplicate, ArrayRemove } from "../handle/UtilsTS";
+import { ArrayAddWithCheckDuplicate, ArrayRemove, IsValuableArrayOrString } from "../handle/UtilsTS";
 
 export type UserDataState = {
     inboxes: Inbox[] | undefined,
@@ -183,6 +183,9 @@ const slice = createSlice({
                 return
 
             ArrayRemove(state.inboxes, inb)
+
+            if (!IsValuableArrayOrString(state.inboxes))
+                state.inboxes = undefined
         },
         
         toggleMarkAsReadInbox: (state, action: PayloadAction<number>) => {
