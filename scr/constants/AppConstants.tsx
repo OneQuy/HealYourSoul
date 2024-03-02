@@ -357,6 +357,8 @@ export const LocalText = {
   new_item_short_film: '# new short film(s) added to the list!!',
   clear: 'Clear',
   clear_all: 'Clear all',
+  mark_read: 'Mark as read',
+  read_all: 'Mark as read all',
 
   one_time_purchase: 'You can choose between a one-time purchase',
   subscriptions: 'Or a subscription',

@@ -1,5 +1,5 @@
 import { ActivityIndicator, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import React, { useContext, useMemo, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors';
 import { BorderRadius, FontSize, FontWeight, LocalText, Outline } from '../../constants/AppConstants';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -8,10 +8,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Inbox } from '../../constants/Types';
 import { IsValuableArrayOrString, RemoveEmptyAndFalsyFromObject } from '../../handle/UtilsTS';
 import { InboxUserAsync } from '../../handle/tracking/UserMan';
-import { UserID } from '../../handle/UserID';
 import { AlertWithError, GoodayToast } from '../../handle/AppUtils';
 import Clipboard from '@react-native-clipboard/clipboard';
-import { Clipboard_AppendLine } from '../../handle/ClipboardMan';
 
 const SendInboxView = () => {
   const theme = useContext(ThemeContext)
