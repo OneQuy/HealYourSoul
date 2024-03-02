@@ -3,7 +3,7 @@ import React, { useCallback, useContext, useEffect, useMemo, useState } from 're
 import { ThemeContext } from '../../constants/Colors';
 import { BorderRadius, FontSize, FontWeight, LocalText, Outline } from '../../constants/AppConstants';
 import { ScrollView } from 'react-native-gesture-handler';
-import { heightPercentageToDP } from 'react-native-responsive-screen';
+import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Inbox } from '../../constants/Types';
 import { IsValuableArrayOrString, RemoveEmptyAndFalsyFromObject } from '../../handle/UtilsTS';
@@ -30,15 +30,15 @@ const SendInboxView = () => {
 
   const style = useMemo(() => {
     return StyleSheet.create({
-      masterView: { paddingBottom: insets.bottom + Outline.Horizontal, flex: 1, backgroundColor: theme.background, padding: Outline.Horizontal, paddingVertical: Outline.GapHorizontal },
+      masterView: { paddingBottom: insets.bottom + Outline.GapHorizontal, flex: 1, backgroundColor: theme.background, padding: Outline.Horizontal, paddingVertical: Outline.GapHorizontal },
       scrollView: { gap: Outline.GapHorizontal },
       btnText: { textAlign: 'center', color: theme.counterPrimary, fontSize: FontSize.Small_L, fontWeight: FontWeight.B500 },
       textInputConView: { height: heightPercentageToDP(20), padding: Outline.GapVertical, borderColor: theme.primary, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth },
       textInputUserContactConView: { flexDirection: 'row', height: heightPercentageToDP(5), paddingHorizontal: Outline.GapVertical, borderColor: theme.primary, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth },
+      sendFeedbackInput: { flex: 1, color: theme.counterBackground, textAlignVertical: 'top', textAlign: 'left', height: '100%' },
       titleText: { color: theme.primary, fontSize: FontSize.Small_L, fontWeight: FontWeight.B600 },
       contentTxt: { color: theme.counterBackground, fontSize: FontSize.Small_L },
-      sendFeedbackTO: { backgroundColor: theme.primary, minWidth: 100, alignSelf: 'center', paddingVertical: Outline.GapVertical, paddingHorizontal: Outline.GapVertical_2, borderRadius: BorderRadius.BR8 },
-      sendFeedbackInput: { flex: 1, color: theme.counterBackground, textAlignVertical: 'top', textAlign: 'left', height: '100%' },
+      sendTO: { backgroundColor: theme.primary, margin: Outline.GapVertical, minWidth: widthPercentageToDP(40), alignSelf: 'center', paddingVertical: Outline.GapVertical, paddingHorizontal: Outline.GapVertical_2, borderRadius: BorderRadius.BR8 },
     })
   }, [theme, insets])
 
@@ -217,16 +217,17 @@ const SendInboxView = () => {
           </TouchableOpacity>
         </View>
 
-        {/* send */}
-
-        <TouchableOpacity onPress={send} style={style.sendFeedbackTO}>
-          {
-            isSendingFeedback ?
-              <ActivityIndicator /> :
-              <Text style={style.btnText}>{LocalText.send}</Text>
-          }
-        </TouchableOpacity>
       </ScrollView>
+
+      {/* send */}
+
+      <TouchableOpacity onPress={send} style={style.sendTO}>
+        {
+          isSendingFeedback ?
+            <ActivityIndicator /> :
+            <Text style={style.btnText}>{LocalText.send}</Text>
+        }
+      </TouchableOpacity>
     </View >
   )
 }
