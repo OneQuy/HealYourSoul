@@ -24,6 +24,7 @@ import { iapBg_1 } from '../IAP/IAPPage';
 import { Cheat } from '../../handle/Cheat';
 import { SubView } from './UploadScreen';
 import { DelayAsync } from '../../handle/Utils';
+import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 
 
 const UploadView = ({ setSubView }: { setSubView: (view: SubView) => void }) => {
@@ -44,6 +45,8 @@ const UploadView = ({ setSubView }: { setSubView: (view: SubView) => void }) => 
     }, [])
 
     const onPressPickImage = useCallback(async () => {
+        track_SimpleWithParam('upload', 'pick_image')
+
         let response
 
         try {
@@ -128,6 +131,8 @@ const UploadView = ({ setSubView }: { setSubView: (view: SubView) => void }) => 
     }, [isPremium])
 
     const onUploadedSuccess = useCallback(async () => {
+        track_SimpleWithParam('upload', 'uploaded_success')
+
         IncreaseNumberAsync_WithCheckAndResetNewDay(StorageKey_TodayUploadsCount)
         SetDateAsync_Now(StorageKey_LastTimeUpload)
 
@@ -145,6 +150,8 @@ const UploadView = ({ setSubView }: { setSubView: (view: SubView) => void }) => 
             setUploadingStatusText('')
             return
         }
+
+        track_SimpleWithParam('upload', 'press_upload')
 
         // check user permission here
 

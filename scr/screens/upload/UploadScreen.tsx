@@ -8,6 +8,7 @@ import { GetBooleanAsync, SetBooleanAsync } from '../../handle/AsyncStorageUtils
 import { GoodayToast } from '../../handle/AppUtils';
 import ApprovedUploadsView from './ApprovedUploadsView';
 import { useFocusEffect } from '@react-navigation/native';
+import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 
 export type SubView = 'upload' | 'approved' | 'rules'
 
@@ -17,6 +18,8 @@ const UploadScreen = () => {
     const [readRules, setReadRules] = useState(false)
 
     const onSetReadRule = useCallback(() => {
+        track_SimpleWithParam('upload', 'agreed_rules')
+        
         SetBooleanAsync(StorageKey_ReadRulesUpload, true)
         setReadRules(true)
         setSubView('upload')
