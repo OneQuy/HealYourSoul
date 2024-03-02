@@ -4,12 +4,13 @@ import { useAppDispatch, useAppSelector } from "../redux/Store";
 import { toggleSavedItem } from "../redux/UserDataSlice";
 import { GoToPremiumScreen, OnPressedXInDiversityMode } from "../screens/components/HeaderXButton";
 import { useNavigation } from "@react-navigation/native";
-import { LimitSaved, LocalText, StorageKey_MaxSavedCount } from "../constants/AppConstants";
+import { LimitSaved, LocalText, ScreenName, StorageKey_MaxSavedCount } from "../constants/AppConstants";
 import { Alert } from "react-native";
 import { usePremium } from "./usePremium";
 import { GoodayToast } from "../handle/AppUtils";
 import { track_MaxSavedCount, track_SimpleWithCat } from "../handle/tracking/GoodayTracking";
 import { GetNumberIntAsync, SetNumberAsync } from "../handle/AsyncStorageUtils";
+import { GetScreenBackWhenPressXGlobal } from "../screens/diversity/TheDiversity";
 
 export const useSaved = (itemData?: DiversityItemType, diversityMode?: boolean) => {
     const allSavedItems = useAppSelector((state) => state.userData.savedItems)
@@ -46,7 +47,7 @@ export const useSaved = (itemData?: DiversityItemType, diversityMode?: boolean) 
     }, [itemData, allSavedItems])
 
     const onPressSaved = useCallback(async () => {
-        if (isSaved && diversityMode)
+        if (isSaved && diversityMode && GetScreenBackWhenPressXGlobal() === ScreenName.Saved)
             OnPressedXInDiversityMode()
 
         let shouldDispatch = true
