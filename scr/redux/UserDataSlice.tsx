@@ -14,6 +14,8 @@ export type UserDataState = {
 
     savedItems: DiversityItemType[] | undefined,
 
+    uploadedItems: DiversityItemType[] | undefined,
+
     checkedInScreens: ScreenName[],
 
     funSoundFavoriteIDs: (number | string)[],
@@ -88,6 +90,8 @@ const initialState: UserDataState = {
     checkedInScreens: [],
 
     savedItems: [],
+
+    uploadedItems: [],
 
     shortFilmsFavoritedIDs: [],
 
@@ -187,7 +191,7 @@ const slice = createSlice({
             if (!IsValuableArrayOrString(state.inboxes))
                 state.inboxes = undefined
         },
-        
+
         toggleMarkAsReadInbox: (state, action: PayloadAction<number>) => {
             if (!state.inboxes)
                 return
@@ -199,7 +203,7 @@ const slice = createSlice({
 
             inb.didRead = !inb.didRead
         },
-        
+
         toggleLovedInbox: (state, action: PayloadAction<number>) => {
             if (!state.inboxes)
                 return
@@ -249,6 +253,16 @@ const slice = createSlice({
                 ArrayRemove(state.savedItems, state.savedItems[idx])
             else
                 state.savedItems.push(action.payload)
+        },
+
+        addUploadedItem(state, action: PayloadAction<DiversityItemType>) {
+            if (!state.uploadedItems)
+                state.uploadedItems = []
+
+            const idx = state.uploadedItems.findIndex(i => JSON.stringify(i) === JSON.stringify(action.payload))
+
+            if (idx < 0)
+                state.uploadedItems.unshift(action.payload)
         },
 
         checkInScreen(state, action: PayloadAction<ScreenName>) {
@@ -735,6 +749,8 @@ export const {
     checkInScreen,
 
     toggleSavedItem,
+    
+    addUploadedItem,
 
     togglePinFunSound,
     addFunSoundFavoritedID,
@@ -826,5 +842,4 @@ export const {
     toggleMarkAsReadInbox,
 } = slice.actions;
 
-export default slice.reducer;
-
+export default slice.reducer
