@@ -50,6 +50,6 @@ export const GetUserInboxesAsync = async (userId?: string): Promise<Inbox[] | nu
     return Object.values(userRes.value)
 }
 
-export const ClearUserInboxesInFirebaseAsync = async (userId?: string): Promise<void> => {
-    await FirebaseDatabase_SetValueAsync(GetUserFirebasePath_AllInboxes(userId), undefined)
+export const ClearAllUserInboxesInFirebaseAsync = async (userId?: string): Promise<void> => {
+    await FirebaseDatabase_SetValueAsync(GetUserFirebasePath_AllInboxes(userId), null)
 }
