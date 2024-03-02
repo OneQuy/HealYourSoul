@@ -13,6 +13,7 @@ import { HexToRgb, RegexUrl } from '../../handle/UtilsTS';
 import { useAppDispatch } from '../../redux/Store';
 import { clearInbox, toggleLovedInbox, toggleMarkAsReadInbox } from '../../redux/UserDataSlice';
 import { SetBooleanAsync } from '../../handle/AsyncStorageUtils';
+import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 
 const DidReadOpacity = 0.2
 
@@ -36,22 +37,37 @@ const InboxItem = ({
     const dispatch = useAppDispatch()
 
     const onPressImage = useCallback(() => {
+        track_SimpleWithParam('press_inbox', 'image')
+
         setMinimal(i => !i)
     }, [])
 
     const onPressLove = useCallback(() => {
         dispatch(toggleLovedInbox(tickAsId))
-    }, [tickAsId])
+
+        if (approvedUploadedDiversity) {
+            track_SimpleWithParam('press_inbox', 'love_approved_upload')
+        }
+        else {
+            track_SimpleWithParam('press_love_inbox', 'id_' + tickAsId)
+        }
+    }, [tickAsId, approvedUploadedDiversity])
 
     const onPressClear = useCallback(() => {
+        track_SimpleWithParam('press_inbox', 'clear')
+
         dispatch(clearInbox(tickAsId))
     }, [tickAsId])
 
     const onPressMarkAsRead = useCallback(() => {
+        track_SimpleWithParam('press_inbox', 'mark_read')
+
         dispatch(toggleMarkAsReadInbox(tickAsId))
     }, [tickAsId])
 
     const onPressPrimaryBtn = useCallback(async () => {
+        track_SimpleWithParam('press_inbox', 'primary')
+
         if (primaryBtnGoToScreen) {
             if (primaryBtnGoToScreen === ScreenName.Upload && approvedUploadedDiversity) {
                 await SetBooleanAsync(StorageKey_HaveNewApprovedUploads, true)

@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/Store'
 import { clearAllInboxes } from '../../redux/UserDataSlice'
 import { Inbox } from '../../constants/Types';
 import { useFocusEffect } from '@react-navigation/native';
+import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 
 const InboxScreen = () => {
     const theme = useContext(ThemeContext);
@@ -21,6 +22,8 @@ const InboxScreen = () => {
     const [sortedAllInboxes, setSortedAllInboxes] = useState<Inbox[] | undefined>(undefined)
 
     const onPressClearAll = useCallback(() => {
+        track_SimpleWithParam('press_inbox', 'clear_all')
+
         dispatch(clearAllInboxes())
     }, [])
 

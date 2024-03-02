@@ -57,10 +57,10 @@ const SendInboxView = () => {
       primaryBtnGoToScreen: btnScreen,
       primaryBtnUrl: btnUrl,
 
-      // approvedUploadedDiversity: {
-      //   cat: Category.Meme,
-      //   id: 500
-      // } as DiversityItemType
+      approvedUploadedDiversity: {
+        cat: Category.Meme,
+        id: 500
+      } as DiversityItemType
     }
 
     const obj = RemoveEmptyAndFalsyFromObject(inbox) as Inbox
