@@ -348,6 +348,42 @@ export function AddOrRemoveItemInArray<T>(arr: T[], item: T): boolean {
     }
 }
 
+export function ArrayAddWithCheckDuplicate<T>(
+    arr: NonNullable<T>[],
+    itemsToAdd: NonNullable<T> | NonNullable<T>[],
+    propertyForCompareIfTypeIsObject?: string,
+    pushOrUnshift = true): boolean {
+    const arrToAdd = Array.isArray(itemsToAdd) ? itemsToAdd : [itemsToAdd]
+    let added = false
+
+    for (let i = 0; i < arrToAdd.length; i++) {
+        const curItemToAdd = arrToAdd[i]
+
+        const foundIdx = arr.findIndex(f => {
+            if (propertyForCompareIfTypeIsObject && typeof curItemToAdd === 'object') {
+                console.log('sameeee');
+
+                return curItemToAdd[propertyForCompareIfTypeIsObject] === f[propertyForCompareIfTypeIsObject]
+            }
+            else
+                return f === curItemToAdd
+        })
+
+        if (foundIdx >= 0) { // found => not add
+            continue
+        }
+
+        added = true
+
+        if (pushOrUnshift)
+            arr.push(curItemToAdd)
+        else
+            arr.unshift(curItemToAdd)
+    }
+
+    return added
+}
+
 export function ShuffleArray<T>(arr: T[]): void {
     if (!Array.isArray(arr))
         return
@@ -642,14 +678,14 @@ export const GetDayHourMinSecFromMs_ToString = (ms: number, separator = '_', rem
 
         s += arr[1] + 'h'
     }
-    
+
     if (arr[2] > 0 || !removeZeroElement) {
         if (s.length > 0)
             s += separator
 
         s += arr[2] + 'm'
     }
-    
+
     if (arr[3] > 0 || !removeZeroElement) {
         if (s.length > 0)
             s += separator
@@ -874,10 +910,10 @@ export async function ExecuteWithTimeoutAsync<T>(asyncFunction: () => Promise<T>
  * @returns if anything === undefined => defaultValue
  * @returns if anything !== undefined => anythhing
  */
-export function SafeValue<T>(anything: undefined | T, defaultValue: T) : T {
+export function SafeValue<T>(anything: undefined | T, defaultValue: T): T {
     if (anything !== undefined)
         return anything
-    else 
+    else
         return defaultValue
 }
 
