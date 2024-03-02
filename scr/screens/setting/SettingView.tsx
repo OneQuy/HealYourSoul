@@ -25,6 +25,7 @@ import { IsDev } from '../../handle/IsDev';
 import { useAppDispatch } from '../../redux/Store';
 import { setOnboarded } from '../../redux/MiscSlice';
 import { GetIPLocationAsync } from '../../hooks/useCountryFromIP';
+import { UserID } from '../../handle/UserID';
 
 const limitFeedback = 300
 
@@ -107,6 +108,10 @@ const SettingView = () => {
   const onPressDevLocation = useCallback(async () => {
     const location = await GetIPLocationAsync()
     Alert.alert('Location', ToCanPrint(location))
+  }, [])
+
+  const onPressDevGetUserID = useCallback(async () => {
+    CopyAndToast(UserID())
   }, [])
 
   const onFocusInput = useCallback(async (scrollToPercent?: number) => {
@@ -443,7 +448,9 @@ const SettingView = () => {
 
         {/* install date */}
 
-        <Text style={style.contentTxt}>{LocalText.install_app_date + ': ' + installDate}</Text>
+        <Text
+          onPress={IsDev() ? onPressDevGetUserID : undefined}
+          style={style.contentTxt}>{LocalText.install_app_date + ': ' + installDate}</Text>
         {
           hair100Width()
         }

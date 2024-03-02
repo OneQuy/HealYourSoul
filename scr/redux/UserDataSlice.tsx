@@ -1,9 +1,11 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
-import { DiversityItemType, SubscribedData } from "../constants/Types";
+import { DiversityItemType, Inbox, SubscribedData } from "../constants/Types";
 import { ScreenName } from "../constants/AppConstants";
 import { ArrayRemove } from "../handle/UtilsTS";
 
 export type UserDataState = {
+    inboxes: Inbox[] | undefined,
+
     disableScreens: ScreenName[],
 
     pinnedFunSoundNames: string[],
@@ -74,6 +76,8 @@ export type UserDataState = {
 }
 
 const initialState: UserDataState = {
+    inboxes: [],
+
     disableScreens: [],
 
     pinnedFunSoundNames: [],
@@ -148,6 +152,41 @@ const slice = createSlice({
     reducers: {
         clearAllUserData: () => initialState,
 
+        setDidReadInbox: (state, action: PayloadAction<number>) => {
+            if (!state.inboxes)
+                return
+
+            const inb = state.inboxes.find(i => i.tickAsId === action.payload)
+
+            if (!inb)
+                return
+
+            inb.didRead = true
+        },
+        
+        addInboxes: (state, action: PayloadAction<Inbox[]>) => {
+            if (!state.inboxes)
+                state.inboxes = []
+
+            state.inboxes.unshift(...action.payload)
+        },
+
+        clearInbox: (state, action: PayloadAction<number>) => {
+            if (!state.inboxes)
+                return
+
+            const inb = state.inboxes.find(i => i.tickAsId === action.payload)
+
+            if (!inb)
+                return
+
+            ArrayRemove(state.inboxes, inb)
+        },
+
+        clearAllInboxes: (state) => {
+            state.inboxes = []
+        },
+
         setSubscribe: (state, action: PayloadAction<string>) => {
             state.subscribedData = {
                 id: action.payload,
@@ -187,7 +226,7 @@ const slice = createSlice({
 
             if (!state.checkedInScreens.includes(action.payload)) {
                 state.checkedInScreens.push(action.payload)
-                
+
                 console.log('checkedInScreens', action.payload)
             }
         },
@@ -746,7 +785,12 @@ export const {
 
     addVocabularySeenID,
     addVocabularyFavoritedID,
-    removeVocabularyFavoritedID
+    removeVocabularyFavoritedID,
+
+    clearAllInboxes,
+    clearInbox,
+    setDidReadInbox,
+    addInboxes,
 } = slice.actions;
 
 export default slice.reducer;

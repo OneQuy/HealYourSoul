@@ -32,6 +32,8 @@ export type LatestVersionConfig = {
 export type UserUploadPostStatus = 'approved' | '' | 'rejected' | 'banned'
 
 export type User = {
+    inboxes?: Inbox[],
+
     uploadLimit?: {
         uploadBannedReason?: string,
 
@@ -58,18 +60,24 @@ export const CreateDefaultUser = (): User => ({
 })
 
 export type Inbox = {
+    tickAsId: number,
     msg: string,
     title?: string,
     imgUri?: string,
-    
+
     /**
      *  must valuable to show btn and (primaryBtnUrl | primaryBtnGoToScreen) is valuable
      */
     primaryBtnTxt?: string,
     primaryBtnUrl?: string,
     primaryBtnGoToScreen?: string,
-    
+
     goToScreenParamObj?: object,
+
+    /**
+     *  client set only
+     */
+    didRead?: boolean
 }
 
 export type UserUploadInfo = {

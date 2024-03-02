@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native'
-import React, { useCallback, useContext, useMemo } from 'react'
+import React, { useCallback, useContext, useEffect, useMemo } from 'react'
 import { Inbox } from '../../constants/Types'
 import { ThemeContext } from '../../constants/Colors'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -9,12 +9,14 @@ import { widthPercentageToDP } from 'react-native-responsive-screen'
 
 const listInboxes: Inbox[] = [
     {
+        tickAsId: 33333,
         title: 'Revenue',
         msg: 'Subscribe to unlock new features and if eligible, receive a share of ads revenue.',
         imgUri: 'https://www.socialpilot.co/wp-content/uploads/2023/02/MEME.webp',
     },
 
     {
+        tickAsId: 78987978979,
         title: 'This is the title',
         msg: 'Subscribe to unlock new features and if eligible, receive a share of ads revenue.',
         // imgUri: 'https://i.pinimg.com/236x/6b/eb/9c/6beb9c44d9cfed918fbb82568acd051b.jpg',
@@ -60,8 +62,8 @@ const InboxScreen = () => {
             {/* clear all */}
 
             <TouchableOpacity onPress={onPressClearAll} style={style.clearAllTO}>
-                    <Text adjustsFontSizeToFit numberOfLines={1} style={style.clearAllTxt}>{LocalText.clear_all}</Text>
-                </TouchableOpacity>
+                <Text adjustsFontSizeToFit numberOfLines={1} style={style.clearAllTxt}>{LocalText.clear_all}</Text>
+            </TouchableOpacity>
         </View>
     )
 }

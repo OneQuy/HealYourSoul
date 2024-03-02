@@ -392,12 +392,12 @@ export const GoodayToast = (s: string) => {
     toast(options);
 }
 
-export const CopyAndToast = (s: string, theme: ThemeColor) => {
+export const CopyAndToast = (s: string, theme?: ThemeColor) => {
     Clipboard.setString(s);
 
     const options: ToastOptions = {
         title: LocalText.copied,
-        ...ToastTheme(theme, 'done')
+        ...ToastTheme(theme ?? appUtilsTheme, 'done')
     };
 
     toast(options);

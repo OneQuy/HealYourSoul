@@ -2,7 +2,7 @@
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { TouchableOpacity } from 'react-native'
-import React, { useCallback, useContext, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 
 import { Icon, ScreenName, Size } from '../../constants/AppConstants';
 import { ThemeContext } from '../../constants/Colors';
@@ -16,12 +16,18 @@ const InboxButton = () => {
     const theme = useContext(ThemeContext)
     const [status, setStatus] = useState<InboxStatus>('no_msg')
     const navigation = useNavigation()
+    
+    // const 
 
     const onPress = useCallback(() => {
         track_PressDrawerItem(FilterOnlyLetterAndNumberFromString(ScreenName.Inbox))
 
         // @ts-ignore
         navigation.navigate(ScreenName.Inbox)
+    }, [])
+
+    useEffect(() => {
+
     }, [])
 
     if (status === 'hide')
