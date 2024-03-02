@@ -1,13 +1,13 @@
 import { View, StyleSheet } from 'react-native'
 import React, { useCallback, useContext, useMemo, useState } from 'react'
-import { ThemeContext } from '../../../constants/Colors';
-import { BorderRadius, FontSize, Outline } from '../../../constants/AppConstants';
+import { ThemeContext } from '../../constants/Colors';
+import { BorderRadius, FontSize, Outline } from '../../constants/AppConstants';
 import { widthPercentageToDP } from 'react-native-responsive-screen';
 
 const SendInboxView = () => {
     const theme = useContext(ThemeContext);
 
-    const onPressMarkAsRead = useCallback(() => {
+    const onPress = useCallback(() => {
 
     }, [])
 

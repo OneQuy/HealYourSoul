@@ -24,7 +24,7 @@ import { toast } from '@baronha/ting';
 import { IsDev } from '../handle/IsDev';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { useNavigation } from '@react-navigation/native';
-import { setNavigation } from '../handle/GoodayAppState';
+import { GoToScreen, setNavigation } from '../handle/GoodayAppState';
 import { usePremium } from '../hooks/usePremium';
 import InboxButton from '../screens/inbox/InboxButton';
 
@@ -138,6 +138,14 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
 
     return arr
   }, [disableScreens])
+
+  const onPressVersionText = useCallback(() => {
+    if (IsDev()) {
+      GoToScreen(ScreenName.Admin)
+    }
+    else
+      OpenStore()
+  }, [])
 
   const onPressLogo = useCallback(() => {
     changePremiumBtnBg()
@@ -261,7 +269,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
         </View>
 
         {/* version */}
-        <View onTouchEnd={OpenStore} style={style.versionContainerView}>
+        <View onTouchEnd={onPressVersionText} style={style.versionContainerView}>
           {/* version text */}
           <Text style={{ color: theme.background, }}>Version: v{versionAsNumber}</Text>
           {/* update btn */}

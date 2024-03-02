@@ -38,6 +38,7 @@ import { DiversityItemType } from '../constants/Types';
 import { setAppUtilsTheme } from '../handle/AppUtils';
 import UploadScreen from '../screens/upload/UploadScreen';
 import InboxScreen from '../screens/inbox/InboxScreen';
+import AdminScreen from '../screens/admin/AdminScreen';
 
 export type DrawerParamList = {
   [ScreenName.Meme]: { item: DiversityItemType } | undefined,
@@ -74,6 +75,7 @@ export type DrawerParamList = {
   [ScreenName.Saved]: undefined,
   [ScreenName.Upload]: undefined,
   [ScreenName.Inbox]: undefined,
+  [ScreenName.Admin]: undefined,
 }
 
 type MainNavigatorProps = {
@@ -121,6 +123,7 @@ const ScreenList: ScreenNamePair[] = [
   [ScreenName.Saved, SavedScreen],
   [ScreenName.Upload, UploadScreen],
   [ScreenName.Inbox, InboxScreen],
+  [ScreenName.Admin, AdminScreen],
 ]
 
 const Navigator = ({ initialRouteName }: MainNavigatorProps) => {

@@ -51,6 +51,7 @@ export enum ScreenName {
   FunSound = 'Meme Sounds',
   Upload = 'Upload',
   Inbox = 'Inbox',
+  Admin = 'Admin',
 }
 
 // dir / file
