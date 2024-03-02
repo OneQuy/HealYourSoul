@@ -8,8 +8,15 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const SendInboxView = () => {
   const theme = useContext(ThemeContext)
+  
   const [titleText, setTitleText] = useState('')
   const [contentText, setContentText] = useState('')
+  const [imageurlText, setimageurlText] = useState('')
+  const [btnText, setbtnText] = useState('')
+  const [btnUrl, setbtnUrl] = useState('')
+  const [btnScreen, setbtnScreen] = useState('')
+  const [param, setparam] = useState('')
+  
   const [isSendingFeedback, setIsSendingFeedback] = useState(false)
   const insets = useSafeAreaInsets()
   // const dispatch = useAppDispatch()
@@ -76,8 +83,8 @@ const SendInboxView = () => {
         <View style={style.textInputUserContactConView}>
           <TextInput
             style={style.sendFeedbackInput}
-            value={titleText}
-            onChangeText={setTitleText}
+            value={imageurlText}
+            onChangeText={setimageurlText}
             placeholderTextColor={theme.counterBackground}
             autoCapitalize={'none'}
           />
@@ -90,8 +97,8 @@ const SendInboxView = () => {
         <View style={style.textInputUserContactConView}>
           <TextInput
             style={style.sendFeedbackInput}
-            value={titleText}
-            onChangeText={setTitleText}
+            value={btnText}
+            onChangeText={setbtnText}
             placeholderTextColor={theme.counterBackground}
             autoCapitalize={'none'}
           />
@@ -104,8 +111,8 @@ const SendInboxView = () => {
         <View style={style.textInputUserContactConView}>
           <TextInput
             style={style.sendFeedbackInput}
-            value={titleText}
-            onChangeText={setTitleText}
+            value={btnUrl}
+            onChangeText={setbtnUrl}
             placeholderTextColor={theme.counterBackground}
             autoCapitalize={'none'}
           />
@@ -118,8 +125,8 @@ const SendInboxView = () => {
         <View style={style.textInputUserContactConView}>
           <TextInput
             style={style.sendFeedbackInput}
-            value={titleText}
-            onChangeText={setTitleText}
+            value={btnScreen}
+            onChangeText={setbtnScreen}
             placeholderTextColor={theme.counterBackground}
             autoCapitalize={'none'}
           />
@@ -132,8 +139,8 @@ const SendInboxView = () => {
         <View style={style.textInputUserContactConView}>
           <TextInput
             style={style.sendFeedbackInput}
-            value={titleText}
-            onChangeText={setTitleText}
+            value={param}
+            onChangeText={setparam}
             placeholderTextColor={theme.counterBackground}
             autoCapitalize={'none'}
           />
