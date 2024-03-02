@@ -40,7 +40,7 @@ const UploadScreen = () => {
 
             setReadRules(readed)
 
-            if (!readRules)
+            if (!readed)
                 setSubView('rules')
         })()
     }, [])
