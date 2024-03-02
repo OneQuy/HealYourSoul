@@ -3,7 +3,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import { TouchableOpacity } from 'react-native'
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
-import { Icon, ScreenName, Size } from '../../constants/AppConstants';
+import { Icon, ScreenName, Size, StorageKey_HaveNewApprovedUploads } from '../../constants/AppConstants';
 import { ThemeContext } from '../../constants/Colors';
 import { track_PressDrawerItem } from '../../handle/tracking/GoodayTracking';
 import { DateDiff_InHour, DateDiff_InHour_WithNow, FilterOnlyLetterAndNumberFromString } from '../../handle/UtilsTS';
@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/Store';
 import { ClearAllUserInboxesInFirebaseAsync, GetUserInboxesAsync } from '../../handle/tracking/UserMan';
 import { addInboxes, addUploadedItem } from '../../redux/UserDataSlice';
 import { useDrawerStatus } from '@react-navigation/drawer';
+import { SetBooleanAsync } from '../../handle/AsyncStorageUtils';
 
 export type InboxStatus = 'new_msg' | 'no_msg' | 'hide'
 
@@ -73,6 +74,8 @@ const InboxButton = () => {
 
             // add approvedUploadedDiversity
 
+            let setNewApproved = false
+
             for (let i = 0; i < inboxes.length; i++) {
                 const inb = inboxes[i]
 
@@ -80,6 +83,12 @@ const InboxButton = () => {
                     continue
 
                 dispatch(addUploadedItem(inb.approvedUploadedDiversity))
+
+                if (!setNewApproved) {
+                    setNewApproved = true
+
+                    SetBooleanAsync(StorageKey_HaveNewApprovedUploads, true)
+                }
             }
         }
     }, [])

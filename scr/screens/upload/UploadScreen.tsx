@@ -1,10 +1,11 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { BorderRadius, FontSize, FontWeight, LocalText, Outline, StorageKey_ReadRulesUpload } from '../../constants/AppConstants'
+import { BorderRadius, FontSize, FontWeight, LocalText, Outline, StorageKey_HaveNewApprovedUploads, StorageKey_ReadRulesUpload } from '../../constants/AppConstants'
 import { ThemeContext } from '../../constants/Colors';
 import UploadView from './UploadView';
 import UploadRulesView from './RulesView';
 import { GetBooleanAsync, SetBooleanAsync } from '../../handle/AsyncStorageUtils';
+import { GoodayToast } from '../../handle/AppUtils';
 
 export type SubView = 'upload' | 'approved' | 'rules'
 
@@ -42,6 +43,15 @@ const UploadScreen = () => {
 
             if (!readed)
                 setSubView('rules')
+            else { // did read rules
+                const haveNewApprovedItems = await GetBooleanAsync(StorageKey_HaveNewApprovedUploads, false)
+
+                if (haveNewApprovedItems) {
+                    SetBooleanAsync(StorageKey_HaveNewApprovedUploads, false)
+                    setSubView('approved')
+                    GoodayToast(LocalText.congrats_got_uploads)
+                }
+            }
         })()
     }, [])
 

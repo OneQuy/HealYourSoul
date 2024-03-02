@@ -374,6 +374,7 @@ export const LocalText = {
   show_all: "Show all",
   full_saved: "Upgrade for Unlimited Saves",
 
+  congrats_got_uploads: "Congrats! Your uploads are approved!",
   follow_rules_upload: "I have read and agree to abide by the rules and guidelines",
   read_rules: "Rules and guidelines",
 
@@ -557,3 +558,4 @@ export const StorageKey_MaxSavedCount = 'max_saved_count'
 export const StorageKey_TodayUploadsCount = 'today_uploads_count'
 export const StorageKey_LastTimeUpload = 'last_time_upload'
 export const StorageKey_ReadRulesUpload = 'read_rules_upload'
+export const StorageKey_HaveNewApprovedUploads = 'new_approved_uploads'
