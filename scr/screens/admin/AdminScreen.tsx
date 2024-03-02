@@ -1,8 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { BorderRadius, FontSize, FontWeight, LocalText, Outline, StorageKey_ReadRulesUpload } from '../../constants/AppConstants'
+import { BorderRadius, FontSize, FontWeight, LocalText, Outline } from '../../constants/AppConstants'
 import { ThemeContext } from '../../constants/Colors';
-import { GetBooleanAsync, SetBooleanAsync } from '../../handle/AsyncStorageUtils';
 import SendInboxView from './SendInboxView';
 
 type SubView = 'send_inbox' | 'approve_uploads'
@@ -10,7 +9,6 @@ type SubView = 'send_inbox' | 'approve_uploads'
 const AdminScreen = () => {
     const theme = useContext(ThemeContext);
     const [subview, setSubView] = useState<SubView>('send_inbox')
-    const [readRules, setReadRules] = useState(false)
 
     const onPressView = useCallback((view: SubView) => {
         setSubView(view)
@@ -37,7 +35,6 @@ const AdminScreen = () => {
         <View style={style.masterView}>
 
             {
-                readRules &&
                 <View style={style.topButtonContainerView}>
                     <TouchableOpacity onPress={() => onPressView('send_inbox')} style={subview === 'send_inbox' ? style.topButtonTO : style.topButtonTO_Inactive}>
                         <Text adjustsFontSizeToFit numberOfLines={1} style={subview === 'send_inbox' ? style.topButtonText : style.topButtonText_Inactive}>{LocalText.upload}</Text>
