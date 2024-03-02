@@ -202,23 +202,6 @@ const SendInboxView = () => {
           </TouchableOpacity>
         </View>
 
-        {/* goToScreenParamObj */}
-
-        <Text style={style.titleText}>goToScreenParamObj</Text>
-
-        <View style={style.textInputUserContactConView}>
-          <TextInput
-            style={style.sendFeedbackInput}
-            value={param}
-            onChangeText={setparam}
-            placeholderTextColor={theme.counterBackground}
-            autoCapitalize={'none'}
-          />
-          <TouchableOpacity onPress={() => paste(setparam)}>
-            <Text style={style.contentTxt}>paste</Text>
-          </TouchableOpacity>
-        </View>
-
       </ScrollView>
 
       {/* send */}
