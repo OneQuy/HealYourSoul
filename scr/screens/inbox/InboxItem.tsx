@@ -26,6 +26,7 @@ const InboxItem = ({
         primaryBtnUrl,
         isLoved,
         didRead,
+        // goToScreenParamObj,
     }
 }: { inbox: Inbox }) => {
     const theme = useContext(ThemeContext);

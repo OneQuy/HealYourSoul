@@ -82,6 +82,8 @@ export type Inbox = {
 
     goToScreenParamObj: object | null,
 
+    approvedUploadedDiversity?: DiversityItemType,
+    
     /**
      *  client set only
      */

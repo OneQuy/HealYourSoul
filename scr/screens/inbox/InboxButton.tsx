@@ -10,7 +10,7 @@ import { DateDiff_InHour, DateDiff_InHour_WithNow, FilterOnlyLetterAndNumberFrom
 import { useNavigation } from '@react-navigation/native';
 import { useAppDispatch, useAppSelector } from '../../redux/Store';
 import { ClearAllUserInboxesInFirebaseAsync, GetUserInboxesAsync } from '../../handle/tracking/UserMan';
-import { addInboxes } from '../../redux/UserDataSlice';
+import { addInboxes, addUploadedItem } from '../../redux/UserDataSlice';
 import { useDrawerStatus } from '@react-navigation/drawer';
 
 export type InboxStatus = 'new_msg' | 'no_msg' | 'hide'
@@ -70,6 +70,17 @@ const InboxButton = () => {
             // clear on firebase
 
             ClearAllUserInboxesInFirebaseAsync()
+
+            // add approvedUploadedDiversity
+
+            for (let i = 0; i < inboxes.length; i++) {
+                const inb = inboxes[i]
+
+                if (!inb.approvedUploadedDiversity)
+                    continue
+
+                dispatch(addUploadedItem(inb.approvedUploadedDiversity))
+            }
         }
     }, [])
 
