@@ -6,7 +6,7 @@ import React, { useCallback, useContext, useEffect, useRef, useState } from 'rea
 import { Icon, ScreenName, Size } from '../../constants/AppConstants';
 import { ThemeContext } from '../../constants/Colors';
 import { track_PressDrawerItem } from '../../handle/tracking/GoodayTracking';
-import { FilterOnlyLetterAndNumberFromString } from '../../handle/UtilsTS';
+import { DateDiff_InHour, DateDiff_InHour_WithNow, FilterOnlyLetterAndNumberFromString } from '../../handle/UtilsTS';
 import { useNavigation } from '@react-navigation/native';
 import { useAppDispatch, useAppSelector } from '../../redux/Store';
 import { ClearAllUserInboxesInFirebaseAsync, GetUserInboxesAsync } from '../../handle/tracking/UserMan';
@@ -21,17 +21,25 @@ const InboxButton = () => {
     const navigation = useNavigation()
     const allInboxes = useAppSelector(state => state.userData.inboxes)
     const fetchNewInboxesStatus = useRef<'fetching' | 'fetched' | 'not_fetched_yet'>('not_fetched_yet')
+    const lastFetchedTick = useRef(0)
     const dispatch = useAppDispatch()
     const drawerStatus = useDrawerStatus()
 
     // const 
 
     const checkAndFetchNewInboxes = useCallback(async () => {
-        // already called
+        // fetching
 
-        if (fetchNewInboxesStatus.current === 'fetching' ||
-            fetchNewInboxesStatus.current === 'fetched') {
+        if (fetchNewInboxesStatus.current === 'fetching') {
             return
+        }
+
+        // fetched => check last fetch, if over 1 hour re-fetch
+
+        if (fetchNewInboxesStatus.current === 'fetched') {
+            if (DateDiff_InHour_WithNow(lastFetchedTick.current) < 1) {
+                return
+            }
         }
         // fetch!
 
@@ -49,6 +57,7 @@ const InboxButton = () => {
         // success
 
         fetchNewInboxesStatus.current = 'fetched'
+        lastFetchedTick.current = Date.now()
 
         // have new inboxes
 
