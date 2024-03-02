@@ -7,6 +7,7 @@ import UploadRulesView from './RulesView';
 import { GetBooleanAsync, SetBooleanAsync } from '../../handle/AsyncStorageUtils';
 import { GoodayToast } from '../../handle/AppUtils';
 import ApprovedUploadsView from './ApprovedUploadsView';
+import { useFocusEffect } from '@react-navigation/native';
 
 export type SubView = 'upload' | 'approved' | 'rules'
 
@@ -36,25 +37,27 @@ const UploadScreen = () => {
         })
     }, [theme])
 
-    useEffect(() => {
-        (async () => {
-            const readed = await GetBooleanAsync(StorageKey_ReadRulesUpload, false)
+    const autoSwitchSubViewAsync = useCallback(async () => {
+        const readed = await GetBooleanAsync(StorageKey_ReadRulesUpload, false)
 
-            setReadRules(readed)
+        setReadRules(readed)
 
-            if (!readed)
-                setSubView('rules')
-            else { // did read rules
-                const haveNewApprovedItems = await GetBooleanAsync(StorageKey_HaveNewApprovedUploads, false)
+        if (!readed)
+            setSubView('rules')
+        else { // did read rules
+            const haveNewApprovedItems = await GetBooleanAsync(StorageKey_HaveNewApprovedUploads, false)
 
-                if (haveNewApprovedItems) {
-                    SetBooleanAsync(StorageKey_HaveNewApprovedUploads, false)
-                    setSubView('approved')
-                    GoodayToast(LocalText.congrats_got_uploads)
-                }
+            if (haveNewApprovedItems) {
+                SetBooleanAsync(StorageKey_HaveNewApprovedUploads, false)
+                setSubView('approved')
+                GoodayToast(LocalText.congrats_got_uploads)
             }
-        })()
+        }
     }, [])
+
+    useFocusEffect(useCallback(() => {
+        autoSwitchSubViewAsync()
+    }, [autoSwitchSubViewAsync]))
 
     return (
         <View style={style.masterView}>

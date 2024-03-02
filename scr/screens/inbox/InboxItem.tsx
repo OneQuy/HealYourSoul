@@ -5,13 +5,14 @@ import { View, Text, StyleSheet, TouchableOpacity, Linking } from 'react-native'
 import React, { useCallback, useContext, useMemo, useState } from 'react'
 import { Inbox } from '../../constants/Types'
 import { ThemeContext } from '../../constants/Colors';
-import { BorderRadius, FontSize, FontWeight, LocalText, Outline, Size } from '../../constants/AppConstants';
+import { BorderRadius, FontSize, FontWeight, LocalText, Outline, ScreenName, Size, StorageKey_HaveNewApprovedUploads } from '../../constants/AppConstants';
 import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 import { GoToScreen } from '../../handle/GoodayAppState';
 import { HexToRgb, RegexUrl } from '../../handle/UtilsTS';
 import { useAppDispatch } from '../../redux/Store';
 import { clearInbox, toggleLovedInbox, toggleMarkAsReadInbox } from '../../redux/UserDataSlice';
+import { SetBooleanAsync } from '../../handle/AsyncStorageUtils';
 
 const DidReadOpacity = 0.2
 
@@ -24,6 +25,7 @@ const InboxItem = ({
         primaryBtnGoToScreen,
         primaryBtnTxt,
         primaryBtnUrl,
+        approvedUploadedDiversity,
         isLoved,
         didRead,
         // goToScreenParamObj,
@@ -49,14 +51,18 @@ const InboxItem = ({
         dispatch(toggleMarkAsReadInbox(tickAsId))
     }, [tickAsId])
 
-    const onPressPrimaryBtn = useCallback(() => {
+    const onPressPrimaryBtn = useCallback(async () => {
         if (primaryBtnGoToScreen) {
+            if (primaryBtnGoToScreen === ScreenName.Upload && approvedUploadedDiversity) {
+                await SetBooleanAsync(StorageKey_HaveNewApprovedUploads, true)
+            }
+
             GoToScreen(primaryBtnGoToScreen)
         }
         else if (primaryBtnUrl && RegexUrl(primaryBtnUrl)) {
             Linking.openURL(primaryBtnUrl)
         }
-    }, [primaryBtnGoToScreen, primaryBtnUrl])
+    }, [primaryBtnGoToScreen, approvedUploadedDiversity, primaryBtnUrl])
 
     const style = useMemo(() => {
         return StyleSheet.create({
