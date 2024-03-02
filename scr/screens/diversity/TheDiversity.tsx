@@ -30,6 +30,7 @@ type TheDiversityProps = {
     allItems: DiversityItemType[] | undefined,
     emptyText: string,
     emptyIcon: string,
+    showLimitSaved?: boolean
 }
 
 var onPressedNextItemDiversityGlobalFunc: undefined | ((isNext: boolean, curItem: DiversityItemType) => void) = undefined
@@ -60,6 +61,7 @@ const TheDiversity = (
         allItems,
         emptyText,
         emptyIcon,
+        showLimitSaved,
     }: TheDiversityProps) => {
     const navigation = useNavigation();
     const theme = useContext(ThemeContext);
@@ -263,7 +265,7 @@ const TheDiversity = (
     }, [])
 
     const renderPleaseSubscribe = useCallback(() => {
-        if (isPremium || isUserPressedClosePleaseSubscribe)
+        if (showLimitSaved !== true || isPremium || isUserPressedClosePleaseSubscribe)
             return undefined
 
         return (
@@ -285,7 +287,7 @@ const TheDiversity = (
                 </View>
             </View>
         )
-    }, [onPressedUpgrade, style, isUserPressedClosePleaseSubscribe, isPremium])
+    }, [showLimitSaved, onPressedUpgrade, style, isUserPressedClosePleaseSubscribe, isPremium])
 
     // init
 

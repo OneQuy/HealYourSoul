@@ -6,6 +6,7 @@ import UploadView from './UploadView';
 import UploadRulesView from './RulesView';
 import { GetBooleanAsync, SetBooleanAsync } from '../../handle/AsyncStorageUtils';
 import { GoodayToast } from '../../handle/AppUtils';
+import ApprovedUploadsView from './ApprovedUploadsView';
 
 export type SubView = 'upload' | 'approved' | 'rules'
 
@@ -77,6 +78,12 @@ const UploadScreen = () => {
                 subview === 'upload' &&
                 <UploadView setSubView={setSubView} />
             }
+
+            {
+                subview === 'approved' &&
+                <ApprovedUploadsView />
+            }
+
             {
                 subview === 'rules' &&
                 <UploadRulesView setReadRule={onSetReadRule} />

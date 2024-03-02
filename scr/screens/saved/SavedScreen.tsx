@@ -11,6 +11,7 @@ const SavedScreen = () => {
       allItems={allSavedItems}
       emptyIcon={Icon.BookmarkOutline}
       emptyText={LocalText.diversity_empty_saved}
+      showLimitSaved={true}
     />
   )
 }
