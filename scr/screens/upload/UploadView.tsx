@@ -131,10 +131,10 @@ const UploadView = ({ setSubView }: { setSubView: (view: SubView) => void }) => 
     }, [isPremium])
 
     const onUploadedSuccess = useCallback(async () => {
-        track_SimpleWithParam('upload', 'uploaded_success')
-
-        IncreaseNumberAsync_WithCheckAndResetNewDay(StorageKey_TodayUploadsCount)
+        const count = await IncreaseNumberAsync_WithCheckAndResetNewDay(StorageKey_TodayUploadsCount)
         SetDateAsync_Now(StorageKey_LastTimeUpload)
+        
+        track_SimpleWithParam('upload', 'uploaded_success_' + count)
 
         Alert.alert(
             LocalText.upload_success,
