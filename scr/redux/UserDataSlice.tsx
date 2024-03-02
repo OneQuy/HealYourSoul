@@ -184,7 +184,7 @@ const slice = createSlice({
         },
 
         clearAllInboxes: (state) => {
-            state.inboxes = []
+            state.inboxes = undefined
         },
 
         setSubscribe: (state, action: PayloadAction<string>) => {

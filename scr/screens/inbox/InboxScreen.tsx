@@ -6,32 +6,36 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { BorderRadius, FontSize, LocalText, Outline } from '../../constants/AppConstants'
 import InboxItem from './InboxItem'
 import { widthPercentageToDP } from 'react-native-responsive-screen'
+import { useAppDispatch, useAppSelector } from '../../redux/Store'
+import { clearAllInboxes } from '../../redux/UserDataSlice'
 
-const listInboxes: Inbox[] = [
-    {
-        tickAsId: 33333,
-        title: 'Revenue',
-        msg: 'Subscribe to unlock new features and if eligible, receive a share of ads revenue.',
-        imgUri: 'https://www.socialpilot.co/wp-content/uploads/2023/02/MEME.webp',
-    },
+// const listInboxes: Inbox[] = [
+//     {
+//         tickAsId: 33333,
+//         title: 'Revenue',
+//         msg: 'Subscribe to unlock new features and if eligible, receive a share of ads revenue.',
+//         imgUri: 'https://www.socialpilot.co/wp-content/uploads/2023/02/MEME.webp',
+//     },
 
-    {
-        tickAsId: 78987978979,
-        title: 'This is the title',
-        msg: 'Subscribe to unlock new features and if eligible, receive a share of ads revenue.',
-        // imgUri: 'https://i.pinimg.com/236x/6b/eb/9c/6beb9c44d9cfed918fbb82568acd051b.jpg',
-        primaryBtnTxt: 'Go!',
-        // primaryBtnGoToScreen: 'Cute',
-        primaryBtnUrl: 'https://i.pinimg.com/236x/6b/eb/9c/6beb9c44d9cfed918fbb82568acd051b.jpg',
-    }
-]
+//     {
+//         tickAsId: 78987978979,
+//         title: 'This is the title',
+//         msg: 'Subscribe to unlock new features and if eligible, receive a share of ads revenue.',
+//         // imgUri: 'https://i.pinimg.com/236x/6b/eb/9c/6beb9c44d9cfed918fbb82568acd051b.jpg',
+//         primaryBtnTxt: 'Go!',
+//         // primaryBtnGoToScreen: 'Cute',
+//         primaryBtnUrl: 'https://i.pinimg.com/236x/6b/eb/9c/6beb9c44d9cfed918fbb82568acd051b.jpg',
+//     }
+// ]
 
 const InboxScreen = () => {
     const theme = useContext(ThemeContext);
     const insets = useSafeAreaInsets()
+    const allInboxes = useAppSelector(state => state.userData.inboxes)
+    const dispatch = useAppDispatch()
 
     const onPressClearAll = useCallback(() => {
-
+        dispatch(clearAllInboxes())
     }, [])
 
     const style = useMemo(() => {
@@ -45,12 +49,15 @@ const InboxScreen = () => {
         })
     }, [theme, insets])
 
+    if (!allInboxes)
+        return undefined
+
     return (
         <View style={style.masterView}>
             <View style={style.scrollViewContainer}>
                 <ScrollView contentContainerStyle={style.scrollView}>
                     {
-                        listInboxes.map((inbox, index) => {
+                        allInboxes.map((inbox, index) => {
                             return (
                                 <InboxItem key={index} inbox={inbox} />
                             )
