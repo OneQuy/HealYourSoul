@@ -59,7 +59,7 @@ const SendInboxView = () => {
       goToScreenParamObj: null,
       approvedUploadedDiversity: {
         cat: Category.Meme,
-        id: 77
+        id: 500
       } as DiversityItemType
     }
 

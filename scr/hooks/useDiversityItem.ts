@@ -22,7 +22,7 @@ const useDiversityItem = (
     // update x button
 
     useFocusEffect(useCallback(() => {
-        UpdateHeaderXButton(navigation, diversityItem !== undefined)
+        UpdateHeaderXButton(navigation, diversityItem)
     }, [diversityItem]))
 
     // check to reload if have another diversity

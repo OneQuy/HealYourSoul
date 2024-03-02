@@ -11,6 +11,8 @@ import { DrawerParamList } from '../../navigation/Navigator';
 import { track_Simple } from '../../handle/tracking/GoodayTracking';
 import { GetScreenBackWhenPressXGlobal } from '../diversity/TheDiversity';
 import { GoToScreen } from '../../handle/GoodayAppState';
+import { DiversityItemType } from '../../constants/Types';
+import { Cheat } from '../../handle/Cheat';
 
 const HeaderXButton = () => {
     const theme = useContext(ThemeContext);
@@ -50,19 +52,22 @@ export const OnPressedXInDiversityMode = () => {
 
 export const UpdateHeaderXButton = (
     navigation: DrawerNavigationProp<DrawerParamList> | NavigationProp<ReactNavigation.RootParamList>,
-    replaceByXButton: boolean
+    diversityItem: DiversityItemType | undefined
 ) => {
     const index = navigation.getState().index
     const screen = navigation.getState().routes[index].name
 
     let title: string = screen
 
-    if (replaceByXButton) {
+    if (diversityItem !== undefined) {
         title += ` (${GetScreenBackWhenPressXGlobal()})`
     }
+    
+    if (diversityItem && Cheat('IsLog_CurrentPost'))
+        title += ` ID=${diversityItem.id}`
 
     navigation.setOptions({
-        headerLeft: replaceByXButton ? () => <HeaderXButton /> : undefined,
+        headerLeft: diversityItem !== undefined ? () => <HeaderXButton /> : undefined,
         headerTitle: title,
     })
 }
