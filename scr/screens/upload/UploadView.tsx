@@ -465,6 +465,8 @@ export const GetCanNotUploadReasonAsync = async (isPremium: boolean): Promise<
     const currentUploadsCount = await GetNumberIntAsync_WithCheckAndResetNewDay(StorageKey_TodayUploadsCount)
 
     if (limitUploadsPerDay_Final !== NotLimitUploadsValue && currentUploadsCount >= limitUploadsPerDay_Final) {
+        track_SimpleWithParam('upload', 'limited_times')
+
         return {
             reason: LocalText.reached_limit_uploads
                 .replaceAll('##', limitUploadsPerDay_Final.toString())
