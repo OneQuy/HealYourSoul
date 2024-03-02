@@ -11,7 +11,7 @@ import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsi
 import { GoToScreen } from '../../handle/GoodayAppState';
 import { HexToRgb, RegexUrl } from '../../handle/UtilsTS';
 import { useAppDispatch } from '../../redux/Store';
-import { toggleLovedInbox, toggleMarkAsReadInbox } from '../../redux/UserDataSlice';
+import { clearInbox, toggleLovedInbox, toggleMarkAsReadInbox } from '../../redux/UserDataSlice';
 
 const DidReadOpacity = 0.2
 
@@ -41,8 +41,8 @@ const InboxItem = ({
     }, [tickAsId])
 
     const onPressClear = useCallback(() => {
-
-    }, [])
+        dispatch(clearInbox(tickAsId))
+    }, [tickAsId])
 
     const onPressMarkAsRead = useCallback(() => {
         dispatch(toggleMarkAsReadInbox(tickAsId))
