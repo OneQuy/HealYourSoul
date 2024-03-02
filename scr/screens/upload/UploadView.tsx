@@ -51,13 +51,16 @@ const UploadView = ({ setSubView }: { setSubView: (view: SubView) => void }) => 
                 usedCameraButton: false,
             })
         }
-        catch { }
+        catch (e) {
+            if (e && !ToCanPrint(e).toString().includes('cancel')) {
+                AlertWithError(e)
+            }
+        }
 
         if (!response || response.length == 0)
             return
 
         let path: string
-
         if (Platform.OS === 'android')
             path = 'file://' + response[0].realPath;
         else
