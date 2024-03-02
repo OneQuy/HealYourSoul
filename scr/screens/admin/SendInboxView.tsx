@@ -1,11 +1,11 @@
 import { ActivityIndicator, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useContext, useMemo, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors';
-import { BorderRadius, FontSize, FontWeight, LocalText, Outline } from '../../constants/AppConstants';
+import { BorderRadius, Category, FontSize, FontWeight, LocalText, Outline } from '../../constants/AppConstants';
 import { ScrollView } from 'react-native-gesture-handler';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Inbox } from '../../constants/Types';
+import { DiversityItemType, Inbox } from '../../constants/Types';
 import { IsValuableArrayOrString, RemoveEmptyAndFalsyFromObject } from '../../handle/UtilsTS';
 import { InboxUserAsync } from '../../handle/tracking/UserMan';
 import { AlertWithError, GoodayToast } from '../../handle/AppUtils';
@@ -56,7 +56,11 @@ const SendInboxView = () => {
       primaryBtnTxt: btnText,
       primaryBtnGoToScreen: btnScreen,
       primaryBtnUrl: btnUrl,
-      goToScreenParamObj: null
+      goToScreenParamObj: null,
+      approvedUploadedDiversity: {
+        cat: Category.Meme,
+        id: 77
+      } as DiversityItemType
     }
 
     const obj = RemoveEmptyAndFalsyFromObject(inbox) as Inbox

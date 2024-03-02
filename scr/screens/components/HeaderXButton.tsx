@@ -9,6 +9,8 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { DrawerParamList } from '../../navigation/Navigator';
 import { track_Simple } from '../../handle/tracking/GoodayTracking';
+import { GetScreenBackWhenPressXGlobal } from '../diversity/TheDiversity';
+import { GoToScreen } from '../../handle/GoodayAppState';
 
 const HeaderXButton = () => {
     const theme = useContext(ThemeContext);
@@ -21,7 +23,7 @@ const HeaderXButton = () => {
     }, [])
 
     const onPressX = useCallback(() => {
-        OnPressedXInDiversityMode(navigation)
+        OnPressedXInDiversityMode()
     }, [])
 
     return (
@@ -36,16 +38,14 @@ const HeaderXButton = () => {
 
 export const GoToPremiumScreen = (navigation: DrawerNavigationProp<DrawerParamList> | NavigationProp<ReactNavigation.RootParamList>) => {
     track_Simple('pressed_go_to_premium')
-    
+
     // @ts-ignore
     navigation.navigate(ScreenName.IAPPage)
 }
 
-export const OnPressedXInDiversityMode = (
-    navigation: DrawerNavigationProp<DrawerParamList> | NavigationProp<ReactNavigation.RootParamList>) => {
+export const OnPressedXInDiversityMode = () => {
     // go to diversity screen
-    // @ts-ignore
-    navigation.navigate(ScreenName.Saved);
+    GoToScreen(GetScreenBackWhenPressXGlobal())
 }
 
 export const UpdateHeaderXButton = (

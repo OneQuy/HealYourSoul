@@ -374,6 +374,7 @@ export const LocalText = {
   limit_saved_desc: "In the free version, you can save up to ## posts. Upgrade to a subscription to enjoy unlimited savings.",
   show_all: "Show all",
   full_saved: "Upgrade for Unlimited Saves",
+  full_saved_desc: "You've reached the limit of ## items, which is the maximum quantity allowed in the free version. Please subscribe to save an unlimited number of items.",
 
   congrats_got_uploads: "Congrats! Your uploads are approved!",
   follow_rules_upload: "I have read and agree to abide by the rules and guidelines",

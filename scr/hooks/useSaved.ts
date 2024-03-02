@@ -47,7 +47,7 @@ export const useSaved = (itemData?: DiversityItemType, diversityMode?: boolean) 
 
     const onPressSaved = useCallback(async () => {
         if (isSaved && diversityMode)
-            OnPressedXInDiversityMode(navigation)
+            OnPressedXInDiversityMode()
 
         let shouldDispatch = true
 

@@ -5,7 +5,7 @@ import { View, StyleSheet, FlatList, Text, TouchableOpacity, ImageBackground } f
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { BorderRadius, Category, FontSize, Icon, LimitSaved, LocalText, Outline, ScreenName, Size, StorageKey_CurPageFunSoundIdx, StorageKey_IsUserPressedClosePleaseSubscribe } from '../../constants/AppConstants'
 import { DiversityItemType } from '../../constants/Types'
-import { NavigationProp, useNavigation } from '@react-navigation/native'
+import { NavigationProp, useFocusEffect, useNavigation } from '@react-navigation/native'
 import { ThemeContext } from '../../constants/Colors'
 import { IsValuableArrayOrString } from '../../handle/UtilsTS'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -30,8 +30,13 @@ type TheDiversityProps = {
     allItems: DiversityItemType[] | undefined,
     emptyText: string,
     emptyIcon: string,
-    showLimitSaved?: boolean
+    screenBackWhenPressX: ScreenName,
+    showLimitSaved?: boolean,
 }
+
+var screenBackWhenPressXGlobal = ScreenName.Saved
+
+export const GetScreenBackWhenPressXGlobal = () => screenBackWhenPressXGlobal
 
 var onPressedNextItemDiversityGlobalFunc: undefined | ((isNext: boolean, curItem: DiversityItemType) => void) = undefined
 
@@ -62,6 +67,7 @@ const TheDiversity = (
         emptyText,
         emptyIcon,
         showLimitSaved,
+        screenBackWhenPressX,
     }: TheDiversityProps) => {
     const navigation = useNavigation();
     const theme = useContext(ThemeContext);
@@ -300,6 +306,10 @@ const TheDiversity = (
             })
         })()
     }, [])
+
+    useFocusEffect(useCallback(() => {
+        screenBackWhenPressXGlobal = screenBackWhenPressX
+    }, [screenBackWhenPressX]))
 
     // render list is empty
 
