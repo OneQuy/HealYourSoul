@@ -24,6 +24,7 @@ import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
 import HeaderRightButtons from '../components/HeaderRightButtons';
 import useIntroduceCat from '../components/IntroduceCat';
+import ViewCount from '../components/ViewCount';
 
 const BGAnim = Animated.createAnimatedComponent(ImageBackground)
 
@@ -365,6 +366,10 @@ const PicturesOfTheYearScreen = () => {
                                         :
                                         undefined
                                 }
+                                {/* view count */}
+                                <View style={{ marginRight: Outline.GapVertical, alignItems: 'flex-end', }}>
+                                    <ViewCount cat={category} id={selectingPhotoID} />
+                                </View>
                             </View>
                     }
                 </View>
