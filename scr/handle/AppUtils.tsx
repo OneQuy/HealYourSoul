@@ -67,6 +67,7 @@ const notContentScreen: ScreenName[] = [
     ScreenName.Saved,
     ScreenName.Inbox,
     ScreenName.Admin,
+    ScreenName.Gallery,
 ] as const
 
 var appUtilsTheme: ThemeColor = GetColors('default_dark')
