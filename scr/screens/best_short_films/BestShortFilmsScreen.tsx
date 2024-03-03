@@ -28,6 +28,7 @@ import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
 import HeaderRightButtons from '../components/HeaderRightButtons';
 import useIntroduceCat from '../components/IntroduceCat';
+import ViewCount from '../components/ViewCount';
 
 const category = Category.BestShortFilms
 const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Fshort_films.json?alt=media&token=537eec8b-f774-4908-a5fa-45f8daf676d8'
@@ -341,10 +342,14 @@ const BestShortFilmsScreen = () => {
                 }
             </View>
 
-            <TouchableOpacity onPress={onPressOpenYoutubeApp} style={styleSheet.openYtb}>
-                <MaterialCommunityIcons name={Icon.Youtube} color={theme.counterBackground} size={Size.IconSmaller} />
-                <Text style={{ color: theme.counterBackground, fontSize: FontSize.Small_L }}>{LocalText.open_youtube}</Text>
-            </TouchableOpacity>
+            <View style={styleSheet.openYtbAndView}>
+                <TouchableOpacity onPress={onPressOpenYoutubeApp} style={styleSheet.openYtb}>
+                    <MaterialCommunityIcons name={Icon.Youtube} color={theme.counterBackground} size={Size.IconSmaller} />
+                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Small_L }}>{LocalText.open_youtube}</Text>
+                </TouchableOpacity>
+
+                <ViewCount fontSize={FontSize.Small_L} cat={category} id={idCurrent} />
+            </View>
 
             {/* main btn part */}
 
@@ -375,5 +380,6 @@ const styleSheet = StyleSheet.create({
     nameText: { marginLeft: widthPercentageToDP(12), flex: 1, textAlign: 'center', fontSize: FontSize.Normal },
     nameContainerView: { paddingHorizontal: Outline.GapVertical, flexDirection: 'row', gap: Outline.GapHorizontal },
     showListIconView: { padding: Outline.GapHorizontal, borderWidth: StyleSheet.hairlineWidth, borderRadius: BorderRadius.BR8 },
-    openYtb: { alignItems: 'center', marginLeft: Outline.VerticalMini, gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, flexDirection: 'row' },
+    openYtbAndView: { alignItems: 'center', marginHorizontal: Outline.VerticalMini, justifyContent: 'space-between', flexDirection: 'row' },
+    openYtb: { alignItems: 'center', gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR8, flexDirection: 'row' },
 })

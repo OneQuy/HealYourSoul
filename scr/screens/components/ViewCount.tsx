@@ -10,10 +10,12 @@ import { IsNumType, NumberWithCommas } from '../../handle/UtilsTS';
 
 const ViewCount = ({
     cat,
-    id
+    id,
+    fontSize,
 }: {
     cat: Category,
-    id: string | number | undefined
+    id: string | number | undefined,
+    fontSize?: number
 }) => {
     const theme = useContext(ThemeContext);
     const { count, onPress } = useCount('view', '', cat, id)
@@ -21,9 +23,9 @@ const ViewCount = ({
     const style = useMemo(() => {
         return StyleSheet.create({
             master: { gap: Outline.GapHorizontal, alignItems: 'center', justifyContent: 'center', flexDirection: 'row' },
-            text: { fontSize: FontSize.Small, color: theme.counterBackground, }
+            text: { fontSize: fontSize ?? FontSize.Small, color: theme.counterBackground, }
         })
-    }, [theme])
+    }, [theme, fontSize])
 
     const countVal = NumberWithCommas(IsNumType(count) ? count : 0)
 
