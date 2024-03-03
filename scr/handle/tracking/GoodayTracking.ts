@@ -2,7 +2,7 @@ import { Category, StorageKey_CachedPressNextPost, StorageKey_FirstTimeInstallTi
 import { GetDateAsync, GetDateAsync_IsValueExistedAndIsToday, GetNumberIntAsync, SetDateAsync_Now, SetNumberAsync } from "../AsyncStorageUtils"
 import { MainTrack, TrackErrorOnFirebase } from "./Tracking"
 import { versionAsNumber } from "../AppUtils"
-import { DistanceFrom2Dates, FilterOnlyLetterAndNumberFromString, GetDayHourMinSecFromMs_ToString, IsValuableArrayOrString, ToCanPrint } from "../UtilsTS"
+import { DistanceFrom2Dates, FilterOnlyLetterAndNumberFromString, GetDayHourMinSecFromMs_ToString, IsValuableArrayOrString, TimeOutError, ToCanPrint } from "../UtilsTS"
 import { UserID } from "../UserID"
 import { Dimensions, Platform } from "react-native"
 import { GetIPLocationAsync, IPLocation } from "../../hooks/useCountryFromIP"
@@ -317,10 +317,12 @@ export const track_PressFavorite = (category: Category, isFavorited: boolean) =>
 }
 
 export const track_HandleError = (methodName: string, error: any) => {
-    track_SimpleWithParam('error', methodName)
-
     const s = '' + ToCanPrint(error)
-    TrackErrorOnFirebase(s)
+
+    if (s === TimeOutError)
+        return
+
+    TrackErrorOnFirebase(`[${methodName}] ${s}`)
 }
 
 export const checkAndTrackLocation = async () => {
