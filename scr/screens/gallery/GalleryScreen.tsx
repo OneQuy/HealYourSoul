@@ -6,6 +6,7 @@ import GallerySeenView from './GallerySeenView';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { DrawerParamList } from '../../navigation/Navigator';
 import { SafeValue } from '../../handle/UtilsTS';
+import GalleryLovedView from './GalleryLovedView';
 
 type SubView = 'seen' | 'favorite'
 
@@ -60,7 +61,7 @@ const GalleryScreen = () => {
 
             {
                 subview === 'favorite' &&
-                <GallerySeenView cat={cat} />
+                <GalleryLovedView cat={cat} />
             }
         </View>
     )
