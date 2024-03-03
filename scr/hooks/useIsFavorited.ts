@@ -145,8 +145,7 @@ export default function useIsFavorited(category: Category, id: number | string |
         else
             throw new Error('NI cat: ' + category);
 
-        if (!IsDev())
-            LikePostAsync('like', !isFavorited, category, id, (likes) => setLikeCount(likes))
+        LikePostAsync('like', !isFavorited, category, id, (likes) => setLikeCount(likes))
     }, [isFavorited, id]);
 
     useEffect(() => {
