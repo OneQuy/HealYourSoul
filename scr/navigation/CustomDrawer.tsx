@@ -26,7 +26,7 @@ import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { useNavigation } from '@react-navigation/native';
 import { GoToScreen, setNavigation } from '../handle/GoodayAppState';
 import { usePremium } from '../hooks/usePremium';
-import InboxButton from '../screens/inbox/InboxButton';
+import InboxButton, { GetInboxButtonGlobalStatus } from '../screens/inbox/InboxButton';
 
 const premiumBGs = [
   [require(`../../assets/images/premium_btn/0.jpg`), '#1c1c1c'],
@@ -216,11 +216,15 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.background }}>
-      {/* message && logo & app name */}
+      {/* inbox && logo & app name */}
+
       <View style={[style.topMasterView, CommonStyles.justifyContentCenter_AlignItemsCenter, { marginTop: safeAreaInsets.top }]}>
         {/* align with inbox btn */}
 
-        <View style={{ width: Size.IconSmaller, height: Size.IconSmaller, }} />
+        {
+          GetInboxButtonGlobalStatus() !== 'hide' &&
+          <View style={{ width: Size.IconSmaller, height: Size.IconSmaller, }} />
+        }
 
         {/* app name & logo */}
 
@@ -234,9 +238,13 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
         <InboxButton />
       </View>
 
+      {/* cat buttons */}
+
       {
         renderCategoryButtons()
       }
+
+      {/* bottom buttons */}
 
       <View style={[style.bottomMasterView, { backgroundColor: theme.primary }]}>
         {/* premium btn */}

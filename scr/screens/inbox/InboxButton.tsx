@@ -16,6 +16,10 @@ import { SetBooleanAsync } from '../../handle/AsyncStorageUtils';
 
 export type InboxStatus = 'new_msg' | 'no_msg' | 'hide'
 
+var globalStatus: InboxStatus = 'hide'
+
+export const GetInboxButtonGlobalStatus = () => globalStatus
+
 const InboxButton = () => {
     const theme = useContext(ThemeContext)
     const [status, setStatus] = useState<InboxStatus>('hide')
@@ -25,8 +29,6 @@ const InboxButton = () => {
     const lastFetchedTick = useRef(0)
     const dispatch = useAppDispatch()
     const drawerStatus = useDrawerStatus()
-
-    // const 
 
     const checkAndFetchNewInboxes = useCallback(async () => {
         // fetching
@@ -113,6 +115,8 @@ const InboxButton = () => {
             setStatus(unread ? 'new_msg' : 'no_msg')
         }
     }, [allInboxes])
+
+    globalStatus = status
 
     if (status === 'hide')
         return undefined
