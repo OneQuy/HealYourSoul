@@ -9,10 +9,17 @@ export default function useCount(
     text: string,
     category: Category,
     id: number | string | undefined)
-    : readonly [displayText: string, onPress: () => void] {
+    : {
+        displayText: string,
+        count: number,
+        onPress: () => void
+    } {
     const [displayText, setDisplayText] = useState<string>(text);
+    const [count, setCount] = useState(0);
 
     const onValue = useCallback(async (value: number) => {
+        setCount(value)
+
         if (IsNumType(value) && value > 0)
             setDisplayText(value.toString())
         else
@@ -35,5 +42,9 @@ export default function useCount(
         }
     }, [onValue, id, category, text, type])
 
-    return [displayText, onPress] as const
+    return {
+        displayText,
+        count,
+        onPress,
+    } as const
 }

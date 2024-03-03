@@ -29,7 +29,7 @@ const CountButton = (
     }: CountButtonProps) => {
     const theme = useContext(ThemeContext);
 
-    const [displayText, onPressFromHook] = useCount(type, title, category, id)
+    const { displayText, onPress: onPressFromHook } = useCount(type, title, category, id)
 
     const onPress = useCallback(async () => {
         onPressFromHook()

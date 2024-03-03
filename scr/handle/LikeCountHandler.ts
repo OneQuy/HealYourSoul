@@ -10,13 +10,17 @@ const SharePath = 'user_data/post/@cat/@id/share';
 
 const DownloadPath = 'user_data/post/@cat/@id/download';
 
-export type CountType = 'like' | 'share' | 'download'
+const ViewPath = 'user_data/post/@cat/@id/view';
+
+export type CountType = 'like' | 'share' | 'download' | 'view'
 
 const GetPathCountType = (type: CountType) => {
     if (type === 'download')
         return DownloadPath
     else if (type === 'share')
         return SharePath
+    else if (type === 'view')
+        return ViewPath
     else
         return LikePath
 }
