@@ -1,5 +1,5 @@
 import { Alert, Share as RNShare, Linking, Platform, ShareContent } from "react-native";
-import { Category, FirebaseDBPath, FirebasePath, Icon, LocalPath, LocalText, NeedReloadReason, ScreenName, StorageKey_FirstTimeInstallTick, StorageKey_ItemCountCat, StorageKey_LastTrackCountryName, StorageKey_Rated, StorageKey_ScreenToInit, shareAppText } from "../constants/AppConstants";
+import { Category, FirebaseDBPath, FirebasePath, Icon, LocalPath, LocalText, NeedReloadReason, ScreenName, StorageKey_FirstTimeInstallTick, StorageKey_ItemCountCat, StorageKey_LastTrackCountryName, StorageKey_ScreenToInit, shareAppText } from "../constants/AppConstants";
 import { GetColors, ThemeColor } from "../constants/Colors";
 import { FileList, MediaType, PostMetadata, UserInfo } from "../constants/Types";
 import { Cheat } from "./Cheat";
@@ -14,7 +14,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CheckDuplicateAndDownloadAsync } from "../firebase/FirebaseStorageDownloadManager";
 import { track_HandleError, track_Simple, track_SimpleWithParam } from "./tracking/GoodayTracking";
 import { GetBooleanAsync, GetDateAsync, GetNumberIntAsync, SetBooleanAsync, SetNumberAsync } from "./AsyncStorageUtils";
-import { CheckAndShowInAppReviewAsync } from "./InAppReview";
 import { UserID } from "./UserID";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { DrawerParamList } from "../navigation/Navigator";
@@ -107,7 +106,7 @@ export const GetExpiredDateAndDaysLeft = (startDayTick: number, month: number, e
     if (Number.isNaN(month)) { // lifetimed
         const d = new Date()
         d.setFullYear(5000)
-        
+
         return [d, Number.NaN]
     }
 
@@ -357,32 +356,8 @@ export const ShareApp = async () => {
 }
 
 export const RateApp = async () => {
-    const res = await CheckAndShowInAppReviewAsync()
-
-    track_SimpleWithParam('rated', res === true ? 'true' : 'false')
-
-    console.log('rated result: ' + ToCanPrint(res));
-
-    if (res === true) // success
-    {
-        if (Platform.OS === 'ios')
-            return
-
-        const ratedBefore = await GetBooleanAsync(StorageKey_Rated)
-
-        if (!ratedBefore) {
-            SetBooleanAsync(StorageKey_Rated, true)
-            return
-        }
-    }
-
-    // fail
-
+    track_Simple('press_rate_app')
     OpenStore()
-
-    if (typeof res !== 'boolean') {
-        HandleError('RateApp', ToCanPrint(res), true)
-    }
 }
 
 export const GoodayToast = (s: string) => {
