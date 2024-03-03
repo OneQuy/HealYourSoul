@@ -203,7 +203,7 @@ const IAPPage = () => {
     return <IAPPage_Subscribed subscribedData={subscribedData} />
   }
 
-  if (!false) {
+  if (!isInited) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', gap: Outline.GapHorizontal, }}>
         <ActivityIndicator color={theme.primary} />
