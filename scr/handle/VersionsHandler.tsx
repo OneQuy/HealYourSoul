@@ -32,8 +32,6 @@ export var versions: Versions;
  * @returns true if dl success
  */
 export async function HandleVersionsFileAsync(): Promise<boolean> {
-    let tick = Date.now()
-
     const res = await ExecuteWithTimeoutAsync(
         async () => await FirebaseDatabase_GetValueAsync(FirebaseDBAppVersionsPath),
         FirebaseDatabaseTimeOutMs)
@@ -41,8 +39,6 @@ export async function HandleVersionsFileAsync(): Promise<boolean> {
     // fail time out
 
     if (res.isTimeOut || res.result === undefined) {
-        HandleError('HandleVersions', 'TimeOut-' + (Date.now() - tick))
-
         toast({ title: LocalText.offline_mode }) // toast offline
 
         return false

@@ -139,8 +139,6 @@ const BestShortFilmsScreen = () => {
 
         if (can)
             track_SimpleWithCat(category, 'open_ytb_app')
-        else
-            HandleError('onPressOpenYoutubeApp-' + Category[category], 'failed to open Youtube', true)
     }, [selectingItem])
 
     const onPressRandom = useCallback(async () => {
