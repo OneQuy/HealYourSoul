@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react'
 import TheDiversity from '../diversity/TheDiversity'
-import { useAppSelector } from '../../redux/Store'
 import { Category, Icon, LocalText, ScreenName } from '../../constants/AppConstants'
 import { DiversityItemType } from '../../constants/Types'
 import useSeenIDs from '../../hooks/useSeenIDs'
