@@ -8,7 +8,7 @@ import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedRelo
 import Share from 'react-native-share';
 import { NetLord } from '../../handle/NetLord'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
-import { HandleError, SaveCurrentScreenForLoadNextTime, ToastNewItemsAsync } from '../../handle/AppUtils'
+import { SaveCurrentScreenForLoadNextTime, ToastNewItemsAsync } from '../../handle/AppUtils'
 import ViewShot from 'react-native-view-shot'
 import { CommonStyles } from '../../constants/CommonConstants'
 import { ShortFilm } from '../../constants/Types';

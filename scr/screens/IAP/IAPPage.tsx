@@ -85,6 +85,7 @@ const IAPPage = () => {
   const theme = useContext(ThemeContext)
   const insets = useSafeAreaInsets()
   const { isPremium, subscribedData } = usePremium()
+  const [isInited, setInited] = useState(false)
 
   const onPressed_Buy = async (id: string) => {
     track_SimpleWithParam('click_iap', id)
@@ -171,8 +172,10 @@ const IAPPage = () => {
     let resInitIAP: Awaited<ReturnType<typeof InitIAPAsync>> = undefined
 
     const hanldeAsync = async () => {
-      if (isPremium)
+      if (isPremium) {
+        setInited(true)
         return
+      }
 
       // init IAP
 
@@ -180,6 +183,8 @@ const IAPPage = () => {
         allProducts,
         async (s: string) => AsyncStorage.setItem(StorageKey_CachedIAP, s),
         async () => AsyncStorage.getItem(StorageKey_CachedIAP))
+
+      setInited(true)
 
       if (resInitIAP !== undefined) {
         HandleError('InitIAPAsync', resInitIAP, true)
@@ -196,6 +201,14 @@ const IAPPage = () => {
 
   if (isPremium && subscribedData) {
     return <IAPPage_Subscribed subscribedData={subscribedData} />
+  }
+
+  if (!false) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', gap: Outline.GapHorizontal, }}>
+        <ActivityIndicator color={theme.primary} />
+      </View>
+    )
   }
 
   return (
