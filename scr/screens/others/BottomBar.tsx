@@ -1,12 +1,11 @@
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { View, Text, StyleSheet, TouchableOpacity, Platform } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React, { useContext, useMemo } from 'react'
 import { ThemeContext } from '../../constants/Colors';
 import { BorderRadius, FontSize, Outline, Size } from '../../constants/AppConstants';
 import FavoriteButton, { FavoriteButtonProp } from './FavoriteButton';
-import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export type BottomBarItem = {
