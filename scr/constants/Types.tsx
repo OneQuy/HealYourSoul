@@ -148,6 +148,7 @@ export type AppConfig = {
 
         enableAptabase: boolean,
         aptabaseProductionKey: string,
+        aptabaseIgnores?: string,
     }
 }
 

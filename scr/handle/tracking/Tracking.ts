@@ -46,6 +46,25 @@ export const InitAptabase = () => {
     Aptabase.init(IsDev() ? APTA_KEY_DEV : productionKey)
 }
 
+export const GetFinalAptabaseIgnoredEventNames = () => {
+    const appConfig = GetAppConfig()
+
+    if (!appConfig)
+        return aptabaseIgnoredEventNames
+
+    const additions = appConfig.tracking.aptabaseIgnores
+
+    if (!IsValuableArrayOrString(additions))
+        return aptabaseIgnoredEventNames
+
+    const arr = additions?.split(',')
+
+    if (!IsValuableArrayOrString(arr) || !arr)
+        return aptabaseIgnoredEventNames
+
+    return arr.concat(aptabaseIgnoredEventNames)
+}
+
 export const TrackErrorOnFirebase = (error: string) => {
     const path = prefixFbTrackPath() + 'errors/' + Date.now()
     FirebaseDatabase_SetValueAsync(path, error)
@@ -61,7 +80,7 @@ export const MainTrack = (
     const shouldTrackAptabase = initedAptabase &&
         (!__DEV__ || NetLord.IsAvailableLatestCheck()) &&
         (!appConfig || appConfig.tracking.enableAptabase) &&
-        (!aptabaseIgnoredEventNames.includes(eventName))
+        (!GetFinalAptabaseIgnoredEventNames().includes(eventName))
 
     const shouldTrackFirebase = !appConfig || appConfig.tracking.enableFirebase
     const shouldTrackTelemetry = !appConfig || appConfig.tracking.enableTelemetry
