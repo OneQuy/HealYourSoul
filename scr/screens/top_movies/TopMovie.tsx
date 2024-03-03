@@ -25,6 +25,7 @@ import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
 import HeaderRightButtons from '../components/HeaderRightButtons';
+import ViewCount from '../components/ViewCount';
 
 const category = Category.TopMovie
 const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Ftop_movies.json?alt=media&token=4203c962-58bb-41c3-a1a0-ab3b1b3359f8'
@@ -266,6 +267,10 @@ const TopMovieScreen = () => {
                                             <ScrollView >
                                                 <Text selectable adjustsFontSizeToFit style={[{ flexWrap: 'wrap', color: theme.counterBackground, fontSize: FontSize.Small_L }]}>{selectingItem?.desc}</Text>
                                             </ScrollView>
+                                        </View>
+                                        {/* view count */}
+                                        <View style={{ marginRight: Outline.GapVertical, alignItems: 'flex-end', }}>
+                                            <ViewCount cat={category} id={idNumber} />
                                         </View>
                                     </View>
                             }
