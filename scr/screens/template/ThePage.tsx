@@ -898,28 +898,42 @@ const ThePage = ({ category }: ThePageProps) => {
             {/* credit author */}
             <View style={style.authorView}>
                 {/* author text */}
+
                 <Text numberOfLines={1} style={style.authorText}>{hasCredit ? post.current?.author : LocalText.credit_to_author}</Text>
-                {/* copy btn */}
+
+                {/* copy btn
+
                 {
                     !hasCredit ? undefined :
                         <TouchableOpacity onPress={() => onPressCopy(post.current?.author)} style={style.authorCopyTO} >
                             <MaterialIcons name={Icon.Copy} color={theme.counterBackground} size={Size.IconSmaller} />
                         </TouchableOpacity>
+                } */}
+
+                {/* view */}
+
+                {
+                    <View style={{ gap: Outline.GapHorizontal, alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }} >
+                        <MaterialCommunityIcons name={Icon.Eye} color={theme.counterBackground} size={Size.IconTiny} />
+                        <Text numberOfLines={1} style={{ fontSize: FontSize.Small, color: theme.counterBackground, }}>{88}</Text>
+                    </View>
                 }
             </View>
 
             {/* link credit */}
+
             {
                 post.current === null || !post.current.url ? null :
                     <View style={style.authorView}>
                         <Text numberOfLines={1} style={style.authorText}>{post.current.url}</Text>
                         <TouchableOpacity onPress={() => onPressCopy(post.current?.url)} style={style.authorCopyTO} >
-                            <MaterialIcons name={Icon.Copy} color={theme.counterBackground} size={Size.IconSmaller} />
+                            <MaterialIcons name={Icon.Copy} color={theme.counterBackground} size={Size.IconTiny} />
                         </TouchableOpacity>
                     </View>
             }
 
             {/* main btn part */}
+
             <BottomBar
                 items={bottomBarItems}
                 id={post.current?.id}
