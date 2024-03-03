@@ -38,6 +38,7 @@ import { DrawerParamList } from '../../navigation/Navigator';
 import useDiversityItem from '../../hooks/useDiversityItem';
 import { OnPressedNextItemDiversity } from '../diversity/TheDiversity';
 import useSeenIDs from '../../hooks/useSeenIDs';
+import ViewCount from '../components/ViewCount';
 
 const videoNumbSize = 10;
 const videoTouchEffectRadius = 100;
@@ -913,10 +914,7 @@ const ThePage = ({ category }: ThePageProps) => {
                 {/* view */}
 
                 {
-                    <View style={{ gap: Outline.GapHorizontal, alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }} >
-                        <MaterialCommunityIcons name={Icon.Eye} color={theme.counterBackground} size={Size.IconTiny} />
-                        <Text numberOfLines={1} style={{ fontSize: FontSize.Small, color: theme.counterBackground, }}>{88}</Text>
-                    </View>
+                    <ViewCount cat={category} id={post.current?.id} />
                 }
             </View>
 
