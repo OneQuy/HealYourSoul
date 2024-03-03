@@ -288,7 +288,7 @@ const TheDiversity = (
             return undefined
 
         return <DiversityLimitBanner
-            text={LocalText.limit_pages.replace('##', limitPages.toString())}
+            text={LocalText.limit_pages.replace('##', (limitPages + 1).toString())}
         />
     }, [showLitmitPages, limitPages, isPremium, curPageIdx])
 
