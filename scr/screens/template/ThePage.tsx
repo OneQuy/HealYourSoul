@@ -736,7 +736,8 @@ const ThePage = ({ category }: ThePageProps) => {
             {
                 text: LocalText.share,
                 onPress: onPressShareImage,
-                icon: Icon.ShareImage
+                icon: Icon.ShareImage,
+                countType: 'share'
             },
             {
                 text: LocalText.previous,
@@ -760,7 +761,8 @@ const ThePage = ({ category }: ThePageProps) => {
             {
                 text: LocalText.save,
                 onPress: onPressDownloadMedia,
-                icon: Icon.Download
+                icon: Icon.Download,
+                countType: 'download',
             },
         ] as BottomBarItem[]
     }, [onPressNextPost, onPressDownloadMedia, diversityItem])

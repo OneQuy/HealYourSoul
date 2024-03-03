@@ -15,7 +15,7 @@ export type CountButtonProps = {
     type: CountType,
     icon: string,
     title: string,
-    callbackRef: React.MutableRefObject<(() => void) | undefined>,
+    onPressFunc?: () => void,
 }
 
 const CountButton = (
@@ -25,7 +25,7 @@ const CountButton = (
         icon,
         title,
         type,
-        callbackRef,
+        onPressFunc
     }: CountButtonProps) => {
     const theme = useContext(ThemeContext);
 
@@ -34,9 +34,10 @@ const CountButton = (
     const onPress = useCallback(async () => {
         // track_PressFavorite(category, !isFavorited)
         onPressFromHook()
-    }, [onPressFromHook])
 
-    callbackRef.current = onPress
+        if (onPressFunc)
+            onPressFunc()
+    }, [onPressFromHook, onPressFunc])
 
     const style = useMemo(() => {
         return StyleSheet.create({

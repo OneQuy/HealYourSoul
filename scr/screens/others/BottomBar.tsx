@@ -7,6 +7,8 @@ import { ThemeContext } from '../../constants/Colors';
 import { BorderRadius, Category, FontSize, Outline, Size } from '../../constants/AppConstants';
 import FavoriteButton from './FavoriteButton';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { CountType } from '../../handle/LikeCountHandler';
+import CountButton from './CountButton';
 
 export type BottomBarItem = {
     icon?: string,
@@ -15,6 +17,8 @@ export type BottomBarItem = {
     scaleIcon?: number,
 
     favoriteCallbackRef?: React.MutableRefObject<(() => void) | undefined>,
+
+    countType?: CountType,
 }
 
 const BottomBar = ({
@@ -52,6 +56,16 @@ const BottomBar = ({
                     callbackRef={item.favoriteCallbackRef}
                     category={category}
                     id={id}
+                />
+            else if (item.countType !== undefined && item.icon && item.text)
+                return <CountButton
+                    key={item.text}
+                    title={item.text}
+                    type={item.countType}
+                    onPressFunc={item.onPress}
+                    category={category}
+                    id={id}
+                    icon={item.icon}
                 />
             else {
                 return (
