@@ -26,6 +26,7 @@ import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
 import HeaderRightButtons from '../components/HeaderRightButtons';
 import useIntroduceCat from '../components/IntroduceCat';
+import ViewCount from '../components/ViewCount';
 
 const category = Category.FunWebsites
 const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Ffun_websites.json?alt=media&token=10ecb626-e576-49d4-b124-a9ba148a93a6'
@@ -294,7 +295,11 @@ const FunWebsitesScreen = () => {
                                             </ScrollView>
                                         </View>
                                         {/* author */}
-                                        <Text numberOfLines={1} style={[{ color: theme.counterBackground }, styleSheet.authorText]}>{LocalText.credit_to_author}</Text>
+
+                                        <View style={styleSheet.authorAndView}>
+                                            <Text numberOfLines={1} style={[{ color: theme.counterBackground }, styleSheet.authorText]}>{LocalText.credit_to_author}</Text>
+                                            <ViewCount cat={category} id={selectingItem?.id} />
+                                        </View>
                                         {
                                             !showFull || !selectingItem?.url ? undefined :
                                                 <View style={[CommonStyles.width100Percent_Height100Percent_PositionAbsolute_JustifyContentCenter_AlignItemsCenter]}>
@@ -339,4 +344,5 @@ const styleSheet = StyleSheet.create({
     titleText: { flex: 1, textAlign: 'center', fontSize: FontSize.Normal },
     titleContainerView: { paddingHorizontal: Outline.GapVertical, flexDirection: 'row', gap: Outline.GapHorizontal },
     showListIconView: { padding: Outline.GapHorizontal, borderWidth: StyleSheet.hairlineWidth, borderRadius: BorderRadius.BR8 },
+    authorAndView: { marginRight: Outline.GapVertical, alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' },
 })
