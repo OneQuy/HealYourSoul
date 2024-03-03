@@ -214,9 +214,9 @@ export const themes = {
         background: '#1c1c1c',
         counterBackground: '#fafafa',
 
-        primary: '#fafafa',
+        primary: '#ababab',
         counterPrimary: '#1c1c1c',
-
+        
         shouldStatusBarLight: true,
     } as ThemeColor,
 
