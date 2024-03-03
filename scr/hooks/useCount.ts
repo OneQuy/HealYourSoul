@@ -23,8 +23,7 @@ export default function useCount(
         if (id === undefined)
             return
 
-        // if (!IsDev())
-            LikePostAsync(type, true, category, id, (count) => onValue(count))
+        LikePostAsync(type, true, category, id, (count) => onValue(count))
     }, [onValue, text, category, id]);
 
     useEffect(() => {
