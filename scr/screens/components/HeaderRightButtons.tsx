@@ -50,8 +50,11 @@ const HeaderRightButtons = (
                     <MaterialCommunityIcons name={isSaved ? Icon.Bookmark : Icon.BookmarkOutline} color={theme.primary} size={Size.Icon} />
                 </TouchableOpacity>
             }
+
+            {/* gallery btn */}
+
             {
-                galleryCat !== undefined &&
+                galleryCat !== undefined && !diversityMode &&
                 <TouchableOpacity onPress={onPressGallery} >
                     <MaterialCommunityIcons name={Icon.Gallery} color={theme.primary} size={Size.Icon} />
                 </TouchableOpacity>
