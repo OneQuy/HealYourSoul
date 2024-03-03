@@ -76,6 +76,7 @@ export const track_NewlyInstallOrFirstOpenOfTheDayOldUserAsync = async () => {
             ],
             {
                 installedDaysCount,
+                userId: UserID(),
                 totalOpenAppCount,
             })
     }
@@ -96,7 +97,7 @@ export const track_OnUseEffectOnceEnterAppAsync = async (startFreshlyOpenAppTick
             `total/${event}`,
             `events/${event}/#d`,
         ],
-        {
+        { // should not put string values here.
             openTime,
             totalOpenAppCount,
             openTodaySoFar,
@@ -123,6 +124,7 @@ export const track_OnUseEffectOnceEnterAppAsync = async (startFreshlyOpenAppTick
         [],
         {
             last_time: lastFreshlyOpenAppToNow,
+            userId: UserID(),
         })
 
     // track update version
