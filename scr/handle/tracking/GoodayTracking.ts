@@ -139,7 +139,7 @@ export const track_OnUseEffectOnceEnterAppAsync = async (startFreshlyOpenAppTick
         MainTrack(event,
             [
                 `total/${event}`,
-                `events/${event}/#d`,
+                // `events/${event}/#d`,
             ])
 
         track_SimpleWithParam('versions', 'v' + versionAsNumber)
@@ -275,7 +275,7 @@ export const track_PressRandom = (shouldTracking: boolean, category: Category, s
         [
             'total/press_random/total',
             'total/press_random/' + Category[category],
-            'events/press_random/#d/' + Category[category],
+            // 'events/press_random/#d/' + Category[category],
         ],
         {
             cat: Category[category],
@@ -292,7 +292,7 @@ export const track_PressDrawerItem = (screen: string) => {
             `total/${event}/total`,
             `total/${event}/` + screen,
 
-            `events/${event}/#d/` + screen
+            // `events/${event}/#d/` + screen
         ],
         {
             screen
@@ -307,7 +307,7 @@ export const track_PressFavorite = (category: Category, isFavorited: boolean) =>
             `total/${event}/total`,
             `total/${event}/` + Category[category] + '/' + (isFavorited ? 'like' : 'dislike'),
 
-            `events/${event}/#d/` + Category[category] + '/' + (isFavorited ? 'like' : 'dislike'),
+            // `events/${event}/#d/` + Category[category] + '/' + (isFavorited ? 'like' : 'dislike'),
         ],
         {
             cat: Category[category],
