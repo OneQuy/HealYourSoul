@@ -76,7 +76,7 @@ export const track_NewlyInstallOrFirstOpenOfTheDayOldUserAsync = async () => {
     else {
         let event = 'first_open_of_day_old_user'
         const totalOpenAppCount = await GetNumberIntAsync(StorageKey_OpenAppTotalCount, 0)
-        
+
         const installedDaysCountDiff = Date.now() - firstTimeInstallTick.getTime()
         const installedDaysCount = GetDayHourMinSecFromMs_ToString(installedDaysCountDiff)
 
@@ -96,9 +96,24 @@ export const track_NewlyInstallOrFirstOpenOfTheDayOldUserAsync = async () => {
  */
 export const track_OnUseEffectOnceEnterAppAsync = async (startFreshlyOpenAppTick: number) => {
     let event = 'freshly_open_app'
-    const elapsedOpenAppTime = Date.now() - startFreshlyOpenAppTick
+
+    const openTime = Date.now() - startFreshlyOpenAppTick
     const totalOpenAppCount = await GetNumberIntAsync(StorageKey_OpenAppTotalCount, 0)
     const openTodaySoFar = await GetNumberIntAsync(StorageKey_OpenAppOfDayCount, 0)
+
+    MainTrack(event,
+        [
+            `total/${event}`,
+            `events/${event}/#d`,
+        ],
+        {
+            openTime,
+            totalOpenAppCount,
+            openTodaySoFar,
+        }
+    )
+
+    // lastFreshlyOpenAppTick
 
     const lastFreshlyOpenAppTick = await GetDateAsync(StorageKey_LastFreshlyOpenApp)
     SetDateAsync_Now(StorageKey_LastFreshlyOpenApp)
@@ -112,20 +127,13 @@ export const track_OnUseEffectOnceEnterAppAsync = async (startFreshlyOpenAppTick
     let lastFreshlyOpenAppToNow = GetDayHourMinSecFromMs_ToString(lastFreshlyOpenAppToNowMs)
 
     if (!IsValuableArrayOrString(lastFreshlyOpenAppToNow))
-        lastFreshlyOpenAppToNow = 'new_user'
+        lastFreshlyOpenAppToNow = 'no_data'
 
-    MainTrack(event,
-        [
-            `total/${event}`,
-            `events/${event}/#d`,
-        ],
+    MainTrack('last_freshly_open',
+        [],
         {
-            floatValue: elapsedOpenAppTime,
-            totalOpenAppCount,
-            openTodaySoFar,
             lastFreshlyOpenAppToNow,
-        }
-    )
+        })
 
     // track update version
 
@@ -379,7 +387,7 @@ export const track_RateInApp = async (starNumber: number) => {
             `total/${event}/${starNumber}_star`,
         ],
         {
-            floatValue: starNumber
+            starNumber
         }
     )
 }
@@ -392,7 +400,7 @@ export const track_OpenAppOfDayCount = (count: number) => {
             `total/${event}/${count}_times`,
         ],
         {
-            floatValue: count
+            count
         }
     )
 }
@@ -405,7 +413,7 @@ export const track_MaxSavedCount = (count: number) => {
             `total/${event}/${count}_saved`,
         ],
         {
-            floatValue: count
+            count
         }
     )
 }
