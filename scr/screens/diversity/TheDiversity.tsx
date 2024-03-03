@@ -32,6 +32,7 @@ type TheDiversityProps = {
     emptyIcon: string,
     screenBackWhenPressX: ScreenName,
     showLimitSaved?: boolean,
+    showFilterButton?: boolean,
 }
 
 var screenBackWhenPressXGlobal = ScreenName.Saved
@@ -68,6 +69,7 @@ const TheDiversity = (
         emptyIcon,
         showLimitSaved,
         screenBackWhenPressX,
+        showFilterButton,
     }: TheDiversityProps) => {
     const navigation = useNavigation();
     const theme = useContext(ThemeContext);
@@ -334,12 +336,15 @@ const TheDiversity = (
         <View style={style.masterView}>
             {/* filter button */}
 
-            <View style={style.filterView}>
-                <TouchableOpacity onPress={() => setIsShowFilterPopup(true)} style={style.filterTO}>
-                    <MaterialCommunityIcons name={Icon.Bookmark} color={theme.counterPrimary} size={Size.IconSmaller} />
-                    <Text adjustsFontSizeToFit numberOfLines={1} style={style.filterCatTxt}>{titleFilter}</Text>
-                </TouchableOpacity>
-            </View>
+            {
+                showFilterButton !== false &&
+                <View style={style.filterView}>
+                    <TouchableOpacity onPress={() => setIsShowFilterPopup(true)} style={style.filterTO}>
+                        <MaterialCommunityIcons name={Icon.Bookmark} color={theme.counterPrimary} size={Size.IconSmaller} />
+                        <Text adjustsFontSizeToFit numberOfLines={1} style={style.filterCatTxt}>{titleFilter}</Text>
+                    </TouchableOpacity>
+                </View>
+            }
 
             {/* scroll view */}
 

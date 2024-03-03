@@ -31,6 +31,7 @@ const GallerySeenView = ({ cat }: { cat: Category }) => {
             emptyText={LocalText.you_have_no_item}
             showLimitSaved={false}
             screenBackWhenPressX={ScreenName.Gallery}
+            showFilterButton={false}
         />
     )
 }
