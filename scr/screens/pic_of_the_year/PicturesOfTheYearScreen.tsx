@@ -249,7 +249,8 @@ const PicturesOfTheYearScreen = () => {
             {
                 text: LocalText.share,
                 onPress: onPressShareImage,
-                icon: Icon.ShareImage
+                icon: Icon.ShareImage,
+                countType: 'share',
             },
             {
                 favoriteCallbackRef: favoriteCallbackRef,
@@ -264,6 +265,7 @@ const PicturesOfTheYearScreen = () => {
                 text: LocalText.save,
                 onPress: onPressSaveToPhoto,
                 icon: Icon.Download,
+                countType: 'download',
             }
         ] as BottomBarItem[]
     }, [onPressShareImage, onPressSaveToPhoto, selectingPhotoID, onPressNext])

@@ -235,7 +235,8 @@ const BestShortFilmsScreen = () => {
             {
                 text: LocalText.share,
                 onPress: onPressShareText,
-                icon: Icon.ShareText
+                icon: Icon.ShareText,
+                countType: 'share',
             },
         ] as BottomBarItem[]
     }, [showFull, onPressNext, onPressRandom, onPressShareText])

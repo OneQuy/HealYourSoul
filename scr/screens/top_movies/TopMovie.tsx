@@ -181,7 +181,8 @@ const TopMovieScreen = () => {
             {
                 text: LocalText.share,
                 onPress: onPressShareText,
-                icon: Icon.ShareText
+                icon: Icon.ShareText,
+                countType: 'share',
             },
             {
                 favoriteCallbackRef: favoriteCallbackRef,

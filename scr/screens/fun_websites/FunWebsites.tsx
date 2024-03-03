@@ -194,7 +194,8 @@ const FunWebsitesScreen = () => {
             {
                 text: LocalText.share,
                 onPress: onPressShareText,
-                icon: Icon.ShareText
+                icon: Icon.ShareText,
+                countType: 'share',
             },
         ] as BottomBarItem[]
     }, [showFull, onPressInAppWeb, onPressNext, onPressCopy, onPressShareText])
