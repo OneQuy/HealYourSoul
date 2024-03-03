@@ -64,7 +64,7 @@ const BottomBar = ({
                 )
             }
         })
-    }, [items, theme, styleSheet])
+    }, [items, theme, styleSheet, id, category])
 
     return (
         <View style={styleSheet.masterView}>
