@@ -7,6 +7,7 @@ import { Category, FontSize, Icon, Outline, Size } from '../../constants/AppCons
 import { ThemeContext } from '../../constants/Colors';
 import useCount from '../../hooks/useCount';
 import { IsNumType, NumberWithCommas } from '../../handle/UtilsTS';
+import { IsDev } from '../../handle/IsDev';
 
 const ViewCount = ({
     cat,
@@ -30,6 +31,9 @@ const ViewCount = ({
     const countVal = NumberWithCommas(IsNumType(count) ? count : 0)
 
     useEffect(() => {
+        if (IsDev())
+            return
+
         onPress()
     }, [id, cat])
 

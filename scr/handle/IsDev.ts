@@ -10,7 +10,8 @@ var inited = false
  */
 export const IsDev = () => {
     if (!inited)
-        throw new Error('[IsDev] not inited yet.')
+        // throw new Error('[IsDev] not inited yet.')
+        return false
 
     return isDev
 }
