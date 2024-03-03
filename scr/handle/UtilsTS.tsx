@@ -723,6 +723,10 @@ export const GetDayHourMinSecFromMs = (ms: number): [number, number, number, num
 
 // number ---------------------------
 
+export function NumberWithCommas(x: number) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+}
+
 export const Clamp01 = (value: number) => {
     return Clamp(value, 0, 1)
 }
