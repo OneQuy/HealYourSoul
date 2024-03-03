@@ -2,14 +2,13 @@
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, Alert, GestureResponderEvent, Animated } from 'react-native'
-import React, { LegacyRef, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size, StorageKey_LocalFileVersion, StorageKey_SelectingShortFilmIdx } from '../../constants/AppConstants'
 import Share from 'react-native-share';
 import { NetLord } from '../../handle/NetLord'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { SaveCurrentScreenForLoadNextTime, ToastNewItemsAsync } from '../../handle/AppUtils'
-import ViewShot from 'react-native-view-shot'
 import { CommonStyles } from '../../constants/CommonConstants'
 import { ShortFilm } from '../../constants/Types';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
@@ -40,7 +39,6 @@ const BestShortFilmsScreen = () => {
     const [handling, setHandling] = useState(true)
     const [selectingItem, setSelectingItem] = useState<ShortFilm | undefined>(undefined)
     const [isShowList, setIsShowList] = useState(false)
-    const viewShotRef = useRef<LegacyRef<ViewShot> | undefined>();
     const [showFull, setShowFull] = useState(false);
     const favoriteCallbackRef = useRef<(() => void) | undefined>(undefined);
     const [showIntroduceCat, renderShowIntroduceCat] = useIntroduceCat(category)
@@ -194,36 +192,6 @@ const BestShortFilmsScreen = () => {
             })
     }, [selectingItem, theme])
 
-    // const onPressShareImage = useCallback(() => {
-    //     if (!selectingItem)
-    //         return
-
-    //     track_SimpleWithCat(category, 'share_as_image')
-
-    //     const message =
-    //         selectingItem.name +
-    //         (selectingItem.author ? ' (' + selectingItem.author + '): ' : ': ') +
-    //         selectingItem.desc + '\n\n' +
-    //         selectingItem.url
-
-    //     console.log(message);
-
-    //     // @ts-ignore
-    //     viewShotRef.current.capture().then(async (uri: string) => {
-    //         Share
-    //             .open({
-    //                 message,
-    //                 url: uri,
-    //             })
-    //             .catch((err) => {
-    //                 const error = ToCanPrint(err)
-
-    //                 if (!error.includes('User did not share'))
-    //                     Alert.alert('Fail', error)
-    //             });
-    //     })
-    // }, [selectingItem, theme])
-
     const onLongPressed = useCallback(() => {
         console.log('long pressed');
     }, [])
@@ -256,11 +224,7 @@ const BestShortFilmsScreen = () => {
                 icon: Icon.Dice,
             },
             {
-                favoriteBtn: {
-                    callbackRef: favoriteCallbackRef,
-                    id: idCurrent,
-                    category,
-                }
+                favoriteCallbackRef: favoriteCallbackRef,
             },
             {
                 text: LocalText.next,
@@ -274,7 +238,7 @@ const BestShortFilmsScreen = () => {
                 icon: Icon.ShareText
             },
         ] as BottomBarItem[]
-    }, [idCurrent, showFull, onPressNext, onPressRandom, onPressShareText])
+    }, [showFull, onPressNext, onPressRandom, onPressShareText])
 
     // for load data first time
 
@@ -326,58 +290,55 @@ const BestShortFilmsScreen = () => {
 
     return (
         <View pointerEvents={handling ? 'none' : 'auto'} style={[styleSheet.masterView, { backgroundColor: theme.background }]}>
-            {/* @ts-ignore */}
-            <ViewShot style={CommonStyles.flex_1} ref={viewShotRef} options={{ fileName: "Your-File-Name", format: "jpg", quality: 1 }}>
-                <View style={CommonStyles.flex_1} >
-                    {
-                        handling ?
-                            <View style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
-                                <ActivityIndicator color={theme.counterBackground} style={{ marginRight: Outline.Horizontal }} />
-                            </View> :
-                            <View style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
-                                {
-                                    reasonToReload.current !== NeedReloadReason.None ?
-                                        <TouchableOpacity onPress={() => onPressNext(-1, 'none')} style={[{ gap: Outline.GapVertical }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]} >
-                                            <MaterialCommunityIcons name={reasonToReload.current === NeedReloadReason.NoInternet ? Icon.NoInternet : Icon.HeartBroken} color={theme.counterBackground} size={Size.IconMedium} />
-                                            <Text style={{ fontSize: FontSize.Normal, color: theme.counterBackground }}>{reasonToReload.current === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
-                                            <Text style={{ fontSize: FontSize.Small_L, color: theme.counterBackground }}>{LocalText.tap_to_retry}</Text>
-                                        </TouchableOpacity>
-                                        :
-                                        <View onTouchStart={onBigViewStartTouch} onTouchEnd={onBigViewEndTouch} style={styleSheet.contentView}>
-                                            <View onTouchEnd={() => setIsShowList(true)} style={[styleSheet.nameContainerView, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
-                                                <Text style={[{ color: theme.counterBackground, }, styleSheet.nameText]}>{selectingItem?.name}</Text>
-                                                <View style={[{ borderColor: theme.counterBackground, }, styleSheet.showListIconView]}>
-                                                    <MaterialCommunityIcons name={Icon.List} color={theme.counterBackground} size={Size.Icon} />
-                                                </View>
+            <View style={CommonStyles.flex_1} >
+                {
+                    handling ?
+                        <View style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
+                            <ActivityIndicator color={theme.counterBackground} style={{ marginRight: Outline.Horizontal }} />
+                        </View> :
+                        <View style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
+                            {
+                                reasonToReload.current !== NeedReloadReason.None ?
+                                    <TouchableOpacity onPress={() => onPressNext(-1, 'none')} style={[{ gap: Outline.GapVertical }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]} >
+                                        <MaterialCommunityIcons name={reasonToReload.current === NeedReloadReason.NoInternet ? Icon.NoInternet : Icon.HeartBroken} color={theme.counterBackground} size={Size.IconMedium} />
+                                        <Text style={{ fontSize: FontSize.Normal, color: theme.counterBackground }}>{reasonToReload.current === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
+                                        <Text style={{ fontSize: FontSize.Small_L, color: theme.counterBackground }}>{LocalText.tap_to_retry}</Text>
+                                    </TouchableOpacity>
+                                    :
+                                    <View onTouchStart={onBigViewStartTouch} onTouchEnd={onBigViewEndTouch} style={styleSheet.contentView}>
+                                        <View onTouchEnd={() => setIsShowList(true)} style={[styleSheet.nameContainerView, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
+                                            <Text style={[{ color: theme.counterBackground, }, styleSheet.nameText]}>{selectingItem?.name}</Text>
+                                            <View style={[{ borderColor: theme.counterBackground, }, styleSheet.showListIconView]}>
+                                                <MaterialCommunityIcons name={Icon.List} color={theme.counterBackground} size={Size.Icon} />
                                             </View>
-                                            <Animated.View style={[{ transform: [{ scale: mediaViewScaleAnimRef }] }]}>
-                                                <ImageBackgroundWithLoading onLoad={onImageLoaded} resizeMode='contain' source={{ uri: selectingItem?.img }} style={styleSheet.image} indicatorProps={{ color: theme.counterBackground }} />
-                                            </Animated.View>
-                                            <Text selectable style={[styleSheet.nameView, { color: theme.counterBackground, }]}>{selectingItem?.name}</Text>
-                                            {
-                                                !selectingItem?.author ? undefined :
-                                                    <Text selectable style={[styleSheet.infoTextView, { color: theme.counterBackground, }]}>{LocalText.credit_to + ': ' + selectingItem.author}</Text>
-                                            }
-                                            <View style={styleSheet.contentScrollView}>
-                                                <ScrollView >
-                                                    <Text selectable adjustsFontSizeToFit style={[{ flexWrap: 'wrap', color: theme.counterBackground, fontSize: FontSize.Small_L }]}>{selectingItem?.desc}</Text>
-                                                </ScrollView>
-                                            </View>
-                                            {
-                                                !showFull || !selectingItem?.url ? undefined :
-                                                    <View style={[CommonStyles.width100Percent_Height100Percent_PositionAbsolute_JustifyContentCenter_AlignItemsCenter]}>
-                                                        <WebView
-                                                            source={{ uri: selectingItem.url }}
-                                                            containerStyle={{ width: '100%', height: '100%' }}
-                                                        />
-                                                    </View>
-                                            }
                                         </View>
-                                }
-                            </View>
-                    }
-                </View>
-            </ViewShot>
+                                        <Animated.View style={[{ transform: [{ scale: mediaViewScaleAnimRef }] }]}>
+                                            <ImageBackgroundWithLoading onLoad={onImageLoaded} resizeMode='contain' source={{ uri: selectingItem?.img }} style={styleSheet.image} indicatorProps={{ color: theme.counterBackground }} />
+                                        </Animated.View>
+                                        <Text selectable style={[styleSheet.nameView, { color: theme.counterBackground, }]}>{selectingItem?.name}</Text>
+                                        {
+                                            !selectingItem?.author ? undefined :
+                                                <Text selectable style={[styleSheet.infoTextView, { color: theme.counterBackground, }]}>{LocalText.credit_to + ': ' + selectingItem.author}</Text>
+                                        }
+                                        <View style={styleSheet.contentScrollView}>
+                                            <ScrollView >
+                                                <Text selectable adjustsFontSizeToFit style={[{ flexWrap: 'wrap', color: theme.counterBackground, fontSize: FontSize.Small_L }]}>{selectingItem?.desc}</Text>
+                                            </ScrollView>
+                                        </View>
+                                        {
+                                            !showFull || !selectingItem?.url ? undefined :
+                                                <View style={[CommonStyles.width100Percent_Height100Percent_PositionAbsolute_JustifyContentCenter_AlignItemsCenter]}>
+                                                    <WebView
+                                                        source={{ uri: selectingItem.url }}
+                                                        containerStyle={{ width: '100%', height: '100%' }}
+                                                    />
+                                                </View>
+                                        }
+                                    </View>
+                            }
+                        </View>
+                }
+            </View>
 
             <TouchableOpacity onPress={onPressOpenYoutubeApp} style={styleSheet.openYtb}>
                 <MaterialCommunityIcons name={Icon.Youtube} color={theme.counterBackground} size={Size.IconSmaller} />
@@ -385,7 +346,12 @@ const BestShortFilmsScreen = () => {
             </TouchableOpacity>
 
             {/* main btn part */}
-            <BottomBar items={bottomBarItems} />
+
+            <BottomBar
+                items={bottomBarItems}
+                id={idCurrent}
+                category={category}
+            />
 
             {
                 isShowList && Array.isArray(shortFilms) ? <ListMovie getSelectingIdAsync={getSelectingIdxAsync} setIdx={(idx: number) => onPressNext(idx, 'menu')} list={shortFilms} /> : undefined

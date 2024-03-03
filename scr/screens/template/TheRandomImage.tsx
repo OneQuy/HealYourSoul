@@ -278,8 +278,13 @@ const TheRandomImage = ({
                         </View>
                 }
             </View>
+
             {/* main btn part */}
-            <BottomBar items={bottomBarItems} />
+
+            <BottomBar
+                items={bottomBarItems}
+                category={category}
+            />
         </View>
     )
 }

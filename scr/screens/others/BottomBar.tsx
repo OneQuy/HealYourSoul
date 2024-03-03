@@ -4,8 +4,8 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React, { useContext, useMemo } from 'react'
 import { ThemeContext } from '../../constants/Colors';
-import { BorderRadius, FontSize, Outline, Size } from '../../constants/AppConstants';
-import FavoriteButton, { FavoriteButtonProp } from './FavoriteButton';
+import { BorderRadius, Category, FontSize, Outline, Size } from '../../constants/AppConstants';
+import FavoriteButton from './FavoriteButton';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export type BottomBarItem = {
@@ -14,10 +14,18 @@ export type BottomBarItem = {
     text?: string,
     scaleIcon?: number,
 
-    favoriteBtn?: FavoriteButtonProp,
+    favoriteCallbackRef?: React.MutableRefObject<(() => void) | undefined>,
 }
 
-const BottomBar = ({ items }: { items: BottomBarItem[] }) => {
+const BottomBar = ({
+    items,
+    category,
+    id,
+}: {
+    items: BottomBarItem[],
+    category: Category,
+    id?: string | number,
+}) => {
     const theme = useContext(ThemeContext);
     const safeArea = useSafeAreaInsets()
 
@@ -38,8 +46,13 @@ const BottomBar = ({ items }: { items: BottomBarItem[] }) => {
 
     const renderedItems = useMemo(() => {
         return items.map((item) => {
-            if (item.favoriteBtn)
-                return <FavoriteButton key={'favorite'} {...item.favoriteBtn} />
+            if (item.favoriteCallbackRef)
+                return <FavoriteButton
+                    key={'favorite'}
+                    callbackRef={item.favoriteCallbackRef}
+                    category={category}
+                    id={id}
+                />
             else {
                 return (
                     <TouchableOpacity key={item.text} onPress={item.onPress} style={styleSheet.mainBtnTO}>

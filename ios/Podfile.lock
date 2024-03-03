@@ -416,8 +416,6 @@ PODS:
     - react-native-video/Video (= 5.2.1)
   - react-native-video/Video (5.2.1):
     - React-Core
-  - react-native-view-shot (3.8.0):
-    - React-Core
   - react-native-webview (13.6.3):
     - React-Core
   - React-NativeModulesApple (0.72.3):
@@ -650,7 +648,6 @@ DEPENDENCIES:
   - "react-native-multiple-image-picker (from `../node_modules/@baronha/react-native-multiple-image-picker`)"
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-video (from `../node_modules/react-native-video`)
-  - react-native-view-shot (from `../node_modules/react-native-view-shot`)
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -772,8 +769,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-video:
     :path: "../node_modules/react-native-video"
-  react-native-view-shot:
-    :path: "../node_modules/react-native-view-shot"
   react-native-webview:
     :path: "../node_modules/react-native-webview"
   React-NativeModulesApple:
@@ -883,7 +878,6 @@ SPEC CHECKSUMS:
   react-native-multiple-image-picker: 7836e8269dd7696edc87bab686b3c3c7e6ebb41d
   react-native-safe-area-context: 9697629f7b2cda43cf52169bb7e0767d330648c2
   react-native-video: c26780b224543c62d5e1b2a7244a5cd1b50e8253
-  react-native-view-shot: 6b7ed61d77d88580fed10954d45fad0eb2d47688
   react-native-webview: 88293a0f23eca8465c0433c023ec632930e644d0
   React-NativeModulesApple: c57f3efe0df288a6532b726ad2d0322a9bf38472
   React-perflogger: 6bd153e776e6beed54c56b0847e1220a3ff92ba5

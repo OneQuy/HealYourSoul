@@ -747,11 +747,7 @@ const ThePage = ({ category }: ThePageProps) => {
                 scaleIcon: 1.5,
             },
             {
-                favoriteBtn: {
-                    callbackRef: favoriteCallbackRef,
-                    id: post.current?.id,
-                    category,
-                }
+                favoriteCallbackRef: favoriteCallbackRef
             },
             {
                 text: LocalText.next,
@@ -767,7 +763,7 @@ const ThePage = ({ category }: ThePageProps) => {
                 icon: Icon.Download
             },
         ] as BottomBarItem[]
-    }, [onPressNextPost, post.current?.id, onPressDownloadMedia, diversityItem])
+    }, [onPressNextPost, onPressDownloadMedia, diversityItem])
 
     // introduce cat
 
@@ -922,7 +918,11 @@ const ThePage = ({ category }: ThePageProps) => {
             }
 
             {/* main btn part */}
-            <BottomBar items={bottomBarItems} />
+            <BottomBar
+                items={bottomBarItems}
+                id={post.current?.id}
+                category={category}
+            />
         </View>
     )
 }

@@ -1,17 +1,12 @@
 import { Share as RNShare, View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, ShareContent, Linking, Animated } from 'react-native'
-import React, { LegacyRef, useCallback, useContext, useDebugValue, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
-
-
-// @ts-ignore
-
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { NetLord } from '../../handle/NetLord'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { CopyAndToast, SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
-import ViewShot from 'react-native-view-shot'
 import { CommonStyles } from '../../constants/CommonConstants'
 import { GetWikiAsync } from '../../handle/services/Wikipedia';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
@@ -37,7 +32,6 @@ const WikipediaScreen = () => {
     const [handling, setHandling] = useState(false);
     const [data, setData] = useState<object | undefined>(undefined);
     const [showFull, setShowFull] = useState(false);
-    const viewShotRef = useRef<LegacyRef<ViewShot> | undefined>();
     const [showIntroduceCat, renderShowIntroduceCat] = useIntroduceCat(category)
     const mediaViewScaleAnimRef = useRef(new Animated.Value(1)).current
 
@@ -161,30 +155,6 @@ const WikipediaScreen = () => {
             } as ShareOptions)
     }, [currentContent, currentTitle, currentLink, theme])
 
-    // const onPressShareImage = useCallback(() => {
-    //     if (!currentContent)
-    //         return
-
-    //     track_SimpleWithCat(category, 'share_as_image')
-
-    //     const message = currentTitle + '\n\n' + currentContent + '\n\nLink: ' + currentLink
-
-    //     // @ts-ignore
-    //     viewShotRef.current.capture().then(async (uri: string) => {
-    //         Share
-    //             .open({
-    //                 message,
-    //                 url: uri,
-    //             })
-    //             .catch((err) => {
-    //                 const error = ToCanPrint(err)
-
-    //                 if (!error.includes('User did not share'))
-    //                     Alert.alert('Fail', error)
-    //             });
-    //     })
-    // }, [currentTitle, currentContent, currentLink, theme])
-
     const onSwiped = useCallback((result: SwipeResult) => {
         if (!result.primaryDirectionIsHorizontalOrVertical)
             return
@@ -201,11 +171,6 @@ const WikipediaScreen = () => {
 
     const bottomBarItems = useMemo(() => {
         const btns = [
-            // {
-            //     text: LocalText.share_image,
-            //     onPress: onPressShareImage,
-            //     icon: Icon.ShareImage
-            // },
             {
                 text: LocalText.copy,
                 onPress: onPressCopy,
@@ -295,57 +260,57 @@ const WikipediaScreen = () => {
 
     return (
         <View pointerEvents={handling ? 'none' : 'auto'} style={[styleSheet.masterView, { backgroundColor: theme.background }]}>
-            {/* @ts-ignore */}
-            <ViewShot style={CommonStyles.flex_1} ref={viewShotRef} options={{ fileName: "Your-File-Name", format: "jpg", quality: 1 }}>
-                <View style={CommonStyles.flex_1} >
-                    {
-                        handling ?
-                            // true ?
-                            <View style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
-                                <ActivityIndicator color={theme.counterBackground} style={{ marginRight: Outline.Horizontal }} />
-                            </View> :
-                            <View style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
-                                {
-                                    reasonToReload.current !== NeedReloadReason.None ?
-                                        // true ?
-                                        <TouchableOpacity onPress={() => onPressRandom(true)} style={[{ gap: Outline.GapVertical }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]} >
-                                            <MaterialCommunityIcons name={reasonToReload.current === NeedReloadReason.NoInternet ? Icon.NoInternet : Icon.HeartBroken} color={theme.counterBackground} size={Size.IconMedium} />
-                                            <Text style={{ fontSize: FontSize.Normal, color: theme.counterBackground }}>{reasonToReload.current === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
-                                            <Text style={{ fontSize: FontSize.Small_L, color: theme.counterBackground }}>{LocalText.tap_to_retry}</Text>
+            <View style={CommonStyles.flex_1} >
+                {
+                    handling ?
+                        // true ?
+                        <View style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
+                            <ActivityIndicator color={theme.counterBackground} style={{ marginRight: Outline.Horizontal }} />
+                        </View> :
+                        <View style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
+                            {
+                                reasonToReload.current !== NeedReloadReason.None ?
+                                    // true ?
+                                    <TouchableOpacity onPress={() => onPressRandom(true)} style={[{ gap: Outline.GapVertical }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]} >
+                                        <MaterialCommunityIcons name={reasonToReload.current === NeedReloadReason.NoInternet ? Icon.NoInternet : Icon.HeartBroken} color={theme.counterBackground} size={Size.IconMedium} />
+                                        <Text style={{ fontSize: FontSize.Normal, color: theme.counterBackground }}>{reasonToReload.current === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
+                                        <Text style={{ fontSize: FontSize.Small_L, color: theme.counterBackground }}>{LocalText.tap_to_retry}</Text>
+                                    </TouchableOpacity>
+                                    :
+                                    <View onTouchStart={onBigViewStartTouch} onTouchEnd={onBigViewEndTouch} style={styleSheet.contentView}>
+                                        <Animated.View style={[{ transform: [{ scale: mediaViewScaleAnimRef }] }, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
+                                            <ImageBackgroundWithLoading onLoad={onImageLoaded} resizeMode='contain' source={{ uri: currentThumbUri }} style={styleSheet.image} indicatorProps={{ color: theme.counterBackground }} />
+                                        </Animated.View>
+                                        <TouchableOpacity onPress={onPressLink} style={styleSheet.titleTO}>
+                                            <Text selectable style={[styleSheet.titleView, { color: theme.counterBackground, }]}>{currentTitle}</Text>
+                                            <MaterialCommunityIcons name={Icon.Link} color={theme.counterBackground} size={Size.IconSmaller} />
                                         </TouchableOpacity>
-                                        :
-                                        <View onTouchStart={onBigViewStartTouch} onTouchEnd={onBigViewEndTouch} style={styleSheet.contentView}>
-                                            <Animated.View style={[{ transform: [{ scale: mediaViewScaleAnimRef }] }, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
-                                                <ImageBackgroundWithLoading onLoad={onImageLoaded} resizeMode='contain' source={{ uri: currentThumbUri }} style={styleSheet.image} indicatorProps={{ color: theme.counterBackground }} />
-                                            </Animated.View>
-                                            <TouchableOpacity onPress={onPressLink} style={styleSheet.titleTO}>
-                                                <Text selectable style={[styleSheet.titleView, { color: theme.counterBackground, }]}>{currentTitle}</Text>
-                                                <MaterialCommunityIcons name={Icon.Link} color={theme.counterBackground} size={Size.IconSmaller} />
-                                            </TouchableOpacity>
-                                            <View style={styleSheet.contentScrollView}>
-                                                <ScrollView >
-                                                    <Text selectable adjustsFontSizeToFit style={[{ flexWrap: 'wrap', color: theme.counterBackground, fontSize: FontSize.Small_L }]}>{currentContent}</Text>
-                                                </ScrollView>
-                                            </View>
-                                            <Text numberOfLines={1} style={[{ color: theme.counterBackground }, styleSheet.authorText]}>{LocalText.credit_to_author}</Text>
-                                            {
-                                                !showFull || !currentLink ? undefined :
-                                                    <View style={[{ backgroundColor: 'green' }, CommonStyles.width100Percent_Height100Percent_PositionAbsolute_JustifyContentCenter_AlignItemsCenter]}>
-                                                        <WebView
-                                                            source={{ uri: currentLink }}
-                                                            containerStyle={{ width: '100%', height: '100%', }}
-                                                        />
-                                                    </View>
-                                            }
+                                        <View style={styleSheet.contentScrollView}>
+                                            <ScrollView >
+                                                <Text selectable adjustsFontSizeToFit style={[{ flexWrap: 'wrap', color: theme.counterBackground, fontSize: FontSize.Small_L }]}>{currentContent}</Text>
+                                            </ScrollView>
                                         </View>
-                                }
-                            </View>
-                    }
-                </View>
-            </ViewShot>
+                                        <Text numberOfLines={1} style={[{ color: theme.counterBackground }, styleSheet.authorText]}>{LocalText.credit_to_author}</Text>
+                                        {
+                                            !showFull || !currentLink ? undefined :
+                                                <View style={[{ backgroundColor: 'green' }, CommonStyles.width100Percent_Height100Percent_PositionAbsolute_JustifyContentCenter_AlignItemsCenter]}>
+                                                    <WebView
+                                                        source={{ uri: currentLink }}
+                                                        containerStyle={{ width: '100%', height: '100%', }}
+                                                    />
+                                                </View>
+                                        }
+                                    </View>
+                            }
+                        </View>
+                }
+            </View>
 
             {/* main btns */}
-            <BottomBar items={bottomBarItems} />
+            <BottomBar
+                items={bottomBarItems}
+                category={category}
+            />
         </View>
     )
 }

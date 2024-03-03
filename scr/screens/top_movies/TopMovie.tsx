@@ -3,16 +3,11 @@ import React, { LegacyRef, useCallback, useContext, useEffect, useMemo, useRef, 
 import { ThemeContext } from '../../constants/Colors'
 import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size, StorageKey_LocalFileVersion, StorageKey_SelectingTopMovieIdx } from '../../constants/AppConstants'
 import Share from 'react-native-share';
-
-
-// @ts-ignore
-
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { NetLord } from '../../handle/NetLord'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
-import ViewShot from 'react-native-view-shot'
 import { CommonStyles } from '../../constants/CommonConstants'
 import { TopMovie } from '../../constants/Types';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
@@ -41,7 +36,6 @@ const TopMovieScreen = () => {
     const [handling, setHandling] = useState(true)
     const [selectingItem, setSelectingItem] = useState<TopMovie | undefined>(undefined)
     const [isShowList, setIsShowList] = useState(false)
-    const viewShotRef = useRef<LegacyRef<ViewShot> | undefined>();
     const favoriteCallbackRef = useRef<(() => void) | undefined>(undefined);
 
     const [topMovies, errorDownloadJson, _, reUpdateData] = useCheckAndDownloadRemoteFile<TopMovie[]>(
@@ -163,35 +157,6 @@ const TopMovieScreen = () => {
             })
     }, [selectingItem, theme])
 
-    // const onPressShareImage = useCallback(() => {
-    //     if (!selectingItem)
-    //         return
-
-    //     track_SimpleWithCat(category, 'share_as_image')
-
-    //     const message =
-    //         '#' + selectingItem.rank + '. ' +
-    //         selectingItem.title + ': ' +
-    //         selectingItem.desc + '\n' +
-    //         selectingItem.info + '\n' +
-    //         '★ ' + selectingItem.rate + ' on IMDb'
-
-    //     // @ts-ignore
-    //     viewShotRef.current.capture().then(async (uri: string) => {
-    //         Share
-    //             .open({
-    //                 message,
-    //                 url: uri,
-    //             })
-    //             .catch((err) => {
-    //                 const error = ToCanPrint(err)
-
-    //                 if (!error.includes('User did not share'))
-    //                     Alert.alert('Fail', error)
-    //             });
-    //     })
-    // }, [selectingItem, theme])
-
     const onLongPressed = useCallback(() => {
         console.log('long pressed');
     }, [])
@@ -213,22 +178,13 @@ const TopMovieScreen = () => {
 
     const bottomBarItems = useMemo(() => {
         return [
-            // {
-            //     text: LocalText.share_image,
-            //     onPress: onPressShareImage,
-            //     icon: Icon.ShareImage
-            // },
             {
                 text: LocalText.share,
                 onPress: onPressShareText,
                 icon: Icon.ShareText
             },
             {
-                favoriteBtn: {
-                    callbackRef: favoriteCallbackRef,
-                    id: idNumber,
-                    category,
-                }
+                favoriteCallbackRef: favoriteCallbackRef,
             },
             {
                 text: LocalText.random,
@@ -242,7 +198,7 @@ const TopMovieScreen = () => {
                 scaleIcon: 1.5,
             },
         ] as BottomBarItem[]
-    }, [idNumber, onPressNext, onPressRandom, onPressShareText])
+    }, [onPressNext, onPressRandom, onPressShareText])
 
     // for load data first time
 
@@ -277,50 +233,51 @@ const TopMovieScreen = () => {
 
     return (
         <View pointerEvents={handling ? 'none' : 'auto'} style={[styleSheet.masterView, { backgroundColor: theme.background }]}>
-            {/* @ts-ignore */}
-            <ViewShot style={CommonStyles.flex_1} ref={viewShotRef} options={{ fileName: "Your-File-Name", format: "jpg", quality: 1 }}>
-                <View style={CommonStyles.flex_1} >
-                    {
-                        handling ?
-                            <View style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
-                                <ActivityIndicator color={theme.counterBackground} style={{ marginRight: Outline.Horizontal }} />
-                            </View> :
-                            <View style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
-                                {
-                                    reasonToReload.current !== NeedReloadReason.None ?
-                                        <TouchableOpacity onPress={() => onPressNext(-1, 'none')} style={[{ gap: Outline.GapVertical }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]} >
-                                            <MaterialCommunityIcons name={reasonToReload.current === NeedReloadReason.NoInternet ? Icon.NoInternet : Icon.HeartBroken} color={theme.counterBackground} size={Size.IconMedium} />
-                                            <Text style={{ fontSize: FontSize.Normal, color: theme.counterBackground }}>{reasonToReload.current === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
-                                            <Text style={{ fontSize: FontSize.Small_L, color: theme.counterBackground }}>{LocalText.tap_to_retry}</Text>
-                                        </TouchableOpacity>
-                                        :
-                                        <View onTouchStart={onBigViewStartTouch} onTouchEnd={onBigViewEndTouch} style={styleSheet.contentView}>
-                                            <View onTouchEnd={() => setIsShowList(true)} style={[styleSheet.titleContainerView, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
-                                                <Text style={[{ color: theme.counterBackground }, styleSheet.titleText]}>{selectingItem ? '#' + selectingItem.rank : ''}</Text>
-                                                <View style={[{ borderColor: theme.counterBackground, }, styleSheet.showListIconView]}>
-                                                    <MaterialCommunityIcons name={Icon.List} color={theme.counterBackground} size={Size.Icon} />
-                                                </View>
-                                            </View>
-                                            <Animated.View style={[{ transform: [{ scale: mediaViewScaleAnimRef }] }]}>
-                                                <ImageBackgroundWithLoading onLoad={onImageLoaded} resizeMode='contain' source={{ uri: selectingItem?.thumbnailUri }} style={styleSheet.image} indicatorProps={{ color: theme.counterBackground }} />
-                                            </Animated.View>
-                                            <Text selectable style={[styleSheet.titleView, { color: theme.counterBackground, }]}>{selectingItem?.title}</Text>
-                                            <Text selectable style={[styleSheet.infoTextView, { color: theme.counterBackground, }]}>{selectingItem?.info}</Text>
-                                            <Text selectable style={[styleSheet.infoTextView, { color: theme.counterBackground, }]}>★ {selectingItem?.rate} on IMDb</Text>
-                                            <View style={styleSheet.contentScrollView}>
-                                                <ScrollView >
-                                                    <Text selectable adjustsFontSizeToFit style={[{ flexWrap: 'wrap', color: theme.counterBackground, fontSize: FontSize.Small_L }]}>{selectingItem?.desc}</Text>
-                                                </ScrollView>
+            <View style={CommonStyles.flex_1} >
+                {
+                    handling ?
+                        <View style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
+                            <ActivityIndicator color={theme.counterBackground} style={{ marginRight: Outline.Horizontal }} />
+                        </View> :
+                        <View style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
+                            {
+                                reasonToReload.current !== NeedReloadReason.None ?
+                                    <TouchableOpacity onPress={() => onPressNext(-1, 'none')} style={[{ gap: Outline.GapVertical }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]} >
+                                        <MaterialCommunityIcons name={reasonToReload.current === NeedReloadReason.NoInternet ? Icon.NoInternet : Icon.HeartBroken} color={theme.counterBackground} size={Size.IconMedium} />
+                                        <Text style={{ fontSize: FontSize.Normal, color: theme.counterBackground }}>{reasonToReload.current === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
+                                        <Text style={{ fontSize: FontSize.Small_L, color: theme.counterBackground }}>{LocalText.tap_to_retry}</Text>
+                                    </TouchableOpacity>
+                                    :
+                                    <View onTouchStart={onBigViewStartTouch} onTouchEnd={onBigViewEndTouch} style={styleSheet.contentView}>
+                                        <View onTouchEnd={() => setIsShowList(true)} style={[styleSheet.titleContainerView, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
+                                            <Text style={[{ color: theme.counterBackground }, styleSheet.titleText]}>{selectingItem ? '#' + selectingItem.rank : ''}</Text>
+                                            <View style={[{ borderColor: theme.counterBackground, }, styleSheet.showListIconView]}>
+                                                <MaterialCommunityIcons name={Icon.List} color={theme.counterBackground} size={Size.Icon} />
                                             </View>
                                         </View>
-                                }
-                            </View>
-                    }
-                </View>
-            </ViewShot>
+                                        <Animated.View style={[{ transform: [{ scale: mediaViewScaleAnimRef }] }]}>
+                                            <ImageBackgroundWithLoading onLoad={onImageLoaded} resizeMode='contain' source={{ uri: selectingItem?.thumbnailUri }} style={styleSheet.image} indicatorProps={{ color: theme.counterBackground }} />
+                                        </Animated.View>
+                                        <Text selectable style={[styleSheet.titleView, { color: theme.counterBackground, }]}>{selectingItem?.title}</Text>
+                                        <Text selectable style={[styleSheet.infoTextView, { color: theme.counterBackground, }]}>{selectingItem?.info}</Text>
+                                        <Text selectable style={[styleSheet.infoTextView, { color: theme.counterBackground, }]}>★ {selectingItem?.rate} on IMDb</Text>
+                                        <View style={styleSheet.contentScrollView}>
+                                            <ScrollView >
+                                                <Text selectable adjustsFontSizeToFit style={[{ flexWrap: 'wrap', color: theme.counterBackground, fontSize: FontSize.Small_L }]}>{selectingItem?.desc}</Text>
+                                            </ScrollView>
+                                        </View>
+                                    </View>
+                            }
+                        </View>
+                }
+            </View>
 
             {/* main btn part */}
-            <BottomBar items={bottomBarItems} />
+            <BottomBar
+                items={bottomBarItems}
+                category={category}
+                id={idNumber}
+            />
 
             {
                 isShowList && Array.isArray(topMovies) ? <ListMovie getSelectingIdAsync={getSelectingIdxAsync} setIdx={(idx: number) => onPressNext(idx, 'menu')} list={topMovies} /> : undefined

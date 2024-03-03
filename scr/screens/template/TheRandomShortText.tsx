@@ -2,13 +2,12 @@
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { View, Text, TouchableOpacity, ActivityIndicator, Share as RNShare, ShareContent, ShareOptions, StyleSheet, Animated } from 'react-native'
-import React, { LegacyRef, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { Category, FontSize, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
 import { NetLord } from '../../handle/NetLord'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { CopyAndToast, SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
-import ViewShot from 'react-native-view-shot'
 import { CommonStyles } from '../../constants/CommonConstants'
 import { track_PressRandom, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
@@ -32,7 +31,6 @@ const TheRandomShortText = ({
     const reasonToReload = useRef<NeedReloadReason>(NeedReloadReason.None);
     const theme = useContext(ThemeContext);
     const [handling, setHandling] = useState(false);
-    const viewShotRef = useRef<LegacyRef<ViewShot> | undefined>();
 
     const diversityItem = useDiversityItem(() => onPressRandom(false), undefined, undefined, text)
 
@@ -137,11 +135,6 @@ const TheRandomShortText = ({
 
     const bottomBarItems = useMemo(() => {
         const btns = [
-            // {
-            //     text: LocalText.share_image,
-            //     onPress: onPressShareImage,
-            //     icon: Icon.ShareImage
-            // },
             {
                 text: LocalText.copy,
                 onPress: onPressCopy,
@@ -215,41 +208,41 @@ const TheRandomShortText = ({
 
     return (
         <View pointerEvents={handling ? 'none' : 'auto'} style={[styleSheet.masterView, { backgroundColor: theme.background }]}>
-            {/* @ts-ignore */}
-            <ViewShot style={CommonStyles.flex_1} ref={viewShotRef} options={{ fileName: "Your-File-Name", format: "jpg", quality: 1 }}>
-                <View style={CommonStyles.flex_1} >
-                    {
-                        handling ?
-                            // true ?
-                            <View style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
-                                <ActivityIndicator color={theme.counterBackground} style={{ marginRight: Outline.Horizontal }} />
-                            </View> :
-                            <Animated.View
-                                onTouchStart={onBigViewStartTouch}
-                                onTouchEnd={onBigViewEndTouch}
-                                style={[{ transform: [{ scale: mediaViewScaleAnimRef }] }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]}>
-                                {
-                                    reasonToReload.current !== NeedReloadReason.None ?
-                                        // true ?
-                                        <TouchableOpacity onPress={() => onPressRandom(false)} style={[{ gap: Outline.GapVertical }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]} >
-                                            <MaterialCommunityIcons name={reasonToReload.current === NeedReloadReason.NoInternet ? Icon.NoInternet : Icon.HeartBroken} color={theme.counterBackground} size={Size.IconMedium} />
-                                            <Text style={{ fontSize: FontSize.Normal, color: theme.counterBackground }}>{reasonToReload.current === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
-                                            <Text style={{ fontSize: FontSize.Small_L, color: theme.counterBackground }}>{LocalText.tap_to_retry}</Text>
-                                        </TouchableOpacity>
-                                        :
-                                        <Text adjustsFontSizeToFit numberOfLines={20} selectable style={{ verticalAlign: 'middle', marginHorizontal: Outline.Horizontal, color: theme.counterBackground, fontSize: FontSize.Big }}>{text ? text : ''}</Text>
-                                }
-                            </Animated.View>
-                    }
-                </View>
-            </ViewShot>
+            <View style={CommonStyles.flex_1} >
+                {
+                    handling ?
+                        // true ?
+                        <View style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
+                            <ActivityIndicator color={theme.counterBackground} style={{ marginRight: Outline.Horizontal }} />
+                        </View> :
+                        <Animated.View
+                            onTouchStart={onBigViewStartTouch}
+                            onTouchEnd={onBigViewEndTouch}
+                            style={[{ transform: [{ scale: mediaViewScaleAnimRef }] }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]}>
+                            {
+                                reasonToReload.current !== NeedReloadReason.None ?
+                                    // true ?
+                                    <TouchableOpacity onPress={() => onPressRandom(false)} style={[{ gap: Outline.GapVertical }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]} >
+                                        <MaterialCommunityIcons name={reasonToReload.current === NeedReloadReason.NoInternet ? Icon.NoInternet : Icon.HeartBroken} color={theme.counterBackground} size={Size.IconMedium} />
+                                        <Text style={{ fontSize: FontSize.Normal, color: theme.counterBackground }}>{reasonToReload.current === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
+                                        <Text style={{ fontSize: FontSize.Small_L, color: theme.counterBackground }}>{LocalText.tap_to_retry}</Text>
+                                    </TouchableOpacity>
+                                    :
+                                    <Text adjustsFontSizeToFit numberOfLines={20} selectable style={{ verticalAlign: 'middle', marginHorizontal: Outline.Horizontal, color: theme.counterBackground, fontSize: FontSize.Big }}>{text ? text : ''}</Text>
+                            }
+                        </Animated.View>
+                }
+            </View>
 
             {
                 handling || reasonToReload.current !== NeedReloadReason.None ? undefined :
                     <Text numberOfLines={1} style={[{ color: theme.counterBackground }, styleSheet.authorText]}>{LocalText.credit_to_author}</Text>
             }
 
-            <BottomBar items={bottomBarItems} />
+            <BottomBar
+                items={bottomBarItems}
+                category={category}
+            />
         </View>
     )
 }

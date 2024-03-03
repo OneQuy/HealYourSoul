@@ -252,11 +252,7 @@ const PicturesOfTheYearScreen = () => {
                 icon: Icon.ShareImage
             },
             {
-                favoriteBtn: {
-                    callbackRef: favoriteCallbackRef,
-                    id: selectingPhotoID,
-                    category,
-                }
+                favoriteCallbackRef: favoriteCallbackRef,
             },
             {
                 text: LocalText.next,
@@ -373,7 +369,11 @@ const PicturesOfTheYearScreen = () => {
             </View>
 
             {/* main btn part */}
-            <BottomBar items={bottomBarItems} />
+            <BottomBar
+                items={bottomBarItems}
+                id={selectingPhotoID}
+                category={category}
+            />
 
             {
                 isShowAwardList ? <SelectAward setIdx={(idx: number) => onPressNext(idx, 'menu')} year={selectingYear} selectIdx={selectingPhotoIndex} /> : undefined
