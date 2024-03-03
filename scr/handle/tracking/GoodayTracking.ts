@@ -132,7 +132,7 @@ export const track_OnUseEffectOnceEnterAppAsync = async (startFreshlyOpenAppTick
     MainTrack('last_freshly_open',
         [],
         {
-            lastFreshlyOpenAppToNow,
+            last_time: lastFreshlyOpenAppToNow,
         })
 
     // track update version
