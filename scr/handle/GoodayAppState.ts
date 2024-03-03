@@ -265,12 +265,12 @@ export const RegisterGoodayAppState = (isRegister: boolean) => {
         UnregisterOnChangedState(onStateChanged)
 }
 
-export const HandleGoodayStreakAsync = async () => {
+export const HandleGoodayStreakAsync = async (forceShow = false) => {
     const id = 'gooday'
 
     const handled = await SetStreakAsync(id)
 
-    if (!handled) // already showed
+    if (!handled && !forceShow) // already showed
         return
 
     const data = await GetStreakAsync(id)

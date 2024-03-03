@@ -26,6 +26,7 @@ import { useAppDispatch } from '../../redux/Store';
 import { setOnboarded } from '../../redux/MiscSlice';
 import { GetIPLocationAsync } from '../../hooks/useCountryFromIP';
 import { UserID } from '../../handle/UserID';
+import { HandleGoodayStreakAsync } from '../../handle/GoodayAppState';
 
 const limitFeedback = 300
 
@@ -112,6 +113,10 @@ const SettingView = () => {
 
   const onPressDevGetUserID = useCallback(async () => {
     CopyAndToast(UserID())
+  }, [])
+
+  const onPressDevShowStreak = useCallback(async () => {
+    HandleGoodayStreakAsync(true)
   }, [])
 
   const onFocusInput = useCallback(async (scrollToPercent?: number) => {
@@ -296,7 +301,10 @@ const SettingView = () => {
 
         {/* theme */}
 
-        <Text style={style.titleText}>{LocalText.theme}</Text>
+        <Text
+          style={style.titleText}
+          onPress={IsDev() ? onPressDevShowStreak : undefined}
+        >{LocalText.theme}</Text>
 
         <Text style={style.contentTxt}>{LocalText.lights_mode}</Text>
         <ThemeScroll mode='lights' />
