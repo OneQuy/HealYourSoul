@@ -18,6 +18,9 @@ const aptabaseIgnoredEventNames: string[] = [
     'press_previous_post',
     'saved',
     'max_saved',
+    'dimension_screen',
+    'dimension_window',
+    'platform',
 ] as const
 
 const isLog = Cheat('IsLog_Tracking')
