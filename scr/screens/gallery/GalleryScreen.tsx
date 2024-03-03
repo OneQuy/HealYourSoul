@@ -3,19 +3,23 @@ import React, { useCallback, useContext, useMemo, useState } from 'react'
 import { BorderRadius, Category, FontSize, FontWeight, LocalText, Outline } from '../../constants/AppConstants'
 import { ThemeContext } from '../../constants/Colors';
 import GallerySeenView from './GallerySeenView';
-import { RouteProp, useRoute } from '@react-navigation/native';
+import { RouteProp, useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
 import { DrawerParamList } from '../../navigation/Navigator';
 import { SafeValue } from '../../handle/UtilsTS';
 import GalleryLovedView from './GalleryLovedView';
+import { UpdateHeaderXButton } from '../components/HeaderXButton';
 
 type SubView = 'seen' | 'favorite'
 
 var lastCat = Category.Meme
 
+export const GetLastCatOfGallery = () => lastCat
+
 const GalleryScreen = () => {
     const theme = useContext(ThemeContext);
     const [subview, setSubView] = useState<SubView>('seen')
     const route = useRoute<RouteProp<DrawerParamList>>()
+    const navigation = useNavigation()
 
     const onPressView = useCallback((view: SubView) => {
         setSubView(view)
@@ -39,6 +43,10 @@ const GalleryScreen = () => {
             topButtonText_Inactive: { color: theme.counterBackground, fontWeight: FontWeight.B600, fontSize: FontSize.Small },
         })
     }, [theme])
+
+    useFocusEffect(useCallback(() => {
+        UpdateHeaderXButton(navigation, undefined)
+    }, [cat]))
 
     return (
         <View style={style.masterView}>

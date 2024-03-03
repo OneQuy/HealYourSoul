@@ -3,7 +3,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import { TouchableOpacity, StyleSheet, View } from 'react-native'
 import React, { useCallback, useContext, useMemo } from 'react'
-import { Icon, LocalText, Outline, ScreenName, Size } from '../../constants/AppConstants';
+import { Category, Icon, LocalText, Outline, ScreenName, Size } from '../../constants/AppConstants';
 import { ThemeContext } from '../../constants/Colors';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
@@ -13,6 +13,8 @@ import { GetScreenBackWhenPressXGlobal } from '../diversity/TheDiversity';
 import { GoToScreen } from '../../handle/GoodayAppState';
 import { DiversityItemType } from '../../constants/Types';
 import { Cheat } from '../../handle/Cheat';
+import { GetLastCatOfGallery } from '../gallery/GalleryScreen';
+import { CatToScreenName } from '../../handle/AppUtils';
 
 const HeaderXButton = () => {
     const theme = useContext(ThemeContext);
@@ -62,9 +64,15 @@ export const UpdateHeaderXButton = (
     if (diversityItem !== undefined) {
         title += ` (${GetScreenBackWhenPressXGlobal()})`
     }
-    
+
     if (diversityItem && Cheat('IsLog_CurrentPost'))
         title += ` ID=${diversityItem.id}`
+
+    if (title === ScreenName.Gallery as string) {
+        const screenOf = CatToScreenName(GetLastCatOfGallery())
+
+        title += ' of ' + screenOf
+    }
 
     navigation.setOptions({
         headerLeft: diversityItem !== undefined ? () => <HeaderXButton /> : undefined,
