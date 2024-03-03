@@ -4,6 +4,7 @@ import { useAppDispatch } from "../redux/Store";
 import { addDrawFavoritedID, addQuoteFavoritedID, addMemeFavoritedID, removeDrawFavoritedID, removeQuoteFavoritedID, removeMemeFavoritedID, removeLoveFavoritedID, addLoveFavoritedID, removeSatisfyingFavoritedID, addSatisfyingFavoritedID, removeCatDogFavoritedID, addCatDogFavoritedID, removeNSFWFavoritedID, addNSFWFavoritedID, removeCuteFavoritedID, addCuteFavoritedID, removeArtFavoritedID, addArtFavoritedID, removeSarcasmFavoritedID, addSarcasmFavoritedID, removeAwardPictureFavoritedID, addAwardPictureFavoritedID, removeFunWebsiteFavoritedID, addFunWebsiteFavoritedID, removeTopMovieFavoritedID, addTopMovieFavoritedID, removeShortFilmsFavoritedID, addShortFilmsFavoritedID, removeSunsetFavoritedID, addSunsetFavoritedID, removeTypoFavoritedID, addTypoFavoritedID, removeAwesomeFavoritedID, addAwesomeFavoritedID, removeInfoFavoritedID, addInfoFavoritedID, removeTuneFavoritedID, addTuneFavoritedID, removeVocabularyFavoritedID, addVocabularyFavoritedID } from '../redux/UserDataSlice'
 import { GetPostLikeCountAsync, LikePostAsync } from "../handle/LikeCountHandler";
 import useFavoritedIDs from "./useFavoritedIDs";
+import { IsDev } from "../handle/IsDev";
 
 export default function useIsFavorited(category: Category, id: number | string | undefined)
     : readonly [isFavorited: boolean, likeCount: number, onPressFavorite: () => void] {
@@ -144,7 +145,8 @@ export default function useIsFavorited(category: Category, id: number | string |
         else
             throw new Error('NI cat: ' + category);
 
-        LikePostAsync(!isFavorited, category, id, (likes) => setLikeCount(likes))
+        if (!IsDev())
+            LikePostAsync(!isFavorited, category, id, (likes) => setLikeCount(likes))
     }, [isFavorited, id]);
 
     useEffect(() => {

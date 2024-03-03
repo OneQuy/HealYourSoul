@@ -16,13 +16,15 @@ const useDiversityItem = (
     const navigation = useNavigation()
 
     const diversityItem = useMemo(() => {
+        // @ts-ignore
         return route.params?.item
+        // @ts-ignore
     }, [route.params?.item])
 
     // update x button
 
     useFocusEffect(useCallback(() => {
-        UpdateHeaderXButton(navigation, diversityItem)
+        UpdateHeaderXButton(navigation, diversityItem, false)
     }, [diversityItem]))
 
     // check to reload if have another diversity

@@ -3,9 +3,9 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import { TouchableOpacity, StyleSheet, View } from 'react-native'
 import React, { useCallback, useContext, useMemo } from 'react'
-import { Category, Icon, LocalText, Outline, ScreenName, Size } from '../../constants/AppConstants';
+import { Icon, Outline, ScreenName, Size } from '../../constants/AppConstants';
 import { ThemeContext } from '../../constants/Colors';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { NavigationProp } from '@react-navigation/native';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { DrawerParamList } from '../../navigation/Navigator';
 import { track_Simple } from '../../handle/tracking/GoodayTracking';
@@ -16,9 +16,13 @@ import { Cheat } from '../../handle/Cheat';
 import { GetLastCatOfGallery } from '../gallery/GalleryScreen';
 import { CatToScreenName } from '../../handle/AppUtils';
 
-const HeaderXButton = () => {
+const HeaderXButton = ({
+    pressGoToDiversityScreenOrThePage
+}: {
+    pressGoToDiversityScreenOrThePage?: boolean
+}
+) => {
     const theme = useContext(ThemeContext);
-    const navigation = useNavigation<DrawerNavigationProp<DrawerParamList>>();
 
     const style = useMemo(() => {
         return StyleSheet.create({
@@ -26,15 +30,22 @@ const HeaderXButton = () => {
         })
     }, [])
 
-    const onPressX = useCallback(() => {
-        OnPressedXInDiversityMode()
-    }, [])
+    const onPress = useCallback(() => {
+        if (pressGoToDiversityScreenOrThePage)
+            OnPressedXInDiversityMode()
+        else {
+            const screenOf = CatToScreenName(GetLastCatOfGallery())
+
+            if (screenOf)
+                GoToScreen(screenOf)
+        }
+    }, [pressGoToDiversityScreenOrThePage])
 
     return (
         <View style={style.master}>
             {/* x button */}
-            <TouchableOpacity onPress={onPressX} >
-                <MaterialCommunityIcons name={Icon.Close} color={theme.primary} size={Size.Icon} />
+            <TouchableOpacity onPress={onPress} >
+                <MaterialCommunityIcons name={pressGoToDiversityScreenOrThePage ? Icon.Close : Icon.Left} color={theme.primary} size={Size.Icon} />
             </TouchableOpacity>
         </View>
     )
@@ -54,7 +65,8 @@ export const OnPressedXInDiversityMode = () => {
 
 export const UpdateHeaderXButton = (
     navigation: DrawerNavigationProp<DrawerParamList> | NavigationProp<ReactNavigation.RootParamList>,
-    diversityItem: DiversityItemType | undefined
+    diversityItem: DiversityItemType | undefined,
+    pressBackToThePage: boolean | undefined,
 ) => {
     const index = navigation.getState().index
     const screen = navigation.getState().routes[index].name
@@ -75,7 +87,7 @@ export const UpdateHeaderXButton = (
     }
 
     navigation.setOptions({
-        headerLeft: diversityItem !== undefined ? () => <HeaderXButton /> : undefined,
+        headerLeft: pressBackToThePage === true || diversityItem !== undefined ? () => <HeaderXButton pressGoToDiversityScreenOrThePage={pressBackToThePage !== true} /> : undefined,
         headerTitle: title,
     })
 }

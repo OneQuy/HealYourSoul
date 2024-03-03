@@ -45,7 +45,7 @@ const GalleryScreen = () => {
     }, [theme])
 
     useFocusEffect(useCallback(() => {
-        UpdateHeaderXButton(navigation, undefined)
+        UpdateHeaderXButton(navigation, undefined, true)
     }, [cat]))
 
     return (
