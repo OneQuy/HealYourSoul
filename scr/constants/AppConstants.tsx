@@ -361,6 +361,8 @@ export const LocalText = {
   clear_all: 'Clear all',
   mark_read: 'Mark as read',
   read_all: 'Mark as read all',
+  seen_posts: 'Seen posts',
+  favorited_posts: 'Loved posts',
 
   one_time_purchase: 'You can choose between a one-time purchase',
   subscriptions: 'Or a subscription',

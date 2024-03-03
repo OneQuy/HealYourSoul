@@ -11,7 +11,6 @@ import { useSaved } from '../../hooks/useSaved';
 import { GoToPremiumScreen } from './HeaderXButton';
 import { usePremium } from '../../hooks/usePremium';
 import { GoToScreen } from '../../handle/GoodayAppState';
-import GalleryScreen from '../gallery/GalleryScreen';
 
 const HeaderRightButtons = (
     {
