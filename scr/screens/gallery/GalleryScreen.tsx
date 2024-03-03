@@ -8,6 +8,7 @@ import { DrawerParamList } from '../../navigation/Navigator';
 import { SafeValue } from '../../handle/UtilsTS';
 import GalleryLovedView from './GalleryLovedView';
 import { UpdateHeaderXButton } from '../components/HeaderXButton';
+import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 
 type SubView = 'seen' | 'favorite'
 
@@ -22,6 +23,8 @@ const GalleryScreen = () => {
     const navigation = useNavigation()
 
     const onPressView = useCallback((view: SubView) => {
+        track_SimpleWithParam('gallery', view)
+        
         setSubView(view)
     }, [])
 
