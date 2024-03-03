@@ -2,6 +2,8 @@ import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-nat
 
 export const LimitSaved = 50
 
+export const LimitPagesGalleryLovedPosts = 2
+
 /**
  * time out handle firebase db: 
  * + app config

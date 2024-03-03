@@ -1,7 +1,7 @@
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { View, StyleSheet, FlatList, Text, TouchableOpacity, ImageBackground } from 'react-native'
+import { View, StyleSheet, FlatList, Text, TouchableOpacity } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { BorderRadius, Category, FontSize, Icon, LimitSaved, LocalText, Outline, ScreenName, Size, StorageKey_CurPageFunSoundIdx, StorageKey_IsUserPressedClosePleaseSubscribe } from '../../constants/AppConstants'
 import { DiversityItemType } from '../../constants/Types'
@@ -18,9 +18,8 @@ import PageNavigatorBar from '../fun_sound/PageNavigatorBar'
 import { CatToScreenName } from '../../handle/AppUtils'
 import { widthPercentageToDP } from 'react-native-responsive-screen';
 import FilterDiversityPopup from './FilterDiversityPopup';
-import { iapBg_1 } from '../IAP/IAPPage';
-import { GoToPremiumScreen } from '../components/HeaderXButton';
 import { usePremium } from '../../hooks/usePremium';
+import DiversityLimitBanner from '../components/DiversityLimitBanner';
 
 export const numColumnsDiversity = 3
 
@@ -33,6 +32,7 @@ type TheDiversityProps = {
     screenBackWhenPressX: ScreenName,
     showLimitSaved?: boolean,
     showFilterButton?: boolean,
+    limitPage?: boolean,
 }
 
 var screenBackWhenPressXGlobal = ScreenName.Saved
@@ -243,29 +243,18 @@ const TheDiversity = (
         return StyleSheet.create({
             masterView: { flex: 1, paddingBottom: Outline.GapHorizontal, gap: Outline.GapHorizontal, },
             centerView: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-            plsSubView: { gap: Outline.GapHorizontal, margin: Outline.GapVertical, marginBottom: insets.bottom + Outline.GapHorizontal, padding: Outline.GapVertical, borderRadius: BorderRadius.BR, borderWidth: StyleSheet.hairlineWidth, borderColor: theme.counterBackground, justifyContent: 'center', alignItems: 'center' },
-            plsSubBtnsView: { gap: Outline.GapHorizontal, flexDirection: 'row' },
             filterView: { marginHorizontal: Outline.GapVertical, justifyContent: 'center', alignItems: 'center', },
-            premiumIB: { padding: Outline.GapVertical, minWidth: widthPercentageToDP(30), borderRadius: BorderRadius.BR, overflow: 'hidden', justifyContent: 'center', alignItems: 'center', },
-            gotItBtn: { padding: Outline.GapVertical, minWidth: widthPercentageToDP(30), borderColor: theme.counterBackground, borderRadius: BorderRadius.BR, borderWidth: StyleSheet.hairlineWidth, justifyContent: 'center', alignItems: 'center', },
             filterTO: { maxWidth: '100%', paddingHorizontal: 20, borderRadius: BorderRadius.BR8, justifyContent: 'center', alignItems: 'center', gap: Outline.GapHorizontal, padding: Outline.GapHorizontal, minWidth: widthPercentageToDP(20), flexDirection: 'row', backgroundColor: theme.primary },
             flatListContainer: { flex: 1, },
             filterCatTxt: { maxWidth: '100%', fontSize: FontSize.Small_L, color: theme.counterPrimary, },
             noItemTxt: { textAlign: 'center', marginHorizontal: Outline.GapVertical, fontSize: FontSize.Normal, color: theme.counterBackground, },
-            subscribeTxt: { textAlign: 'center', fontSize: FontSize.Small_L, color: theme.counterBackground, },
-            premiumText: { fontSize: FontSize.Small_L, color: 'black' },
-            gotItText: { fontSize: FontSize.Small_L, color: theme.counterBackground },
         })
-    }, [theme])
+    }, [theme, insets])
 
     const onPressedClosePlsSubscribe = useCallback(() => {
         SetBooleanAsync(StorageKey_IsUserPressedClosePleaseSubscribe, true)
         setIsUserPressedClosePleaseSubscribe(true)
     }, [])
-
-    const onPressedUpgrade = useCallback(() => {
-        GoToPremiumScreen(navigation)
-    }, [navigation])
 
     const renderItem = useCallback(({ item }: { item: DiversityItemType }) => {
         return <DiversityItem
@@ -276,26 +265,11 @@ const TheDiversity = (
         if (showLimitSaved !== true || isPremium || isUserPressedClosePleaseSubscribe)
             return undefined
 
-        return (
-            <View style={style.plsSubView}>
-                <Text adjustsFontSizeToFit numberOfLines={2} style={style.subscribeTxt}>{LocalText.limit_saved_desc.replace('##', LimitSaved.toString())}</Text>
-
-                <View style={style.plsSubBtnsView}>
-                    <TouchableOpacity onPress={onPressedClosePlsSubscribe}>
-                        <View style={style.gotItBtn}>
-                            <Text numberOfLines={1} adjustsFontSizeToFit style={style.gotItText}>{LocalText.got_it}</Text>
-                        </View>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity onPress={onPressedUpgrade}>
-                        <ImageBackground resizeMode="cover" source={iapBg_1} style={style.premiumIB}>
-                            <Text numberOfLines={1} adjustsFontSizeToFit style={style.premiumText}>{LocalText.upgrade}</Text>
-                        </ImageBackground>
-                    </TouchableOpacity>
-                </View>
-            </View>
-        )
-    }, [showLimitSaved, onPressedUpgrade, style, isUserPressedClosePleaseSubscribe, isPremium])
+        return <DiversityLimitBanner
+            onPressedClose={onPressedClosePlsSubscribe}
+            text={LocalText.limit_saved_desc.replace('##', LimitSaved.toString())}
+        />
+    }, [showLimitSaved, onPressedClosePlsSubscribe, isUserPressedClosePleaseSubscribe, isPremium])
 
     // init
 
