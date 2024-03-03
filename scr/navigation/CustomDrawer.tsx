@@ -218,11 +218,19 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
     <View style={{ flex: 1, backgroundColor: theme.background }}>
       {/* message && logo & app name */}
       <View style={[style.topMasterView, CommonStyles.justifyContentCenter_AlignItemsCenter, { marginTop: safeAreaInsets.top }]}>
+        {/* align with inbox btn */}
+
         <View style={{ width: Size.IconSmaller, height: Size.IconSmaller, }} />
+
+        {/* app name & logo */}
+
         <View style={[CommonStyles.justifyContentCenter_AlignItemsCenter, { gap: Outline.GapVertical, flex: 1, flexDirection: 'row', }]}>
           <Image source={logoScr} resizeMode='contain' style={[style.logoImg]} />
           <Text onPress={onPressLogo} style={[style.appNameText, { color: theme.counterBackground }]}>Gooday{IsDev() ? '.' : ''}</Text>
         </View>
+
+        {/* inbox button */}
+
         <InboxButton />
       </View>
 
