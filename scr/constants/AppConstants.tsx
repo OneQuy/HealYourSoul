@@ -52,6 +52,7 @@ export enum ScreenName {
   Upload = 'Upload',
   Inbox = 'Inbox',
   Admin = 'Admin',
+  Gallery = 'Gallery',
 }
 
 // dir / file
@@ -245,6 +246,7 @@ export enum Icon {
   CheckBox_No = 'checkbox-blank-outline',
   BellNewMsg = 'bell-badge',
   BellNoMsg = 'bell-outline',
+  Gallery = 'view-dashboard',
 
   // MaterialIcons
 

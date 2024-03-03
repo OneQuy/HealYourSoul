@@ -138,14 +138,15 @@ const checkAndFireOnActiveOrOnceUseEffectWithCheckDuplicateAsync = async () => {
     await IncreaseNumberAsync(StorageKey_OpenAppTotalCount)
 }
 
-export const GoToScreen = (screen: ScreenName | string) => {
+export const GoToScreen = (screen: ScreenName | string, param?: object) => {
     if (!navigation)
         return
 
     track_SimpleWithParam('goto_screen', screen)
 
     try {
-        navigation.navigate(screen as never)
+        // @ts-ignore
+        navigation.navigate(screen as never, param)
     }
     catch { }
 }

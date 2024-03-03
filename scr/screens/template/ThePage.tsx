@@ -728,6 +728,7 @@ const ThePage = ({ category }: ThePageProps) => {
                 () => <HeaderRightButtons
                     diversityItemData={{ cat: category, id: post.current?.id }}
                     diversityMode={diversityItem !== undefined}
+                    galleryCat={category}
                 />
                 :
                 () => (

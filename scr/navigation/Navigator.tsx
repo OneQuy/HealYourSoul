@@ -2,7 +2,7 @@ import 'react-native-gesture-handler';
 import React, { useContext, useEffect, useMemo } from 'react'
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
-import { ScreenName } from '../constants/AppConstants';
+import { Category, ScreenName } from '../constants/AppConstants';
 import ComicScreen from '../screens/comic/ComicScreen';
 import MemeScreen from '../screens/meme/MemeScreen';
 import QuoteScreen from '../screens/quote/QuoteScreen';
@@ -39,6 +39,7 @@ import { setAppUtilsTheme } from '../handle/AppUtils';
 import UploadScreen from '../screens/upload/UploadScreen';
 import InboxScreen from '../screens/inbox/InboxScreen';
 import AdminScreen from '../screens/admin/AdminScreen';
+import GalleryScreen from '../screens/gallery/GalleryScreen';
 
 export type DrawerParamList = {
   [ScreenName.Meme]: { item: DiversityItemType } | undefined,
@@ -76,6 +77,7 @@ export type DrawerParamList = {
   [ScreenName.Upload]: undefined,
   [ScreenName.Inbox]: undefined,
   [ScreenName.Admin]: undefined,
+  [ScreenName.Gallery]: { cat: Category },
 }
 
 type MainNavigatorProps = {
@@ -124,6 +126,7 @@ const ScreenList: ScreenNamePair[] = [
   [ScreenName.Upload, UploadScreen],
   [ScreenName.Inbox, InboxScreen],
   [ScreenName.Admin, AdminScreen],
+  [ScreenName.Gallery, GalleryScreen],
 ]
 
 const Navigator = ({ initialRouteName }: MainNavigatorProps) => {
