@@ -227,7 +227,7 @@ export const track_ToggleNotification = (type: string, toggle: boolean) => {
     )
 }
 
-export const track_SimpleWithCat = (category: Category, event: string, trackDate: boolean = true) => {
+export const track_SimpleWithCat = (category: Category, event: string, trackDate: boolean = false) => {
     const fbArr = [
         `total/${event}/total`,
         `total/${event}/` + Category[category],
