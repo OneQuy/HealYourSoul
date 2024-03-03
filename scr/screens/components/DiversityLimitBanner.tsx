@@ -29,7 +29,7 @@ const DiversityLimitBanner = ({
             plsSubBtnsView: { gap: Outline.GapHorizontal, flexDirection: 'row' },
             premiumIB: { padding: Outline.GapVertical, minWidth: widthPercentageToDP(30), borderRadius: BorderRadius.BR, overflow: 'hidden', justifyContent: 'center', alignItems: 'center', },
             gotItBtn: { padding: Outline.GapVertical, minWidth: widthPercentageToDP(30), borderColor: theme.counterBackground, borderRadius: BorderRadius.BR, borderWidth: StyleSheet.hairlineWidth, justifyContent: 'center', alignItems: 'center', },
-            subscribeTxt: { textAlign: 'center', fontSize: FontSize.Small_L, color: theme.counterBackground, },
+            textTxt: { textAlign: 'center', fontSize: FontSize.Small_L, color: theme.counterBackground, },
             premiumText: { fontSize: FontSize.Small_L, color: 'black' },
             gotItText: { fontSize: FontSize.Small_L, color: theme.counterBackground },
         })
@@ -37,7 +37,7 @@ const DiversityLimitBanner = ({
 
     return (
         <View style={style.plsSubView}>
-            <Text adjustsFontSizeToFit numberOfLines={2} style={style.subscribeTxt}>{text}</Text>
+            <Text style={style.textTxt}>{text}</Text>
 
             <View style={style.plsSubBtnsView}>
                 {

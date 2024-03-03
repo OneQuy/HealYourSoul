@@ -2,7 +2,7 @@ import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-nat
 
 export const LimitSaved = 50
 
-export const LimitPagesGalleryLovedPosts = 2
+export const LimitPagesGalleryLovedPosts = 1
 
 /**
  * time out handle firebase db: 
@@ -380,6 +380,7 @@ export const LocalText = {
   you_have_no_item: "You have no item",
   diversity_empty_saved: "You have no item.\n\nSimply tap the Save icon on the header of the post you'd like to watch later, and it will be saved here for your convenience.",
   limit_saved_desc: "In the free version, you can save up to ## posts. Upgrade to a subscription to enjoy unlimited savings.",
+  limit_pages: "In the free version, you are limited to viewing items starting from page ##. Please subscribe to access all pages and explore the full range of items.",
   show_all: "Show all",
   full_saved: "Upgrade for Unlimited Saves",
   full_saved_desc: "You've reached the limit of ## items, which is the maximum quantity allowed in the free version. Please subscribe to save an unlimited number of items.",

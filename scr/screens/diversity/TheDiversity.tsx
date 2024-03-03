@@ -32,7 +32,7 @@ type TheDiversityProps = {
     screenBackWhenPressX: ScreenName,
     showLimitSaved?: boolean,
     showFilterButton?: boolean,
-    limitPage?: boolean,
+    limitPages?: number,
 }
 
 var screenBackWhenPressXGlobal = ScreenName.Saved
@@ -70,6 +70,7 @@ const TheDiversity = (
         showLimitSaved,
         screenBackWhenPressX,
         showFilterButton,
+        limitPages,
     }: TheDiversityProps) => {
     const navigation = useNavigation();
     const theme = useContext(ThemeContext);
@@ -271,6 +272,26 @@ const TheDiversity = (
         />
     }, [showLimitSaved, onPressedClosePlsSubscribe, isUserPressedClosePleaseSubscribe, isPremium])
 
+    const showLitmitPages = useCallback(() => {
+        // return true
+        if (limitPages === undefined || isPremium)
+            return false
+
+        if (maxPage < 2 || curPageIdx < limitPages)
+            return false
+
+        return true
+    }, [limitPages, isPremium, curPageIdx, maxPage])
+
+    const renderLimitPages = useCallback(() => {
+        if (limitPages === undefined)
+            return undefined
+
+        return <DiversityLimitBanner
+            text={LocalText.limit_pages.replace('##', limitPages.toString())}
+        />
+    }, [showLitmitPages, limitPages, isPremium, curPageIdx])
+
     // init
 
     useEffect(() => {
@@ -320,17 +341,31 @@ const TheDiversity = (
                 </View>
             }
 
+            {/* limit page */}
+
+            {
+                showLitmitPages() &&
+                <View style={style.centerView}>
+                    {
+                        renderLimitPages()
+                    }
+                </View>
+            }
+
             {/* scroll view */}
 
-            <View style={style.flatListContainer}>
-                <FlatList
-                    showsVerticalScrollIndicator={false}
-                    data={itemsToRender}
-                    numColumns={numColumnsDiversity}
-                    keyExtractor={(_, index) => index.toString()}
-                    renderItem={renderItem}
-                />
-            </View>
+            {
+                !showLitmitPages() &&
+                <View style={style.flatListContainer}>
+                    <FlatList
+                        showsVerticalScrollIndicator={false}
+                        data={itemsToRender}
+                        numColumns={numColumnsDiversity}
+                        keyExtractor={(_, index) => index.toString()}
+                        renderItem={renderItem}
+                    />
+                </View>
+            }
 
             {/* please subscribe */}
 

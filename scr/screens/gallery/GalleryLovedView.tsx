@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import TheDiversity from '../diversity/TheDiversity'
-import { Category, Icon, LocalText, ScreenName } from '../../constants/AppConstants'
+import { Category, Icon, LimitPagesGalleryLovedPosts, LocalText, ScreenName } from '../../constants/AppConstants'
 import { DiversityItemType } from '../../constants/Types'
 import useFavoritedIDs from '../../hooks/useFavoritedIDs'
 
@@ -31,6 +31,7 @@ const GalleryLovedView = ({ cat }: { cat: Category }) => {
             showLimitSaved={false}
             screenBackWhenPressX={ScreenName.Gallery}
             showFilterButton={false}
+            limitPages={LimitPagesGalleryLovedPosts}
         />
     )
 }
