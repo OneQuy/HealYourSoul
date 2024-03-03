@@ -397,6 +397,19 @@ export const track_OpenAppOfDayCount = (count: number) => {
     )
 }
 
+export const track_Streak = (count: number) => {
+    const event = 'streak'
+
+    MainTrack(event,
+        [
+            `total/${event}/${count}_gooday`,
+        ],
+        {
+            count
+        }
+    )
+}
+
 export const track_MaxSavedCount = (count: number) => {
     const event = 'max_saved'
 

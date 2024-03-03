@@ -16,8 +16,6 @@ const aptabaseIgnoredEventNames: string[] = [
     'press_random',
     'press_drawer_item',
     'press_previous_post',
-    'saved',
-    'max_saved',
     'dimension_screen',
     'dimension_window',
     'platform',
