@@ -32,7 +32,6 @@ const CountButton = (
     const [displayText, onPressFromHook] = useCount(type, title, category, id)
 
     const onPress = useCallback(async () => {
-        // track_PressFavorite(category, !isFavorited)
         onPressFromHook()
 
         if (onPressFunc)
