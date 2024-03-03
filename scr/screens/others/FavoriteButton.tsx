@@ -4,7 +4,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import { Animated, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useRef } from 'react'
-import { Category, FontSize, LocalText, Outline, Size } from '../../constants/AppConstants';
+import { Category, FontSize, Icon, LocalText, Outline, Size } from '../../constants/AppConstants';
 import { track_PressFavorite } from '../../handle/tracking/GoodayTracking';
 import useIsFavorited from '../../hooks/useIsFavorited';
 import { ThemeContext } from '../../constants/Colors';
@@ -66,7 +66,7 @@ const FavoriteButton = (
     return (
         <TouchableOpacity onPress={onPressFavorite} style={style.masterTO} >
             <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
-                <MaterialCommunityIcons name={!isFavorited ? "cards-heart-outline" : 'cards-heart'} color={theme.counterPrimary} size={Size.Icon} />
+                <MaterialCommunityIcons name={!isFavorited ? Icon.HeartOutline : Icon.HeartFull} color={theme.counterPrimary} size={Size.Icon} />
             </Animated.View>
             <Text style={style.countText}>{Number.isNaN(likeCount) ? LocalText.like : likeCount}</Text>
         </TouchableOpacity>

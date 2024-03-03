@@ -247,6 +247,8 @@ export enum Icon {
   BellNewMsg = 'bell-badge',
   BellNoMsg = 'bell-outline',
   Gallery = 'view-dashboard',
+  HeartFull = 'cards-heart',
+  HeartOutline = 'cards-heart-outline',
 
   // MaterialIcons
 

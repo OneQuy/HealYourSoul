@@ -1,5 +1,3 @@
-import { View, Text } from 'react-native'
-import React from 'react'
 import { Category } from '../constants/AppConstants';
 import { useAppSelector } from '../redux/Store';
 
