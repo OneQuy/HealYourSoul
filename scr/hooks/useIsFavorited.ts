@@ -146,7 +146,7 @@ export default function useIsFavorited(category: Category, id: number | string |
             throw new Error('NI cat: ' + category);
 
         if (!IsDev())
-            LikePostAsync(!isFavorited, category, id, (likes) => setLikeCount(likes))
+            LikePostAsync('like', !isFavorited, category, id, (likes) => setLikeCount(likes))
     }, [isFavorited, id]);
 
     useEffect(() => {
@@ -154,7 +154,7 @@ export default function useIsFavorited(category: Category, id: number | string |
             setLikeCount(Number.NaN)
         else {
             setLikeCount(Number.NaN)
-            GetPostLikeCountAsync(category, id, (likes) => setLikeCount(likes))
+            GetPostLikeCountAsync('like', category, id, (likes) => setLikeCount(likes))
         }
     }, [id])
 

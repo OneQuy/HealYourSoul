@@ -6,17 +6,31 @@ import { IsNumType, ToCanPrint } from "./UtilsTS";
 
 const LikePath = 'user_data/post/@cat/@id/like';
 
+const SharePath = 'user_data/post/@cat/@id/share';
+
+const DownloadPath = 'user_data/post/@cat/@id/download';
+
+export type CountType = 'like' | 'share' | 'download'
+
+const GetPathCountType = (type: CountType) => {
+    if (type === 'download')
+        return DownloadPath
+    else if (type === 'share')
+        return SharePath
+    else
+        return LikePath
+}
 /**
  * 
  * @returns likes or NaN if error
  */
-export const GetPostLikeCountAsync = async (cat: Category, postID: number | string, callback: (curValue: number) => void): Promise<number> => {
+export const GetPostLikeCountAsync = async (type: CountType, cat: Category, postID: number | string, callback: (curValue: number) => void): Promise<number> => {
     if (!NetLord.IsAvailableLatestCheck()) {
         callback(Number.NaN)
         return Number.NaN
     }
 
-    const path = FillPathPattern(LikePath, cat, postID)
+    const path = FillPathPattern(GetPathCountType(type), cat, postID)
     const res = await FirebaseDatabase_GetValueAsync(path)
 
     if (res.error) {
@@ -39,13 +53,13 @@ export const GetPostLikeCountAsync = async (cat: Category, postID: number | stri
     }
 }
 
-export const LikePostAsync = async (isLikeOrDislike: boolean, cat: Category, postID: number | string, callback: (curValue: number) => void): Promise<number> => {
+export const LikePostAsync = async (type: CountType, isLikeOrDislike: boolean, cat: Category, postID: number | string, callback: (curValue: number) => void): Promise<number> => {
     if (!NetLord.IsAvailableLatestCheck()) {
         callback(Number.NaN)
         return Number.NaN
     }
 
-    const path = FillPathPattern(LikePath, cat, postID)
+    const path = FillPathPattern(GetPathCountType(type), cat, postID)
     const res = await FirebaseDatabase_IncreaseNumberAsync(path, 0, isLikeOrDislike ? 1 : -1, undefined, 0)
 
     if (res.error) {
