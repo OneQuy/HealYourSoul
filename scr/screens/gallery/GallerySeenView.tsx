@@ -27,7 +27,7 @@ const GallerySeenView = ({ cat }: { cat: Category }) => {
         <TheDiversity
             allItems={allItems}
             emptyIcon={Icon.Eye}
-            emptyText={LocalText.you_have_no_item}
+            emptyText={LocalText.diversity_empty_gallery_seen}
             showLimitSaved={false}
             screenBackWhenPressX={ScreenName.Gallery}
             showFilterButton={false}

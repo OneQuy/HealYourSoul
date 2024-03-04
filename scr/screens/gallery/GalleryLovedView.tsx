@@ -27,7 +27,7 @@ const GalleryLovedView = ({ cat }: { cat: Category }) => {
         <TheDiversity
             allItems={allItems}
             emptyIcon={Icon.HeartFull}
-            emptyText={LocalText.you_have_no_item}
+            emptyText={LocalText.diversity_empty_gallery_loved}
             showLimitSaved={false}
             screenBackWhenPressX={ScreenName.Gallery}
             showFilterButton={false}

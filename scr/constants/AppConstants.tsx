@@ -365,7 +365,7 @@ export const LocalText = {
   clear_all: 'Clear all',
   mark_read: 'Mark as read',
   read_all: 'Mark as read all',
-  seen_posts: 'Seen posts',
+  seen_posts: 'Viewed posts',
   favorited_posts: 'Loved posts',
 
   one_time_purchase: 'You can choose between a one-time purchase',
@@ -379,6 +379,8 @@ export const LocalText = {
 
   you_have_no_item: "You have no item",
   diversity_empty_saved: "You have no item.\n\nSimply tap the Save icon on the header of the post you'd like to watch later, and it will be saved here for your convenience.",
+  diversity_empty_gallery_loved: "You have no item.\n\nThe posts you loved will be displayed here.",
+  diversity_empty_gallery_seen: "You have no item.\n\nAll the posts you've viewed will be displayed here.",
   limit_saved_desc: "In the free version, you can save up to ## posts. Upgrade to a subscription to enjoy unlimited savings.",
   limit_pages: "In the free version, you are limited to viewing items starting from page ##. Please subscribe to access all pages and explore the full range of items.",
   show_all: "Show all",
