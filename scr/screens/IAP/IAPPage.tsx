@@ -224,7 +224,7 @@ const IAPPage = () => {
               <Image source={icon} resizeMode='contain' style={{ width: wp('13%'), height: wp('13%') }} />
               <View style={{ flex: 1, justifyContent: 'center', gap: Outline.GapHorizontal }}>
                 <Text selectable style={{ color: theme.counterBackground, fontSize: FontSize.Normal, fontWeight: FontWeight.B500 }}>{title}</Text>
-                <Text selectable style={{ color: theme.counterBackground, fontSize: FontSize.Small_L, }}>{content}</Text>
+                <Text selectable style={{ color: theme.counterBackground, fontSize: FontSize.Small, }}>{content}</Text>
               </View>
             </View>)
         })

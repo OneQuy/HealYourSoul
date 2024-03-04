@@ -433,14 +433,17 @@ export const LocalText = {
 3. Both free and subscribed users must adhere to a minimum posting interval of ## minutes/post. This interval may be subject to updates by Gooday.`,
 
   By_following_these: 'By following these guidelines, you contribute to making Gooday a fun and safe community for meme enthusiasts. Happy memeing!',
-  
-  // --------
-  
-    upgrade: 'Upgrade',
-    refresh: 'Refresh',
 
-  unlock_all: 'Unlock features',
-  unlock_all_info: "Save an unlimited number of posts. Subcribe now for the best experience",
+  // --------
+
+  upgrade: 'Upgrade',
+  refresh: 'Refresh',
+
+  unlock_all: 'Unlock all features',
+
+  unlock_all_info: `- Save an unlimited number of posts to watch later.
+- Re-watch the posts you loved without any page limits in Gallery.
+- Upload an unlimited number of memes.`,
 
   support_me: 'Support app',
   support_me_info: "Support me in covering the monthly costs of the operation and data server.",
