@@ -66,7 +66,7 @@ const ThePage = ({ category }: ThePageProps) => {
     const [handling, setHandling] = useState(false);
     const [needLoadPost, setNeedLoadPost] = useState<NeedLoadPostType>('none');
     const [downloadPercent, setDownloadPercent] = useState(0);
-    // const [isInternetAvailable, setIsInternetAvailable] = useState(true);
+    const [isInternetAvailable, setIsInternetAvailable] = useState(true);
     const reasonToReload = useRef<NeedReloadReason>(NeedReloadReason.None);
     const fileList = useRef<FileList | null>(null);
     const previousPostIDs = useRef<number[]>([]);
@@ -408,7 +408,7 @@ const ThePage = ({ category }: ThePageProps) => {
 
     const onInternetChanged = useCallback(() => {
         const isNet = NetLord.IsAvailableLatestCheck();
-        // setIsInternetAvailable(isNet);
+        setIsInternetAvailable(isNet);
 
         if (isNet && reasonToReload.current !== NeedReloadReason.None && globalCurrentCategory === category)
             onPressReloadAsync();
@@ -635,8 +635,8 @@ const ThePage = ({ category }: ThePageProps) => {
         const Init = async () => {
             // set net state
 
-            // if (isInternetAvailable !== NetLord.IsAvailableLatestCheck())
-            //     setIsInternetAvailable(NetLord.IsAvailableLatestCheck());
+            if (isInternetAvailable !== NetLord.IsAvailableLatestCheck())
+                setIsInternetAvailable(NetLord.IsAvailableLatestCheck());
 
             // subscribe net
 
@@ -779,12 +779,12 @@ const ThePage = ({ category }: ThePageProps) => {
         // master view
         <View style={{ pointerEvents: handling ? 'none' : 'auto', backgroundColor: theme.background, flex: 1, gap: Outline.GapVertical, }}>
             {/* net state */}
-            {/* {
-                isInternetAvailable &&
+            {
+                isInternetAvailable ? null :
                     <View style={{ paddingHorizontal: Outline.Horizontal, paddingVertical: 2, backgroundColor: ColorNameToRgb('silver', 0.5), alignItems: 'center' }}>
                         <Text style={{ textAlignVertical: 'center', fontSize: FontSize.Small, color: theme.counterBackground }}>{LocalText.you_are_offline}</Text>
                     </View>
-            } */}
+            }
 
             {/* title */}
             {
