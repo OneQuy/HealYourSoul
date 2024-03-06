@@ -15,8 +15,38 @@ function LogYellow(...msg) {
     console.log(`\x1b[${code}m ${msg.join(', ')} \x1b[0m`);
 }
 
+/**
+ * function SplitSectionsFromText(wholeTxt: string): string[][]
+*/
+function SplitSectionsFromText(wholeTxt) {
+    const lines = wholeTxt.split('\n')
+
+    const arrRes= []
+    let curElement= undefined
+
+    for (let iline = 0; iline < lines.length; iline++) {
+        const lineTrim = lines[iline].trim()
+
+        if (!lineTrim) {
+            curElement = undefined
+            continue
+        }
+
+        if (!curElement) {
+            curElement = []
+            arrRes.push(curElement)
+        }
+
+        curElement.push(lineTrim)
+    }
+
+    return arrRes
+}
+
 module.exports = {
     LogRed,
     LogGreen,
     LogYellow,
+
+    SplitSectionsFromText,
 }
