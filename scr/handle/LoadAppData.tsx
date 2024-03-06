@@ -16,6 +16,7 @@ import TelemetryDeck from "@telemetrydeck/sdk";
 import { createTelemetryDeckClient } from "./TelemetryDeck/TelemetryDeck";
 import { TELEMETRY_DECK_KEY } from "../../keys";
 import { SetDateAsync_Now } from "./AsyncStorageUtils";
+import { InitOneSignalAsync } from "./OneSignal";
 
 export type LoadAppDataResult = {
     categoryScreenToOpenFirst: keyof DrawerParamList | null,
@@ -62,6 +63,10 @@ export async function LoadAppData(): Promise<LoadAppDataResult> {
     // init noti
 
     await initNotificationAsync() // alert_priority 3 (doc)
+
+    // one signal
+
+    await InitOneSignalAsync()  // alert_priority 4 (doc)
 
     // handle: versions file
 
