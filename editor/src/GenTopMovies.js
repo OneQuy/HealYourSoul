@@ -1,43 +1,37 @@
-const { log } = require("console")
-const { LogRed, LogGreen } = require("./Utils_NodeJS")
+const { LogRed, LogGreen, SplitSectionsFromText } = require("./Utils_NodeJS")
 
 const fs = require('fs')
 
 const filepath = './assets/json/top_movies.json'
-const source = './editor/top-movies-html.txt'
-
-const GetMiddleText = (text) => {
-    let idx = text.indexOf('>')
-
-    if (idx <= 0)
-        return text
-
-    text = text.substring(idx + 1)
-
-    idx = text.indexOf('<')
+const source_html = './editor/top-movies-html.txt'
+const source_txt = './editor/movies.txt'
 
 
-    if (idx <= 0)
-        return text
+const rates = ['R', 'PG-13', 'Approved', 'Not Rate', 'PG']
 
-    return text.substring(0, idx)
-}
 
-// <a href="/title/
-// srcset="
-// <span class="sc-43986a27-8 jHYIIK cli-title-metadata-item">
-// an class="ipc-rating-star--voteCoun
-// class="ipc-html-content-inner-d
+// const GetMiddleText = (text) => {
+//     let idx = text.indexOf('>')
 
-var expression = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi;
-var regex = new RegExp(expression);
+//     if (idx <= 0)
+//         return text
 
-const GenDataTopMovies = async () => {
-    const text = fs.readFileSync(source, 'utf-8')
+//     text = text.substring(idx + 1)
+
+//     idx = text.indexOf('<')
+
+
+//     if (idx <= 0)
+//         return text
+
+//     return text.substring(0, idx)
+// }
+
+const GenThumbUrlOf250Movies = () => {
+    const text = fs.readFileSync(source_html, 'utf-8')
     const lines = text.split('\n')
 
     const arr = []
-    let currentItem = undefined
 
     for (let i = 0; i < lines.length; i++) {
         let line = lines[i].trim()
@@ -45,111 +39,161 @@ const GenDataTopMovies = async () => {
         if (line.includes('srcset=')) {
             i++
             line = lines[i].trim()
-            currentItem = {}
-            currentItem.thumbnailUri = line.replace(',', '')
+            arr.push(line.replace(',', ''))
+        }
+    }
+
+    return arr;
+}
+
+/**
+  [
+    'Tim Robbins in The Shawshank Redemption (1994)',
+    '1. The Shawshank Redemption',
+    '1994',
+    '2h 22m',
+    'R',
+    '9.3',
+    '(2.9M)'
+  ],
+  [
+    'Over the course of several years, two convicts form a friendship, seeking consolation and, eventually, redemption through basic compassion.',
+    'DirectorFrank DarabontStarsTim RobbinsMorgan FreemanBob Gunton',
+    'Votes2,866,429',
+    'Marlon Brando in The Godfather (1972)',
+    '2. The Godfather',
+    '1972',
+    '2h 55m',
+    'R',
+    '9.2',
+    '(2M)'
+  ],    
+ */
+const GenMovieFromSession = (session, nextSession) => {
+    const currentItem = {}
+
+    var descOnNextSession = nextSession && nextSession.length > 0 ? nextSession[0] : undefined
+
+    if (descOnNextSession) {
+        currentItem.desc = descOnNextSession
+        nextSession[0] = ''
+    }
+
+    for (let i = 0; i < session.length; i++) {
+        var line = session[i]
+
+        if (!line || !line.trim())
+            continue;
+
+        if (line.startsWith('Director') || line.startsWith('Votes')) {
+
+            continue;
         }
 
+        var isRateLine = rates.includes(line)
 
-        else if (line.includes('<a href="/title/')) {
-            if (!currentItem)
-                continue
+        if (isRateLine) { // rate (info)
+            if (!currentItem.info)
+                currentItem.info = '' + line
+            else
+                currentItem.info += ' • ' + line
 
-            const title  = GetMiddleText(GetMiddleText(line))
-            const dotIdx = title.indexOf('.')
 
-            const rankS = title.substring(0, dotIdx)
-            currentItem.title = title.substring(dotIdx + 2)
-            currentItem.rank = Number.parseInt(rankS)
+            continue
         }
 
-        else if (line.includes('</span><span class="sc-43986a27-8 jHYIIK dli-title-metadata-item">')) {
-            if (!currentItem)
-                continue
+        var rankAndTitleIdx = line.indexOf('. ')
+        var nextLine = i + 1 < session.length ? session[i + 1] : undefined
 
-            line = line.replaceAll('<span class="sc-43986a27-8 jHYIIK dli-title-metadata-item">', '*')
-            line = line.replaceAll('</span><span class="sc-43986a27-8 jHYIIK dli-title-metadata-item">', '*')
-            line = line.replaceAll('<div class="sc-43986a27-7 dBkaPT dli-title-metadata">', '*')
-            line = line.replaceAll('</span>', '*')
-            line = line.replaceAll('</div>', '*')
-            
-
-            currentItem.info = line.trim()
-
-            line = lines[i + 1].trim()
-            i++
-
-            const rate = GetMiddleText(line)
-            currentItem.info += ' ' + rate
-
-            line  = currentItem.info
-            line = line.replaceAll('**', ' • ')
-            line = line.replaceAll('* ', ' • ')
-            line = line.replaceAll('*', '')
-
-            currentItem.info = line.trim()
-        }
-
-        else if (line.includes('class="ipc-rating-star--voteCoun')) {
-            if (!currentItem)
-                continue
-
-                
-            currentItem.rate = line.replaceAll('<span class="ipc-rating-star--voteCount">&nbsp;', ' ')
-            currentItem.rate = currentItem.rate.replaceAll('</span>', '')
-        }
-
-        else if (line.includes('class="ipc-html-content-inner-d')) {
-            if (!currentItem)
-                continue
-
-            currentItem.desc = GetMiddleText(GetMiddleText(line))
-
-            if (!currentItem.desc && !line.includes('</div>')) {
-                // LogRed(currentItem.title)
-
-                currentItem.desc = ''
-
-                const maxL = i + 5
-                for ( i  = i + 1; i < maxL; i++) {
-                    line = lines[i].trim()
-
-                    if (line.includes('</div>'))
-                        break
-
-                    currentItem.desc += lines[i].trim() + ' '
-                }
-
-                // log(currentItem.desc)
+        if (rankAndTitleIdx >= 1 && rankAndTitleIdx <= 3) { // title & rank // '211. The Godfather'         
+            try {
+                currentItem.rank = Number.parseInt(line.substring(0, rankAndTitleIdx))
+                currentItem.title = line.substring(rankAndTitleIdx + 2)
             }
-
-            if (currentItem.thumbnailUri && currentItem.thumbnailUri.match(regex) &&
-                currentItem.desc &&
-                currentItem.rank > 0 &&
-                currentItem.info &&
-                currentItem.rate &&
-                currentItem.title) { // is valid
-                arr.push(currentItem)
-                // break
+            catch {
+                LogRed('can not get rank & title of this session: ' + session);
             }
-            else {
-                LogRed('mising info: ' + JSON.stringify( currentItem))
-            }
-
-            currentItem = undefined
         }
 
+        //  '1972',
+        else if (line.length === 4 && !Number.isNaN(Number.parseInt(line))) { // year (info)
+            if (!currentItem.info)
+                currentItem.info = line
+            else
+                currentItem.info += ' • ' + line
+
+
+        }
+
+        // '2h 55m'
+        else if (line.length <= 7 && (line.includes('h') || line.includes('m'))) { // duration (info)
+            if (!currentItem.info)
+                currentItem.info = '' + line
+            else
+                currentItem.info += ' • ' + line
+
+
+        }
+
+        // '9.2',
+        // '(2M)'
+        else if (!Number.isNaN(Number.parseInt(line[0])) && nextLine && nextLine.includes('(') && nextLine.includes(')')) { // rate        
+            currentItem.rate = line + ' ' + nextLine
+
+            // session[i + 1] = ''
+        }
+    }
+
+    if (currentItem.desc &&
+        currentItem.rank > 0 &&
+        currentItem.info &&
+        currentItem.rate &&
+        currentItem.title) { // is valid
+        return currentItem
+    }
+    else {
+        LogRed('can not extract info of movie: ' + JSON.stringify(session))
+        return undefined
+    }
+}
+
+const GenDataTopMovies = () => {
+    const thumbUriArr = GenThumbUrlOf250Movies()
+
+    if (thumbUriArr.length !== 250) {
+        LogRed('not enough 250 thumb uri!!!')
+        return
+    }
+
+    const text = fs.readFileSync(source_txt, 'utf-8')
+
+    const arr = []
+
+    const sessions = SplitSectionsFromText(text)
+
+    for (let i = 0; i < sessions.length; i++) {
+        const mov = GenMovieFromSession(sessions[i], i + 1 < sessions.length ? sessions[i + 1] : undefined)
+
+        if (mov) {
+            mov.thumbnailUri = thumbUriArr[i]
+            arr.push(mov)
+        }
+
+        if (arr.length === 250)
+            break
+    }
+
+    if (arr.length !== 250) {
+        LogRed('not enough 250 movies!!!')
+        return
     }
 
     const t = JSON.stringify(arr, null, 1)
 
-    // console.log(t);
     fs.writeFileSync(filepath, t)
 
-    console.log('validated all. count ' + arr.length)
-
-    LogGreen('done')
+    LogGreen('done. validated all. enough 250 movies!')
 }
-
 
 module.exports = {
     GenDataTopMovies

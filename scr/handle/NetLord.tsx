@@ -1,7 +1,38 @@
+/**
+ * USAGE
+    -------------------------------------------
+
+    const isInternetAvailable = await IsInternetAvailableAsync()
+
+    if (isInternetAvailable) {
+        // do your internet thing
+    }
+
+    NOTE: this function could take time (up to time-out value 2000ms) if it can not fetch the url (offline)
+
+    -------------------------------------------
+
+    Or you can subcribe / unsubcribe event when internet changed:
+
+    1. Put this into your Init app code:
+        await NetLord.InitAsync()
+
+    2. To subscribe: NetLord.Subscribe(yourCallback)
+
+    3. To unsubscribe: NetLord.Unsubscribe(yourSubscribedCallback)
+
+    4. Call Netlord.IsAvailableLatestCheck() to check if the internet is available on the latest check. This is not async func so it will fast to check the internet.
+        NOTE: But in some cases this function return wrong value. Particularly calling this func right after your app re-active after backing from 'background' app state.
+        Due to the throttle check internet is 500ms. So if we checked 500ms before. 400ms after that, maybe this func return correct value, but 200ms after that, NetLord will not sure the real internet available or not. 
+        So please consider call this function only for some features that not important in your app, such as display UI internet status,... Do Not use for your core app logic. Use it at your own risk.
+
+    -------------------------------------------
+ */
+
 import { RegexUrl, TimeOutError } from "./UtilsTS"
 
-const IntervalCheckTime = 500;
-const ThresholdFetchTime = 2000;
+const IntervalCheckTime = 500; // in ms, throttle check time.
+const ThresholdFetchTime = 2000; //  in ms,  time-out when fetching
 
 // https://downloads.intercomcdn.com/i/o/118519/ddfeac07590ae764956095e7/4e16b83b84b7649bece46ae25a166d47.png
 
@@ -11,8 +42,11 @@ const ThresholdFetchTime = 2000;
 
 // https://licensebuttons.net/l/by-sa/4.0/88x31.png
 
-// const FetchURL = 'https://s1cdn.vnecdn.net/vnexpress/restruct/i/v800/v2_2019/pc/graphics/logo.svg'
-const FetchURL = 'https://ssl.gstatic.com/ui/v1/icons/mail/rfr/logo_gmail_lockup_dark_1x_r5.png'
+// https://s1cdn.vnecdn.net/vnexpress/restruct/i/v800/v2_2019/pc/graphics/logo.svg
+
+// https://ssl.gstatic.com/ui/v1/icons/mail/rfr/logo_gmail_lockup_dark_1x_r5.png
+
+const FetchURL = 'https://developer.apple.com/contact/images/icons/svg/icon-cas-phone.svg'
 
 export class NetLord {
     private static startTick: number = 0;
