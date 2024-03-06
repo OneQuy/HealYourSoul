@@ -23,7 +23,7 @@
  * 
  */
 
-import { LogLevel, OneSignal } from 'react-native-onesignal';
+import { OneSignal } from 'react-native-onesignal';
 import { OneSignalKey } from '../../keys';
 
 // Add OneSignal within your App's root component
