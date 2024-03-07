@@ -129,17 +129,20 @@ export const track_OnUseEffectOnceEnterAppAsync = async (startFreshlyOpenAppTick
 
     // track update version
 
-    const lastVersion = await GetNumberIntAsync(StorageKey_LastInstalledVersion)
+    const lastInstalledVersion = await GetNumberIntAsync(StorageKey_LastInstalledVersion)
 
     SetNumberAsync(StorageKey_LastInstalledVersion, versionAsNumber)
 
-    if (!Number.isNaN(lastVersion) && lastVersion !== versionAsNumber) {
+    if (!Number.isNaN(lastInstalledVersion) && lastInstalledVersion !== versionAsNumber) {
         event = 'updated_app'
 
         MainTrack(event,
             [
                 `total/${event}`,
-            ])
+            ],
+            {
+                from: 'v' + lastInstalledVersion
+            })
 
         track_SimpleWithParam('versions', 'v' + versionAsNumber)
     }
