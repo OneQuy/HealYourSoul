@@ -1,5 +1,24 @@
 import { PermissionsAndroid, Platform } from "react-native";
 import { CameraRoll } from "@react-native-camera-roll/camera-roll";
+import { GetFullDirPathOfFile } from "./FileUtils";
+
+/**
+ * 
+ * @returns undefined if error
+ */
+export async function GetPhotosPathAsync() {
+  try {
+    const res = await CameraRoll.getPhotos({
+      first: 1,
+      assetType: 'All'
+    })
+
+    return GetFullDirPathOfFile(res.edges[0].node.image.uri)
+  }
+  catch {
+    return undefined
+  }
+}
 
 /**
  * 
