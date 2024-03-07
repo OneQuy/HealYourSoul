@@ -626,6 +626,19 @@ export const DateDiff_InHour = (d1: Date | number, d2: Date | number): number =>
     return distanceMs / 1000 / 60 / 60
 }
 
+export const DateDiff = (d1: Date | number, d2: Date | number): number => {
+    const tick1 = typeof d1 === 'number' ? d1 : d1.getTime()
+    const tick2 = typeof d2 === 'number' ? d2 : d2.getTime()
+
+    const distanceMs = Math.abs(tick1 - tick2)
+
+    return distanceMs / 1000 / 60 / 60 / 24
+}
+
+export const DateDiff_WithNow = (d: Date | number): number => {
+    return DateDiff(Date.now(), d)
+}
+
 export const IsTodayAndSameHour = (date: Date): boolean => {
     if (!IsToday(date))
         return false

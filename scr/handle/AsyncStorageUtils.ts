@@ -1,6 +1,5 @@
-// @ts-ignore
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import { DateDiff_InHour, DateDiff_InMinute, IsToday, IsTodayAndSameHour } from "./UtilsTS"
+import { DateDiff, DateDiff_InHour, DateDiff_InMinute, IsToday, IsTodayAndSameHour } from "./UtilsTS"
 
 // boolean =================
 
@@ -148,6 +147,15 @@ export const GetDateAsync_IsValueNotExistedOrEqualOverHourFromNow = async (key: 
         return true
 
     return DateDiff_InHour(Date.now(), d) >= hour
+}
+
+export const GetDateAsync_IsValueNotExistedOrEqualOverDayFromNow = async (key: string, day: number): Promise<boolean> => {
+    const d = await GetDateAsync(key)
+
+    if (d === undefined)
+        return true
+
+    return DateDiff(Date.now(), d) >= day
 }
 
 export const GetDateAsync_IsValueExistedAndIsTodayAndSameHour = async (key: string): Promise<boolean> => {

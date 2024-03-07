@@ -2,7 +2,7 @@ import { GetAppConfig } from "./AppConfigHandler"
 import { OpenStore, versionAsNumber } from "./AppUtils"
 import { LocalText, StorageKey_LastAskForUpdateApp } from "../constants/AppConstants"
 import { Alert, AlertButton, Platform } from "react-native"
-import { GetDateAsync_IsValueExistedAndIsToday, SetDateAsync_Now } from "./AsyncStorageUtils"
+import { GetDateAsync_IsValueExistedAndIsToday, GetDateAsync_IsValueNotExistedOrEqualOverDayFromNow, SetDateAsync_Now } from "./AsyncStorageUtils"
 
 const isLog = false
 
@@ -26,9 +26,11 @@ export const HandldAlertUpdateAppAsync = async () => {
     }
 
     if (!data.force_update) {
-        if (await GetDateAsync_IsValueExistedAndIsToday(StorageKey_LastAskForUpdateApp)) {
+        const isValueNotExistedOrEqualOverDayFromNow = await GetDateAsync_IsValueNotExistedOrEqualOverDayFromNow(StorageKey_LastAskForUpdateApp, data.day_diff_to_ask)
+
+        if (!isValueNotExistedOrEqualOverDayFromNow) {
             if (isLog)
-                console.log('[HandldAlertUpdateAppAsync] NOT show cuz aksed today')
+                console.log('[HandldAlertUpdateAppAsync] NOT show cuz aksed recently')
 
             return
         }
