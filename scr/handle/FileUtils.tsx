@@ -227,6 +227,33 @@ export async function DownloadFileAsync(
   }
 }
 
+/**
+ * 
+ * @returns undefined if can not find last '/'.
+ */
+export async function GetFullDirPathOfFile(flpOrRlp: string): Promise<undefined | string> {
+  const idx = flpOrRlp.lastIndexOf('/');
+
+  if (idx < 0)
+    return undefined
+
+  return flpOrRlp.substring(0, idx);
+}
+
+/**
+ * 
+ * @param path suppports both rlp & flp
+ * @returns undefined if can not find last '/'.
+ */
+export function GetFileNameAndExtension(path: string) {
+  var idx = path.lastIndexOf('/')
+
+  if (idx < 0)
+    return undefined
+  else
+    return path.substring(idx + 1)
+}
+
 export async function DownloadFile_GetJsonAsync(url: string, saveLocalRelativeFilepath: string) {
   // get json from url
 
