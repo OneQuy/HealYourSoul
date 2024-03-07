@@ -109,7 +109,8 @@ export const MainTrack = (
     if (IsDev())
         eventName = 'dev__' + eventName
 
-    console.log('------------------------')
+    if (isLog)
+        console.log('------------------------')
 
     // track aptabase
 
@@ -146,5 +147,6 @@ export const MainTrack = (
         }
     }
 
-    console.log('****************')
+    if (isLog)
+        console.log('****************')
 }
