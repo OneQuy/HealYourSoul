@@ -2,7 +2,7 @@ import { GetAppConfig } from "./AppConfigHandler"
 import { OpenStore, versionAsNumber } from "./AppUtils"
 import { LocalText, StorageKey_LastAskForUpdateApp } from "../constants/AppConstants"
 import { Alert, AlertButton, Platform } from "react-native"
-import { GetDateAsync_IsValueExistedAndIsToday, GetDateAsync_IsValueNotExistedOrEqualOverDayFromNow, SetDateAsync_Now } from "./AsyncStorageUtils"
+import { GetDateAsync_IsValueNotExistedOrEqualOverDayFromNow, SetDateAsync_Now } from "./AsyncStorageUtils"
 
 const isLog = false
 
