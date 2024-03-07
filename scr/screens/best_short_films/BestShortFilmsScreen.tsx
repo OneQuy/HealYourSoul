@@ -44,13 +44,13 @@ const BestShortFilmsScreen = () => {
     const favoriteCallbackRef = useRef<(() => void) | undefined>(undefined);
     const [showIntroduceCat, renderShowIntroduceCat] = useIntroduceCat(category)
 
-    const [shortFilms, errorDownloadJson, _, reUpdateData] = useCheckAndDownloadRemoteFile<ShortFilm[]>(
+    const { result: shortFilms, error: errorDownloadJson, reUpdateAsync } = useCheckAndDownloadRemoteFile<ShortFilm[]>(
         fileURL,
         TempDirName + '/short_films.json',
         true,
         GetRemoteFileConfigVersion('short_films'),
         'json',
-        false,
+        true,
         async () => AsyncStorage.getItem(StorageKey_LocalFileVersion(category)),
         async () => AsyncStorage.setItem(StorageKey_LocalFileVersion(category), GetRemoteFileConfigVersion('short_films').toString()))
 
@@ -97,7 +97,7 @@ const BestShortFilmsScreen = () => {
         setShowFull(false)
 
         if (!Array.isArray(shortFilms)) {
-            reUpdateData()
+            reUpdateAsync()
             setHandling(true)
             return
         }
@@ -117,7 +117,7 @@ const BestShortFilmsScreen = () => {
         setSelectingIdxAsync(idx)
 
         setSelectingItem(movie)
-    }, [shortFilms, reUpdateData])
+    }, [shortFilms, reUpdateAsync])
 
     const onPressOpenYoutubeApp = useCallback(async () => {
         if (!selectingItem)

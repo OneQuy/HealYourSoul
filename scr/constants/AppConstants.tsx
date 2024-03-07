@@ -361,6 +361,7 @@ export const LocalText = {
   filter: 'Filter',
   new_item_website: '# new fun website(s) added to the list!!',
   new_item_short_film: '# new short film(s) added to the list!!',
+  new_item_top_movies: 'The movies just updated with the latest data!',
   clear: 'Clear',
   clear_all: 'Clear all',
   mark_read: 'Mark as read',

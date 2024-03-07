@@ -45,7 +45,7 @@ const FunSoundScreen = () => {
   const favoritedIDs = useAppSelector((state) => state.userData.funSoundFavoriteIDs)
   const insets = useSafeAreaInsets()
 
-  const [funSounds, errorDownloadJson, _, reUpdateData] = useCheckAndDownloadRemoteFile<FunSound[]>(
+  const { result: funSounds, error: errorDownloadJson, reUpdateAsync: reUpdateData } = useCheckAndDownloadRemoteFile<FunSound[]>(
     fileURL,
     TempDirName + '/fun_sound.json',
     true,

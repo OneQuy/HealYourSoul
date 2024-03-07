@@ -12,7 +12,7 @@ type ReturnType = 'uri' | 'json' | 'text'
  * 
  * USAGE:
  * 
-const [result, error, isDataLatestFromRemoteOrLocal, reUpdate] = useCheckAndDownloadRemoteFile(
+const { result, error, isDataLatestFromRemoteOrLocal, reUpdate, didDownload } = useCheckAndDownloadRemoteFile(
         fileURL,
         TempDirName + '/fun_website.json',
         true,
@@ -31,13 +31,16 @@ export default function useCheckAndDownloadRemoteFile<T extends object>(
     isLog: boolean,
     localVersionGetterAsync: () => Promise<any>,
     localVersionSetterAsync: () => Promise<void>,
-): readonly [
+): {
     result: string | T | undefined,
     error: any,
     isDataLatestFromRemoteOrLocal: boolean,
-    reUpdate: () => void] {
+    reUpdateAsync: () => Promise<void>,
+    didDownload: boolean,
+} {
     const [result, setResult] = useState<string | T | undefined>(undefined)
     const [error, setError] = useState<any>(undefined)
+    const [didDownload, setDidDownload] = useState(false)
     const [isDataLatestFromRemoteOrLocal, setIsDataLatestFromRemoteOrLocal] = useState(false)
 
     const isNeedToDownloadAsync = useCallback(async () => {
@@ -65,7 +68,7 @@ export default function useCheckAndDownloadRemoteFile<T extends object>(
         return localVersion !== remoteVersion
     }, [remoteVersion])
 
-    const mainHanldeAsync = useCallback(async () => {
+    const reUpdateAsync = useCallback(async () => {
         let downloadError = undefined
 
         // 1. check need to download or not
@@ -82,6 +85,7 @@ export default function useCheckAndDownloadRemoteFile<T extends object>(
             }
             else { // download success
                 localVersionSetterAsync()
+                setDidDownload(true)
             }
 
             if (isLog)
@@ -147,12 +151,14 @@ export default function useCheckAndDownloadRemoteFile<T extends object>(
     }, [isNeedToDownloadAsync])
 
     useEffect(() => {
-        mainHanldeAsync()
-    }, [mainHanldeAsync])
+        reUpdateAsync()
+    }, [reUpdateAsync])
 
-    return [
+    return {
         result,
         error,
+        reUpdateAsync,
         isDataLatestFromRemoteOrLocal,
-        mainHanldeAsync]
+        didDownload,
+    } as const
 }

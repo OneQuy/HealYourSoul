@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, Alert, GestureResponderEvent, Animated } from 'react-native'
-import React, { LegacyRef, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size, StorageKey_LocalFileVersion, StorageKey_SelectingTopMovieIdx } from '../../constants/AppConstants'
 import Share from 'react-native-share';
@@ -7,7 +7,7 @@ import Share from 'react-native-share';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { NetLord } from '../../handle/NetLord'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
-import { SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
+import { GoodayToast, SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
 import { CommonStyles } from '../../constants/CommonConstants'
 import { TopMovie } from '../../constants/Types';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
@@ -39,7 +39,7 @@ const TopMovieScreen = () => {
     const [isShowList, setIsShowList] = useState(false)
     const favoriteCallbackRef = useRef<(() => void) | undefined>(undefined);
 
-    const [topMovies, errorDownloadJson, _, reUpdateData] = useCheckAndDownloadRemoteFile<TopMovie[]>(
+    const { result: topMovies, didDownload, error: errorDownloadJson, reUpdateAsync } = useCheckAndDownloadRemoteFile<TopMovie[]>(
         fileURL,
         TempDirName + '/top_movies.json',
         true,
@@ -90,7 +90,7 @@ const TopMovieScreen = () => {
         setIsShowList(false)
 
         if (!Array.isArray(topMovies)) {
-            reUpdateData()
+            reUpdateAsync()
             setHandling(true)
             return
         }
@@ -109,7 +109,7 @@ const TopMovieScreen = () => {
         setSelectingIdxAsync(idx)
 
         setSelectingItem(movie)
-    }, [topMovies, reUpdateData])
+    }, [topMovies, reUpdateAsync])
 
     const onPressRandom = useCallback(async () => {
         track_PressRandom(true, category, undefined)
@@ -232,6 +232,15 @@ const TopMovieScreen = () => {
     // save last visit category screen
 
     useFocusEffect(useCallback(() => SaveCurrentScreenForLoadNextTime(navigation), []))
+
+    // toast latest data
+
+    useEffect(() => {
+        if (!didDownload)
+            return
+
+        GoodayToast(LocalText.new_item_top_movies)
+    }, [didDownload])
 
     return (
         <View pointerEvents={handling ? 'none' : 'auto'} style={[styleSheet.masterView, { backgroundColor: theme.background }]}>

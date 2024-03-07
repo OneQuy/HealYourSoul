@@ -52,7 +52,7 @@ const FunWebsitesScreen = () => {
         playAnimLoadedMedia(mediaViewScaleAnimRef)
     }, [])
 
-    const [funWebsites, errorDownloadJson, _, reUpdateData] = useCheckAndDownloadRemoteFile<FunWebsite[]>(
+    const { result: funWebsites, error: errorDownloadJson, reUpdateAsync: reUpdateData } = useCheckAndDownloadRemoteFile<FunWebsite[]>(
         fileURL,
         TempDirName + '/fun_website.json',
         true,
