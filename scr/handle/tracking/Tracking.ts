@@ -11,7 +11,7 @@ import { NetLord } from "../NetLord";
 
 export type SignalType = ReturnType<typeof useTelemetryDeck>['signal']
 
-const aptabaseIgnoredEventNames: string[] = [
+const aptabaseIgnoredEventNamesDefault: string[] = [
     'press_next_post_x5',
     'press_random',
     'press_drawer_item',
@@ -24,6 +24,7 @@ const aptabaseIgnoredEventNames: string[] = [
 const isLog = Cheat('IsLog_Tracking')
 
 var initedAptabase = false
+var finalAptabaseIgnoredEventNames: string[] | undefined = undefined
 
 var signal: SignalType | undefined = undefined
 
@@ -48,22 +49,39 @@ export const InitAptabase = () => {
 }
 
 export const GetFinalAptabaseIgnoredEventNames = () => {
+    if (finalAptabaseIgnoredEventNames)
+        return finalAptabaseIgnoredEventNames
+
     const appConfig = GetAppConfig()
 
     if (!appConfig)
-        return aptabaseIgnoredEventNames
+        return aptabaseIgnoredEventNamesDefault
+
+    let finalArr: string[]
 
     const additions = appConfig.tracking.aptabaseIgnores
 
     if (!IsValuableArrayOrString(additions))
-        return aptabaseIgnoredEventNames
+        finalArr = aptabaseIgnoredEventNamesDefault
+    else {
+        const arr = additions?.split(',')
 
-    const arr = additions?.split(',')
+        if (!IsValuableArrayOrString(arr) || !arr)
+            finalArr = aptabaseIgnoredEventNamesDefault
+        else
+            finalArr = arr.concat(aptabaseIgnoredEventNamesDefault)
+    }
 
-    if (!IsValuableArrayOrString(arr) || !arr)
-        return aptabaseIgnoredEventNames
+    const removeIgnoredListText = appConfig.tracking.aptabaseRemoveIgnores
 
-    return arr.concat(aptabaseIgnoredEventNames)
+    const removeIgnoredList = removeIgnoredListText?.split(',')
+
+    if (!IsValuableArrayOrString(removeIgnoredList) || !removeIgnoredList)
+        finalAptabaseIgnoredEventNames = finalArr
+    else
+        finalAptabaseIgnoredEventNames = finalArr.filter(i => !removeIgnoredList.includes(i))
+
+    return finalAptabaseIgnoredEventNames
 }
 
 export const TrackErrorOnFirebase = (error: string) => {
