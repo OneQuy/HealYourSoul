@@ -40,7 +40,7 @@ import UploadScreen from '../screens/upload/UploadScreen';
 import InboxScreen from '../screens/inbox/InboxScreen';
 import AdminScreen from '../screens/admin/AdminScreen';
 import GalleryScreen from '../screens/gallery/GalleryScreen';
-import CustomThemeScreen from '../screens/custom_theme/CustomThemeScreen';
+import CustomThemeScreen from '../screens/friend/FriendScreen';
 
 export type DrawerParamList = {
   [ScreenName.Meme]: { item: DiversityItemType } | undefined,
@@ -78,7 +78,7 @@ export type DrawerParamList = {
   [ScreenName.Upload]: undefined,
   [ScreenName.Inbox]: undefined,
   [ScreenName.Admin]: undefined,
-  [ScreenName.CustomTheme]: undefined,
+  [ScreenName.Friend]: undefined,
   [ScreenName.Gallery]: { cat: Category },
 }
 
@@ -129,7 +129,7 @@ const ScreenList: ScreenNamePair[] = [
   [ScreenName.Inbox, InboxScreen],
   [ScreenName.Admin, AdminScreen],
   [ScreenName.Gallery, GalleryScreen],
-  [ScreenName.CustomTheme, CustomThemeScreen],
+  [ScreenName.Friend, CustomThemeScreen],
 ]
 
 const Navigator = ({ initialRouteName }: MainNavigatorProps) => {

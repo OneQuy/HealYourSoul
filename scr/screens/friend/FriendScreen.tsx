@@ -3,10 +3,10 @@ import React, { useCallback, useContext, useMemo } from 'react'
 import { Outline } from '../../constants/AppConstants'
 import { ThemeContext } from '../../constants/Colors';
 
-const CustomThemeScreen = () => {
+const FriendScreen = () => {
     const theme = useContext(ThemeContext);
     
-    const onPressView = useCallback(() => {
+    const onPress = useCallback(() => {
     }, [])
 
     const style = useMemo(() => {
@@ -27,4 +27,4 @@ const CustomThemeScreen = () => {
     )
 }
 
-export default CustomThemeScreen
+export default FriendScreen
