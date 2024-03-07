@@ -28,6 +28,7 @@ export type LatestVersionConfig = {
     force_update: boolean,
     release_note: string,
     day_diff_to_ask: number,
+    required: number,
 }
 
 export type UserUploadPostStatus = 'approved' | '' | 'rejected' | 'banned'

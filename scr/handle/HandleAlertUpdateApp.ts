@@ -25,6 +25,10 @@ export const HandldAlertUpdateAppAsync = async () => {
         return
     }
 
+    if (data.required > versionAsNumber) {
+        data.force_update = true
+    }
+
     if (!data.force_update) {
         const isValueNotExistedOrEqualOverDayFromNow = await GetDateAsync_IsValueNotExistedOrEqualOverDayFromNow(StorageKey_LastAskForUpdateApp, data.day_diff_to_ask)
 
