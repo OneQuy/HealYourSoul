@@ -295,11 +295,10 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
           <Text style={{ color: theme.background, }}>Version: v{versionAsNumber}</Text>
           {/* update btn */}
           {
-            !showUpdateBtn ? undefined :
-              // false ? undefined :
-              <View style={[style.versionBtnView, { backgroundColor: theme.background, }]}>
-                <Text style={[style.updateBtnTxt, { color: theme.counterBackground, }]}>{LocalText.update}</Text>
-              </View>
+            showUpdateBtn &&
+            <View style={[style.versionBtnView, { backgroundColor: theme.background, }]}>
+              <Text style={[style.updateBtnTxt, { color: theme.counterBackground, }]}>{LocalText.update}</Text>
+            </View>
           }
         </View>
 
