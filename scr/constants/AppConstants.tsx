@@ -55,7 +55,6 @@ export enum ScreenName {
   Inbox = 'Inbox',
   Admin = 'Admin',
   Gallery = 'Gallery',
-  Friend = 'Friend',
 }
 
 // dir / file
