@@ -139,7 +139,6 @@ export const track_OnUseEffectOnceEnterAppAsync = async (startFreshlyOpenAppTick
         MainTrack(event,
             [
                 `total/${event}`,
-                // `events/${event}/#d`,
             ])
 
         track_SimpleWithParam('versions', 'v' + versionAsNumber)
