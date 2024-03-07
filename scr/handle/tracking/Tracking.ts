@@ -109,13 +109,14 @@ export const MainTrack = (
     if (IsDev())
         eventName = 'dev__' + eventName
 
+    console.log('------------------------')
+
     // track aptabase
 
     if (shouldTrackAptabase) {
         trackEvent(eventName, trackingValuesObject)
 
         if (isLog) {
-            console.log('------------------------')
             console.log('tracking aptabase: ', eventName, JSON.stringify(trackingValuesObject));
         }
     }
@@ -144,4 +145,6 @@ export const MainTrack = (
             console.log('tracking telemetry: ', eventName, JSON.stringify(trackingValuesObject))
         }
     }
+
+    console.log('****************')
 }

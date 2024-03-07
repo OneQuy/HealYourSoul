@@ -271,8 +271,6 @@ const slice = createSlice({
 
             if (!state.checkedInScreens.includes(action.payload)) {
                 state.checkedInScreens.push(action.payload)
-
-                console.log('checkedInScreens', action.payload)
             }
         },
 
@@ -749,7 +747,7 @@ export const {
     checkInScreen,
 
     toggleSavedItem,
-    
+
     addUploadedItem,
 
     togglePinFunSound,
