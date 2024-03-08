@@ -49,7 +49,6 @@ export async function HandleVersionsFileAsync(): Promise<boolean> {
     // fail firebase
 
     if (result.error) {
-        HandleError('HandleVersions', result.error)
         return false
     }
 

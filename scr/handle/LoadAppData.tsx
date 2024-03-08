@@ -34,43 +34,43 @@ export async function LoadAppData(): Promise<LoadAppDataResult> {
 
     // cheat clear all local file
 
-    await CheckAndClearAllLocalFileBeforeLoadApp();
+    await CheckAndClearAllLocalFileBeforeLoadApp(); // no depended
 
     // user id
 
-    await InitUserIDAsync()
+    await InitUserIDAsync() // no depended
 
     // handle: app config
 
-    const successHandleAppConfig = await HandleAppConfigAsync()
+    const successHandleAppConfig = await HandleAppConfigAsync() // no depended
 
-    // check is dev (must after HandleAppConfigAsync)
+    // check is dev 
 
-    await CheckIsDevAsync()
+    await CheckIsDevAsync() // (must after HandleAppConfigAsync)
 
-    // init aptabase tracking (must after HandleAppConfigAsync & CheckIsDevAsync)
+    // init aptabase tracking
 
-    InitAptabase()
+    InitAptabase() // (must after HandleAppConfigAsync & CheckIsDevAsync)
 
     // handle alert (must after HandleAppConfigAsync)
 
-    await HandleStartupAlertAsync() // alert_priority 1 (doc)
+    await HandleStartupAlertAsync() // alert_priority 1 (doc) // (must after HandleAppConfigAsync)
 
     // handle alert update
 
-    await HandldAlertUpdateAppAsync() // alert_priority 2 (doc)
+    await HandldAlertUpdateAppAsync() // alert_priority 2 (doc) // (must after HandleAppConfigAsync)
 
     // init noti
 
-    await initNotificationAsync() // alert_priority 3 (doc)
+    await initNotificationAsync() // alert_priority 3 (doc) // no depended
 
     // one signal
 
-    InitOneSignalAsync()  // alert_priority MUST FINAL (doc)
+    InitOneSignalAsync()  // alert_priority MUST FINAL (doc) // no depended
 
     // handle: versions file
 
-    const successHandleFileVersions = await HandleVersionsFileAsync();
+    const successHandleFileVersions = await HandleVersionsFileAsync(); // no depended
 
     if (successHandleAppConfig && successHandleFileVersions) {
         await SetDateAsync_Now(StorageKey_LastTimeCheckAndReloadAppConfig)
