@@ -5,6 +5,18 @@ export enum MediaType {
     Video = 1
 }
 
+// PostMetadata ------------------------------
+
+export const GenerateFromEmptyPost = (rawPost: PostMetadata): PostMetadata => {
+    return {
+        id: rawPost.id,
+        title: rawPost.title ?? '',
+        author: rawPost.author ?? '',
+        url: rawPost.url ?? '',
+        media: rawPost.media ?? [MediaType.Image]
+    }
+}
+
 export type PostMetadata = {
     id: number,
     title: string,
@@ -12,6 +24,8 @@ export type PostMetadata = {
     url: string,
     media: MediaType[],
 }
+
+// PostMetadata ------------------------------
 
 export type FileList = {
     version: number,
@@ -71,7 +85,7 @@ export type Inbox = {
      * required
      */
     msg: string,
-    
+
     title: string | null,
     imgUri: string | null,
 
@@ -85,12 +99,12 @@ export type Inbox = {
     // goToScreenParamObj: object | null,
 
     approvedUploadedDiversity?: DiversityItemType,
-    
+
     /**
      *  client set only
      */
     didRead?: boolean
-    
+
     /**
      *  client set only
      */
