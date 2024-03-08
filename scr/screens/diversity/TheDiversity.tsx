@@ -2,7 +2,7 @@
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { View, StyleSheet, FlatList, Text, TouchableOpacity } from 'react-native'
-import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import React, { LegacyRef, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { BorderRadius, Category, FontSize, Icon, LimitSaved, LocalText, Outline, ScreenName, Size, StorageKey_CurPageFunSoundIdx, StorageKey_IsUserPressedClosePleaseSubscribe } from '../../constants/AppConstants'
 import { DiversityItemType } from '../../constants/Types'
 import { NavigationProp, useFocusEffect, useNavigation } from '@react-navigation/native'
@@ -80,6 +80,7 @@ const TheDiversity = (
     const [isUserPressedClosePleaseSubscribe, setIsUserPressedClosePleaseSubscribe] = useState(false)
     const { isPremium } = usePremium()
     const insets = useSafeAreaInsets()
+    const flatListRef = useRef<LegacyRef<FlatList<DiversityItemType>> | undefined>()
 
     const filterItems: DiversityItemType[] | undefined = useMemo(() => {
         if (!allItems || !IsValuableArrayOrString(allItems))
@@ -304,6 +305,12 @@ const TheDiversity = (
         })()
     }, [])
 
+    useEffect(() => {
+        if (flatListRef.current)
+            // @ts-ignore
+            flatListRef.current.scrollToOffset({ animated: true, offset: 0 });
+    }, [curPageIdx])
+
     useFocusEffect(useCallback(() => {
         screenBackWhenPressXGlobal = screenBackWhenPressX
     }, [screenBackWhenPressX]))
@@ -358,6 +365,7 @@ const TheDiversity = (
                 !showLitmitPages() &&
                 <View style={style.flatListContainer}>
                     <FlatList
+                        ref={flatListRef}
                         showsVerticalScrollIndicator={false}
                         data={itemsToRender}
                         numColumns={numColumnsDiversity}
