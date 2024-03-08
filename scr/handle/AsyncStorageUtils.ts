@@ -38,6 +38,40 @@ export const GetNumberFloatAsync = async (key: string, defaultValue?: number): P
 
 /**
  * 
+ * @return number or NaN
+ */
+export const GetNumberIntAsync = async (key: string, defaultValue?: number): Promise<number> => {
+    const s = await AsyncStorage.getItem(key)
+
+    if (!s)
+        return defaultValue === undefined ? Number.NaN : defaultValue
+
+    try {
+        return Number.parseInt(s)
+    }
+    catch {
+        return Number.NaN
+    }
+}
+
+export const SetNumberAsync = async (key: string, value: number): Promise<void> => {
+    await AsyncStorage.setItem(key, value.toString())
+}
+
+/**
+ * 
+ * @returns lastest saved value (value that after increasing)
+ */
+export const IncreaseNumberAsync = async (key: string, startAt: number = 0, incUnit: number = 1): Promise<number> => {
+    const cur = await GetNumberIntAsync(key, startAt)
+    await SetNumberAsync(key, cur + incUnit)
+    return cur + incUnit
+}
+
+// date & number =================
+
+/**
+ * 
  * @returns lastest saved value (value that after increasing)
  */
 export const IncreaseNumberAsync_WithCheckAndResetNewDay = async (key: string, valueNewDay: number = 0, incUnit: number = 1): Promise<number> => {
@@ -75,34 +109,67 @@ export const GetNumberIntAsync_WithCheckAndResetNewDay = async (key: string, val
 
 /**
  * 
- * @return number or NaN
+ * @returns 
+ * `{
+ * 
+ *  number: value. If empty or error: defaultNumber
+ * 
+ *  date: Date. If empty or error: undefined
+ * 
+ * }`
  */
-export const GetNumberIntAsync = async (key: string, defaultValue?: number): Promise<number> => {
+export const GetPairNumberIntAndDateAsync = async (key: string, defaultNumber = 0): Promise<{ number: number, date: Date | undefined }> => {
     const s = await AsyncStorage.getItem(key)
 
-    if (!s)
-        return defaultValue === undefined ? Number.NaN : defaultValue
+    if (!s) {
+        return {
+            number: defaultNumber,
+            date: undefined
+        }
+    }
+
+    const arr = s.split('_')
+
+    if (!Array.isArray(arr) || arr.length !== 2) {
+        return {
+            number: defaultNumber,
+            date: undefined
+        }
+    }
 
     try {
-        return Number.parseInt(s)
+        return {
+            date: new Date(parseInt(arr[0])),
+            number: parseInt(arr[1])
+        }
     }
     catch {
-        return Number.NaN
+        return {
+            number: defaultNumber,
+            date: undefined
+        }
     }
 }
 
-export const SetNumberAsync = async (key: string, value: number): Promise<void> => {
-    await AsyncStorage.setItem(key, value.toString())
-}
+export const SetPairNumberIntAndDateAsync_Now = async (key: string, valueNum: number, initNum: number, valueNumForSetOrForIncreaseUnit: boolean): Promise<{ number: number, date: Date | undefined }> => {
+    let valueToSet = 0
 
-/**
- * 
- * @returns lastest saved value (value that after increasing)
- */
-export const IncreaseNumberAsync = async (key: string, startAt: number = 0, incUnit: number = 1): Promise<number> => {
-    const cur = await GetNumberIntAsync(key, startAt)
-    await SetNumberAsync(key, cur + incUnit)
-    return cur + incUnit
+    if (!valueNumForSetOrForIncreaseUnit) { // for inc => need load current value
+        const { number } = await GetPairNumberIntAndDateAsync(key, initNum)
+        valueToSet = number + valueNum
+    }
+    else
+        valueToSet = valueNum
+
+    const now = new Date()
+
+    const s = `${now.getTime()}_${valueToSet}`
+    await AsyncStorage.setItem(key, s)
+
+    return {
+        number: valueToSet,
+        date: now,
+    }
 }
 
 // date =================
@@ -138,7 +205,6 @@ export const GetDateAsync_IsValueNotExistedOrEqualOverMinFromNow = async (key: s
 
     return DateDiff_InMinute(Date.now(), d) >= min
 }
-
 
 export const GetDateAsync_IsValueNotExistedOrEqualOverHourFromNow = async (key: string, hour: number): Promise<boolean> => {
     const d = await GetDateAsync(key)
