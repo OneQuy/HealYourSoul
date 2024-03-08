@@ -13,7 +13,7 @@ import React, { useCallback, useLayoutEffect, useContext, useEffect, useMemo, us
 import { BorderRadius, Category, FontSize, Icon, LocalText, NeedReloadReason, Opacity, Outline, Size } from '../../constants/AppConstants';
 import { ThemeContext } from '../../constants/Colors';
 import { heightPercentageToDP as hp, } from "react-native-responsive-screen";
-import { FileList, GenerateFromEmptyPost, MediaType, PostMetadata } from '../../constants/Types';
+import { FileList, CheckAndFillEmptyPropertiesPost, MediaType, PostMetadata } from '../../constants/Types';
 import { CheckLocalFileAndGetURIAsync, CopyAndToast, GetAllSavedLocalPostIDsListAsync, HandleError, PreDownloadPosts, SaveCurrentScreenForLoadNextTime, ToastTheme } from '../../handle/AppUtils';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
@@ -279,7 +279,7 @@ const ThePage = ({ category }: ThePageProps) => {
 
         // start load post
 
-        post.current = GenerateFromEmptyPost(foundPost) // post.current = foundPost;
+        post.current = CheckAndFillEmptyPropertiesPost(foundPost) // post.current = foundPost;
 
         loadNextMediaAsync(true, foundPost, isNext ? 'next' : 'previous');
 

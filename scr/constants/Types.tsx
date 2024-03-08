@@ -7,14 +7,13 @@ export enum MediaType {
 
 // PostMetadata ------------------------------
 
-export const GenerateFromEmptyPost = (rawPost: PostMetadata): PostMetadata => {
-    return {
-        id: rawPost.id,
-        title: rawPost.title ?? '',
-        author: rawPost.author ?? '',
-        url: rawPost.url ?? '',
-        media: rawPost.media ?? [MediaType.Image]
-    }
+export const CheckAndFillEmptyPropertiesPost = (rawPost: PostMetadata): PostMetadata => {
+    rawPost.title = rawPost.title ?? ''
+    rawPost.author = rawPost.author ?? ''
+    rawPost.url = rawPost.url ?? ''
+    rawPost.media = rawPost.media ?? [MediaType.Image]
+
+    return rawPost
 }
 
 export type PostMetadata = {
