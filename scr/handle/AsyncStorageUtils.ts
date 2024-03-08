@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import { DateDiff, DateDiff_InHour, DateDiff_InMinute, IsToday, IsTodayAndSameHour } from "./UtilsTS"
+import { DateDiff, DateDiff_InHour, DateDiff_InMinute, IsNumType, IsToday, IsTodayAndSameHour } from "./UtilsTS"
 
 // boolean =================
 
@@ -151,15 +151,24 @@ export const GetPairNumberIntAndDateAsync = async (key: string, defaultNumber = 
     }
 }
 
-export const SetPairNumberIntAndDateAsync_Now = async (key: string, valueNum: number, initNum: number, valueNumForSetOrForIncreaseUnit: boolean): Promise<{ number: number, date: Date | undefined }> => {
+/**
+ * 
+ * @param valueToSetOrDefaultValueForIncrease the value to force set. If just need to inc the old number, fill this the default value if old value not existed
+ * @param increaseUnit if force set, leave this param undefined. If need to inc, fill the inc unit here.
+ * @returns --- { number, date } with latest saved value
+ */
+export const SetPairNumberIntAndDateAsync_Now = async (
+    key: string,
+    valueToSetOrDefaultValueForIncrease: number,
+    increaseUnit?: number): Promise<{ number: number, date: Date | undefined }> => {
     let valueToSet = 0
 
-    if (!valueNumForSetOrForIncreaseUnit) { // for inc => need load current value
-        const { number } = await GetPairNumberIntAndDateAsync(key, initNum)
-        valueToSet = number + valueNum
+    if (typeof increaseUnit === 'number') { // for inc => need load current value
+        const { number } = await GetPairNumberIntAndDateAsync(key, valueToSetOrDefaultValueForIncrease)
+        valueToSet = number + increaseUnit
     }
     else
-        valueToSet = valueNum
+        valueToSet = valueToSetOrDefaultValueForIncrease
 
     const now = new Date()
 
