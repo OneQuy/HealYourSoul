@@ -32,17 +32,34 @@ export async function LoadAppData(): Promise<LoadAppDataResult> {
 
     NetLord.InitAsync();
 
-    // cheat clear all local file
+    const [
+        _,
+        __,
+        successHandleAppConfig,
+        successHandleFileVersions,
+        categoryScreenToOpenFirst
+    ] = await Promise.all([
+        // cheat clear all local file
+        CheckAndClearAllLocalFileBeforeLoadApp(), // no depended
 
-    await CheckAndClearAllLocalFileBeforeLoadApp(); // no depended
+        // user id
+        InitUserIDAsync(), // no depended
 
-    // user id
+        // handle: app config
+        HandleAppConfigAsync(), // no depended
 
-    await InitUserIDAsync() // no depended
+        // handle: versions file
+        HandleVersionsFileAsync(), // no depended
 
-    // handle: app config
+        // load screen to open
+        AsyncStorage.getItem(StorageKey_ScreenToInit),
+    ])
 
-    const successHandleAppConfig = await HandleAppConfigAsync() // no depended
+    // save tick load latest config & version
+
+    if (successHandleAppConfig && successHandleFileVersions) {
+        SetDateAsync_Now(StorageKey_LastTimeCheckAndReloadAppConfig)
+    }
 
     // check is dev 
 
@@ -52,7 +69,7 @@ export async function LoadAppData(): Promise<LoadAppDataResult> {
 
     InitAptabase() // (must after HandleAppConfigAsync & CheckIsDevAsync)
 
-    // handle alert (must after HandleAppConfigAsync)
+    // handl startup alert (must after HandleAppConfigAsync)
 
     await HandleStartupAlertAsync() // alert_priority 1 (doc) // (must after HandleAppConfigAsync)
 
@@ -60,25 +77,13 @@ export async function LoadAppData(): Promise<LoadAppDataResult> {
 
     await HandldAlertUpdateAppAsync() // alert_priority 2 (doc) // (must after HandleAppConfigAsync)
 
-    // init noti
+    // init notifee
 
     await initNotificationAsync() // alert_priority 3 (doc) // no depended
 
     // one signal
 
     InitOneSignalAsync()  // alert_priority MUST FINAL (doc) // no depended
-
-    // handle: versions file
-
-    const successHandleFileVersions = await HandleVersionsFileAsync(); // no depended
-
-    if (successHandleAppConfig && successHandleFileVersions) {
-        await SetDateAsync_Now(StorageKey_LastTimeCheckAndReloadAppConfig)
-    }
-
-    // load screen to open
-
-    const categoryScreenToOpenFirst = await AsyncStorage.getItem(StorageKey_ScreenToInit);
 
     // teleletry
 
