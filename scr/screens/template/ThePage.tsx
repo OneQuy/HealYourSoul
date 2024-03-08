@@ -239,8 +239,6 @@ const ThePage = ({ category }: ThePageProps) => {
         let foundPost: PostMetadata | undefined;
 
         if (diversityItem) { // load diversity item mode
-            // console.log('load diversity item', diversityItem);
-
             foundPost = fileList.current?.posts.find(post => post.id === diversityItem.id);
         }
         else if (isNext) {
