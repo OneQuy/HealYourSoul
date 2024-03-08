@@ -1,5 +1,8 @@
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-native-responsive-screen";
 
+export const DaysToAskRate_ForFirstTimeAfterInstalledDays = 1
+export const DaysToAskRate_FromSecondTime = 10
+
 export const LimitSaved = 50
 
 export const LimitPagesGalleryLovedPosts = 1
@@ -575,3 +578,5 @@ export const StorageKey_TodayUploadsCount = 'today_uploads_count'
 export const StorageKey_LastTimeUpload = 'last_time_upload'
 export const StorageKey_ReadRulesUpload = 'read_rules_upload'
 export const StorageKey_HaveNewApprovedUploads = 'new_approved_uploads'
+export const StorageKey_LastTickAskRate = 'last_ask_rate'
+export const StorageKey_LastAskRateIsPressRateOrNot = 'last_ask_rate_ok'
