@@ -4,7 +4,7 @@ import { RegisterOnChangedState, UnregisterOnChangedState } from "./AppStateMan"
 import { HandleAppConfigAsync } from "./AppConfigHandler"
 import { HandleStartupAlertAsync } from "./StartupAlert"
 import { GoodayToast, startFreshlyOpenAppTick } from "./AppUtils"
-import { SaveCachedPressNextPostAsync, checkAndTrackLocation, track_NewlyInstallOrFirstOpenOfTheDayOldUserAsync, track_OnUseEffectOnceEnterAppAsync, track_OpenAppOfDayCount, track_SimpleWithParam, track_Streak } from "./tracking/GoodayTracking"
+import { SaveCachedPressNextPostAsync, checkAndTrackLocation, track_NewlyInstallOrFirstOpenOfTheDayOldUserAsync, track_OnUseEffectOnceEnterAppAsync, track_OpenAppOfDayCount, track_Simple, track_SimpleWithParam, track_Streak } from "./tracking/GoodayTracking"
 import { LocalText, ScreenName, StorageKey_LastTimeCheckAndReloadAppConfig, StorageKey_LastTimeCheckFirstOpenAppOfTheDay, StorageKey_OpenAppOfDayCount, StorageKey_OpenAppOfDayCountForDate, StorageKey_OpenAppTotalCount, StorageKey_ScreenToInit } from "../constants/AppConstants"
 import { GetDateAsync, GetDateAsync_IsValueExistedAndIsToday, GetDateAsync_IsValueNotExistedOrEqualOverMinFromNow, GetNumberIntAsync, IncreaseNumberAsync, SetDateAsync_Now, SetNumberAsync } from "./AsyncStorageUtils"
 import { HandldAlertUpdateAppAsync } from "./HandleAlertUpdateApp"
@@ -160,6 +160,8 @@ export const ResetNavigation = async () => {
         if (!curScreen)
             return
 
+        track_Simple('reset_navigation')
+
         navigation.dispatch(
             CommonActions.reset({
                 index: 0,
@@ -169,8 +171,7 @@ export const ResetNavigation = async () => {
             })
         )
     }
-    catch {
-    }
+    catch { }
 }
 
 const onActiveAsync = async () => {
