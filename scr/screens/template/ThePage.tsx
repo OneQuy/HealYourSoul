@@ -39,6 +39,7 @@ import useDiversityItem from '../../hooks/useDiversityItem';
 import { OnPressedNextItemDiversity } from '../diversity/TheDiversity';
 import useSeenIDs from '../../hooks/useSeenIDs';
 import ViewCount from '../components/ViewCount';
+import MiniIAP from '../components/MiniIAP';
 
 const videoNumbSize = 10;
 const videoTouchEffectRadius = 100;
@@ -891,6 +892,8 @@ const ThePage = ({ category }: ThePageProps) => {
                                     </View>
                             }
                         </View>
+                        {/* mini iap */}
+                        <MiniIAP />
                     </Animated.View>
             }
 
