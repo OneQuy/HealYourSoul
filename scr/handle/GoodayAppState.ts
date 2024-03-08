@@ -44,13 +44,6 @@ const checkAndReloadAppAsync = async () => {
 
     // need to reload!
 
-    // if (!NetLord.IsAvailableLastestCheck()) {
-    //     console.log('[checkAndReloadAppConfigAsync] no check cuz no network');
-    //     return
-    // }
-
-    // download
-
     const [successDownloadAppConfig, successDownloadFileVersion] = await Promise.all([
         HandleAppConfigAsync(),
         HandleVersionsFileAsync()
