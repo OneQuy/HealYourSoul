@@ -1,7 +1,7 @@
 import { Alert, Share as RNShare, Linking, Platform, ShareContent } from "react-native";
 import { Category, FirebaseDBPath, FirebasePath, Icon, LocalPath, LocalText, NeedReloadReason, ScreenName, StorageKey_FirstTimeInstallTick, StorageKey_ItemCountCat, StorageKey_LastTrackCountryName, StorageKey_ScreenToInit, shareAppText } from "../constants/AppConstants";
 import { GetColors, ThemeColor } from "../constants/Colors";
-import { FileList, MediaType, PostMetadata, UserInfo } from "../constants/Types";
+import { CheckAndFillEmptyPropertiesPost, FileList, MediaType, PostMetadata, UserInfo } from "../constants/Types";
 import { Cheat } from "./Cheat";
 import { DeleteFileAsync, DeleteTempDirAsync, GetFLPFromRLP, IsExistedAsync } from "./FileUtils";
 import { ToastOptions, toast } from "@baronha/ting";
@@ -464,7 +464,7 @@ export async function PreDownloadPosts(
     let count = 0
 
     for (let ipost = 0; ipost < fileList.posts.length; ipost++) {
-        const post = fileList.posts[ipost]
+        const post = CheckAndFillEmptyPropertiesPost(fileList.posts[ipost])
         const postID = post.id
 
         if (seenIDs && seenIDs.includes(postID))
