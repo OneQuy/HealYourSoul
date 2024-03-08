@@ -66,7 +66,7 @@ export async function LoadAppData(): Promise<LoadAppDataResult> {
 
     // one signal
 
-    InitOneSignalAsync()  // alert_priority 4 (doc)
+    InitOneSignalAsync()  // alert_priority MUST FINAL (doc)
 
     // handle: versions file
 
