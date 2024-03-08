@@ -52,8 +52,8 @@ const checkAndReloadAppAsync = async () => {
     // download
 
     const [successDownloadAppConfig, successDownloadFileVersion] = await Promise.all([
-        await HandleAppConfigAsync(),
-        await HandleVersionsFileAsync()
+        HandleAppConfigAsync(),
+        HandleVersionsFileAsync()
     ])
 
     console.log('successDownloadAppConfig', successDownloadAppConfig);
