@@ -8,7 +8,7 @@ alert priority:
 2. update app // alert_priority 2
 3. initNotificationAsync() // alert_priority 3 (doc)
 ....
-InitOneSignalAsync()  // alert_priority MUST FINAL (doc)
+InitOneSignalAsync()  // alert_priority MUST FINAL (doc) // cuz perhaps too long to wait. maybe has alert request permission notification
 
 =========================
 
