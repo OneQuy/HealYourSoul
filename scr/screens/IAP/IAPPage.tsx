@@ -1,11 +1,10 @@
 import { View, Text, ScrollView, Image, ImageBackground, Alert, StyleSheet, ActivityIndicator } from 'react-native'
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useState } from 'react'
 import { BorderRadius, FontSize, FontWeight, LocalText, Outline, StorageKey_CachedIAP } from '../../constants/AppConstants'
 import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { FetchListroductsAsync, IAPProduct, InitIAPAsync, PurchaseAsync } from '../../handle/IAP';
+import { IAPProduct, PurchaseAsync } from '../../handle/IAP';
 import { SafeDateString, ToCanPrintError } from '../../handle/UtilsTS';
-import { Product } from 'react-native-iap';
 import IAPPage_Subscribed from './IAPPage_Subscribed';
 import { useAppDispatch } from '../../redux/Store';
 import { setSubscribe } from '../../redux/UserDataSlice';
@@ -13,12 +12,13 @@ import { CreateUserInfoObjectAsync, GetExpiredDateAndDaysLeft, HandleError, toda
 import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 import { ThemeContext } from '../../constants/Colors';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { prefixFbTrackPath } from '../../handle/tracking/Tracking';
 import { FirebaseDatabase_SetValueAsync } from '../../firebase/FirebaseDatabase';
 import { usePremium } from '../../hooks/usePremium';
 import { Cheat } from '../../handle/Cheat';
 import { ResetNavigation } from '../../handle/GoodayAppState';
+import { useMyIAP } from '../../hooks/useMyIAP';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const iapBg_1 = require('../../../assets/images/btn_bg_1.jpeg')
 
@@ -56,8 +56,6 @@ const subscriptions = [
 
 const allProducts: IAPProduct[] = [lifetimeProduct, ...subscriptions.map(i => i.product)] as const
 
-const allIds = allProducts.map(i => i.sku)
-
 const reasonItems = [
   {
     icon: require('../../../assets/images/premium_icon.png'),
@@ -79,18 +77,20 @@ const reasonItems = [
 ]
 
 const IAPPage = () => {
-  const [fetchedProducts, setFetchedProducts] = useState<Product[]>([])
   const dispatch = useAppDispatch();
   const [processingId, setProcessingId] = useState('')
   const theme = useContext(ThemeContext)
   const insets = useSafeAreaInsets()
   const { isPremium, subscribedData } = usePremium()
-  const [isInited, setInited] = useState(false)
+
+  const { isInited, fetchedProducts } = useMyIAP(
+    allProducts,
+    async (s: string) => AsyncStorage.setItem(StorageKey_CachedIAP, s),
+    async () => AsyncStorage.getItem(StorageKey_CachedIAP))
 
   const onPressed_Buy = async (id: string) => {
     track_SimpleWithParam('click_iap', id)
     setProcessingId(id)
-
 
     let res
 
@@ -157,47 +157,6 @@ const IAPPage = () => {
         <Text selectable style={{ color: theme.counterBackground, fontSize: FontSize.Small, }}>{LocalText.lifetime_desc_2}</Text>
       </View>)
   }, [theme, fetchedProducts, processingId])
-
-  const fetchLocalPriceAsync = useCallback(async () => {
-    const items = await FetchListroductsAsync(allIds)
-
-    if (items.length > 0)
-      setFetchedProducts(items)
-    else {
-      setTimeout(fetchLocalPriceAsync, 2000);
-    }
-  }, [])
-
-  useEffect(() => {
-    let resInitIAP: Awaited<ReturnType<typeof InitIAPAsync>> = undefined
-
-    const hanldeAsync = async () => {
-      if (isPremium) {
-        setInited(true)
-        return
-      }
-
-      // init IAP
-
-      resInitIAP = await InitIAPAsync(
-        allProducts,
-        async (s: string) => AsyncStorage.setItem(StorageKey_CachedIAP, s),
-        async () => AsyncStorage.getItem(StorageKey_CachedIAP))
-
-      setInited(true)
-
-      if (resInitIAP !== undefined) {
-        HandleError('InitIAPAsync', resInitIAP, true)
-        return
-      }
-
-      // fetch local price
-
-      fetchLocalPriceAsync()
-    }
-
-    hanldeAsync()
-  }, [isPremium])
 
   if (isPremium && subscribedData) {
     return <IAPPage_Subscribed subscribedData={subscribedData} />

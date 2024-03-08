@@ -58,7 +58,6 @@ export const InitIAPAsync = async (
     cachedProductsListGetterAsync?: () => Promise<string | null>,
 ): Promise<Error | undefined> => {
     if (isInited) {
-        console.warn('IAP already inited')
         return undefined
     }
 
@@ -163,7 +162,7 @@ export const GetIAPLocalPriceAsync = async (sku: string): Promise<string | undef
         return undefined
 }
 
-export const FetchListroductsAsync = async (skus: string[]) => {
+export const FetchListProductsAsync = async (skus: string[]) => {
     if (fetchedProducts.length > 0) // already fetched
         return fetchedProducts
 
@@ -195,7 +194,7 @@ export const PurchaseAsync = async (sku: string) => {
             throw new Error('IAP not inited yet')
 
         if (Platform.OS === 'android' && fetchedProducts.length <= 0) { // need to fetch on android
-            await FetchListroductsAsync(initedProducts.map(i => i.sku))
+            await FetchListProductsAsync(initedProducts.map(i => i.sku))
         }
 
         await requestPurchase({
