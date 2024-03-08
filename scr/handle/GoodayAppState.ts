@@ -6,7 +6,7 @@ import { HandleStartupAlertAsync } from "./StartupAlert"
 import { GoodayToast, startFreshlyOpenAppTick } from "./AppUtils"
 import { SaveCachedPressNextPostAsync, checkAndTrackLocation, track_NewlyInstallOrFirstOpenOfTheDayOldUserAsync, track_OnUseEffectOnceEnterAppAsync, track_OpenAppOfDayCount, track_SimpleWithParam, track_Streak } from "./tracking/GoodayTracking"
 import { LocalText, ScreenName, StorageKey_LastTimeCheckAndReloadAppConfig, StorageKey_LastTimeCheckFirstOpenAppOfTheDay, StorageKey_OpenAppOfDayCount, StorageKey_OpenAppOfDayCountForDate, StorageKey_OpenAppTotalCount, StorageKey_ScreenToInit } from "../constants/AppConstants"
-import { GetDateAsync, GetDateAsync_IsValueExistedAndIsToday, GetDateAsync_IsValueExistedAndIsTodayAndSameHour, GetNumberIntAsync, IncreaseNumberAsync, SetDateAsync_Now, SetNumberAsync } from "./AsyncStorageUtils"
+import { GetDateAsync, GetDateAsync_IsValueExistedAndIsToday, GetDateAsync_IsValueNotExistedOrEqualOverMinFromNow, GetNumberIntAsync, IncreaseNumberAsync, SetDateAsync_Now, SetNumberAsync } from "./AsyncStorageUtils"
 import { HandldAlertUpdateAppAsync } from "./HandleAlertUpdateApp"
 import { CheckAndPrepareDataForNotificationAsync, setNotificationAsync } from "./GoodayNotification"
 import { IsToday } from "./UtilsTS"
@@ -16,6 +16,8 @@ import { HandleVersionsFileAsync } from './VersionsHandler';
 import { GetStreakAsync, SetStreakAsync } from './Streak';
 
 const HowLongInMinutesToCount2TimesUseAppSeparately = 20
+
+const HowLongToReloadInMinute = 30
 
 var lastFireOnActiveOrOnceUseEffectWithCheckDuplicate = 0
 
@@ -37,8 +39,10 @@ export const setNavigation = (navi: NavigationType) => {
 
 /** reload (app config + file version) if app re-active after a period 1 HOUR */
 const checkAndReloadAppAsync = async () => {
-    if (await GetDateAsync_IsValueExistedAndIsTodayAndSameHour(StorageKey_LastTimeCheckAndReloadAppConfig)) {
-        console.log('[checkAndReloadAppAsync] no check cuz checked this hour');
+    if (!await GetDateAsync_IsValueNotExistedOrEqualOverMinFromNow(
+        StorageKey_LastTimeCheckAndReloadAppConfig,
+        HowLongToReloadInMinute)) {
+        console.log('[checkAndReloadAppAsync] no check reload cuz checked recently');
         return
     }
 
