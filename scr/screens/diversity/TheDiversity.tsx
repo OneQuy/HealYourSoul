@@ -308,7 +308,7 @@ const TheDiversity = (
     useEffect(() => {
         if (flatListRef.current)
             // @ts-ignore
-            flatListRef.current.scrollToOffset({ animated: true, offset: 0 });
+            flatListRef.current.scrollToOffset({ animated: false, offset: 0 });
     }, [curPageIdx])
 
     useFocusEffect(useCallback(() => {
