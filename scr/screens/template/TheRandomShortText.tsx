@@ -16,6 +16,7 @@ import BottomBar, { BottomBarItem } from '../others/BottomBar';
 import HeaderRightButtons from '../components/HeaderRightButtons';
 import useDiversityItem from '../../hooks/useDiversityItem';
 import { OnPressedNextItemDiversity } from '../diversity/TheDiversity';
+import MiniIAP from '../components/MiniIAP';
 
 interface TheRandomShortTextProps {
     category: Category,
@@ -97,27 +98,6 @@ const TheRandomShortText = ({
                 tintColor: theme.primary,
             } as ShareOptions)
     }, [text, theme])
-
-    // const onPressShareImage = useCallback(() => {
-    //     if (!text)
-    //         return
-
-    //     track_SimpleWithCat(category, 'share_as_image')
-
-    //     // @ts-ignore
-    //     viewShotRef.current.capture().then(async (uri: string) => {
-    //         Share
-    //             .open({
-    //                 url: uri,
-    //             })
-    //             .catch((err) => {
-    //                 const error = ToCanPrint(err)
-
-    //                 if (!error.includes('User did not share'))
-    //                     Alert.alert('Fail', error)
-    //             });
-    //     })
-    // }, [text, theme])
 
     const onSwiped = useCallback((result: SwipeResult) => {
         if (!result.primaryDirectionIsHorizontalOrVertical)
@@ -243,6 +223,9 @@ const TheRandomShortText = ({
                 items={bottomBarItems}
                 category={category}
             />
+
+            <MiniIAP postID={text} />
+
         </View>
     )
 }
