@@ -5,17 +5,16 @@ import { HandleAppConfigAsync } from "./AppConfigHandler"
 import { HandleStartupAlertAsync } from "./StartupAlert"
 import { GoodayToast, startFreshlyOpenAppTick, versionAsNumber } from "./AppUtils"
 import { SaveCachedPressNextPostAsync, checkAndTrackLocation, track_NewlyInstallOrFirstOpenOfTheDayOldUserAsync, track_OnUseEffectOnceEnterAppAsync, track_OpenAppOfDayCount, track_Simple, track_SimpleWithParam, track_Streak } from "./tracking/GoodayTracking"
-import { LocalText, ScreenName, StorageKey_LastTimeCheckAndReloadAppConfig, StorageKey_LastTimeCheckFirstOpenAppOfTheDay, StorageKey_OpenAppOfDayCount, StorageKey_OpenAppOfDayCountForDate, StorageKey_OpenAppTotalCount, StorageKey_ScreenToInit } from "../constants/AppConstants"
+import { LocalText, ScreenName, StorageKey_ClickNotificationOneSignal, StorageKey_LastTimeCheckAndReloadAppConfig, StorageKey_LastTimeCheckFirstOpenAppOfTheDay, StorageKey_OpenAppOfDayCount, StorageKey_OpenAppOfDayCountForDate, StorageKey_OpenAppTotalCount, StorageKey_ScreenToInit } from "../constants/AppConstants"
 import { GetDateAsync, GetDateAsync_IsValueExistedAndIsToday, GetDateAsync_IsValueNotExistedOrEqualOverMinFromNow, GetNumberIntAsync, IncreaseNumberAsync, SetDateAsync_Now, SetNumberAsync } from "./AsyncStorageUtils"
 import { HandldAlertUpdateAppAsync } from "./HandleAlertUpdateApp"
 import { CheckAndPrepareDataForNotificationAsync, setNotificationAsync } from "./GoodayNotification"
-import { IsToday, ToCanPrint } from "./UtilsTS"
+import { FilterOnlyLetterAndNumberFromString, IsToday, SafeValue } from "./UtilsTS"
 import { NavigationProp } from "@react-navigation/native"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { HandleVersionsFileAsync } from './VersionsHandler';
 import { GetStreakAsync, SetStreakAsync } from './Streak';
 import { OneSignal } from 'react-native-onesignal';
-import { Clipboard_AppendLine, Clipboard_Clear } from './ClipboardMan';
 
 const HowLongInMinutesToCount2TimesUseAppSeparately = 20
 
@@ -257,7 +256,7 @@ export const OnUseEffectOnceEnterApp = () => {
     CheckAndTriggerFirstOpenAppOfTheDayAsync()
     CheckAndPrepareDataForNotificationAsync()
     onActiveOrOnceUseEffectAsync()
-    SetTagOneSignal()
+    SetupOneSignal()
 }
 
 export const RegisterGoodayAppState = (isRegister: boolean) => {
@@ -289,6 +288,24 @@ export const HandleGoodayStreakAsync = async (forceShow = false) => {
         track_Streak(data.currentStreak)
 }
 
-const SetTagOneSignal = () => {
+const SetupOneSignal = () => {
     OneSignal.User.addTag('version', versionAsNumber.toString())
+
+    // Method for listening for notification clicks
+
+    OneSignal.Notifications.addEventListener('click', (event) => {
+        const title = SafeValue(event?.notification?.title, 'v' + versionAsNumber)
+        AsyncStorage.setItem(StorageKey_ClickNotificationOneSignal, title)
+    })
+
+    // track old click notification
+
+    AsyncStorage.getItem(StorageKey_ClickNotificationOneSignal).then((s) => {
+        if (!s)
+            return
+        
+        const value = FilterOnlyLetterAndNumberFromString(s)
+
+        track_SimpleWithParam('click_onesignal', value)
+    })
 }
