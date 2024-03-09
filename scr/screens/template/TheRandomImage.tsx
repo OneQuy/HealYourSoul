@@ -25,6 +25,7 @@ import BottomBar, { BottomBarItem } from '../others/BottomBar';
 import HeaderRightButtons from '../components/HeaderRightButtons';
 import useDiversityItem from '../../hooks/useDiversityItem';
 import { OnPressedNextItemDiversity } from '../diversity/TheDiversity';
+import MiniIAP from '../components/MiniIAP';
 
 interface TheRandomImageProps {
     category: Category,
@@ -285,6 +286,8 @@ const TheRandomImage = ({
                 items={bottomBarItems}
                 category={category}
             />
+
+            <MiniIAP postID={currentItem?.uri} />
         </View>
     )
 }
