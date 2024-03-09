@@ -17,7 +17,7 @@ const MiniIAP = ({
     const [product, setProduct] = useState(allProducts[0])
     const processing = false
 
-    const { isInited, fetchedTargetProduct } = useMyIAP(
+    const { isInited, localPrice } = useMyIAP(
         allProducts,
         async (s: string) => AsyncStorage.setItem(StorageKey_CachedIAP, s),
         async () => AsyncStorage.getItem(StorageKey_CachedIAP),
@@ -81,7 +81,7 @@ const MiniIAP = ({
                     source={iapBg_1}
                     style={style.iapIB}>
                     <Text style={style.monthTxt}>{product.displayName}</Text>
-                    <Text style={style.priceTxt}>{fetchedTargetProduct ? fetchedTargetProduct.localizedPrice : '...'}{processing ? '  ' : ''}{processing ? <ActivityIndicator color={theme.counterBackground} size={'small'} /> : undefined}</Text>
+                    <Text style={style.priceTxt}>{localPrice ?? '...'}{processing ? '  ' : ''}{processing ? <ActivityIndicator color={theme.counterBackground} size={'small'} /> : undefined}</Text>
                 </ImageBackground>
             </TouchableOpacity>
 
