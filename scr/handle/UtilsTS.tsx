@@ -18,7 +18,8 @@ import { Buffer as TheBuffer } from 'buffer'
 
 // const -------------------------
 
-export const TimeOutError = '[time_out]';
+export const TimeOutError = '[time_out]'
+export const TimeOutStandardInMs = 5000
 
 // color ------------------------
 
