@@ -33,6 +33,7 @@ import {
 export type IAPProduct = {
     sku: string,
     isConsumable: boolean,
+    displayName: string,
 }
 
 // export type SuccessCallback = (sku: string) => void

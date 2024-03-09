@@ -34,3 +34,21 @@ how IntroduceCat works?
 =========================
 
 =========================
+
+/**
+ * Init module for purchase flow. Required on Android. In ios it will check whether user canMakePayment.
+ * ## Usage
+
+```tsx
+import React, {useEffect} from 'react';
+import {View} from 'react-native';
+import {initConnection} from 'react-native-iap';
+
+const App = () => {
+  useEffect(() => {
+    void initConnection();
+  }, []);
+
+  return <View />;
+};
+```

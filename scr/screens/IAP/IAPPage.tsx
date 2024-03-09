@@ -25,6 +25,7 @@ export const iapBg_1 = require('../../../assets/images/btn_bg_1.jpeg')
 const lifetimeProduct: IAPProduct = {
   sku: 'gooday_lifetime',
   isConsumable: true,
+  displayName: 'Gooday Lifetime'
 } as const
 
 const subscriptions = [
@@ -34,6 +35,7 @@ const subscriptions = [
     product: {
       sku: 'gooday_month_1',
       isConsumable: true,
+      displayName: '1 month'
     } as IAPProduct
   },
   {
@@ -42,6 +44,7 @@ const subscriptions = [
     product: {
       sku: 'gooday_month_6',
       isConsumable: true,
+      displayName: '6 months'
     } as IAPProduct
   },
   {
@@ -50,11 +53,12 @@ const subscriptions = [
     product: {
       sku: 'gooday_month_12',
       isConsumable: true,
+      displayName: '12 months'
     } as IAPProduct
   },
 ] as const
 
-const allProducts: IAPProduct[] = [lifetimeProduct, ...subscriptions.map(i => i.product)] as const
+export const allProducts: IAPProduct[] = [lifetimeProduct, ...subscriptions.map(i => i.product)] as const
 
 const reasonItems = [
   {
@@ -219,7 +223,7 @@ const IAPPage = () => {
                   resizeMode='cover'
                   source={imgUrl}
                   style={{ alignItems: 'center', padding: Outline.GapVertical_2, justifyContent: 'center', }}>
-                  <Text style={{ color: 'black', fontSize: FontSize.Normal, fontWeight: FontWeight.B600 }}>{month} month{month > 1 ? 's' : ''}</Text>
+                  <Text style={{ color: 'black', fontSize: FontSize.Normal, fontWeight: FontWeight.B600 }}>{product.displayName}</Text>
                   <Text style={{ color: 'black', fontSize: FontSize.Normal }}>{price}{processingId === sku ? '  ' : ''}{processingId === sku ? <ActivityIndicator color={theme.counterBackground} size={'small'} /> : undefined}</Text>
                 </ImageBackground>
               </TouchableOpacity>

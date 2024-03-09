@@ -1,17 +1,17 @@
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { FetchListProductsAsync, IAPProduct, InitIAPAsync } from "../handle/IAP"
 import { Product } from "react-native-iap"
 
 /**
  * 
- * USAGE:
- * 
+ * ## Usage
  * 1.
- * 
+ ```tsx
 const { isInited, fetchedProducts } = useMyIAP(
     allProducts,
     async (s: string) => AsyncStorage.setItem(StorageKey_CachedIAP, s),
     async () => AsyncStorage.getItem(StorageKey_CachedIAP))
+```
 
  * 2. check isInited for show loading
  * 3. when isInited is true, check initErrorObj (undefined means success inited)
@@ -28,6 +28,7 @@ export const useMyIAP = (
     const [fetchedProducts, setFetchedProducts] = useState<Product[]>([])
     const [isInited, setInited] = useState(false)
     const [initErrorObj, setInitErroObj] = useState<Error | undefined>(undefined)
+    const fetchTimeout = useRef<NodeJS.Timeout | undefined>(undefined)
 
     const allIds = useMemo(() => {
         return allProducts.map(i => i.sku)
@@ -46,13 +47,13 @@ export const useMyIAP = (
             return fetchedProducts.find(i => i.productId === targetProductSku.sku)
     }, [fetchedProducts, targetProductSku])
 
-    const fetchLocalPriceAsync = useCallback(async () => {
+    const fetchListProducts = useCallback(async () => {
         const items = await FetchListProductsAsync(allIds)
 
         if (items.length > 0)
             setFetchedProducts(items)
         else {
-            setTimeout(fetchLocalPriceAsync, 2000)
+            fetchTimeout.current = setTimeout(fetchListProducts, 2000)
         }
     }, [allIds])
 
@@ -74,8 +75,12 @@ export const useMyIAP = (
 
             // fetch local price
 
-            fetchLocalPriceAsync()
+            fetchListProducts()
         })()
+
+        return () => {
+            clearTimeout(fetchTimeout.current)
+        }
     }, [])
 
     return {

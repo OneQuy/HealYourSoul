@@ -1,22 +1,34 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground, ActivityIndicator } from 'react-native'
-import React, { useCallback, useContext, useMemo } from 'react'
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors';
-import { BorderRadius, FontSize, FontWeight, LocalText, Outline, Size } from '../../constants/AppConstants';
+import { BorderRadius, FontSize, FontWeight, LocalText, Outline, Size, StorageKey_CachedIAP, StorageKey_LastMiniIapProductIdxShowed } from '../../constants/AppConstants';
 import { logoScr } from '../others/SplashScreen';
-import { iapBg_1 } from '../IAP/IAPPage';
+import { allProducts, iapBg_1 } from '../IAP/IAPPage';
+import { useMyIAP } from '../../hooks/useMyIAP';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { GetNumberIntAsync, SetNumberAsync } from '../../handle/AsyncStorageUtils';
 
-const MiniIAP = () => {
+const MiniIAP = ({
+    setActive,
+}: {
+    setActive: (active: boolean) => void,
+}) => {
     const theme = useContext(ThemeContext);
-    const price = '333'
-    const month = 12
+    const [product, setProduct] = useState(allProducts[0])
     const processing = false
+
+    const { isInited, fetchedTargetProduct } = useMyIAP(
+        allProducts,
+        async (s: string) => AsyncStorage.setItem(StorageKey_CachedIAP, s),
+        async () => AsyncStorage.getItem(StorageKey_CachedIAP),
+        product)
 
     const onPressed_Buy = useCallback(() => {
 
     }, [])
 
     const onPressed_Later = useCallback(() => {
-
+        setActive(false)
     }, [])
 
     const style = useMemo(() => {
@@ -33,6 +45,28 @@ const MiniIAP = () => {
         })
     }, [theme])
 
+    useEffect(() => {
+        (async () => {
+            let idxShowedBefore = await GetNumberIntAsync(StorageKey_LastMiniIapProductIdxShowed, -1)
+
+            idxShowedBefore++
+
+            if (idxShowedBefore >= allProducts.length)
+                idxShowedBefore = 0
+
+            setProduct(allProducts[idxShowedBefore])
+            SetNumberAsync(StorageKey_LastMiniIapProductIdxShowed, idxShowedBefore)
+        })()
+    }, [])
+
+    if (!isInited) {
+        return (
+            <View style={style.master} >
+                <ActivityIndicator color={theme.primary} />
+            </View>
+        )
+    }
+
     return (
         <View style={style.master} >
             <Image source={logoScr} resizeMode='contain' style={[style.logoImg]} />
@@ -46,8 +80,8 @@ const MiniIAP = () => {
                     resizeMode='cover'
                     source={iapBg_1}
                     style={style.iapIB}>
-                    <Text style={style.monthTxt}>{month} month{month > 1 ? 's' : ''}</Text>
-                    <Text style={style.priceTxt}>{price}{processing ? '  ' : ''}{processing ? <ActivityIndicator color={theme.counterBackground} size={'small'} /> : undefined}</Text>
+                    <Text style={style.monthTxt}>{product.displayName}</Text>
+                    <Text style={style.priceTxt}>{fetchedTargetProduct ? fetchedTargetProduct.localizedPrice : '...'}{processing ? '  ' : ''}{processing ? <ActivityIndicator color={theme.counterBackground} size={'small'} /> : undefined}</Text>
                 </ImageBackground>
             </TouchableOpacity>
 
