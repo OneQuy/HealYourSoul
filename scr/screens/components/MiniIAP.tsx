@@ -39,6 +39,7 @@ const MiniIAP = ({
 
     const onPressed_Buy = useCallback(async () => {
         setProcessing(true)
+        premiumScaleRef.setValue(1)
 
         await BuyPremiumAsync(product.sku, dispatch)
 
