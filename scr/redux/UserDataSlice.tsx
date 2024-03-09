@@ -31,6 +31,9 @@ export type UserDataState = {
     awesomeSeenIDs: (number | string)[],
     awesomeFavoritedIDs: (number | string)[],
 
+    awesomeNatureSeenIDs: (number | string)[],
+    awesomeNatureFavoritedIDs: (number | string)[],
+
     tuneSeenIDs: (number | string)[],
     tuneFavoritedIDs: (number | string)[],
 
@@ -124,6 +127,9 @@ const initialState: UserDataState = {
 
     awesomeSeenIDs: [],
     awesomeFavoritedIDs: [],
+
+    awesomeNatureSeenIDs: [],
+    awesomeNatureFavoritedIDs: [],
 
     quoteSeenIDs: [],
     quoteFavoritedIDs: [],
@@ -383,6 +389,31 @@ const slice = createSlice({
 
         removeDrawFavoritedID(state, action: PayloadAction<number | string>) {
             state.drawFavoritedIDs = state.drawFavoritedIDs.filter(i => i !== action.payload)
+        },
+
+        // awesomeNature
+
+        addAwesomeNatureSeenID(state, action: PayloadAction<number | string>) {
+            if (!state.awesomeNatureSeenIDs)
+                state.awesomeNatureSeenIDs = []
+
+            if (!state.awesomeNatureSeenIDs.includes(action.payload))
+                state.awesomeNatureSeenIDs.push(action.payload);
+        },
+
+        addAwesomeNatureFavoritedID(state, action: PayloadAction<number | string>) {
+            if (!state.awesomeNatureFavoritedIDs)
+                state.awesomeNatureFavoritedIDs = []
+
+            if (!state.awesomeNatureFavoritedIDs.includes(action.payload))
+                state.awesomeNatureFavoritedIDs.push(action.payload);
+        },
+
+        removeAwesomeNatureFavoritedID(state, action: PayloadAction<number | string>) {
+            if (!state.awesomeNatureFavoritedIDs)
+                return
+
+            state.awesomeNatureFavoritedIDs = state.awesomeNatureFavoritedIDs.filter(i => i !== action.payload)
         },
 
         // vocabulary
@@ -832,6 +863,10 @@ export const {
     addVocabularyFavoritedID,
     removeVocabularyFavoritedID,
 
+    addAwesomeNatureFavoritedID,
+    addAwesomeNatureSeenID,
+    removeAwesomeNatureFavoritedID,
+    
     clearAllInboxes,
     clearInbox,
     setDidReadInbox,

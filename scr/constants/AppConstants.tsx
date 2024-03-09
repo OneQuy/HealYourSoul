@@ -26,6 +26,7 @@ export enum ScreenName {
   Comic = 'Warm', // draw
   Meme = 'Meme',
   Awesome = 'Awesome',
+  AwesomeNature = 'Awesome Nature',
   Tune = 'Tune',
   Typo = 'Typography',
   Info = 'Infographic',
@@ -75,6 +76,7 @@ export enum LocalPath {
   ListFile_Art = LocalPath.MasterDirName + '/art/list.json',
   ListFile_Sarcasm = LocalPath.MasterDirName + '/sarcasm/list.json',
   ListFile_Awesome = LocalPath.MasterDirName + '/awesome/list.json',
+  ListFile_AwesomeNature = LocalPath.MasterDirName + '/awesomenature/list.json',
   ListFile_Tune = LocalPath.MasterDirName + '/tune/list.json',
   ListFile_Typo = LocalPath.MasterDirName + '/typo/list.json',
   ListFile_Info = LocalPath.MasterDirName + '/info/list.json',
@@ -95,6 +97,7 @@ export enum FirebasePath {
   ListFile_Sarcasm = 'sarcasm/list.json',
   ListFile_Awesome = 'awesome/list.json',
   ListFile_Tune = 'tune/list.json',
+  ListFile_AwesomeNature = 'awesomenature/list.json',
   ListFile_Info = 'info/list.json',
   ListFile_Typo = 'typo/list.json',
   ListFile_Sunset = 'sunset/list.json',
@@ -117,6 +120,7 @@ export enum FirebaseDBPath {
   Version_Info = 'app/versions/info',
   Version_Tune = 'app/versions/tune',
   Version_Awesome = 'app/versions/awesome',
+  Version_AwesomeNature = 'app/versions/awesomenature',
   Version_Vocabulary = 'app/versions/vocabulary',
 }
 
@@ -151,6 +155,7 @@ export enum Category {
   FunSound = 26,
   Tune = 27,
   Vocabulary = 28,
+  AwesomeNature = 29,
 }
 
 // margin / padding
@@ -362,9 +367,9 @@ export const LocalText = {
   top_movies: 'Top 250 Movies',
   best_short_films: 'Best Short Films',
   filter: 'Filter',
-  new_item_website: '# new fun website(s) added to the list!!',
-  new_item_short_film: '# new short film(s) added to the list!!',
-  new_item_top_movies: 'The movies just updated with the latest data!',
+  new_item_website: '# new fun website(s) added to the list',
+  new_item_short_film: '# new short film(s) added to the list',
+  new_item_top_movies: 'Latest data updated!',
   clear: 'Clear',
   clear_all: 'Clear all',
   mark_read: 'Mark as read',

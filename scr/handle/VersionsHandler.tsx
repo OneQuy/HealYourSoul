@@ -23,6 +23,7 @@ export type Versions = {
     info: number,
     tune: number,
     vocabulary: number,
+    awesomenature: number,
 }
 
 export var versions: Versions;

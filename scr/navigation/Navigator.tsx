@@ -12,7 +12,7 @@ import LoveScreen from '../screens/love/LoveScreen';
 import { CustomDrawerContent } from './CustomDrawer';
 import NSFWScreen from '../screens/nsfw/NSFWScreen';
 import IAPPage from '../screens/IAP/IAPPage';
-import { ArtScreen, AwesomeScreen, CuteScreen, InfoScreen, QuoteTextScreen, RandomMemeScreen, SarcasmScreen, SunsetScreen, TuneScreen, TypoScreen, VocabularyScreen, } from '../screens/other_thepage_screens/Index';
+import { ArtScreen, AwesomeNatureScreen, AwesomeScreen, CuteScreen, InfoScreen, QuoteTextScreen, RandomMemeScreen, SarcasmScreen, SunsetScreen, TuneScreen, TypoScreen, VocabularyScreen, } from '../screens/other_thepage_screens/Index';
 import NinjaFactScreen from '../screens/ninja_fact/NinjaFactScreen';
 import PictureScreen from '../screens/picture/PictureScreen';
 import NinjaJokeScreen from '../screens/ninja_fact/NinjaJokeScreen';
@@ -70,6 +70,7 @@ export type DrawerParamList = {
   [ScreenName.Sunset]: { item: DiversityItemType } | undefined,
   [ScreenName.Info]: { item: DiversityItemType } | undefined,
   [ScreenName.Typo]: { item: DiversityItemType } | undefined,
+  [ScreenName.AwesomeNature]: { item: DiversityItemType } | undefined,
 
   [ScreenName.IAPPage]: undefined,
   [ScreenName.Setting]: undefined,
@@ -98,6 +99,7 @@ const ScreenList: ScreenNamePair[] = [
   [ScreenName.Quote, QuoteScreen], // movivation
   [ScreenName.Art, ArtScreen],
   [ScreenName.Awesome, AwesomeScreen],
+  [ScreenName.AwesomeNature, AwesomeNatureScreen],
   [ScreenName.Tune, TuneScreen],
   [ScreenName.Typo, TypoScreen],
   [ScreenName.Cute, CuteScreen],

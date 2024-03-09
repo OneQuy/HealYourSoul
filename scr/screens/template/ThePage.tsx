@@ -18,7 +18,6 @@ import { CheckLocalFileAndGetURIAsync, CopyAndToast, GetAllSavedLocalPostIDsList
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { PickRandomElement, RoundNumber, SecondsToHourMinuteSecondString } from '../../handle/Utils';
-import { addDrawSeenID, addQuoteSeenID, addMemeSeenID, addLoveSeenID, addSatisfyingSeenID, addCatDogSeenID, addNSFWSeenID, addCuteSeenID, addArtSeenID, addSarcasmSeenID, addTypoSeenID, addSunsetSeenID, addInfoSeenID, addAwesomeSeenID, addTuneSeenID, addVocabularySeenID } from '../../redux/UserDataSlice';
 import { setMutedVideo } from '../../redux/MiscSlice';
 import { ColorNameToRgb, HexToRgb, ToCanPrint } from '../../handle/UtilsTS';
 import { ToastOptions, toast } from '@baronha/ting';
@@ -74,8 +73,6 @@ const ThePage = ({ category }: ThePageProps) => {
     const allSavedLocalPostIdsRef = useRef<number[] | undefined>(undefined);
     const favoriteCallbackRef = useRef<(() => void) | undefined>(undefined);
     const [showIntroduceCat, renderShowIntroduceCat] = useIntroduceCat(category)
-
-    const seenIDs = useSeenIDs(category)
 
     // video states
 
@@ -153,6 +150,8 @@ const ThePage = ({ category }: ThePageProps) => {
     const mediaURI = useRef('');
     const post = useRef<PostMetadata | null>(null);
     const curMediaIdx = useRef<number>(0);
+
+    const seenIDs = useSeenIDs(category, post.current?.id)
 
     // animation
 
@@ -505,43 +504,6 @@ const ThePage = ({ category }: ThePageProps) => {
         if (!fileList.current) {
             onPressReloadAsync();
             return;
-        }
-
-        if (post.current) {
-            if (category === Category.Meme)
-                dispatch(addMemeSeenID(post.current.id));
-            else if (category === Category.Draw)
-                dispatch(addDrawSeenID(post.current.id));
-            else if (category === Category.Quote)
-                dispatch(addQuoteSeenID(post.current.id));
-            else if (category === Category.Love)
-                dispatch(addLoveSeenID(post.current.id));
-            else if (category === Category.Satisfying)
-                dispatch(addSatisfyingSeenID(post.current.id));
-            else if (category === Category.CatDog)
-                dispatch(addCatDogSeenID(post.current.id));
-            else if (category === Category.NSFW)
-                dispatch(addNSFWSeenID(post.current.id));
-            else if (category === Category.Cute)
-                dispatch(addCuteSeenID(post.current.id));
-            else if (category === Category.Art)
-                dispatch(addArtSeenID(post.current.id));
-            else if (category === Category.Sarcasm)
-                dispatch(addSarcasmSeenID(post.current.id));
-            else if (category === Category.Typo)
-                dispatch(addTypoSeenID(post.current.id));
-            else if (category === Category.Sunset)
-                dispatch(addSunsetSeenID(post.current.id));
-            else if (category === Category.Vocabulary)
-                dispatch(addVocabularySeenID(post.current.id));
-            else if (category === Category.Info)
-                dispatch(addInfoSeenID(post.current.id));
-            else if (category === Category.Awesome)
-                dispatch(addAwesomeSeenID(post.current.id));
-            else if (category === Category.Tune)
-                dispatch(addTuneSeenID(post.current.id));
-            else
-                throw new Error('NI cat: ' + category);
         }
 
         setNeedLoadPost(isNext ? 'next' : 'previous')

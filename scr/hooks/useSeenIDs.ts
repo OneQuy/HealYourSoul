@@ -1,8 +1,12 @@
+import { useEffect } from 'react';
 import { Category } from '../constants/AppConstants';
-import { useAppSelector } from '../redux/Store';
+import { useAppDispatch, useAppSelector } from '../redux/Store';
+import { addDrawSeenID, addQuoteSeenID, addMemeSeenID, addLoveSeenID, addSatisfyingSeenID, addCatDogSeenID, addNSFWSeenID, addCuteSeenID, addArtSeenID, addSarcasmSeenID, addTypoSeenID, addSunsetSeenID, addInfoSeenID, addAwesomeSeenID, addTuneSeenID, addVocabularySeenID, addAwesomeNatureSeenID } from '../redux/UserDataSlice'
 
-const useSeenIDs = (category: Category) => {
-    return useAppSelector((state) => {
+const useSeenIDs = (category: Category, postID: number | string | undefined) => {
+    const dispatch = useAppDispatch()
+
+    const seenIDs = useAppSelector((state) => {
         if (category === Category.Draw)
             return state.userData.drawSeenIDs;
         else if (category === Category.Meme)
@@ -35,9 +39,55 @@ const useSeenIDs = (category: Category) => {
             return state.userData.awesomeSeenIDs;
         else if (category === Category.Tune)
             return state.userData.tuneSeenIDs;
+        else if (category === Category.AwesomeNature)
+            return state.userData.awesomeNatureSeenIDs;
         else
             throw new Error('not implement cat: ' + category);
     })
+
+    useEffect(() => {
+        if (postID === undefined)
+            return
+
+        if (category === Category.Meme)
+            dispatch(addMemeSeenID(postID));
+        else if (category === Category.Draw)
+            dispatch(addDrawSeenID(postID));
+        else if (category === Category.Quote)
+            dispatch(addQuoteSeenID(postID));
+        else if (category === Category.Love)
+            dispatch(addLoveSeenID(postID));
+        else if (category === Category.Satisfying)
+            dispatch(addSatisfyingSeenID(postID));
+        else if (category === Category.CatDog)
+            dispatch(addCatDogSeenID(postID));
+        else if (category === Category.NSFW)
+            dispatch(addNSFWSeenID(postID));
+        else if (category === Category.Cute)
+            dispatch(addCuteSeenID(postID));
+        else if (category === Category.Art)
+            dispatch(addArtSeenID(postID));
+        else if (category === Category.Sarcasm)
+            dispatch(addSarcasmSeenID(postID));
+        else if (category === Category.Typo)
+            dispatch(addTypoSeenID(postID));
+        else if (category === Category.Sunset)
+            dispatch(addSunsetSeenID(postID));
+        else if (category === Category.Vocabulary)
+            dispatch(addVocabularySeenID(postID));
+        else if (category === Category.Info)
+            dispatch(addInfoSeenID(postID));
+        else if (category === Category.Awesome)
+            dispatch(addAwesomeSeenID(postID));
+        else if (category === Category.Tune)
+            dispatch(addTuneSeenID(postID));
+        else if (category === Category.AwesomeNature)
+            dispatch(addAwesomeNatureSeenID(postID));
+        else
+            throw new Error('NI cat: ' + category);
+    }, [postID])
+
+    return seenIDs
 }
 
 export default useSeenIDs

@@ -56,6 +56,8 @@ async function JustDoIt() {
       cat = 'sarcasm'
     else if (IsParamExist('awesome') || IsParamExist('aw'))
       cat = 'awesome'
+    else if (IsParamExist('an'))
+      cat = 'awesomenature'
     else if (IsParamExist('typo') || IsParamExist('ty'))
       cat = 'typo'
     else if (IsParamExist('info') || IsParamExist('in'))
