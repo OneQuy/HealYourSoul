@@ -6,7 +6,7 @@ import { HandleStartupAlertAsync } from "./StartupAlert"
 import { GoodayToast, startFreshlyOpenAppTick, versionAsNumber } from "./AppUtils"
 import { SaveCachedPressNextPostAsync, checkAndTrackLocation, track_NewlyInstallOrFirstOpenOfTheDayOldUserAsync, track_OnUseEffectOnceEnterAppAsync, track_OpenAppOfDayCount, track_Simple, track_SimpleWithParam, track_Streak } from "./tracking/GoodayTracking"
 import { LocalText, ScreenName, StorageKey_ClickNotificationOneSignal, StorageKey_LastTimeCheckAndReloadAppConfig, StorageKey_LastTimeCheckFirstOpenAppOfTheDay, StorageKey_OpenAppOfDayCount, StorageKey_OpenAppOfDayCountForDate, StorageKey_OpenAppTotalCount, StorageKey_ScreenToInit } from "../constants/AppConstants"
-import { GetDateAsync, GetDateAsync_IsValueExistedAndIsToday, GetDateAsync_IsValueNotExistedOrEqualOverMinFromNow, GetNumberIntAsync, IncreaseNumberAsync, SetDateAsync_Now, SetNumberAsync } from "./AsyncStorageUtils"
+import { GetDateAsync, GetDateAsync_IsValueExistedAndIsToday, GetDateAsync_IsValueNotExistedOrEqualOverMinFromNow, GetNumberIntAsync, IncreaseNumberAsync, SetDateAsync_Now, SetNumberAsync, StorageAppendToArrayAsync, StorageGetArrayAsync } from "./AsyncStorageUtils"
 import { HandldAlertUpdateAppAsync } from "./HandleAlertUpdateApp"
 import { CheckAndPrepareDataForNotificationAsync, setNotificationAsync } from "./GoodayNotification"
 import { FilterOnlyLetterAndNumberFromString, IsToday, SafeValue } from "./UtilsTS"
@@ -295,17 +295,18 @@ const SetupOneSignal = () => {
 
     OneSignal.Notifications.addEventListener('click', (event) => {
         const title = SafeValue(event?.notification?.title, 'v' + versionAsNumber)
-        AsyncStorage.setItem(StorageKey_ClickNotificationOneSignal, title)
+        const value = FilterOnlyLetterAndNumberFromString(title)
+
+        StorageAppendToArrayAsync(StorageKey_ClickNotificationOneSignal, value)
     })
 
     // track old click notification
 
-    AsyncStorage.getItem(StorageKey_ClickNotificationOneSignal).then((s) => {
-        if (!s)
-            return
-        
-        const value = FilterOnlyLetterAndNumberFromString(s)
+    StorageGetArrayAsync(StorageKey_ClickNotificationOneSignal).then((s) => {
+        s.forEach(element => {
+            track_SimpleWithParam('click_onesignal', element)
+        });
 
-        track_SimpleWithParam('click_onesignal', value)
+        AsyncStorage.removeItem(StorageKey_ClickNotificationOneSignal)
     })
 }
