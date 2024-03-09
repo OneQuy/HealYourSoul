@@ -5,7 +5,7 @@ import { HandleAppConfigAsync } from "./AppConfigHandler"
 import { HandleStartupAlertAsync } from "./StartupAlert"
 import { GoodayToast, startFreshlyOpenAppTick, versionAsNumber } from "./AppUtils"
 import { SaveCachedPressNextPostAsync, checkAndTrackLocation, track_NewlyInstallOrFirstOpenOfTheDayOldUserAsync, track_OnUseEffectOnceEnterAppAsync, track_OpenAppOfDayCount, track_Simple, track_SimpleWithParam, track_Streak } from "./tracking/GoodayTracking"
-import { LocalText, ScreenName, StorageKey_ClickNotificationOneSignal, StorageKey_LastTimeCheckAndReloadAppConfig, StorageKey_LastTimeCheckFirstOpenAppOfTheDay, StorageKey_OpenAppOfDayCount, StorageKey_OpenAppOfDayCountForDate, StorageKey_OpenAppTotalCount, StorageKey_ScreenToInit } from "../constants/AppConstants"
+import { LocalText, ScreenName, StorageKey_ClickNotificationOneSignal, StorageKey_LastTimeCheckAndReloadAppConfig, StorageKey_LastTimeCheckFirstOpenAppOfTheDay, StorageKey_OpenAppOfDayCount, StorageKey_OpenAppOfDayCountForDate, StorageKey_OpenAppTotalCount, StorageKey_ScreenToInit, StorageKey_Streak, StorageKey_StreakLastTime } from "../constants/AppConstants"
 import { GetDateAsync, GetDateAsync_IsValueExistedAndIsToday, GetDateAsync_IsValueNotExistedOrEqualOverMinFromNow, GetNumberIntAsync, IncreaseNumberAsync, SetDateAsync_Now, SetNumberAsync, StorageAppendToArrayAsync, StorageGetArrayAsync } from "./AsyncStorageUtils"
 import { HandldAlertUpdateAppAsync } from "./HandleAlertUpdateApp"
 import { CheckAndPrepareDataForNotificationAsync, setNotificationAsync } from "./GoodayNotification"
@@ -279,10 +279,19 @@ export const HandleGoodayStreakAsync = async (forceShow = false) => {
     if (!data)
         return
 
+    const streakLastTime = await GetNumberIntAsync(StorageKey_StreakLastTime)
+
+    if (data.currentStreak === streakLastTime && !forceShow)
+        return
+
+    SetNumberAsync(StorageKey_StreakLastTime, data.currentStreak)
+
     if (data.currentStreak > 1)
         GoodayToast(LocalText.gooday_streak_2.replaceAll('##', data.currentStreak.toString()))
     else
         GoodayToast(LocalText.gooday_streak_1)
+
+    // track
 
     if (!forceShow)
         track_Streak(data.currentStreak)
