@@ -8,6 +8,9 @@ import { useMyIAP } from '../../hooks/useMyIAP';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GetNumberIntAsync, IncreaseNumberAsync, SetNumberAsync } from '../../handle/AsyncStorageUtils';
 import { useAppDispatch } from '../../redux/Store';
+import { GetAppConfig } from '../../handle/AppConfigHandler';
+import { SafeValue } from '../../handle/UtilsTS';
+import { usePremium } from '../../hooks/usePremium';
 
 const MiniIAP = ({
     postID,
@@ -19,8 +22,9 @@ const MiniIAP = ({
     const [processing, setProcessing] = useState(false)
     const [showMiniIAP, setShowMiniIAP] = useState(false)
     const dispatch = useAppDispatch()
+    const { isPremium } = usePremium()
 
-    const { isReadyPurchase, localPrice, initErrorObj } = useMyIAP(
+    const { isReadyPurchase, localPrice } = useMyIAP(
         allProducts,
         async (s: string) => AsyncStorage.setItem(StorageKey_CachedIAP, s),
         async () => AsyncStorage.getItem(StorageKey_CachedIAP),
@@ -52,33 +56,36 @@ const MiniIAP = ({
         })
     }, [theme])
 
-    // init once (select which iap to show)
-
     useEffect(() => {
         (async () => {
+            if (isPremium)
+                return
+
+            if (!postID || !isReadyPurchase)
+                return
+
+            const count = await IncreaseNumberAsync(StorageKey_MiniIAPCount, 0)
+
+            const triggerNum = SafeValue(GetAppConfig()?.count_trigger_mini_iap, 30)
+            console.log('trigger ', triggerNum, count);
+
+            if (count < triggerNum)
+                return
+
+            // show!
+
             let idxShowedBefore = await GetNumberIntAsync(StorageKey_LastMiniIapProductIdxShowed, -1)
 
             idxShowedBefore++
 
             if (idxShowedBefore >= allProducts.length)
                 idxShowedBefore = 0
-
-            setProduct(allProducts[idxShowedBefore])
+            
             SetNumberAsync(StorageKey_LastMiniIapProductIdxShowed, idxShowedBefore)
-        })()
-    }, [])
-
-    useEffect(() => {
-        (async () => {
-
-            await IncreaseNumberAsync(StorageKey_MiniIAPCount)
-
-            const count = await GetNumberIntAsync(StorageKey_MiniIAPCount, 0)
-
-            if (count > 1) {
-                setShowMiniIAP(true)
-                SetNumberAsync(StorageKey_MiniIAPCount, 0)
-            }
+            SetNumberAsync(StorageKey_MiniIAPCount, 0)
+            
+            setProduct(allProducts[idxShowedBefore])
+            setShowMiniIAP(true)
         })()
     }, [postID])
 
