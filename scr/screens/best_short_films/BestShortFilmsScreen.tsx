@@ -29,6 +29,7 @@ import BottomBar, { BottomBarItem } from '../others/BottomBar';
 import HeaderRightButtons from '../components/HeaderRightButtons';
 import useIntroduceCat from '../components/IntroduceCat';
 import ViewCount from '../components/ViewCount';
+import MiniIAP from '../components/MiniIAP';
 
 const category = Category.BestShortFilms
 const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Fshort_films.json?alt=media&token=537eec8b-f774-4908-a5fa-45f8daf676d8'
@@ -50,7 +51,7 @@ const BestShortFilmsScreen = () => {
         true,
         GetRemoteFileConfigVersion('short_films'),
         'json',
-        true,
+        false,
         async () => AsyncStorage.getItem(StorageKey_LocalFileVersion(category)),
         async () => AsyncStorage.setItem(StorageKey_LocalFileVersion(category), GetRemoteFileConfigVersion('short_films').toString()))
 
@@ -362,6 +363,8 @@ const BestShortFilmsScreen = () => {
             {
                 isShowList && Array.isArray(shortFilms) ? <ListMovie getSelectingIdAsync={getSelectingIdxAsync} setIdx={(idx: number) => onPressNext(idx, 'menu')} list={shortFilms} /> : undefined
             }
+
+            <MiniIAP postID={idCurrent} />
         </View>
     )
 }
