@@ -132,6 +132,7 @@ export type AppConfig = {
     net_url: string,
     remote_files: object,
     force_dev_01: number,
+    count_trigger_mini_iap: number,
     userUploadLimit: {
         freeUserUploadsPerDay: number,
         intervalInMinute: number, // for both user free and premium.
