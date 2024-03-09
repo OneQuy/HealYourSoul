@@ -52,7 +52,7 @@ const MiniIAP = ({
     const style = useMemo(() => {
         return StyleSheet.create({
             master: { gap: Outline.GapVertical, padding: Outline.GapVertical, justifyContent: 'center', alignItems: 'center', backgroundColor: theme.background, width: '100%', height: '100%', position: 'absolute' },
-            title: { color: theme.primary, fontSize: FontSize.Normal, fontWeight: FontWeight.Bold },
+            title: { color: theme.primary, fontSize: FontSize.Big, fontWeight: FontWeight.Bold },
             logoImg: { height: Size.IconBig, aspectRatio: 1, },
             iapTO: { borderRadius: BorderRadius.BR, overflow: 'hidden' },
             laterTO: { borderColor: theme.counterBackground, borderWidth: StyleSheet.hairlineWidth, borderRadius: BorderRadius.BR, minWidth: '60%', alignItems: 'center', padding: Outline.GapVertical_2, justifyContent: 'center', },
@@ -69,7 +69,7 @@ const MiniIAP = ({
         for (let i = 0; i < arr.length; i++) {
             const ref = arr[i]
             ref.setValue(0)
-            
+
             Animated.spring(ref, {
                 useNativeDriver: true,
                 toValue: 1,

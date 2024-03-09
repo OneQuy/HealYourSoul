@@ -447,7 +447,8 @@ export const LocalText = {
 
   unlock_all: 'Unlock all features',
 
-  unlock_all_info: `- Save an unlimited number of posts to watch later.
+  unlock_all_info: `- Remove Ads
+- Save an unlimited number of posts to watch later.
 - Re-watch the posts you loved without any page limits in Gallery.
 - Upload an unlimited number of memes.`,
 
