@@ -66,14 +66,10 @@ const MiniIAP = ({
     const effectShow = useCallback(() => {
         const arr = [titleScaleRef, contentScaleRef, premiumScaleRef, laterScaleRef]
 
-        titleScaleRef.setValue(0)
-        contentScaleRef.setValue(0)
-        premiumScaleRef.setValue(0)
-        laterScaleRef.setValue(0)
-
         for (let i = 0; i < arr.length; i++) {
             const ref = arr[i]
-
+            ref.setValue(0)
+            
             Animated.spring(ref, {
                 useNativeDriver: true,
                 toValue: 1,
