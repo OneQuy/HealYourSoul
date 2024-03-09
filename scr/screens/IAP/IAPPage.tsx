@@ -93,54 +93,11 @@ const IAPPage = () => {
     async () => AsyncStorage.getItem(StorageKey_CachedIAP))
 
   const onPressed_Buy = async (id: string) => {
-    track_SimpleWithParam('click_iap', id)
     setProcessingId(id)
 
-    let res
-
-    if (!__DEV__ || !Cheat('IAPSuccess')) // release mode
-      res = await PurchaseAsync(id)
-    else { // cheat
-      res = undefined
-    }
-
-    // const res = undefined
+    await BuyPremiumAsync(id, dispatch)
 
     setProcessingId('')
-
-    if (res === undefined) { // success
-      // track count
-
-      track_SimpleWithParam('iap_resulted', 'successssss_' + id)
-
-      // track detail
-
-      const pathFb = prefixFbTrackPath() + 'iap_success/' + todayString + '/' + Date.now()
-      const trackText = JSON.stringify(await CreateUserInfoObjectAsync(id))
-      FirebaseDatabase_SetValueAsync(pathFb, trackText)
-
-      // dispatch
-
-      dispatch(setSubscribe(id))
-
-      Alert.alert(LocalText.you_are_awesome, LocalText.thank_iap)
-
-      if (id === lifetimeProduct.sku) { // lifetimed
-        ResetNavigation()
-      }
-    }
-    else if (res === null) { // user cancelled
-      track_SimpleWithParam('iap_resulted', 'canceled')
-    }
-    else { // fail
-      track_SimpleWithParam('iap_resulted', 'failed')
-
-      HandleError('IAP_Failed', res, true)
-
-      Alert.alert(
-        'Error',
-        'An error occured when processing purchase. Please try again!\n' + id + '\n' + ToCanPrintError(res))
-    }
   }
 
   const renderLifetimeButton = useCallback(() => {
@@ -242,3 +199,49 @@ const IAPPage = () => {
 }
 
 export default IAPPage
+
+export const BuyPremiumAsync = async (sku: string, dispatch: ReturnType<typeof useAppDispatch>) => {
+  track_SimpleWithParam('click_iap', sku)
+
+  let res
+
+  if (!__DEV__ || !Cheat('IAPSuccess')) // release mode
+    res = await PurchaseAsync(sku)
+  else { // cheat
+    res = undefined
+  }
+
+  if (res === undefined) { // success
+    // track count
+
+    track_SimpleWithParam('iap_resulted', 'successssss_' + sku)
+
+    // track detail
+
+    const pathFb = prefixFbTrackPath() + 'iap_success/' + todayString + '/' + Date.now()
+    const trackText = JSON.stringify(await CreateUserInfoObjectAsync(sku))
+    FirebaseDatabase_SetValueAsync(pathFb, trackText)
+
+    // dispatch
+
+    dispatch(setSubscribe(sku))
+
+    Alert.alert(LocalText.you_are_awesome, LocalText.thank_iap)
+
+    if (sku === lifetimeProduct.sku) { // lifetimed
+      ResetNavigation()
+    }
+  }
+  else if (res === null) { // user cancelled
+    track_SimpleWithParam('iap_resulted', 'canceled')
+  }
+  else { // fail
+    track_SimpleWithParam('iap_resulted', 'failed')
+
+    HandleError('IAP_Failed', res, true)
+
+    Alert.alert(
+      'Error',
+      'An error occured when processing purchase. Please try again!\n' + sku + '\n' + ToCanPrintError(res))
+  }
+}

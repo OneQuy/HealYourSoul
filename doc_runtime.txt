@@ -27,6 +27,14 @@ how IntroduceCat works?
 
 =========================
 
+alerts in app:
+
+- alert update app
+- startup alert 
+- iap: success & error
+- ThePage video error
+...
+
 =========================
 
 =========================
