@@ -18,9 +18,10 @@ const { isInited, fetchedProducts } = useMyIAP(
 
  * 2. check isInited for show loading
  * 3. when isInited is true, check initErrorObj (undefined means success inited)
- * 4. use:
+ * 4. use in return:
  *      + fetchedProducts
- *      + fetchedTargetProduct for get local price of targetProductSku
+ *      + fetchedTargetProduct of targetProductSku
+ *      + localPrice of targetProductSku
  */
 export const useMyIAP = (
     allProducts: IAPProduct[],
@@ -91,6 +92,7 @@ export const useMyIAP = (
     return {
         fetchedProducts,
         fetchedTargetProduct,
+        localPrice: fetchedTargetProduct ? fetchedTargetProduct.localizedPrice : undefined,
         isInited,
         initErrorObj,
     } as const
