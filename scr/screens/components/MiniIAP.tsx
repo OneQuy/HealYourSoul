@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground, ActivityIndicator } from 'react-native'
-import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground, ActivityIndicator, Animated } from 'react-native'
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors';
 import { BorderRadius, FontSize, FontWeight, LocalText, Outline, Size, StorageKey_CachedIAP, StorageKey_LastMiniIapProductIdxShowed, StorageKey_MiniIAPCount } from '../../constants/AppConstants';
 import { logoScr } from '../others/SplashScreen';
@@ -12,6 +12,8 @@ import { GetAppConfig } from '../../handle/AppConfigHandler';
 import { SafeValue } from '../../handle/UtilsTS';
 import { usePremium } from '../../hooks/usePremium';
 
+const TOAnimated = Animated.createAnimatedComponent(TouchableOpacity)
+
 const MiniIAP = ({
     postID,
 }: {
@@ -23,6 +25,11 @@ const MiniIAP = ({
     const [showMiniIAP, setShowMiniIAP] = useState(false)
     const dispatch = useAppDispatch()
     const { isPremium } = usePremium()
+
+    const titleScaleRef = useRef(new Animated.Value(0)).current
+    const contentScaleRef = useRef(new Animated.Value(0)).current
+    const premiumScaleRef = useRef(new Animated.Value(0)).current
+    const laterScaleRef = useRef(new Animated.Value(0)).current
 
     const { isReadyPurchase, localPrice } = useMyIAP(
         allProducts,
@@ -56,6 +63,32 @@ const MiniIAP = ({
         })
     }, [theme])
 
+    const effectShow = useCallback(() => {
+        const arr = [titleScaleRef, contentScaleRef, premiumScaleRef, laterScaleRef]
+
+        titleScaleRef.setValue(0)
+        contentScaleRef.setValue(0)
+        premiumScaleRef.setValue(0)
+        laterScaleRef.setValue(0)
+
+        for (let i = 0; i < arr.length; i++) {
+            const ref = arr[i]
+
+            Animated.spring(ref, {
+                useNativeDriver: true,
+                toValue: 1,
+                delay: i * 100,
+            }).start()
+        }
+    }, [])
+
+    useEffect(() => {
+        if (!showMiniIAP)
+            return
+
+        effectShow()
+    }, [showMiniIAP])
+
     useEffect(() => {
         (async () => {
             if (isPremium)
@@ -67,7 +100,6 @@ const MiniIAP = ({
             const count = await IncreaseNumberAsync(StorageKey_MiniIAPCount, 0)
 
             const triggerNum = SafeValue(GetAppConfig()?.count_trigger_mini_iap, 30)
-            console.log('trigger ', triggerNum, count);
 
             if (count < triggerNum)
                 return
@@ -80,10 +112,10 @@ const MiniIAP = ({
 
             if (idxShowedBefore >= allProducts.length)
                 idxShowedBefore = 0
-            
+
             SetNumberAsync(StorageKey_LastMiniIapProductIdxShowed, idxShowedBefore)
             SetNumberAsync(StorageKey_MiniIAPCount, 0)
-            
+
             setProduct(allProducts[idxShowedBefore])
             setShowMiniIAP(true)
         })()
@@ -96,12 +128,12 @@ const MiniIAP = ({
     return (
         <View style={style.master} >
             <Image source={logoScr} resizeMode='contain' style={[style.logoImg]} />
-            <Text style={style.title}>Gooday Premium</Text>
-            <Text style={style.benefitsTxt}>{LocalText.unlock_all_info + '\n' + LocalText.support_me_info}</Text>
+            <Animated.Text style={[style.title, { transform: [{ scale: titleScaleRef }] }]}>Gooday Premium</Animated.Text>
+            <Animated.Text style={[style.benefitsTxt, { transform: [{ scale: contentScaleRef }] }]}>{LocalText.unlock_all_info + '\n' + LocalText.support_me_info}</Animated.Text>
 
             {/* iap btn */}
 
-            <TouchableOpacity onPress={onPressed_Buy} style={style.iapTO}>
+            <TOAnimated onPress={onPressed_Buy} style={[style.iapTO, { transform: [{ scale: premiumScaleRef }] }]}>
                 <ImageBackground
                     resizeMode='cover'
                     source={iapBg_1}
@@ -109,13 +141,13 @@ const MiniIAP = ({
                     <Text style={style.monthTxt}>{product.displayName}</Text>
                     <Text style={style.priceTxt}>{localPrice ?? '...'}{processing ? '  ' : ''}{processing ? <ActivityIndicator color={theme.counterBackground} size={'small'} /> : undefined}</Text>
                 </ImageBackground>
-            </TouchableOpacity>
+            </TOAnimated>
 
             {/* later btn */}
 
-            <TouchableOpacity onPress={onPressed_Later} style={style.laterTO}>
+            <TOAnimated onPress={onPressed_Later} style={[style.laterTO, { transform: [{ scale: laterScaleRef }] }]}>
                 <Text style={style.benefitsTxt}>{LocalText.later}</Text>
-            </TouchableOpacity>
+            </TOAnimated>
         </View>
     )
 }
