@@ -27,6 +27,7 @@ import BottomBar, { BottomBarItem } from '../others/BottomBar';
 import HeaderRightButtons from '../components/HeaderRightButtons';
 import useIntroduceCat from '../components/IntroduceCat';
 import ViewCount from '../components/ViewCount';
+import MiniIAP from '../components/MiniIAP';
 
 const category = Category.FunWebsites
 const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Ffun_websites.json?alt=media&token=10ecb626-e576-49d4-b124-a9ba148a93a6'
@@ -326,6 +327,8 @@ const FunWebsitesScreen = () => {
             {
                 isShowList && Array.isArray(funWebsites) ? <ListWebsite getSelectingIdAsync={getSelectingIdAsync} setIdx={(idx: number) => onPressNext(idx, 'menu')} list={funWebsites} /> : undefined
             }
+
+            <MiniIAP postID={selectingItem?.id} />
         </View>
     )
 }
