@@ -579,6 +579,7 @@ export const StorageKey_LastTimeUpload = 'last_time_upload'
 export const StorageKey_ReadRulesUpload = 'read_rules_upload'
 export const StorageKey_HaveNewApprovedUploads = 'new_approved_uploads'
 export const StorageKey_LastMiniIapProductIdxShowed = 'mini_iap_idx'
+export const StorageKey_MiniIAPCount = 'mini_iap_count'
 
 // export const StorageKey_LastTickAskRate = 'last_ask_rate'
 // export const StorageKey_LastAskRateIsPressRateOrNot = 'last_ask_rate_ok'

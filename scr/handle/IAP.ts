@@ -14,7 +14,7 @@
  */
 
 
-import { Platform } from 'react-native';
+import { Alert, Platform } from 'react-native';
 import {
     initConnection,
     purchaseUpdatedListener,
@@ -29,6 +29,9 @@ import {
     ErrorCode,
     getAvailablePurchases,
 } from 'react-native-iap';
+import { ExecuteWithTimeoutAsync, TimeOutStandardInMs } from './UtilsTS';
+
+const FetchListProductsTimeOut = TimeOutStandardInMs
 
 export type IAPProduct = {
     sku: string,
@@ -167,12 +170,18 @@ export const FetchListProductsAsync = async (skus: string[]) => {
     if (fetchedProducts.length > 0) // already fetched
         return fetchedProducts
 
-    if (!isInited)
-        throw new Error('IAP not inited yet')
+    if (!isInited) { // rare to happen
+        console.error('IAP not inited yet')
+        Alert.alert('[FetchListProductsAsync] IAP not inited yet')
+    }
 
-    fetchedProducts = await getProducts({ skus })
+    const { result } = await ExecuteWithTimeoutAsync(
+        async () => await getProducts({ skus }),
+        FetchListProductsTimeOut)
 
-    if (fetchedProducts && fetchedProducts.length > 0) { // loaded from store success, cached them
+    if (result && result.length > 0) { // loaded from store success, cached them
+        fetchedProducts = result
+        
         if (typeof cachedProductsSetterAsync === 'function') {
             cachedProductsSetterAsync(JSON.stringify(fetchedProducts))
         }
