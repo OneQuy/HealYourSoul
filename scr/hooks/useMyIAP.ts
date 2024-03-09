@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { FetchListProductsAsync, IAPProduct, InitIAPAsync } from "../handle/IAP"
 import { Product } from "react-native-iap"
-import { ExecuteWithTimeoutAsync } from "../handle/UtilsTS"
 
 /**
  * 
@@ -14,8 +13,10 @@ const { isInited, fetchedProducts } = useMyIAP(
     async () => AsyncStorage.getItem(StorageKey_CachedIAP))
 ```
 
- * 2. check isInited for show loading
- * 3. when isInited is true, check initErrorObj (undefined means success inited)
+ * 2. if isReadyPurchase === true, you can purchase anything now.
+ * 3. when isReadyToPurchase === false: 
+ *  + if initErrorObj !== undefinded means error inited (maybe no support device)
+ *  + if initErrorObj === undefinded means initing
  * 4. use in return:
  *      + fetchedProducts
  *      + fetchedTargetProduct of targetProductSku
@@ -28,7 +29,7 @@ export const useMyIAP = (
     targetProductSku?: IAPProduct | string,
 ) => {
     const [fetchedProducts, setFetchedProducts] = useState<Product[]>([])
-    const [isInited, setInited] = useState(false)
+    const [isReadyPurchase, setIsReadyPurchase] = useState(false)
     const [initErrorObj, setInitErroObj] = useState<Error | undefined>(undefined)
     const fetchTimeout = useRef<NodeJS.Timeout | undefined>(undefined)
 
@@ -64,12 +65,12 @@ export const useMyIAP = (
                 cachedProductsListSetterAsync,
                 cachedProductsListGetterAsync)
 
-            setInited(true)
-
             if (errorObj !== undefined) {
                 setInitErroObj(errorObj)
                 return
             }
+            else // inited and no error => ready
+                setIsReadyPurchase(true)
 
             // fetch local price
 
@@ -85,7 +86,7 @@ export const useMyIAP = (
         fetchedProducts,
         fetchedTargetProduct,
         localPrice: fetchedTargetProduct ? fetchedTargetProduct.localizedPrice : undefined,
-        isInited,
+        isReadyPurchase,
         initErrorObj,
     } as const
 }

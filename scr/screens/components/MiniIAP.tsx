@@ -1,22 +1,26 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground, ActivityIndicator } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors';
-import { BorderRadius, FontSize, FontWeight, LocalText, Outline, Size, StorageKey_CachedIAP, StorageKey_LastMiniIapProductIdxShowed } from '../../constants/AppConstants';
+import { BorderRadius, FontSize, FontWeight, LocalText, Outline, Size, StorageKey_CachedIAP, StorageKey_LastMiniIapProductIdxShowed, StorageKey_MiniIAPCount } from '../../constants/AppConstants';
 import { logoScr } from '../others/SplashScreen';
 import { BuyPremiumAsync, allProducts, iapBg_1 } from '../IAP/IAPPage';
 import { useMyIAP } from '../../hooks/useMyIAP';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { GetNumberIntAsync, SetNumberAsync } from '../../handle/AsyncStorageUtils';
+import { GetNumberIntAsync, IncreaseNumberAsync, SetNumberAsync } from '../../handle/AsyncStorageUtils';
 import { useAppDispatch } from '../../redux/Store';
 
-const MiniIAP = () => {
+const MiniIAP = ({
+    postID,
+}: {
+    postID: number | string | undefined
+}) => {
     const theme = useContext(ThemeContext);
     const [product, setProduct] = useState(allProducts[0])
     const [processing, setProcessing] = useState(false)
-    const [showMiniIAP, setShowMiniIAP] = useState(true)
+    const [showMiniIAP, setShowMiniIAP] = useState(false)
     const dispatch = useAppDispatch()
 
-    const { isInited, localPrice, initErrorObj } = useMyIAP(
+    const { isReadyPurchase, localPrice, initErrorObj } = useMyIAP(
         allProducts,
         async (s: string) => AsyncStorage.setItem(StorageKey_CachedIAP, s),
         async () => AsyncStorage.getItem(StorageKey_CachedIAP),
@@ -64,7 +68,21 @@ const MiniIAP = () => {
         })()
     }, [])
 
-    if (!isInited || initErrorObj || !showMiniIAP) {
+    useEffect(() => {
+        (async () => {
+
+            await IncreaseNumberAsync(StorageKey_MiniIAPCount)
+
+            const count = await GetNumberIntAsync(StorageKey_MiniIAPCount, 0)
+
+            if (count > 1) {
+                setShowMiniIAP(true)
+                SetNumberAsync(StorageKey_MiniIAPCount, 0)
+            }
+        })()
+    }, [postID])
+
+    if (!isReadyPurchase || !showMiniIAP) {
         return undefined
     }
 
