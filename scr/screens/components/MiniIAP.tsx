@@ -11,6 +11,7 @@ import { useAppDispatch } from '../../redux/Store';
 import { GetAppConfig } from '../../handle/AppConfigHandler';
 import { SafeValue } from '../../handle/UtilsTS';
 import { usePremium } from '../../hooks/usePremium';
+import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 
 const TOAnimated = Animated.createAnimatedComponent(TouchableOpacity)
 
@@ -38,6 +39,8 @@ const MiniIAP = ({
         product)
 
     const onPressed_Buy = useCallback(async () => {
+        track_SimpleWithParam('mini_iap', 'buy')
+        
         setProcessing(true)
         premiumScaleRef.setValue(1)
 
@@ -48,6 +51,7 @@ const MiniIAP = ({
 
     const onPressed_Later = useCallback(() => {
         setShowMiniIAP(false)
+        track_SimpleWithParam('mini_iap', 'later')
     }, [])
 
     const style = useMemo(() => {
@@ -115,6 +119,8 @@ const MiniIAP = ({
 
             setProduct(allProducts[idxShowedBefore])
             setShowMiniIAP(true)
+
+            track_SimpleWithParam('mini_iap', 'show')
         })()
     }, [postID])
 
