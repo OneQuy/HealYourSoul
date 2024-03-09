@@ -18,6 +18,7 @@ import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import HeaderRightButtons from '../components/HeaderRightButtons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import MiniIAP from '../components/MiniIAP';
 
 const TOAnim = Animated.createAnimatedComponent(TouchableOpacity)
 
@@ -243,6 +244,8 @@ const TheTrivia = ({
                     <Text style={{ color: theme.counterPrimary, fontSize: FontSize.Normal }}>{LocalText.random}</Text>
                 </TouchableOpacity>
             </View>
+
+            <MiniIAP postID={trivia?.question} />
         </View>
     )
 }
