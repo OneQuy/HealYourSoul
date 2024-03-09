@@ -249,3 +249,29 @@ export const SetDateAsync = async (key: string, value: number): Promise<void> =>
 export const SetDateAsync_Now = async (key: string): Promise<void> => {
     await SetDateAsync(key, Date.now())
 }
+
+// array =================
+
+export const StorageGetArrayAsync = async (key: string, separator = '|'): Promise<string[]> => {
+    const valueS = await AsyncStorage.getItem(key)
+
+    if (!valueS)
+        return []
+    else
+        return valueS.split(separator)
+}
+
+export const StorageAppendToArrayAsync = async (key: string, value: string, separator = '|'): Promise<string> => {
+    const old = await AsyncStorage.getItem(key)
+
+    let set: string
+
+    if (old)
+        set = `${old}${separator}${value}`
+    else
+        set = value
+
+    await AsyncStorage.setItem(key, set)
+
+    return set
+}
