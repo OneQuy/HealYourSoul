@@ -151,7 +151,7 @@ async function DownloadAndSaveFileListAsync(cat: Category): Promise<FileList | N
     const result = await FirebaseStorage_DownloadAndReadJsonAsync(GetListFileRLP(cat, false), GetListFileRLP(cat, true));
 
     if (result.error) {
-        HandleError('DownloadFileList', result.error)
+        HandleError('DownloadFileList-' + Category[cat], result.error)
         return NeedReloadReason.FailToGetContent;
     }
 
