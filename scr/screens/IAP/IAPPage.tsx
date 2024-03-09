@@ -1,6 +1,6 @@
 import { View, Text, ScrollView, Image, ImageBackground, Alert, StyleSheet, ActivityIndicator } from 'react-native'
 import React, { useCallback, useContext, useState } from 'react'
-import { BorderRadius, FontSize, FontWeight, LocalText, Outline, StorageKey_CachedIAP } from '../../constants/AppConstants'
+import { BorderRadius, FontSize, FontWeight, LocalText, Outline, ScreenName, StorageKey_CachedIAP } from '../../constants/AppConstants'
 import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { IAPProduct, PurchaseAsync } from '../../handle/IAP';
@@ -16,7 +16,7 @@ import { prefixFbTrackPath } from '../../handle/tracking/Tracking';
 import { FirebaseDatabase_SetValueAsync } from '../../firebase/FirebaseDatabase';
 import { usePremium } from '../../hooks/usePremium';
 import { Cheat } from '../../handle/Cheat';
-import { ResetNavigation } from '../../handle/GoodayAppState';
+import { GoToScreen, ResetNavigation } from '../../handle/GoodayAppState';
 import { useMyIAP } from '../../hooks/useMyIAP';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -231,6 +231,8 @@ export const BuyPremiumAsync = async (sku: string, dispatch: ReturnType<typeof u
     if (sku === lifetimeProduct.sku) { // lifetimed
       ResetNavigation()
     }
+    else
+      GoToScreen(ScreenName.IAPPage)
   }
   else if (res === null) { // user cancelled
     track_SimpleWithParam('iap_resulted', 'canceled')
