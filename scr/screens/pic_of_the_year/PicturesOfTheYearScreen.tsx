@@ -25,6 +25,7 @@ import BottomBar, { BottomBarItem } from '../others/BottomBar';
 import HeaderRightButtons from '../components/HeaderRightButtons';
 import useIntroduceCat from '../components/IntroduceCat';
 import ViewCount from '../components/ViewCount';
+import MiniIAP from '../components/MiniIAP';
 
 const BGAnim = Animated.createAnimatedComponent(ImageBackground)
 
@@ -385,6 +386,8 @@ const PicturesOfTheYearScreen = () => {
             {
                 isShowAwardList ? <SelectAward setIdx={(idx: number) => onPressNext(idx, 'menu')} year={selectingYear} selectIdx={selectingPhotoIndex} /> : undefined
             }
+
+            <MiniIAP postID={selectingPhotoID} />
         </View>
     )
 }
