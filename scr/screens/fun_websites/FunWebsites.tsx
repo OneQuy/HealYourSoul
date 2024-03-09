@@ -109,7 +109,7 @@ const FunWebsitesScreen = () => {
         let web = funWebsites.find(w => w.id === id)
 
         if (!web) {
-            web = funWebsites[funWebsites.length - 1]
+            web = funWebsites[0]
             id = web.id
         }
 
