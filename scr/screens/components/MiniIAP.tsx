@@ -9,17 +9,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GetNumberIntAsync, SetNumberAsync } from '../../handle/AsyncStorageUtils';
 import { useAppDispatch } from '../../redux/Store';
 
-const MiniIAP = ({
-    setActive,
-}: {
-    setActive: (active: boolean) => void,
-}) => {
+const MiniIAP = () => {
     const theme = useContext(ThemeContext);
     const [product, setProduct] = useState(allProducts[0])
     const [processing, setProcessing] = useState(false)
+    const [showMiniIAP, setShowMiniIAP] = useState(true)
     const dispatch = useAppDispatch()
 
-    const { isInited, localPrice } = useMyIAP(
+    const { isInited, localPrice, initErrorObj } = useMyIAP(
         allProducts,
         async (s: string) => AsyncStorage.setItem(StorageKey_CachedIAP, s),
         async () => AsyncStorage.getItem(StorageKey_CachedIAP),
@@ -34,7 +31,7 @@ const MiniIAP = ({
     }, [product])
 
     const onPressed_Later = useCallback(() => {
-        setActive(false)
+        setShowMiniIAP(false)
     }, [])
 
     const style = useMemo(() => {
@@ -67,12 +64,8 @@ const MiniIAP = ({
         })()
     }, [])
 
-    if (!isInited) {
-        return (
-            <View style={style.master} >
-                <ActivityIndicator color={theme.primary} />
-            </View>
-        )
+    if (!isInited || initErrorObj || !showMiniIAP) {
+        return undefined
     }
 
     return (

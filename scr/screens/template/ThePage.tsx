@@ -68,7 +68,6 @@ const ThePage = ({ category }: ThePageProps) => {
     const [needLoadPost, setNeedLoadPost] = useState<NeedLoadPostType>('none');
     const [downloadPercent, setDownloadPercent] = useState(0);
     const [isInternetAvailable, setIsInternetAvailable] = useState(true);
-    const [showMiniIAP, setShowMiniIAP] = useState(true)
     const reasonToReload = useRef<NeedReloadReason>(NeedReloadReason.None);
     const fileList = useRef<FileList | null>(null);
     const previousPostIDs = useRef<number[]>([]);
@@ -893,11 +892,6 @@ const ThePage = ({ category }: ThePageProps) => {
                                     </View>
                             }
                         </View>
-                        {/* mini iap */}
-                        {
-                            showMiniIAP &&
-                            <MiniIAP setActive={setShowMiniIAP} />
-                        }
                     </Animated.View>
             }
 
@@ -942,6 +936,12 @@ const ThePage = ({ category }: ThePageProps) => {
                 id={post.current?.id}
                 category={category}
             />
+
+            {/* mini iap */}
+
+            {
+                <MiniIAP />
+            }
         </View>
     )
 }
