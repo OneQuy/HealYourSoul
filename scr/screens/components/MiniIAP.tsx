@@ -3,10 +3,11 @@ import React, { useCallback, useContext, useEffect, useMemo, useState } from 're
 import { ThemeContext } from '../../constants/Colors';
 import { BorderRadius, FontSize, FontWeight, LocalText, Outline, Size, StorageKey_CachedIAP, StorageKey_LastMiniIapProductIdxShowed } from '../../constants/AppConstants';
 import { logoScr } from '../others/SplashScreen';
-import { allProducts, iapBg_1 } from '../IAP/IAPPage';
+import { BuyPremiumAsync, allProducts, iapBg_1 } from '../IAP/IAPPage';
 import { useMyIAP } from '../../hooks/useMyIAP';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GetNumberIntAsync, SetNumberAsync } from '../../handle/AsyncStorageUtils';
+import { useAppDispatch } from '../../redux/Store';
 
 const MiniIAP = ({
     setActive,
@@ -15,7 +16,8 @@ const MiniIAP = ({
 }) => {
     const theme = useContext(ThemeContext);
     const [product, setProduct] = useState(allProducts[0])
-    const processing = false
+    const [processing, setProcessing] = useState(false)
+    const dispatch = useAppDispatch()
 
     const { isInited, localPrice } = useMyIAP(
         allProducts,
@@ -23,9 +25,13 @@ const MiniIAP = ({
         async () => AsyncStorage.getItem(StorageKey_CachedIAP),
         product)
 
-    const onPressed_Buy = useCallback(() => {
+    const onPressed_Buy = useCallback(async () => {
+        setProcessing(true)
 
-    }, [])
+        await BuyPremiumAsync(product.sku, dispatch)
+
+        setProcessing(false)
+    }, [product])
 
     const onPressed_Later = useCallback(() => {
         setActive(false)
@@ -44,6 +50,8 @@ const MiniIAP = ({
             benefitsTxt: { color: theme.counterBackground, fontSize: FontSize.Small_L },
         })
     }, [theme])
+
+    // init once (select which iap to show)
 
     useEffect(() => {
         (async () => {
