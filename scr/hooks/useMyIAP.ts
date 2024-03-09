@@ -1,6 +1,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { FetchListProductsAsync, IAPProduct, InitIAPAsync } from "../handle/IAP"
 import { Product } from "react-native-iap"
+import { ExecuteWithTimeoutAsync, TimeOutStandardInMs } from "../handle/UtilsTS"
+
+const FetchListProductsTimeOut = TimeOutStandardInMs
 
 /**
  * 
@@ -48,12 +51,14 @@ export const useMyIAP = (
     }, [fetchedProducts, targetProductSku])
 
     const fetchListProducts = useCallback(async () => {
-        const items = await FetchListProductsAsync(allIds)
+        const { result: items } = await ExecuteWithTimeoutAsync(
+            async () => await FetchListProductsAsync(allIds),
+            FetchListProductsTimeOut)
 
-        if (items.length > 0)
+        if (items && items.length > 0)
             setFetchedProducts(items)
         else {
-            fetchTimeout.current = setTimeout(fetchListProducts, 2000)
+            fetchTimeout.current = setTimeout(fetchListProducts, 500)
         }
     }, [allIds])
 
