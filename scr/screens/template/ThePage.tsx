@@ -940,7 +940,7 @@ const ThePage = ({ category }: ThePageProps) => {
             {/* mini iap */}
 
             {
-                <MiniIAP />
+                <MiniIAP postID={post.current?.id} />
             }
         </View>
     )

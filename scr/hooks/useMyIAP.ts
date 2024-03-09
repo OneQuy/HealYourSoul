@@ -1,9 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { FetchListProductsAsync, IAPProduct, InitIAPAsync } from "../handle/IAP"
 import { Product } from "react-native-iap"
-import { ExecuteWithTimeoutAsync, TimeOutStandardInMs } from "../handle/UtilsTS"
-
-const FetchListProductsTimeOut = TimeOutStandardInMs
+import { ExecuteWithTimeoutAsync } from "../handle/UtilsTS"
 
 /**
  * 
@@ -34,10 +32,6 @@ export const useMyIAP = (
     const [initErrorObj, setInitErroObj] = useState<Error | undefined>(undefined)
     const fetchTimeout = useRef<NodeJS.Timeout | undefined>(undefined)
 
-    const allIds = useMemo(() => {
-        return allProducts.map(i => i.sku)
-    }, [allProducts])
-
     const fetchedTargetProduct = useMemo(() => {
         if (targetProductSku === undefined)
             return undefined
@@ -52,16 +46,14 @@ export const useMyIAP = (
     }, [fetchedProducts, targetProductSku])
 
     const fetchListProducts = useCallback(async () => {
-        const { result: items } = await ExecuteWithTimeoutAsync(
-            async () => await FetchListProductsAsync(allIds),
-            FetchListProductsTimeOut)
+        const items = await FetchListProductsAsync(allProducts.map(i => i.sku))
 
         if (items && items.length > 0)
             setFetchedProducts(items)
         else {
             fetchTimeout.current = setTimeout(fetchListProducts, 500)
         }
-    }, [allIds])
+    }, [])
 
     useEffect(() => {
         (async () => {
