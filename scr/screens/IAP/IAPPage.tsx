@@ -87,7 +87,7 @@ const IAPPage = () => {
   const insets = useSafeAreaInsets()
   const { isPremium, subscribedData } = usePremium()
 
-  const { isInited, fetchedProducts } = useMyIAP(
+  const { isReadyPurchase, fetchedProducts } = useMyIAP(
     allProducts,
     async (s: string) => AsyncStorage.setItem(StorageKey_CachedIAP, s),
     async () => AsyncStorage.getItem(StorageKey_CachedIAP))
@@ -123,7 +123,7 @@ const IAPPage = () => {
     return <IAPPage_Subscribed subscribedData={subscribedData} />
   }
 
-  if (!isInited) {
+  if (!isReadyPurchase) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', gap: Outline.GapHorizontal, }}>
         <ActivityIndicator color={theme.primary} />
