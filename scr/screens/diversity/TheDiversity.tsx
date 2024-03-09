@@ -365,6 +365,7 @@ const TheDiversity = (
                 !showLitmitPages() &&
                 <View style={style.flatListContainer}>
                     <FlatList
+                        // @ts-ignore
                         ref={flatListRef}
                         showsVerticalScrollIndicator={false}
                         data={itemsToRender}
