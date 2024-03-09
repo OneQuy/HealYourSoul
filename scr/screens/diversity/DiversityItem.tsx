@@ -110,7 +110,7 @@ const DiversityItem = ({
             await loadItem_TextAsync()
         else if (item.wikipediaObject)
             await loadItem_WikiAsync()
-        else if (item.id)
+        else if (item.id !== undefined)
             await loadItem_ThePageAsync()
         else
             console.error('[ne]', item);

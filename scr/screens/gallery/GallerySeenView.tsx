@@ -5,7 +5,7 @@ import { DiversityItemType } from '../../constants/Types'
 import useSeenIDs from '../../hooks/useSeenIDs'
 
 const GallerySeenView = ({ cat }: { cat: Category }) => {
-    const ids = useSeenIDs(cat)
+    const ids = useSeenIDs(cat, undefined)
 
     const allItems = useMemo(() => {
         if (!ids)
