@@ -245,6 +245,7 @@ const TheRandomShortText = ({
     return (
         <View pointerEvents={handling ? 'none' : 'auto'} style={[styleSheet.masterView, { backgroundColor: theme.background }]}>
             <ImageBackground
+                key={backgroundUri}
                 source={{ uri: backgroundUri }}
                 resizeMode='cover'
                 style={CommonStyles.flex_1} >

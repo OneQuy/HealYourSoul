@@ -10,6 +10,8 @@ import { ThemeContext } from '../../constants/Colors'
 import { GoToPremiumScreen } from './HeaderXButton'
 import { useNavigation } from '@react-navigation/native'
 import { iapBg_1 } from '../IAP/IAPPage'
+import { useAppDispatch } from '../../redux/Store';
+import { setBackgroundIdForText } from '../../redux/UserDataSlice';
 
 const BackgroundForTextSelector = ({
     currentBackgroundId,
@@ -22,12 +24,14 @@ const BackgroundForTextSelector = ({
 }) => {
     const theme = useContext(ThemeContext);
     const navigation = useNavigation()
+    const dispatch = useAppDispatch()
 
     const onPressedUpgrade = useCallback(() => {
         GoToPremiumScreen(navigation)
     }, [navigation])
 
     const onPressedNoBackground = useCallback(() => {
+        dispatch(setBackgroundIdForText([cat, -1]))
     }, [])
 
     const style = useMemo(() => {
