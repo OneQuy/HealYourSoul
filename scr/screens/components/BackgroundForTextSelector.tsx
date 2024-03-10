@@ -27,7 +27,7 @@ const BackgroundForTextSelector = ({
         GoToPremiumScreen(navigation)
     }, [navigation])
 
-    const onPressedFold = useCallback(() => {
+    const onPressedNoBackground = useCallback(() => {
     }, [])
 
     const style = useMemo(() => {
@@ -70,15 +70,9 @@ const BackgroundForTextSelector = ({
             />
 
             <View style={style.plsSubBtnsView}>
-                <TouchableOpacity onPress={onPressedFold}>
+                <TouchableOpacity onPress={onPressedNoBackground}>
                     <View style={style.btnTO}>
                         <Text numberOfLines={1} adjustsFontSizeToFit style={style.gotItText}>{LocalText.remove_background}</Text>
-                    </View>
-                </TouchableOpacity>
-
-                <TouchableOpacity onPress={onPressedFold}>
-                    <View style={style.btnTO}>
-                        <Text numberOfLines={1} adjustsFontSizeToFit style={style.gotItText}>{LocalText.close}</Text>
                     </View>
                 </TouchableOpacity>
 

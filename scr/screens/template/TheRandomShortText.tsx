@@ -42,6 +42,7 @@ const TheRandomShortText = ({
     const theme = useContext(ThemeContext);
     const [handling, setHandling] = useState(false);
     const diversityItem = useDiversityItem(() => onPressRandom(false), undefined, undefined, text)
+    const [isFoldBackground, setIsFoldBackground] = useState(true)
 
     const backgroundId = useAppSelector(state => {
         const list = state.userData.backgroundIdForText
@@ -125,6 +126,10 @@ const TheRandomShortText = ({
         CopyAndToast(text, theme)
     }, [text, theme])
 
+    const onPressBackground = useCallback(() => {
+        setIsFoldBackground(val => !val)
+    }, [isFoldBackground])
+
     const onPressShareText = useCallback(() => {
         if (!text)
             return
@@ -162,6 +167,11 @@ const TheRandomShortText = ({
                 icon: Icon.Copy,
             },
             {
+                text: LocalText.background,
+                onPress: onPressBackground,
+                icon: isFoldBackground ? Icon.Background : Icon.X,
+            },
+            {
                 text: LocalText.random,
                 onPress: () => onPressRandom(true),
                 icon: Icon.Dice
@@ -184,6 +194,11 @@ const TheRandomShortText = ({
                     scaleIcon: 1.5,
                 },
                 {
+                    text: LocalText.background,
+                    onPress: onPressBackground,
+                    icon: isFoldBackground ? Icon.Background : Icon.X,
+                },
+                {
                     text: LocalText.next,
                     onPress: () => OnPressedNextItemDiversity(true, diversityItem),
                     icon: Icon.Right,
@@ -199,7 +214,7 @@ const TheRandomShortText = ({
         // return 
 
         return btns
-    }, [onPressRandom, onPressShareText, onPressCopy, diversityItem])
+    }, [onPressRandom, isFoldBackground, onPressShareText, onPressCopy, diversityItem])
 
     // on init once (for load first post)
 
@@ -258,11 +273,14 @@ const TheRandomShortText = ({
                 }
             </ImageBackground>
 
-            <BackgroundForTextSelector
-                cat={category}
-                currentBackgroundId={backgroundId}
-                listAllBg={backgrounds}
-            />
+            {
+                !isFoldBackground &&
+                <BackgroundForTextSelector
+                    cat={category}
+                    currentBackgroundId={backgroundId}
+                    listAllBg={backgrounds}
+                />
+            }
 
             {
                 handling || reasonToReload.current !== NeedReloadReason.None ? undefined :
