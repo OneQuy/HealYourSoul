@@ -301,6 +301,8 @@ export const LocalText = {
   close: "Close",
   rate_app: "Rate app",
   Contact: "Contact",
+  bg_for_white_text: "Backgrounds for white text",
+  bg_for_black_text: "Backgrounds for black text",
   saved_2: "Saved",
   upload: "Upload",
   cancel: "Cancel",

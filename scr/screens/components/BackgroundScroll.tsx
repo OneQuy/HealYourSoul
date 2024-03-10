@@ -1,19 +1,19 @@
 import React, { useCallback, useMemo } from 'react'
-import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
+import { useAppDispatch } from '../../redux/Store';
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { Outline } from '../../constants/AppConstants';
+import { Category, Outline } from '../../constants/AppConstants';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
-import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 import { BackgroundForTextType } from '../../constants/Types';
 import ImageBackgroundWithLoading from './ImageBackgroundWithLoading';
+import { setBackgroundIdForText } from '../../redux/UserDataSlice';
 
 const size = heightPercentageToDP(3.5)
 
-var selectedBackgroundForTextForTracking: string | undefined = undefined
+var selectedBackgroundIdTracking: number | undefined = undefined
 
-export const OnPressedBackgroundForText = (backgroundForText: BackgroundForTextType, dispatch: ReturnType<typeof useAppDispatch>) => {
-    // selectedBackgroundForTextForTracking = backgroundForText
-    // dispatch(setBackgroundForText(backgroundForText as string))
+export const OnPressedBackgroundForText = (backgroundForText: BackgroundForTextType, cat: Category, dispatch: ReturnType<typeof useAppDispatch>) => {
+    selectedBackgroundIdTracking = backgroundForText.id
+    dispatch(setBackgroundIdForText([cat, backgroundForText.id]))
 }
 
 export const TrackSelectedBackgroundForText = () => {
@@ -28,10 +28,12 @@ export const TrackSelectedBackgroundForText = () => {
 const BackgroundScroll = ({
     isLightBackground,
     currentBackgroundId,
+    cat,
     listAllBg,
 }: {
     isLightBackground: number,
     currentBackgroundId: number,
+    cat: Category,
     listAllBg: BackgroundForTextType[],
 }) => {
     const dispatch = useAppDispatch();
@@ -49,34 +51,34 @@ const BackgroundScroll = ({
     const renderItem = useCallback((item: BackgroundForTextType, index: number) => {
         const isCurrentBackgroundForText = item.id === currentBackgroundId
 
-        const onPress = () => OnPressedBackgroundForText(item, dispatch)
+        const onPress = () => OnPressedBackgroundForText(item, cat, dispatch)
 
         return (
-            <ImageBackgroundWithLoading
-                // onPress={onPress}
-                source={{ uri: item.img }}
-                key={index}
-                style={{
-                    width: size,
-                    height: size,
-                    borderRadius: size / 2,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    overflow: 'hidden',
-                }}>
-                {
-                    !isCurrentBackgroundForText ? undefined :
-                        <View
-                            style={{
-                                width: size / 4,
-                                height: size / 4,
-                                borderRadius: size / 4 / 2,
-                                backgroundColor: 'red'
-                            }} />
-                }
-            </ImageBackgroundWithLoading>
+            <TouchableOpacity onPress={onPress} key={index} >
+                <ImageBackgroundWithLoading
+                    source={{ uri: item.img }}
+                    style={{
+                        width: size,
+                        height: size,
+                        borderRadius: size / 2,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        overflow: 'hidden',
+                    }}>
+                    {
+                        !isCurrentBackgroundForText ? undefined :
+                            <View
+                                style={{
+                                    width: size / 4,
+                                    height: size / 4,
+                                    borderRadius: size / 4 / 2,
+                                    backgroundColor: 'red'
+                                }} />
+                    }
+                </ImageBackgroundWithLoading>
+            </TouchableOpacity>
         )
-    }, [currentBackgroundId])
+    }, [currentBackgroundId, cat])
 
     return (
         <ScrollView

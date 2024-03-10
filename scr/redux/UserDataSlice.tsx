@@ -893,6 +893,8 @@ export const {
     addInboxes,
     toggleLovedInbox,
     toggleMarkAsReadInbox,
+
+    setBackgroundIdForText,
 } = slice.actions;
 
 export default slice.reducer

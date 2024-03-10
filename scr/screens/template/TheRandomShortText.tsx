@@ -43,7 +43,7 @@ const TheRandomShortText = ({
     const [handling, setHandling] = useState(false);
     const diversityItem = useDiversityItem(() => onPressRandom(false), undefined, undefined, text)
 
-    const bgId = useAppSelector(state => {
+    const backgroundId = useAppSelector(state => {
         const list = state.userData.backgroundIdForText
 
         if (list === undefined)
@@ -66,6 +66,15 @@ const TheRandomShortText = ({
         true,
         async () => AsyncStorage.getItem(StorageKey_LocalFileVersion_ShortText),
         async () => AsyncStorage.setItem(StorageKey_LocalFileVersion_ShortText, GetRemoteFileConfigVersion('background_for_text').toString()))
+
+    const backgroundUri = useMemo(() => {
+        if (backgroundId === -1 || !Array.isArray(backgrounds))
+            return undefined
+
+        const find = backgrounds.find(i => i.id === backgroundId)
+
+        return find?.img
+    }, [backgroundId, backgrounds])
 
     // animation
 
@@ -221,9 +230,7 @@ const TheRandomShortText = ({
     return (
         <View pointerEvents={handling ? 'none' : 'auto'} style={[styleSheet.masterView, { backgroundColor: theme.background }]}>
             <ImageBackground
-                source={{
-                    uri: 'https://images.unsplash.com/photo-1707574133815-f52116ad01c2?q=80&w=2420&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-                }}
+                source={{ uri: backgroundUri }}
                 resizeMode='cover'
                 style={CommonStyles.flex_1} >
                 {
@@ -252,7 +259,8 @@ const TheRandomShortText = ({
             </ImageBackground>
 
             <BackgroundForTextSelector
-                currentBackgroundId={bgId}
+                cat={category}
+                currentBackgroundId={backgroundId}
                 listAllBg={backgrounds}
             />
 
