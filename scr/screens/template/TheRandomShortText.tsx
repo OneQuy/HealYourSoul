@@ -22,8 +22,12 @@ import { BackgroundForTextType } from '../../constants/Types';
 import { TempDirName } from '../../handle/Utils';
 import { GetRemoteFileConfigVersion } from '../../handle/AppConfigHandler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useAppSelector } from '../../redux/Store';
+import { useAppDispatch, useAppSelector } from '../../redux/Store';
 import BackgroundForTextSelector from '../components/BackgroundForTextSelector';
+import { usePremium } from '../../hooks/usePremium';
+import { setBackgroundIdForText } from '../../redux/UserDataSlice';
+import { useDrawerStatus } from '@react-navigation/drawer';
+import ImageBackgroundOrView from '../components/ImageBackgroundOrView';
 
 const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Fbackground_for_text.json?alt=media&token=5ceaac14-13b0-4027-a863-3b8387e7b949'
 
@@ -43,6 +47,9 @@ const TheRandomShortText = ({
     const [handling, setHandling] = useState(false);
     const diversityItem = useDiversityItem(() => onPressRandom(false), undefined, undefined, text)
     const [isFoldBackground, setIsFoldBackground] = useState(true)
+    const { isPremium } = usePremium()
+    const dispatch = useAppDispatch()
+    const drawerStatus = useDrawerStatus()
 
     const backgroundId = useAppSelector(state => {
         const list = state.userData.backgroundIdForText
@@ -64,7 +71,7 @@ const TheRandomShortText = ({
         true,
         GetRemoteFileConfigVersion('background_for_text'),
         'json',
-        true,
+        false,
         async () => AsyncStorage.getItem(StorageKey_LocalFileVersion_ShortText),
         async () => AsyncStorage.setItem(StorageKey_LocalFileVersion_ShortText, GetRemoteFileConfigVersion('background_for_text').toString()))
 
@@ -89,33 +96,6 @@ const TheRandomShortText = ({
 
         playAnimLoadedMedia(mediaViewScaleAnimRef)
     }, [text])
-
-    const onPressRandom = useCallback(async (shouldTracking: boolean) => {
-        reasonToReload.current = NeedReloadReason.None
-        setHandling(true)
-
-        let text: string | undefined
-
-        if (diversityItem && diversityItem.text)
-            text = diversityItem.text
-        else
-            text = await getTextAsync()
-
-        setText(text)
-
-        if (text) { // success
-        }
-        else { // fail
-            if (NetLord.IsAvailableLatestCheck())
-                reasonToReload.current = NeedReloadReason.FailToGetContent
-            else
-                reasonToReload.current = NeedReloadReason.NoInternet
-        }
-
-        track_PressRandom(shouldTracking, category, text !== undefined)
-
-        setHandling(false)
-    }, [diversityItem])
 
     const onPressCopy = useCallback(() => {
         if (!text)
@@ -144,6 +124,54 @@ const TheRandomShortText = ({
                 tintColor: theme.primary,
             } as ShareOptions)
     }, [text, theme])
+
+    const checkAndResetBackground = useCallback(() => {
+        if (isPremium)
+            return
+
+        if (backgroundId === -1 || !Array.isArray(backgrounds))
+            return undefined
+
+        let find = backgrounds.find(i => i.id === backgroundId)
+
+        if (!find)
+            return
+
+        if (!find.isPremium)
+            return
+
+        // reset!
+
+        dispatch(setBackgroundIdForText([category, -1]))
+    }, [backgroundId, backgrounds, isPremium])
+
+    const onPressRandom = useCallback(async (shouldTracking: boolean) => {
+        reasonToReload.current = NeedReloadReason.None
+        setHandling(true)
+
+        let text: string | undefined
+
+        if (diversityItem && diversityItem.text)
+            text = diversityItem.text
+        else
+            text = await getTextAsync()
+
+        setText(text)
+
+        if (text) { // success
+        }
+        else { // fail
+            if (NetLord.IsAvailableLatestCheck())
+                reasonToReload.current = NeedReloadReason.FailToGetContent
+            else
+                reasonToReload.current = NeedReloadReason.NoInternet
+        }
+
+        track_PressRandom(shouldTracking, category, text !== undefined)
+
+        checkAndResetBackground()
+        setHandling(false)
+    }, [diversityItem, checkAndResetBackground])
 
     const onSwiped = useCallback((result: SwipeResult) => {
         if (!result.primaryDirectionIsHorizontalOrVertical)
@@ -238,13 +266,27 @@ const TheRandomShortText = ({
         });
     }, [text, handling, diversityItem])
 
+    // reset bg
+
+    useEffect(() => {
+        if (drawerStatus === 'closed')
+            return
+
+        checkAndResetBackground()
+    }, [drawerStatus])
+
     // save last visit category screen
 
-    useFocusEffect(useCallback(() => SaveCurrentScreenForLoadNextTime(navigation), []))
+    useFocusEffect(useCallback(() => {
+        SaveCurrentScreenForLoadNextTime(navigation)
+    }, []))
 
     return (
-        <View pointerEvents={handling ? 'none' : 'auto'} style={[styleSheet.masterView, { backgroundColor: theme.background }]}>
-            <ImageBackground
+        <View
+            // key={backgroundUri ?? Math.random().toString()}
+            pointerEvents={handling ? 'none' : 'auto'} style={[styleSheet.masterView, { backgroundColor: theme.background }]}>
+            <ImageBackgroundOrView
+                // key={backgroundUri ?? Math.random()}
                 key={backgroundUri}
                 source={{ uri: backgroundUri }}
                 resizeMode='cover'
@@ -272,7 +314,7 @@ const TheRandomShortText = ({
                             }
                         </View>
                 }
-            </ImageBackground>
+            </ImageBackgroundOrView>
 
             {
                 !isFoldBackground &&
