@@ -236,6 +236,7 @@ export enum Icon {
   NoInternet = 'access-point-network-off',
   HeartBroken = 'heart-broken',
   Lock = 'lock',
+  // Up = 'chevron-up',
   Dice = 'dice-5-outline',
   Download = 'arrow-down',
   X = 'close-thick',

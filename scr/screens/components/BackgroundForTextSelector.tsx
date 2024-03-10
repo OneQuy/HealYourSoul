@@ -1,8 +1,11 @@
+// @ts-ignore
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import { View, Text, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native'
-import React, { useCallback, useContext, useMemo } from 'react'
+import React, { useCallback, useContext, useMemo, useState } from 'react'
 import BackgroundScroll from './BackgroundScroll'
 import { BackgroundForTextType } from '../../constants/Types'
-import { BorderRadius, Category, FontSize, LocalText, Outline } from '../../constants/AppConstants'
+import { BorderRadius, Category, FontSize, Icon, LocalText, Outline, Size } from '../../constants/AppConstants'
 import { ThemeContext } from '../../constants/Colors'
 import { GoToPremiumScreen } from './HeaderXButton'
 import { useNavigation } from '@react-navigation/native'
@@ -31,7 +34,6 @@ const BackgroundForTextSelector = ({
         return StyleSheet.create({
             master: { gap: Outline.GapHorizontal, },
             text: { color: theme.counterBackground, fontSize: FontSize.Small_L },
-
             plsSubBtnsView: { gap: Outline.GapHorizontal, flexDirection: 'row' },
             premiumIB: { padding: Outline.VerticalMini, borderRadius: BorderRadius.BR, overflow: 'hidden', justifyContent: 'center', alignItems: 'center', },
             btnTO: { padding: Outline.VerticalMini, borderColor: theme.counterBackground, borderRadius: BorderRadius.BR, borderWidth: StyleSheet.hairlineWidth, justifyContent: 'center', alignItems: 'center', },
