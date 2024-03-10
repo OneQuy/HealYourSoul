@@ -1,7 +1,7 @@
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { View, Text, TouchableOpacity, ActivityIndicator, Share as RNShare, ShareContent, ShareOptions, StyleSheet, Animated } from 'react-native'
+import { View, Text, TouchableOpacity, ActivityIndicator, Share as RNShare, ShareContent, ShareOptions, StyleSheet, Animated, ImageBackground } from 'react-native'
 import React, { useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { Category, FontSize, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
@@ -188,17 +188,22 @@ const TheRandomShortText = ({
 
     return (
         <View pointerEvents={handling ? 'none' : 'auto'} style={[styleSheet.masterView, { backgroundColor: theme.background }]}>
-            <View style={CommonStyles.flex_1} >
+            <ImageBackground
+                source={{
+                    uri: 'https://images.unsplash.com/photo-1707574133815-f52116ad01c2?q=80&w=2420&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+                }}
+                resizeMode='cover'
+                style={CommonStyles.flex_1} >
                 {
                     handling ?
                         // true ?
                         <View style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
                             <ActivityIndicator color={theme.counterBackground} style={{ marginRight: Outline.Horizontal }} />
                         </View> :
-                        <Animated.View
+                        <View
                             onTouchStart={onBigViewStartTouch}
                             onTouchEnd={onBigViewEndTouch}
-                            style={[{ transform: [{ scale: mediaViewScaleAnimRef }] }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]}>
+                            style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
                             {
                                 reasonToReload.current !== NeedReloadReason.None ?
                                     // true ?
@@ -208,11 +213,11 @@ const TheRandomShortText = ({
                                         <Text style={{ fontSize: FontSize.Small_L, color: theme.counterBackground }}>{LocalText.tap_to_retry}</Text>
                                     </TouchableOpacity>
                                     :
-                                    <Text adjustsFontSizeToFit numberOfLines={20} selectable style={{ verticalAlign: 'middle', marginHorizontal: Outline.Horizontal, color: theme.counterBackground, fontSize: FontSize.Big }}>{text ? text : ''}</Text>
+                                    <Animated.Text adjustsFontSizeToFit numberOfLines={20} selectable style={[{ transform: [{ scale: mediaViewScaleAnimRef }] }, { verticalAlign: 'middle', marginHorizontal: Outline.Horizontal, color: theme.counterBackground, fontSize: FontSize.Big }]}>{text ? text : ''}</Animated.Text>
                             }
-                        </Animated.View>
+                        </View>
                 }
-            </View>
+            </ImageBackground>
 
             {
                 handling || reasonToReload.current !== NeedReloadReason.None ? undefined :
@@ -226,7 +231,7 @@ const TheRandomShortText = ({
 
             <MiniIAP postID={text} />
 
-        </View>
+        </View >
     )
 }
 
