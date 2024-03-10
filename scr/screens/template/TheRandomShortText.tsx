@@ -4,7 +4,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { View, Text, TouchableOpacity, ActivityIndicator, Share as RNShare, ShareContent, ShareOptions, StyleSheet, Animated, ImageBackground } from 'react-native'
 import React, { useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
-import { Category, FontSize, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
+import { Category, FontSize, Icon, LocalText, NeedReloadReason, Outline, Size, StorageKey_LocalFileVersion_ShortText } from '../../constants/AppConstants'
 import { NetLord } from '../../handle/NetLord'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { CopyAndToast, SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
@@ -17,6 +17,15 @@ import HeaderRightButtons from '../components/HeaderRightButtons';
 import useDiversityItem from '../../hooks/useDiversityItem';
 import { OnPressedNextItemDiversity } from '../diversity/TheDiversity';
 import MiniIAP from '../components/MiniIAP';
+import useCheckAndDownloadRemoteFile from '../../hooks/useCheckAndDownloadRemoteFile';
+import { BackgroundForTextType } from '../../constants/Types';
+import { TempDirName } from '../../handle/Utils';
+import { GetRemoteFileConfigVersion } from '../../handle/AppConfigHandler';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useAppSelector } from '../../redux/Store';
+import BackgroundForTextSelector from '../components/BackgroundForTextSelector';
+
+const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Fbackground_for_text.json?alt=media&token=5ceaac14-13b0-4027-a863-3b8387e7b949'
 
 interface TheRandomShortTextProps {
     category: Category,
@@ -32,8 +41,31 @@ const TheRandomShortText = ({
     const reasonToReload = useRef<NeedReloadReason>(NeedReloadReason.None);
     const theme = useContext(ThemeContext);
     const [handling, setHandling] = useState(false);
-
     const diversityItem = useDiversityItem(() => onPressRandom(false), undefined, undefined, text)
+
+    const bgId = useAppSelector(state => {
+        const list = state.userData.backgroundIdForText
+
+        if (list === undefined)
+            return -1
+
+        const find = list.find(i => i[0] === category)
+
+        if (find)
+            return find[1]
+        else
+            return -1
+    })
+
+    const { result: backgrounds, didDownload, } = useCheckAndDownloadRemoteFile<BackgroundForTextType[]>(
+        fileURL,
+        TempDirName + '/background_for_text.json',
+        true,
+        GetRemoteFileConfigVersion('background_for_text'),
+        'json',
+        true,
+        async () => AsyncStorage.getItem(StorageKey_LocalFileVersion_ShortText),
+        async () => AsyncStorage.setItem(StorageKey_LocalFileVersion_ShortText, GetRemoteFileConfigVersion('background_for_text').toString()))
 
     // animation
 
@@ -218,6 +250,11 @@ const TheRandomShortText = ({
                         </View>
                 }
             </ImageBackground>
+
+            <BackgroundForTextSelector
+                currentBackgroundId={bgId}
+                listAllBg={backgrounds}
+            />
 
             {
                 handling || reasonToReload.current !== NeedReloadReason.None ? undefined :

@@ -31,6 +31,13 @@ export type FileList = {
     posts: PostMetadata[]
 }
 
+export type BackgroundForTextType = {
+    "id": number
+    "isLightBg": number,
+    "isPremium": number,
+    "img": string,
+}
+
 export type CachedValueOfCatelogry = {
     value: number,
     cat: Category,

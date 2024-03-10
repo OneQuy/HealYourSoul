@@ -528,9 +528,11 @@ export const LocalText = {
 // storage
 
 export const StorageKey_AwardPictureLastSeenIdxOfYear = (year: number) => 'award_picture_last_seen_idx_' + year
-export const StorageKey_LocalFileVersion = (cat: Category) => 'local_file_version_' + cat
 export const StorageKey_ShowedIntroduceCat = (cat: Category) => 'introduce_' + cat
 export const StorageKey_ItemCountCat = (cat: Category) => 'item_count_' + cat
+
+export const StorageKey_LocalFileVersion = (cat: Category) => 'local_file_version_' + cat
+export const StorageKey_LocalFileVersion_ShortText = 'local_file_version_short_text'
 
 export const StorageKey_NinjaFact_ToggleNoti = 'ninja_fact_ToggleNoti'
 export const StorageKey_NinjaJoke_ToggleNoti = 'ninja_joke_ToggleNoti'

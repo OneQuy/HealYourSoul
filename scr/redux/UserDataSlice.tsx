@@ -1,10 +1,12 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { DiversityItemType, Inbox, SubscribedData } from "../constants/Types";
-import { ScreenName } from "../constants/AppConstants";
+import { Category, ScreenName } from "../constants/AppConstants";
 import { ArrayAddWithCheckDuplicate, ArrayRemove, IsValuableArrayOrString } from "../handle/UtilsTS";
 
 export type UserDataState = {
     inboxes: Inbox[] | undefined,
+
+    backgroundIdForText: undefined | [Category, number][],
 
     disableScreens: ScreenName[],
 
@@ -82,6 +84,8 @@ export type UserDataState = {
 
 const initialState: UserDataState = {
     inboxes: [],
+
+    backgroundIdForText: [],
 
     disableScreens: [],
 
@@ -161,6 +165,22 @@ const slice = createSlice({
     initialState,
     reducers: {
         clearAllUserData: () => initialState,
+
+        // background id for text
+
+        setBackgroundIdForText: (state, action: PayloadAction<[Category, number]>) => {
+            if (!state.backgroundIdForText)
+                state.backgroundIdForText = []
+
+            const now = state.backgroundIdForText.find(i => i[0] === action.payload[0])
+
+            if (!now) {
+                state.backgroundIdForText.push([...action.payload])
+            }
+            else {
+                now[1] = action.payload[1]
+            }
+        },
 
         // inbox
 
@@ -866,7 +886,7 @@ export const {
     addAwesomeNatureFavoritedID,
     addAwesomeNatureSeenID,
     removeAwesomeNatureFavoritedID,
-    
+
     clearAllInboxes,
     clearInbox,
     setDidReadInbox,
