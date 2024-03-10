@@ -1,20 +1,22 @@
-import React, { useCallback, useMemo } from 'react'
+// @ts-ignore
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
+import React, { useCallback, useContext, useMemo } from 'react'
 import { useAppDispatch } from '../../redux/Store';
-import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { Category, Outline } from '../../constants/AppConstants';
+import { Alert, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Category, Icon, LocalText, Outline } from '../../constants/AppConstants';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { BackgroundForTextType } from '../../constants/Types';
 import ImageBackgroundWithLoading from './ImageBackgroundWithLoading';
 import { setBackgroundIdForText } from '../../redux/UserDataSlice';
+import { ThemeContext } from '../../constants/Colors';
+import { usePremium } from '../../hooks/usePremium';
+import { GoToPremiumScreen } from './HeaderXButton';
+import { useNavigation } from '@react-navigation/native';
 
 const size = heightPercentageToDP(3.5)
 
 var selectedBackgroundIdTracking: number | undefined = undefined
-
-export const OnPressedBackgroundForText = (backgroundForText: BackgroundForTextType, cat: Category, dispatch: ReturnType<typeof useAppDispatch>) => {
-    selectedBackgroundIdTracking = backgroundForText.id
-    dispatch(setBackgroundIdForText([cat, backgroundForText.id]))
-}
 
 export const TrackSelectedBackgroundForText = () => {
     // if (selectedBackgroundForTextForTracking === undefined)
@@ -37,6 +39,9 @@ const BackgroundScroll = ({
     listAllBg: BackgroundForTextType[],
 }) => {
     const dispatch = useAppDispatch();
+    const theme = useContext(ThemeContext)
+    const navigation = useNavigation()
+    const { isPremium } = usePremium()
 
     const listToDraw = useMemo(() => {
         return listAllBg.filter(i => i.isLightBg === isLightBackground)
@@ -48,13 +53,33 @@ const BackgroundScroll = ({
         })
     }, [])
 
-    const renderItem = useCallback((item: BackgroundForTextType, index: number) => {
-        const isCurrentBackgroundForText = item.id === currentBackgroundId
+    const onPressItem = useCallback((item: BackgroundForTextType) => {
+        selectedBackgroundIdTracking = item.id
 
-        const onPress = () => OnPressedBackgroundForText(item, cat, dispatch)
+        dispatch(setBackgroundIdForText([cat, item.id]))
+
+        if (!isPremium && item.isPremium) {
+            Alert.alert(
+                LocalText.background_for_premium,
+                LocalText.background_for_premium_content,
+                [
+                    {
+                        text: LocalText.later
+                    },
+                    {
+                        text: LocalText.upgrade,
+                        onPress: () => GoToPremiumScreen(navigation)
+                    },
+                ])
+        }
+    }, [isPremium])
+
+    const renderItem = useCallback((item: BackgroundForTextType, index: number) => {
+        const isCurrentBg = item.id === currentBackgroundId
+        const dotColor = item.isLightBg === 1 ? theme.background : theme.counterBackground
 
         return (
-            <TouchableOpacity onPress={onPress} key={index} >
+            <TouchableOpacity onPress={() => onPressItem(item)} key={index} >
                 <ImageBackgroundWithLoading
                     source={{ uri: item.img }}
                     style={{
@@ -66,19 +91,25 @@ const BackgroundScroll = ({
                         overflow: 'hidden',
                     }}>
                     {
-                        !isCurrentBackgroundForText ? undefined :
+                        !isCurrentBg ?
+                            <View>
+                                {
+                                    !item.isPremium ? undefined :
+                                        <MaterialCommunityIcons name={Icon.Lock} color={dotColor} size={size / 2} />
+                                }
+                            </View> :
                             <View
                                 style={{
                                     width: size / 4,
                                     height: size / 4,
                                     borderRadius: size / 4 / 2,
-                                    backgroundColor: 'red'
+                                    backgroundColor: dotColor,
                                 }} />
                     }
                 </ImageBackgroundWithLoading>
             </TouchableOpacity>
         )
-    }, [currentBackgroundId, cat])
+    }, [currentBackgroundId, cat, theme])
 
     return (
         <ScrollView

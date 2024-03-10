@@ -235,6 +235,7 @@ export enum Icon {
   ThreeDots = 'dots-horizontal',
   NoInternet = 'access-point-network-off',
   HeartBroken = 'heart-broken',
+  Lock = 'lock',
   Dice = 'dice-5-outline',
   Download = 'arrow-down',
   X = 'close-thick',
@@ -303,6 +304,7 @@ export const LocalText = {
   Contact: "Contact",
   bg_for_white_text: "Backgrounds for white text",
   bg_for_black_text: "Backgrounds for black text",
+  remove_background: "No background",
   saved_2: "Saved",
   upload: "Upload",
   cancel: "Cancel",
@@ -525,6 +527,9 @@ export const LocalText = {
 
   upload_success: "Uploaded successfully",
   upload_success_desc: "Thank you for uploading to Gooday. I will try to review it as soon as possible. If it is approved, Gooday will notify you in the app. Stay tuned!",
+  
+  background_for_premium: "Gooday Premium",
+  background_for_premium_content: "This background is available exclusively for Premium users. Upgrade now to unlock access to all backgrounds.",
 }
 
 // storage

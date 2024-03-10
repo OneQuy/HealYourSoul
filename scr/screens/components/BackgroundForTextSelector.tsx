@@ -1,9 +1,12 @@
-import { View, Text, StyleSheet } from 'react-native'
-import React, { useContext, useMemo } from 'react'
+import { View, Text, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native'
+import React, { useCallback, useContext, useMemo } from 'react'
 import BackgroundScroll from './BackgroundScroll'
 import { BackgroundForTextType } from '../../constants/Types'
-import { Category, FontSize, LocalText, Outline } from '../../constants/AppConstants'
+import { BorderRadius, Category, FontSize, LocalText, Outline } from '../../constants/AppConstants'
 import { ThemeContext } from '../../constants/Colors'
+import { GoToPremiumScreen } from './HeaderXButton'
+import { useNavigation } from '@react-navigation/native'
+import { iapBg_1 } from '../IAP/IAPPage'
 
 const BackgroundForTextSelector = ({
     currentBackgroundId,
@@ -15,11 +18,26 @@ const BackgroundForTextSelector = ({
     listAllBg: BackgroundForTextType[] | string | undefined,
 }) => {
     const theme = useContext(ThemeContext);
+    const navigation = useNavigation()
+
+    const onPressedUpgrade = useCallback(() => {
+        GoToPremiumScreen(navigation)
+    }, [navigation])
+
+    const onPressedFold = useCallback(() => {
+    }, [])
 
     const style = useMemo(() => {
         return StyleSheet.create({
             master: { gap: Outline.GapHorizontal, },
-            text: { color: theme.counterBackground, fontSize: FontSize.Small_L }
+            text: { color: theme.counterBackground, fontSize: FontSize.Small_L },
+
+            plsSubBtnsView: { gap: Outline.GapHorizontal, flexDirection: 'row' },
+            premiumIB: { padding: Outline.VerticalMini, borderRadius: BorderRadius.BR, overflow: 'hidden', justifyContent: 'center', alignItems: 'center', },
+            btnTO: { padding: Outline.VerticalMini, borderColor: theme.counterBackground, borderRadius: BorderRadius.BR, borderWidth: StyleSheet.hairlineWidth, justifyContent: 'center', alignItems: 'center', },
+            textTxt: { textAlign: 'center', fontSize: FontSize.Small_L, color: theme.counterBackground, },
+            premiumText: { fontSize: FontSize.Small_L, color: 'black' },
+            gotItText: { fontSize: FontSize.Small_L, color: theme.counterBackground },
         })
     }, [theme])
 
@@ -41,12 +59,35 @@ const BackgroundForTextSelector = ({
             {/* dark bgs */}
 
             <Text style={style.text}>{LocalText.bg_for_white_text}:</Text>
+
             <BackgroundScroll
                 cat={cat}
                 listAllBg={listAllBg}
                 currentBackgroundId={currentBackgroundId}
                 isLightBackground={0}
             />
+
+            <View style={style.plsSubBtnsView}>
+                <TouchableOpacity onPress={onPressedFold}>
+                    <View style={style.btnTO}>
+                        <Text numberOfLines={1} adjustsFontSizeToFit style={style.gotItText}>{LocalText.remove_background}</Text>
+                    </View>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={onPressedFold}>
+                    <View style={style.btnTO}>
+                        <Text numberOfLines={1} adjustsFontSizeToFit style={style.gotItText}>{LocalText.close}</Text>
+                    </View>
+                </TouchableOpacity>
+
+                {
+                    <TouchableOpacity onPress={onPressedUpgrade}>
+                        <ImageBackground resizeMode="cover" source={iapBg_1} style={style.premiumIB}>
+                            <Text numberOfLines={1} adjustsFontSizeToFit style={style.premiumText}>{LocalText.upgrade}</Text>
+                        </ImageBackground>
+                    </TouchableOpacity>
+                }
+            </View>
         </View>
     )
 }
