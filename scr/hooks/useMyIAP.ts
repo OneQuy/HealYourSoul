@@ -38,7 +38,7 @@ export const useMyIAP = (
             return undefined
 
         if (fetchedProducts.length === 0)
-            return
+            return undefined
 
         if (typeof targetProductSku === 'string')
             return fetchedProducts.find(i => i.productId === targetProductSku)
