@@ -49,7 +49,7 @@ const ImageBackgroundOrView = (props: Props) => {
     else {
         return (
             <View
-                key={key}
+                // key={key}
                 style={[props.style]} >
                 {
                     props.children
