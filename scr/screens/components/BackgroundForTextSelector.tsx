@@ -4,7 +4,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, Alert } from 'react-native'
 import React, { useCallback, useContext, useMemo } from 'react'
 import BackgroundScroll from './BackgroundScroll'
-import { BackgroundForTextType } from '../../constants/Types'
+import { BackgroundForTextCurrent, BackgroundForTextType } from '../../constants/Types'
 import { BorderRadius, Category, FontSize, Icon, LocalText, Outline, Size } from '../../constants/AppConstants'
 import { ThemeContext } from '../../constants/Colors'
 import { GoToPremiumScreen } from './HeaderXButton'
@@ -15,14 +15,10 @@ import { setBackgroundIdForText } from '../../redux/UserDataSlice';
 import { usePremium } from '../../hooks/usePremium'
 
 const BackgroundForTextSelector = ({
-    currentBackgroundId,
-    isBold,
-    cat,
+    currentBackground,
     listAllBg,
 }: {
-    currentBackgroundId: number,
-    isBold: number,
-    cat: Category,
+    currentBackground: BackgroundForTextCurrent,
     listAllBg: BackgroundForTextType[] | string | undefined,
 }) => {
     const theme = useContext(ThemeContext);
@@ -35,13 +31,13 @@ const BackgroundForTextSelector = ({
     }, [navigation])
 
     const onPressedNoBackground = useCallback(() => {
-        dispatch(setBackgroundIdForText([cat, -1, isBold ? 1 : 0]))
-    }, [isBold])
+        dispatch(setBackgroundIdForText({ ...currentBackground, id: -1 }))
+    }, [currentBackground])
 
     const onPressedBoldText = useCallback(() => {
-        dispatch(setBackgroundIdForText([cat, currentBackgroundId, isBold ? 0 : 1]))
+        dispatch(setBackgroundIdForText({ ...currentBackground, isBold: currentBackground.isBold ? 0 : 1 }))
 
-        if (!isPremium && !isBold) {
+        if (!isPremium && !currentBackground.isBold) {
             Alert.alert(
                 LocalText.background_for_premium,
                 LocalText.background_for_premium_content_bold,
@@ -55,7 +51,7 @@ const BackgroundForTextSelector = ({
                     },
                 ])
         }
-    }, [currentBackgroundId, isPremium, isBold, cat])
+    }, [currentBackground, isPremium])
 
     const style = useMemo(() => {
         return StyleSheet.create({
@@ -64,13 +60,13 @@ const BackgroundForTextSelector = ({
             plsSubBtnsView: { gap: Outline.GapHorizontal, flexDirection: 'row' },
             premiumIB: { padding: Outline.VerticalMini, borderRadius: BorderRadius.BR, overflow: 'hidden', justifyContent: 'center', alignItems: 'center', },
             btnTO: { flexDirection: 'row', gap: Outline.GapHorizontal, padding: Outline.VerticalMini, borderColor: theme.counterBackground, borderRadius: BorderRadius.BR, borderWidth: StyleSheet.hairlineWidth, justifyContent: 'center', alignItems: 'center', },
-            btnTOBold: { flexDirection: 'row', gap: Outline.GapHorizontal, padding: Outline.VerticalMini, backgroundColor: isBold ? theme.primary : undefined, borderColor: theme.counterBackground, borderRadius: BorderRadius.BR, borderWidth: StyleSheet.hairlineWidth, justifyContent: 'center', alignItems: 'center', },
+            btnTOBold: { flexDirection: 'row', gap: Outline.GapHorizontal, padding: Outline.VerticalMini, backgroundColor: currentBackground.isBold ? theme.primary : undefined, borderColor: theme.counterBackground, borderRadius: BorderRadius.BR, borderWidth: StyleSheet.hairlineWidth, justifyContent: 'center', alignItems: 'center', },
             textTxt: { textAlign: 'center', fontSize: FontSize.Small_L, color: theme.counterBackground, },
             premiumText: { fontSize: FontSize.Small_L, color: 'black' },
             btnTxt: { fontSize: FontSize.Small_L, color: theme.counterBackground },
-            btnTxtBold: { fontSize: FontSize.Small_L, color: isBold ? theme.counterPrimary : theme.counterBackground },
+            btnTxtBold: { fontSize: FontSize.Small_L, color: currentBackground.isBold ? theme.counterPrimary : theme.counterBackground },
         })
-    }, [theme, isBold])
+    }, [theme, currentBackground])
 
     if (!Array.isArray(listAllBg))
         return undefined
@@ -81,10 +77,8 @@ const BackgroundForTextSelector = ({
 
             <Text style={style.text}>{LocalText.bg_for_black_text}:</Text>
             <BackgroundScroll
-                isBold={isBold}
-                cat={cat}
                 listAllBg={listAllBg}
-                currentBackgroundId={currentBackgroundId}
+                currentBackground={currentBackground}
                 isLightBackground={1}
             />
 
@@ -93,10 +87,8 @@ const BackgroundForTextSelector = ({
             <Text style={style.text}>{LocalText.bg_for_white_text}:</Text>
 
             <BackgroundScroll
-                isBold={isBold}
-                cat={cat}
                 listAllBg={listAllBg}
-                currentBackgroundId={currentBackgroundId}
+                currentBackground={currentBackground}
                 isLightBackground={0}
             />
 
@@ -110,11 +102,11 @@ const BackgroundForTextSelector = ({
 
                 {/* bold */}
                 <TouchableOpacity onPress={onPressedBoldText}>
-                    <View style={!isBold ? style.btnTO : style.btnTOBold}>
-                        <Text numberOfLines={1} adjustsFontSizeToFit style={isBold ? style.btnTxtBold : style.btnTxt}>{LocalText.bold}</Text>
+                    <View style={!currentBackground.isBold ? style.btnTO : style.btnTOBold}>
+                        <Text numberOfLines={1} adjustsFontSizeToFit style={currentBackground.isBold ? style.btnTxtBold : style.btnTxt}>{LocalText.bold}</Text>
                         {
                             !isPremium &&
-                            <MaterialCommunityIcons name={Icon.Lock} color={isBold === 1 ? theme.counterPrimary : theme.counterBackground} size={Size.IconTiny} />
+                            <MaterialCommunityIcons name={Icon.Lock} color={currentBackground.isBold === 1 ? theme.counterPrimary : theme.counterBackground} size={Size.IconTiny} />
                         }
                     </View>
                 </TouchableOpacity>

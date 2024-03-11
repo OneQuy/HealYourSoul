@@ -6,7 +6,7 @@ import { useAppDispatch } from '../../redux/Store';
 import { Alert, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Category, Icon, LocalText, Outline } from '../../constants/AppConstants';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
-import { BackgroundForTextType } from '../../constants/Types';
+import { BackgroundForTextCurrent, BackgroundForTextType } from '../../constants/Types';
 import ImageBackgroundWithLoading from './ImageBackgroundWithLoading';
 import { setBackgroundIdForText } from '../../redux/UserDataSlice';
 import { ThemeContext } from '../../constants/Colors';
@@ -29,15 +29,11 @@ export const TrackSelectedBackgroundForText = () => {
 
 const BackgroundScroll = ({
     isLightBackground,
-    currentBackgroundId,
-    isBold,
-    cat,
+    currentBackground,
     listAllBg,
 }: {
     isLightBackground: number,
-    currentBackgroundId: number,
-    isBold: number,
-    cat: Category,
+    currentBackground: BackgroundForTextCurrent,
     listAllBg: BackgroundForTextType[],
 }) => {
     const dispatch = useAppDispatch();
@@ -59,7 +55,7 @@ const BackgroundScroll = ({
     const onPressItem = useCallback((item: BackgroundForTextType) => {
         selectedBackgroundIdTracking = item.id
 
-        dispatch(setBackgroundIdForText([cat, item.id, isBold]))
+        dispatch(setBackgroundIdForText({ ...currentBackground, id: item.id }))
 
         if (!isPremium && item.isPremium) {
             Alert.alert(
@@ -75,10 +71,10 @@ const BackgroundScroll = ({
                     },
                 ])
         }
-    }, [isPremium, isBold])
+    }, [isPremium, currentBackground])
 
     const renderItem = useCallback((item: BackgroundForTextType, index: number) => {
-        const isCurrentBg = item.id === currentBackgroundId
+        const isCurrentBg = item.id === currentBackground.id
 
         let dotColor: string
 
@@ -126,7 +122,7 @@ const BackgroundScroll = ({
                 </ImageBackgroundWithLoading>
             </TouchableOpacity>
         )
-    }, [currentBackgroundId, onPressItem, cat, theme, isPremium])
+    }, [currentBackground, onPressItem, theme, isPremium])
 
     return (
         <ScrollView

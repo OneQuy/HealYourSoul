@@ -1,12 +1,12 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
-import { DiversityItemType, Inbox, SubscribedData } from "../constants/Types";
+import { BackgroundForTextCurrent, DiversityItemType, Inbox, SubscribedData } from "../constants/Types";
 import { Category, ScreenName } from "../constants/AppConstants";
 import { ArrayAddWithCheckDuplicate, ArrayRemove, IsValuableArrayOrString } from "../handle/UtilsTS";
 
 export type UserDataState = {
     inboxes: Inbox[] | undefined,
 
-    backgroundIdForText: undefined | [Category, number, number][],
+    backgroundIdForText: undefined | BackgroundForTextCurrent,
 
     disableScreens: ScreenName[],
 
@@ -85,7 +85,7 @@ export type UserDataState = {
 const initialState: UserDataState = {
     inboxes: [],
 
-    backgroundIdForText: [],
+    backgroundIdForText: undefined,
 
     disableScreens: [],
 
@@ -168,20 +168,8 @@ const slice = createSlice({
 
         // background id for text
 
-        setBackgroundIdForText: (state, action: PayloadAction<[Category, number, number]>) => {
-            if (!state.backgroundIdForText)
-                state.backgroundIdForText = []
-
-            const now = state.backgroundIdForText.findIndex(i => i[0] === action.payload[0])
-            let arr = [...state.backgroundIdForText]
-
-            if (now >= 0) {
-                arr.splice(now, 1)
-            }
-
-            arr.push([...action.payload])
-
-            state.backgroundIdForText = arr
+        setBackgroundIdForText: (state, action: PayloadAction<BackgroundForTextCurrent | undefined>) => {
+            state.backgroundIdForText = action.payload
         },
 
         // inbox

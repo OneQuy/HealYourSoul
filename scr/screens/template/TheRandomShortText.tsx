@@ -18,7 +18,7 @@ import useDiversityItem from '../../hooks/useDiversityItem';
 import { OnPressedNextItemDiversity } from '../diversity/TheDiversity';
 import MiniIAP from '../components/MiniIAP';
 import useCheckAndDownloadRemoteFile from '../../hooks/useCheckAndDownloadRemoteFile';
-import { BackgroundForTextType } from '../../constants/Types';
+import { BackgroundForTextCurrent, BackgroundForTextType } from '../../constants/Types';
 import { TempDirName } from '../../handle/Utils';
 import { GetRemoteFileConfigVersion } from '../../handle/AppConfigHandler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -35,7 +35,12 @@ interface TheRandomShortTextProps {
     getTextAsync: () => Promise<string | undefined>
 }
 
-const defaultValue: [Category, number, number] = [Category.Art, -1, 0]
+const defaultValue: BackgroundForTextCurrent = {
+    id: -1,
+    isBold: 0,
+    sizeBig: 0,
+    cat: Category.Art
+}
 
 const TheRandomShortText = ({
     category,
@@ -51,22 +56,16 @@ const TheRandomShortText = ({
     const { isPremium } = usePremium()
     const dispatch = useAppDispatch()
 
-    const bgData = useAppSelector(state => {
-        const list = state.userData.backgroundIdForText
-
-        if (list === undefined)
-            return defaultValue
-
-        const find = list.find(i => i[0] === category)
-
-        if (find)
-            return find
+    const currentBackground = useAppSelector(state => {
+        const value = state.userData.backgroundIdForText
+        if (value)
+            return value
         else
             return defaultValue
     })
 
-    const currentBackgroundId = bgData ? bgData[1] : -1
-    const isBold = bgData ? bgData[2] : 0
+    // const currentBackground.id = bgData.id
+    // const currentBackground.isBold = 
 
     const { result: backgrounds, didDownload, } = useCheckAndDownloadRemoteFile<BackgroundForTextType[]>(
         fileURL,
@@ -79,13 +78,13 @@ const TheRandomShortText = ({
         async () => AsyncStorage.setItem(StorageKey_LocalFileVersion_ShortText, GetRemoteFileConfigVersion('background_for_text').toString()))
 
     const backgroundUri = useMemo(() => {
-        if (currentBackgroundId === -1 || !Array.isArray(backgrounds))
+        if (currentBackground.id === -1 || !Array.isArray(backgrounds))
             return undefined
 
-        const find = backgrounds.find(i => i.id === currentBackgroundId)
+        const find = backgrounds.find(i => i.id === currentBackground.id)
 
         return find?.img
-    }, [currentBackgroundId, backgrounds])
+    }, [currentBackground, backgrounds])
 
     // animation
 
@@ -133,22 +132,22 @@ const TheRandomShortText = ({
 
         // console.log('check reset 2', backgroundId);
 
-        if ((!isBold && currentBackgroundId === -1) || !Array.isArray(backgrounds))
+        if ((!currentBackground.isBold && currentBackground.id === -1) || !Array.isArray(backgrounds))
             return
 
         // console.log('check reset 3', backgroundId);
 
-        const curBg = backgrounds.find(i => i.id === currentBackgroundId)
+        const curBg = backgrounds.find(i => i.id === currentBackground.id)
 
-        if (curBg && !curBg.isPremium && !isBold)
+        if (curBg && !curBg.isPremium && !currentBackground.isBold)
             return
 
         // reset!
 
         console.log('reset');
 
-        dispatch(setBackgroundIdForText([category, curBg && curBg.isPremium ? -1 : currentBackgroundId, 0]))
-    }, [currentBackgroundId, backgrounds, isBold, isPremium])
+        dispatch(setBackgroundIdForText(undefined))
+    }, [currentBackground.id, backgrounds, currentBackground.isBold, isPremium])
 
     const onPressBackground = useCallback(() => {
         setIsFoldBackground(val => !val)
@@ -309,7 +308,7 @@ const TheRandomShortText = ({
                                         <Text style={{ fontSize: FontSize.Small_L, color: theme.counterBackground }}>{LocalText.tap_to_retry}</Text>
                                     </TouchableOpacity>
                                     :
-                                    <Animated.Text adjustsFontSizeToFit numberOfLines={20} selectable style={[{ transform: [{ scale: mediaViewScaleAnimRef }] }, { verticalAlign: 'middle', marginHorizontal: Outline.Horizontal, fontWeight: isBold ? FontWeight.Bold : 'normal', color: theme.counterBackground, fontSize: FontSize.Big }]}>{text ? text : ''}</Animated.Text>
+                                    <Animated.Text adjustsFontSizeToFit numberOfLines={20} selectable style={[{ transform: [{ scale: mediaViewScaleAnimRef }] }, { verticalAlign: 'middle', marginHorizontal: Outline.Horizontal, fontWeight: currentBackground.isBold ? FontWeight.Bold : 'normal', color: theme.counterBackground, fontSize: FontSize.Big }]}>{text ? text : ''}</Animated.Text>
                             }
                         </View>
                 }
@@ -318,9 +317,7 @@ const TheRandomShortText = ({
             {
                 !isFoldBackground &&
                 <BackgroundForTextSelector
-                    isBold={isBold}
-                    cat={category}
-                    currentBackgroundId={currentBackgroundId}
+                    currentBackground={currentBackground}
                     listAllBg={backgrounds}
                 />
             }

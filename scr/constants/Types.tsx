@@ -182,6 +182,13 @@ export type SubscribedData = {
     tick: number,
 }
 
+export type BackgroundForTextCurrent = {
+    id: number,
+    cat: Category,
+    isBold: number,
+    sizeBig: number,
+}
+
 export type TriviaDifficulty = 'hard' | 'medium' | 'easy' | 'all'
 
 export type TriviaAnswerType = 'multi' | 'truefalse' | 'all'
