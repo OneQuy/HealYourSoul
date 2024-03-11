@@ -257,6 +257,12 @@ const slice = createSlice({
             } as SubscribedData
         },
 
+        resetSubscribe: (state) => {
+            state.subscribedData = undefined
+        },
+
+        // enable screens
+
         enableAllScreen(state) {
             state.disableScreens = []
         },
@@ -271,6 +277,8 @@ const slice = createSlice({
                 state.disableScreens.push(action.payload)
         },
 
+        // saved
+
         toggleSavedItem(state, action: PayloadAction<DiversityItemType>) {
             if (!state.savedItems)
                 state.savedItems = []
@@ -283,6 +291,8 @@ const slice = createSlice({
                 state.savedItems.push(action.payload)
         },
 
+        // upload
+
         addUploadedItem(state, action: PayloadAction<DiversityItemType>) {
             if (!state.uploadedItems)
                 state.uploadedItems = []
@@ -292,6 +302,8 @@ const slice = createSlice({
             if (idx < 0)
                 state.uploadedItems.unshift(action.payload)
         },
+
+        // check in
 
         checkInScreen(state, action: PayloadAction<ScreenName>) {
             if (!state.checkedInScreens)
@@ -808,6 +820,7 @@ export const {
     removeFunSoundFavoritedID,
 
     setSubscribe,
+    resetSubscribe,
 
     addDrawSeenID,
     addDrawFavoritedID,

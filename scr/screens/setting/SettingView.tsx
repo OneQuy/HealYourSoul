@@ -27,6 +27,7 @@ import { setOnboarded } from '../../redux/MiscSlice';
 import { GetIPLocationAsync } from '../../hooks/useCountryFromIP';
 import { UserID } from '../../handle/UserID';
 import { HandleGoodayStreakAsync } from '../../handle/GoodayAppState';
+import { resetSubscribe } from '../../redux/UserDataSlice';
 
 const limitFeedback = 300
 
@@ -113,6 +114,10 @@ const SettingView = () => {
 
   const onPressDevGetUserID = useCallback(async () => {
     CopyAndToast(UserID())
+  }, [])
+
+  const onPressResetSubscribe = useCallback(async () => {
+    dispatch(resetSubscribe())
   }, [])
 
   const onPressDevShowStreak = useCallback(async () => {
@@ -321,7 +326,7 @@ const SettingView = () => {
 
         {/* notification */}
 
-        <Text style={style.titleText}>{LocalText.notification}</Text>
+        <Text onPress={IsDev() ? onPressResetSubscribe : undefined} style={style.titleText}>{LocalText.notification}</Text>
 
         {/* quote */}
         <View style={style.checkbox}>
