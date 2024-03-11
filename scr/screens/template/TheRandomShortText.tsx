@@ -95,7 +95,7 @@ const TheRandomShortText = ({
             return
 
         playAnimLoadedMedia(mediaViewScaleAnimRef)
-    }, [text])
+    }, [text, backgroundId])
 
     const onPressCopy = useCallback(() => {
         if (!text)
@@ -126,11 +126,13 @@ const TheRandomShortText = ({
     }, [text, theme])
 
     const checkAndResetBackground = useCallback(() => {
+        // console.log('check reset', backgroundId);
+
         if (isPremium)
             return
 
         if (backgroundId === -1 || !Array.isArray(backgrounds))
-            return undefined
+            return
 
         let find = backgrounds.find(i => i.id === backgroundId)
 
@@ -141,6 +143,8 @@ const TheRandomShortText = ({
             return
 
         // reset!
+        
+        // console.log('reset');
 
         dispatch(setBackgroundIdForText([category, -1]))
     }, [backgroundId, backgrounds, isPremium])
@@ -248,6 +252,10 @@ const TheRandomShortText = ({
 
     useEffect(() => {
         onPressRandom(false)
+
+        const func = navigation.addListener('focus', checkAndResetBackground)
+
+        return func
     }, [])
 
     // update header setting btn
@@ -268,12 +276,12 @@ const TheRandomShortText = ({
 
     // reset bg
 
-    useEffect(() => {
-        if (drawerStatus === 'closed')
-            return
+    // useEffect(() => {
+    //     if (drawerStatus === 'closed')
+    //         return
 
-        checkAndResetBackground()
-    }, [drawerStatus])
+    //     checkAndResetBackground()
+    // }, [drawerStatus])
 
     // save last visit category screen
 
@@ -282,12 +290,10 @@ const TheRandomShortText = ({
     }, []))
 
     return (
-        <View
-            // key={backgroundUri ?? Math.random().toString()}
-            pointerEvents={handling ? 'none' : 'auto'} style={[styleSheet.masterView, { backgroundColor: theme.background }]}>
+        <View pointerEvents={handling ? 'none' : 'auto'} style={[styleSheet.masterView, { backgroundColor: theme.background }]}>
             <ImageBackgroundOrView
-                // key={backgroundUri ?? Math.random()}
                 key={backgroundUri}
+                // source={{ uri: 'https://images.unsplash.com/photo-1564951434112-64d74cc2a2d7?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjA3fHxiYWNrZ3JvdW5kfGVufDB8fDB8fHww' }}
                 source={{ uri: backgroundUri }}
                 resizeMode='cover'
                 style={CommonStyles.flex_1} >
