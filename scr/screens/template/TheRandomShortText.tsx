@@ -307,7 +307,7 @@ const TheRandomShortText = ({
                                         <Text style={{ fontSize: FontSize.Small_L, color: theme.counterBackground }}>{LocalText.tap_to_retry}</Text>
                                     </TouchableOpacity>
                                     :
-                                    <Animated.Text adjustsFontSizeToFit numberOfLines={20} selectable style={[{ transform: [{ scale: mediaViewScaleAnimRef }] }, { verticalAlign: 'middle', marginHorizontal: Outline.Horizontal, fontWeight: currentBackground.isBold ? FontWeight.Bold : 'normal', color: theme.counterBackground, fontSize: FontSize.Big }]}>{text ? text : ''}</Animated.Text>
+                                    <Animated.Text adjustsFontSizeToFit numberOfLines={20} selectable style={[{ transform: [{ scale: mediaViewScaleAnimRef }] }, { verticalAlign: 'middle', marginHorizontal: Outline.Horizontal, fontWeight: currentBackground.isBold ? FontWeight.Bold : 'normal', color: theme.counterBackground, fontSize: currentBackground.sizeBig ? FontSize.Super : FontSize.Big }]}>{text ? text : ''}</Animated.Text>
                             }
                         </View>
                 }

@@ -199,6 +199,7 @@ export enum BorderRadius {
 // font size
 
 export enum FontSize {
+  Super = wp('10%'),
   Big = wp('7%'),
   Normal = wp('5%'),
   Small_L = wp('4%'),
@@ -307,6 +308,7 @@ export const LocalText = {
   bg_for_black_text: "Backgrounds for black text",
   remove_background: "No background",
   bold: "Bold",
+  sizebig: "Big text",
   Style: "Style",
   saved_2: "Saved",
   upload: "Upload",
@@ -532,8 +534,9 @@ export const LocalText = {
   upload_success_desc: "Thank you for uploading to Gooday. I will try to review it as soon as possible. If it is approved, Gooday will notify you in the app. Stay tuned!",
 
   background_for_premium: "Gooday Premium",
-  background_for_premium_content: "This background is available exclusively for Premium users. Upgrade now to unlock access to all backgrounds and bold text.",
-  background_for_premium_content_bold: "Bold text is available exclusively for Premium users. Upgrade now to unlock access to all backgrounds and bold text.",
+  background_for_premium_content: "This background is available exclusively for Premium users. Upgrade now to unlock access to all styles.",
+  background_for_premium_content_bold: "Bold text is available exclusively for Premium users. Upgrade now to unlock access to all styles.",
+  background_for_premium_content_sizebig: "Big text is available exclusively for Premium users. Upgrade now to unlock access to all styles.",
 }
 
 // storage

@@ -52,6 +52,26 @@ const BackgroundForTextSelector = ({
                 ])
         }
     }, [currentBackground, isPremium])
+   
+    const onPressedSize = useCallback(() => {
+        dispatch(setBackgroundIdForText({ ...currentBackground, sizeBig: currentBackground.sizeBig ? 0 : 1 }))
+
+        if (!isPremium && !currentBackground.sizeBig) {
+            Alert.alert(
+                LocalText.background_for_premium,
+                LocalText.background_for_premium_content_sizebig,
+                [
+                    {
+                        text: LocalText.later
+                    },
+                    {
+                        text: LocalText.upgrade,
+                        onPress: () => GoToPremiumScreen(navigation)
+                    },
+                ])
+        }
+    }, [currentBackground, isPremium])
+console.log(currentBackground);
 
     const style = useMemo(() => {
         return StyleSheet.create({
@@ -61,10 +81,12 @@ const BackgroundForTextSelector = ({
             premiumIB: { padding: Outline.VerticalMini, borderRadius: BorderRadius.BR, overflow: 'hidden', justifyContent: 'center', alignItems: 'center', },
             btnTO: { flexDirection: 'row', gap: Outline.GapHorizontal, padding: Outline.VerticalMini, borderColor: theme.counterBackground, borderRadius: BorderRadius.BR, borderWidth: StyleSheet.hairlineWidth, justifyContent: 'center', alignItems: 'center', },
             btnTOBold: { flexDirection: 'row', gap: Outline.GapHorizontal, padding: Outline.VerticalMini, backgroundColor: currentBackground.isBold ? theme.primary : undefined, borderColor: theme.counterBackground, borderRadius: BorderRadius.BR, borderWidth: StyleSheet.hairlineWidth, justifyContent: 'center', alignItems: 'center', },
+            btnTOSize: { flexDirection: 'row', gap: Outline.GapHorizontal, padding: Outline.VerticalMini, backgroundColor: currentBackground.sizeBig ? theme.primary : undefined, borderColor: theme.counterBackground, borderRadius: BorderRadius.BR, borderWidth: StyleSheet.hairlineWidth, justifyContent: 'center', alignItems: 'center', },
             textTxt: { textAlign: 'center', fontSize: FontSize.Small_L, color: theme.counterBackground, },
             premiumText: { fontSize: FontSize.Small_L, color: 'black' },
             btnTxt: { fontSize: FontSize.Small_L, color: theme.counterBackground },
             btnTxtBold: { fontSize: FontSize.Small_L, color: currentBackground.isBold ? theme.counterPrimary : theme.counterBackground },
+            btnTxtSize: { fontSize: FontSize.Small_L, color: currentBackground.sizeBig ? theme.counterPrimary : theme.counterBackground },
         })
     }, [theme, currentBackground])
 
@@ -107,6 +129,17 @@ const BackgroundForTextSelector = ({
                         {
                             !isPremium &&
                             <MaterialCommunityIcons name={Icon.Lock} color={currentBackground.isBold === 1 ? theme.counterPrimary : theme.counterBackground} size={Size.IconTiny} />
+                        }
+                    </View>
+                </TouchableOpacity>
+                
+                {/* size */}
+                <TouchableOpacity onPress={onPressedSize}>
+                    <View style={currentBackground.sizeBig !== 1 ? style.btnTO : style.btnTOSize}>
+                        <Text numberOfLines={1} adjustsFontSizeToFit style={currentBackground.sizeBig === 1 ? style.btnTxtSize : style.btnTxt}>{LocalText.sizebig}</Text>
+                        {
+                            !isPremium &&
+                            <MaterialCommunityIcons name={Icon.Lock} color={currentBackground.sizeBig === 1 ? theme.counterPrimary : theme.counterBackground} size={Size.IconTiny} />
                         }
                     </View>
                 </TouchableOpacity>
