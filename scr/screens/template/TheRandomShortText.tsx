@@ -296,7 +296,7 @@ const TheRandomShortText = ({
             <ImageBackgroundOrView
                 key={backgroundUri}
                 // source={{ uri: 'https://images.unsplash.com/photo-1564951434112-64d74cc2a2d7?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjA3fHxiYWNrZ3JvdW5kfGVufDB8fDB8fHww' }}
-                source={{ uri: backgroundUri, }}
+                source={{ uri: backgroundUri, cache: 'force-cache' }}
                 resizeMode='cover'
                 style={CommonStyles.flex_1} >
                 {
