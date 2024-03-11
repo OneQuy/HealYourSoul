@@ -36,7 +36,7 @@ interface TheRandomShortTextProps {
     getTextAsync: () => Promise<string | undefined>
 }
 
-const defaultValue: [Category, number, boolean] = [Category.Art, -1, false]
+const defaultValue: [Category, number, number] = [Category.Art, -1, 0]
 
 const TheRandomShortText = ({
     category,
@@ -52,21 +52,22 @@ const TheRandomShortText = ({
     const { isPremium } = usePremium()
     const dispatch = useAppDispatch()
 
-    const [_, currentBackgroundId, isBold] = useAppSelector(state => {
+    const bgData = useAppSelector(state => {
         const list = state.userData.backgroundIdForText
-        // console.log(Category[category], list);
 
         if (list === undefined)
             return defaultValue
 
         const find = list.find(i => i[0] === category)
-        // console.log(find);
 
         if (find)
             return find
         else
             return defaultValue
     })
+
+    const currentBackgroundId = bgData ? bgData[1] : -1
+    const isBold = bgData ? bgData[2] : 0
 
     const { result: backgrounds, didDownload, } = useCheckAndDownloadRemoteFile<BackgroundForTextType[]>(
         fileURL,
@@ -124,7 +125,7 @@ const TheRandomShortText = ({
     const checkAndResetBackground = useCallback(() => {
         // console.log('check reset', backgroundId);
 
-        playAnimLoadedMedia(mediaViewScaleAnimRef)
+        // playAnimLoadedMedia(mediaViewScaleAnimRef)
 
         if (isPremium)
             return
@@ -143,9 +144,9 @@ const TheRandomShortText = ({
 
         // reset!
 
-        // console.log('reset');
+        console.log('reset');
 
-        dispatch(setBackgroundIdForText([category, curBg && curBg.isPremium ? -1 : currentBackgroundId, false]))
+        dispatch(setBackgroundIdForText([category, curBg && curBg.isPremium ? -1 : currentBackgroundId, 0]))
     }, [currentBackgroundId, backgrounds, isBold, isPremium])
 
     const onPressBackground = useCallback(() => {

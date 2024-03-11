@@ -20,7 +20,7 @@ const BackgroundForTextSelector = ({
     listAllBg,
 }: {
     currentBackgroundId: number,
-    isBold: boolean,
+    isBold: number,
     cat: Category,
     listAllBg: BackgroundForTextType[] | string | undefined,
 }) => {
@@ -34,11 +34,11 @@ const BackgroundForTextSelector = ({
     }, [navigation])
 
     const onPressedNoBackground = useCallback(() => {
-        dispatch(setBackgroundIdForText([cat, -1, isBold]))
+        dispatch(setBackgroundIdForText([cat, -1, isBold ? 1 : 0]))
     }, [isBold])
 
     const onPressedBoldText = useCallback(() => {
-        dispatch(setBackgroundIdForText([cat, currentBackgroundId, !isBold]))
+        dispatch(setBackgroundIdForText([cat, currentBackgroundId, isBold ? 0 : 1]))
 
         if (!isPremium && !isBold) {
             Alert.alert(
@@ -54,7 +54,7 @@ const BackgroundForTextSelector = ({
                     },
                 ])
         }
-    }, [currentBackgroundId, isPremium, isBold])
+    }, [currentBackgroundId, isPremium, isBold, cat])
 
     const style = useMemo(() => {
         return StyleSheet.create({

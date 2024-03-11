@@ -6,7 +6,7 @@ import { ArrayAddWithCheckDuplicate, ArrayRemove, IsValuableArrayOrString } from
 export type UserDataState = {
     inboxes: Inbox[] | undefined,
 
-    backgroundIdForText: undefined | [Category, number, boolean][],
+    backgroundIdForText: undefined | [Category, number, number][],
 
     disableScreens: ScreenName[],
 
@@ -168,17 +168,20 @@ const slice = createSlice({
 
         // background id for text
 
-        setBackgroundIdForText: (state, action: PayloadAction<[Category, number, boolean]>) => {
+        setBackgroundIdForText: (state, action: PayloadAction<[Category, number, number]>) => {
             if (!state.backgroundIdForText)
                 state.backgroundIdForText = []
 
-            const now = state.backgroundIdForText.find(i => i[0] === action.payload[0])
+            const now = state.backgroundIdForText.findIndex(i => i[0] === action.payload[0])
+            let arr = [...state.backgroundIdForText]
 
-            if (now) {
-                ArrayRemove(state.backgroundIdForText, now)
+            if (now >= 0) {
+                arr.splice(now, 1)
             }
 
-            state.backgroundIdForText.push([...action.payload])
+            arr.push([...action.payload])
+
+            state.backgroundIdForText = arr
         },
 
         // inbox

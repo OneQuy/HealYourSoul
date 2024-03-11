@@ -36,7 +36,7 @@ const BackgroundScroll = ({
 }: {
     isLightBackground: number,
     currentBackgroundId: number,
-    isBold: boolean,
+    isBold: number,
     cat: Category,
     listAllBg: BackgroundForTextType[],
 }) => {
@@ -81,7 +81,6 @@ const BackgroundScroll = ({
         const isCurrentBg = item.id === currentBackgroundId
 
         const dotColor = theme.primary
-        // const dotColor = item.isLightBg === 1 ? theme.background : theme.counterBackground
 
         return (
             <TouchableOpacity onPress={() => onPressItem(item)} key={index} >
@@ -114,7 +113,7 @@ const BackgroundScroll = ({
                 </ImageBackgroundWithLoading>
             </TouchableOpacity>
         )
-    }, [currentBackgroundId, cat, theme, isPremium])
+    }, [currentBackgroundId, onPressItem, cat, theme, isPremium])
 
     return (
         <ScrollView
