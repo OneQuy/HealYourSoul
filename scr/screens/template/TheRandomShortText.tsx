@@ -249,9 +249,9 @@ const TheRandomShortText = ({
                 },
             ] as BottomBarItem[]
 
-            const idxRandom = btns.findIndex(i => i.text === LocalText.random)
+            const idxRandom = btns.findIndex(i => i.text === LocalText.background)
 
-            btns.splice(idxRandom, 1, ...naviBtns)
+            btns.splice(idxRandom, 2, ...naviBtns)
         }
 
         // return 

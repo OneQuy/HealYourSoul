@@ -36,6 +36,7 @@ export type BackgroundForTextType = {
     "isLightBg": number,
     "isPremium": number,
     "img": string,
+    "thumb": string,
 }
 
 export type CachedValueOfCatelogry = {

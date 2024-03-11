@@ -84,7 +84,7 @@ const BackgroundScroll = ({
         return (
             <TouchableOpacity onPress={() => onPressItem(item)} key={index} >
                 <ImageBackgroundWithLoading
-                    source={{ uri: item.img }}
+                    source={{ uri: item.thumb }}
                     style={{
                         width: size,
                         height: size,
