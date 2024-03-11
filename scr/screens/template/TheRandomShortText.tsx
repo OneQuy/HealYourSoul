@@ -95,14 +95,7 @@ const TheRandomShortText = ({
 
     useLayoutEffect(() => {
         playAnimLoadedMedia(mediaViewScaleAnimRef)
-    }, [text])
-
-    useEffect(() => {
-        if (!text)
-            return
-
-        mediaViewScaleAnimRef.setValue(1)
-    }, [currentBackgroundId])
+    }, [text, backgroundUri])
 
     const onPressCopy = useCallback(() => {
         if (!text)
@@ -112,7 +105,6 @@ const TheRandomShortText = ({
 
         CopyAndToast(text, theme)
     }, [text, theme])
-
 
     const onPressShareText = useCallback(() => {
         if (!text)
@@ -131,6 +123,8 @@ const TheRandomShortText = ({
 
     const checkAndResetBackground = useCallback(() => {
         // console.log('check reset', backgroundId);
+
+        playAnimLoadedMedia(mediaViewScaleAnimRef)
 
         if (isPremium)
             return
@@ -261,13 +255,8 @@ const TheRandomShortText = ({
     // on init once (for load first post)
 
     useEffect(() => {
-        if (!text)
-            onPressRandom(false)
-
-        const func = navigation.addListener('state', checkAndResetBackground)
-
-        return func
-    }, [checkAndResetBackground])
+        onPressRandom(false)
+    }, [])
 
     // update header setting btn
 
@@ -298,6 +287,7 @@ const TheRandomShortText = ({
                 // source={{ uri: 'https://images.unsplash.com/photo-1564951434112-64d74cc2a2d7?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjA3fHxiYWNrZ3JvdW5kfGVufDB8fDB8fHww' }}
                 source={{ uri: backgroundUri, cache: 'force-cache' }}
                 resizeMode='cover'
+                notShowIndicator={true}
                 style={CommonStyles.flex_1} >
                 {
                     handling ?

@@ -11,16 +11,17 @@ import { ImageBackground, ActivityIndicator, ActivityIndicatorProps, View } from
 import React, { useCallback, useMemo, useState } from 'react'
 
 interface Props extends React.ComponentProps<typeof ImageBackground> {
-    indicatorProps?: ActivityIndicatorProps
+    indicatorProps?: ActivityIndicatorProps,
+    notShowIndicator?: boolean,
 }
 
 const ImageBackgroundOrView = (props: Props) => {
     const [showIndicator, setShowIndicator] = useState(true)
 
-    const key = useMemo(() => {
-        return Math.random()
-        // @ts-ignore
-    }, [props.source.uri])
+    // const key = useMemo(() => {
+    //     return Math.random()
+    //     // @ts-ignore
+    // }, [props.source.uri])
 
     const onStartLoad = useCallback(() => {
         setShowIndicator(true)
@@ -34,13 +35,13 @@ const ImageBackgroundOrView = (props: Props) => {
     if (props.source.uri) {
         return (
             <ImageBackground
-                key={key}
+                // key={key}
                 onLoadStart={onStartLoad}
                 onLoadEnd={onEndLoad}
                 {...props}
                 style={[props.style, { justifyContent: 'center', alignItems: 'center' }]} >
                 {
-                    !showIndicator ? props.children :
+                    !showIndicator || props.notShowIndicator ? props.children :
                         <ActivityIndicator {...props.indicatorProps} />
                 }
             </ImageBackground>
