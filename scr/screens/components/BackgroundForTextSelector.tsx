@@ -48,11 +48,13 @@ const BackgroundForTextSelector = ({
             plsSubBtnsView: { gap: Outline.GapHorizontal, flexDirection: 'row' },
             premiumIB: { padding: Outline.VerticalMini, borderRadius: BorderRadius.BR, overflow: 'hidden', justifyContent: 'center', alignItems: 'center', },
             btnTO: { padding: Outline.VerticalMini, borderColor: theme.counterBackground, borderRadius: BorderRadius.BR, borderWidth: StyleSheet.hairlineWidth, justifyContent: 'center', alignItems: 'center', },
+            btnTOBold: { padding: Outline.VerticalMini, backgroundColor: isBold ? theme.primary : undefined, borderColor: theme.counterBackground, borderRadius: BorderRadius.BR, borderWidth: StyleSheet.hairlineWidth, justifyContent: 'center', alignItems: 'center', },
             textTxt: { textAlign: 'center', fontSize: FontSize.Small_L, color: theme.counterBackground, },
             premiumText: { fontSize: FontSize.Small_L, color: 'black' },
-            gotItText: { fontSize: FontSize.Small_L, color: theme.counterBackground },
+            btnTxt: { fontSize: FontSize.Small_L, color: theme.counterBackground },
+            btnTxtBold: { fontSize: FontSize.Small_L, color: isBold ? theme.counterPrimary : theme.counterBackground },
         })
-    }, [theme])
+    }, [theme, isBold])
 
     if (!Array.isArray(listAllBg))
         return undefined
@@ -85,13 +87,13 @@ const BackgroundForTextSelector = ({
             <View style={style.plsSubBtnsView}>
                 <TouchableOpacity onPress={onPressedNoBackground}>
                     <View style={style.btnTO}>
-                        <Text numberOfLines={1} adjustsFontSizeToFit style={style.gotItText}>{LocalText.remove_background}</Text>
+                        <Text numberOfLines={1} adjustsFontSizeToFit style={style.btnTxt}>{LocalText.remove_background}</Text>
                     </View>
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={onPressedBoldText}>
-                    <View style={style.btnTO}>
-                        <Text numberOfLines={1} adjustsFontSizeToFit style={style.gotItText}>{LocalText.bold}</Text>
+                    <View style={!isBold ? style.btnTO : style.btnTOBold}>
+                        <Text numberOfLines={1} adjustsFontSizeToFit style={isBold ? style.btnTxtBold : style.btnTxt}>{LocalText.bold}</Text>
                     </View>
                 </TouchableOpacity>
 

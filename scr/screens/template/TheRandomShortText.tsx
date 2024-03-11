@@ -137,17 +137,14 @@ const TheRandomShortText = ({
 
         // console.log('check reset 2', backgroundId);
 
-        if (currentBackgroundId === -1 || !Array.isArray(backgrounds))
+        if ((!isBold && currentBackgroundId === -1) || !Array.isArray(backgrounds))
             return
 
         // console.log('check reset 3', backgroundId);
 
         let find = backgrounds.find(i => i.id === currentBackgroundId)
 
-        if (!find)
-            return
-
-        if (!find.isPremium)
+        if (find && !find.isPremium && !isBold)
             return
 
         // reset!
@@ -155,7 +152,7 @@ const TheRandomShortText = ({
         // console.log('reset');
 
         dispatch(setBackgroundIdForText([category, -1, false]))
-    }, [currentBackgroundId, backgrounds, isPremium])
+    }, [currentBackgroundId, backgrounds, isBold, isPremium])
 
     const onPressBackground = useCallback(() => {
         setIsFoldBackground(val => !val)
