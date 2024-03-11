@@ -174,12 +174,11 @@ const slice = createSlice({
 
             const now = state.backgroundIdForText.find(i => i[0] === action.payload[0])
 
-            if (!now) {
-                state.backgroundIdForText.push([...action.payload])
+            if (now) {
+                ArrayRemove(state.backgroundIdForText, now)
             }
-            else {
-                now[1] = action.payload[1]
-            }
+
+            state.backgroundIdForText.push([...action.payload])
         },
 
         // inbox
