@@ -71,7 +71,6 @@ const BackgroundForTextSelector = ({
                 ])
         }
     }, [currentBackground, isPremium])
-console.log(currentBackground);
 
     const style = useMemo(() => {
         return StyleSheet.create({
