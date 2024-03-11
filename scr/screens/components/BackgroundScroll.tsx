@@ -44,7 +44,8 @@ const BackgroundScroll = ({
     const { isPremium } = usePremium()
 
     const listToDraw = useMemo(() => {
-        return listAllBg.filter(i => i.isLightBg === isLightBackground)
+        const arr = listAllBg.filter(i => i.isLightBg === isLightBackground)
+        return arr.sort((a, b) => a.isPremium - b.isPremium)
     }, [isLightBackground, listAllBg])
 
     const style = useMemo(() => {
@@ -76,7 +77,9 @@ const BackgroundScroll = ({
 
     const renderItem = useCallback((item: BackgroundForTextType, index: number) => {
         const isCurrentBg = item.id === currentBackgroundId
-        const dotColor = item.isLightBg === 1 ? theme.background : theme.counterBackground
+        
+        const dotColor = theme.primary
+        // const dotColor = item.isLightBg === 1 ? theme.background : theme.counterBackground
 
         return (
             <TouchableOpacity onPress={() => onPressItem(item)} key={index} >
