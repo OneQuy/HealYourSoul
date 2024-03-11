@@ -1,6 +1,6 @@
 {
     "IsClearAllLocalFileBeforeLoadApp": 0,
-    "ClearAllUserData": 1,
+    "ClearAllUserData": 0,
     "IAPSuccess": 0,
     "NotLimitUpload": 0,
     "IsLog_CurrentPost": 0,
