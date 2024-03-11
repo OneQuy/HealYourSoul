@@ -80,7 +80,20 @@ const BackgroundScroll = ({
     const renderItem = useCallback((item: BackgroundForTextType, index: number) => {
         const isCurrentBg = item.id === currentBackgroundId
 
-        const dotColor = theme.primary
+        let dotColor: string
+
+        if (item.isLightBg) {
+            if (theme.shouldStatusBarLight)
+                dotColor = theme.background
+            else
+                dotColor = theme.counterBackground
+        }
+        else {
+            if (theme.shouldStatusBarLight)
+                dotColor = theme.counterBackground
+            else
+                dotColor = theme.background
+        }
 
         return (
             <TouchableOpacity onPress={() => onPressItem(item)} key={index} >

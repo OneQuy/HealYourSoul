@@ -98,9 +98,6 @@ const TheRandomShortText = ({
     }, [text])
 
     useLayoutEffect(() => {
-        // if (backgroundUri)
-        //     playAnimLoadedMedia(mediaViewScaleAnimRef)
-
         mediaViewScaleAnimRef.setValue(1)
     }, [backgroundUri])
 
@@ -130,8 +127,6 @@ const TheRandomShortText = ({
 
     const checkAndResetBackground = useCallback(() => {
         // console.log('check reset', backgroundId);
-
-        // playAnimLoadedMedia(mediaViewScaleAnimRef)
 
         if (isPremium)
             return
@@ -210,7 +205,7 @@ const TheRandomShortText = ({
                 icon: Icon.Copy,
             },
             {
-                text: LocalText.background,
+                text: LocalText.Style,
                 onPress: onPressBackground,
                 icon: isFoldBackground ? Icon.Background : Icon.X,
             },
@@ -237,7 +232,7 @@ const TheRandomShortText = ({
                     scaleIcon: 1.5,
                 },
                 {
-                    text: LocalText.background,
+                    text: LocalText.Style,
                     onPress: onPressBackground,
                     icon: isFoldBackground ? Icon.Background : Icon.X,
                 },
@@ -249,7 +244,7 @@ const TheRandomShortText = ({
                 },
             ] as BottomBarItem[]
 
-            const idxRandom = btns.findIndex(i => i.text === LocalText.background)
+            const idxRandom = btns.findIndex(i => i.text === LocalText.Style)
 
             btns.splice(idxRandom, 2, ...naviBtns)
         }

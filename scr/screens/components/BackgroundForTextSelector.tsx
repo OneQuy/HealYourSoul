@@ -1,10 +1,11 @@
 // @ts-ignore
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, Alert } from 'react-native'
 import React, { useCallback, useContext, useMemo } from 'react'
 import BackgroundScroll from './BackgroundScroll'
 import { BackgroundForTextType } from '../../constants/Types'
-import { BorderRadius, Category, FontSize, LocalText, Outline } from '../../constants/AppConstants'
+import { BorderRadius, Category, FontSize, Icon, LocalText, Outline, Size } from '../../constants/AppConstants'
 import { ThemeContext } from '../../constants/Colors'
 import { GoToPremiumScreen } from './HeaderXButton'
 import { useNavigation } from '@react-navigation/native'
@@ -62,8 +63,8 @@ const BackgroundForTextSelector = ({
             text: { color: theme.counterBackground, fontSize: FontSize.Small_L },
             plsSubBtnsView: { gap: Outline.GapHorizontal, flexDirection: 'row' },
             premiumIB: { padding: Outline.VerticalMini, borderRadius: BorderRadius.BR, overflow: 'hidden', justifyContent: 'center', alignItems: 'center', },
-            btnTO: { padding: Outline.VerticalMini, borderColor: theme.counterBackground, borderRadius: BorderRadius.BR, borderWidth: StyleSheet.hairlineWidth, justifyContent: 'center', alignItems: 'center', },
-            btnTOBold: { padding: Outline.VerticalMini, backgroundColor: isBold ? theme.primary : undefined, borderColor: theme.counterBackground, borderRadius: BorderRadius.BR, borderWidth: StyleSheet.hairlineWidth, justifyContent: 'center', alignItems: 'center', },
+            btnTO: { flexDirection: 'row', gap: Outline.GapHorizontal, padding: Outline.VerticalMini, borderColor: theme.counterBackground, borderRadius: BorderRadius.BR, borderWidth: StyleSheet.hairlineWidth, justifyContent: 'center', alignItems: 'center', },
+            btnTOBold: { flexDirection: 'row', gap: Outline.GapHorizontal, padding: Outline.VerticalMini, backgroundColor: isBold ? theme.primary : undefined, borderColor: theme.counterBackground, borderRadius: BorderRadius.BR, borderWidth: StyleSheet.hairlineWidth, justifyContent: 'center', alignItems: 'center', },
             textTxt: { textAlign: 'center', fontSize: FontSize.Small_L, color: theme.counterBackground, },
             premiumText: { fontSize: FontSize.Small_L, color: 'black' },
             btnTxt: { fontSize: FontSize.Small_L, color: theme.counterBackground },
@@ -100,18 +101,25 @@ const BackgroundForTextSelector = ({
             />
 
             <View style={style.plsSubBtnsView}>
+                {/* no bg */}
                 <TouchableOpacity onPress={onPressedNoBackground}>
                     <View style={style.btnTO}>
                         <Text numberOfLines={1} adjustsFontSizeToFit style={style.btnTxt}>{LocalText.remove_background}</Text>
                     </View>
                 </TouchableOpacity>
 
+                {/* bold */}
                 <TouchableOpacity onPress={onPressedBoldText}>
                     <View style={!isBold ? style.btnTO : style.btnTOBold}>
                         <Text numberOfLines={1} adjustsFontSizeToFit style={isBold ? style.btnTxtBold : style.btnTxt}>{LocalText.bold}</Text>
+                        {
+                            !isPremium &&
+                            <MaterialCommunityIcons name={Icon.Lock} color={isBold === 1 ? theme.counterPrimary : theme.counterBackground} size={Size.IconTiny} />
+                        }
                     </View>
                 </TouchableOpacity>
 
+                {/* premium */}
                 {
                     !isPremium &&
                     < TouchableOpacity onPress={onPressedUpgrade}>

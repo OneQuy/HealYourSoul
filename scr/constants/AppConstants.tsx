@@ -307,7 +307,7 @@ export const LocalText = {
   bg_for_black_text: "Backgrounds for black text",
   remove_background: "No background",
   bold: "Bold",
-  background: "Background",
+  Style: "Style",
   saved_2: "Saved",
   upload: "Upload",
   cancel: "Cancel",
