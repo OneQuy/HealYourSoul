@@ -49,7 +49,6 @@ const TheRandomShortText = ({
     const [isFoldBackground, setIsFoldBackground] = useState(true)
     const { isPremium } = usePremium()
     const dispatch = useAppDispatch()
-    const drawerStatus = useDrawerStatus()
 
     const backgroundId = useAppSelector(state => {
         const list = state.userData.backgroundIdForText
@@ -143,7 +142,7 @@ const TheRandomShortText = ({
             return
 
         // reset!
-        
+
         // console.log('reset');
 
         dispatch(setBackgroundIdForText([category, -1]))
@@ -273,15 +272,6 @@ const TheRandomShortText = ({
             />
         });
     }, [text, handling, diversityItem])
-
-    // reset bg
-
-    // useEffect(() => {
-    //     if (drawerStatus === 'closed')
-    //         return
-
-    //     checkAndResetBackground()
-    // }, [drawerStatus])
 
     // save last visit category screen
 
