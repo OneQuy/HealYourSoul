@@ -298,7 +298,6 @@ const TheRandomShortText = ({
                 style={CommonStyles.flex_1} >
                 {
                     handling ?
-                        // true ?
                         <View style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
                             <ActivityIndicator color={theme.counterBackground} style={{ marginRight: Outline.Horizontal }} />
                         </View> :
