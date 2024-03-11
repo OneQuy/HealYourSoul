@@ -1,7 +1,7 @@
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { View, Text, TouchableOpacity, ActivityIndicator, Share as RNShare, ShareContent, ShareOptions, StyleSheet, Animated, ImageBackground } from 'react-native'
+import { View, Text, TouchableOpacity, ActivityIndicator, Share as RNShare, ShareContent, ShareOptions, StyleSheet, Animated } from 'react-native'
 import React, { useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size, StorageKey_LocalFileVersion_ShortText } from '../../constants/AppConstants'
@@ -26,7 +26,6 @@ import { useAppDispatch, useAppSelector } from '../../redux/Store';
 import BackgroundForTextSelector from '../components/BackgroundForTextSelector';
 import { usePremium } from '../../hooks/usePremium';
 import { setBackgroundIdForText } from '../../redux/UserDataSlice';
-import { useDrawerStatus } from '@react-navigation/drawer';
 import ImageBackgroundOrView from '../components/ImageBackgroundOrView';
 
 const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Fbackground_for_text.json?alt=media&token=5ceaac14-13b0-4027-a863-3b8387e7b949'
@@ -96,7 +95,14 @@ const TheRandomShortText = ({
 
     useLayoutEffect(() => {
         playAnimLoadedMedia(mediaViewScaleAnimRef)
-    }, [text, backgroundUri])
+    }, [text])
+
+    useLayoutEffect(() => {
+        // if (backgroundUri)
+        //     playAnimLoadedMedia(mediaViewScaleAnimRef)
+
+        mediaViewScaleAnimRef.setValue(1)
+    }, [backgroundUri])
 
     const onPressCopy = useCallback(() => {
         if (!text)
@@ -284,7 +290,7 @@ const TheRandomShortText = ({
     return (
         <View pointerEvents={handling ? 'none' : 'auto'} style={[styleSheet.masterView, { backgroundColor: theme.background }]}>
             <ImageBackgroundOrView
-                key={backgroundUri}
+                // key={backgroundUri}
                 // source={{ uri: 'https://images.unsplash.com/photo-1564951434112-64d74cc2a2d7?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjA3fHxiYWNrZ3JvdW5kfGVufDB8fDB8fHww' }}
                 source={{ uri: backgroundUri, cache: 'force-cache' }}
                 resizeMode='cover'

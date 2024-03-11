@@ -8,7 +8,7 @@
  */
 
 import { ImageBackground, ActivityIndicator, ActivityIndicatorProps, View } from 'react-native'
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 
 interface Props extends React.ComponentProps<typeof ImageBackground> {
     indicatorProps?: ActivityIndicatorProps,
