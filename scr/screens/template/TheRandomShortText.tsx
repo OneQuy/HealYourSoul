@@ -105,9 +105,6 @@ const TheRandomShortText = ({
         CopyAndToast(text, theme)
     }, [text, theme])
 
-    const onPressBackground = useCallback(() => {
-        setIsFoldBackground(val => !val)
-    }, [isFoldBackground])
 
     const onPressShareText = useCallback(() => {
         if (!text)
@@ -125,7 +122,7 @@ const TheRandomShortText = ({
     }, [text, theme])
 
     const checkAndResetBackground = useCallback(() => {
-        // console.log('check reset', backgroundId);
+        console.log('check reset', backgroundId);
 
         if (isPremium)
             return
@@ -143,10 +140,15 @@ const TheRandomShortText = ({
 
         // reset!
 
-        // console.log('reset');
+        console.log('reset');
 
         dispatch(setBackgroundIdForText([category, -1]))
     }, [backgroundId, backgrounds, isPremium])
+
+    const onPressBackground = useCallback(() => {
+        setIsFoldBackground(val => !val)
+        checkAndResetBackground()
+    }, [checkAndResetBackground])
 
     const onPressRandom = useCallback(async (shouldTracking: boolean) => {
         reasonToReload.current = NeedReloadReason.None
