@@ -30,11 +30,13 @@ export const TrackSelectedBackgroundForText = () => {
 const BackgroundScroll = ({
     isLightBackground,
     currentBackgroundId,
+    isBold,
     cat,
     listAllBg,
 }: {
     isLightBackground: number,
     currentBackgroundId: number,
+    isBold: boolean,
     cat: Category,
     listAllBg: BackgroundForTextType[],
 }) => {
@@ -57,7 +59,7 @@ const BackgroundScroll = ({
     const onPressItem = useCallback((item: BackgroundForTextType) => {
         selectedBackgroundIdTracking = item.id
 
-        dispatch(setBackgroundIdForText([cat, item.id]))
+        dispatch(setBackgroundIdForText([cat, item.id, isBold]))
 
         if (!isPremium && item.isPremium) {
             Alert.alert(
@@ -73,11 +75,11 @@ const BackgroundScroll = ({
                     },
                 ])
         }
-    }, [isPremium])
+    }, [isPremium, isBold])
 
     const renderItem = useCallback((item: BackgroundForTextType, index: number) => {
         const isCurrentBg = item.id === currentBackgroundId
-        
+
         const dotColor = theme.primary
         // const dotColor = item.isLightBg === 1 ? theme.background : theme.counterBackground
 
@@ -97,7 +99,7 @@ const BackgroundScroll = ({
                         !isCurrentBg ?
                             <View>
                                 {
-                                    !item.isPremium ? undefined :
+                                    !item.isPremium || isPremium ? undefined :
                                         <MaterialCommunityIcons name={Icon.Lock} color={dotColor} size={size / 2} />
                                 }
                             </View> :
@@ -112,7 +114,7 @@ const BackgroundScroll = ({
                 </ImageBackgroundWithLoading>
             </TouchableOpacity>
         )
-    }, [currentBackgroundId, cat, theme])
+    }, [currentBackgroundId, cat, theme, isPremium])
 
     return (
         <ScrollView

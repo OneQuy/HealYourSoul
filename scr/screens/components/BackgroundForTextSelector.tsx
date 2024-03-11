@@ -11,27 +11,35 @@ import { useNavigation } from '@react-navigation/native'
 import { iapBg_1 } from '../IAP/IAPPage'
 import { useAppDispatch } from '../../redux/Store';
 import { setBackgroundIdForText } from '../../redux/UserDataSlice';
+import { usePremium } from '../../hooks/usePremium'
 
 const BackgroundForTextSelector = ({
     currentBackgroundId,
+    isBold,
     cat,
     listAllBg,
 }: {
     currentBackgroundId: number,
+    isBold: boolean,
     cat: Category,
     listAllBg: BackgroundForTextType[] | string | undefined,
 }) => {
     const theme = useContext(ThemeContext);
     const navigation = useNavigation()
     const dispatch = useAppDispatch()
+    const { isPremium } = usePremium()
 
     const onPressedUpgrade = useCallback(() => {
         GoToPremiumScreen(navigation)
     }, [navigation])
 
     const onPressedNoBackground = useCallback(() => {
-        dispatch(setBackgroundIdForText([cat, -1]))
-    }, [])
+        dispatch(setBackgroundIdForText([cat, -1, isBold]))
+    }, [isBold])
+
+    const onPressedBoldText = useCallback(() => {
+        dispatch(setBackgroundIdForText([cat, currentBackgroundId, !isBold]))
+    }, [currentBackgroundId, isBold])
 
     const style = useMemo(() => {
         return StyleSheet.create({
@@ -55,6 +63,7 @@ const BackgroundForTextSelector = ({
 
             <Text style={style.text}>{LocalText.bg_for_black_text}:</Text>
             <BackgroundScroll
+                isBold={isBold}
                 cat={cat}
                 listAllBg={listAllBg}
                 currentBackgroundId={currentBackgroundId}
@@ -66,6 +75,7 @@ const BackgroundForTextSelector = ({
             <Text style={style.text}>{LocalText.bg_for_white_text}:</Text>
 
             <BackgroundScroll
+                isBold={isBold}
                 cat={cat}
                 listAllBg={listAllBg}
                 currentBackgroundId={currentBackgroundId}
@@ -79,15 +89,22 @@ const BackgroundForTextSelector = ({
                     </View>
                 </TouchableOpacity>
 
+                <TouchableOpacity onPress={onPressedBoldText}>
+                    <View style={style.btnTO}>
+                        <Text numberOfLines={1} adjustsFontSizeToFit style={style.gotItText}>{LocalText.bold}</Text>
+                    </View>
+                </TouchableOpacity>
+
                 {
-                    <TouchableOpacity onPress={onPressedUpgrade}>
+                    !isPremium &&
+                    < TouchableOpacity onPress={onPressedUpgrade}>
                         <ImageBackground resizeMode="cover" source={iapBg_1} style={style.premiumIB}>
                             <Text numberOfLines={1} adjustsFontSizeToFit style={style.premiumText}>{LocalText.upgrade}</Text>
                         </ImageBackground>
                     </TouchableOpacity>
                 }
             </View>
-        </View>
+        </View >
     )
 }
 

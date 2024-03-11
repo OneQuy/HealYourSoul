@@ -4,7 +4,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { View, Text, TouchableOpacity, ActivityIndicator, Share as RNShare, ShareContent, ShareOptions, StyleSheet, Animated, ImageBackground } from 'react-native'
 import React, { useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
-import { Category, FontSize, Icon, LocalText, NeedReloadReason, Outline, Size, StorageKey_LocalFileVersion_ShortText } from '../../constants/AppConstants'
+import { Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size, StorageKey_LocalFileVersion_ShortText } from '../../constants/AppConstants'
 import { NetLord } from '../../handle/NetLord'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { CopyAndToast, SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
@@ -36,6 +36,8 @@ interface TheRandomShortTextProps {
     getTextAsync: () => Promise<string | undefined>
 }
 
+const defaultValue: [Category, number, boolean] = [Category.Art, -1, false]
+
 const TheRandomShortText = ({
     category,
     getTextAsync,
@@ -50,20 +52,20 @@ const TheRandomShortText = ({
     const { isPremium } = usePremium()
     const dispatch = useAppDispatch()
 
-    const backgroundId = useAppSelector(state => {
+    const [_, currentBackgroundId, isBold] = useAppSelector(state => {
         const list = state.userData.backgroundIdForText
         // console.log(Category[category], list);
 
         if (list === undefined)
-            return -1
+            return defaultValue
 
         const find = list.find(i => i[0] === category)
         // console.log(find);
 
         if (find)
-            return find[1]
+            return find
         else
-            return -1
+            return defaultValue
     })
 
     const { result: backgrounds, didDownload, } = useCheckAndDownloadRemoteFile<BackgroundForTextType[]>(
@@ -77,13 +79,13 @@ const TheRandomShortText = ({
         async () => AsyncStorage.setItem(StorageKey_LocalFileVersion_ShortText, GetRemoteFileConfigVersion('background_for_text').toString()))
 
     const backgroundUri = useMemo(() => {
-        if (backgroundId === -1 || !Array.isArray(backgrounds))
+        if (currentBackgroundId === -1 || !Array.isArray(backgrounds))
             return undefined
 
-        const find = backgrounds.find(i => i.id === backgroundId)
+        const find = backgrounds.find(i => i.id === currentBackgroundId)
 
         return find?.img
-    }, [backgroundId, backgrounds])
+    }, [currentBackgroundId, backgrounds])
 
     // animation
 
@@ -100,7 +102,7 @@ const TheRandomShortText = ({
             return
 
         mediaViewScaleAnimRef.setValue(1)
-    }, [backgroundId])
+    }, [currentBackgroundId])
 
     const onPressCopy = useCallback(() => {
         if (!text)
@@ -135,12 +137,12 @@ const TheRandomShortText = ({
 
         // console.log('check reset 2', backgroundId);
 
-        if (backgroundId === -1 || !Array.isArray(backgrounds))
+        if (currentBackgroundId === -1 || !Array.isArray(backgrounds))
             return
 
         // console.log('check reset 3', backgroundId);
 
-        let find = backgrounds.find(i => i.id === backgroundId)
+        let find = backgrounds.find(i => i.id === currentBackgroundId)
 
         if (!find)
             return
@@ -152,8 +154,8 @@ const TheRandomShortText = ({
 
         // console.log('reset');
 
-        dispatch(setBackgroundIdForText([category, -1]))
-    }, [backgroundId, backgrounds, isPremium])
+        dispatch(setBackgroundIdForText([category, -1, false]))
+    }, [currentBackgroundId, backgrounds, isPremium])
 
     const onPressBackground = useCallback(() => {
         setIsFoldBackground(val => !val)
@@ -297,7 +299,7 @@ const TheRandomShortText = ({
             <ImageBackgroundOrView
                 key={backgroundUri}
                 // source={{ uri: 'https://images.unsplash.com/photo-1564951434112-64d74cc2a2d7?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjA3fHxiYWNrZ3JvdW5kfGVufDB8fDB8fHww' }}
-                source={{ uri: backgroundUri }}
+                source={{ uri: backgroundUri, }}
                 resizeMode='cover'
                 style={CommonStyles.flex_1} >
                 {
@@ -319,7 +321,7 @@ const TheRandomShortText = ({
                                         <Text style={{ fontSize: FontSize.Small_L, color: theme.counterBackground }}>{LocalText.tap_to_retry}</Text>
                                     </TouchableOpacity>
                                     :
-                                    <Animated.Text adjustsFontSizeToFit numberOfLines={20} selectable style={[{ transform: [{ scale: mediaViewScaleAnimRef }] }, { verticalAlign: 'middle', marginHorizontal: Outline.Horizontal, color: theme.counterBackground, fontSize: FontSize.Big }]}>{text ? text : ''}</Animated.Text>
+                                    <Animated.Text adjustsFontSizeToFit numberOfLines={20} selectable style={[{ transform: [{ scale: mediaViewScaleAnimRef }] }, { verticalAlign: 'middle', marginHorizontal: Outline.Horizontal, fontWeight: isBold ? FontWeight.Bold : 'normal', color: theme.counterBackground, fontSize: FontSize.Big }]}>{text ? text : ''}</Animated.Text>
                             }
                         </View>
                 }
@@ -328,16 +330,14 @@ const TheRandomShortText = ({
             {
                 !isFoldBackground &&
                 <BackgroundForTextSelector
+                    isBold={isBold}
                     cat={category}
-                    currentBackgroundId={backgroundId}
+                    currentBackgroundId={currentBackgroundId}
                     listAllBg={backgrounds}
                 />
             }
 
-            {
-                handling || reasonToReload.current !== NeedReloadReason.None ? undefined :
-                    <Text numberOfLines={1} style={[{ color: theme.counterBackground }, styleSheet.authorText]}>{LocalText.credit_to_author}</Text>
-            }
+            <Text numberOfLines={1} style={[{ color: theme.counterBackground }, styleSheet.authorText]}>{LocalText.credit_to_author}</Text>
 
             <BottomBar
                 items={bottomBarItems}
