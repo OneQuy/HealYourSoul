@@ -41,7 +41,7 @@ const TheRandomShortText = ({
     getTextAsync,
 }: TheRandomShortTextProps) => {
     const navigation = useNavigation();
-    const [text, setText] = useState<string | undefined>('undefined')
+    const [text, setText] = useState<string | undefined>(undefined)
     const reasonToReload = useRef<NeedReloadReason>(NeedReloadReason.None);
     const theme = useContext(ThemeContext);
     const [handling, setHandling] = useState(false);
@@ -52,11 +52,13 @@ const TheRandomShortText = ({
 
     const backgroundId = useAppSelector(state => {
         const list = state.userData.backgroundIdForText
+        // console.log(Category[category], list);
 
         if (list === undefined)
             return -1
 
         const find = list.find(i => i[0] === category)
+        // console.log(find);
 
         if (find)
             return find[1]
@@ -85,16 +87,20 @@ const TheRandomShortText = ({
 
     // animation
 
-    const mediaViewScaleAnimRef = useRef(new Animated.Value(1)).current
+    const mediaViewScaleAnimRef = useRef(new Animated.Value(0)).current
 
     // play loaded anim
 
     useLayoutEffect(() => {
+        playAnimLoadedMedia(mediaViewScaleAnimRef)
+    }, [text])
+
+    useEffect(() => {
         if (!text)
             return
 
-        playAnimLoadedMedia(mediaViewScaleAnimRef)
-    }, [text, backgroundId])
+        mediaViewScaleAnimRef.setValue(1)
+    }, [backgroundId])
 
     const onPressCopy = useCallback(() => {
         if (!text)
@@ -122,13 +128,17 @@ const TheRandomShortText = ({
     }, [text, theme])
 
     const checkAndResetBackground = useCallback(() => {
-        console.log('check reset', backgroundId);
+        // console.log('check reset', backgroundId);
 
         if (isPremium)
             return
 
+        // console.log('check reset 2', backgroundId);
+
         if (backgroundId === -1 || !Array.isArray(backgrounds))
             return
+
+        // console.log('check reset 3', backgroundId);
 
         let find = backgrounds.find(i => i.id === backgroundId)
 
@@ -140,7 +150,7 @@ const TheRandomShortText = ({
 
         // reset!
 
-        console.log('reset');
+        // console.log('reset');
 
         dispatch(setBackgroundIdForText([category, -1]))
     }, [backgroundId, backgrounds, isPremium])
@@ -252,12 +262,13 @@ const TheRandomShortText = ({
     // on init once (for load first post)
 
     useEffect(() => {
-        onPressRandom(false)
+        if (!text)
+            onPressRandom(false)
 
-        const func = navigation.addListener('focus', checkAndResetBackground)
+        const func = navigation.addListener('state', checkAndResetBackground)
 
         return func
-    }, [])
+    }, [checkAndResetBackground])
 
     // update header setting btn
 
