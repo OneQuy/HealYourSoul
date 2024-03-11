@@ -1,6 +1,6 @@
 // @ts-ignore
 
-import { View, Text, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, Alert } from 'react-native'
 import React, { useCallback, useContext, useMemo } from 'react'
 import BackgroundScroll from './BackgroundScroll'
 import { BackgroundForTextType } from '../../constants/Types'
@@ -39,7 +39,22 @@ const BackgroundForTextSelector = ({
 
     const onPressedBoldText = useCallback(() => {
         dispatch(setBackgroundIdForText([cat, currentBackgroundId, !isBold]))
-    }, [currentBackgroundId, isBold])
+
+        if (!isPremium && !isBold) {
+            Alert.alert(
+                LocalText.background_for_premium,
+                LocalText.background_for_premium_content_bold,
+                [
+                    {
+                        text: LocalText.later
+                    },
+                    {
+                        text: LocalText.upgrade,
+                        onPress: () => GoToPremiumScreen(navigation)
+                    },
+                ])
+        }
+    }, [currentBackgroundId, isPremium, isBold])
 
     const style = useMemo(() => {
         return StyleSheet.create({

@@ -530,9 +530,10 @@ export const LocalText = {
 
   upload_success: "Uploaded successfully",
   upload_success_desc: "Thank you for uploading to Gooday. I will try to review it as soon as possible. If it is approved, Gooday will notify you in the app. Stay tuned!",
-  
+
   background_for_premium: "Gooday Premium",
-  background_for_premium_content: "This background is available exclusively for Premium users. Upgrade now to unlock access to all backgrounds.",
+  background_for_premium_content: "This background is available exclusively for Premium users. Upgrade now to unlock access to all backgrounds and bold text.",
+  background_for_premium_content_bold: "Bold text is available exclusively for Premium users. Upgrade now to unlock access to all backgrounds and bold text.",
 }
 
 // storage
