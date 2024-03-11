@@ -35,7 +35,7 @@ const BackgroundForTextSelector = ({
 
     const style = useMemo(() => {
         return StyleSheet.create({
-            master: { gap: Outline.GapHorizontal, },
+            master: { gap: Outline.GapHorizontal, marginHorizontal: Outline.GapVertical },
             text: { color: theme.counterBackground, fontSize: FontSize.Small_L },
             plsSubBtnsView: { gap: Outline.GapHorizontal, flexDirection: 'row' },
             premiumIB: { padding: Outline.VerticalMini, borderRadius: BorderRadius.BR, overflow: 'hidden', justifyContent: 'center', alignItems: 'center', },
