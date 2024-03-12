@@ -131,17 +131,24 @@ const TheRandomShortText = ({
         if (isPremium)
             return
 
-        if ((!currentBackground.isBold && currentBackground.id === -1) || !Array.isArray(backgrounds))
+        if (!Array.isArray(backgrounds))
             return
 
         const curBg = backgrounds.find(i => i.id === currentBackground.id)
 
-        if (curBg && !curBg.isPremium && !currentBackground.isBold)
+        if (!curBg) {
+            dispatch(setBackgroundIdForText(defaultBg.current))
             return
+        }
 
         // reset!
 
-        dispatch(setBackgroundIdForText({ cat: category, id: -1, isBold: 0, sizeBig: 0 }))
+        dispatch(setBackgroundIdForText({
+            cat: category,
+            id: curBg.isPremium && !isPremium ? -1 : curBg.id,
+            isBold: 0,
+            sizeBig: 0
+        }))
     }, [currentBackground.id, backgrounds, currentBackground.isBold, isPremium])
 
     const onPressBackground = useCallback(() => {
