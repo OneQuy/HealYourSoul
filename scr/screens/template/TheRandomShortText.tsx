@@ -58,14 +58,15 @@ const TheRandomShortText = ({
 
     const currentBackground = useAppSelector(state => {
         const value = state.userData.backgroundIdForText
-        if (value)
-            return value
+
+        if (value) {
+            const find = value.find(i => i.cat === category)
+
+            return find ?? defaultValue
+        }
         else
             return defaultValue
     })
-
-    // const currentBackground.id = bgData.id
-    // const currentBackground.isBold = 
 
     const { result: backgrounds, didDownload, } = useCheckAndDownloadRemoteFile<BackgroundForTextType[]>(
         fileURL,
@@ -130,12 +131,8 @@ const TheRandomShortText = ({
         if (isPremium)
             return
 
-        // console.log('check reset 2', backgroundId);
-
         if ((!currentBackground.isBold && currentBackground.id === -1) || !Array.isArray(backgrounds))
             return
-
-        // console.log('check reset 3', backgroundId);
 
         const curBg = backgrounds.find(i => i.id === currentBackground.id)
 
@@ -144,9 +141,9 @@ const TheRandomShortText = ({
 
         // reset!
 
-        console.log('reset');
+        // console.log('reset');
 
-        dispatch(setBackgroundIdForText(undefined))
+        dispatch(setBackgroundIdForText({ cat: category, id: -1, isBold: 0, sizeBig: 0 }))
     }, [currentBackground.id, backgrounds, currentBackground.isBold, isPremium])
 
     const onPressBackground = useCallback(() => {
