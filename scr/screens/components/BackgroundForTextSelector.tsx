@@ -17,9 +17,11 @@ import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 
 const BackgroundForTextSelector = ({
     currentBackground,
+    isLoading,
     listAllBg,
 }: {
     currentBackground: BackgroundForTextCurrent,
+    isLoading: boolean,
     listAllBg: BackgroundForTextType[] | string | undefined,
 }) => {
     const theme = useContext(ThemeContext);
@@ -57,7 +59,7 @@ const BackgroundForTextSelector = ({
                 ])
         }
     }, [currentBackground, isPremium])
-   
+
     const onPressedSize = useCallback(() => {
         track_SimpleWithParam('background_text', 'size')
 
@@ -105,6 +107,7 @@ const BackgroundForTextSelector = ({
 
             <Text style={style.text}>{LocalText.bg_for_black_text}:</Text>
             <BackgroundScroll
+                isLoading={isLoading}
                 listAllBg={listAllBg}
                 currentBackground={currentBackground}
                 isLightBackground={1}
@@ -115,6 +118,7 @@ const BackgroundForTextSelector = ({
             <Text style={style.text}>{LocalText.bg_for_white_text}:</Text>
 
             <BackgroundScroll
+                isLoading={isLoading}
                 listAllBg={listAllBg}
                 currentBackground={currentBackground}
                 isLightBackground={0}
@@ -138,7 +142,7 @@ const BackgroundForTextSelector = ({
                         }
                     </View>
                 </TouchableOpacity>
-                
+
                 {/* size */}
                 <TouchableOpacity onPress={onPressedSize}>
                     <View style={currentBackground.sizeBig !== 1 ? style.btnTO : style.btnTOSize}>

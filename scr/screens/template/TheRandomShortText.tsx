@@ -46,6 +46,7 @@ const TheRandomShortText = ({
     const [handling, setHandling] = useState(false);
     const diversityItem = useDiversityItem(() => onPressRandom(false), undefined, undefined, text)
     const [isFoldBackground, setIsFoldBackground] = useState(true)
+    const [isLoadingBG, setIsLoadingBG] = useState(false)
     const { isPremium } = usePremium()
     const dispatch = useAppDispatch()
 
@@ -196,6 +197,14 @@ const TheRandomShortText = ({
             onPressRandom(true)
     }, [onPressRandom, diversityItem])
 
+    const onStartLoad = useCallback(() => {
+        setIsLoadingBG(true)
+    }, [])
+
+    const onEndLoad = useCallback(() => {
+        setIsLoadingBG(false)
+    }, [])
+
     const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(undefined, undefined, onSwiped)
 
     const bottomBarItems = useMemo(() => {
@@ -299,6 +308,8 @@ const TheRandomShortText = ({
                 source={{ uri: backgroundUri, cache: 'force-cache' }}
                 resizeMode='cover'
                 notShowIndicator={true}
+                onLoadStart={onStartLoad}
+                onLoadEnd={onEndLoad}
                 style={CommonStyles.flex_1} >
                 {
                     handling ?
@@ -327,6 +338,7 @@ const TheRandomShortText = ({
             {
                 !isFoldBackground &&
                 <BackgroundForTextSelector
+                    isLoading={isLoadingBG}
                     currentBackground={currentBackground}
                     listAllBg={backgrounds}
                 />

@@ -3,7 +3,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import React, { useCallback, useContext, useMemo } from 'react'
 import { useAppDispatch } from '../../redux/Store';
-import { Alert, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Alert, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Icon, LocalText, Outline } from '../../constants/AppConstants';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { BackgroundForTextCurrent, BackgroundForTextType } from '../../constants/Types';
@@ -19,10 +19,12 @@ const size = heightPercentageToDP(3.5)
 
 const BackgroundScroll = ({
     isLightBackground,
+    isLoading,
     currentBackground,
     listAllBg,
 }: {
     isLightBackground: number,
+    isLoading: boolean,
     currentBackground: BackgroundForTextCurrent,
     listAllBg: BackgroundForTextType[],
 }) => {
@@ -44,7 +46,7 @@ const BackgroundScroll = ({
 
     const onPressItem = useCallback((item: BackgroundForTextType) => {
         track_SimpleWithParam('background_text', 'i' + item.id)
-        
+
         dispatch(setBackgroundIdForText({ ...currentBackground, id: item.id }))
 
         if (!isPremium && item.isPremium) {
@@ -101,18 +103,24 @@ const BackgroundScroll = ({
                                         <MaterialCommunityIcons name={Icon.Lock} color={dotColor} size={size / 2} />
                                 }
                             </View> :
-                            <View
-                                style={{
-                                    width: size / 4,
-                                    height: size / 4,
-                                    borderRadius: size / 4 / 2,
-                                    backgroundColor: dotColor,
-                                }} />
+                            <>
+                                {
+                                    isLoading ?
+                                        <ActivityIndicator color={dotColor} /> :
+                                        <View
+                                            style={{
+                                                width: size / 4,
+                                                height: size / 4,
+                                                borderRadius: size / 4 / 2,
+                                                backgroundColor: dotColor,
+                                            }} />
+                                }
+                            </>
                     }
                 </ImageBackgroundWithLoading>
             </TouchableOpacity>
         )
-    }, [currentBackground, onPressItem, theme, isPremium])
+    }, [currentBackground, isLoading, onPressItem, theme, isPremium])
 
     return (
         <ScrollView

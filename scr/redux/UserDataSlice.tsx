@@ -166,6 +166,10 @@ const slice = createSlice({
     reducers: {
         clearAllUserData: () => initialState,
 
+        resetDev: (state) => {
+            state.backgroundIdForText = undefined
+        },
+
         // background id for text
 
         setBackgroundIdForText: (state, action: PayloadAction<BackgroundForTextCurrent>) => {
@@ -177,7 +181,7 @@ const slice = createSlice({
 
                 arr[i] = action.payload
                 state.backgroundIdForText = arr
-                
+
                 return
             }
 
@@ -806,6 +810,8 @@ const slice = createSlice({
 
 export const {
     clearAllUserData,
+    
+    resetDev,
 
     enableAllScreen,
     toggleDisableScreen,
