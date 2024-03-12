@@ -35,13 +35,6 @@ interface TheRandomShortTextProps {
     getTextAsync: () => Promise<string | undefined>
 }
 
-const defaultValue: BackgroundForTextCurrent = {
-    id: -1,
-    isBold: 0,
-    sizeBig: 0,
-    cat: Category.Art
-}
-
 const TheRandomShortText = ({
     category,
     getTextAsync,
@@ -56,16 +49,23 @@ const TheRandomShortText = ({
     const { isPremium } = usePremium()
     const dispatch = useAppDispatch()
 
+    const defaultBg = useRef({
+        id: -1,
+        isBold: 0,
+        sizeBig: 0,
+        cat: category,
+    } as BackgroundForTextCurrent)
+
     const currentBackground = useAppSelector(state => {
         const value = state.userData.backgroundIdForText
 
         if (value) {
             const find = value.find(i => i.cat === category)
 
-            return find ?? defaultValue
+            return find ? find : defaultBg.current
         }
         else
-            return defaultValue
+            return defaultBg.current
     })
 
     const { result: backgrounds, didDownload, } = useCheckAndDownloadRemoteFile<BackgroundForTextType[]>(
@@ -140,8 +140,6 @@ const TheRandomShortText = ({
             return
 
         // reset!
-
-        // console.log('reset');
 
         dispatch(setBackgroundIdForText({ cat: category, id: -1, isBold: 0, sizeBig: 0 }))
     }, [currentBackground.id, backgrounds, currentBackground.isBold, isPremium])

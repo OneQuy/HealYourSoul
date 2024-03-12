@@ -169,23 +169,20 @@ const slice = createSlice({
         // background id for text
 
         setBackgroundIdForText: (state, action: PayloadAction<BackgroundForTextCurrent>) => {
-            if (!state.backgroundIdForText)
-                state.backgroundIdForText = []
+            let arr = state.backgroundIdForText ? [...state.backgroundIdForText] : []
 
-            let changed = false
-
-            for (let i = 0; i < state.backgroundIdForText.length; i++) {
-                if (state.backgroundIdForText[i].cat !== action.payload.cat)
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i].cat !== action.payload.cat)
                     continue
 
-                changed = true
-                state.backgroundIdForText[i] = action.payload
+                arr[i] = action.payload
+                state.backgroundIdForText = arr
+                
+                return
             }
 
-            if (changed)
-                return
-
-            state.backgroundIdForText.push(action.payload)
+            arr.push(action.payload)
+            state.backgroundIdForText = arr
         },
 
         // inbox
