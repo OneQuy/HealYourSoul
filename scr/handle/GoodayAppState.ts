@@ -117,7 +117,6 @@ const checkAndFireOnActiveOrOnceUseEffectWithCheckDuplicateAsync = async () => {
 
     if (await GetDateAsync_IsValueExistedAndIsToday(StorageKey_OpenAppOfDayCountForDate)) { // already tracked yesterday, just inc today
         SetNumberAsync(StorageKey_OpenAppOfDayCount, count + 1)
-        // console.log('inc today to', count + 1);
     }
     else { // need to track for yesterday
         if (count > 0)
@@ -125,8 +124,6 @@ const checkAndFireOnActiveOrOnceUseEffectWithCheckDuplicateAsync = async () => {
 
         SetDateAsync_Now(StorageKey_OpenAppOfDayCountForDate)
         SetNumberAsync(StorageKey_OpenAppOfDayCount, 1)
-
-        // console.log('reset for today', count);
     }
 
     await IncreaseNumberAsync(StorageKey_OpenAppTotalCount)
