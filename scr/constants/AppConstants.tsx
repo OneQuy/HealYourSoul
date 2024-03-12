@@ -379,6 +379,7 @@ export const LocalText = {
   new_item_website: '# new fun website(s) added to the list',
   new_item_short_film: '# new short film(s) added to the list',
   new_item_top_movies: 'Latest data updated!',
+  new_item_background_for_text: 'Added new backgrounds!',
   clear: 'Clear',
   clear_all: 'Clear all',
   mark_read: 'Mark as read',

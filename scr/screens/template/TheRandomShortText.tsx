@@ -7,7 +7,7 @@ import { ThemeContext } from '../../constants/Colors'
 import { Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size, StorageKey_LocalFileVersion_ShortText } from '../../constants/AppConstants'
 import { NetLord } from '../../handle/NetLord'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
-import { CopyAndToast, SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
+import { CopyAndToast, GoodayToast, SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
 import { CommonStyles } from '../../constants/CommonConstants'
 import { track_PressRandom, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
@@ -260,6 +260,15 @@ const TheRandomShortText = ({
     useEffect(() => {
         onPressRandom(false)
     }, [])
+
+    // toast latest data
+
+    useEffect(() => {
+        if (!didDownload)
+            return
+
+        GoodayToast(LocalText.new_item_background_for_text)
+    }, [didDownload])
 
     // update header setting btn
 
