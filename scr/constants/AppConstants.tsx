@@ -462,6 +462,7 @@ export const LocalText = {
   unlock_all: 'Unlock all features',
 
   unlock_all_info: `- Remove Ads
+- Unlock all backgrounds for Fact, Joke & Quote.
 - Save an unlimited number of posts to watch later.
 - Re-watch the posts you loved without any page limits in Gallery.
 - Upload an unlimited number of memes.`,
