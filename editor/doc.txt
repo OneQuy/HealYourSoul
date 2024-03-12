@@ -1,4 +1,6 @@
-draw, meme, quote, catdog, satisfying, nsfw, sarcasm, art, cute
+tạo fact_dogs.json thủ công từ:
+
+https://github.com/kinduff/dog-api/blob/master/db/seeds.rb
 
 ======================
 
