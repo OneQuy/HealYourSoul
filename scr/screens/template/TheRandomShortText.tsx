@@ -127,7 +127,7 @@ const TheRandomShortText = ({
     }, [text, theme])
 
     const checkAndResetBackground = useCallback(() => {
-        // console.log('check reset', backgroundId);
+        // console.log('check reset', currentBackground, isPremium);
 
         if (isPremium)
             return
@@ -269,6 +269,13 @@ const TheRandomShortText = ({
     useEffect(() => {
         onPressRandom(false)
     }, [])
+
+    useEffect(() => {
+        if (!backgrounds)
+            return
+
+        checkAndResetBackground()
+    }, [backgrounds])
 
     // toast latest data
 
