@@ -4,7 +4,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import React, { useCallback, useContext, useMemo } from 'react'
 import { useAppDispatch } from '../../redux/Store';
 import { Alert, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { Category, Icon, LocalText, Outline } from '../../constants/AppConstants';
+import { Icon, LocalText, Outline } from '../../constants/AppConstants';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { BackgroundForTextCurrent, BackgroundForTextType } from '../../constants/Types';
 import ImageBackgroundWithLoading from './ImageBackgroundWithLoading';
@@ -15,17 +15,6 @@ import { GoToPremiumScreen } from './HeaderXButton';
 import { useNavigation } from '@react-navigation/native';
 
 const size = heightPercentageToDP(3.5)
-
-var selectedBackgroundIdTracking: number | undefined = undefined
-
-export const TrackSelectedBackgroundForText = () => {
-    // if (selectedBackgroundForTextForTracking === undefined)
-    //     return
-
-    // track_SimpleWithParam('selected_backgroundForText', selectedBackgroundForTextForTracking)
-
-    // selectedBackgroundForTextForTracking = undefined
-}
 
 const BackgroundScroll = ({
     isLightBackground,
