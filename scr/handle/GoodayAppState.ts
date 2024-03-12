@@ -106,8 +106,6 @@ const checkAndFireOnActiveOrOnceUseEffectWithCheckDuplicateAsync = async () => {
 
     const minFromLastCall = distanceMs / 1000 / 60
 
-    // console.log('minFromLastCall', minFromLastCall);
-
     if (minFromLastCall < HowLongInMinutesToCount2TimesUseAppSeparately)
         return
 
@@ -116,8 +114,6 @@ const checkAndFireOnActiveOrOnceUseEffectWithCheckDuplicateAsync = async () => {
     // handle here ------------------------------------
 
     const count = await GetNumberIntAsync(StorageKey_OpenAppOfDayCount, 0)
-
-    // console.log('checkAndFireOnActiveOrOnceUseEffectWithCheckDuplicateAsync');
 
     if (await GetDateAsync_IsValueExistedAndIsToday(StorageKey_OpenAppOfDayCountForDate)) { // already tracked yesterday, just inc today
         SetNumberAsync(StorageKey_OpenAppOfDayCount, count + 1)
