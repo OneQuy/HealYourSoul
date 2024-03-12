@@ -13,6 +13,7 @@ import { ThemeContext } from '../../constants/Colors';
 import { usePremium } from '../../hooks/usePremium';
 import { GoToPremiumScreen } from './HeaderXButton';
 import { useNavigation } from '@react-navigation/native';
+import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 
 const size = heightPercentageToDP(3.5)
 
@@ -42,8 +43,8 @@ const BackgroundScroll = ({
     }, [])
 
     const onPressItem = useCallback((item: BackgroundForTextType) => {
-        selectedBackgroundIdTracking = item.id
-
+        track_SimpleWithParam('background_text', 'i' + item.id)
+        
         dispatch(setBackgroundIdForText({ ...currentBackground, id: item.id }))
 
         if (!isPremium && item.isPremium) {

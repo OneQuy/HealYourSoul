@@ -5,7 +5,7 @@ import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, Alert } from
 import React, { useCallback, useContext, useMemo } from 'react'
 import BackgroundScroll from './BackgroundScroll'
 import { BackgroundForTextCurrent, BackgroundForTextType } from '../../constants/Types'
-import { BorderRadius, Category, FontSize, Icon, LocalText, Outline, Size } from '../../constants/AppConstants'
+import { BorderRadius, FontSize, Icon, LocalText, Outline, Size } from '../../constants/AppConstants'
 import { ThemeContext } from '../../constants/Colors'
 import { GoToPremiumScreen } from './HeaderXButton'
 import { useNavigation } from '@react-navigation/native'
@@ -13,6 +13,7 @@ import { iapBg_1 } from '../IAP/IAPPage'
 import { useAppDispatch } from '../../redux/Store';
 import { setBackgroundIdForText } from '../../redux/UserDataSlice';
 import { usePremium } from '../../hooks/usePremium'
+import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 
 const BackgroundForTextSelector = ({
     currentBackground,
@@ -31,10 +32,14 @@ const BackgroundForTextSelector = ({
     }, [navigation])
 
     const onPressedNoBackground = useCallback(() => {
+        track_SimpleWithParam('background_text', 'no_background')
+
         dispatch(setBackgroundIdForText({ ...currentBackground, id: -1 }))
     }, [currentBackground])
 
     const onPressedBoldText = useCallback(() => {
+        track_SimpleWithParam('background_text', 'bold')
+
         dispatch(setBackgroundIdForText({ ...currentBackground, isBold: currentBackground.isBold ? 0 : 1 }))
 
         if (!isPremium && !currentBackground.isBold) {
@@ -54,6 +59,8 @@ const BackgroundForTextSelector = ({
     }, [currentBackground, isPremium])
    
     const onPressedSize = useCallback(() => {
+        track_SimpleWithParam('background_text', 'size')
+
         dispatch(setBackgroundIdForText({ ...currentBackground, sizeBig: currentBackground.sizeBig ? 0 : 1 }))
 
         if (!isPremium && !currentBackground.sizeBig) {
