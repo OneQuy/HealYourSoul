@@ -557,6 +557,7 @@ export const StorageKey_Quote_ToggleNoti = 'quote_ToggleNoti'
 export const StorageKey_NinjaFact = 'ninja_fact_arr'
 export const StorageKey_NinjaJoke = 'ninja_joke_arr'
 export const StorageKey_Quote = 'quote_arr'
+export const StorageKey_DogFact = 'dog_fact_arr'
 
 export const StorageKey_NinjaFact_DataNoti = 'ninja_fact_arr_noti'
 export const StorageKey_NinjaJoke_DataNoti = 'ninja_joke_arr_noti'
