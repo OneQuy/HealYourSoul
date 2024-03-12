@@ -4,6 +4,12 @@ https://github.com/kinduff/dog-api/blob/master/db/seeds.rb
 
 ======================
 
+tạo fact_cats.json thủ công từ (tìm chỗ tải đê, quên cách rồi lol)
+
+https://catfact.ninja/#/Facts/getFacts
+
+======================
+
 download:
 
 simple:
