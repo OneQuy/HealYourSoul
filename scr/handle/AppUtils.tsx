@@ -58,6 +58,12 @@ const pairCatAndScreenName: [Category, ScreenName][] = [
     [Category.Tune, ScreenName.Tune],
     [Category.Vocabulary, ScreenName.Vocabulary],
     [Category.AwesomeNature, ScreenName.AwesomeNature],
+    
+    [Category.Universe, ScreenName.Universe],
+    [Category.Anime, ScreenName.Anime],
+    [Category.CatDogFact, ScreenName.CatDogFact],
+    [Category.Memedroid, ScreenName.Memedroid],
+    [Category.Siena, ScreenName.Siena],
 ] as const
 
 const notContentScreen: ScreenName[] = [

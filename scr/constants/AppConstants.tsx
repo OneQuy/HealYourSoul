@@ -59,6 +59,11 @@ export enum ScreenName {
   Inbox = 'Inbox',
   Admin = 'Admin',
   Gallery = 'Gallery',
+  Siena = 'Photos of Year 2',
+  Memedroid = 'Random Meme 2',
+  CatDogFact = 'Cat & Dog Fact',
+  Anime = 'Anime',
+  Universe = 'Universe',
 }
 
 // dir / file
@@ -156,6 +161,12 @@ export enum Category {
   Tune = 27,
   Vocabulary = 28,
   AwesomeNature = 29,
+  
+  Siena = 30,
+  CatDogFact = 31,
+  Universe = 32,
+  Anime = 33,
+  Memedroid = 34,
 }
 
 // margin / padding
@@ -557,7 +568,6 @@ export const StorageKey_Quote_ToggleNoti = 'quote_ToggleNoti'
 export const StorageKey_NinjaFact = 'ninja_fact_arr'
 export const StorageKey_NinjaJoke = 'ninja_joke_arr'
 export const StorageKey_Quote = 'quote_arr'
-export const StorageKey_DogFact = 'dog_fact_arr'
 
 export const StorageKey_NinjaFact_DataNoti = 'ninja_fact_arr_noti'
 export const StorageKey_NinjaJoke_DataNoti = 'ninja_joke_arr_noti'

@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { BackgroundForTextCurrent, DiversityItemType, Inbox, SubscribedData } from "../constants/Types";
 import { Category, ScreenName } from "../constants/AppConstants";
-import { ArrayAddWithCheckDuplicate, ArrayRemove, IsValuableArrayOrString } from "../handle/UtilsTS";
+import { AddOrRemoveItemInArray, ArrayAddWithCheckDuplicate, ArrayRemove, IsValuableArrayOrString } from "../handle/UtilsTS";
 
 export type UserDataState = {
     inboxes: Inbox[] | undefined,
@@ -25,6 +25,10 @@ export type UserDataState = {
     shortFilmsFavoritedIDs: (number | string)[],
 
     awardPictureFavoritedIDs: (number | string)[],
+
+    universeFavoritedIDs: (number | string)[],
+
+    sienaFavoritedIDs: (number | string)[],
 
     funWebsiteFavoritesIDs: (number | string)[],
 
@@ -103,6 +107,10 @@ const initialState: UserDataState = {
     shortFilmsFavoritedIDs: [],
 
     awardPictureFavoritedIDs: [],
+
+    universeFavoritedIDs: [],
+
+    sienaFavoritedIDs: [],
 
     funWebsiteFavoritesIDs: [],
 
@@ -361,6 +369,24 @@ const slice = createSlice({
                 state.awardPictureFavoritedIDs = []
 
             state.awardPictureFavoritedIDs = state.awardPictureFavoritedIDs.filter(i => i !== action.payload)
+        },
+
+        // universe
+
+        toggleFavoritedUniverse(state, action: PayloadAction<number | string>) {
+            if (!state.universeFavoritedIDs)
+                state.universeFavoritedIDs = []
+
+            AddOrRemoveItemInArray(state.universeFavoritedIDs, action.payload)
+        },
+
+        // siena
+
+        toggleFavoritedSiena(state, action: PayloadAction<number | string>) {
+            if (!state.sienaFavoritedIDs)
+                state.sienaFavoritedIDs = []
+
+            AddOrRemoveItemInArray(state.sienaFavoritedIDs, action.payload)
         },
 
         // top movies
@@ -810,7 +836,7 @@ const slice = createSlice({
 
 export const {
     clearAllUserData,
-    
+
     resetDev,
 
     enableAllScreen,
@@ -917,6 +943,9 @@ export const {
     toggleMarkAsReadInbox,
 
     setBackgroundIdForText,
+
+    toggleFavoritedSiena,
+    toggleFavoritedUniverse,
 } = slice.actions;
 
 export default slice.reducer
