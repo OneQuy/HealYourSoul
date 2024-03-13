@@ -343,6 +343,7 @@ const TheRandomImage = ({
             {
                 isShowPopupSelect && selectItems &&
                 <PopupSelect
+                title={LocalText.select_dog_breed}
                     cat={category}
                     list={selectItems}
                     setIdx={saveCurrentPopupSelectItemIdx}

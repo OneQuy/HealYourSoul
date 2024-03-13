@@ -19,11 +19,13 @@ export type PopupSelectItem = {
 }
 
 const PopupSelect = ({
+    title,
     cat,
     list,
     setIdx,
     getSelectingIdxAsync
 }: {
+    title: string,
     cat: Category,
     list: PopupSelectItem[],
     setIdx: (idx: number) => void,
@@ -70,7 +72,7 @@ const PopupSelect = ({
             <View style={[{ backgroundColor: theme.background, }, styleSheet.bgView]}>
                 <View style={[{ flexDirection: 'row' }, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
                     <MaterialCommunityIcons name={Icon.ThreeDots} color={theme.background} size={Size.Icon} />
-                    <Text style={[{ color: theme.counterBackground, }, styleSheet.name]}>{LocalText.best_short_films}</Text>
+                    <Text style={[{ color: theme.counterBackground, }, styleSheet.name]}>{title}</Text>
                     <TouchableOpacity onPress={() => setIdx(selectingIdxInPopup)}>
                         <MaterialCommunityIcons name={Icon.X} color={theme.counterBackground} size={Size.Icon} />
                     </TouchableOpacity>
