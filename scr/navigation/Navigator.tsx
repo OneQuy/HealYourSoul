@@ -12,7 +12,7 @@ import LoveScreen from '../screens/love/LoveScreen';
 import { CustomDrawerContent } from './CustomDrawer';
 import NSFWScreen from '../screens/nsfw/NSFWScreen';
 import IAPPage from '../screens/IAP/IAPPage';
-import { AnimeImageScreen, AnimeQuoteScreen, ArtScreen, AwesomeNatureScreen, AwesomeScreen, CatFactScreen, CuteScreen, DogFactScreen, InfoScreen, MemedroidScreen, QuoteTextScreen, RandomMemeScreen, SarcasmScreen, SunsetScreen, TuneScreen, TypoScreen, VocabularyScreen, } from '../screens/other_thepage_screens/Index';
+import { AnimeImageScreen, AnimeQuoteScreen, ArtScreen, AwesomeNatureScreen, AwesomeScreen, CatFactScreen, CuteScreen, InfoScreen, MemedroidScreen, QuoteTextScreen, RandomMemeScreen, SarcasmScreen, SunsetScreen, TuneScreen, TypoScreen, VocabularyScreen, } from '../screens/other_thepage_screens/Index';
 import NinjaFactScreen from '../screens/ninja_fact/NinjaFactScreen';
 import PictureScreen from '../screens/picture/PictureScreen';
 import NinjaJokeScreen from '../screens/ninja_fact/NinjaJokeScreen';
@@ -42,6 +42,7 @@ import AdminScreen from '../screens/admin/AdminScreen';
 import GalleryScreen from '../screens/gallery/GalleryScreen';
 import SienaScreen from '../screens/pic_of_the_year/SienaScreen';
 import UniverseScreen from '../screens/universe/UniverseScreen';
+import { DogFactScreen } from '../screens/dog_fact/DogFactScreen';
 
 export type DrawerParamList = {
   [ScreenName.Meme]: { item: DiversityItemType } | undefined,

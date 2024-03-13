@@ -60,13 +60,6 @@ export const CatFactScreen = () => {
   />;
 }
 
-export const DogFactScreen = () => {
-  return <TheRandomShortText
-    category={Category.DogFact}
-    getTextAsync={GetQuoteTextAsync}
-  />;
-}
-
 export const AnimeQuoteScreen = () => {
   return <TheRandomShortText
     category={Category.AnimeQuote}
