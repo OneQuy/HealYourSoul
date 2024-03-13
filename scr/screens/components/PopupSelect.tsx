@@ -22,13 +22,13 @@ const PopupSelect = ({
     title,
     cat,
     list,
-    setSelectingIdx,
+    setSelectingIdxAndClose,
     getSelectingIdxAsync
 }: {
     title: string,
     cat: Category,
     list: PopupSelectItem[],
-    setSelectingIdx: (idx: number) => void,
+    setSelectingIdxAndClose: (idx: number) => void,
     getSelectingIdxAsync: () => Promise<number>,
 }) => {
     const theme = useContext(ThemeContext);
@@ -39,7 +39,7 @@ const PopupSelect = ({
         const isSelecting = index === selectingIdxInPopup
         const textColor = isSelecting ? theme.counterPrimary : theme.counterBackground
 
-        return <TouchableOpacity onPress={() => setSelectingIdx(index)} style={[{ backgroundColor: isSelecting ? theme.primary : undefined, borderRadius: isSelecting ? BorderRadius.BR8 : 0, borderWidth: isSelecting ? 1 : 0 }, styleSheet.itemTO]}>
+        return <TouchableOpacity onPress={() => setSelectingIdxAndClose(index)} style={[{ backgroundColor: isSelecting ? theme.primary : undefined, borderRadius: isSelecting ? BorderRadius.BR8 : 0, borderWidth: isSelecting ? 1 : 0 }, styleSheet.itemTO]}>
             {
                 item.thumbUri &&
                 <ImageBackgroundOrView indicatorProps={{ color: textColor }} source={{ uri: item.thumbUri }} resizeMode='cover' style={styleSheet.image} />
@@ -71,9 +71,14 @@ const PopupSelect = ({
         <View style={[styleSheet.masterView, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
             <View style={[{ backgroundColor: theme.background, }, styleSheet.bgView]}>
                 <View style={[{ flexDirection: 'row' }, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
-                    <MaterialCommunityIcons name={Icon.ThreeDots} color={theme.background} size={Size.Icon} />
+                    {/* invisible */}
+                    <MaterialCommunityIcons name={Icon.X} color={theme.background} size={Size.Icon} />
+                    
+                    {/* title */}
                     <Text adjustsFontSizeToFit numberOfLines={1} style={[{ color: theme.counterBackground, }, styleSheet.name]}>{title}</Text>
-                    <TouchableOpacity onPress={() => setSelectingIdx(selectingIdxInPopup)}>
+                    
+                    {/* close x btn */}
+                    <TouchableOpacity onPress={() => setSelectingIdxAndClose(selectingIdxInPopup)}>
                         <MaterialCommunityIcons name={Icon.X} color={theme.counterBackground} size={Size.Icon} />
                     </TouchableOpacity>
                 </View>

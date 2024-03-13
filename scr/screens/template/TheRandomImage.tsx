@@ -72,9 +72,19 @@ const TheRandomImage = ({
             return 0
     }, [])
 
-    const saveCurrentPopupSelectItemIdx = useCallback(async (idx: number) => {
-        if (storageKeyCurrentItemIdxInPopupSelect)
-            await SetNumberAsync(storageKeyCurrentItemIdxInPopupSelect, idx)
+    const saveCurrentPopupSelectItemIdxAndClose = useCallback(async (idx: number) => {
+        if (!storageKeyCurrentItemIdxInPopupSelect || !selectItems || selectItems.length <= 0)
+            return
+
+        if (idx >= 0 && idx < selectItems.length) { }
+        else
+            idx = 0
+
+        setCurrentPopupSelectedItem(selectItems[idx])
+        
+        await SetNumberAsync(storageKeyCurrentItemIdxInPopupSelect, idx)
+        
+        setIsShowPopupSelect(false)
     }, [])
 
     const onPressRandom = useCallback(async (shouldTracking: boolean) => {
@@ -343,10 +353,10 @@ const TheRandomImage = ({
             {
                 isShowPopupSelect && selectItems &&
                 <PopupSelect
-                title={LocalText.select_dog_breed}
+                    title={LocalText.select_dog_breed}
                     cat={category}
                     list={selectItems}
-                    setSelectingIdx={saveCurrentPopupSelectItemIdx}
+                    setSelectingIdxAndClose={saveCurrentPopupSelectItemIdxAndClose}
                     getSelectingIdxAsync={getSavedCurrentPopupSelectItemIdx}
                 />
             }
