@@ -23,16 +23,12 @@ const PopupSelect = ({
     cat,
     list,
     setIdx,
-    getSelectingIdxAsync,
-
-    getThumbUriAsync,
+    getSelectingIdxAsync
 }: {
     cat: Category,
     list: PopupSelectItem[],
     setIdx: (idx: number) => void,
     getSelectingIdxAsync: () => Promise<number>,
-
-    getThumbUriAsync?: (item: PopupSelectItem) => Promise<string | undefined>,
 }) => {
     const theme = useContext(ThemeContext);
     const flatlistRef = useRef()
