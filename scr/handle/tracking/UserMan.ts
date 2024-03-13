@@ -3,7 +3,7 @@ import { CreateDefaultUser, Inbox, User } from "../../constants/Types"
 import { FirebaseDatabase_GetValueAsyncWithTimeOut, FirebaseDatabase_SetValueAsync } from "../../firebase/FirebaseDatabase"
 import { HandleError } from "../AppUtils"
 import { UserID } from "../UserID"
-import { CreateError, IsValuableArrayOrString } from "../UtilsTS"
+import { CreateError, IsValuableArrayOrString, TimeOutError } from "../UtilsTS"
 
 const GetUserFirebasePath = () => {
     return `user_data/users/${UserID()}`
@@ -40,13 +40,16 @@ export const GetUserInboxesAsync = async (userId?: string): Promise<Inbox[] | nu
     const userRes = await FirebaseDatabase_GetValueAsyncWithTimeOut(GetUserFirebasePath_AllInboxes(userId), FirebaseDatabaseTimeOutMs)
 
     if (userRes.error !== null) { // system error
-        HandleError('GetUserInboxesAsync', userRes.error, true)
+        if (userRes.error instanceof Error && userRes.error.message === TimeOutError) { }
+        else
+            HandleError('GetUserInboxesAsync', userRes.error, true)
+
         return CreateError(userRes.error)
     }
 
     if (!userRes.value) // empty data user
         return null
-    
+
     return Object.values(userRes.value)
 }
 
