@@ -28,7 +28,7 @@ import { usePremium } from '../../hooks/usePremium';
 import { setBackgroundIdForText } from '../../redux/UserDataSlice';
 import ImageBackgroundOrView from '../components/ImageBackgroundOrView';
 
-const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Fbackground_for_text.json?alt=media&token=5ceaac14-13b0-4027-a863-3b8387e7b949'
+const backgroundsFileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Fbackground_for_text.json?alt=media&token=5ceaac14-13b0-4027-a863-3b8387e7b949'
 
 interface TheRandomShortTextProps {
     category: Category,
@@ -70,7 +70,7 @@ const TheRandomShortText = ({
     })
 
     const { result: backgrounds, didDownload, } = useCheckAndDownloadRemoteFile<BackgroundForTextType[]>(
-        fileURL,
+        backgroundsFileURL,
         TempDirName + '/background_for_text.json',
         true,
         GetRemoteFileConfigVersion('background_for_text'),
