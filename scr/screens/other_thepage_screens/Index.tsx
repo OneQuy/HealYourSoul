@@ -74,6 +74,13 @@ export const RandomMemeScreen = () => {
   />;
 }
 
+export const DogBreedScreen = () => {
+  return <TheRandomImage
+    category={Category.DogBreed}
+    getImageAsync={GetIWasteSoMuchTimeAsync}
+  />;
+}
+
 export const MemedroidScreen = () => {
   return <TheRandomImage
     category={Category.Memedroid}

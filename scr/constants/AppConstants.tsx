@@ -62,7 +62,7 @@ export enum ScreenName {
   Siena = 'Photos of Year 2',
   Memedroid = 'Random Meme 2',
   DogFact = 'Dog Fact',
-  DogBreed = 'Dog Fact',
+  DogBreed = 'Dog Breed',
   CatFact = 'Cat Fact',
   AnimeImage = 'Anime Image',
   AnimeQuote = 'Anime Quote',
