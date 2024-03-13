@@ -10,8 +10,8 @@ type ReturnType = 'uri' | 'json' | 'text'
  * @returns result: undefined if error
  * @returns error: undefined if success or error
  * 
- * USAGE:
- * 
+ ## USAGE:
+ ```tsx
 const { result, error, isDataLatestFromRemoteOrLocal, reUpdate, didDownload } = useCheckAndDownloadRemoteFile(
         fileURL,
         TempDirName + '/fun_website.json',
@@ -21,6 +21,7 @@ const { result, error, isDataLatestFromRemoteOrLocal, reUpdate, didDownload } = 
         true,
         async () => AsyncStorage.getItem(StorageKey_LocalFileVersion(category)),
         async () => AsyncStorage.setItem(StorageKey_LocalFileVersion(category), GetRemoteFileConfigVersion('fun_websites').toString()))
+```
  */
 export default function useCheckAndDownloadRemoteFile<T extends object>(
     fileURL: string,
@@ -71,7 +72,7 @@ export default function useCheckAndDownloadRemoteFile<T extends object>(
     const reUpdateAsync = useCallback(async () => {
         setResult(undefined)
         setError(undefined)
-        
+
         let downloadError = undefined
 
         // 1. check need to download or not
