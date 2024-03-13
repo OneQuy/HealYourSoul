@@ -6,6 +6,7 @@ const { Tmp } = require("./src/tmp")
 const { LogRed, LogGreen } = require("./src/Utils_NodeJS");
 const { IsParamExist, GetParam, } = require("./src/common/Utils");
 const { GenMyInstants } = require("./src/GenMyInstant");
+const { GenDogBreeds } = require("./src/GenDogBreeds");
 
 async function JustDoIt() {
   if (IsParamExist('pull')) {
@@ -18,6 +19,9 @@ async function JustDoIt() {
 
       await PullAllAsync()
     }
+  }
+  else if (IsParamExist('dogbreed')) {
+    GenDogBreeds()
   }
   else if (IsParamExist('tmp')) {
     Tmp()

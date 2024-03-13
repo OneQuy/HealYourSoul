@@ -1,3 +1,14 @@
+tạo dog_breeds.json:
+
+copy json từ đây 
+https://dog.ceo/dog-api/documentation/#:~:text=breeds/list/all-,JSON,-%7B%0A%20%20%20%20%22message%22%3A%20%7B%0A%20%20%20%20%20%20%20%20%22affenpinscher%22%3A%20%5B%5D%2C%0A%20%20%20%20%20%20%20%20%22african
+
+cho vào: editor/dog_breeds.json
+
+r chạy: node editor dogbreed
+
+======================
+
 tạo fact_dogs.json thủ công từ:
 
 https://github.com/kinduff/dog-api/blob/master/db/seeds.rb
