@@ -6,7 +6,7 @@ import React, { useCallback, useContext, useEffect, useRef, useState } from 'rea
 import { ThemeContext } from '../../constants/Colors';
 import { CommonStyles } from '../../constants/CommonConstants';
 import { ColorNameToRgb } from '../../handle/UtilsTS';
-import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, Outline, Size } from '../../constants/AppConstants';
+import { BorderRadius, Category, FontSize, FontWeight, Icon, Outline, Size } from '../../constants/AppConstants';
 import { track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 import ImageBackgroundOrView from './ImageBackgroundOrView';
 
