@@ -15,7 +15,7 @@ import { GoToPremiumScreen } from './HeaderXButton';
 import { useNavigation } from '@react-navigation/native';
 import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 
-const size = heightPercentageToDP(3.5)
+const size = heightPercentageToDP(4.5)
 
 const BackgroundScroll = ({
     isLightBackground,
