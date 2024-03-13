@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { GetRemoteFileConfigVersion } from "../../handle/AppConfigHandler";
-import { DelayAsync, TempDirName } from "../../handle/Utils";
+import { TempDirName } from "../../handle/Utils";
 import useCheckAndDownloadRemoteFile from "../../hooks/useCheckAndDownloadRemoteFile";
 import { Category, LocalText, NeedReloadReason, StorageKey_DogFact_CurrentFactIdx, StorageKey_LocalFileVersion } from "../../constants/AppConstants";
 import TheRandomShortText from "../template/TheRandomShortText";
