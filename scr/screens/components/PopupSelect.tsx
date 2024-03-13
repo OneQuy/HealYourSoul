@@ -9,6 +9,7 @@ import { ColorNameToRgb } from '../../handle/UtilsTS';
 import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, Outline, Size } from '../../constants/AppConstants';
 import ImageBackgroundWithLoading from './ImageBackgroundWithLoading';
 import { track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
+import ImageBackgroundOrView from './ImageBackgroundOrView';
 
 const listPopupIconSize = Size.IconBig
 const listPopupGap = Outline.GapVertical
@@ -42,7 +43,7 @@ const PopupSelect = ({
         const textColor = isSelecting ? theme.counterPrimary : theme.counterBackground
 
         return <TouchableOpacity onPress={() => setIdx(index)} style={[{ backgroundColor: isSelecting ? theme.primary : undefined, borderRadius: isSelecting ? BorderRadius.BR8 : 0, borderWidth: isSelecting ? 1 : 0 }, styleSheet.itemTO]}>
-            <ImageBackgroundWithLoading indicatorProps={{ color: textColor }} source={{ uri: item.thumbUri }} resizeMode='cover' style={styleSheet.image} />
+            <ImageBackgroundOrView indicatorProps={{ color: textColor }} source={{ uri: item.thumbUri }} resizeMode='cover' style={styleSheet.image} />
             <Text style={[styleSheet.text, { color: textColor }]}>{item.displayText}</Text>
         </TouchableOpacity>
     }, [selectIdx, theme])
