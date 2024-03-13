@@ -1,6 +1,6 @@
 import React from 'react'
 import ThePage from '../template/ThePage';
-import { Category } from '../../constants/AppConstants';
+import { Category, StorageKey_DogBreed_CurrentBreedIdx } from '../../constants/AppConstants';
 import TheRandomShortText from '../template/TheRandomShortText';
 import { GetQuoteTextAsync } from '../../handle/services/QuoteTextApi';
 import TheRandomImage from '../template/TheRandomImage';
@@ -78,6 +78,17 @@ export const DogBreedScreen = () => {
   return <TheRandomImage
     category={Category.DogBreed}
     getImageAsync={GetIWasteSoMuchTimeAsync}
+
+    storageKeyCurrentItemIdxInPopupSelect={StorageKey_DogBreed_CurrentBreedIdx}
+
+    selectItems={[
+      {
+        displayText: 'a'
+      },
+      {
+        displayText: 'b'
+      }
+    ]}
   />;
 }
 

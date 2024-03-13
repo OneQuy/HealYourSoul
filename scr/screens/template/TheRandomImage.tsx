@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, ActivityIndicator, Alert, StyleSheet, Animated, NativeSyntheticEvent, ImageLoadEventData } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
-import { Category, FontSize, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
+import { BorderRadius, Category, FontSize, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
 import Share from 'react-native-share';
 import RNFS from "react-native-fs";
 
@@ -26,21 +26,32 @@ import HeaderRightButtons from '../components/HeaderRightButtons';
 import useDiversityItem from '../../hooks/useDiversityItem';
 import { OnPressedNextItemDiversity } from '../diversity/TheDiversity';
 import MiniIAP from '../components/MiniIAP';
+import { widthPercentageToDP } from 'react-native-responsive-screen';
+import PopupSelect, { PopupSelectItem } from '../components/PopupSelect';
+import { GetNumberIntAsync, SetNumberAsync } from '../../handle/AsyncStorageUtils';
 
 interface TheRandomImageProps {
     category: Category,
-    getImageAsync: () => Promise<RandomImage | undefined>
+    getImageAsync: () => Promise<RandomImage | undefined>,
+
+    selectItems?: PopupSelectItem[],
+    storageKeyCurrentItemIdxInPopupSelect?: string,
 }
 
 const TheRandomImage = ({
     category,
     getImageAsync,
+
+    selectItems,
+    storageKeyCurrentItemIdxInPopupSelect,
 }: TheRandomImageProps) => {
     const navigation = useNavigation();
     const [currentItem, setCurrentItem] = useState<RandomImage | undefined>(undefined)
     const reasonToReload = useRef<NeedReloadReason>(NeedReloadReason.None);
     const theme = useContext(ThemeContext);
     const [handling, setHandling] = useState(false);
+    const [isShowPopupSelect, setIsShowPopupSelect] = useState(false);
+    const [currentPopupSelectedItem, setCurrentPopupSelectedItem] = useState<PopupSelectItem | undefined>(undefined);
 
     // animation
 
@@ -52,6 +63,18 @@ const TheRandomImage = ({
 
     const onLoadedImage = useCallback((_: NativeSyntheticEvent<ImageLoadEventData>) => {
         playAnimLoadedMedia(mediaViewScaleAnimRef)
+    }, [])
+
+    const getSavedCurrentPopupSelectItemIdx = useCallback(async () => {
+        if (storageKeyCurrentItemIdxInPopupSelect)
+            return await GetNumberIntAsync(storageKeyCurrentItemIdxInPopupSelect, 0)
+        else
+            return 0
+    }, [])
+
+    const saveCurrentPopupSelectItemIdx = useCallback(async (idx: number) => {
+        if (storageKeyCurrentItemIdxInPopupSelect)
+            await SetNumberAsync(storageKeyCurrentItemIdxInPopupSelect, idx)
     }, [])
 
     const onPressRandom = useCallback(async (shouldTracking: boolean) => {
@@ -152,7 +175,18 @@ const TheRandomImage = ({
     // on init once (for load first post)
 
     useEffect(() => {
-        onPressRandom(false)
+        (async () => {
+            const idx = await getSavedCurrentPopupSelectItemIdx()
+
+            if (selectItems && selectItems.length > 0) {
+                if (idx >= 0 && idx < selectItems.length)
+                    setCurrentPopupSelectedItem(selectItems[idx])
+                else
+                    setCurrentPopupSelectedItem(selectItems[0])
+            }
+
+            onPressRandom(false)
+        })()
     }, [])
 
     // on change theme
@@ -231,6 +265,9 @@ const TheRandomImage = ({
             contentView: { width: '100%', height: '100%', gap: Outline.GapVertical, paddingTop: Outline.GapHorizontal },
             headerOptionTO: { marginRight: 15 },
             imageTO: { flex: 1 },
+            filterView: { marginHorizontal: Outline.GapVertical, justifyContent: 'center', alignItems: 'center', },
+            filterCatTxt: { maxWidth: '100%', fontSize: FontSize.Small_L, color: theme.counterPrimary, },
+            filterTO: { maxWidth: '100%', paddingHorizontal: 20, borderRadius: BorderRadius.BR8, justifyContent: 'center', alignItems: 'center', gap: Outline.GapHorizontal, padding: Outline.GapHorizontal, minWidth: widthPercentageToDP(20), flexDirection: 'row', backgroundColor: theme.primary },
             authorText: { marginLeft: Outline.GapVertical, fontSize: FontSize.Small, color: theme.counterBackground },
         })
     }, [theme])
@@ -257,10 +294,21 @@ const TheRandomImage = ({
                                     :
                                     // main
                                     <View style={styleSheet.contentView}>
+                                        {/* filter button */}
+                                        {
+                                            Array.isArray(selectItems) && selectItems.length > 0 &&
+                                            <View style={styleSheet.filterView}>
+                                                <TouchableOpacity onPress={() => setIsShowPopupSelect(true)} style={styleSheet.filterTO}>
+                                                    <Text adjustsFontSizeToFit numberOfLines={1} style={styleSheet.filterCatTxt}>{currentPopupSelectedItem ? currentPopupSelectedItem.displayText : '...'}</Text>
+                                                </TouchableOpacity>
+                                            </View>
+                                        }
+                                        {/* title */}
                                         {
                                             !currentItem?.title ? undefined :
                                                 <Text numberOfLines={3} style={[{ color: theme.counterBackground, }, styleSheet.titleText]}>{currentItem.title}</Text>
                                         }
+                                        {/* image */}
                                         <Animated.View
                                             onTouchStart={onBigViewStartTouch}
                                             onTouchEnd={onBigViewEndTouch}
@@ -275,6 +323,7 @@ const TheRandomImage = ({
                                                 onLoadedImage={onLoadedImage}
                                             />
                                         </Animated.View>
+                                        {/* author */}
                                         <Text numberOfLines={1} style={styleSheet.authorText}>{LocalText.credit_to_author}</Text>
                                     </View>
                             }
@@ -288,6 +337,18 @@ const TheRandomImage = ({
                 items={bottomBarItems}
                 category={category}
             />
+
+            {/* popup select */}
+
+            {
+                isShowPopupSelect && selectItems &&
+                <PopupSelect
+                    cat={category}
+                    list={selectItems}
+                    setIdx={saveCurrentPopupSelectItemIdx}
+                    getSelectingIdxAsync={getSavedCurrentPopupSelectItemIdx}
+                />
+            }
 
             <MiniIAP postID={currentItem?.uri} />
         </View>
