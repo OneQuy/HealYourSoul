@@ -239,21 +239,23 @@ const TheRandomImage = ({
         <View pointerEvents={handling ? 'none' : 'auto'} style={[styleSheet.masterView, { backgroundColor: theme.background }]}>
             <View style={CommonStyles.flex_1} >
                 {
+                    // true ?
                     handling ?
-                        // true ?
                         <View style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
                             <ActivityIndicator color={theme.counterBackground} style={{ marginRight: Outline.Horizontal }} />
                         </View> :
                         <View style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
                             {
+                                // true ?
                                 reasonToReload.current !== NeedReloadReason.None ?
-                                    // true ?
+                                    // error
                                     <TouchableOpacity onPress={() => onPressRandom(true)} style={[{ gap: Outline.GapVertical }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]} >
                                         <MaterialCommunityIcons name={reasonToReload.current === NeedReloadReason.NoInternet ? Icon.NoInternet : Icon.HeartBroken} color={theme.counterBackground} size={Size.IconMedium} />
                                         <Text style={{ fontSize: FontSize.Normal, color: theme.counterBackground }}>{reasonToReload.current === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
                                         <Text style={{ fontSize: FontSize.Small_L, color: theme.counterBackground }}>{LocalText.tap_to_retry}</Text>
                                     </TouchableOpacity>
                                     :
+                                    // main
                                     <View style={styleSheet.contentView}>
                                         {
                                             !currentItem?.title ? undefined :
