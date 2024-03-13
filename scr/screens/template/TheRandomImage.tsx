@@ -346,7 +346,7 @@ const TheRandomImage = ({
                 title={LocalText.select_dog_breed}
                     cat={category}
                     list={selectItems}
-                    setIdx={saveCurrentPopupSelectItemIdx}
+                    setSelectingIdx={saveCurrentPopupSelectItemIdx}
                     getSelectingIdxAsync={getSavedCurrentPopupSelectItemIdx}
                 />
             }
