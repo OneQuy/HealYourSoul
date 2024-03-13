@@ -194,9 +194,9 @@ const TheRandomImage = ({
     // on init once (for load first post)
 
     useEffect(() => {
-        if (!IsValuableArrayOrString(selectItems) || currentPopupSelectedItem) {
+        if (!IsValuableArrayOrString(selectItems) || // popup select mode
+            currentPopupSelectedItem) { // normal mode
             onPressRandom(false)
-            // console.log('inited random');
         }
     }, [currentPopupSelectedItem])
 
@@ -204,9 +204,8 @@ const TheRandomImage = ({
 
     useEffect(() => {
         (async () => {
-            const idx = await getSavedCurrentPopupSelectItemIdx()
-
             if (selectItems && selectItems.length > 0) {
+                const idx = await getSavedCurrentPopupSelectItemIdx()
                 if (idx >= 0 && idx < selectItems.length)
                     setCurrentPopupSelectedItem(selectItems[idx])
                 else
