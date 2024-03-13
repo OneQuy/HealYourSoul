@@ -102,6 +102,8 @@ const TheRandomImage = ({
                 item = await getImageAsync()
             else if (getImageWithParamAsync && currentPopupSelectedItem)
                 item = await getImageWithParamAsync(currentPopupSelectedItem)
+            else 
+                console.error('[ne] TheRandomImage-onPressRandom')
         }
 
         if (item) { // success
