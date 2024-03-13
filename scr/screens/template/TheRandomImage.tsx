@@ -13,7 +13,7 @@ import { TempDirName } from '../../handle/Utils'
 import { SaveCurrentScreenForLoadNextTime, ToastTheme } from '../../handle/AppUtils'
 import { CommonStyles } from '../../constants/CommonConstants'
 import { DiversityItemType, RandomImage } from '../../constants/Types';
-import { ToCanPrint } from '../../handle/UtilsTS';
+import { IsValuableArrayOrString, ToCanPrint } from '../../handle/UtilsTS';
 import { DownloadFileAsync, GetFLPFromRLP } from '../../handle/FileUtils';
 import { SaveToGalleryAsync } from '../../handle/CameraRoll';
 import { ToastOptions, toast } from '@baronha/ting';
@@ -32,10 +32,11 @@ import { GetNumberIntAsync, SetNumberAsync } from '../../handle/AsyncStorageUtil
 
 interface TheRandomImageProps {
     category: Category,
-    getImageAsync: () => Promise<RandomImage | undefined>,
+    getImageAsync?: () => Promise<RandomImage | undefined>,
 
     selectItems?: PopupSelectItem[],
     storageKeyCurrentItemIdxInPopupSelect?: string,
+    getImageWithParamAsync?: (item: PopupSelectItem) => Promise<RandomImage | undefined>,
 }
 
 const TheRandomImage = ({
@@ -44,6 +45,7 @@ const TheRandomImage = ({
 
     selectItems,
     storageKeyCurrentItemIdxInPopupSelect,
+    getImageWithParamAsync,
 }: TheRandomImageProps) => {
     const navigation = useNavigation();
     const [currentItem, setCurrentItem] = useState<RandomImage | undefined>(undefined)
@@ -81,9 +83,9 @@ const TheRandomImage = ({
             idx = 0
 
         setCurrentPopupSelectedItem(selectItems[idx])
-        
+
         await SetNumberAsync(storageKeyCurrentItemIdxInPopupSelect, idx)
-        
+
         setIsShowPopupSelect(false)
     }, [])
 
@@ -91,9 +93,16 @@ const TheRandomImage = ({
         reasonToReload.current = NeedReloadReason.None
         setHandling(true)
 
-        const item = diversityItem ?
-            diversityItem.randomImage :
-            await getImageAsync()
+        let item: RandomImage | undefined = undefined
+
+        if (diversityItem)
+            item = diversityItem.randomImage
+        else {
+            if (getImageAsync)
+                item = await getImageAsync()
+            else if (getImageWithParamAsync && currentPopupSelectedItem)
+                item = await getImageWithParamAsync(currentPopupSelectedItem)
+        }
 
         if (item) { // success
         }
@@ -109,7 +118,7 @@ const TheRandomImage = ({
         setCurrentItem(item)
         setHandling(false)
 
-    }, [diversityItem])
+    }, [diversityItem, currentPopupSelectedItem])
 
     const onPressSaveToPhoto = useCallback(async () => {
         if (!currentItem) {
@@ -185,6 +194,15 @@ const TheRandomImage = ({
     // on init once (for load first post)
 
     useEffect(() => {
+        if (!IsValuableArrayOrString(selectItems) || currentPopupSelectedItem) {
+            onPressRandom(false)
+            // console.log('inited random');
+        }
+    }, [currentPopupSelectedItem])
+
+    // on init once (for set current selected item (if has select popup))
+
+    useEffect(() => {
         (async () => {
             const idx = await getSavedCurrentPopupSelectItemIdx()
 
@@ -194,8 +212,6 @@ const TheRandomImage = ({
                 else
                     setCurrentPopupSelectedItem(selectItems[0])
             }
-
-            onPressRandom(false)
         })()
     }, [])
 
