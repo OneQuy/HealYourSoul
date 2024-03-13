@@ -69,6 +69,9 @@ export default function useCheckAndDownloadRemoteFile<T extends object>(
     }, [remoteVersion])
 
     const reUpdateAsync = useCallback(async () => {
+        setResult(undefined)
+        setError(undefined)
+        
         let downloadError = undefined
 
         // 1. check need to download or not
