@@ -53,13 +53,6 @@ export const QuoteTextScreen = () => {
   />;
 }
 
-export const CatFactScreen = () => {
-  return <TheRandomShortText
-    category={Category.CatFact}
-    getTextAsync={GetQuoteTextAsync}
-  />;
-}
-
 export const AnimeQuoteScreen = () => {
   return <TheRandomShortText
     category={Category.AnimeQuote}
