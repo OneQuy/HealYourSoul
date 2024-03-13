@@ -53,24 +53,44 @@ export const QuoteTextScreen = () => {
   />;
 }
 
+export const CatFactScreen = () => {
+  return <TheRandomShortText
+    category={Category.CatFact}
+    getTextAsync={GetQuoteTextAsync}
+  />;
+}
+
+export const DogFactScreen = () => {
+  return <TheRandomShortText
+    category={Category.DogFact}
+    getTextAsync={GetQuoteTextAsync}
+  />;
+}
+
+export const AnimeQuoteScreen = () => {
+  return <TheRandomShortText
+    category={Category.AnimeQuote}
+    getTextAsync={GetQuoteTextAsync}
+  />;
+}
+
+export const AnimeImageScreen = () => {
+  return <TheRandomImage
+    category={Category.AnimeImage}
+    getImageAsync={GetIWasteSoMuchTimeAsync}
+  />;
+}
 
 export const RandomMemeScreen = () => {
   return <TheRandomImage
-      category={Category.RandomMeme}
-      getImageAsync={GetIWasteSoMuchTimeAsync}
+    category={Category.RandomMeme}
+    getImageAsync={GetIWasteSoMuchTimeAsync}
   />;
 }
 
 export const MemedroidScreen = () => {
   return <TheRandomImage
-      category={Category.Memedroid}
-      getImageAsync={GetIWasteSoMuchTimeAsync}
+    category={Category.Memedroid}
+    getImageAsync={GetIWasteSoMuchTimeAsync}
   />;
 }
-
-// export const RedditMemeScreen = () => {
-//   return <TheRandomImage
-//       category={Category.RedditMeme}
-//       getImageAsync={GetRedditMemeAsync}
-//   />;
-// }

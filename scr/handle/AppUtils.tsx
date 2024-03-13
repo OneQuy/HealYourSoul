@@ -58,10 +58,12 @@ const pairCatAndScreenName: [Category, ScreenName][] = [
     [Category.Tune, ScreenName.Tune],
     [Category.Vocabulary, ScreenName.Vocabulary],
     [Category.AwesomeNature, ScreenName.AwesomeNature],
-    
+
     [Category.Universe, ScreenName.Universe],
-    [Category.Anime, ScreenName.Anime],
-    [Category.CatDogFact, ScreenName.CatDogFact],
+    [Category.AnimeImage, ScreenName.AnimeImage],
+    [Category.AnimeQuote, ScreenName.AnimeQuote],
+    [Category.CatFact, ScreenName.CatFact],
+    [Category.DogFact, ScreenName.DogFact],
     [Category.Memedroid, ScreenName.Memedroid],
     [Category.Siena, ScreenName.Siena],
 ] as const

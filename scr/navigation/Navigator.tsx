@@ -12,7 +12,7 @@ import LoveScreen from '../screens/love/LoveScreen';
 import { CustomDrawerContent } from './CustomDrawer';
 import NSFWScreen from '../screens/nsfw/NSFWScreen';
 import IAPPage from '../screens/IAP/IAPPage';
-import { ArtScreen, AwesomeNatureScreen, AwesomeScreen, CuteScreen, InfoScreen, MemedroidScreen, QuoteTextScreen, RandomMemeScreen, SarcasmScreen, SunsetScreen, TuneScreen, TypoScreen, VocabularyScreen, } from '../screens/other_thepage_screens/Index';
+import { AnimeImageScreen, AnimeQuoteScreen, ArtScreen, AwesomeNatureScreen, AwesomeScreen, CatFactScreen, CuteScreen, DogFactScreen, InfoScreen, MemedroidScreen, QuoteTextScreen, RandomMemeScreen, SarcasmScreen, SunsetScreen, TuneScreen, TypoScreen, VocabularyScreen, } from '../screens/other_thepage_screens/Index';
 import NinjaFactScreen from '../screens/ninja_fact/NinjaFactScreen';
 import PictureScreen from '../screens/picture/PictureScreen';
 import NinjaJokeScreen from '../screens/ninja_fact/NinjaJokeScreen';
@@ -41,8 +41,6 @@ import InboxScreen from '../screens/inbox/InboxScreen';
 import AdminScreen from '../screens/admin/AdminScreen';
 import GalleryScreen from '../screens/gallery/GalleryScreen';
 import SienaScreen from '../screens/pic_of_the_year/SienaScreen';
-import CatDogFactScreen from '../screens/cat_dog_fact/CatDogFactScreen';
-import AnimeScreen from '../screens/anime/AnimeScreen';
 import UniverseScreen from '../screens/universe/UniverseScreen';
 
 export type DrawerParamList = {
@@ -75,11 +73,14 @@ export type DrawerParamList = {
   [ScreenName.Info]: { item: DiversityItemType } | undefined,
   [ScreenName.Typo]: { item: DiversityItemType } | undefined,
   [ScreenName.AwesomeNature]: { item: DiversityItemType } | undefined,
-  
+
   [ScreenName.Siena]: { item: DiversityItemType } | undefined,
-  [ScreenName.Anime]: { item: DiversityItemType } | undefined,
+  [ScreenName.AnimeQuote]: { item: DiversityItemType } | undefined,
+  [ScreenName.AnimeImage]: { item: DiversityItemType } | undefined,
   [ScreenName.Universe]: { item: DiversityItemType } | undefined,
-  [ScreenName.CatDogFact]: { item: DiversityItemType } | undefined,
+  [ScreenName.CatFact]: { item: DiversityItemType } | undefined,
+  [ScreenName.DogFact]: { item: DiversityItemType } | undefined,
+  [ScreenName.DogBreed]: { item: DiversityItemType } | undefined,
   [ScreenName.Memedroid]: { item: DiversityItemType } | undefined,
 
   [ScreenName.IAPPage]: undefined,
@@ -129,11 +130,13 @@ const ScreenList: ScreenNamePair[] = [
   [ScreenName.AwardPicture, PicturesOfTheYearScreen],
   [ScreenName.Picture, PictureScreen],
   [ScreenName.TopMovie, TopMovieScreen],
-  
+
   [ScreenName.Universe, UniverseScreen],
-  [ScreenName.Anime, AnimeScreen],
+  [ScreenName.AnimeImage, AnimeImageScreen],
+  [ScreenName.AnimeQuote, AnimeQuoteScreen],
   [ScreenName.Siena, SienaScreen],
-  [ScreenName.CatDogFact, CatDogFactScreen],
+  [ScreenName.CatFact, CatFactScreen],
+  [ScreenName.DogFact, DogFactScreen],
   [ScreenName.Memedroid, MemedroidScreen],
 
   // app

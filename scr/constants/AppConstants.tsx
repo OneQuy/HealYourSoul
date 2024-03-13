@@ -61,8 +61,11 @@ export enum ScreenName {
   Gallery = 'Gallery',
   Siena = 'Photos of Year 2',
   Memedroid = 'Random Meme 2',
-  CatDogFact = 'Cat & Dog Fact',
-  Anime = 'Anime',
+  DogFact = 'Dog Fact',
+  DogBreed = 'Dog Fact',
+  CatFact = 'Cat Fact',
+  AnimeImage = 'Anime Image',
+  AnimeQuote = 'Anime Quote',
   Universe = 'Universe',
 }
 
@@ -163,10 +166,13 @@ export enum Category {
   AwesomeNature = 29,
   
   Siena = 30,
-  CatDogFact = 31,
+  CatFact = 31,
   Universe = 32,
-  Anime = 33,
+  AnimeImage = 33,
   Memedroid = 34,
+  DogFact = 35,
+  DogBreed = 36,
+  AnimeQuote = 37,
 }
 
 // margin / padding
