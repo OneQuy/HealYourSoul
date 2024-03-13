@@ -72,7 +72,7 @@ const PopupSelect = ({
             <View style={[{ backgroundColor: theme.background, }, styleSheet.bgView]}>
                 <View style={[{ flexDirection: 'row' }, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
                     <MaterialCommunityIcons name={Icon.ThreeDots} color={theme.background} size={Size.Icon} />
-                    <Text style={[{ color: theme.counterBackground, }, styleSheet.name]}>{title}</Text>
+                    <Text adjustsFontSizeToFit numberOfLines={1} style={[{ color: theme.counterBackground, }, styleSheet.name]}>{title}</Text>
                     <TouchableOpacity onPress={() => setIdx(selectingIdxInPopup)}>
                         <MaterialCommunityIcons name={Icon.X} color={theme.counterBackground} size={Size.Icon} />
                     </TouchableOpacity>
