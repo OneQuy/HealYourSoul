@@ -98,7 +98,7 @@ export default PopupSelect
 const styleSheet = StyleSheet.create({
     masterView: { backgroundColor: ColorNameToRgb('black', 0.8), width: '100%', height: '100%', position: 'absolute' },
     bgView: { gap: Outline.GapVertical, padding: Outline.GapVertical, width: '80%', height: '70%', borderRadius: BorderRadius.BR },
-    itemTO: { flexDirection: 'row', alignItems: 'center', gap: Outline.GapHorizontal },
+    itemTO: { padding: Outline.GapVertical, flexDirection: 'row', alignItems: 'center', gap: Outline.GapHorizontal },
     image: { width: listPopupIconSize, height: listPopupIconSize, borderRadius: BorderRadius.BR8, overflow: 'hidden' },
     flatlist: { gap: listPopupGap },
     text: { fontSize: FontSize.Small_L, flex: 1 },
