@@ -401,7 +401,7 @@ export const track_OpenAppOfDayCount = (count: number) => {
     )
 }
 
-export const track_Streak = (count: number) => {
+export const track_Streak = (count: number, bestStreak: number) => {
     const event = 'streak'
 
     MainTrack(event,
@@ -409,7 +409,8 @@ export const track_Streak = (count: number) => {
             `total/${event}/${count}_gooday`,
         ],
         {
-            count
+            count,
+            bestStreak,
         }
     )
 }

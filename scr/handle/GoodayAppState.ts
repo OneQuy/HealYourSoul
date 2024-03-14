@@ -297,7 +297,7 @@ export const HandleGoodayStreakAsync = async (forceShow = false) => {
     // track
 
     if (!forceShow)
-        track_Streak(data.currentStreak)
+        track_Streak(data.currentStreak, data.bestStreak)
 }
 
 const SetupOneSignal = () => {
