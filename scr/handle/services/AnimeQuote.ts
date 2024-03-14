@@ -6,7 +6,7 @@ import { Quote } from "../../constants/Types"
 
 const url = 'https://animechan.xyz/api/quotes'
 
-export const GetAnimeQuoteListAsync_FromApi = async (): Promise<Quote[] | undefined> => {
+const GetAnimeQuoteListAsync_FromApi = async (): Promise<Quote[] | undefined> => {
     let res: Response | undefined
 
     for (let i = 0; i < 5; i++) {
@@ -32,16 +32,17 @@ export const GetAnimeQuoteListAsync_FromApi = async (): Promise<Quote[] | undefi
 
     if (!Array.isArray(arr) || arr.length <= 0)
         return undefined
+console.log(arr, arr.length);
 
     return arr.map(i => ({
         // @ts-ignore
-        content: `${i.content}\n\n-${i.character} (${i.anime})`,
+        content: `${i.quote}`,
         // @ts-ignore
-        author: i.author
+        author: `${i.character} (${i.anime})`,
     } as Quote))
 }
 
-export const GetQuoteTextAsync = async (): Promise<string | undefined> => {
+export const GetAnimeQuoteTextAsync = async (): Promise<string | undefined> => {
     try {
 
         let json = await GetApiDataItemFromCached<Quote>(StorageKey_AnimeQuote_RandomAll)

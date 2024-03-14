@@ -575,7 +575,7 @@ export const StorageKey_Quote_ToggleNoti = 'quote_ToggleNoti'
 export const StorageKey_NinjaFact = 'ninja_fact_arr'
 export const StorageKey_NinjaJoke = 'ninja_joke_arr'
 export const StorageKey_Quote = 'quote_arr'
-export const StorageKey_AnimeQuote_RandomAll = 'anime_quote_arr'
+export const StorageKey_AnimeQuote_RandomAll = 'anime_quote_arr2'
 
 export const StorageKey_DogFact_CurrentFactIdx = 'dog_fact_idx'
 export const StorageKey_DogBreed_CurrentBreedIdx = 'dog_breed_idx'
