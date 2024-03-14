@@ -580,6 +580,7 @@ export const StorageKey_AnimeQuote_RandomAll = 'anime_quote_arr2'
 export const StorageKey_DogFact_CurrentFactIdx = 'dog_fact_idx'
 export const StorageKey_DogBreed_CurrentBreedIdx = 'dog_breed_idx'
 export const StorageKey_CatFact_CurrentFactIdx = 'cat_fact_idx'
+export const StorageKey_AnimeImage_CurrentIdx = 'anime_image_idx'
 
 export const StorageKey_NinjaFact_DataNoti = 'ninja_fact_arr_noti'
 export const StorageKey_NinjaJoke_DataNoti = 'ninja_joke_arr_noti'

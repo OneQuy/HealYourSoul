@@ -66,7 +66,7 @@ export const TheRandomImage_PopupSelect = ({
     }
 
     return <TheRandomImage
-        category={Category.DogBreed}
+        category={category}
 
         storageKeyCurrentItemIdxInPopupSelect={currentItemIdxStorageKey}
         selectItems={selectItems}
