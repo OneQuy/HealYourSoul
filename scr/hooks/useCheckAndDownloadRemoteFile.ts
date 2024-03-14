@@ -4,13 +4,20 @@ import { DownloadFileAsync, GetFLPFromRLP, IsExistedAsync, ReadTextAsync } from 
 type ReturnType = 'uri' | 'json' | 'text'
 
 /**
- * hook runs whenever [remoteVersion] changed
+ ## HOW IT WORKS?
+ * Hook runs whenever [remoteVersion] changed
  * 
- * note: still handling if result === undefined && error === undefined
- * @returns result: undefined if error
- * @returns error: undefined if success or error
+ ## NOTE
+ * It still handling (you should handle loading) if result === undefined && error === undefined
+ * 
+ * @param shuffleIfJsonIsArray will shuffle the array before saving file.
+ * 
+ * { result } undefined if error.
+ * 
+ * { error } undefined if success. Otherwise error
  * 
  ## USAGE:
+ *
  ```tsx
 const { result, error, isDataLatestFromRemoteOrLocal, reUpdate, didDownload } = useCheckAndDownloadRemoteFile(
         fileURL,
@@ -32,6 +39,7 @@ export default function useCheckAndDownloadRemoteFile<T extends object>(
     isLog: boolean,
     localVersionGetterAsync: () => Promise<any>,
     localVersionSetterAsync: () => Promise<void>,
+    shuffleIfJsonIsArray?: boolean
 ): {
     result: string | T | undefined,
     error: any,
@@ -82,7 +90,7 @@ export default function useCheckAndDownloadRemoteFile<T extends object>(
         // 2. download if needed
 
         if (isNeedToDownload) {
-            const res = await DownloadFileAsync(fileURL, localPath, isRLP)
+            const res = await DownloadFileAsync(fileURL, localPath, isRLP, undefined, shuffleIfJsonIsArray)
 
             if (res !== null) { // download fail
                 downloadError = res

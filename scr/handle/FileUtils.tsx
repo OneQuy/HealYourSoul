@@ -7,7 +7,7 @@
 import RNFS, { DownloadProgressCallbackResult, StatResult } from "react-native-fs";
 import { LoadJsonFromURLAsync, TempDirName } from "./Utils";
 import { Platform } from "react-native";
-import { ToCanPrint } from "./UtilsTS";
+import { ShuffleArray, ToCanPrint } from "./UtilsTS";
 
 /**
  * @returns null if success, otherwise error
@@ -185,40 +185,62 @@ export async function IsExistedAsync(path: string, isRLP: boolean = true): Promi
 }
 
 /**
- * usage: const res = await DownloadFileAsync('fileurl', 'dataDir/file.txt');
+ ## Usage: 
+ const res = await DownloadFileAsync('fileurl', 'dataDir/file.txt');
+ * @param shuffleIfJsonIsArray will shuffle the array before saving file.
  * @returns null if success, otherwise error
+ ## Note:
+ If  shuffleIfJsonIsArray === true, 'progress' will not work.
  */
 export async function DownloadFileAsync(
   url: string,
   saveLocalPath: string,
   isRLP: boolean = true,
-  progress?: (p: DownloadProgressCallbackResult) => void): Promise<null | NonNullable<any>> {
+  progress?: (p: DownloadProgressCallbackResult) => void,
+  shuffleIfJsonIsArray?: boolean): Promise<null | NonNullable<any>> {
   try {
     if (!url || !saveLocalPath) {
       throw 'url or saveLocalPath is invalid to download';
     }
 
+    // flp
+
     saveLocalPath = isRLP ? RNFS.DocumentDirectoryPath + '/' + saveLocalPath : saveLocalPath;
 
     // check & create dir first
 
-    var res = await CheckAndMkDirOfFilepathAsync(saveLocalPath);
+    let res = await CheckAndMkDirOfFilepathAsync(saveLocalPath);
 
     if (res)
       throw 'can not download file, error when CheckAndMkDirOfFilepathAsync: ' + res;
 
     // download
 
-    res = await RNFS.downloadFile({
-      fromUrl: url,
-      toFile: saveLocalPath,
-      begin: () => { },
-      progress
-    }).promise;
+    if (shuffleIfJsonIsArray === true) { // file is json & need to shuffle
+      res = await DownloadFile_GetJsonAsync(
+        url,
+        saveLocalPath,
+        false,
+        true)
 
-    if (res.statusCode !== 200) {
-      throw '[' + url + ']' + ' downloaded failed, code: ' + res.statusCode;
+      if (!res.json) {
+        throw '[' + url + ']' + ' downloaded failed, error: ' + res.error
+      }
     }
+    else { // other cases
+      res = await RNFS.downloadFile({
+        fromUrl: url,
+        toFile: saveLocalPath,
+        begin: () => { },
+        progress
+      }).promise;
+
+      if (res.statusCode !== 200) {
+        throw '[' + url + ']' + ' downloaded failed, code: ' + res.statusCode;
+      }
+    }
+
+    // success
 
     return null;
   }
@@ -254,17 +276,39 @@ export function GetFileNameAndExtension(path: string) {
     return path.substring(idx + 1)
 }
 
-export async function DownloadFile_GetJsonAsync(url: string, saveLocalRelativeFilepath: string) {
+/**
+ * @param shuffleIfJsonIsArray will shuffle the array before saving file.
+ ```tsx
+ return {
+  json: json (object) if success. null if error.
+  error: null if success. error if error.
+ }
+```
+ */
+export async function DownloadFile_GetJsonAsync(
+  url: string,
+  saveLocalPath: string,
+  isRLP = true,
+  shuffleIfJsonIsArray?: boolean) {
   // get json from url
 
   var res = await LoadJsonFromURLAsync(url);
 
   if (res.json) // sucess
   {
+    // shuffle
+
+    if (Array.isArray(res.json) && shuffleIfJsonIsArray === true) {
+      console.log(res.json.length, res.json.slice(0, 3));
+
+      ShuffleArray(res.json)
+      console.log(res.json.length, res.json.slice(0, 3));
+    }
+
     // write to local
 
     var s = JSON.stringify(res.json);
-    var writeFileResObj = await WriteTextAsync(saveLocalRelativeFilepath, s);
+    var writeFileResObj = await WriteTextAsync(saveLocalPath, s, isRLP);
 
     if (writeFileResObj === null) // success
     {

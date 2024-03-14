@@ -19,11 +19,15 @@ export const TheRandomShortText_FileConfig = ({
     configFileName,
     category,
     currentItemStorageKey,
+
+    shuffleIfJsonIsArray,
 }: {
     category: Category,
     fileURL: string,
     configFileName: string,
     currentItemStorageKey: string,
+
+    shuffleIfJsonIsArray?: boolean
 }) => {
     const { result: textArr, didDownload, error, reUpdateAsync } = useCheckAndDownloadRemoteFile<string[]>(
         fileURL,
@@ -33,7 +37,8 @@ export const TheRandomShortText_FileConfig = ({
         'json',
         false,
         async () => AsyncStorage.getItem(StorageKey_LocalFileVersion(category)),
-        async () => AsyncStorage.setItem(StorageKey_LocalFileVersion(category), GetRemoteFileConfigVersion(configFileName).toString()))
+        async () => AsyncStorage.setItem(StorageKey_LocalFileVersion(category), GetRemoteFileConfigVersion(configFileName).toString()),
+        shuffleIfJsonIsArray)
 
     const getTextAsync = useCallback(async (): Promise<string | undefined> => {
         if (Array.isArray(textArr)) {

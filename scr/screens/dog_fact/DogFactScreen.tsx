@@ -30,6 +30,7 @@ export const MovieQuoteScreen = () => {
             fileURL='https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Fmovie_quotes.json?alt=media&token=3aaf866c-2463-483f-8478-f73a18f84a42'
             configFileName="movie_quotes"
             currentItemStorageKey={StorageKey_MovieQuote_CurrentIdx}
+            shuffleIfJsonIsArray={true}
         />
     )
 }
