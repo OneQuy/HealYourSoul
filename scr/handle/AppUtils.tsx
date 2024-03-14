@@ -220,7 +220,11 @@ export const CatToScreenName = (cat: Category): ScreenName | undefined => {
     if (f)
         return f[1]
     else
+    {
+        console.log('[ne] CatToScreenName: ' + Category[cat]);
+        
         return undefined
+    }
 }
 
 export const GetDBVersionPath = (cat: Category) => {
