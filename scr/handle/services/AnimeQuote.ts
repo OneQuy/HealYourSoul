@@ -32,7 +32,6 @@ const GetAnimeQuoteListAsync_FromApi = async (): Promise<Quote[] | undefined> =>
 
     if (!Array.isArray(arr) || arr.length <= 0)
         return undefined
-console.log(arr, arr.length);
 
     return arr.map(i => ({
         // @ts-ignore
