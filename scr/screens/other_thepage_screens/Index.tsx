@@ -53,13 +53,6 @@ export const QuoteTextScreen = () => {
   />;
 }
 
-export const AnimeImageScreen = () => {
-  return <TheRandomImage
-    category={Category.AnimeImage}
-    getImageAsync={GetIWasteSoMuchTimeAsync}
-  />;
-}
-
 export const RandomMemeScreen = () => {
   return <TheRandomImage
     category={Category.RandomMeme}
