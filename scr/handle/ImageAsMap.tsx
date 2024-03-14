@@ -1,9 +1,7 @@
-import { View, Animated, NativeTouchEvent, ViewProps, GestureResponderEvent, Dimensions, LayoutChangeEvent, NativeSyntheticEvent, ImageLoadEventData, Image, ImageBackgroundProps, ImageProps, ActivityIndicator, ActivityIndicatorProps, StyleSheet } from 'react-native'
-import React, { ReactNode, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { View, Animated, NativeTouchEvent, ViewProps, GestureResponderEvent, Dimensions, LayoutChangeEvent, NativeSyntheticEvent, ImageLoadEventData, Image, ImageProps, ActivityIndicator, ActivityIndicatorProps, StyleSheet } from 'react-native'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { CachedMeassure, CachedMeassureResult } from './PreservedMessure'
 import { Throttle } from './Throttler'
-
-// const AnimatedImageBackground = Animated.createAnimatedComponent(ImageBackground)
 
 const screenScale = Dimensions.get('screen').scale
 const dimensionsScreen = Dimensions.get('screen')
