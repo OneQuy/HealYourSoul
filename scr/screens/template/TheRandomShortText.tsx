@@ -1,7 +1,7 @@
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { View, Text, TouchableOpacity, ActivityIndicator, Share as RNShare, ShareContent, ShareOptions, StyleSheet, Animated } from 'react-native'
+import { View, Text, TouchableOpacity, ActivityIndicator, Share as RNShare, ShareContent, ShareOptions, StyleSheet, Animated, NativeTouchEvent } from 'react-native'
 import React, { useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size, StorageKey_LocalFileVersion_ShortText } from '../../constants/AppConstants'
@@ -146,8 +146,8 @@ const TheRandomShortText = ({
         }))
     }, [currentBackground, backgrounds, isPremium])
 
-    const onPressBackground = useCallback(() => {
-        setIsFoldBackground(val => !val)
+    const onPressBackground = useCallback((forceClose = false) => {
+        setIsFoldBackground(val => typeof forceClose === 'boolean' && forceClose ? true : !val)
         checkAndResetBackground()
     }, [checkAndResetBackground])
 
@@ -179,6 +179,11 @@ const TheRandomShortText = ({
         setHandling(false)
     }, [diversityItem, checkAndResetBackground])
 
+    const onTap = useCallback((count: number, _: NativeTouchEvent) => {
+        if (count === 1)
+            onPressBackground(true)
+    }, [onPressBackground])
+
     const onSwiped = useCallback((result: SwipeResult) => {
         if (!result.primaryDirectionIsHorizontalOrVertical)
             return
@@ -199,7 +204,7 @@ const TheRandomShortText = ({
         setIsLoadingBG(false)
     }, [])
 
-    const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(undefined, undefined, onSwiped)
+    const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(onTap, undefined, onSwiped)
 
     const bottomBarItems = useMemo(() => {
         const btns = [
@@ -256,7 +261,7 @@ const TheRandomShortText = ({
         // return 
 
         return btns
-    }, [onPressRandom, isFoldBackground, onPressShareText, onPressCopy, diversityItem])
+    }, [onPressRandom, isFoldBackground, onPressBackground, onPressShareText, onPressCopy, diversityItem])
 
     // on init once (for load first post)
 
