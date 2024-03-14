@@ -1,5 +1,7 @@
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-native-responsive-screen";
 
+export const FirstColorTextsIsFree = 13
+
 export const DaysToAskRate_ForFirstTimeAfterInstalledDays = 1
 export const DaysToAskRate_FromSecondTime = 10
 
@@ -165,7 +167,7 @@ export enum Category {
   Tune = 27,
   Vocabulary = 28,
   AwesomeNature = 29,
-  
+
   Siena = 30,
   CatFact = 31,
   Universe = 32,
@@ -325,6 +327,7 @@ export const LocalText = {
   Contact: "Contact",
   bg_for_white_text: "Backgrounds for white text",
   bg_for_black_text: "Backgrounds for black text",
+  text_color: "Text color",
   remove_background: "No background",
   bold: "Bold",
   sizebig: "Big text",
@@ -560,6 +563,7 @@ export const LocalText = {
   background_for_premium_content: "This background is available exclusively for Premium users. Upgrade now to unlock access to all styles.",
   background_for_premium_content_bold: "Bold text is available exclusively for Premium users. Upgrade now to unlock access to all styles.",
   background_for_premium_content_sizebig: "Big text is available exclusively for Premium users. Upgrade now to unlock access to all styles.",
+  background_for_premium_content_text_color: "This color is available exclusively for Premium users. Upgrade now to unlock access to all styles.",
 }
 
 // storage

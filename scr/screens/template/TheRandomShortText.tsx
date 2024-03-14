@@ -23,7 +23,7 @@ import { TempDirName } from '../../handle/Utils';
 import { GetRemoteFileConfigVersion } from '../../handle/AppConfigHandler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAppDispatch, useAppSelector } from '../../redux/Store';
-import BackgroundForTextSelector from '../components/BackgroundForTextSelector';
+import BackgroundForTextSelector, { IsBackgroundForText_ColorFree } from '../components/BackgroundForTextSelector';
 import { usePremium } from '../../hooks/usePremium';
 import { setBackgroundIdForText } from '../../redux/UserDataSlice';
 import ImageBackgroundOrView from '../components/ImageBackgroundOrView';
@@ -55,6 +55,7 @@ const TheRandomShortText = ({
         isBold: 0,
         sizeBig: 0,
         cat: category,
+        colorText: undefined,
     } as BackgroundForTextCurrent)
 
     const currentBackground = useAppSelector(state => {
@@ -132,25 +133,18 @@ const TheRandomShortText = ({
         if (isPremium)
             return
 
-        if (!Array.isArray(backgrounds))
-            return
-
-        const curBg = backgrounds.find(i => i.id === currentBackground.id)
-
-        if (!curBg) {
-            dispatch(setBackgroundIdForText(defaultBg.current))
-            return
-        }
+        const curBg = Array.isArray(backgrounds) ? backgrounds.find(i => i.id === currentBackground.id) : undefined
 
         // reset!
 
         dispatch(setBackgroundIdForText({
             cat: category,
-            id: curBg.isPremium && !isPremium ? -1 : curBg.id,
+            id: curBg && curBg.isPremium ? -1 : currentBackground.id,
+            colorText: currentBackground && currentBackground.colorText && !IsBackgroundForText_ColorFree(currentBackground.colorText) && !isPremium ? undefined : currentBackground.colorText,
             isBold: 0,
             sizeBig: 0
         }))
-    }, [currentBackground.id, backgrounds, currentBackground.isBold, isPremium])
+    }, [currentBackground, backgrounds, isPremium])
 
     const onPressBackground = useCallback(() => {
         setIsFoldBackground(val => !val)
@@ -336,7 +330,7 @@ const TheRandomShortText = ({
                                         <Text style={{ fontSize: FontSize.Small_L, color: theme.counterBackground }}>{LocalText.tap_to_retry}</Text>
                                     </TouchableOpacity>
                                     :
-                                    <Animated.Text adjustsFontSizeToFit numberOfLines={20} selectable style={[{ transform: [{ scale: mediaViewScaleAnimRef }] }, { verticalAlign: 'middle', marginHorizontal: Outline.Horizontal, fontWeight: currentBackground.isBold ? FontWeight.Bold : 'normal', color: theme.counterBackground, fontSize: currentBackground.sizeBig ? FontSize.Super : FontSize.Big }]}>{text ? text : ''}</Animated.Text>
+                                    <Animated.Text adjustsFontSizeToFit numberOfLines={20} selectable style={[{ transform: [{ scale: mediaViewScaleAnimRef }] }, { verticalAlign: 'middle', marginHorizontal: Outline.Horizontal, fontWeight: currentBackground.isBold ? FontWeight.Bold : 'normal', color: currentBackground.colorText ? currentBackground.colorText : theme.counterBackground, fontSize: currentBackground.sizeBig ? FontSize.Super : FontSize.Big }]}>{text ? text : ''}</Animated.Text>
                             }
                         </View>
                 }

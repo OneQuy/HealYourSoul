@@ -187,6 +187,7 @@ export type BackgroundForTextCurrent = {
     cat: Category,
     isBold: number,
     sizeBig: number,
+    colorText: string | undefined,
 }
 
 export type TriviaDifficulty = 'hard' | 'medium' | 'easy' | 'all'

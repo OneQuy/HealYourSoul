@@ -15,7 +15,7 @@ import { GoToPremiumScreen } from './HeaderXButton';
 import { useNavigation } from '@react-navigation/native';
 import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 
-const size = heightPercentageToDP(4.5)
+export const sizeBackgroundForTextItem = heightPercentageToDP(4.5)
 
 const BackgroundScroll = ({
     isLightBackground,
@@ -88,9 +88,9 @@ const BackgroundScroll = ({
                 <ImageBackgroundWithLoading
                     source={{ uri: item.thumb, cache: 'force-cache' }}
                     style={{
-                        width: size,
-                        height: size,
-                        borderRadius: size / 2,
+                        width: sizeBackgroundForTextItem,
+                        height: sizeBackgroundForTextItem,
+                        borderRadius: sizeBackgroundForTextItem / 2,
                         justifyContent: 'center',
                         alignItems: 'center',
                         overflow: 'hidden',
@@ -100,7 +100,7 @@ const BackgroundScroll = ({
                             <View>
                                 {
                                     !item.isPremium || isPremium ? undefined :
-                                        <MaterialCommunityIcons name={Icon.Lock} color={dotColor} size={size / 2} />
+                                        <MaterialCommunityIcons name={Icon.Lock} color={dotColor} size={sizeBackgroundForTextItem / 2} />
                                 }
                             </View> :
                             <>
@@ -109,9 +109,9 @@ const BackgroundScroll = ({
                                         <ActivityIndicator color={dotColor} /> :
                                         <View
                                             style={{
-                                                width: size / 4,
-                                                height: size / 4,
-                                                borderRadius: size / 4 / 2,
+                                                width: sizeBackgroundForTextItem / 4,
+                                                height: sizeBackgroundForTextItem / 4,
+                                                borderRadius: sizeBackgroundForTextItem / 4 / 2,
                                                 backgroundColor: dotColor,
                                             }} />
                                 }

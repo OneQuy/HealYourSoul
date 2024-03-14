@@ -1,11 +1,11 @@
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, Alert } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, Alert, ScrollView } from 'react-native'
 import React, { useCallback, useContext, useMemo } from 'react'
-import BackgroundScroll from './BackgroundScroll'
+import BackgroundScroll, { sizeBackgroundForTextItem } from './BackgroundScroll'
 import { BackgroundForTextCurrent, BackgroundForTextType } from '../../constants/Types'
-import { BorderRadius, FontSize, Icon, LocalText, Outline, Size } from '../../constants/AppConstants'
+import { BorderRadius, FirstColorTextsIsFree, FontSize, Icon, LocalText, Outline, Size } from '../../constants/AppConstants'
 import { ThemeContext } from '../../constants/Colors'
 import { GoToPremiumScreen } from './HeaderXButton'
 import { useNavigation } from '@react-navigation/native'
@@ -14,6 +14,15 @@ import { useAppDispatch } from '../../redux/Store';
 import { setBackgroundIdForText } from '../../redux/UserDataSlice';
 import { usePremium } from '../../hooks/usePremium'
 import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
+import { colorNameToHexDefines } from '../../handle/UtilsTS';
+
+const colorTexts = [''].concat(Object.keys(colorNameToHexDefines))
+
+export const IsBackgroundForText_ColorFree = (color: string) => {
+    const idx = colorTexts.findIndex(i => i === color)
+
+    return idx < FirstColorTextsIsFree
+}
 
 const BackgroundForTextSelector = ({
     currentBackground,
@@ -39,6 +48,27 @@ const BackgroundForTextSelector = ({
         dispatch(setBackgroundIdForText({ ...currentBackground, id: -1 }))
     }, [currentBackground])
 
+    const onPressedColorItem = useCallback((color: string | undefined) => {
+        track_SimpleWithParam('background_text_color', 'text_' + color)
+
+        dispatch(setBackgroundIdForText({ ...currentBackground, colorText: color === '' ? undefined : color }))
+
+        if (!isPremium && color && !IsBackgroundForText_ColorFree(color)) {
+            Alert.alert(
+                LocalText.background_for_premium,
+                LocalText.background_for_premium_content_text_color,
+                [
+                    {
+                        text: LocalText.later
+                    },
+                    {
+                        text: LocalText.upgrade,
+                        onPress: () => GoToPremiumScreen(navigation)
+                    },
+                ])
+        }
+    }, [currentBackground, isPremium])
+
     const onPressedBoldText = useCallback(() => {
         track_SimpleWithParam('background_text', 'bold')
 
@@ -61,7 +91,7 @@ const BackgroundForTextSelector = ({
     }, [currentBackground, isPremium])
 
     const onPressedSize = useCallback(() => {
-        track_SimpleWithParam('background_text', 'size')
+        track_SimpleWithParam('background_text', 'sizeBackgroundForTextItem')
 
         dispatch(setBackgroundIdForText({ ...currentBackground, sizeBig: currentBackground.sizeBig ? 0 : 1 }))
 
@@ -84,8 +114,9 @@ const BackgroundForTextSelector = ({
     const style = useMemo(() => {
         return StyleSheet.create({
             master: { gap: Outline.GapHorizontal, marginHorizontal: Outline.GapVertical },
+            scrollViewTextColors: { gap: Outline.GapVertical, },
             text: { color: theme.counterBackground, fontSize: FontSize.Small_L },
-            plsSubBtnsView: { gap: Outline.GapHorizontal, flexDirection: 'row' },
+            buttonsView: { gap: Outline.GapHorizontal, flexDirection: 'row' },
             premiumIB: { padding: Outline.VerticalMini, borderRadius: BorderRadius.BR, overflow: 'hidden', justifyContent: 'center', alignItems: 'center', },
             btnTO: { flexDirection: 'row', gap: Outline.GapHorizontal, padding: Outline.VerticalMini, borderColor: theme.counterBackground, borderRadius: BorderRadius.BR, borderWidth: StyleSheet.hairlineWidth, justifyContent: 'center', alignItems: 'center', },
             btnTOBold: { flexDirection: 'row', gap: Outline.GapHorizontal, padding: Outline.VerticalMini, backgroundColor: currentBackground.isBold ? theme.primary : undefined, borderColor: theme.counterBackground, borderRadius: BorderRadius.BR, borderWidth: StyleSheet.hairlineWidth, justifyContent: 'center', alignItems: 'center', },
@@ -97,6 +128,48 @@ const BackgroundForTextSelector = ({
             btnTxtSize: { fontSize: FontSize.Small_L, color: currentBackground.sizeBig ? theme.counterPrimary : theme.counterBackground },
         })
     }, [theme, currentBackground])
+
+
+    const renderColorItem = useCallback((item: string, index: number) => {
+        const isCurrentColor = item === currentBackground.colorText || (item === '' && currentBackground.colorText === undefined)
+
+        let dotColor = 'black'
+
+        return (
+            <TouchableOpacity onPress={() => onPressedColorItem(item)} key={index} >
+                <View
+                    style={{
+                        width: sizeBackgroundForTextItem,
+                        height: sizeBackgroundForTextItem,
+                        borderRadius: sizeBackgroundForTextItem / 2,
+                        borderWidth: item === '' ? StyleSheet.hairlineWidth : 0,
+                        borderColor: item === '' ? theme.counterBackground : undefined,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        backgroundColor: item === '' ? undefined : item,
+                    }}>
+                    {
+                        !isCurrentColor ?
+                            <View>
+                                {
+                                    (item !== '' && IsBackgroundForText_ColorFree(item)) || isPremium ? undefined :
+                                        <MaterialCommunityIcons name={item === '' ? Icon.X : Icon.Lock} color={item === '' ? theme.counterBackground : dotColor} size={sizeBackgroundForTextItem / 2} />
+                                }
+                            </View> :
+                            <>
+                                <View
+                                    style={{
+                                        width: sizeBackgroundForTextItem / 4,
+                                        height: sizeBackgroundForTextItem / 4,
+                                        borderRadius: sizeBackgroundForTextItem / 4 / 2,
+                                        backgroundColor: dotColor,
+                                    }} />
+                            </>
+                    }
+                </View>
+            </TouchableOpacity>
+        )
+    }, [currentBackground, onPressedColorItem, theme, isPremium])
 
     if (!Array.isArray(listAllBg))
         return undefined
@@ -124,7 +197,18 @@ const BackgroundForTextSelector = ({
                 isLightBackground={0}
             />
 
-            <View style={style.plsSubBtnsView}>
+            <Text style={style.text}>{LocalText.text_color}:</Text>
+
+            <ScrollView
+                horizontal
+                contentContainerStyle={style.scrollViewTextColors}
+                showsHorizontalScrollIndicator={false}>
+                {
+                    colorTexts.map(renderColorItem)
+                }
+            </ScrollView>
+
+            <View style={style.buttonsView}>
                 {/* no bg */}
                 <TouchableOpacity onPress={onPressedNoBackground}>
                     <View style={style.btnTO}>
@@ -138,18 +222,18 @@ const BackgroundForTextSelector = ({
                         <Text numberOfLines={1} adjustsFontSizeToFit style={currentBackground.isBold ? style.btnTxtBold : style.btnTxt}>{LocalText.bold}</Text>
                         {
                             !isPremium &&
-                            <MaterialCommunityIcons name={Icon.Lock} color={currentBackground.isBold === 1 ? theme.counterPrimary : theme.counterBackground} size={Size.IconTiny} />
+                            <MaterialCommunityIcons name={Icon.Lock} color={currentBackground.isBold === 1 ? theme.counterPrimary : theme.counterBackground} sizeBackgroundForTextItem={Size.IconTiny} />
                         }
                     </View>
                 </TouchableOpacity>
 
-                {/* size */}
+                {/* sizeBackgroundForTextItem */}
                 <TouchableOpacity onPress={onPressedSize}>
                     <View style={currentBackground.sizeBig !== 1 ? style.btnTO : style.btnTOSize}>
                         <Text numberOfLines={1} adjustsFontSizeToFit style={currentBackground.sizeBig === 1 ? style.btnTxtSize : style.btnTxt}>{LocalText.sizebig}</Text>
                         {
                             !isPremium &&
-                            <MaterialCommunityIcons name={Icon.Lock} color={currentBackground.sizeBig === 1 ? theme.counterPrimary : theme.counterBackground} size={Size.IconTiny} />
+                            <MaterialCommunityIcons name={Icon.Lock} color={currentBackground.sizeBig === 1 ? theme.counterPrimary : theme.counterBackground} sizeBackgroundForTextItem={Size.IconTiny} />
                         }
                     </View>
                 </TouchableOpacity>
