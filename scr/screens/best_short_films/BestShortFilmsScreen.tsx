@@ -13,7 +13,7 @@ import { CommonStyles } from '../../constants/CommonConstants'
 import { ShortFilm } from '../../constants/Types';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 import { ScrollView } from 'react-native-gesture-handler';
-import { ToCanPrint, IsChar, IsNumChar, OpenYoutubeAsync } from '../../handle/UtilsTS';
+import { ToCanPrint, IsChar, IsNumChar, OpenYoutubeAsync, SafeValue } from '../../handle/UtilsTS';
 import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading';
 import useCheckAndDownloadRemoteFile from '../../hooks/useCheckAndDownloadRemoteFile';
 import { RandomInt, TempDirName } from '../../handle/Utils';
@@ -343,14 +343,17 @@ const BestShortFilmsScreen = () => {
                 }
             </View>
 
-            <View style={styleSheet.openYtbAndView}>
-                <TouchableOpacity onPress={onPressOpenYoutubeApp} style={styleSheet.openYtb}>
-                    <MaterialCommunityIcons name={Icon.Youtube} color={theme.counterBackground} size={Size.IconSmaller} />
-                    <Text style={{ color: theme.counterBackground, fontSize: FontSize.Small_L }}>{LocalText.open_youtube}</Text>
-                </TouchableOpacity>
+            {
+                (SafeValue(selectingItem?.url, '').includes('youtu.be') || SafeValue(selectingItem?.url, '').includes('youtube')) &&
+                <View style={styleSheet.openYtbAndView}>
+                    <TouchableOpacity onPress={onPressOpenYoutubeApp} style={styleSheet.openYtb}>
+                        <MaterialCommunityIcons name={Icon.Youtube} color={theme.counterBackground} size={Size.IconSmaller} />
+                        <Text style={{ color: theme.counterBackground, fontSize: FontSize.Small_L }}>{LocalText.open_youtube}</Text>
+                    </TouchableOpacity>
 
-                <ViewCount fontSize={FontSize.Small_L} cat={category} id={idCurrent} />
-            </View>
+                    <ViewCount fontSize={FontSize.Small_L} cat={category} id={idCurrent} />
+                </View>
+            }
 
             {/* main btn part */}
 
