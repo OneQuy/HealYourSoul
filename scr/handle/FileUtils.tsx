@@ -299,10 +299,7 @@ export async function DownloadFile_GetJsonAsync(
     // shuffle
 
     if (Array.isArray(res.json) && shuffleIfJsonIsArray === true) {
-      console.log(res.json.length, res.json.slice(0, 3));
-
       ShuffleArray(res.json)
-      console.log(res.json.length, res.json.slice(0, 3));
     }
 
     // write to local
