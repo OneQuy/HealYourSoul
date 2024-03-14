@@ -138,9 +138,10 @@ const DrawerSingleItem = ({
                         alignItems: 'flex-end',
                     }}>
                         <View style={{
-                            width: '25%',
-                            height: '30%',
+                            width: '35%',
+                            height: '35%',
                             left: Outline.GapVertical,
+                            top: -Outline.GapVertical / 2,
                             backgroundColor: theme.primary,
                             justifyContent: 'center',
                             alignItems: 'center',
