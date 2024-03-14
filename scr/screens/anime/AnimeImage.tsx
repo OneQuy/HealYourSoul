@@ -9,13 +9,18 @@ export const AnimeImageScreen = () => {
         const url = `https://api.waifu.pics/many/sfw/${item.displayText}`
 
         try {
-            const res = await fetch(url)
+            const res = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ exclude: null}),
+            })
 
             if (!res.ok)
                 return undefined
 
             const json = await res.json()
-console.log(json);
 
             return {
                 uri: json.files[0]
