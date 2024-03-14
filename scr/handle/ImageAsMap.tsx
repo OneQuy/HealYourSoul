@@ -425,11 +425,6 @@ const ImageAsMap = ({
         updatePositionItems()
     }, [allItems])
 
-    // const key = useMemo(() => {
-    //     return Math.random()
-    //     // @ts-ignore
-    // }, [props.source.uri])
-
     const onStartLoad = useCallback(() => {
         setShowIndicator(true)
     }, [])
