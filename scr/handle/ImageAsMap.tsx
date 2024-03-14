@@ -101,11 +101,9 @@ const ImageAsMap = ({
     // functions
 
     const onSetPositionLeftTop = (x: number, y: number, addToCurrent: boolean) => {
-        // console.log('mapCurrentScaleCachedValue', mapCurrentScaleCachedValue.current)
-        // console.log('mapMinScale', mapMinScale.current)
-
-        if (minScaleIsContainOrCover.current && mapMinScale.current === mapCurrentScaleCachedValue.current)
+        if (minScaleIsContainOrCover.current && mapMinScale.current === mapCurrentScaleCachedValue.current) {
             return
+        }
 
         if (addToCurrent) {
             x += positionLeftTopCachedValue.current.x
