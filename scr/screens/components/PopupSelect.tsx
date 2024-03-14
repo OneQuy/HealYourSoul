@@ -2,14 +2,17 @@
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native'
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors';
 import { CommonStyles } from '../../constants/CommonConstants';
 import { ColorNameToRgb } from '../../handle/UtilsTS';
 import { BorderRadius, Category, FontSize, FontWeight, Icon, Outline, Size } from '../../constants/AppConstants';
 import { track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 import ImageBackgroundOrView from './ImageBackgroundOrView';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
+import { useInterpolateConfig } from 'react-native-reanimated';
 
+const listPopupTextSizeIfNoIcon = heightPercentageToDP(5)
 const listPopupIconSize = Size.IconBig
 const listPopupGap = Outline.GapVertical
 
@@ -34,6 +37,10 @@ const PopupSelect = ({
     const theme = useContext(ThemeContext);
     const flatlistRef = useRef()
     const [selectingIdxInPopup, setSelectIdxInPopup] = useState(0)
+
+    const hasThumbs = useMemo(() => {
+        return list.every(i => i.thumbUri !== undefined)
+    }, [list])
 
     const renderItem = useCallback(({ item, index }: { item: PopupSelectItem, index: number }) => {
         const isSelecting = index === selectingIdxInPopup
@@ -73,10 +80,10 @@ const PopupSelect = ({
                 <View style={[{ flexDirection: 'row' }, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
                     {/* invisible */}
                     <MaterialCommunityIcons name={Icon.X} color={theme.background} size={Size.Icon} />
-                    
+
                     {/* title */}
                     <Text adjustsFontSizeToFit numberOfLines={1} style={[{ color: theme.counterBackground, }, styleSheet.name]}>{title}</Text>
-                    
+
                     {/* close x btn */}
                     <TouchableOpacity onPress={() => setSelectingIdxAndClose(selectingIdxInPopup)}>
                         <MaterialCommunityIcons name={Icon.X} color={theme.counterBackground} size={Size.Icon} />
@@ -89,9 +96,13 @@ const PopupSelect = ({
                     keyExtractor={(item) => item.displayText}
                     contentContainerStyle={styleSheet.flatlist}
                     renderItem={renderItem}
-                    getItemLayout={(_, index) => {
-                        return { length: listPopupIconSize, offset: listPopupIconSize * index + listPopupGap * (index) - listPopupIconSize * 3, index }
-                    }}
+                    getItemLayout={!hasThumbs ?
+                        (_, index) => {
+                            return { length: listPopupTextSizeIfNoIcon, offset: listPopupTextSizeIfNoIcon * index + listPopupGap * (index) - listPopupTextSizeIfNoIcon * 3, index }
+                        } :
+                        (_, index) => {
+                            return { length: listPopupIconSize, offset: listPopupIconSize * index + listPopupGap * (index) - listPopupIconSize * 3, index }
+                        }}
                 />
             </View>
         </View>
@@ -103,7 +114,7 @@ export default PopupSelect
 const styleSheet = StyleSheet.create({
     masterView: { backgroundColor: ColorNameToRgb('black', 0.8), width: '100%', height: '100%', position: 'absolute' },
     bgView: { gap: Outline.GapVertical, padding: Outline.GapVertical, width: '80%', height: '70%', borderRadius: BorderRadius.BR },
-    itemTO: { padding: Outline.GapVertical, flexDirection: 'row', alignItems: 'center', gap: Outline.GapHorizontal },
+    itemTO: { height: listPopupTextSizeIfNoIcon , padding: Outline.GapVertical, flexDirection: 'row', alignItems: 'center', gap: Outline.GapHorizontal },
     image: { width: listPopupIconSize, height: listPopupIconSize, borderRadius: BorderRadius.BR8, overflow: 'hidden' },
     flatlist: { gap: listPopupGap },
     text: { fontSize: FontSize.Small_L, flex: 1 },
