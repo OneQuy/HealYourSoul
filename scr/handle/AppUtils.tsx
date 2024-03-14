@@ -64,6 +64,7 @@ const pairCatAndScreenName: [Category, ScreenName][] = [
     [Category.AnimeQuote, ScreenName.AnimeQuote],
     [Category.CatFact, ScreenName.CatFact],
     [Category.DogFact, ScreenName.DogFact],
+    [Category.DogBreed, ScreenName.DogBreed],
     [Category.Memedroid, ScreenName.Memedroid],
     [Category.Siena, ScreenName.Siena],
 ] as const
