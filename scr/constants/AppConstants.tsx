@@ -393,6 +393,7 @@ export const LocalText = {
   top_movies: 'Top 250 Movies',
   best_short_films: 'Best Short Films',
   select_dog_breed: 'Select dog breed',
+  select_type: 'Select type',
   filter: 'Filter',
   new_item_website: '# new fun website(s) added to the list',
   new_item_short_film: '# new short film(s) added to the list',

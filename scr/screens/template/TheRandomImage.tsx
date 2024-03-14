@@ -37,15 +37,17 @@ interface TheRandomImageProps {
     selectItems?: PopupSelectItem[],
     storageKeyCurrentItemIdxInPopupSelect?: string,
     getImageWithParamAsync?: (item: PopupSelectItem) => Promise<RandomImage | undefined>,
+    popupSelectTitle?: string,
 }
 
 const TheRandomImage = ({
     category,
     getImageAsync,
-
+    
     selectItems,
     storageKeyCurrentItemIdxInPopupSelect,
     getImageWithParamAsync,
+    popupSelectTitle,
 }: TheRandomImageProps) => {
     const navigation = useNavigation();
     const [currentItem, setCurrentItem] = useState<RandomImage | undefined>(undefined)
@@ -370,7 +372,7 @@ const TheRandomImage = ({
             {
                 isShowPopupSelect && selectItems &&
                 <PopupSelect
-                    title={LocalText.select_dog_breed}
+                    title={popupSelectTitle ?? LocalText.select_type}
                     cat={category}
                     list={selectItems}
                     setSelectingIdxAndClose={saveCurrentPopupSelectItemIdxAndClose}

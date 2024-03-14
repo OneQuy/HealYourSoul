@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { Category, StorageKey_DogBreed_CurrentBreedIdx } from '../../constants/AppConstants';
+import { Category, LocalText, StorageKey_DogBreed_CurrentBreedIdx } from '../../constants/AppConstants';
 import { TheRandomImage_PopupSelect } from '../template/TheRandomImage_PopupSelect';
 import { PopupSelectItem } from '../components/PopupSelect';
 import { RandomImage } from '../../constants/Types';
@@ -32,6 +32,7 @@ export const DogBreedScreen = () => {
             category={Category.DogBreed}
             currentItemIdxStorageKey={StorageKey_DogBreed_CurrentBreedIdx}
             getImageWithParamAsync={getImage}
+            popupSelectTitle={LocalText.select_dog_breed}
         />
     )
 }

@@ -21,12 +21,16 @@ export const TheRandomImage_PopupSelect = ({
     category,
     currentItemIdxStorageKey,
     getImageWithParamAsync,
+
+    popupSelectTitle,
 }: {
     category: Category,
     fileURL: string,
     configFileName: string,
     currentItemIdxStorageKey: string,
     getImageWithParamAsync: (item: PopupSelectItem) => Promise<RandomImage | undefined>,
+
+    popupSelectTitle?: string,
 }) => {
     const { result: textArr, didDownload, error, reUpdateAsync } = useCheckAndDownloadRemoteFile<string[]>(
         fileURL,
@@ -71,5 +75,6 @@ export const TheRandomImage_PopupSelect = ({
         storageKeyCurrentItemIdxInPopupSelect={currentItemIdxStorageKey}
         selectItems={selectItems}
         getImageWithParamAsync={getImageWithParamAsync}
+        popupSelectTitle={popupSelectTitle}
     />;
 }  
