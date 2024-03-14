@@ -232,7 +232,7 @@ const TheRandomImage = ({
 
         navigation.setOptions({
             headerRight: () => <HeaderRightButtons
-                diversityItemData={selectItems ? undefined : diversityItemData}
+                diversityItemData={diversityItemData} // for Saved btn
                 diversityMode={diversityItem !== undefined}
             />
         })
@@ -325,7 +325,7 @@ const TheRandomImage = ({
                                     <View style={styleSheet.contentView}>
                                         {/* filter button */}
                                         {
-                                            Array.isArray(selectItems) && selectItems.length > 0 &&
+                                            !diversityItem && Array.isArray(selectItems) && selectItems.length > 0 &&
                                             <View style={styleSheet.filterView}>
                                                 <TouchableOpacity onPress={() => setIsShowPopupSelect(true)} style={styleSheet.filterTO}>
                                                     <Text adjustsFontSizeToFit numberOfLines={1} style={styleSheet.filterCatTxt}>{currentPopupSelectedItem ? currentPopupSelectedItem.displayText : '...'}</Text>
