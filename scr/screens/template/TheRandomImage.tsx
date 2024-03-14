@@ -102,7 +102,7 @@ const TheRandomImage = ({
                 item = await getImageAsync()
             else if (getImageWithParamAsync && currentPopupSelectedItem)
                 item = await getImageWithParamAsync(currentPopupSelectedItem)
-            else 
+            else
                 console.error('[ne] TheRandomImage-onPressRandom')
         }
 
@@ -230,7 +230,7 @@ const TheRandomImage = ({
 
         navigation.setOptions({
             headerRight: () => <HeaderRightButtons
-                diversityItemData={diversityItemData}
+                diversityItemData={selectItems ? undefined : diversityItemData}
                 diversityMode={diversityItem !== undefined}
             />
         })
