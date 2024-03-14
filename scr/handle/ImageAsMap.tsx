@@ -433,10 +433,10 @@ const ImageAsMap = ({
         setShowIndicator(false)
     }, [])
 
-    const isDrawItems = allItems && allItems.length > 0 &&
+    const isDrawItems =
+        allItems &&
+        allItems.length > 0 &&
         (isDrawAllItems !== true || allItems.length === itemLeftTopAnimatedValueArr.current.length)
-
-    //     return
 
     // render
 
