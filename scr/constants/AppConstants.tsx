@@ -66,6 +66,7 @@ export enum ScreenName {
   CatFact = 'Cat Fact',
   AnimeImage = 'Anime Image',
   AnimeQuote = 'Anime Quote',
+  MovieQuote = 'Movie Quote',
   Universe = 'Universe',
 }
 
@@ -173,6 +174,7 @@ export enum Category {
   DogFact = 35,
   DogBreed = 36,
   AnimeQuote = 37,
+  MovieQuote = 38,
 }
 
 // margin / padding
@@ -584,6 +586,7 @@ export const StorageKey_DogFact_CurrentFactIdx = 'dog_fact_idx'
 export const StorageKey_DogBreed_CurrentBreedIdx = 'dog_breed_idx'
 export const StorageKey_CatFact_CurrentFactIdx = 'cat_fact_idx'
 export const StorageKey_AnimeImage_CurrentIdx = 'anime_image_idx'
+export const StorageKey_MovieQuote_CurrentIdx = 'movie_quote_idx'
 
 export const StorageKey_NinjaFact_DataNoti = 'ninja_fact_arr_noti'
 export const StorageKey_NinjaJoke_DataNoti = 'ninja_joke_arr_noti'

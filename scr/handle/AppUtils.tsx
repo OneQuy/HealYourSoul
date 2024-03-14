@@ -62,6 +62,7 @@ const pairCatAndScreenName: [Category, ScreenName][] = [
     [Category.Universe, ScreenName.Universe],
     [Category.AnimeImage, ScreenName.AnimeImage],
     [Category.AnimeQuote, ScreenName.AnimeQuote],
+    [Category.MovieQuote, ScreenName.MovieQuote],
     [Category.CatFact, ScreenName.CatFact],
     [Category.DogFact, ScreenName.DogFact],
     [Category.DogBreed, ScreenName.DogBreed],

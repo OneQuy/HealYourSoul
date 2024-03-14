@@ -42,7 +42,7 @@ import AdminScreen from '../screens/admin/AdminScreen';
 import GalleryScreen from '../screens/gallery/GalleryScreen';
 import SienaScreen from '../screens/pic_of_the_year/SienaScreen';
 import UniverseScreen from '../screens/universe/UniverseScreen';
-import { CatFactScreen, DogFactScreen } from '../screens/dog_fact/DogFactScreen';
+import { CatFactScreen, DogFactScreen, MovieQuoteScreen } from '../screens/dog_fact/DogFactScreen';
 import { DogBreedScreen } from '../screens/other_thepage_screens/DogBreedScreen';
 import { AnimeQuoteScreen } from '../screens/anime/AnimeQuoteScreen';
 import { AnimeImageScreen } from '../screens/anime/AnimeImage';
@@ -80,6 +80,7 @@ export type DrawerParamList = {
 
   [ScreenName.Siena]: { item: DiversityItemType } | undefined,
   [ScreenName.AnimeQuote]: { item: DiversityItemType } | undefined,
+  [ScreenName.MovieQuote]: { item: DiversityItemType } | undefined,
   [ScreenName.AnimeImage]: { item: DiversityItemType } | undefined,
   [ScreenName.Universe]: { item: DiversityItemType } | undefined,
   [ScreenName.CatFact]: { item: DiversityItemType } | undefined,
@@ -138,6 +139,7 @@ const ScreenList: ScreenNamePair[] = [
   [ScreenName.Universe, UniverseScreen],
   [ScreenName.AnimeImage, AnimeImageScreen],
   [ScreenName.AnimeQuote, AnimeQuoteScreen],
+  [ScreenName.MovieQuote, MovieQuoteScreen],
   [ScreenName.Siena, SienaScreen],
   [ScreenName.CatFact, CatFactScreen],
   [ScreenName.DogFact, DogFactScreen],
