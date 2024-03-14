@@ -15,6 +15,12 @@ https://github.com/kinduff/dog-api/blob/master/db/seeds.rb
 
 ======================
 
+tạo movie_quotes.json thủ công từ:
+
+https://github.com/NikhilNamal17/popular-movie-quotes/blob/master/data/data.json
+
+======================
+
 tạo fact_cats.json thủ công từ (tìm chỗ tải đê, quên cách rồi lol)
 
 https://catfact.ninja/#/Facts/getFacts
