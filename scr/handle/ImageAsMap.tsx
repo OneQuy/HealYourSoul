@@ -71,6 +71,7 @@ const ImageAsMap = ({
     const [showIndicator, setShowIndicator] = useState(true)
 
     const itemLeftTopAnimatedValueArr = useRef(allItems && isDrawAllItems ? allItems.map(i => new Animated.ValueXY()) : [])
+    const minScaleIsContainOrCover = useRef(false)
 
     // position
 
@@ -100,6 +101,12 @@ const ImageAsMap = ({
     // functions
 
     const onSetPositionLeftTop = (x: number, y: number, addToCurrent: boolean) => {
+        // console.log('mapCurrentScaleCachedValue', mapCurrentScaleCachedValue.current)
+        // console.log('mapMinScale', mapMinScale.current)
+
+        if (minScaleIsContainOrCover.current && mapMinScale.current === mapCurrentScaleCachedValue.current)
+            return
+
         if (addToCurrent) {
             x += positionLeftTopCachedValue.current.x
             y += positionLeftTopCachedValue.current.y
@@ -284,13 +291,14 @@ const ImageAsMap = ({
             setMapRealOriginSize([w, h])
 
             const ratio = Math.max(w, h) / Math.min(w, h)
-            let minScaleIsContainOrCover = typeof minScaleIsContainIfImageRatioOver === 'number' && minScaleIsContainIfImageRatioOver > ratio
+
+            minScaleIsContainOrCover.current = typeof minScaleIsContainIfImageRatioOver === 'number' && minScaleIsContainIfImageRatioOver > ratio
 
             if (notMinScaleCoverModeWhenImageIsLandscape === true && w > h) {
-                minScaleIsContainOrCover = true
+                minScaleIsContainOrCover.current = true
             }
 
-            // console.log(ratio, minScaleIsContainOrCover);
+            // console.log(ratio, minScaleIsContainOrCover.current);
 
             // find min scale
 
@@ -299,7 +307,7 @@ const ImageAsMap = ({
                 return
             }
 
-            if (minScaleIsContainOrCover) {
+            if (minScaleIsContainOrCover.current) {
                 if (w > h) {
                     mapMinScale.current = viewportRealSize[0] / w
 
@@ -337,7 +345,7 @@ const ImageAsMap = ({
 
             onSetScale(initialScale || mapMinScale.current, false)
 
-            if (!minScaleIsContainOrCover && initialPointCenterByMapSizePercent && initialPointCenterByMapSizePercent.length === 2) {
+            if (!minScaleIsContainOrCover.current && initialPointCenterByMapSizePercent && initialPointCenterByMapSizePercent.length === 2) {
                 setCenter(
                     initialPointCenterByMapSizePercent[0],
                     initialPointCenterByMapSizePercent[1],
