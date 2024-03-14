@@ -101,22 +101,44 @@ const ImageAsMap = ({
     // functions
 
     const onSetPositionLeftTop = (x: number, y: number, addToCurrent: boolean) => {
+        let anim = false
+
+        // if current min scale, so check to slide to 0,0 
+
         if (minScaleIsContainOrCover.current && mapMinScale.current === mapCurrentScaleCachedValue.current) {
-            return
+            if (positionLeftTopCachedValue.current.x === 0 &&
+                positionLeftTopCachedValue.current.y === 0) { // already 0, 0 => not move anymore
+                return
+            }
+            else { // need to slide
+                anim = true
+                x = 0
+                y = 0
+            }
         }
+
+        // calc to move
 
         if (addToCurrent) {
             x += positionLeftTopCachedValue.current.x
             y += positionLeftTopCachedValue.current.y
         }
 
-        // console.log('set left top ', x, y, limitLeft.current, limitTop.current);
-
         x = Math.min(limitLeft.current, Math.max(-limitLeft.current, x))
         y = Math.min(limitTop.current, Math.max(-limitTop.current, y))
 
+        // console.log('set left top ', x, y, limitLeft.current, limitTop.current);
+
         positionLeftTopCachedValue.current = { x, y }
-        positionLeftTopAnimated.setValue(positionLeftTopCachedValue.current)
+
+        if (anim) {
+            Animated.spring(positionLeftTopAnimated, {
+                useNativeDriver: false,
+                toValue: { x, y }
+            }).start()
+        }
+        else
+            positionLeftTopAnimated.setValue(positionLeftTopCachedValue.current)
 
         // update items
 
@@ -223,10 +245,15 @@ const ImageAsMap = ({
 
         scale = Math.max(mapMinScale.current, Math.min(mapMaxScale.current, scale))
 
+        // if (scale === mapCurrentScaleCachedValue.current)
+        //     return
+
         // update scale
 
         mapCurrentScaleCachedValue.current = scale
         mapCurrentScaleAnimated.setValue(scale)
+
+        // console.log('scale', mapCurrentScaleCachedValue.current, mapMinScale.current);
 
         // map size
 
