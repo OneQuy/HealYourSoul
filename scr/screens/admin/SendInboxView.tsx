@@ -6,7 +6,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { DiversityItemType, Inbox } from '../../constants/Types';
-import { IsValuableArrayOrString, RemoveEmptyAndFalsyFromObject } from '../../handle/UtilsTS';
+import { IsValuableArrayOrString, RemoveEmptyAndFalsyFromObject, ToCanPrint } from '../../handle/UtilsTS';
 import { InboxUserAsync } from '../../handle/tracking/UserMan';
 import { AlertWithError, GoodayToast } from '../../handle/AppUtils';
 import Clipboard from '@react-native-clipboard/clipboard';
@@ -32,7 +32,7 @@ const SendInboxView = () => {
       masterView: { paddingBottom: insets.bottom + Outline.GapHorizontal, flex: 1, backgroundColor: theme.background, padding: Outline.Horizontal, paddingVertical: Outline.GapHorizontal },
       scrollView: { gap: Outline.GapHorizontal },
       btnText: { textAlign: 'center', color: theme.counterPrimary, fontSize: FontSize.Small_L, fontWeight: FontWeight.B500 },
-      textInputConView: { height: heightPercentageToDP(20), padding: Outline.GapVertical, borderColor: theme.primary, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth },
+      textInputConView: { height: heightPercentageToDP(13), padding: Outline.GapVertical, borderColor: theme.primary, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth },
       textInputUserContactConView: { flexDirection: 'row', height: heightPercentageToDP(5), paddingHorizontal: Outline.GapVertical, borderColor: theme.primary, borderRadius: BorderRadius.BR8, borderWidth: StyleSheet.hairlineWidth },
       sendFeedbackInput: { flex: 1, color: theme.counterBackground, textAlignVertical: 'top', textAlign: 'left', height: '100%' },
       titleText: { color: theme.primary, fontSize: FontSize.Small_L, fontWeight: FontWeight.B600 },
@@ -44,6 +44,12 @@ const SendInboxView = () => {
   const paste = async (set: (s: string) => void) => {
     set(await Clipboard.getString())
   }
+
+  const screens = useMemo(() => {
+    const keys = Object.keys(ScreenName).filter(i => i !== 'Upload')
+    return ['Upload'].concat(keys)
+  }, [])
+
   const send = async () => {
     if (!IsValuableArrayOrString(msg))
       return
@@ -59,12 +65,13 @@ const SendInboxView = () => {
       primaryBtnUrl: btnUrl,
 
       approvedUploadedDiversity: diversityItemId <= 0 ? undefined : {
-        cat: Category.Meme,
+        cat: diversityItemCat,
         id: diversityItemId,
       } as DiversityItemType
     }
 
     const obj = RemoveEmptyAndFalsyFromObject(inbox) as Inbox
+    console.log(ToCanPrint(obj));
 
     setIsSendingFeedback(true)
 
@@ -209,10 +216,11 @@ const SendInboxView = () => {
           showsHorizontalScrollIndicator={false}
         >
           {
-            Object.keys(ScreenName).map(i => {
+            screens.map(i => {
               return (
-                <TouchableOpacity onPress={() => setbtnScreen(i)} style={{ backgroundColor: i === btnScreen ? theme.primary : undefined }}>
-                  <Text style={{ color: theme.counterBackground, fontSize: FontSize.Normal}}>{i}</Text>
+                // @ts-ignore
+                <TouchableOpacity key={i} onPress={() => setbtnScreen(ScreenName[i])} style={{ backgroundColor: i === btnScreen ? theme.primary : undefined }}>
+                  <Text style={{ color: theme.counterBackground, fontSize: FontSize.Normal }}>{i}</Text>
                 </TouchableOpacity>
               )
             })
@@ -250,8 +258,8 @@ const SendInboxView = () => {
 
               return (
                 // @ts-ignore
-                <TouchableOpacity onPress={() => setDiversityItemCat(Category[cat])} style={{ backgroundColor: cat === Category[diversityItemCat] ? theme.primary : undefined }}>
-                  <Text style={{ color: theme.counterBackground, fontSize: FontSize.Normal}}>{cat}</Text>
+                <TouchableOpacity key={i} onPress={() => setDiversityItemCat(Category[cat])} style={{ backgroundColor: cat === Category[diversityItemCat] ? theme.primary : undefined }}>
+                  <Text style={{ color: theme.counterBackground, fontSize: FontSize.Normal }}>{cat}</Text>
                 </TouchableOpacity>
               )
             })
