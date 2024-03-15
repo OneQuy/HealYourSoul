@@ -317,6 +317,8 @@ export const CheckAndShowAlertWhatsNewAsync = async (fromVer: number) => {
         `${LocalText.whats_new} v${versionAsNumber}:\n\n ${s}`)
 
     AsyncStorage.removeItem(StorageKey_NeedToShowWhatsNewFromVer)
+
+    track_Simple('show_whats_new')
 }
 
 export const HandleGoodayStreakAsync = async (forceShow = false) => {
