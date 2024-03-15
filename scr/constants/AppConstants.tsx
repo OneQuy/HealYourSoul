@@ -378,6 +378,7 @@ export const LocalText = {
   copied: 'Copied!',
   copy: 'Copy',
   later: 'Later',
+  latest: 'Latest',
   share: 'Share',
   got_it: 'Got it!',
   open_youtube: 'Open in Youtube',

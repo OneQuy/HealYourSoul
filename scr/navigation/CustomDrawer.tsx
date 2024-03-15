@@ -292,7 +292,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
         {/* version */}
         <View onTouchEnd={onPressVersionText} style={style.versionContainerView}>
           {/* version text */}
-          <Text style={{ color: theme.background, }}>Version: v{versionAsNumber}</Text>
+          <Text style={{ color: theme.background, }}>Version: v{versionAsNumber}{!showUpdateBtn ? ` (${LocalText.latest})` : ''}</Text>
           {/* update btn */}
           {
             showUpdateBtn &&
