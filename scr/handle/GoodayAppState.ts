@@ -307,16 +307,17 @@ export const CheckAndShowAlertWhatsNewAsync = async (fromVer: number) => {
             s += '\n' + entries[i][1]
     }
 
-    if (s === '')
+    AsyncStorage.removeItem(StorageKey_NeedToShowWhatsNewFromVer)
+
+    if (s === '') {
         return
+    }
 
     s = s.replaceAll('@', '\n')
 
     Alert.alert(
         LocalText.update_updated,
         `${LocalText.whats_new} v${versionAsNumber}:\n\n ${s}`)
-
-    AsyncStorage.removeItem(StorageKey_NeedToShowWhatsNewFromVer)
 
     track_Simple('show_whats_new')
 }
