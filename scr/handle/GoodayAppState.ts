@@ -15,7 +15,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { HandleVersionsFileAsync } from './VersionsHandler';
 import { GetStreakAsync, SetStreakAsync } from './Streak';
 import { OneSignal } from 'react-native-onesignal';
-import { FirebaseDatabase_GetValueAsync, FirebaseDatabase_GetValueAsyncWithTimeOut } from '../firebase/FirebaseDatabase';
+import { FirebaseDatabase_GetValueAsyncWithTimeOut } from '../firebase/FirebaseDatabase';
 
 const HowLongInMinutesToCount2TimesUseAppSeparately = 20
 
