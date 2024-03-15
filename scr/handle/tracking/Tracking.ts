@@ -19,6 +19,7 @@ const aptabaseIgnoredEventNamesDefault: string[] = [
     'dimension_screen',
     'dimension_window',
     'platform',
+    'onboarding'
 ] as const
 
 const isLog = Cheat('IsLog_Tracking')
