@@ -1,7 +1,7 @@
 import { ActivityIndicator, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useContext, useMemo, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors';
-import { BorderRadius, Category, FontSize, FontWeight, LocalText, Outline } from '../../constants/AppConstants';
+import { BorderRadius, Category, FontSize, FontWeight, LocalText, Outline, ScreenName } from '../../constants/AppConstants';
 import { ScrollView } from 'react-native-gesture-handler';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -21,7 +21,8 @@ const SendInboxView = () => {
   const [btnText, setbtnText] = useState('')
   const [btnUrl, setbtnUrl] = useState('')
   const [btnScreen, setbtnScreen] = useState('')
-  const [param, setparam] = useState('')
+  const [diversityItemId, setDiversityItemId] = useState(0)
+  const [diversityItemCat, setDiversityItemCat] = useState(Category.Meme)
 
   const [isSendingFeedback, setIsSendingFeedback] = useState(false)
   const insets = useSafeAreaInsets()
@@ -57,14 +58,19 @@ const SendInboxView = () => {
       primaryBtnGoToScreen: btnScreen,
       primaryBtnUrl: btnUrl,
 
-      // approvedUploadedDiversity: {
-      //   cat: Category.Meme,
-      //   id: 500
-      // } as DiversityItemType
+      approvedUploadedDiversity: diversityItemId <= 0 ? undefined : {
+        cat: Category.Meme,
+        id: diversityItemId,
+      } as DiversityItemType
     }
 
     const obj = RemoveEmptyAndFalsyFromObject(inbox) as Inbox
+
+    setIsSendingFeedback(true)
+
     const res = await InboxUserAsync(obj, userIdText)
+
+    setIsSendingFeedback(false)
 
     if (res === null) {
       GoodayToast('success')
@@ -73,11 +79,6 @@ const SendInboxView = () => {
       AlertWithError(res)
     }
   }
-
-  // useEffect(() => {
-  //   (async () => {
-  //   })()
-  // }, [])
 
   return (
     <View style={style.masterView}>
@@ -189,7 +190,7 @@ const SendInboxView = () => {
 
         <Text style={style.titleText}>primaryBtnGoToScreen</Text>
 
-        <View style={style.textInputUserContactConView}>
+        {/* <View style={style.textInputUserContactConView}>
           <TextInput
             style={style.sendFeedbackInput}
             value={btnScreen}
@@ -200,9 +201,64 @@ const SendInboxView = () => {
           <TouchableOpacity onPress={() => paste(setbtnScreen)}>
             <Text style={style.contentTxt}>paste</Text>
           </TouchableOpacity>
+        </View> */}
+
+        <ScrollView
+          horizontal
+          contentContainerStyle={{ gap: Outline.GapHorizontal }}
+          showsHorizontalScrollIndicator={false}
+        >
+          {
+            Object.keys(ScreenName).map(i => {
+              return (
+                <TouchableOpacity onPress={() => setbtnScreen(i)} style={{ backgroundColor: i === btnScreen ? theme.primary : undefined }}>
+                  <Text style={{ color: theme.counterBackground, fontSize: FontSize.Normal}}>{i}</Text>
+                </TouchableOpacity>
+              )
+            })
+          }
+        </ScrollView>
+
+        {/* diversity id */}
+
+        <Text style={style.titleText}>upload diversity id</Text>
+
+        <View style={style.textInputUserContactConView}>
+          <TextInput
+            style={style.sendFeedbackInput}
+            value={diversityItemId.toString()}
+            onChangeText={s => setDiversityItemId(Number.isNaN(Number.parseInt(s)) ? 0 : Number.parseInt(s))}
+            placeholderTextColor={theme.counterBackground}
+            autoCapitalize={'none'}
+            inputMode='numeric'
+          />
+          <TouchableOpacity onPress={() => paste(s => setDiversityItemId(Number.parseInt(s)))}>
+            <Text style={style.contentTxt}>paste</Text>
+          </TouchableOpacity>
         </View>
 
+        <Text style={style.titleText}>upload diversity cat</Text>
+
+        <ScrollView
+          horizontal
+          contentContainerStyle={{ gap: Outline.GapHorizontal }}
+          showsHorizontalScrollIndicator={false}
+        >
+          {
+            Object.keys(Category).map(i => {
+              const cat = Category[i as any]
+
+              return (
+                // @ts-ignore
+                <TouchableOpacity onPress={() => setDiversityItemCat(Category[cat])} style={{ backgroundColor: cat === Category[diversityItemCat] ? theme.primary : undefined }}>
+                  <Text style={{ color: theme.counterBackground, fontSize: FontSize.Normal}}>{cat}</Text>
+                </TouchableOpacity>
+              )
+            })
+          }
+        </ScrollView>
       </ScrollView>
+
 
       {/* send */}
 
