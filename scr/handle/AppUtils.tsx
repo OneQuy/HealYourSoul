@@ -657,6 +657,18 @@ export const GetIconOfScreen = (screen: ScreenName) => {
         return 'music-note'
     else if (screen === ScreenName.AwesomeNature)
         return 'weather-sunny'
+    else if (screen === ScreenName.DogFact)
+        return 'dog'
+    else if (screen === ScreenName.CatFact)
+        return 'cat'
+    else if (screen === ScreenName.DogBreed)
+        return 'dog-service'
+    else if (screen === ScreenName.AnimeQuote)
+        return 'comment-quote-outline'
+    else if (screen === ScreenName.AnimeImage)
+        return 'horse-human'
+    else if (screen === ScreenName.MovieQuote)
+        return 'movie-roll'
     else
         return Icon.HeartBroken
 }

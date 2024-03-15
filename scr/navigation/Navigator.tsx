@@ -136,15 +136,15 @@ const ScreenList: ScreenNamePair[] = [
   [ScreenName.Picture, PictureScreen],
   [ScreenName.TopMovie, TopMovieScreen],
 
-  [ScreenName.Universe, UniverseScreen],
+  [ScreenName.MovieQuote, MovieQuoteScreen],
   [ScreenName.AnimeImage, AnimeImageScreen],
   [ScreenName.AnimeQuote, AnimeQuoteScreen],
-  [ScreenName.MovieQuote, MovieQuoteScreen],
-  [ScreenName.Siena, SienaScreen],
   [ScreenName.CatFact, CatFactScreen],
   [ScreenName.DogFact, DogFactScreen],
   [ScreenName.DogBreed, DogBreedScreen],
-  [ScreenName.Memedroid, MemedroidScreen],
+  // [ScreenName.Siena, SienaScreen],
+  // [ScreenName.Universe, UniverseScreen],
+  // [ScreenName.Memedroid, MemedroidScreen],
 
   // app
 
