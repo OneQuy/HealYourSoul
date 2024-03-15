@@ -1,4 +1,4 @@
-import { ActivityIndicator, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useContext, useMemo, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors';
 import { BorderRadius, Category, FontSize, FontWeight, LocalText, Outline, ScreenName } from '../../constants/AppConstants';
@@ -21,7 +21,7 @@ const SendInboxView = () => {
   const [btnText, setbtnText] = useState('')
   const [btnUrl, setbtnUrl] = useState('')
   const [btnScreen, setbtnScreen] = useState('')
-  const [diversityItemId, setDiversityItemId] = useState(0)
+  const [uploadDiversityItemId, setDiversityItemId] = useState(0)
   const [diversityItemCat, setDiversityItemCat] = useState(Category.Meme)
 
   const [isSendingFeedback, setIsSendingFeedback] = useState(false)
@@ -51,22 +51,23 @@ const SendInboxView = () => {
   }, [])
 
   const send = async () => {
-    if (!IsValuableArrayOrString(msg))
+    if (!IsValuableArrayOrString(msg) && !IsValuableArrayOrString(title)) {
+      Alert.alert('title empty or content')
       return
-
+    }
+    
     const inbox: Inbox = {
       tickAsId: Date.now(),
       msg,
-
       title,
       imgUri,
-      primaryBtnTxt: btnText,
+      primaryBtnTxt: uploadDiversityItemId <= 0 ? btnText : (btnText ?? "View it"),
       primaryBtnGoToScreen: btnScreen,
       primaryBtnUrl: btnUrl,
 
-      approvedUploadedDiversity: diversityItemId <= 0 ? undefined : {
+      approvedUploadedDiversity: uploadDiversityItemId <= 0 ? undefined : {
         cat: diversityItemCat,
-        id: diversityItemId,
+        id: uploadDiversityItemId,
       } as DiversityItemType
     }
 
@@ -111,7 +112,7 @@ const SendInboxView = () => {
 
         {/* content */}
 
-        <Text style={style.titleText}>content***</Text>
+        <Text style={style.titleText}>content</Text>
 
         <View style={style.textInputConView}>
           <TextInput
@@ -234,7 +235,7 @@ const SendInboxView = () => {
         <View style={style.textInputUserContactConView}>
           <TextInput
             style={style.sendFeedbackInput}
-            value={diversityItemId.toString()}
+            value={uploadDiversityItemId.toString()}
             onChangeText={s => setDiversityItemId(Number.isNaN(Number.parseInt(s)) ? 0 : Number.parseInt(s))}
             placeholderTextColor={theme.counterBackground}
             autoCapitalize={'none'}
