@@ -8,6 +8,7 @@ import { Dimensions, Platform } from "react-native"
 import { GetIPLocationAsync, IPLocation } from "../../hooks/useCountryFromIP"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { CachedValueOfCatelogry } from "../../constants/Types"
+import { CheckAndShowAlertWhatsNewAsync } from "../GoodayAppState"
 
 export var location: IPLocation | undefined | string
 var cachedPressNextPost: CachedValueOfCatelogry[] | undefined = undefined
@@ -132,8 +133,10 @@ export const track_OnUseEffectOnceEnterAppAsync = async (startFreshlyOpenAppTick
     const lastInstalledVersion = await GetNumberIntAsync(StorageKey_LastInstalledVersion)
 
     SetNumberAsync(StorageKey_LastInstalledVersion, versionAsNumber)
-
+    let didUpdated = false
+    
     if (!Number.isNaN(lastInstalledVersion) && lastInstalledVersion !== versionAsNumber) {
+        didUpdated = true
         event = 'updated_app'
 
         MainTrack(event,
@@ -146,6 +149,10 @@ export const track_OnUseEffectOnceEnterAppAsync = async (startFreshlyOpenAppTick
 
         track_SimpleWithParam('versions', 'v' + versionAsNumber)
     }
+
+    // show alert whats new
+
+    CheckAndShowAlertWhatsNewAsync(didUpdated ? lastInstalledVersion : NaN) // alert_priority 5 (doc)
 }
 
 export const SaveCachedPressNextPostAsync = async () => {

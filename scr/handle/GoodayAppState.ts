@@ -1,11 +1,11 @@
 import { CommonActions } from '@react-navigation/native';
-import { AppStateStatus } from "react-native"
+import { Alert, AppStateStatus } from "react-native"
 import { RegisterOnChangedState, UnregisterOnChangedState } from "./AppStateMan"
 import { HandleAppConfigAsync } from "./AppConfigHandler"
 import { HandleStartupAlertAsync } from "./StartupAlert"
 import { GoodayToast, startFreshlyOpenAppTick, versionAsNumber } from "./AppUtils"
 import { SaveCachedPressNextPostAsync, checkAndTrackLocation, track_NewlyInstallOrFirstOpenOfTheDayOldUserAsync, track_OnUseEffectOnceEnterAppAsync, track_OpenAppOfDayCount, track_Simple, track_SimpleWithParam, track_Streak } from "./tracking/GoodayTracking"
-import { LocalText, ScreenName, StorageKey_ClickNotificationOneSignal, StorageKey_GoodayAt, StorageKey_LastTimeCheckAndReloadAppConfig, StorageKey_LastTimeCheckFirstOpenAppOfTheDay, StorageKey_OpenAppOfDayCount, StorageKey_OpenAppOfDayCountForDate, StorageKey_OpenAppTotalCount, StorageKey_ScreenToInit, StorageKey_Streak, StorageKey_StreakLastTime } from "../constants/AppConstants"
+import { FirebaseDatabaseTimeOutMs, LocalText, ScreenName, StorageKey_ClickNotificationOneSignal, StorageKey_GoodayAt, StorageKey_LastTimeCheckAndReloadAppConfig, StorageKey_LastTimeCheckFirstOpenAppOfTheDay, StorageKey_NeedToShowWhatsNewFromVer, StorageKey_OpenAppOfDayCount, StorageKey_OpenAppOfDayCountForDate, StorageKey_OpenAppTotalCount, StorageKey_ScreenToInit, StorageKey_Streak, StorageKey_StreakLastTime } from "../constants/AppConstants"
 import { GetDateAsync, GetDateAsync_IsValueExistedAndIsToday, GetDateAsync_IsValueNotExistedOrEqualOverMinFromNow, GetNumberIntAsync, GetPairNumberIntAndDateAsync, IncreaseNumberAsync, SetDateAsync_Now, SetNumberAsync, SetPairNumberIntAndDateAsync_Now, StorageAppendToArrayAsync, StorageGetArrayAsync } from "./AsyncStorageUtils"
 import { HandldAlertUpdateAppAsync } from "./HandleAlertUpdateApp"
 import { CheckAndPrepareDataForNotificationAsync, setNotificationAsync } from "./GoodayNotification"
@@ -15,6 +15,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { HandleVersionsFileAsync } from './VersionsHandler';
 import { GetStreakAsync, SetStreakAsync } from './Streak';
 import { OneSignal } from 'react-native-onesignal';
+import { FirebaseDatabase_GetValueAsync, FirebaseDatabase_GetValueAsyncWithTimeOut } from '../firebase/FirebaseDatabase';
 
 const HowLongInMinutesToCount2TimesUseAppSeparately = 20
 
@@ -267,6 +268,55 @@ export const RegisterGoodayAppState = (isRegister: boolean) => {
         RegisterOnChangedState(onStateChanged)
     else
         UnregisterOnChangedState(onStateChanged)
+}
+
+export const CheckAndShowAlertWhatsNewAsync = async (fromVer: number) => {
+    if (!Number.isNaN(fromVer))
+        await SetNumberAsync(StorageKey_NeedToShowWhatsNewFromVer, fromVer)
+    else
+        fromVer = await GetNumberIntAsync(StorageKey_NeedToShowWhatsNewFromVer)
+
+    if (Number.isNaN(fromVer))
+        return
+
+    const configFromFb = await FirebaseDatabase_GetValueAsyncWithTimeOut('app/whats_new', FirebaseDatabaseTimeOutMs)
+
+    if (!configFromFb.value)
+        return
+
+    const entries = Object.entries(configFromFb.value)
+    let s = ''
+
+    for (let i = 0; i < entries.length; i++) {
+        var key = entries[i][0]
+
+        if (!key.startsWith('v') || key.length < 4)
+            continue
+
+        const verNum = Number.parseInt(key.substring(1))
+
+        if (Number.isNaN(verNum))
+            continue
+
+        if (verNum <= fromVer || verNum > versionAsNumber)
+            continue
+
+        if (s === '')
+            s = entries[i][1] as string
+        else
+            s += '\n' + entries[i][1]
+    }
+
+    if (s === '')
+        return
+
+    s = s.replaceAll('@', '\n')
+
+    Alert.alert(
+        LocalText.update_updated,
+        `${LocalText.whats_new} v${versionAsNumber}:\n\n ${s}`)
+
+    AsyncStorage.removeItem(StorageKey_NeedToShowWhatsNewFromVer)
 }
 
 export const HandleGoodayStreakAsync = async (forceShow = false) => {

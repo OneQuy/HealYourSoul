@@ -313,6 +313,8 @@ export const LocalText = {
   update: "Update",
   update_title: "New version is available!",
   update_content: "Please update the app to the latest version for the best experience.",
+  update_updated: "Thank you for updating!",
+  whats_new: "What's new in version",
   learn_more: "Learn more",
   enable_all: "Enable all",
   remove_screen_intro: "Tap to enable/disable screens:",
@@ -641,6 +643,7 @@ export const StorageKey_LastMiniIapProductIdxShowed = 'mini_iap_idx'
 export const StorageKey_MiniIAPCount = 'mini_iap_count'
 export const StorageKey_ClickNotificationOneSignal = 'click_onesignal'
 export const StorageKey_GoodayAt = 'gooday_at'
+export const StorageKey_NeedToShowWhatsNewFromVer = 'whatsnew_from'
 
 // export const StorageKey_LastTickAskRate = 'last_ask_rate'
 // export const StorageKey_LastAskRateIsPressRateOrNot = 'last_ask_rate_ok'
