@@ -1,6 +1,6 @@
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, GestureResponderEvent, Animated } from 'react-native'
+import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, GestureResponderEvent, Animated, Linking } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
@@ -18,7 +18,7 @@ import BottomBar, { BottomBarItem } from '../others/BottomBar';
 import HeaderRightButtons from '../components/HeaderRightButtons';
 import MiniIAP from '../components/MiniIAP';
 import ViewCount from '../components/ViewCount';
-import { GetUniversePicOfDayDataAsync } from '../../handle/services/UniverseApi';
+import { GetSourceUniverse, GetUniversePicOfDayDataAsync } from '../../handle/services/UniverseApi';
 import { NetLord } from '../../handle/NetLord';
 
 const category = Category.Universe
@@ -122,9 +122,9 @@ const UniversePicOfDayView = ({
     //     })
   }, [curentDayData, theme])
 
-  const onLongPressed = useCallback(() => {
-    console.log('long pressed');
-  }, [])
+  const onPressSource = useCallback(() => {
+    Linking.openURL(GetSourceUniverse(date))
+  }, [date])
 
   const onTapCounted = useCallback((count: number, _: GestureResponderEvent['nativeEvent']) => {
     if (count === 2) {
@@ -139,7 +139,7 @@ const UniversePicOfDayView = ({
     }
   }, [onPressNext])
 
-  const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(onTapCounted, onLongPressed, onSwiped)
+  const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(onTapCounted, undefined, onSwiped)
 
   const bottomBarItems = useMemo(() => {
     return [
@@ -228,9 +228,14 @@ const UniversePicOfDayView = ({
                         <Text selectable adjustsFontSizeToFit style={[{ flexWrap: 'wrap', color: theme.counterBackground, fontSize: FontSize.Small_L }]}>{curentDayData?.explanation}</Text>
                       </ScrollView>
                     </View>
-                    {/* view count */}
-                    <View style={{ marginRight: Outline.GapVertical, alignItems: 'flex-end', }}>
-                      <ViewCount cat={category} id={id} />
+                    <View style={{ flexDirection: 'row', }}>
+                      <TouchableOpacity onPress={onPressSource} style={{ flex: 1, marginLeft: Outline.GapVertical_2 }}>
+                        <Text adjustsFontSizeToFit numberOfLines={1} style={{ flex: 1, fontSize: FontSize.Small }}>{LocalText.source + ': ' + GetSourceUniverse(date)}</Text>
+                      </TouchableOpacity>
+                      {/* view count */}
+                      <View style={{ marginRight: Outline.GapVertical, alignItems: 'flex-end', }}>
+                        <ViewCount cat={category} id={id} />
+                      </View>
                     </View>
                   </View>
               }

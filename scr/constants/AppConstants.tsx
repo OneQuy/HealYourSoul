@@ -455,6 +455,7 @@ export const LocalText = {
   agree_rules: 'Please agree the rules and guidelines before uploading.',
   agree: 'Agree rules',
   banned_with_exp: "@@\n\nTime you can upload: ##",
+  source: "Source", 
 
   // ---------
   Upload_Guidelines: 'Upload Guidelines.',

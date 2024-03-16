@@ -104,11 +104,14 @@ const extract = (text: string, date: Date): UniversePicOfDayData | Error => {
     }
 }
 
+export const GetSourceUniverse = (date: Date) => {
+    const year = date.getFullYear().toString().substring(2)
+    return `https://apod.nasa.gov/apod/ap${year}${prependZero(date.getMonth() + 1)}${prependZero(date.getDate())}.html`
+}
+
 export const GetUniversePicOfDayDataAsync = async (date: Date): Promise<UniversePicOfDayData | Error> => {
     try {
-        const year = date.getFullYear().toString().substring(2)
-
-        const link = `https://apod.nasa.gov/apod/ap${year}${prependZero(date.getMonth() + 1)}${prependZero(date.getDate())}.html`
+        const link = GetSourceUniverse(date)
         console.log('fetching...', link);
 
         const response = await fetch(link)
