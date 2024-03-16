@@ -1,5 +1,5 @@
 // @ts-ignore
-import { View, StyleSheet, Animated, Linking } from 'react-native'
+import { View, StyleSheet, Animated, Linking, FlatList } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useRef } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { Category, FontSize, FontWeight, Icon, LocalText, Outline } from '../../constants/AppConstants'
@@ -14,6 +14,7 @@ import HeaderRightButtons from '../components/HeaderRightButtons';
 import MiniIAP from '../components/MiniIAP';
 import { GetSourceUniverse } from '../../handle/services/UniverseApi';
 import { RandomInt } from '../../handle/Utils';
+import UniverseMonthItem from './UniverseMonthItem'
 
 const category = Category.Universe
 
@@ -93,20 +94,38 @@ const UniverseMonthView = ({
   }, [onPressNextDay, onPressToday, onPressRandom])
 
   const reloadAsync = useCallback(async () => {
-
   }, [date])
 
+  const daysToRender = useMemo(() => {
+    const now = new Date()
+    const isThisMonth = now.getMonth() === date.getMonth() && now.getFullYear() === date.getFullYear()
+
+    let num = isThisMonth ? now.getDate() : new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate()
+
+    return new Array(num).fill(undefined)
+  }, [date])
 
   const style = useMemo(() => {
     return StyleSheet.create({
       masterView: { flex: 1, backgroundColor: theme.background },
-      // image: { width: widthPercentageToDP(100), height: heightPercentageToDP(40) },
-      // contentView: { flex: 1, gap: Outline.GapHorizontal, paddingTop: Outline.GapHorizontal },
+      flatlistContainerView: { flex: 1 },
       // contentScrollView: { flex: 1, marginHorizontal: Outline.GapVertical },
       // titleView: { textAlign: 'center', marginHorizontal: Outline.GapVertical, fontSize: FontSize.Normal, fontWeight: FontWeight.B500 },
       // creditTxt: { fontStyle: 'italic', marginHorizontal: Outline.GapVertical, fontSize: FontSize.Small_L, },
     })
   }, [theme])
+
+  const onPressDay = useCallback((dayNum: number) => {
+
+  }, [date])
+
+  const renderDay = useCallback(({ item, index }: { item: any, index: number }) => {
+    return <UniverseMonthItem
+      dayNum={index + 1}
+      monthYear={date}
+      onPressDate={onPressDay}
+    />
+  }, [])
 
   useEffect(() => {
     reloadAsync()
@@ -127,6 +146,13 @@ const UniverseMonthView = ({
   return (
     <View style={style.masterView}>
 
+      <View style={style.flatlistContainerView}>
+        <FlatList
+          data={daysToRender}
+          renderItem={renderDay}
+          numColumns={7}
+        />
+      </View>
 
       {/* main btn part */}
 
