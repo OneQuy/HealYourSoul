@@ -2,7 +2,7 @@
 import { View, StyleSheet, Linking, FlatList, Text, TouchableOpacity } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo } from 'react'
 import { ThemeContext } from '../../constants/Colors'
-import { BorderRadius, Category, FontSize, Icon, LocalText, Outline } from '../../constants/AppConstants'
+import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, Outline } from '../../constants/AppConstants'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
 import { MonthName, SafeDateString } from '../../handle/UtilsTS';
@@ -14,6 +14,8 @@ import { GetSourceUniverse } from '../../handle/services/UniverseApi';
 import { RandomInt } from '../../handle/Utils';
 import UniverseMonthItem from './UniverseMonthItem'
 import { ScrollView } from 'react-native-gesture-handler'
+
+export const numColumnMonthItem = 6
 
 const category = Category.Universe
 
@@ -108,7 +110,7 @@ const UniverseMonthView = ({
   const yearsToRender = useMemo(() => {
     return new Array(new Date().getFullYear() - 1995 + 1).fill(undefined)
   }, [])
- 
+
   const monthsToRender = useMemo(() => {
     return new Array(12).fill(undefined)
   }, [])
@@ -117,6 +119,7 @@ const UniverseMonthView = ({
     return StyleSheet.create({
       masterView: { flex: 1, backgroundColor: theme.background, gap: Outline.GapHorizontal, },
       flatlistContainerView: { flex: 1, alignItems: 'center' },
+      
       yearsMasterView: { marginLeft: Outline.GapVertical, flexDirection: 'row', gap: Outline.GapHorizontal, alignItems: 'center' },
       yearsScrollContainerView: { gap: Outline.GapHorizontal },
 
@@ -126,10 +129,9 @@ const UniverseMonthView = ({
       yearTxt: { fontSize: FontSize.Small_L, color: theme.counterBackground },
       yearTxt_Current: { fontSize: FontSize.Small_L, color: theme.counterPrimary },
 
-      headerTxt: { fontSize: FontSize.Small_L, color: theme.counterBackground },
-
-      // contentScrollView: { flex: 1, marginHorizontal: Outline.GapVertical },
-      // creditTxt: { fontStyle: 'italic', marginHorizontal: Outline.GapVertical, fontSize: FontSize.Small_L, },
+      headerTxt: { fontWeight: FontWeight.Bold, fontSize: FontSize.Small_L, color: theme.counterBackground },
+      
+      title: { textAlign: 'center', fontWeight: FontWeight.Bold, fontSize: FontSize.Big, color: theme.counterBackground },
     })
   }, [theme])
 
@@ -187,7 +189,7 @@ const UniverseMonthView = ({
           }
         </ScrollView>
       </View>
-      
+
       {/* month */}
 
       <View style={style.yearsMasterView}>
@@ -212,13 +214,17 @@ const UniverseMonthView = ({
         </ScrollView>
       </View>
 
+      {/* title */}
+
+      <Text style={style.title}>{`${MonthName(monthYear.getMonth(), true)} ${monthYear.getFullYear()}`}</Text>
+
       {/* list day */}
 
       <View style={style.flatlistContainerView}>
         <FlatList
           data={daysToRender}
           renderItem={renderDay}
-          numColumns={7}
+          numColumns={numColumnMonthItem}
         />
       </View>
 

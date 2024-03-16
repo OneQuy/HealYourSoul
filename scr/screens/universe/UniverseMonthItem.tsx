@@ -4,7 +4,9 @@ import React, { useCallback, useContext, useEffect, useMemo } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading'
 import { prependZero } from '../../handle/Utils'
-import { FontSize, FontWeight } from '../../constants/AppConstants'
+import { FontSize, FontWeight, Outline } from '../../constants/AppConstants'
+import { widthPercentageToDP } from 'react-native-responsive-screen'
+import { numColumnMonthItem } from './UniverseMonthView'
 
 const UniverseMonthItem = ({
   dayNum,
@@ -32,7 +34,7 @@ const UniverseMonthItem = ({
 
   const style = useMemo(() => {
     return StyleSheet.create({
-      masterView: { width: 50, height: 50, },
+      masterView: { width: (widthPercentageToDP(100) - Outline.GapVertical * 2) / numColumnMonthItem, aspectRatio: 1, },
       flatlistContainerView: { flex: 1 },
       textDay: { color: 'white', fontSize: FontSize.Small_L, fontWeight: FontWeight.B500 },
     })
