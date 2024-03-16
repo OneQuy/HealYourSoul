@@ -253,7 +253,7 @@ const UniversePicOfDayView = ({
 
                     {/* source & view count */}
 
-                    <View style={{ flexDirection: 'row', }}>
+                    <View style={{ flexDirection: 'row', marginVertical: Outline.GapHorizontal / 2, }}>
                       <TouchableOpacity onPress={onPressSource} style={{ flex: 1, marginLeft: Outline.GapVertical }}>
                         <Text adjustsFontSizeToFit numberOfLines={1} style={{ color: theme.counterBackground, flex: 1, fontSize: FontSize.Small }}>{LocalText.source + ': ' + GetSourceUniverse(date)}</Text>
                       </TouchableOpacity>
