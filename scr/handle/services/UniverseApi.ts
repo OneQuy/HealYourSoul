@@ -14,7 +14,6 @@ const extract = (text: string, date: Date): UniversePicOfDayData | Error => {
     for (let i = 0; i < lines.length; i++) {
 
         let line = lines[i]
-        // console.log(line);
 
         // img uri (first '<a href="image')
 
@@ -69,7 +68,7 @@ const extract = (text: string, date: Date): UniversePicOfDayData | Error => {
 
         // credit
 
-        else if (line.includes('Credit') && line.includes(':') && line.includes('<b>')) { // start
+        else if (line.includes('Credit') && line.includes('<b>')) { // start
             if (credit) // alrady extracted
                 continue
 

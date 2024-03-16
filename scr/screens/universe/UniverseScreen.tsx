@@ -1,11 +1,12 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useCallback, useContext, useMemo, useState } from 'react'
-import { BorderRadius, FontSize, FontWeight, Outline } from '../../constants/AppConstants'
+import { BorderRadius, FontSize, FontWeight, LocalText, Outline } from '../../constants/AppConstants'
 import { ThemeContext } from '../../constants/Colors';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { DrawerParamList } from '../../navigation/Navigator';
 import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 import UniversePicOfDayView from './UniversePicOfDayView';
+import { IsToday, SafeDateString } from '../../handle/UtilsTS';
 
 type SubView = 'day' | 'month'
 
@@ -39,10 +40,10 @@ const UniverseScreen = () => {
       {
         <View style={style.topButtonContainerView}>
           <TouchableOpacity onPress={() => onPressView('day')} style={subview === 'day' ? style.topButtonTO : style.topButtonTO_Inactive}>
-            <Text adjustsFontSizeToFit numberOfLines={1} style={subview === 'day' ? style.topButtonText : style.topButtonText_Inactive}>{'dayyyy'}</Text>
+            <Text adjustsFontSizeToFit numberOfLines={1} style={subview === 'day' ? style.topButtonText : style.topButtonText_Inactive}>{IsToday(currentDate) ? LocalText.today : SafeDateString(currentDate, ' ')}</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => onPressView('month')} style={subview === 'month' ? style.topButtonTO : style.topButtonTO_Inactive}>
-            <Text adjustsFontSizeToFit numberOfLines={1} style={subview === 'month' ? style.topButtonText : style.topButtonText_Inactive}>{'monthhh'}</Text>
+            <Text adjustsFontSizeToFit numberOfLines={1} style={subview === 'month' ? style.topButtonText : style.topButtonText_Inactive}>{LocalText.select_month}</Text>
           </TouchableOpacity>
         </View>
       }

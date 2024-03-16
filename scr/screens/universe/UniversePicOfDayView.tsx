@@ -3,16 +3,15 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, GestureResponderEvent, Animated } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
-import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size, StorageKey_SelectingTopMovieIdx } from '../../constants/AppConstants'
+import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
 import { CommonStyles } from '../../constants/CommonConstants'
-import { TopMovie, UniversePicOfDayData } from '../../constants/Types';
+import { UniversePicOfDayData } from '../../constants/Types';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 import { ScrollView } from 'react-native-gesture-handler';
-import { ExtractAllNumbersInText, IsChar, IsNumChar, SafeDateString } from '../../handle/UtilsTS';
+import { SafeDateString } from '../../handle/UtilsTS';
 import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
@@ -36,7 +35,6 @@ const UniversePicOfDayView = ({
   const theme = useContext(ThemeContext);
   const [handling, setHandling] = useState(true)
   const [curentDayData, setCurentDayData] = useState<UniversePicOfDayData | undefined>(undefined)
-  const [isShowList, setIsShowList] = useState(false)
   const favoriteCallbackRef = useRef<(() => void) | undefined>(undefined);
 
   const mediaViewScaleAnimRef = useRef(new Animated.Value(1)).current
@@ -48,15 +46,6 @@ const UniversePicOfDayView = ({
   const id = useMemo(() => {
     return SafeDateString(date, '_')
   }, [date])
-
-  const getSelectingIdxAsync = useCallback(async () => {
-    const s = await AsyncStorage.getItem(StorageKey_SelectingTopMovieIdx)
-    return typeof s === 'string' ? Number.parseInt(s) : -1
-  }, [])
-
-  const setSelectingIdxAsync = useCallback(async (id: number) => {
-    await AsyncStorage.setItem(StorageKey_SelectingTopMovieIdx, id.toString())
-  }, [])
 
   const onPressNext = useCallback(async (toIdx: number = -1, trackingTarget: 'none' | 'menu' | 'next') => {
     // track_PressNextPost(trackingTarget === 'next', category, true)
@@ -233,7 +222,7 @@ const UniversePicOfDayView = ({
                       <ImageBackgroundWithLoading onLoad={onImageLoaded} resizeMode='contain' source={{ uri: curentDayData?.imgUri }} style={styleSheet.image} indicatorProps={{ color: theme.counterBackground }} />
                     </Animated.View>
                     <Text selectable style={[styleSheet.titleView, { color: theme.counterBackground, }]}>{curentDayData?.title}</Text>
-                    <Text selectable style={[styleSheet.infoTextView, { color: theme.counterBackground, }]}>{'curentDayData?.info'}</Text>
+                    <Text selectable style={[styleSheet.infoTextView, { color: theme.counterBackground, }]}>{curentDayData?.credit}</Text>
                     <View style={styleSheet.contentScrollView}>
                       <ScrollView >
                         <Text selectable adjustsFontSizeToFit style={[{ flexWrap: 'wrap', color: theme.counterBackground, fontSize: FontSize.Small_L }]}>{curentDayData?.explanation}</Text>
