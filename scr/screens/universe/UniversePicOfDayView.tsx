@@ -5,7 +5,7 @@ import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } 
 import { ThemeContext } from '../../constants/Colors'
 import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
-import { SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
+import { AlertWithError, SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
 import { CommonStyles } from '../../constants/CommonConstants'
 import { UniversePicOfDayData } from '../../constants/Types';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
@@ -20,6 +20,7 @@ import MiniIAP from '../components/MiniIAP';
 import ViewCount from '../components/ViewCount';
 import { GetSourceUniverse, GetUniversePicOfDayDataAsync } from '../../handle/services/UniverseApi';
 import { NetLord } from '../../handle/NetLord';
+import { RandomInt } from '../../handle/Utils';
 
 const category = Category.Universe
 
@@ -31,7 +32,7 @@ const UniversePicOfDayView = ({
   setDate: (d: Date) => void,
 }) => {
   const navigation = useNavigation();
-  const reasonToReload = useRef<NeedReloadReason>(NeedReloadReason.None);
+  const [reasonToReload, setReasonToReload] = useState(NeedReloadReason.None);
   const theme = useContext(ThemeContext);
   const [handling, setHandling] = useState(true)
   const [curentDayData, setCurentDayData] = useState<UniversePicOfDayData | undefined>(undefined)
@@ -47,43 +48,18 @@ const UniversePicOfDayView = ({
     return SafeDateString(date, '_')
   }, [date])
 
-  const onPressNext = useCallback(async (toIdx: number = -1, trackingTarget: 'none' | 'menu' | 'next') => {
-    // track_PressNextPost(trackingTarget === 'next', category, true)
-
-    // setSelectingItem(undefined)
-    // setIsShowList(false)
-
-    // if (!Array.isArray(topMovies)) {
-    //     reUpdateAsync()
-    //     setHandling(true)
-    //     return
-    // }
-
-    // let idx = toIdx
-
-    // if (idx < 0) {
-    //     idx = await getSelectingIdxAsync()
-    //     idx++
-    // }
-
-    // idx = Clamp(idx, 0, topMovies.length - 1)
-
-    // let movie = topMovies[idx]
-
-    // setSelectingIdxAsync(idx)
-
-    // setSelectingItem(movie)
-  }, [])
+  const onPressNextDay = useCallback(async (isNext: boolean) => {
+    const nd = date.setDate(date.getDate() + (isNext ? 1 : -1))
+    setDate(new Date(nd))
+  }, [date])
 
   const onPressRandom = useCallback(async () => {
     // track_PressRandom(true, category, undefined)
 
-    // if (!Array.isArray(topMovies)) {
-    //     onPressNext(-1, 'none')
-    //     return
-    // }
+    const minday = new Date(1995, 5, 20).getTime()
 
-    // onPressNext(RandomInt(0, topMovies.length - 1), 'none')
+    setDate(new Date(RandomInt(minday, Date.now())))
+    // setDate(new Date(2014, 4, 21))
   }, [])
 
   const onPressShareText = useCallback(async () => {
@@ -134,23 +110,41 @@ const UniversePicOfDayView = ({
   }, [])
 
   const onSwiped = useCallback((result: SwipeResult) => {
-    if (result.primaryDirectionIsHorizontalOrVertical && !result.primaryDirectionIsPositive) {
-      onPressNext(-1, 'next')
+    if (!result.primaryDirectionIsHorizontalOrVertical)
+      return
+
+    if (result.primaryDirectionIsPositive) {
+      onPressNextDay(result.primaryDirectionIsPositive ? true : false)
     }
-  }, [onPressNext])
+  }, [onPressNextDay])
 
   const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(onTapCounted, undefined, onSwiped)
 
+  const onPressToday = useCallback(async () => {
+    setDate(new Date())
+  }, [])
+
   const bottomBarItems = useMemo(() => {
     return [
+      {
+        text: LocalText.previous_day,
+        onPress: () => onPressNextDay(false),
+        icon: Icon.Left,
+        scaleIcon: 1.5,
+      },
       {
         text: LocalText.share,
         onPress: onPressShareText,
         icon: Icon.ShareText,
         countType: 'share',
       },
+      // {
+      //   favoriteCallbackRef: favoriteCallbackRef,
+      // },
       {
-        favoriteCallbackRef: favoriteCallbackRef,
+        text: LocalText.today,
+        onPress: onPressToday,
+        icon: Icon.Today,
       },
       {
         text: LocalText.random,
@@ -158,34 +152,39 @@ const UniversePicOfDayView = ({
         icon: Icon.Dice,
       },
       {
-        text: LocalText.next,
-        onPress: () => onPressNext(-1, 'next'),
+        text: LocalText.next_day,
+        onPress: () => onPressNextDay(true),
         icon: Icon.Right,
         scaleIcon: 1.5,
       },
     ] as BottomBarItem[]
-  }, [onPressNext, onPressRandom, onPressShareText])
+  }, [onPressNextDay, onPressToday, onPressRandom, onPressShareText])
 
-  useEffect(() => {
-    (async () => {
-      setHandling(true)
-      setCurentDayData(undefined)
-      reasonToReload.current = NeedReloadReason.None
+  const reloadAsync = useCallback(async () => {
+    setHandling(true)
+    setReasonToReload(NeedReloadReason.None)
+    setCurentDayData(undefined)
 
-      const data = await GetUniversePicOfDayDataAsync(date)
+    const data = await GetUniversePicOfDayDataAsync(date)
 
-      setHandling(false)
+    setHandling(false)
 
-      if (!(data instanceof Error)) {
-        setCurentDayData(data)
-        return
-      }
+    if (!(data instanceof Error)) { // success
+      setCurentDayData(data)
+      return
+    }
+    else { // fail
+      AlertWithError(data)
 
       if (NetLord.IsAvailableLatestCheck())
-        reasonToReload.current = NeedReloadReason.FailToGetContent
+        setReasonToReload(NeedReloadReason.FailToGetContent)
       else
-        reasonToReload.current = NeedReloadReason.NoInternet
-    })()
+        setReasonToReload(NeedReloadReason.NoInternet)
+    }
+  }, [date])
+
+  useEffect(() => {
+    reloadAsync()
   }, [date])
 
   // update header setting btn
@@ -210,10 +209,10 @@ const UniversePicOfDayView = ({
             </View> :
             <View style={CommonStyles.flex1_justifyContentCenter_AlignItemsCenter}>
               {
-                reasonToReload.current !== NeedReloadReason.None ?
-                  <TouchableOpacity onPress={() => onPressNext(-1, 'none')} style={[{ gap: Outline.GapVertical }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]} >
-                    <MaterialCommunityIcons name={reasonToReload.current === NeedReloadReason.NoInternet ? Icon.NoInternet : Icon.HeartBroken} color={theme.counterBackground} size={Size.IconMedium} />
-                    <Text style={{ fontSize: FontSize.Normal, color: theme.counterBackground }}>{reasonToReload.current === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
+                reasonToReload !== NeedReloadReason.None ?
+                  <TouchableOpacity onPress={reloadAsync} style={[{ gap: Outline.GapVertical }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]} >
+                    <MaterialCommunityIcons name={reasonToReload === NeedReloadReason.NoInternet ? Icon.NoInternet : Icon.HeartBroken} color={theme.counterBackground} size={Size.IconMedium} />
+                    <Text style={{ fontSize: FontSize.Normal, color: theme.counterBackground }}>{reasonToReload === NeedReloadReason.NoInternet ? LocalText.no_internet : LocalText.cant_get_content}</Text>
                     <Text style={{ fontSize: FontSize.Small_L, color: theme.counterBackground }}>{LocalText.tap_to_retry}</Text>
                   </TouchableOpacity>
                   :
