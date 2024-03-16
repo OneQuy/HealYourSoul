@@ -426,6 +426,7 @@ export const LocalText = {
   subscribe_for: 'Subscribe for',
   today: 'Today',
   select_month: 'Select month',
+  pic_of_day: 'Picture of day',
   warning_premium: 'These subscriptions are non-renewable. If you no longer wish to subscribe, it will be automatically canceled at the end of the period.',
   thank_you_premium: "Any purchase is greatly appreciated. Thank you 💛",
 

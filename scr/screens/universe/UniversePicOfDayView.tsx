@@ -10,7 +10,7 @@ import { CommonStyles } from '../../constants/CommonConstants'
 import { UniversePicOfDayData } from '../../constants/Types';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 import { ScrollView } from 'react-native-gesture-handler';
-import { SafeDateString, ToCanPrint } from '../../handle/UtilsTS';
+import { IsToday, SafeDateString, ToCanPrint } from '../../handle/UtilsTS';
 import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading';
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
@@ -222,6 +222,12 @@ const UniversePicOfDayView = ({
                   </TouchableOpacity>
                   :
                   <View onTouchStart={onBigViewStartTouch} onTouchEnd={onBigViewEndTouch} style={styleSheet.contentView}>
+                    {/* title */}
+
+                    <Text selectable adjustsFontSizeToFit numberOfLines={1} style={[styleSheet.titleView, { color: theme.counterBackground, }]}>{IsToday(date) ? LocalText.today : SafeDateString(date, ' ')}</Text>
+
+                    {/* image */}
+
                     <Animated.View style={[{ transform: [{ scale: mediaViewScaleAnimRef }] }]}>
                       <ImageBackgroundWithLoading onLoad={onImageLoaded} resizeMode='contain' source={{ uri: curentDayData?.thumbUri ?? curentDayData?.imgUri }} style={styleSheet.image} indicatorProps={{ color: theme.counterBackground }} />
                     </Animated.View>
@@ -234,7 +240,7 @@ const UniversePicOfDayView = ({
 
                     {
                       curentDayData?.credit &&
-                      <Text selectable style={[styleSheet.creditTxt, { color: theme.counterBackground, }]}>{LocalText.credit_to + ': ' + curentDayData?.credit}</Text>
+                      <Text adjustsFontSizeToFit numberOfLines={2} selectable style={[styleSheet.creditTxt, { color: theme.counterBackground, }]}>{LocalText.credit_to + ': ' + curentDayData?.credit}</Text>
                     }
 
                     {/* explanation */}
