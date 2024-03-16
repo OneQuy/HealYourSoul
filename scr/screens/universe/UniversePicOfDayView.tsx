@@ -220,15 +220,30 @@ const UniversePicOfDayView = ({
                     <Animated.View style={[{ transform: [{ scale: mediaViewScaleAnimRef }] }]}>
                       <ImageBackgroundWithLoading onLoad={onImageLoaded} resizeMode='contain' source={{ uri: curentDayData?.imgUri }} style={styleSheet.image} indicatorProps={{ color: theme.counterBackground }} />
                     </Animated.View>
-                    <Text selectable style={[styleSheet.titleView, { color: theme.counterBackground, }]}>{curentDayData?.title}</Text>
-                    <Text selectable style={[styleSheet.infoTextView, { color: theme.counterBackground, }]}>{curentDayData?.credit}</Text>
+
+                    {/* title */}
+
+                    <Text selectable adjustsFontSizeToFit numberOfLines={1} style={[styleSheet.titleView, { color: theme.counterBackground, }]}>{curentDayData?.title}</Text>
+
+                    {/* credit */}
+
+                    {
+                      curentDayData?.credit &&
+                      <Text selectable style={[styleSheet.creditTxt, { color: theme.counterBackground, }]}>{LocalText.credit_to + ': ' + curentDayData?.credit}</Text>
+                    }
+
+                    {/* explanation */}
+
                     <View style={styleSheet.contentScrollView}>
                       <ScrollView >
                         <Text selectable adjustsFontSizeToFit style={[{ flexWrap: 'wrap', color: theme.counterBackground, fontSize: FontSize.Small_L }]}>{curentDayData?.explanation}</Text>
                       </ScrollView>
                     </View>
+
+                    {/* source & view count */}
+
                     <View style={{ flexDirection: 'row', }}>
-                      <TouchableOpacity onPress={onPressSource} style={{ flex: 1, marginLeft: Outline.GapVertical_2 }}>
+                      <TouchableOpacity onPress={onPressSource} style={{ flex: 1, marginLeft: Outline.GapVertical }}>
                         <Text adjustsFontSizeToFit numberOfLines={1} style={{ flex: 1, fontSize: FontSize.Small }}>{LocalText.source + ': ' + GetSourceUniverse(date)}</Text>
                       </TouchableOpacity>
                       {/* view count */}
@@ -258,14 +273,9 @@ export default UniversePicOfDayView
 
 const styleSheet = StyleSheet.create({
   masterView: { flex: 1, gap: Outline.GapVertical, },
-  headerOptionTO: { marginRight: 15 },
   image: { width: widthPercentageToDP(100), height: heightPercentageToDP(40) },
   contentView: { flex: 1, gap: Outline.GapVertical, paddingTop: Outline.GapHorizontal },
-  contentScrollView: { flex: 1, marginHorizontal: Outline.GapVertical_2 },
-  titleView: { marginLeft: Outline.Horizontal, fontSize: FontSize.Normal, fontWeight: FontWeight.B500 },
-  infoTextView: { paddingLeft: Outline.Horizontal, fontSize: FontSize.Small_L, },
-  titleTO: { marginHorizontal: Outline.GapVertical_2, flexDirection: 'row', justifyContent: 'space-between' },
-  titleText: { marginLeft: widthPercentageToDP(12), flex: 1, textAlign: 'center', fontWeight: FontWeight.Bold, fontSize: FontSize.Big },
-  titleContainerView: { paddingHorizontal: Outline.GapVertical, flexDirection: 'row', gap: Outline.GapHorizontal },
-  showListIconView: { padding: Outline.GapHorizontal, borderWidth: StyleSheet.hairlineWidth, borderRadius: BorderRadius.BR8 },
+  contentScrollView: { flex: 1, marginHorizontal: Outline.GapVertical },
+  titleView: { textAlign: 'center', marginHorizontal: Outline.GapVertical, fontSize: FontSize.Normal, fontWeight: FontWeight.B500 },
+  creditTxt: { fontStyle: 'italic', marginHorizontal: Outline.GapVertical, fontSize: FontSize.Small_L, },
 })

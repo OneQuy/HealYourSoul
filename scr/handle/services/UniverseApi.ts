@@ -84,7 +84,16 @@ const extract = (text: string, date: Date): UniversePicOfDayData | Error => {
                 s += line
             }
 
+            console.log(s);
             credit = RemoveHTMLTags(s).trim()
+
+            console.log(credit);
+
+            const idxSemicolon = credit.indexOf(':')
+
+            if (idxSemicolon > 0 && idxSemicolon < credit.length - 1) {
+                credit = credit.substring(idxSemicolon + 1).trim()
+            }
         }
     }
 
