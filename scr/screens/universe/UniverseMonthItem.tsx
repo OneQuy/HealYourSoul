@@ -34,7 +34,7 @@ const UniverseMonthItem = ({
     return StyleSheet.create({
       masterView: { width: 50, height: 50, },
       flatlistContainerView: { flex: 1 },
-      textDay: { color: theme.counterBackground, fontSize: FontSize.Normal, fontWeight: FontWeight.B500 },
+      textDay: { color: 'white', fontSize: FontSize.Small_L, fontWeight: FontWeight.B500 },
     })
   }, [theme])
 
