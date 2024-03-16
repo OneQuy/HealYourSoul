@@ -106,7 +106,7 @@ const extract = (text: string, date: Date): UniversePicOfDayData | Error => {
             // console.log(s);
             credit = RemoveHTMLTags(s).trim()
 
-            console.log(credit);
+            // console.log(credit);
 
             const idxSemicolon = credit.indexOf(':')
 
@@ -141,7 +141,7 @@ export const GetSourceUniverse = (date: Date) => {
 export const GetUniversePicOfDayDataAsync = async (date: Date): Promise<UniversePicOfDayData | Error> => {
     try {
         const link = GetSourceUniverse(date)
-        console.log('fetching...', link);
+        // console.log('fetching...', link);
 
         const response = await fetch(link)
 
