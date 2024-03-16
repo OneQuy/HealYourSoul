@@ -1,11 +1,11 @@
 // @ts-ignore
-import { View, StyleSheet, Linking, FlatList } from 'react-native'
+import { View, StyleSheet, Linking, FlatList, Text, TouchableOpacity } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo } from 'react'
 import { ThemeContext } from '../../constants/Colors'
-import { Category, Icon, LocalText } from '../../constants/AppConstants'
+import { BorderRadius, Category, FontSize, Icon, LocalText, Outline } from '../../constants/AppConstants'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
-import { SafeDateString } from '../../handle/UtilsTS';
+import { MonthName, SafeDateString } from '../../handle/UtilsTS';
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
 import HeaderRightButtons from '../components/HeaderRightButtons';
@@ -13,15 +13,16 @@ import MiniIAP from '../components/MiniIAP';
 import { GetSourceUniverse } from '../../handle/services/UniverseApi';
 import { RandomInt } from '../../handle/Utils';
 import UniverseMonthItem from './UniverseMonthItem'
+import { ScrollView } from 'react-native-gesture-handler'
 
 const category = Category.Universe
 
 const UniverseMonthView = ({
-  date: monthYear,
+  monthYear,
   setMonthYear,
   onPressDayOfMonth,
 }: {
-  date: Date,
+  monthYear: Date,
   setMonthYear: (d: Date) => void,
   onPressDayOfMonth: (dayNum: number) => void
 }) => {
@@ -104,12 +105,30 @@ const UniverseMonthView = ({
     return new Array(num).fill(undefined)
   }, [monthYear])
 
+  const yearsToRender = useMemo(() => {
+    return new Array(new Date().getFullYear() - 1995 + 1).fill(undefined)
+  }, [])
+ 
+  const monthsToRender = useMemo(() => {
+    return new Array(12).fill(undefined)
+  }, [])
+
   const style = useMemo(() => {
     return StyleSheet.create({
-      masterView: { flex: 1, backgroundColor: theme.background },
+      masterView: { flex: 1, backgroundColor: theme.background, gap: Outline.GapHorizontal, },
       flatlistContainerView: { flex: 1, alignItems: 'center' },
+      yearsMasterView: { marginLeft: Outline.GapVertical, flexDirection: 'row', gap: Outline.GapHorizontal, alignItems: 'center' },
+      yearsScrollContainerView: { gap: Outline.GapHorizontal },
+
+      yearTO: { padding: Outline.GapHorizontal, alignItems: 'center', justifyContent: 'center', },
+      yearTO_Current: { padding: Outline.GapHorizontal, alignItems: 'center', justifyContent: 'center', backgroundColor: theme.primary, borderRadius: BorderRadius.BR8, },
+
+      yearTxt: { fontSize: FontSize.Small_L, color: theme.counterBackground },
+      yearTxt_Current: { fontSize: FontSize.Small_L, color: theme.counterPrimary },
+
+      headerTxt: { fontSize: FontSize.Small_L, color: theme.counterBackground },
+
       // contentScrollView: { flex: 1, marginHorizontal: Outline.GapVertical },
-      // titleView: { textAlign: 'center', marginHorizontal: Outline.GapVertical, fontSize: FontSize.Normal, fontWeight: FontWeight.B500 },
       // creditTxt: { fontStyle: 'italic', marginHorizontal: Outline.GapVertical, fontSize: FontSize.Small_L, },
     })
   }, [theme])
@@ -144,6 +163,56 @@ const UniverseMonthView = ({
 
   return (
     <View style={style.masterView}>
+      {/* years */}
+
+      <View style={style.yearsMasterView}>
+        <Text style={style.headerTxt}>{LocalText.year}:</Text>
+
+        <ScrollView
+          horizontal
+          contentContainerStyle={style.yearsScrollContainerView}
+          showsHorizontalScrollIndicator={false}
+        >
+          {
+            yearsToRender.map((_, index) => {
+              const year = new Date().getFullYear() - index
+              const isCurrent = year === monthYear.getFullYear()
+
+              return (
+                <TouchableOpacity key={year} onPress={() => setMonthYear(new Date(year, monthYear.getMonth(), 1))} style={isCurrent ? style.yearTO_Current : style.yearTO}>
+                  <Text style={isCurrent ? style.yearTxt_Current : style.yearTxt}>{year}</Text>
+                </TouchableOpacity>
+              )
+            })
+          }
+        </ScrollView>
+      </View>
+      
+      {/* month */}
+
+      <View style={style.yearsMasterView}>
+        <Text style={style.headerTxt}>{LocalText.month}:</Text>
+
+        <ScrollView
+          horizontal
+          contentContainerStyle={style.yearsScrollContainerView}
+          showsHorizontalScrollIndicator={false}
+        >
+          {
+            monthsToRender.map((_, index) => {
+              const isCurrent = index === monthYear.getMonth()
+
+              return (
+                <TouchableOpacity key={index} onPress={() => setMonthYear(new Date(monthYear.getFullYear(), index, 1))} style={isCurrent ? style.yearTO_Current : style.yearTO}>
+                  <Text style={isCurrent ? style.yearTxt_Current : style.yearTxt}>{MonthName(index, false)}</Text>
+                </TouchableOpacity>
+              )
+            })
+          }
+        </ScrollView>
+      </View>
+
+      {/* list day */}
 
       <View style={style.flatlistContainerView}>
         <FlatList

@@ -67,7 +67,7 @@ const UniverseScreen = () => {
         subview === 'month' &&
         <UniverseMonthView
           onPressDayOfMonth={onPressDayOfMonth}
-          date={currentDateOfMonthView}
+          monthYear={currentDateOfMonthView}
           setMonthYear={setCurrentDateOfMonthView}
         />
       }

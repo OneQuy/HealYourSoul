@@ -371,6 +371,8 @@ export const LocalText = {
   thank_iap: 'Your purchase is successful! Thank you so much for this support!',
   done: 'Done!',
   you_are_awesome: 'You are awsome!!',
+  year: 'Year',
+  month: 'Month',
   donate_me: 'Buy me a coffee',
   you_vip: 'You are VIP',
   theme: 'Theme',
