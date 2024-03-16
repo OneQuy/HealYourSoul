@@ -1,16 +1,16 @@
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, GestureResponderEvent, Animated, Linking } from 'react-native'
+import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, GestureResponderEvent, Animated, Linking, Alert } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
-import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
+import { Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { AlertWithError, SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
 import { CommonStyles } from '../../constants/CommonConstants'
 import { UniversePicOfDayData } from '../../constants/Types';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 import { ScrollView } from 'react-native-gesture-handler';
-import { SafeDateString } from '../../handle/UtilsTS';
+import { SafeDateString, ToCanPrint } from '../../handle/UtilsTS';
 import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading';
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
@@ -20,7 +20,10 @@ import MiniIAP from '../components/MiniIAP';
 import ViewCount from '../components/ViewCount';
 import { GetSourceUniverse, GetUniversePicOfDayDataAsync } from '../../handle/services/UniverseApi';
 import { NetLord } from '../../handle/NetLord';
-import { RandomInt } from '../../handle/Utils';
+import { RandomInt, TempDirName } from '../../handle/Utils';
+import { track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
+import { DownloadFileAsync, GetFLPFromRLP } from '../../handle/FileUtils';
+import Share from 'react-native-share';
 
 const category = Category.Universe
 
@@ -63,40 +66,40 @@ const UniversePicOfDayView = ({
   }, [])
 
   const onPressShareText = useCallback(async () => {
-    // if (!selectingItem)
-    //     return
+    if (!curentDayData || !curentDayData.imgUri)
+      return
 
-    // track_SimpleWithCat(category, 'share')
+    track_SimpleWithCat(category, 'share')
 
-    // const flp = GetFLPFromRLP(TempDirName + '/image.jpg', true)
-    // const res = await DownloadFileAsync(selectingItem.thumbnailUri, flp, false)
+    const flp = GetFLPFromRLP(TempDirName + '/image.jpg', true)
+    const res = await DownloadFileAsync(curentDayData.imgUri, flp, false)
 
-    // if (res) {
-    //     Alert.alert('Fail', ToCanPrint(res))
-    //     return
-    // }
+    if (res) {
+      Alert.alert('Fail to share', ToCanPrint(res))
+      return
+    }
 
-    // const message =
-    //     '#' + selectingItem.rank + '. ' +
-    //     selectingItem.title + ': ' +
-    //     selectingItem.desc + '\n' +
-    //     selectingItem.info + '\n' +
-    //     '★ ' + selectingItem.rate + ' on IMDb'
+    const message =
+      LocalText.astronomy_pic + ': ' + SafeDateString(date, ' ') + '\n' +
+      curentDayData.title + '\n' +
+      LocalText.credit_to + ': ' + curentDayData.credit + '\n\n' +
+      curentDayData.explanation + '\n\n' +
+      LocalText.source + ': ' + GetSourceUniverse(date)
 
-    // console.log(message);
+    console.log(message);
 
-    // Share
-    //     .open({
-    //         message,
-    //         url: flp,
-    //     })
-    //     .catch((err) => {
-    //         const error = ToCanPrint(err)
+    Share
+      .open({
+        message,
+        url: flp,
+      })
+      .catch((err) => {
+        const error = ToCanPrint(err)
 
-    //         if (!error.includes('User did not share'))
-    //             Alert.alert('Fail', error)
-    //     })
-  }, [curentDayData, theme])
+        if (!error.includes('User did not share'))
+          Alert.alert('Fail', error)
+      })
+  }, [curentDayData, date])
 
   const onPressSource = useCallback(() => {
     Linking.openURL(GetSourceUniverse(date))

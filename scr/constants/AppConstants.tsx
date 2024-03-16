@@ -362,6 +362,7 @@ export const LocalText = {
   feedback_user_contact: "Please provide me with your email, or if you prefer, your contact information on WhatsApp, Twitter, Facebook, Instagram, etc. This will allow me to reach out to you if needed to address the issue. (Optional)",
   error: "Error",
   credit_to_author: 'Credit to the author.',
+  astronomy_pic: 'Astronomy Picture of the Day', 
   credit_to: 'Credit to',
   error_toast: 'Something\'s wrong',
   tap_to_retry: 'Tap to retry.',
