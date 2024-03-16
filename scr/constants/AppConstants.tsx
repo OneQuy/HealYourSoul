@@ -386,6 +386,7 @@ export const LocalText = {
   open_youtube: 'Open in Youtube',
   share_image: 'Share Image',
   random: 'Random',
+  random_day: 'Random day',
   next: 'Next',
   previous: 'Previous',
   next_day: 'Next day',

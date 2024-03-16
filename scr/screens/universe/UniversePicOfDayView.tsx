@@ -150,7 +150,7 @@ const UniversePicOfDayView = ({
         icon: Icon.Today,
       },
       {
-        text: LocalText.random,
+        text: LocalText.random_day,
         onPress: onPressRandom,
         icon: Icon.Dice,
       },

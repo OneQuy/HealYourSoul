@@ -84,7 +84,7 @@ const extract = (text: string, date: Date): UniversePicOfDayData | Error => {
                 s += line
             }
 
-            console.log(s);
+            // console.log(s);
             credit = RemoveHTMLTags(s).trim()
 
             console.log(credit);
