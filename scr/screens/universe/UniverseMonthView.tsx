@@ -1,14 +1,12 @@
 // @ts-ignore
-import { View, StyleSheet, Animated, Linking, FlatList } from 'react-native'
-import React, { useCallback, useContext, useEffect, useMemo, useRef } from 'react'
+import { View, StyleSheet, Linking, FlatList } from 'react-native'
+import React, { useCallback, useContext, useEffect, useMemo } from 'react'
 import { ThemeContext } from '../../constants/Colors'
-import { Category, FontSize, FontWeight, Icon, LocalText, Outline } from '../../constants/AppConstants'
+import { Category, Icon, LocalText } from '../../constants/AppConstants'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
-import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 import { SafeDateString } from '../../handle/UtilsTS';
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
-import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
 import HeaderRightButtons from '../components/HeaderRightButtons';
 import MiniIAP from '../components/MiniIAP';
@@ -19,37 +17,38 @@ import UniverseMonthItem from './UniverseMonthItem'
 const category = Category.Universe
 
 const UniverseMonthView = ({
-  date,
-  setDate,
+  date: monthYear,
+  setMonthYear,
+  onPressDayOfMonth,
 }: {
   date: Date,
-  setDate: (d: Date) => void,
+  setMonthYear: (d: Date) => void,
+  onPressDayOfMonth: (dayNum: number) => void
 }) => {
   const navigation = useNavigation();
   const theme = useContext(ThemeContext);
 
   const id = useMemo(() => {
-    return SafeDateString(date, '_')
-  }, [date])
+    return SafeDateString(monthYear, '_')
+  }, [monthYear])
 
   const onPressNextDay = useCallback(async (isNext: boolean) => {
-    const nd = date.setDate(date.getDate() + (isNext ? 1 : -1))
-    setDate(new Date(nd))
-  }, [date])
+    const nd = monthYear.setDate(monthYear.getDate() + (isNext ? 1 : -1))
+    setMonthYear(new Date(nd))
+  }, [monthYear])
 
   const onPressRandom = useCallback(async () => {
     // track_PressRandom(true, category, undefined)
 
     const minday = new Date(1995, 5, 20).getTime()
 
-    setDate(new Date(RandomInt(minday, Date.now())))
+    setMonthYear(new Date(RandomInt(minday, Date.now())))
     // setDate(new Date(2014, 4, 21))
   }, [])
 
-
   const onPressSource = useCallback(() => {
-    Linking.openURL(GetSourceUniverse(date))
-  }, [date])
+    Linking.openURL(GetSourceUniverse(monthYear))
+  }, [monthYear])
 
   const onSwiped = useCallback((result: SwipeResult) => {
     if (!result.primaryDirectionIsHorizontalOrVertical)
@@ -63,7 +62,7 @@ const UniverseMonthView = ({
   const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(undefined, undefined, onSwiped)
 
   const onPressToday = useCallback(async () => {
-    setDate(new Date())
+    setMonthYear(new Date())
   }, [])
 
   const bottomBarItems = useMemo(() => {
@@ -94,16 +93,16 @@ const UniverseMonthView = ({
   }, [onPressNextDay, onPressToday, onPressRandom])
 
   const reloadAsync = useCallback(async () => {
-  }, [date])
+  }, [monthYear])
 
   const daysToRender = useMemo(() => {
     const now = new Date()
-    const isThisMonth = now.getMonth() === date.getMonth() && now.getFullYear() === date.getFullYear()
+    const isThisMonth = now.getMonth() === monthYear.getMonth() && now.getFullYear() === monthYear.getFullYear()
 
-    let num = isThisMonth ? now.getDate() : new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate()
+    let num = isThisMonth ? now.getDate() : new Date(monthYear.getFullYear(), monthYear.getMonth() + 1, 0).getDate()
 
     return new Array(num).fill(undefined)
-  }, [date])
+  }, [monthYear])
 
   const style = useMemo(() => {
     return StyleSheet.create({
@@ -116,20 +115,20 @@ const UniverseMonthView = ({
   }, [theme])
 
   const onPressDay = useCallback((dayNum: number) => {
-
-  }, [date])
+    onPressDayOfMonth(dayNum)
+  }, [onPressDayOfMonth])
 
   const renderDay = useCallback(({ item, index }: { item: any, index: number }) => {
     return <UniverseMonthItem
       dayNum={index + 1}
-      monthYear={date}
+      monthYear={monthYear}
       onPressDate={onPressDay}
     />
-  }, [])
+  }, [onPressDay, monthYear])
 
   useEffect(() => {
     reloadAsync()
-  }, [date])
+  }, [monthYear])
 
   // update header setting btn
 
@@ -164,7 +163,7 @@ const UniverseMonthView = ({
 
       {/* mini iap */}
 
-      <MiniIAP postID={date.toDateString()} />
+      <MiniIAP postID={monthYear.toDateString()} />
     </View >
   )
 }

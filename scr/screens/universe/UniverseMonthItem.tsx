@@ -1,5 +1,5 @@
 // @ts-ignore
-import { StyleSheet } from 'react-native'
+import { StyleSheet, TouchableOpacity } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading'
@@ -17,7 +17,8 @@ const UniverseMonthItem = ({
   const theme = useContext(ThemeContext);
 
   const onPressToday = useCallback(async () => {
-  }, [dayNum])
+    onPressDate(dayNum)
+  }, [dayNum, onPressDate])
 
 
   const reloadAsync = useCallback(async () => {
@@ -40,10 +41,12 @@ const UniverseMonthItem = ({
   }, [dayNum, monthYear])
 
   return (
-    <ImageBackgroundWithLoading key={dayNum} source={{ uri }} style={style.masterView}>
+    <TouchableOpacity onPress={onPressToday}>
+      <ImageBackgroundWithLoading key={dayNum} source={{ uri }} style={style.masterView}>
 
 
-    </ImageBackgroundWithLoading>
+      </ImageBackgroundWithLoading>
+    </TouchableOpacity>
   )
 }
 

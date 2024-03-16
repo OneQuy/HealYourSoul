@@ -14,8 +14,14 @@ const UniverseScreen = () => {
   const [currentDate, setCurrentDate] = useState(new Date())
   const [currentDateOfMonthView, setCurrentDateOfMonthView] = useState(new Date())
 
-  // const route = useRoute<RouteProp<DrawerParamList>>()
-  // const navigation = useNavigation()
+  const onPressDayOfMonth = useCallback((dayNum: number) => {
+    setCurrentDate(new Date(
+      currentDateOfMonthView.getFullYear(),
+      currentDateOfMonthView.getMonth(),
+      dayNum))
+
+    setSubView('day')
+  }, [currentDateOfMonthView])
 
   const onPressView = useCallback((view: SubView) => {
     track_SimpleWithParam('gallery', view)
@@ -60,8 +66,9 @@ const UniverseScreen = () => {
       {
         subview === 'month' &&
         <UniverseMonthView
+          onPressDayOfMonth={onPressDayOfMonth}
           date={currentDateOfMonthView}
-          setDate={setCurrentDateOfMonthView}
+          setMonthYear={setCurrentDateOfMonthView}
         />
       }
     </View>
