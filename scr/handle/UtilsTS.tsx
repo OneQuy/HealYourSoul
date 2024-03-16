@@ -435,7 +435,7 @@ console.log(GetTextBetween('aaaa#hihi#cccc', '#', '%')) // return undefined
 console.log(GetTextBetween('aaaa#hihi#cccc', '%', '#')) // return undefined
  ```
  */
-export function GetTextBetween(text: string, afterThisString: string, beforeThisString: string): string | undefined {
+export function GetTextBetween(text: string, afterThisString: string, beforeThisString?: string): string | undefined {
     const startIdx = text.indexOf(afterThisString)
 
     if (startIdx < 0)
@@ -446,7 +446,7 @@ export function GetTextBetween(text: string, afterThisString: string, beforeThis
     if (!IsValuableArrayOrString(s))
         return undefined
 
-    const endIdx = s.indexOf(beforeThisString)
+    const endIdx = s.indexOf(beforeThisString ?? afterThisString)
 
     if (endIdx < 0)
         return undefined
