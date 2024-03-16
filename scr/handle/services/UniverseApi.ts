@@ -9,6 +9,7 @@ const extract = (text: string, date: Date): UniversePicOfDayData | Error => {
     let imgUri = undefined
     let title = undefined
     let explanation = undefined
+    let credit = undefined
 
     for (let i = 0; i < lines.length; i++) {
         
@@ -32,7 +33,7 @@ const extract = (text: string, date: Date): UniversePicOfDayData | Error => {
 
         // title (first <b>)
 
-        else if (line.includes('<b>') && !line.includes('Explanation:')) {
+        else if (line.includes('<b>') && !line.includes('Explanation:') && !line.includes('Credit')) {
             if (title) // alrady extracted
                 continue
 
@@ -65,6 +66,27 @@ const extract = (text: string, date: Date): UniversePicOfDayData | Error => {
 
             explanation = RemoveHTMLTags(s).trim()
         }
+        
+        // credit
+
+        else if (line.includes('Credit') && line.includes(':') && line.includes('<b>')) { // start
+            if (credit) // alrady extracted
+                continue
+
+            let s = ''
+
+            for (i = i + 1; i < lines.length; i++) {
+                line = lines[i]
+
+                if (line.includes('</center>')) { // end
+                    break
+                }
+
+                s += line
+            }
+
+            credit = RemoveHTMLTags(s).trim()
+        }
     }
 
 
@@ -83,7 +105,8 @@ const extract = (text: string, date: Date): UniversePicOfDayData | Error => {
     return {
         imgUri,
         title,
-        explanation
+        explanation,
+        credit
     }
 }
 
