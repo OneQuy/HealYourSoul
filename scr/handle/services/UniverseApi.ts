@@ -105,7 +105,7 @@ const extract = (text: string, date: Date): UniversePicOfDayData | Error => {
     }
 }
 
-export const GetUniversePicOfDayData = async (date: Date): Promise<UniversePicOfDayData | Error> => {
+export const GetUniversePicOfDayDataAsync = async (date: Date): Promise<UniversePicOfDayData | Error> => {
     try {
         const year = date.getFullYear().toString().substring(2)
 
