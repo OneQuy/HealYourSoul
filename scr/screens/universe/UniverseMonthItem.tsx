@@ -1,9 +1,10 @@
 // @ts-ignore
-import { StyleSheet, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading'
 import { prependZero } from '../../handle/Utils'
+import { FontSize, FontWeight } from '../../constants/AppConstants'
 
 const UniverseMonthItem = ({
   dayNum,
@@ -33,6 +34,7 @@ const UniverseMonthItem = ({
     return StyleSheet.create({
       masterView: { width: 50, height: 50, },
       flatlistContainerView: { flex: 1 },
+      textDay: { color: theme.counterBackground, fontSize: FontSize.Normal, fontWeight: FontWeight.B500 },
     })
   }, [theme])
 
@@ -43,7 +45,7 @@ const UniverseMonthItem = ({
   return (
     <TouchableOpacity onPress={onPressToday}>
       <ImageBackgroundWithLoading key={dayNum} source={{ uri }} style={style.masterView}>
-
+        <Text style={style.textDay}>{dayNum}</Text>
 
       </ImageBackgroundWithLoading>
     </TouchableOpacity>

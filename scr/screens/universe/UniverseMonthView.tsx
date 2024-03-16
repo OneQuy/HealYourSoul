@@ -107,7 +107,7 @@ const UniverseMonthView = ({
   const style = useMemo(() => {
     return StyleSheet.create({
       masterView: { flex: 1, backgroundColor: theme.background },
-      flatlistContainerView: { flex: 1 },
+      flatlistContainerView: { flex: 1, alignItems: 'center' },
       // contentScrollView: { flex: 1, marginHorizontal: Outline.GapVertical },
       // titleView: { textAlign: 'center', marginHorizontal: Outline.GapVertical, fontSize: FontSize.Normal, fontWeight: FontWeight.B500 },
       // creditTxt: { fontStyle: 'italic', marginHorizontal: Outline.GapVertical, fontSize: FontSize.Small_L, },
