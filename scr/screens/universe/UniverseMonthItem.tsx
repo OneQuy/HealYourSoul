@@ -43,10 +43,9 @@ const UniverseMonthItem = ({
   }, [dayNum, monthYear])
 
   return (
-    <TouchableOpacity onPress={onPressToday}>
-      <ImageBackgroundWithLoading key={dayNum} source={{ uri }} style={style.masterView}>
+    <TouchableOpacity key={dayNum} onPress={onPressToday}>
+      <ImageBackgroundWithLoading source={{ uri }} style={style.masterView}>
         <Text style={style.textDay}>{dayNum}</Text>
-
       </ImageBackgroundWithLoading>
     </TouchableOpacity>
   )
