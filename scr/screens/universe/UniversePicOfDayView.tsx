@@ -222,7 +222,7 @@ const UniversePicOfDayView = ({
                   </TouchableOpacity>
                   :
                   <View onTouchStart={onBigViewStartTouch} onTouchEnd={onBigViewEndTouch} style={styleSheet.contentView}>
-                    {/* title */}
+                    {/* date */}
 
                     <Text selectable adjustsFontSizeToFit numberOfLines={1} style={[styleSheet.titleView, { color: theme.counterBackground, }]}>{IsToday(date) ? LocalText.today : SafeDateString(date, ' ')}</Text>
 
@@ -234,7 +234,7 @@ const UniversePicOfDayView = ({
 
                     {/* title */}
 
-                    <Text selectable adjustsFontSizeToFit numberOfLines={1} style={[styleSheet.titleView, { color: theme.counterBackground, }]}>{curentDayData?.title}</Text>
+                    <Text selectable adjustsFontSizeToFit numberOfLines={1} style={[styleSheet.titleView, { color: theme.primary, }]}>{curentDayData?.title}</Text>
 
                     {/* credit */}
 
