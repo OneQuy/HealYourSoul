@@ -409,6 +409,11 @@ export function ArrayRemove<T>(arr: T[], value: T): boolean {
 
 // string utils ---------------------------
 
+export function RemoveHTMLTags(text: string): string {
+    const regex = /<[^>]*>/mgi
+    return text.replace(regex, "")
+}
+
 export function IsValuableArrayOrString(value: any, trimString: boolean = true) {
     if (Array.isArray(value)) {
         return value.length > 0
