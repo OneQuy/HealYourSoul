@@ -39,7 +39,7 @@ const UniversePicOfDayView = ({
   const theme = useContext(ThemeContext);
   const [handling, setHandling] = useState(true)
   const [curentDayData, setCurentDayData] = useState<UniversePicOfDayData | undefined>(undefined)
-  const favoriteCallbackRef = useRef<(() => void) | undefined>(undefined);
+  // const favoriteCallbackRef = useRef<(() => void) | undefined>(undefined);
 
   const mediaViewScaleAnimRef = useRef(new Animated.Value(1)).current
 
@@ -107,23 +107,21 @@ const UniversePicOfDayView = ({
     Linking.openURL(GetSourceUniverse(date))
   }, [date])
 
-  const onTapCounted = useCallback((count: number, _: GestureResponderEvent['nativeEvent']) => {
-    if (count === 2) {
-      if (favoriteCallbackRef.current)
-        favoriteCallbackRef.current()
-    }
-  }, [])
+  // const onTapCounted = useCallback((count: number, _: GestureResponderEvent['nativeEvent']) => {
+  //   if (count === 2) {
+  //     if (favoriteCallbackRef.current)
+  //       favoriteCallbackRef.current()
+  //   }
+  // }, [])
 
   const onSwiped = useCallback((result: SwipeResult) => {
     if (!result.primaryDirectionIsHorizontalOrVertical)
       return
 
-    if (result.primaryDirectionIsPositive) {
-      onPressNextDay(result.primaryDirectionIsPositive ? true : false)
-    }
+    onPressNextDay(!result.primaryDirectionIsPositive)
   }, [onPressNextDay])
 
-  const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(onTapCounted, undefined, onSwiped)
+  const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(undefined, undefined, onSwiped)
 
   const onPressToday = useCallback(async () => {
     setDate(new Date())

@@ -2,11 +2,9 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useCallback, useContext, useMemo, useState } from 'react'
 import { BorderRadius, FontSize, FontWeight, LocalText, Outline } from '../../constants/AppConstants'
 import { ThemeContext } from '../../constants/Colors';
-import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-import { DrawerParamList } from '../../navigation/Navigator';
 import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 import UniversePicOfDayView from './UniversePicOfDayView';
-import { IsToday, SafeDateString } from '../../handle/UtilsTS';
+import UniverseMonthView from './UniverseMonthView';
 
 type SubView = 'day' | 'month'
 
@@ -14,8 +12,10 @@ const UniverseScreen = () => {
   const theme = useContext(ThemeContext);
   const [subview, setSubView] = useState<SubView>('day')
   const [currentDate, setCurrentDate] = useState(new Date())
-  const route = useRoute<RouteProp<DrawerParamList>>()
-  const navigation = useNavigation()
+  const [currentDateOfMonthView, setCurrentDateOfMonthView] = useState(new Date())
+
+  // const route = useRoute<RouteProp<DrawerParamList>>()
+  // const navigation = useNavigation()
 
   const onPressView = useCallback((view: SubView) => {
     track_SimpleWithParam('gallery', view)
@@ -56,11 +56,14 @@ const UniverseScreen = () => {
         />
       }
 
-      {/* 
+
       {
         subview === 'month' &&
-        <UniversePicOfDayView date={currentDate} />
-      } */}
+        <UniverseMonthView
+          date={currentDateOfMonthView}
+          setDate={setCurrentDateOfMonthView}
+        />
+      }
     </View>
   )
 }
