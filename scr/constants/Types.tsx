@@ -223,7 +223,8 @@ export type RandomImage = {
 
 export type UniversePicOfDayData = {
     title?: string,
-    imgUri?: string,
+    imgUri?: string, // full hd
+    thumbUri?: string,
     credit?: string,
     explanation?: string,
 }

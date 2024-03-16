@@ -1,4 +1,3 @@
-import { LogRed } from "../../../editor/src/Utils_NodeJS"
 import { UniversePicOfDayData } from "../../constants/Types"
 import { prependZero } from "../Utils"
 import { CreateError, GetTextBetween, RemoveHTMLTags } from "../UtilsTS"
@@ -6,12 +5,17 @@ import { CreateError, GetTextBetween, RemoveHTMLTags } from "../UtilsTS"
 const extract = (text: string, date: Date): UniversePicOfDayData | Error => {
     const lines = text.split('\n')
 
-    let imgUri = undefined
+    let imgUri = undefined // full hd
+    let thumbUri = undefined
     let title = undefined
     let explanation = undefined
     let credit = undefined
 
     for (let i = 0; i < lines.length; i++) {
+
+        if (imgUri && thumbUri && title && explanation && credit) { // success
+            break
+        }
 
         let line = lines[i]
 
@@ -28,6 +32,21 @@ const extract = (text: string, date: Date): UniversePicOfDayData | Error => {
             }
             else
                 imgUri = 'https://apod.nasa.gov/apod/' + imgUri
+        }
+
+        // thumb (first '<IMG SRC')
+
+        if (line.includes('<IMG SRC')) {
+            if (thumbUri) // alrady extracted
+                continue
+
+            thumbUri = GetTextBetween(line, '"')
+
+            if (!thumbUri) {
+                return new Error('[GetUniversePicOfDayData] can not extract thumbUri between "/"" of line: ' + line)
+            }
+            else
+                thumbUri = 'https://apod.nasa.gov/apod/' + thumbUri
         }
 
         // title (first <b>)
@@ -97,8 +116,8 @@ const extract = (text: string, date: Date): UniversePicOfDayData | Error => {
         }
     }
 
-    if (!imgUri) {
-        return new Error('[GetUniversePicOfDayData] can not find img uri of date: ' + date.toLocaleDateString())
+    if (!imgUri && !thumbUri) {
+        return new Error('[GetUniversePicOfDayData] can not find full img or thumb uri of date: ' + date.toLocaleDateString())
     }
 
     if (!explanation && !title) {
@@ -107,10 +126,11 @@ const extract = (text: string, date: Date): UniversePicOfDayData | Error => {
 
     return {
         imgUri,
+        thumbUri,
         title,
         explanation,
         credit
-    }
+    } as UniversePicOfDayData
 }
 
 export const GetSourceUniverse = (date: Date) => {

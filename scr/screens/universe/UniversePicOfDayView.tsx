@@ -66,13 +66,15 @@ const UniversePicOfDayView = ({
   }, [])
 
   const onPressShareText = useCallback(async () => {
-    if (!curentDayData || !curentDayData.imgUri)
+    if (!curentDayData || (!curentDayData.imgUri && !curentDayData.thumbUri))
       return
 
     track_SimpleWithCat(category, 'share')
 
     const flp = GetFLPFromRLP(TempDirName + '/image.jpg', true)
-    const res = await DownloadFileAsync(curentDayData.imgUri, flp, false)
+
+    // @ts-ignore
+    const res = await DownloadFileAsync(curentDayData.imgUri ?? curentDayData.thumbUri, flp, false)
 
     if (res) {
       Alert.alert('Fail to share', ToCanPrint(res))
@@ -221,7 +223,7 @@ const UniversePicOfDayView = ({
                   :
                   <View onTouchStart={onBigViewStartTouch} onTouchEnd={onBigViewEndTouch} style={styleSheet.contentView}>
                     <Animated.View style={[{ transform: [{ scale: mediaViewScaleAnimRef }] }]}>
-                      <ImageBackgroundWithLoading onLoad={onImageLoaded} resizeMode='contain' source={{ uri: curentDayData?.imgUri }} style={styleSheet.image} indicatorProps={{ color: theme.counterBackground }} />
+                      <ImageBackgroundWithLoading onLoad={onImageLoaded} resizeMode='contain' source={{ uri: curentDayData?.thumbUri ?? curentDayData?.imgUri }} style={styleSheet.image} indicatorProps={{ color: theme.counterBackground }} />
                     </Animated.View>
 
                     {/* title */}
