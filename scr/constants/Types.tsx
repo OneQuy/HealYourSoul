@@ -221,6 +221,13 @@ export type RandomImage = {
     uri: string,
 }
 
+export type UniversePicOfDayData = {
+    title?: string,
+    imgUri?: string,
+    credit?: string,
+    explanation?: string,
+}
+
 export type Quote = {
     content: string,
     author: string,

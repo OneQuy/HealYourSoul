@@ -423,6 +423,45 @@ export function IsValuableArrayOrString(value: any, trimString: boolean = true) 
         return false
 }
 
+/**
+ ## Usage:
+ ```tsx
+console.log(GetTextBetween('aaaa#1234@cccc', '#', '@')) // return 1234
+console.log(GetTextBetween('aaaa#@cccc', '#', '@')) // return ''
+console.log(GetTextBetween('aaaa##cccc', '#', '@')) // return ''
+console.log(GetTextBetween('aaaa#hihi#cccc', '#', '@')) // return 'hihi'
+console.log(GetTextBetween('aaaa#hihi#cccc', '*', '%')) // return undefined
+console.log(GetTextBetween('aaaa#hihi#cccc', '#', '%')) // return undefined
+console.log(GetTextBetween('aaaa#hihi#cccc', '%', '#')) // return undefined
+ ```
+ */
+export function GetTextBetween(text: string, afterThisString: string, beforeThisString: string): string | undefined {
+    const startIdx = text.indexOf(afterThisString)
+
+    if (startIdx < 0)
+        return undefined
+
+    const s = text.substring(startIdx + afterThisString.length)
+
+    if (!IsValuableArrayOrString(s))
+        return undefined
+
+    const endIdx = s.indexOf(beforeThisString)
+
+    if (endIdx < 0)
+        return undefined
+
+    return s.substring(0, endIdx)
+}
+
+/**
+ ## Usage:
+ ```tsx
+if (RegexUrl(url)) {
+    // validable url
+}
+ ```
+ */
 export function RegexUrl(url: string) {
     var expression = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi;
     var regex = new RegExp(expression);
@@ -909,7 +948,7 @@ export const GetIPAsync = async (): Promise<string | undefined | any> => {
     const res = await ExecuteWithTimeoutAsync(
         async () => await FirebaseDatabase_GetValueAsync(...),
         3000)
-
+ 
     if (res.isTimeOut || res.result === undefined) {
         // handle time out or other error here
         return false

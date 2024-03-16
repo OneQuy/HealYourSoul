@@ -31,8 +31,11 @@ alerts in app:
 
 - alert update app
 - startup alert 
+- alert request notification & onesignal
+- alert request save media
 - iap: success & error
 - ThePage video error
+- alert fail extract universe api
 ...
 
 =========================
