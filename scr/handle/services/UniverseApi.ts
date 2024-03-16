@@ -12,7 +12,7 @@ const extract = (text: string, date: Date): UniversePicOfDayData | Error => {
     let credit = undefined
 
     for (let i = 0; i < lines.length; i++) {
-        
+
         let line = lines[i]
         // console.log(line);
 
@@ -66,7 +66,7 @@ const extract = (text: string, date: Date): UniversePicOfDayData | Error => {
 
             explanation = RemoveHTMLTags(s).trim()
         }
-        
+
         // credit
 
         else if (line.includes('Credit') && line.includes(':') && line.includes('<b>')) { // start
@@ -89,17 +89,12 @@ const extract = (text: string, date: Date): UniversePicOfDayData | Error => {
         }
     }
 
-
-    if (!explanation) {
-        return new Error('[GetUniversePicOfDayData] can not find explantion of date: ' + date.toLocaleDateString())
-    }
-
-    if (!title) {
-        return new Error('[GetUniversePicOfDayData] can not find title of date: ' + date.toLocaleDateString())
-    }
-
     if (!imgUri) {
         return new Error('[GetUniversePicOfDayData] can not find img uri of date: ' + date.toLocaleDateString())
+    }
+
+    if (!explanation && !title) {
+        return new Error('[GetUniversePicOfDayData] can not find Explantion or Title of date: ' + date.toLocaleDateString())
     }
 
     return {
