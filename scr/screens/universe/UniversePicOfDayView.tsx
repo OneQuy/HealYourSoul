@@ -255,7 +255,7 @@ const UniversePicOfDayView = ({
 
                     <View style={{ flexDirection: 'row', }}>
                       <TouchableOpacity onPress={onPressSource} style={{ flex: 1, marginLeft: Outline.GapVertical }}>
-                        <Text adjustsFontSizeToFit numberOfLines={1} style={{ flex: 1, fontSize: FontSize.Small }}>{LocalText.source + ': ' + GetSourceUniverse(date)}</Text>
+                        <Text adjustsFontSizeToFit numberOfLines={1} style={{ color: theme.counterBackground, flex: 1, fontSize: FontSize.Small }}>{LocalText.source + ': ' + GetSourceUniverse(date)}</Text>
                       </TouchableOpacity>
                       {/* view count */}
                       <View style={{ marginRight: Outline.GapVertical, alignItems: 'flex-end', }}>
@@ -283,9 +283,9 @@ const UniversePicOfDayView = ({
 export default UniversePicOfDayView
 
 const styleSheet = StyleSheet.create({
-  masterView: { flex: 1, gap: Outline.GapVertical, },
+  masterView: { flex: 1, },
   image: { width: widthPercentageToDP(100), height: heightPercentageToDP(40) },
-  contentView: { flex: 1, gap: Outline.GapVertical, paddingTop: Outline.GapHorizontal },
+  contentView: { flex: 1, gap: Outline.GapHorizontal, paddingTop: Outline.GapHorizontal },
   contentScrollView: { flex: 1, marginHorizontal: Outline.GapVertical },
   titleView: { textAlign: 'center', marginHorizontal: Outline.GapVertical, fontSize: FontSize.Normal, fontWeight: FontWeight.B500 },
   creditTxt: { fontStyle: 'italic', marginHorizontal: Outline.GapVertical, fontSize: FontSize.Small_L, },
