@@ -115,21 +115,7 @@ const UniverseMonthView = ({
   }, [])
 
   const monthIndexesToRender = useMemo(() => {
-    const arr = []
-    let min = 0, max = 11
-
-    if (monthYear.getFullYear() === 1995)
-      min = 5
-    else if (monthYear.getFullYear() === new Date().getFullYear())
-      max = new Date().getMonth()
-
-    if (min === 0 && max === 11)
-      return fullMonthIndex
-
-    for (let i = min; i <= max; i++)
-      arr.push(i)
-
-    return arr
+    return getMonthIndexesOfYear(monthYear.getFullYear())
   }, [monthYear])
 
   const style = useMemo(() => {
@@ -152,6 +138,15 @@ const UniverseMonthView = ({
     })
   }, [theme])
 
+  const onPressYear = useCallback((year: number) => {
+    const months = getMonthIndexesOfYear(year)
+
+    if (months.includes(monthYear.getMonth()))
+      setMonthYear(new Date(year, monthYear.getMonth(), 1))
+    else
+      setMonthYear(new Date(year, months[0], 1))
+  }, [monthYear])
+
   const onPressDay = useCallback((dayNum: number) => {
     onPressDayOfMonth(dayNum)
   }, [onPressDayOfMonth])
@@ -168,7 +163,7 @@ const UniverseMonthView = ({
     ref: monthRef,
     onLayoutItem: onLayoutMonth,
     keyForScollView: keyForScollViewMonth,
-  } = useScrollViewScrollTo(true, monthIndexesToRender, monthYear.getMonth(), undefined, -50)
+  } = useScrollViewScrollTo(true, monthIndexesToRender, monthIndexesToRender.includes(monthYear.getMonth()) ? monthYear.getMonth() : monthIndexesToRender[0], undefined, -50)
 
   const {
     ref: yearRef,
@@ -207,7 +202,7 @@ const UniverseMonthView = ({
               const isCurrent = year === monthYear.getFullYear()
 
               return (
-                <TouchableOpacity onLayout={onLayoutYear} key={year} onPress={() => setMonthYear(new Date(year, monthYear.getMonth(), 1))} style={isCurrent ? style.yearTO_Current : style.yearTO}>
+                <TouchableOpacity onLayout={onLayoutYear} key={year} onPress={() => onPressYear(year)} style={isCurrent ? style.yearTO_Current : style.yearTO}>
                   <Text style={isCurrent ? style.yearTxt_Current : style.yearTxt}>{year}</Text>
                 </TouchableOpacity>
               )
@@ -274,3 +269,21 @@ const UniverseMonthView = ({
 }
 
 export default UniverseMonthView
+
+const getMonthIndexesOfYear = (year: number) => {
+  const arr = []
+  let min = 0, max = 11
+
+  if (year === 1995)
+    min = 5
+  else if (year === new Date().getFullYear())
+    max = new Date().getMonth()
+
+  if (min === 0 && max === 11)
+    return fullMonthIndex
+
+  for (let i = min; i <= max; i++)
+    arr.push(i)
+
+  return arr
+}
