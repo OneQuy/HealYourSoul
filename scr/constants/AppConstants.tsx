@@ -617,6 +617,7 @@ export const StorageKey_DogBreed_CurrentBreedIdx = 'dog_breed_idx'
 export const StorageKey_CatFact_CurrentFactIdx = 'cat_fact_idx'
 export const StorageKey_AnimeImage_CurrentIdx = 'anime_image_idx'
 export const StorageKey_MovieQuote_CurrentIdx = 'movie_quote_idx'
+export const StorageKey_Memedroid_CurrentIdx = 'memedroid_idx'
 
 export const StorageKey_NinjaFact_DataNoti = 'ninja_fact_arr_noti'
 export const StorageKey_NinjaJoke_DataNoti = 'ninja_joke_arr_noti'
