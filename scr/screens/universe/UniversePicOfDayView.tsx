@@ -27,6 +27,8 @@ import Share from 'react-native-share';
 
 const category = Category.Universe
 
+var fetchedFirstTime = false
+
 const UniversePicOfDayView = ({
   date,
   setDate,
@@ -39,7 +41,6 @@ const UniversePicOfDayView = ({
   const theme = useContext(ThemeContext);
   const [handling, setHandling] = useState(true)
   const [curentDayData, setCurentDayData] = useState<UniversePicOfDayData | undefined>(undefined)
-  // const favoriteCallbackRef = useRef<(() => void) | undefined>(undefined);
 
   const mediaViewScaleAnimRef = useRef(new Animated.Value(1)).current
 
@@ -109,13 +110,6 @@ const UniversePicOfDayView = ({
     Linking.openURL(GetSourceUniverse(date))
   }, [date])
 
-  // const onTapCounted = useCallback((count: number, _: GestureResponderEvent['nativeEvent']) => {
-  //   if (count === 2) {
-  //     if (favoriteCallbackRef.current)
-  //       favoriteCallbackRef.current()
-  //   }
-  // }, [])
-
   const onSwiped = useCallback((result: SwipeResult) => {
     if (!result.primaryDirectionIsHorizontalOrVertical)
       return
@@ -181,7 +175,17 @@ const UniversePicOfDayView = ({
     }
     else { // fail
       if (IsToday(date)) {
-        Alert.alert(LocalText.popup_title_error, LocalText.popup_content_error_universe_today)
+        if (fetchedFirstTime)
+          Alert.alert(LocalText.popup_title_error, LocalText.popup_content_error_universe_today)
+        else { // data today not updated, back to yesterday
+          fetchedFirstTime = true
+          
+          const d = new Date(date)
+          d.setDate(d.getDate() - 1)
+          setDate(d)
+
+          return
+        }
       }
       else if (date.getTime() > Date.now()) {
         Alert.alert(LocalText.popup_title_error, LocalText.popup_content_error_universe_future)
@@ -198,7 +202,7 @@ const UniversePicOfDayView = ({
 
   useEffect(() => {
     reloadAsync()
-  }, [date])
+  }, [reloadAsync])
 
   // update header setting btn
 
