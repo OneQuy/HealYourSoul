@@ -87,7 +87,7 @@ const UniverseMonthView = ({
 
   const onPressMonth = useCallback((monthIndex: number) => {
     track_SimpleWithParam('universe', 'month')
-    new Date(monthYear.getFullYear(), monthIndex, 1)
+    setMonthYear(new Date(monthYear.getFullYear(), monthIndex, 1))
   }, [monthYear])
 
   const onPressYear = useCallback((year: number) => {
