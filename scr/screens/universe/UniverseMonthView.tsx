@@ -164,32 +164,14 @@ const UniverseMonthView = ({
   const {
     ref: monthRef,
     onLayoutItem: onLayoutMonth,
-    scrollToItem: scrollToMonthIndex,
     keyForScollView: keyForScollViewMonth,
-    readyToScroll: readyToScrollMonth,
-  } = useScrollViewScrollTo(true, monthIndexesToRender)
+  } = useScrollViewScrollTo(true, monthIndexesToRender, monthYear.getMonth(), undefined, -50)
 
   const {
     ref: yearRef,
     onLayoutItem: onLayoutYear,
-    scrollToItem: scrollToYear,
     keyForScollView: keyForScollViewYear,
-    readyToScroll: readyToScrollYear,
-  } = useScrollViewScrollTo(true, yearsToRender)
-
-  useEffect(() => {
-    if (!readyToScrollMonth)
-      return
-
-    scrollToMonthIndex(monthYear.getMonth())
-  }, [readyToScrollMonth])
-
-  useEffect(() => {
-    if (!readyToScrollYear)
-      return
-
-    scrollToYear(monthYear.getFullYear())
-  }, [readyToScrollYear])
+  } = useScrollViewScrollTo(true, yearsToRender, monthYear.getFullYear(), undefined, -50)
 
   // update header setting btn
 

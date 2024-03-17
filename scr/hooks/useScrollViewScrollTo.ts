@@ -52,7 +52,13 @@ useEffect(() => {
  ## NOTE
  The scroll view will re-mounted whenever the items changed
  */
-const useScrollViewScrollTo = <T>(isHorizontal: boolean, items: T[]) => {
+const useScrollViewScrollTo = <T>(
+    isHorizontal: boolean,
+    items: T[],
+    itemToScrollTo?: T,
+    itemIndexToScrollTo?: number,
+    offset = 0,
+) => {
     const ref = useRef<ScrollView | null>(null)
     const layouts = useRef<LayoutRectangle[]>([])
     const [readyToScroll, setReadyToScroll] = useState(false)
@@ -97,8 +103,8 @@ const useScrollViewScrollTo = <T>(isHorizontal: boolean, items: T[]) => {
         }
 
         ref.current.scrollTo({
-            x: isHorizontal ? layouts.current[index].x : 0,
-            y: !isHorizontal ? layouts.current[index].y : 0,
+            x: isHorizontal ? layouts.current[index].x + offset : 0,
+            y: !isHorizontal ? layouts.current[index].y + offset : 0,
         })
     }, [
         items,
@@ -106,7 +112,7 @@ const useScrollViewScrollTo = <T>(isHorizontal: boolean, items: T[]) => {
         isHorizontal
     ])
 
-    const scrollToItem = useCallback((item: any) => {
+    const scrollToItem = useCallback((item: T) => {
         const index = items.indexOf(item)
 
         if (index < 0) {
@@ -116,6 +122,18 @@ const useScrollViewScrollTo = <T>(isHorizontal: boolean, items: T[]) => {
 
         scrollToIndex(index)
     }, [items, scrollToIndex])
+
+    // auto scroll when ready
+
+    useEffect(() => {
+        if (!readyToScroll)
+            return
+
+        if (itemIndexToScrollTo !== undefined)
+            scrollToIndex(itemIndexToScrollTo)
+        else if (itemToScrollTo !== undefined)
+            scrollToItem(itemToScrollTo)
+    }, [readyToScroll])
 
     // reset when changed items
 
