@@ -1,24 +1,24 @@
 // @ts-ignore
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import { View, StyleSheet, FlatList, Text, TouchableOpacity } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo } from 'react'
 import { ThemeContext } from '../../constants/Colors'
-import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, Outline } from '../../constants/AppConstants'
+import { BorderRadius, FontSize, FontWeight, Icon, LocalText, Outline, Size } from '../../constants/AppConstants'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
 import { MonthName, SafeDateString } from '../../handle/UtilsTS';
-import BottomBar, { BottomBarItem } from '../others/BottomBar';
 import HeaderRightButtons from '../components/HeaderRightButtons';
 import MiniIAP from '../components/MiniIAP';
 import { RandomInt } from '../../handle/Utils';
 import UniverseMonthItem from './UniverseMonthItem'
 import { ScrollView } from 'react-native-gesture-handler'
 import useScrollViewScrollTo from '../../hooks/useScrollViewScrollTo'
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const fullMonthIndex = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 
 export const numColumnMonthItem = 6
-
-const category = Category.Universe
 
 const UniverseMonthView = ({
   monthYear,
@@ -31,14 +31,10 @@ const UniverseMonthView = ({
 }) => {
   const navigation = useNavigation();
   const theme = useContext(ThemeContext);
+  const { bottom: bottomSafe } = useSafeAreaInsets()
 
   const idForShowMiniIapAndCountView = useMemo(() => {
     return SafeDateString(monthYear, '_')
-  }, [monthYear])
-
-  const onPressNextDay = useCallback(async (isNext: boolean) => {
-    const nd = monthYear.setDate(monthYear.getDate() + (isNext ? 1 : -1))
-    setMonthYear(new Date(nd))
   }, [monthYear])
 
   const onPressRandom = useCallback(async () => {
@@ -49,52 +45,6 @@ const UniverseMonthView = ({
     setMonthYear(new Date(RandomInt(minday, Date.now())))
     // setDate(new Date(2014, 4, 21))
   }, [])
-
-  // const onPressSource = useCallback(() => {
-  //   Linking.openURL(GetSourceUniverse(monthYear))
-  // }, [monthYear])
-
-  // const onSwiped = useCallback((result: SwipeResult) => {
-  //   if (!result.primaryDirectionIsHorizontalOrVertical)
-  //     return
-
-  //   if (result.primaryDirectionIsPositive) {
-  //     onPressNextDay(result.primaryDirectionIsPositive ? true : false)
-  //   }
-  // }, [onPressNextDay])
-
-  // const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(undefined, undefined, onSwiped)
-
-  const onPressToday = useCallback(async () => {
-    setMonthYear(new Date())
-  }, [])
-
-  const bottomBarItems = useMemo(() => {
-    return [
-      {
-        text: LocalText.previous_day,
-        onPress: () => onPressNextDay(false),
-        icon: Icon.Left,
-        scaleIcon: 1.5,
-      },
-      {
-        text: LocalText.today,
-        onPress: onPressToday,
-        icon: Icon.Today,
-      },
-      {
-        text: LocalText.random_day,
-        onPress: onPressRandom,
-        icon: Icon.Dice,
-      },
-      {
-        text: LocalText.next_day,
-        onPress: () => onPressNextDay(true),
-        icon: Icon.Right,
-        scaleIcon: 1.5,
-      },
-    ] as BottomBarItem[]
-  }, [onPressNextDay, onPressToday, onPressRandom])
 
   const daysToRender = useMemo(() => {
     const now = new Date()
@@ -125,6 +75,9 @@ const UniverseMonthView = ({
 
       yearsMasterView: { marginLeft: Outline.GapVertical, flexDirection: 'row', gap: Outline.GapHorizontal, alignItems: 'center' },
       yearsScrollContainerView: { gap: Outline.GapHorizontal },
+
+      randomTO: { marginHorizontal: Outline.GapVertical, marginBottom: bottomSafe > 0 ? bottomSafe : Outline.GapVertical, gap: Outline.GapHorizontal, borderRadius: BorderRadius.BR, padding: Outline.GapVertical_2, backgroundColor: theme.primary, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', },
+      randomTxt: { color: theme.counterPrimary, fontSize: FontSize.Normal },
 
       yearTO: { padding: Outline.GapHorizontal, alignItems: 'center', justifyContent: 'center', },
       yearTO_Current: { padding: Outline.GapHorizontal, alignItems: 'center', justifyContent: 'center', backgroundColor: theme.primary, borderRadius: BorderRadius.BR8, },
@@ -253,13 +206,12 @@ const UniverseMonthView = ({
         />
       </View>
 
-      {/* main btn part */}
+      {/* random */}
 
-      < BottomBar
-        items={bottomBarItems}
-        category={category}
-        id={idForShowMiniIapAndCountView}
-      />
+      <TouchableOpacity onPress={onPressRandom} style={style.randomTO}>
+        <MaterialCommunityIcons name={Icon.Dice} color={theme.counterPrimary} size={Size.Icon} />
+        <Text style={style.randomTxt}>{LocalText.random}</Text>
+      </TouchableOpacity>
 
       {/* mini iap */}
 
