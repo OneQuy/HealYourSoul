@@ -28,6 +28,10 @@ const BottomBar = ({
 }: {
     items: BottomBarItem[],
     category: Category,
+
+    /**
+     * id for count view & favorite
+     */
     id?: string | number,
 }) => {
     const theme = useContext(ThemeContext);

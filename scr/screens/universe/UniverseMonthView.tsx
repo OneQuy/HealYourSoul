@@ -14,6 +14,7 @@ import { GetSourceUniverse } from '../../handle/services/UniverseApi';
 import { RandomInt } from '../../handle/Utils';
 import UniverseMonthItem from './UniverseMonthItem'
 import { ScrollView } from 'react-native-gesture-handler'
+import useScrollViewScrollTo from '../../hooks/useScrollViewScrollTo'
 
 export const numColumnMonthItem = 6
 
@@ -31,7 +32,7 @@ const UniverseMonthView = ({
   const navigation = useNavigation();
   const theme = useContext(ThemeContext);
 
-  const id = useMemo(() => {
+  const idForShowMiniIapAndCountView = useMemo(() => {
     return SafeDateString(monthYear, '_')
   }, [monthYear])
 
@@ -53,16 +54,16 @@ const UniverseMonthView = ({
     Linking.openURL(GetSourceUniverse(monthYear))
   }, [monthYear])
 
-  const onSwiped = useCallback((result: SwipeResult) => {
-    if (!result.primaryDirectionIsHorizontalOrVertical)
-      return
+  // const onSwiped = useCallback((result: SwipeResult) => {
+  //   if (!result.primaryDirectionIsHorizontalOrVertical)
+  //     return
 
-    if (result.primaryDirectionIsPositive) {
-      onPressNextDay(result.primaryDirectionIsPositive ? true : false)
-    }
-  }, [onPressNextDay])
+  //   if (result.primaryDirectionIsPositive) {
+  //     onPressNextDay(result.primaryDirectionIsPositive ? true : false)
+  //   }
+  // }, [onPressNextDay])
 
-  const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(undefined, undefined, onSwiped)
+  // const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(undefined, undefined, onSwiped)
 
   const onPressToday = useCallback(async () => {
     setMonthYear(new Date())
@@ -95,9 +96,6 @@ const UniverseMonthView = ({
     ] as BottomBarItem[]
   }, [onPressNextDay, onPressToday, onPressRandom])
 
-  const reloadAsync = useCallback(async () => {
-  }, [monthYear])
-
   const daysToRender = useMemo(() => {
     const now = new Date()
     const isThisMonth = now.getMonth() === monthYear.getMonth() && now.getFullYear() === monthYear.getFullYear()
@@ -111,15 +109,26 @@ const UniverseMonthView = ({
     return new Array(new Date().getFullYear() - 1995 + 1).fill(undefined)
   }, [])
 
-  const monthsToRender = useMemo(() => {
-    return new Array(12).fill(undefined)
-  }, [])
+  const monthIndexesToRender = useMemo(() => {
+    const arr = []
+    let min = 0, max = 11
+
+    if (monthYear.getFullYear() === 1995)
+      min = 4
+    else if (monthYear.getFullYear() === new Date().getFullYear())
+      max = new Date().getMonth()
+
+    for (let i = min; i <= max; i++)
+      arr.push(i)
+
+    return arr
+  }, [monthYear])
 
   const style = useMemo(() => {
     return StyleSheet.create({
       masterView: { flex: 1, backgroundColor: theme.background, gap: Outline.GapHorizontal, },
       flatlistContainerView: { flex: 1, alignItems: 'center' },
-      
+
       yearsMasterView: { marginLeft: Outline.GapVertical, flexDirection: 'row', gap: Outline.GapHorizontal, alignItems: 'center' },
       yearsScrollContainerView: { gap: Outline.GapHorizontal },
 
@@ -130,7 +139,7 @@ const UniverseMonthView = ({
       yearTxt_Current: { fontSize: FontSize.Small_L, color: theme.counterPrimary },
 
       headerTxt: { fontWeight: FontWeight.Bold, fontSize: FontSize.Small_L, color: theme.counterBackground },
-      
+
       title: { textAlign: 'center', fontWeight: FontWeight.Bold, fontSize: FontSize.Big, color: theme.counterBackground },
     })
   }, [theme])
@@ -147,9 +156,20 @@ const UniverseMonthView = ({
     />
   }, [onPressDay, monthYear])
 
+  const {
+    ref: monthRef,
+    onLayoutItem: onLayoutMonth,
+    scrollToItem: scrollToMonthIndex,
+    keyForScollView,
+    readyToScroll,
+  } = useScrollViewScrollTo(true, monthIndexesToRender)
+
   useEffect(() => {
-    reloadAsync()
-  }, [monthYear])
+    if (!readyToScroll)
+      return
+
+    scrollToMonthIndex(monthYear.getMonth())
+  }, [readyToScroll])
 
   // update header setting btn
 
@@ -199,14 +219,18 @@ const UniverseMonthView = ({
           horizontal
           contentContainerStyle={style.yearsScrollContainerView}
           showsHorizontalScrollIndicator={false}
+          ref={monthRef}
+          key={keyForScollView}
         >
           {
-            monthsToRender.map((_, index) => {
-              const isCurrent = index === monthYear.getMonth()
+            monthIndexesToRender.map((monthIndex) => {
+              const isCurrent = monthIndex === monthYear.getMonth()
 
               return (
-                <TouchableOpacity key={index} onPress={() => setMonthYear(new Date(monthYear.getFullYear(), index, 1))} style={isCurrent ? style.yearTO_Current : style.yearTO}>
-                  <Text style={isCurrent ? style.yearTxt_Current : style.yearTxt}>{MonthName(index, false)}</Text>
+                <TouchableOpacity
+                  onLayout={onLayoutMonth}
+                  key={monthIndex} onPress={() => setMonthYear(new Date(monthYear.getFullYear(), monthIndex, 1))} style={isCurrent ? style.yearTO_Current : style.yearTO}>
+                  <Text style={isCurrent ? style.yearTxt_Current : style.yearTxt}>{MonthName(monthIndex, false)}</Text>
                 </TouchableOpacity>
               )
             })
@@ -233,12 +257,12 @@ const UniverseMonthView = ({
       < BottomBar
         items={bottomBarItems}
         category={category}
-        id={id}
+        id={idForShowMiniIapAndCountView}
       />
 
       {/* mini iap */}
 
-      <MiniIAP postID={monthYear.toDateString()} />
+      <MiniIAP postID={idForShowMiniIapAndCountView} />
     </View >
   )
 }
