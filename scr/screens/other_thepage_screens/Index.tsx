@@ -60,10 +60,3 @@ export const RandomMemeScreen = () => {
     getImageAsync={GetIWasteSoMuchTimeAsync}
   />;
 }
-
-export const MemedroidScreen = () => {
-  return <TheRandomImage
-    category={Category.Memedroid}
-    getImageAsync={GetMemedroidAsync}
-  />;
-}

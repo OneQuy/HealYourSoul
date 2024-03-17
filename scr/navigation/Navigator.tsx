@@ -12,7 +12,7 @@ import LoveScreen from '../screens/love/LoveScreen';
 import { CustomDrawerContent } from './CustomDrawer';
 import NSFWScreen from '../screens/nsfw/NSFWScreen';
 import IAPPage from '../screens/IAP/IAPPage';
-import { ArtScreen, AwesomeNatureScreen, AwesomeScreen, CuteScreen, InfoScreen, MemedroidScreen, QuoteTextScreen, RandomMemeScreen, SarcasmScreen, SunsetScreen, TuneScreen, TypoScreen, VocabularyScreen, } from '../screens/other_thepage_screens/Index';
+import { ArtScreen, AwesomeNatureScreen, AwesomeScreen, CuteScreen, InfoScreen, QuoteTextScreen, RandomMemeScreen, SarcasmScreen, SunsetScreen, TuneScreen, TypoScreen, VocabularyScreen, } from '../screens/other_thepage_screens/Index';
 import NinjaFactScreen from '../screens/ninja_fact/NinjaFactScreen';
 import PictureScreen from '../screens/picture/PictureScreen';
 import NinjaJokeScreen from '../screens/ninja_fact/NinjaJokeScreen';
@@ -40,12 +40,13 @@ import UploadScreen from '../screens/upload/UploadScreen';
 import InboxScreen from '../screens/inbox/InboxScreen';
 import AdminScreen from '../screens/admin/AdminScreen';
 import GalleryScreen from '../screens/gallery/GalleryScreen';
-import SienaScreen from '../screens/pic_of_the_year/SienaScreen';
+// import SienaScreen from '../screens/pic_of_the_year/SienaScreen';
 import UniverseScreen from '../screens/universe/UniverseScreen';
 import { CatFactScreen, DogFactScreen, MovieQuoteScreen } from '../screens/dog_fact/DogFactScreen';
 import { DogBreedScreen } from '../screens/other_thepage_screens/DogBreedScreen';
 import { AnimeQuoteScreen } from '../screens/anime/AnimeQuoteScreen';
 import { AnimeImageScreen } from '../screens/anime/AnimeImage';
+import { MemedroidScreen } from '../screens/other_thepage_screens/MemedroidScreen';
 
 export type DrawerParamList = {
   [ScreenName.Meme]: { item: DiversityItemType } | undefined,
@@ -107,10 +108,11 @@ const Drawer = createDrawerNavigator<DrawerParamList>();
 
 const ScreenList: ScreenNamePair[] = [
   [ScreenName.Meme, MemeScreen],
+  [ScreenName.NSFW, NSFWScreen],
   [ScreenName.RandomMeme, RandomMemeScreen],
+  [ScreenName.Memedroid, MemedroidScreen], // random meme 2
   [ScreenName.Comic, ComicScreen], // warm
   [ScreenName.CatDog, CatDogScreen],
-  [ScreenName.NSFW, NSFWScreen],
   [ScreenName.FunSound, FunSoundScreen],
   [ScreenName.Quote, QuoteScreen], // movivation
   [ScreenName.Art, ArtScreen],
@@ -123,6 +125,7 @@ const ScreenList: ScreenNamePair[] = [
   [ScreenName.Love, LoveScreen],
   [ScreenName.Satisfying, SatisfyingScreen],
   [ScreenName.Sarcasm, SarcasmScreen],
+  [ScreenName.Universe, UniverseScreen],
   [ScreenName.Info, InfoScreen],
   [ScreenName.WikiFact, WikipediaScreen],
   [ScreenName.Trivia, TheTriviaScreen],
@@ -135,7 +138,6 @@ const ScreenList: ScreenNamePair[] = [
   [ScreenName.AwardPicture, PicturesOfTheYearScreen],
   [ScreenName.Picture, PictureScreen],
   [ScreenName.TopMovie, TopMovieScreen],
-
   [ScreenName.MovieQuote, MovieQuoteScreen],
   [ScreenName.AnimeImage, AnimeImageScreen],
   [ScreenName.AnimeQuote, AnimeQuoteScreen],
@@ -143,8 +145,6 @@ const ScreenList: ScreenNamePair[] = [
   [ScreenName.DogFact, DogFactScreen],
   [ScreenName.DogBreed, DogBreedScreen],
   // [ScreenName.Siena, SienaScreen],
-  [ScreenName.Universe, UniverseScreen],
-  [ScreenName.Memedroid, MemedroidScreen],
 
   // app
 
