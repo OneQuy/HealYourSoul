@@ -106,7 +106,12 @@ const UniverseMonthView = ({
   }, [monthYear])
 
   const yearsToRender = useMemo(() => {
-    return new Array(new Date().getFullYear() - 1995 + 1).fill(undefined)
+    const arr = []
+
+    for (let i = new Date().getFullYear(); i >= 1995; i--)
+      arr.push(i)
+
+    return arr
   }, [])
 
   const monthIndexesToRender = useMemo(() => {
@@ -160,16 +165,31 @@ const UniverseMonthView = ({
     ref: monthRef,
     onLayoutItem: onLayoutMonth,
     scrollToItem: scrollToMonthIndex,
-    keyForScollView,
-    readyToScroll,
+    keyForScollView: keyForScollViewMonth,
+    readyToScroll: readyToScrollMonth,
   } = useScrollViewScrollTo(true, monthIndexesToRender)
 
+  const {
+    ref: yearRef,
+    onLayoutItem: onLayoutYear,
+    scrollToItem: scrollToYear,
+    keyForScollView: keyForScollViewYear,
+    readyToScroll: readyToScrollYear,
+  } = useScrollViewScrollTo(true, yearsToRender)
+
   useEffect(() => {
-    if (!readyToScroll)
+    if (!readyToScrollMonth)
       return
 
     scrollToMonthIndex(monthYear.getMonth())
-  }, [readyToScroll])
+  }, [readyToScrollMonth])
+
+  useEffect(() => {
+    if (!readyToScrollYear)
+      return
+
+    scrollToYear(monthYear.getFullYear())
+  }, [readyToScrollYear])
 
   // update header setting btn
 
@@ -191,17 +211,18 @@ const UniverseMonthView = ({
         <Text style={style.headerTxt}>{LocalText.year}:</Text>
 
         <ScrollView
+          ref={yearRef}
           horizontal
           contentContainerStyle={style.yearsScrollContainerView}
           showsHorizontalScrollIndicator={false}
+          key={keyForScollViewYear}
         >
           {
-            yearsToRender.map((_, index) => {
-              const year = new Date().getFullYear() - index
+            yearsToRender.map((year) => {
               const isCurrent = year === monthYear.getFullYear()
 
               return (
-                <TouchableOpacity key={year} onPress={() => setMonthYear(new Date(year, monthYear.getMonth(), 1))} style={isCurrent ? style.yearTO_Current : style.yearTO}>
+                <TouchableOpacity onLayout={onLayoutYear} key={year} onPress={() => setMonthYear(new Date(year, monthYear.getMonth(), 1))} style={isCurrent ? style.yearTO_Current : style.yearTO}>
                   <Text style={isCurrent ? style.yearTxt_Current : style.yearTxt}>{year}</Text>
                 </TouchableOpacity>
               )
@@ -220,7 +241,7 @@ const UniverseMonthView = ({
           contentContainerStyle={style.yearsScrollContainerView}
           showsHorizontalScrollIndicator={false}
           ref={monthRef}
-          key={keyForScollView}
+          key={keyForScollViewMonth}
         >
           {
             monthIndexesToRender.map((monthIndex) => {
