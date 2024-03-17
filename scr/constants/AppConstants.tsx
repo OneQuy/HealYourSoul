@@ -610,6 +610,10 @@ export const StorageKey_Quote = 'quote_arr'
 export const StorageKey_Memedroid = (type: string) => 'memedroid_' + type
 export const StorageKey_Memedroid_CurrentPage = (mode: string) => 'memedroid_mode' + mode
 
+export const StorageKey_Reddit = 'reddit_arr'
+
+export const StorageKey_RandomMeme1_CurrentIdx = 'random_meme1_idx'
+
 export const StorageKey_AnimeQuote_RandomAll = 'anime_quote_arr2'
 export const StorageKey_AnimeImage_ByType = (type: string) => 'anime_image_type_' + type
 
