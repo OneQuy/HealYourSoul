@@ -68,6 +68,23 @@ export const IncreaseNumberAsync = async (key: string, startAt: number = 0, incU
     return cur + incUnit
 }
 
+/**
+ * 
+ * @returns the current the value. after that inc and save
+ */
+export const LoopNumberAsync = async (key: string, start: number, end: number): Promise<number> => {
+    const cur = await GetNumberIntAsync(key, start)
+
+    let next = cur + 1
+
+    if (next > end)
+        next = start
+
+    await SetNumberAsync(key, next)
+
+    return cur
+}
+
 // date & number =================
 
 /**

@@ -1,10 +1,11 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import { LocalText, StorageKey_Memedroid } from "../../constants/AppConstants"
+import { LocalText, StorageKey_Memedroid, StorageKey_Memedroid_CurrentPage } from "../../constants/AppConstants"
 import { RandomImage } from "../../constants/Types"
 import { GetApiDataItemFromCached } from "../AppUtils"
 import { RandomInt } from "../Utils"
 import { FilterOnlyLetterAndNumberFromString, GetTextBetween } from "../UtilsTS"
 import { PopupSelectItem } from "../../screens/components/PopupSelect"
+import { LoopNumberAsync } from "../AsyncStorageUtils"
 
 const extract = (text: string): RandomImage[] => {
     const lines = text.split('\n')
@@ -65,25 +66,35 @@ export const GetMemedroidAsync = async (source: PopupSelectItem): Promise<Random
 
         let link
         const maxPage = 100
+        const mediumPage = 10
+        const fewPage = 3
 
-        if (source.displayText === LocalText.memedroid_trending)
-            link = `https://www.memedroid.com/memes/trending?page=${RandomInt(1, maxPage)}`
+        if (source.displayText === LocalText.memedroid_trending) {
+            const curPage = await LoopNumberAsync(StorageKey_Memedroid_CurrentPage('trend'), 1, fewPage)
+            link = `https://www.memedroid.com/memes/trending?page=${curPage}`
+        }
 
-        else if (source.displayText === LocalText.memedroid_day)
-            link = `https://www.memedroid.com/memes/top/day?page=${RandomInt(1, 5)}`
+        else if (source.displayText === LocalText.memedroid_day) {
+            const curPage = await LoopNumberAsync(StorageKey_Memedroid_CurrentPage('day'), 1, fewPage)
+            link = `https://www.memedroid.com/memes/top/day?page=${curPage}`
+        }
 
-        else if (source.displayText === LocalText.memedroid_week)
-            link = `https://www.memedroid.com/memes/top/week?page=${RandomInt(1, maxPage)}`
+        else if (source.displayText === LocalText.memedroid_week) {
+            const curPage = await LoopNumberAsync(StorageKey_Memedroid_CurrentPage('week'), 1, mediumPage)
+            link = `https://www.memedroid.com/memes/top/week?page=${curPage}`
+        }
 
-        else if (source.displayText === LocalText.memedroid_month)
-            link = `https://www.memedroid.com/memes/top/month?page=${RandomInt(1, maxPage)}`
+        else if (source.displayText === LocalText.memedroid_month) {
+            const curPage = await LoopNumberAsync(StorageKey_Memedroid_CurrentPage('month'), 1, mediumPage)
+            link = `https://www.memedroid.com/memes/top/month?page=${curPage}`
+        }
 
         else if (source.displayText === LocalText.memedroid_ever)
             link = `https://www.memedroid.com/memes/top/ever?page=${RandomInt(1, maxPage)}`
 
         else // random all
             link = `https://www.memedroid.com/memes/random?page=${RandomInt(1, maxPage)}`
-            
+
         console.log('fetching...', link);
 
         const response = await fetch(link)
