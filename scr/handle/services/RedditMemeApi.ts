@@ -9,7 +9,7 @@ export const GetRedditMemeAsync = async (): Promise<RandomImage | undefined> => 
     try {
         let data = await GetApiDataItemFromCached<RandomImage>(StorageKey_Reddit)
 
-        console.log('get local ', data);
+        // console.log('get local ', data);
 
         if (data !== undefined) {
             return data
@@ -23,7 +23,8 @@ export const GetRedditMemeAsync = async (): Promise<RandomImage | undefined> => 
 
         let json = await response.json()
 
-        let arr: RandomImage[] = json.memes.map(i=> {
+        // @ts-ignore
+        let arr: RandomImage[] = json.memes.map(i => {
             return {
                 uri: i.url,
                 title: i.title,
