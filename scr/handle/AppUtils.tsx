@@ -669,6 +669,8 @@ export const GetIconOfScreen = (screen: ScreenName) => {
         return 'horse-human'
     else if (screen === ScreenName.MovieQuote)
         return 'movie-roll'
+    else if (screen === ScreenName.Universe)
+        return 'moon-waning-crescent'
     else
         return Icon.HeartBroken
 }
