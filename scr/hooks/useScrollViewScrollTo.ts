@@ -1,6 +1,5 @@
-import { LayoutChangeEvent, LayoutRectangle } from 'react-native'
+import { LayoutChangeEvent, LayoutRectangle, ScrollView } from 'react-native'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { ScrollView } from 'react-native-gesture-handler'
 
 /**
  ## USAGE
