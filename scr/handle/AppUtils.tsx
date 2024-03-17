@@ -671,6 +671,8 @@ export const GetIconOfScreen = (screen: ScreenName) => {
         return 'movie-roll'
     else if (screen === ScreenName.Universe)
         return 'moon-waning-crescent'
+    else if (screen === ScreenName.Memedroid)
+        return 'emoticon-excited'
     else
         return Icon.HeartBroken
 }
