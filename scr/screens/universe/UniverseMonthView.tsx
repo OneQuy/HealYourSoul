@@ -1,20 +1,20 @@
 // @ts-ignore
-import { View, StyleSheet, Linking, FlatList, Text, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, FlatList, Text, TouchableOpacity } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, Outline } from '../../constants/AppConstants'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
 import { MonthName, SafeDateString } from '../../handle/UtilsTS';
-import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
 import HeaderRightButtons from '../components/HeaderRightButtons';
 import MiniIAP from '../components/MiniIAP';
-import { GetSourceUniverse } from '../../handle/services/UniverseApi';
 import { RandomInt } from '../../handle/Utils';
 import UniverseMonthItem from './UniverseMonthItem'
 import { ScrollView } from 'react-native-gesture-handler'
 import useScrollViewScrollTo from '../../hooks/useScrollViewScrollTo'
+
+const fullMonthIndex = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 
 export const numColumnMonthItem = 6
 
@@ -50,9 +50,9 @@ const UniverseMonthView = ({
     // setDate(new Date(2014, 4, 21))
   }, [])
 
-  const onPressSource = useCallback(() => {
-    Linking.openURL(GetSourceUniverse(monthYear))
-  }, [monthYear])
+  // const onPressSource = useCallback(() => {
+  //   Linking.openURL(GetSourceUniverse(monthYear))
+  // }, [monthYear])
 
   // const onSwiped = useCallback((result: SwipeResult) => {
   //   if (!result.primaryDirectionIsHorizontalOrVertical)
@@ -122,6 +122,9 @@ const UniverseMonthView = ({
       min = 4
     else if (monthYear.getFullYear() === new Date().getFullYear())
       max = new Date().getMonth()
+
+    if (min === 0 && max === 11)
+      return fullMonthIndex
 
     for (let i = min; i <= max; i++)
       arr.push(i)
