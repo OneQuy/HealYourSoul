@@ -4,6 +4,7 @@ import { RandomImage } from "../../constants/Types"
 import { GetApiDataItemFromCached } from "../AppUtils"
 import { RandomInt } from "../Utils"
 import { CreateError, GetTextBetween } from "../UtilsTS"
+import { PopupSelectItem } from "../../screens/components/PopupSelect"
 
 const extract = (text: string): RandomImage[] => {
     const lines = text.split('\n')
@@ -51,9 +52,10 @@ const extract = (text: string): RandomImage[] => {
     return arr
 }
 
-export const GetMemedroidAsync = async (): Promise<RandomImage | undefined> => {
+export const GetMemedroidAsync = async (source: PopupSelectItem): Promise<RandomImage | undefined> => {
     try {
-
+        console.log(source);
+        
         let json = await GetApiDataItemFromCached<RandomImage>(StorageKey_Memedroid)
         // console.log('get local', json);
 
@@ -61,7 +63,7 @@ export const GetMemedroidAsync = async (): Promise<RandomImage | undefined> => {
             return json
         }
 
-        const link = `https://www.memedroid.com/memes/random?page=${RandomInt(1, 199)}`
+        const link = `https://www.memedroid.com/memes/random?page=${RandomInt(1, 100)}`
         // console.log('fetching...', link);
 
         const response = await fetch(link)
