@@ -37,15 +37,6 @@ const UniverseMonthView = ({
     return SafeDateString(monthYear, '_')
   }, [monthYear])
 
-  const onPressRandom = useCallback(async () => {
-    // track_PressRandom(true, category, undefined)
-
-    const minday = new Date(1995, 5, 20).getTime()
-
-    setMonthYear(new Date(RandomInt(minday, Date.now())))
-    // setDate(new Date(2014, 4, 21))
-  }, [])
-
   const daysToRender = useMemo(() => {
     const now = new Date()
     const isThisMonth = now.getMonth() === monthYear.getMonth() && now.getFullYear() === monthYear.getFullYear()
@@ -116,13 +107,26 @@ const UniverseMonthView = ({
     ref: monthRef,
     onLayoutItem: onLayoutMonth,
     keyForScollView: keyForScollViewMonth,
+    scrollToItem: scrollToMonthIndex,
   } = useScrollViewScrollTo(true, monthIndexesToRender, monthIndexesToRender.includes(monthYear.getMonth()) ? monthYear.getMonth() : monthIndexesToRender[0], undefined, -50)
 
   const {
     ref: yearRef,
     onLayoutItem: onLayoutYear,
     keyForScollView: keyForScollViewYear,
+    scrollToItem: scrollToYear,
   } = useScrollViewScrollTo(true, yearsToRender, monthYear.getFullYear(), undefined, -50)
+
+  const onPressRandom = useCallback(async () => {
+    // track_PressRandom(true, category, undefined)
+
+    const minday = new Date(1995, 5, 20).getTime()
+    const date = new Date(RandomInt(minday, Date.now()))
+    setMonthYear(date)
+
+    scrollToMonthIndex(date.getMonth())    
+    scrollToYear(date.getFullYear())    
+  }, [scrollToMonthIndex, scrollToYear])
 
   // update header setting btn
 
