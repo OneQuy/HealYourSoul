@@ -1,6 +1,6 @@
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, GestureResponderEvent, Animated, Linking, Alert } from 'react-native'
+import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, Animated, Linking, Alert } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
@@ -177,7 +177,11 @@ const UniversePicOfDayView = ({
       return
     }
     else { // fail
-      AlertWithError(data)
+      if (IsToday(date)) {
+        Alert.alert(LocalText.popup_title_error, LocalText.popup_content_error_universe_today)
+      }
+      else
+        AlertWithError(data)
 
       if (NetLord.IsAvailableLatestCheck())
         setReasonToReload(NeedReloadReason.FailToGetContent)

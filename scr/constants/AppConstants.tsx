@@ -362,7 +362,7 @@ export const LocalText = {
   feedback_user_contact: "Please provide me with your email, or if you prefer, your contact information on WhatsApp, Twitter, Facebook, Instagram, etc. This will allow me to reach out to you if needed to address the issue. (Optional)",
   error: "Error",
   credit_to_author: 'Credit to the author.',
-  astronomy_pic: 'Astronomy Picture of the Day', 
+  astronomy_pic: 'Astronomy Picture of the Day',
   credit_to: 'Credit to',
   error_toast: 'Something\'s wrong',
   tap_to_retry: 'Tap to retry.',
@@ -463,7 +463,7 @@ export const LocalText = {
   agree_rules: 'Please agree the rules and guidelines before uploading.',
   agree: 'Agree rules',
   banned_with_exp: "@@\n\nTime you can upload: ##",
-  source: "Source", 
+  source: "Source",
 
   // ---------
   Upload_Guidelines: 'Upload Guidelines.',
@@ -565,6 +565,7 @@ export const LocalText = {
   popup_content_error: "Uh-oh! Something went wrong. We're fixing it. Thanks for your patience!",
   popup_content_error_empty: "The list is empty. Please pick at least 1 item!",
   popup_content_error_common: "Uh-oh! Something went wrong.",
+  popup_content_error_universe_today: "Today data not updated yet. Please wait and try the next time!",
 
   popup_content_sent_feedback: 'Thank you for taking the time to provide feedback! Your input is valuable and helps us improve.',
   popup_content_sent_feedback_error_hour: 'You just sent feedback recently. Please send another one at least in the next hour. Thank you!',
