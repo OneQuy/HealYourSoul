@@ -110,7 +110,7 @@ const useScrollViewScrollTo = <T>(isHorizontal: boolean, items: T[]) => {
         const index = items.indexOf(item)
 
         if (index < 0) {
-            console.error('[useScrollViewScrollTo] can not found item to scroll')
+            console.error('[useScrollViewScrollTo] can not found item to scroll: ' + JSON.stringify(item))
             return
         }
 
