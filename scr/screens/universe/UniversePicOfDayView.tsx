@@ -21,7 +21,7 @@ import ViewCount from '../components/ViewCount';
 import { GetSourceUniverse, GetUniversePicOfDayDataAsync } from '../../handle/services/UniverseApi';
 import { NetLord } from '../../handle/NetLord';
 import { RandomInt, TempDirName } from '../../handle/Utils';
-import { track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
+import { track_PressRandom, track_SimpleWithCat, track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 import { DownloadFileAsync, GetFLPFromRLP } from '../../handle/FileUtils';
 import Share from 'react-native-share';
 
@@ -52,12 +52,14 @@ const UniversePicOfDayView = ({
   }, [date])
 
   const onPressNextDay = useCallback(async (isNext: boolean) => {
+    track_SimpleWithParam('universe', isNext ? 'next_day' : 'previous_day')
+
     const nd = date.setDate(date.getDate() + (isNext ? 1 : -1))
     setDate(new Date(nd))
   }, [date])
 
   const onPressRandom = useCallback(async () => {
-    // track_PressRandom(true, category, undefined)
+    track_PressRandom(true, category, undefined)
 
     const minday = new Date(1995, 5, 20).getTime()
 
@@ -124,6 +126,7 @@ const UniversePicOfDayView = ({
   const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(undefined, undefined, onSwiped)
 
   const onPressToday = useCallback(async () => {
+    track_SimpleWithParam('universe', 'today')
     setDate(new Date())
   }, [])
 

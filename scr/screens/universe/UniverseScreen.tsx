@@ -24,7 +24,7 @@ const UniverseScreen = () => {
   }, [currentDateOfMonthView])
 
   const onPressView = useCallback((view: SubView) => {
-    track_SimpleWithParam('gallery', view)
+    track_SimpleWithParam('universe', 'view_' + view)
 
     setSubView(view)
   }, [])

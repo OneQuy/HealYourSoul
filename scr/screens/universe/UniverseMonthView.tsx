@@ -16,6 +16,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 import useScrollViewScrollTo from '../../hooks/useScrollViewScrollTo'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ViewCount from '../components/ViewCount';
+import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 
 const fullMonthIndex = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 
@@ -84,7 +85,14 @@ const UniverseMonthView = ({
     })
   }, [theme])
 
+  const onPressMonth = useCallback((monthIndex: number) => {
+    track_SimpleWithParam('universe', 'month')
+    new Date(monthYear.getFullYear(), monthIndex, 1)
+  }, [monthYear])
+
   const onPressYear = useCallback((year: number) => {
+    track_SimpleWithParam('universe', 'year')
+
     const months = getMonthIndexesOfYear(year)
 
     if (months.includes(monthYear.getMonth()))
@@ -94,6 +102,7 @@ const UniverseMonthView = ({
   }, [monthYear])
 
   const onPressDay = useCallback((dayNum: number) => {
+    track_SimpleWithParam('universe', 'day')
     onPressDayOfMonth(dayNum)
   }, [onPressDayOfMonth])
 
@@ -120,7 +129,7 @@ const UniverseMonthView = ({
   } = useScrollViewScrollTo(true, yearsToRender, monthYear.getFullYear(), undefined, -50)
 
   const onPressRandom = useCallback(async () => {
-    // track_PressRandom(true, category, undefined)
+    track_SimpleWithParam('universe', 'random_month')
 
     const minday = new Date(1995, 5, 20).getTime()
     const date = new Date(RandomInt(minday, Date.now()))
@@ -189,7 +198,7 @@ const UniverseMonthView = ({
               return (
                 <TouchableOpacity
                   onLayout={onLayoutMonth}
-                  key={monthIndex} onPress={() => setMonthYear(new Date(monthYear.getFullYear(), monthIndex, 1))} style={isCurrent ? style.yearTO_Current : style.yearTO}>
+                  key={monthIndex} onPress={() => onPressMonth(monthIndex)} style={isCurrent ? style.yearTO_Current : style.yearTO}>
                   <Text style={isCurrent ? style.yearTxt_Current : style.yearTxt}>{MonthName(monthIndex, false)}</Text>
                 </TouchableOpacity>
               )
