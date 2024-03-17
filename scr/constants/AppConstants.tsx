@@ -428,6 +428,9 @@ export const LocalText = {
   memedroid_week: 'Top week',
   memedroid_month: 'Top month',
   memedroid_ever: 'Top ever',
+  
+  random_meme_1_source_1: 'Source 1',
+  random_meme_1_source_2: 'Source 2',
 
   one_time_purchase: 'You can choose between a one-time purchase',
   subscriptions: 'Or a subscription',
