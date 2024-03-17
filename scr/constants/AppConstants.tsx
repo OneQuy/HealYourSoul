@@ -392,7 +392,7 @@ export const LocalText = {
   next: 'Next',
   previous: 'Previous',
   next_day: 'Next day',
-  previous_day: 'Previous day',
+  previous_day: 'Prev. day',
   read_full: 'Read Full',
   view: 'View',
   saved: 'Downloaded!',
