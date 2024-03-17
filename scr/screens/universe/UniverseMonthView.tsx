@@ -4,7 +4,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { View, StyleSheet, FlatList, Text, TouchableOpacity } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo } from 'react'
 import { ThemeContext } from '../../constants/Colors'
-import { BorderRadius, FontSize, FontWeight, Icon, LocalText, Outline, Size } from '../../constants/AppConstants'
+import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, Outline, Size } from '../../constants/AppConstants'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { SaveCurrentScreenForLoadNextTime } from '../../handle/AppUtils'
 import { MonthName, SafeDateString } from '../../handle/UtilsTS';
@@ -15,6 +15,7 @@ import UniverseMonthItem from './UniverseMonthItem'
 import { ScrollView } from 'react-native-gesture-handler'
 import useScrollViewScrollTo from '../../hooks/useScrollViewScrollTo'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import ViewCount from '../components/ViewCount';
 
 const fullMonthIndex = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 
@@ -34,7 +35,7 @@ const UniverseMonthView = ({
   const { bottom: bottomSafe } = useSafeAreaInsets()
 
   const idForShowMiniIapAndCountView = useMemo(() => {
-    return SafeDateString(monthYear, '_')
+    return `month_view/${MonthName(monthYear.getMonth(), false)}_${monthYear.getFullYear()}`
   }, [monthYear])
 
   const daysToRender = useMemo(() => {
@@ -63,6 +64,7 @@ const UniverseMonthView = ({
     return StyleSheet.create({
       masterView: { flex: 1, backgroundColor: theme.background, gap: Outline.GapHorizontal, },
       flatlistContainerView: { flex: 1, alignItems: 'center' },
+      viewCount: { marginRight: Outline.GapVertical, alignItems: 'flex-end', },
 
       yearsMasterView: { marginLeft: Outline.GapVertical, flexDirection: 'row', gap: Outline.GapHorizontal, alignItems: 'center' },
       yearsScrollContainerView: { gap: Outline.GapHorizontal },
@@ -124,8 +126,8 @@ const UniverseMonthView = ({
     const date = new Date(RandomInt(minday, Date.now()))
     setMonthYear(date)
 
-    scrollToMonthIndex(date.getMonth())    
-    scrollToYear(date.getFullYear())    
+    scrollToMonthIndex(date.getMonth())
+    scrollToYear(date.getFullYear())
   }, [scrollToMonthIndex, scrollToYear])
 
   // update header setting btn
@@ -208,6 +210,12 @@ const UniverseMonthView = ({
           renderItem={renderDay}
           numColumns={numColumnMonthItem}
         />
+      </View>
+
+      {/* view count */}
+
+      <View style={style.viewCount}>
+        <ViewCount cat={Category.Universe} id={idForShowMiniIapAndCountView} />
       </View>
 
       {/* random */}
