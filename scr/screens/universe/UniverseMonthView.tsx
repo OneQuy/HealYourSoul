@@ -119,7 +119,7 @@ const UniverseMonthView = ({
     let min = 0, max = 11
 
     if (monthYear.getFullYear() === 1995)
-      min = 4
+      min = 5
     else if (monthYear.getFullYear() === new Date().getFullYear())
       max = new Date().getMonth()
 
