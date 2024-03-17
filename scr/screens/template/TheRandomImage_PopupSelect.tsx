@@ -23,6 +23,7 @@ export const TheRandomImage_PopupSelect = ({
     getImageWithParamAsync,
 
     popupSelectTitle,
+    fixedArrayData,
 }: {
     category: Category,
     fileURL: string,
@@ -31,8 +32,9 @@ export const TheRandomImage_PopupSelect = ({
     getImageWithParamAsync: (item: PopupSelectItem) => Promise<RandomImage | undefined>,
 
     popupSelectTitle?: string,
+    fixedArrayData?: string[],
 }) => {
-    const { result: textArr, didDownload, error, reUpdateAsync } = useCheckAndDownloadRemoteFile<string[]>(
+    const { result, didDownload, error, reUpdateAsync } = useCheckAndDownloadRemoteFile<string[]>(
         fileURL,
         TempDirName + `/${configFileName}.json`,
         true,
@@ -41,6 +43,13 @@ export const TheRandomImage_PopupSelect = ({
         false,
         async () => AsyncStorage.getItem(StorageKey_LocalFileVersion(category)),
         async () => AsyncStorage.setItem(StorageKey_LocalFileVersion(category), GetRemoteFileConfigVersion(configFileName).toString()))
+
+    const textArr = useMemo(() => {
+        if (fixedArrayData)
+            return fixedArrayData
+        else 
+            return result
+    }, [result, fixedArrayData])
 
     const selectItems = useMemo(() => {
         if (!Array.isArray(textArr))
