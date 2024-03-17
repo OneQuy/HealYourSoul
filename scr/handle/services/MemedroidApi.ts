@@ -1,9 +1,9 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import { StorageKey_Memedroid } from "../../constants/AppConstants"
+import { LocalText, StorageKey_Memedroid } from "../../constants/AppConstants"
 import { RandomImage } from "../../constants/Types"
 import { GetApiDataItemFromCached } from "../AppUtils"
 import { RandomInt } from "../Utils"
-import { CreateError, GetTextBetween } from "../UtilsTS"
+import { FilterOnlyLetterAndNumberFromString, GetTextBetween } from "../UtilsTS"
 import { PopupSelectItem } from "../../screens/components/PopupSelect"
 
 const extract = (text: string): RandomImage[] => {
@@ -54,17 +54,37 @@ const extract = (text: string): RandomImage[] => {
 
 export const GetMemedroidAsync = async (source: PopupSelectItem): Promise<RandomImage | undefined> => {
     try {
-        console.log(source);
-        
-        let json = await GetApiDataItemFromCached<RandomImage>(StorageKey_Memedroid)
-        // console.log('get local', json);
+        const key = StorageKey_Memedroid(FilterOnlyLetterAndNumberFromString(source.displayText))
+        let json = await GetApiDataItemFromCached<RandomImage>(key)
+
+        // console.log('get local ', key, json);
 
         if (json !== undefined) {
             return json
         }
 
-        const link = `https://www.memedroid.com/memes/random?page=${RandomInt(1, 100)}`
-        // console.log('fetching...', link);
+        let link
+        const maxPage = 100
+
+        if (source.displayText === LocalText.memedroid_trending)
+            link = `https://www.memedroid.com/memes/trending?page=${RandomInt(1, maxPage)}`
+
+        else if (source.displayText === LocalText.memedroid_day)
+            link = `https://www.memedroid.com/memes/top/day?page=${RandomInt(1, 5)}`
+
+        else if (source.displayText === LocalText.memedroid_week)
+            link = `https://www.memedroid.com/memes/top/week?page=${RandomInt(1, maxPage)}`
+
+        else if (source.displayText === LocalText.memedroid_month)
+            link = `https://www.memedroid.com/memes/top/month?page=${RandomInt(1, maxPage)}`
+
+        else if (source.displayText === LocalText.memedroid_ever)
+            link = `https://www.memedroid.com/memes/top/ever?page=${RandomInt(1, maxPage)}`
+
+        else // random all
+            link = `https://www.memedroid.com/memes/random?page=${RandomInt(1, maxPage)}`
+            
+        console.log('fetching...', link);
 
         const response = await fetch(link)
 
@@ -78,9 +98,9 @@ export const GetMemedroidAsync = async (source: PopupSelectItem): Promise<Random
             // return new Error('[RandomMeme 2] can not fetch, empty arr')
             return undefined
 
-        await AsyncStorage.setItem(StorageKey_Memedroid, JSON.stringify(arr))
+        await AsyncStorage.setItem(key, JSON.stringify(arr))
 
-        json = await GetApiDataItemFromCached<RandomImage>(StorageKey_Memedroid)
+        json = await GetApiDataItemFromCached<RandomImage>(key)
 
         if (!json)
             // return new Error('[RandomMeme 2] get cached local fail')
