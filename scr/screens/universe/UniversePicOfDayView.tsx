@@ -180,6 +180,9 @@ const UniversePicOfDayView = ({
       if (IsToday(date)) {
         Alert.alert(LocalText.popup_title_error, LocalText.popup_content_error_universe_today)
       }
+      else if (date.getTime() > Date.now()) {
+        Alert.alert(LocalText.popup_title_error, LocalText.popup_content_error_universe_future)
+      }
       else
         AlertWithError(data)
 
