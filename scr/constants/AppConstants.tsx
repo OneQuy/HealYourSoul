@@ -421,6 +421,13 @@ export const LocalText = {
   read_all: 'Mark as read all',
   seen_posts: 'Viewed posts',
   favorited_posts: 'Loved posts',
+  
+  memedroid_all: 'Random all',
+  memedroid_trending: 'Trending',
+  memedroid_day: 'Top day',
+  memedroid_week: 'Top week',
+  memedroid_month: 'Top month',
+  memedroid_ever: 'Top ever',
 
   one_time_purchase: 'You can choose between a one-time purchase',
   subscriptions: 'Or a subscription',
