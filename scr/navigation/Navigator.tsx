@@ -144,7 +144,7 @@ const ScreenList: ScreenNamePair[] = [
   [ScreenName.DogBreed, DogBreedScreen],
   // [ScreenName.Siena, SienaScreen],
   [ScreenName.Universe, UniverseScreen],
-  // [ScreenName.Memedroid, MemedroidScreen],
+  [ScreenName.Memedroid, MemedroidScreen],
 
   // app
 

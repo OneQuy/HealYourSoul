@@ -599,6 +599,8 @@ export const StorageKey_NinjaFact = 'ninja_fact_arr'
 export const StorageKey_NinjaJoke = 'ninja_joke_arr'
 export const StorageKey_Quote = 'quote_arr'
 
+export const StorageKey_Memedroid = 'memedroid'
+
 export const StorageKey_AnimeQuote_RandomAll = 'anime_quote_arr2'
 export const StorageKey_AnimeImage_ByType = (type: string) => 'anime_image_type_' + type
 

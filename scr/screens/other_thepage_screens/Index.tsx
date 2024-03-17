@@ -5,6 +5,7 @@ import TheRandomShortText from '../template/TheRandomShortText';
 import { GetQuoteTextAsync } from '../../handle/services/QuoteTextApi';
 import TheRandomImage from '../template/TheRandomImage';
 import { GetIWasteSoMuchTimeAsync } from '../../handle/services/IWasteSoMuchTime';
+import { GetMemedroidAsync } from '../../handle/services/MemedroidApi';
 
 export const CuteScreen = () => {
   return <ThePage category={Category.Cute} />;
@@ -63,6 +64,6 @@ export const RandomMemeScreen = () => {
 export const MemedroidScreen = () => {
   return <TheRandomImage
     category={Category.Memedroid}
-    getImageAsync={GetIWasteSoMuchTimeAsync}
+    getImageAsync={GetMemedroidAsync}
   />;
 }
