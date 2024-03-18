@@ -1,7 +1,7 @@
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, Alert, GestureResponderEvent, Animated } from 'react-native'
+import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, Alert, GestureResponderEvent, Animated, NativeSyntheticEvent, ImageLoadEventData } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { BorderRadius, Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size, StorageKey_LocalFileVersion, StorageKey_SelectingShortFilmIdx } from '../../constants/AppConstants'
@@ -30,6 +30,7 @@ import HeaderRightButtons from '../components/HeaderRightButtons';
 import useIntroduceCat from '../components/IntroduceCat';
 import ViewCount from '../components/ViewCount';
 import MiniIAP from '../components/MiniIAP';
+import { useHeightOfImageWhenWidthFull } from '../../hooks/useHeightOfImageWhenWidthFull';
 
 const category = Category.BestShortFilms
 const fileURL = 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Fshort_films.json?alt=media&token=537eec8b-f774-4908-a5fa-45f8daf676d8'
@@ -55,15 +56,18 @@ const BestShortFilmsScreen = () => {
         async () => AsyncStorage.getItem(StorageKey_LocalFileVersion(category)),
         async () => AsyncStorage.setItem(StorageKey_LocalFileVersion(category), GetRemoteFileConfigVersion('short_films').toString()))
 
+    const { onLoad, heightInPixel } = useHeightOfImageWhenWidthFull(heightPercentageToDP(40))
+
     // animation
 
     const mediaViewScaleAnimRef = useRef(new Animated.Value(1)).current
 
     // play loaded media anim
 
-    const onImageLoaded = useCallback(() => {
-        playAnimLoadedMedia(mediaViewScaleAnimRef)
-    }, [])
+    useEffect(() => {
+        if (selectingItem?.img)
+            playAnimLoadedMedia(mediaViewScaleAnimRef)
+    }, [heightInPixel, selectingItem?.img])
 
     const idCurrent = useMemo(() => {
         if (!selectingItem)
@@ -315,8 +319,12 @@ const BestShortFilmsScreen = () => {
                                                 <MaterialCommunityIcons name={Icon.List} color={theme.counterBackground} size={Size.Icon} />
                                             </View>
                                         </View>
-                                        <Animated.View style={[{ transform: [{ scale: mediaViewScaleAnimRef }] }]}>
-                                            <ImageBackgroundWithLoading onLoad={onImageLoaded} resizeMode='contain' source={{ uri: selectingItem?.img }} style={styleSheet.image} indicatorProps={{ color: theme.counterBackground }} />
+                                        <Animated.View style={{
+                                            width: widthPercentageToDP(100),
+                                            height: heightInPixel,
+                                            transform: [{ scale: mediaViewScaleAnimRef }]
+                                        }}>
+                                            <ImageBackgroundWithLoading onLoad={onLoad} resizeMode='contain' source={{ uri: selectingItem?.img }} style={styleSheet.image} indicatorProps={{ color: theme.counterBackground }} />
                                         </Animated.View>
                                         <Text selectable style={[styleSheet.nameView, { color: theme.counterBackground, }]}>{selectingItem?.name}</Text>
                                         {
@@ -377,7 +385,7 @@ export default BestShortFilmsScreen
 const styleSheet = StyleSheet.create({
     masterView: { flex: 1, gap: Outline.GapVertical, },
     headerOptionTO: { marginRight: 15 },
-    image: { width: widthPercentageToDP(100), height: heightPercentageToDP(40) },
+    image: { width: '100%', height: '100%' },
     contentView: { flex: 1, gap: Outline.GapVertical, paddingTop: Outline.GapHorizontal },
     contentScrollView: { flex: 1, marginHorizontal: Outline.GapVertical_2 },
     nameView: { marginLeft: Outline.Horizontal, fontSize: FontSize.Normal, fontWeight: FontWeight.B500 },
