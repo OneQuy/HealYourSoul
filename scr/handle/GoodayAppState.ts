@@ -9,7 +9,7 @@ import { FirebaseDatabaseTimeOutMs, LocalText, ScreenName, StorageKey_ClickNotif
 import { GetDateAsync, GetDateAsync_IsValueExistedAndIsToday, GetDateAsync_IsValueNotExistedOrEqualOverMinFromNow, GetNumberIntAsync, GetPairNumberIntAndDateAsync, IncreaseNumberAsync, SetDateAsync_Now, SetNumberAsync, SetPairNumberIntAndDateAsync_Now, StorageAppendToArrayAsync, StorageGetArrayAsync } from "./AsyncStorageUtils"
 import { HandldAlertUpdateAppAsync } from "./HandleAlertUpdateApp"
 import { CheckAndPrepareDataForNotificationAsync, setNotificationAsync } from "./GoodayNotification"
-import { FilterOnlyLetterAndNumberFromString, IsToday, SafeValue } from "./UtilsTS"
+import { DayName, FilterOnlyLetterAndNumberFromString, IsToday, SafeValue } from "./UtilsTS"
 import { NavigationProp } from "@react-navigation/native"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { HandleVersionsFileAsync } from './VersionsHandler';
@@ -243,6 +243,10 @@ export const CheckAndTriggerFirstOpenAppOfTheDayAsync = async () => {
     // gooday streak
 
     HandleGoodayStreakAsync()
+
+    // track day of week
+
+    track_SimpleWithParam('gooday_week', DayName(undefined, true))
 }
 
 /**
