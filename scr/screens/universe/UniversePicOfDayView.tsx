@@ -10,7 +10,7 @@ import { CommonStyles } from '../../constants/CommonConstants'
 import { UniversePicOfDayData } from '../../constants/Types';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 import { ScrollView } from 'react-native-gesture-handler';
-import { IsToday, SafeDateString, ToCanPrint } from '../../handle/UtilsTS';
+import { IsSameDateMonthYear, IsToday, SafeDateString, ToCanPrint } from '../../handle/UtilsTS';
 import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading';
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
@@ -24,6 +24,8 @@ import { track_PressRandom, track_SimpleWithCat, track_SimpleWithParam } from '.
 import { DownloadFileAsync, GetFLPFromRLP } from '../../handle/FileUtils';
 import Share from 'react-native-share';
 import { useHeightOfImageWhenWidthFull } from '../../hooks/useHeightOfImageWhenWidthFull';
+
+const MinDate = new Date(1995, 5, 20)
 
 const category = Category.Universe
 const maxHeightImage = heightPercentageToDP(40)
@@ -48,6 +50,12 @@ const UniversePicOfDayView = ({
   }, [date])
 
   const onPressNextDay = useCallback(async (isNext: boolean) => {
+    if ((isNext && IsToday(date)) ||
+      (!isNext && IsSameDateMonthYear(MinDate, date))) {
+        Alert.alert(LocalText.popup_title_error, LocalText.popup_content_error_universe_out_range_date)
+        return
+    }
+
     track_SimpleWithParam('universe', isNext ? 'next_day' : 'previous_day')
 
     const nd = date.setDate(date.getDate() + (isNext ? 1 : -1))
@@ -57,7 +65,7 @@ const UniversePicOfDayView = ({
   const onPressRandom = useCallback(async () => {
     track_PressRandom(true, category, undefined)
 
-    const minday = new Date(1995, 5, 20).getTime()
+    const minday = MinDate.getTime()
 
     setDate(new Date(RandomInt(minday, Date.now())))
     // setDate(new Date(2014, 4, 21))

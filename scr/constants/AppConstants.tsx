@@ -579,6 +579,7 @@ export const LocalText = {
   
   popup_content_error_universe_today: "Today data not updated yet. Please wait and try the next time!",
   popup_content_error_universe_future: "You can not view the pic of tomorrow or a future date!",
+  popup_content_error_universe_out_range_date: "Out of range of date.",
 
   popup_content_sent_feedback: 'Thank you for taking the time to provide feedback! Your input is valuable and helps us improve.',
   popup_content_sent_feedback_error_hour: 'You just sent feedback recently. Please send another one at least in the next hour. Thank you!',
