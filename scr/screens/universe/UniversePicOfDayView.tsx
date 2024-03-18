@@ -1,6 +1,6 @@
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, Animated, Linking, Alert } from 'react-native'
+import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, Animated, Linking, Alert, NativeSyntheticEvent, ImageLoadEventData } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
@@ -24,8 +24,10 @@ import { RandomInt, TempDirName } from '../../handle/Utils';
 import { track_PressRandom, track_SimpleWithCat, track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 import { DownloadFileAsync, GetFLPFromRLP } from '../../handle/FileUtils';
 import Share from 'react-native-share';
+import { useHeightOfImageWhenWidthFull } from '../../hooks/useHeightOfImageWhenWidthFull';
 
 const category = Category.Universe
+const maxHeightImage = heightPercentageToDP(40)
 
 var fetchedFirstTime = false
 
@@ -41,12 +43,6 @@ const UniversePicOfDayView = ({
   const theme = useContext(ThemeContext);
   const [handling, setHandling] = useState(true)
   const [curentDayData, setCurentDayData] = useState<UniversePicOfDayData | undefined>(undefined)
-
-  const mediaViewScaleAnimRef = useRef(new Animated.Value(1)).current
-
-  const onImageLoaded = useCallback(() => {
-    playAnimLoadedMedia(mediaViewScaleAnimRef)
-  }, [])
 
   const id = useMemo(() => {
     return SafeDateString(date, '_')
@@ -179,7 +175,7 @@ const UniversePicOfDayView = ({
           Alert.alert(LocalText.popup_title_error, LocalText.popup_content_error_universe_today)
         else { // data today not updated, back to yesterday
           fetchedFirstTime = true
-          
+
           const d = new Date(date)
           d.setDate(d.getDate() - 1)
           setDate(d)
@@ -200,16 +196,18 @@ const UniversePicOfDayView = ({
     }
   }, [date])
 
+  const { imageHeightAnimRef, onLoad: onLoadImage } = useHeightOfImageWhenWidthFull(maxHeightImage)
+
   useEffect(() => {
     reloadAsync()
   }, [reloadAsync])
 
-  // update header setting btn
+  // header setting btn
 
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => <HeaderRightButtons />
-    });
+    })
   }, [])
 
   // save last visit category screen
@@ -240,8 +238,8 @@ const UniversePicOfDayView = ({
 
                     {/* image */}
 
-                    <Animated.View style={[{ transform: [{ scale: mediaViewScaleAnimRef }] }]}>
-                      <ImageBackgroundWithLoading onLoad={onImageLoaded} resizeMode='contain' source={{ uri: curentDayData?.thumbUri ?? curentDayData?.imgUri }} style={styleSheet.image} indicatorProps={{ color: theme.counterBackground }} />
+                    <Animated.View style={{ width: widthPercentageToDP(100), height: imageHeightAnimRef }}>
+                      <ImageBackgroundWithLoading onLoad={onLoadImage} resizeMode='contain' source={{ uri: curentDayData?.thumbUri ?? curentDayData?.imgUri }} style={styleSheet.image} indicatorProps={{ color: theme.counterBackground }} />
                     </Animated.View>
 
                     {/* title */}
@@ -296,7 +294,7 @@ export default UniversePicOfDayView
 
 const styleSheet = StyleSheet.create({
   masterView: { flex: 1, },
-  image: { width: widthPercentageToDP(100), height: heightPercentageToDP(40) },
+  image: { width: '100%', height: '100%' },
   contentView: { flex: 1, gap: Outline.GapHorizontal, paddingTop: Outline.GapHorizontal },
   contentScrollView: { flex: 1, marginHorizontal: Outline.GapVertical },
   titleView: { textAlign: 'center', marginHorizontal: Outline.GapVertical, fontSize: FontSize.Normal, fontWeight: FontWeight.B500 },
