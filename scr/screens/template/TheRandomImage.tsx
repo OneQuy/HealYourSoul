@@ -13,12 +13,12 @@ import { TempDirName } from '../../handle/Utils'
 import { SaveCurrentScreenForLoadNextTime, ToastTheme } from '../../handle/AppUtils'
 import { CommonStyles } from '../../constants/CommonConstants'
 import { DiversityItemType, RandomImage } from '../../constants/Types';
-import { IsValuableArrayOrString, ToCanPrint } from '../../handle/UtilsTS';
+import { FilterOnlyLetterAndNumberFromString, IsValuableArrayOrString, ToCanPrint } from '../../handle/UtilsTS';
 import { DownloadFileAsync, GetFLPFromRLP } from '../../handle/FileUtils';
 import { SaveToGalleryAsync } from '../../handle/CameraRoll';
 import { ToastOptions, toast } from '@baronha/ting';
 import ImageAsMap from '../../handle/ImageAsMap';
-import { track_PressRandom, track_PressSaveMedia, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
+import { track_PopupSelect, track_PressRandom, track_PressSaveMedia, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
@@ -43,7 +43,7 @@ interface TheRandomImageProps {
 const TheRandomImage = ({
     category,
     getImageAsync,
-    
+
     selectItems,
     storageKeyCurrentItemIdxInPopupSelect,
     getImageWithParamAsync,
@@ -89,6 +89,8 @@ const TheRandomImage = ({
         await SetNumberAsync(storageKeyCurrentItemIdxInPopupSelect, idx)
 
         setIsShowPopupSelect(false)
+
+        track_PopupSelect(category, FilterOnlyLetterAndNumberFromString(selectItems[idx].displayText))
     }, [])
 
     const onPressRandom = useCallback(async (shouldTracking: boolean) => {

@@ -10,7 +10,6 @@ import { BorderRadius, Category, FontSize, FontWeight, Icon, Outline, Size } fro
 import { track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 import ImageBackgroundOrView from './ImageBackgroundOrView';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
-import { useInterpolateConfig } from 'react-native-reanimated';
 
 const listPopupTextSizeIfNoIcon = heightPercentageToDP(5)
 const listPopupIconSize = Size.IconBig

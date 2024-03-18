@@ -2,7 +2,7 @@ import { Category, StorageKey_CachedPressNextPost, StorageKey_FirstTimeInstallTi
 import { GetDateAsync, GetDateAsync_IsValueExistedAndIsToday, GetNumberIntAsync, SetDateAsync_Now, SetNumberAsync } from "../AsyncStorageUtils"
 import { MainTrack, TrackErrorOnFirebase } from "./Tracking"
 import { versionAsNumber } from "../AppUtils"
-import { DistanceFrom2Dates, FilterOnlyLetterAndNumberFromString, GetDayHourMinSecFromMs_ToString, IsValuableArrayOrString, TimeOutError, ToCanPrint } from "../UtilsTS"
+import { FilterOnlyLetterAndNumberFromString, GetDayHourMinSecFromMs_ToString, IsValuableArrayOrString, TimeOutError, ToCanPrint } from "../UtilsTS"
 import { UserID } from "../UserID"
 import { Dimensions, Platform } from "react-native"
 import { GetIPLocationAsync, IPLocation } from "../../hooks/useCountryFromIP"
@@ -268,6 +268,20 @@ export const track_SimpleWithParam = (event: string, value: string) => {
         ],
         {
             value,
+        }
+    )
+}
+
+export const track_PopupSelect = (cat: Category, value: string) => {
+    const event = 'popup_select'
+
+    MainTrack(event,
+        [
+            `total/${event}/${Category[cat]}/` + value,
+        ],
+        {
+            value,
+            cat: Category[cat],
         }
     )
 }
