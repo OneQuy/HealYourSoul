@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useCallback, useContext, useMemo, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { BorderRadius, FontSize, FontWeight, LocalText, Outline } from '../../constants/AppConstants'
 import { ThemeContext } from '../../constants/Colors';
 import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
@@ -40,6 +40,10 @@ const UniverseScreen = () => {
     })
   }, [theme])
 
+  useEffect(() => {
+    setCurrentDateOfMonthView(new Date(currentDate.getFullYear(), currentDate.getMonth(), 1))
+  }, [currentDate])
+  
   return (
     <View style={style.masterView}>
 
