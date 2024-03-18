@@ -26,10 +26,12 @@ import HeaderRightButtons from '../components/HeaderRightButtons';
 import useIntroduceCat from '../components/IntroduceCat';
 import ViewCount from '../components/ViewCount';
 import MiniIAP from '../components/MiniIAP';
+import { useHeightOfImageWhenWidthFull } from '../../hooks/useHeightOfImageWhenWidthFull';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
 
 const BGAnim = Animated.createAnimatedComponent(ImageBackground)
 
-const screen = Dimensions.get('screen')
+// const screen = Dimensions.get('screen')
 
 const category = Category.AwardPicture
 export const dataOfYears: PhotosOfTheYear[] = require('../../../assets/json/photos_of_the_year.json')
@@ -51,6 +53,21 @@ const PicturesOfTheYearScreen = () => {
     }, [selectingPhotoIndex, selectingYear])
 
     const mediaViewScaleAnimRef = useRef(new Animated.Value(1)).current
+
+    const { onLoad, heightInPixel } = useHeightOfImageWhenWidthFull(heightPercentageToDP(40))
+
+    const onImageLoad = useCallback((e: NativeSyntheticEvent<ImageLoadEventData>) => {
+        setShowLoadImageIndicator(false)
+
+        onLoad(e)
+    }, [onLoad])
+
+    // play loaded media anim
+
+    useEffect(() => {
+        if (selectingPhoto)
+            playAnimLoadedMedia(mediaViewScaleAnimRef)
+    }, [heightInPixel, selectingPhoto])
 
     const selectingPhotoID = useMemo(() => {
         return Number.parseInt(selectingYear.toString() + selectingPhotoIndex.toString())
@@ -162,12 +179,6 @@ const PicturesOfTheYearScreen = () => {
         Linking.openURL(`https://www.nature.org/en-us/get-involved/how-to-help/photo-contest/${selectingYear}-winners/`)
     }, [selectingYear])
 
-    const onImageLoad = useCallback((_: NativeSyntheticEvent<ImageLoadEventData>) => {
-        setShowLoadImageIndicator(false)
-
-        playAnimLoadedMedia(mediaViewScaleAnimRef)
-    }, [])
-
     const onImageError = useCallback((_: NativeSyntheticEvent<ImageErrorEventData>) => {
         setShowLoadImageIndicator(false)
 
@@ -181,11 +192,8 @@ const PicturesOfTheYearScreen = () => {
         if (!selectingPhoto || !selectingPhoto.description)
             return { flex: 1 }
 
-        const wordCount = selectingPhoto.description.split(' ').length
-        const estLines = Math.ceil(wordCount / 12)
-
-        return { width: '100%', height: screen.height * (estLines > 2 ? 0.35 : 0.4) }
-    }, [selectingPhoto])
+        return { width: '100%', height: heightInPixel }
+    }, [heightInPixel])
 
     const onPressShareImage = useCallback(async () => {
         if (!selectingPhoto)
