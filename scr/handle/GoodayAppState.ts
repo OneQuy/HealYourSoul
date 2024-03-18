@@ -232,7 +232,7 @@ export const CheckAndTriggerFirstOpenAppOfTheDayAsync = async () => {
 
     // handles
 
-    console.log('---- handle first open app of the day ------');
+    // console.log('---- handle first open app of the day ------');
 
     track_NewlyInstallOrFirstOpenOfTheDayOldUserAsync()
 
