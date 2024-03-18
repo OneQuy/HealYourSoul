@@ -21,6 +21,8 @@ import { Buffer as TheBuffer } from 'buffer'
 export const TimeOutError = '[time_out]'
 export const TimeOutStandardInMs = 5000
 
+const DayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
 // color ------------------------
 
 export const colorNameToHexDefines = {
@@ -726,6 +728,18 @@ export const MonthName = (monthIndex: number, fullNameOr3Char: boolean): string 
     const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
     return monthNames[monthIndex].substring(0, fullNameOr3Char ? 100 : 3)
+}
+
+export const DayName = (date?: Date, is3Char?: boolean): string => {
+    if (date === undefined)
+        date = new Date()
+
+    const name = DayNames[date.getDay()]
+
+    if (is3Char === true)
+        return name.substring(0, 3)
+    else
+        return name
 }
 
 export const GetDayHourMinSecFromMs_ToString = (ms: number, separator = '_', removeZeroElement = true): string => {
