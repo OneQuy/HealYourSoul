@@ -305,6 +305,16 @@ const TheRandomImage = ({
 
     return (
         <View pointerEvents={handling ? 'none' : 'auto'} style={[styleSheet.masterView, { backgroundColor: theme.background }]}>
+            {/* filter button */}
+            {
+                !diversityItem && Array.isArray(selectItems) && selectItems.length > 0 &&
+                <View style={styleSheet.filterView}>
+                    <TouchableOpacity onPress={() => setIsShowPopupSelect(true)} style={styleSheet.filterTO}>
+                        <Text adjustsFontSizeToFit numberOfLines={1} style={styleSheet.filterCatTxt}>{currentPopupSelectedItem ? currentPopupSelectedItem.displayText : '...'}</Text>
+                    </TouchableOpacity>
+                </View>
+            }
+
             <View style={CommonStyles.flex_1} >
                 {
                     // true ?
@@ -325,15 +335,6 @@ const TheRandomImage = ({
                                     :
                                     // main
                                     <View style={styleSheet.contentView}>
-                                        {/* filter button */}
-                                        {
-                                            !diversityItem && Array.isArray(selectItems) && selectItems.length > 0 &&
-                                            <View style={styleSheet.filterView}>
-                                                <TouchableOpacity onPress={() => setIsShowPopupSelect(true)} style={styleSheet.filterTO}>
-                                                    <Text adjustsFontSizeToFit numberOfLines={1} style={styleSheet.filterCatTxt}>{currentPopupSelectedItem ? currentPopupSelectedItem.displayText : '...'}</Text>
-                                                </TouchableOpacity>
-                                            </View>
-                                        }
                                         {/* title */}
                                         {
                                             !currentItem?.title ? undefined :
