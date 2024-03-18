@@ -4,6 +4,8 @@ import { Category, ScreenName } from "../constants/AppConstants";
 import { AddOrRemoveItemInArray, ArrayAddWithCheckDuplicate, ArrayRemove, IsValuableArrayOrString } from "../handle/UtilsTS";
 
 export type UserDataState = {
+    minimalDrawer: undefined | boolean,
+
     inboxes: Inbox[] | undefined,
 
     backgroundIdForText: undefined | BackgroundForTextCurrent[],
@@ -87,6 +89,8 @@ export type UserDataState = {
 }
 
 const initialState: UserDataState = {
+    minimalDrawer: false,
+
     inboxes: [],
 
     backgroundIdForText: undefined,
@@ -176,6 +180,12 @@ const slice = createSlice({
 
         resetDev: (state) => {
             state.backgroundIdForText = undefined
+        },
+       
+        // minimal drawer
+
+        toggleMinialDrawer: (state) => {
+            state.minimalDrawer = state.minimalDrawer === undefined ? true : !state.minimalDrawer
         },
 
         // background id for text
@@ -836,7 +846,7 @@ const slice = createSlice({
 
 export const {
     clearAllUserData,
-
+    toggleMinialDrawer,
     resetDev,
 
     enableAllScreen,
