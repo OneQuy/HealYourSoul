@@ -40,10 +40,12 @@ const UniverseScreen = () => {
     })
   }, [theme])
 
+  // auto swith to current selected month when go to month view
+
   useEffect(() => {
     setCurrentDateOfMonthView(new Date(currentDate.getFullYear(), currentDate.getMonth(), 1))
   }, [currentDate])
-  
+
   return (
     <View style={style.masterView}>
 

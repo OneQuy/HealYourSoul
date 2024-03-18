@@ -1,7 +1,7 @@
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, Animated, Linking, Alert, NativeSyntheticEvent, ImageLoadEventData } from 'react-native'
-import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, Animated, Linking, Alert } from 'react-native'
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors'
 import { Category, FontSize, FontWeight, Icon, LocalText, NeedReloadReason, Outline, Size } from '../../constants/AppConstants'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
@@ -13,7 +13,6 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { IsToday, SafeDateString, ToCanPrint } from '../../handle/UtilsTS';
 import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading';
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
-import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
 import HeaderRightButtons from '../components/HeaderRightButtons';
 import MiniIAP from '../components/MiniIAP';
