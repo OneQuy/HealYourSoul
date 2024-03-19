@@ -18,7 +18,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { IsContentScreen, OpenStore, RateApp, ShareApp, versionAsNumber } from '../handle/AppUtils';
 import { GetAppConfig } from '../handle/AppConfigHandler';
 import { FilterOnlyLetterAndNumberFromString, RegexUrl } from '../handle/UtilsTS';
-import { track_PressDrawerItem } from '../handle/tracking/GoodayTracking';
+import { track_PressDrawerItem, track_SimpleWithParam } from '../handle/tracking/GoodayTracking';
 import { GetNumberIntAsync, SetBooleanAsync, SetNumberAsync } from '../handle/AsyncStorageUtils';
 import { toast } from '@baronha/ting';
 import { IsDev } from '../handle/IsDev';
@@ -149,8 +149,9 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
   }, [])
 
   const onPressMinimalDrawer = useCallback(() => {
+    track_SimpleWithParam('minimal_drawer', minimalDrawer ? 'full' : 'mini')
     dispatch(toggleMinialDrawer())
-  }, [])
+  }, [minimalDrawer])
 
   const onPressLogo = useCallback(() => {
     changePremiumBtnBg()
