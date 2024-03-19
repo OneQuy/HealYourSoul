@@ -269,7 +269,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
           !isLifetimed &&
           <TouchableOpacity onPress={onPressPremiumButton}>
             {/* @ts-ignore */}
-            <ImageBackground resizeMode="cover" source={premiumBg[0]} style={[style.premiumIB, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
+            <ImageBackground resizeMode="cover" source={premiumBg[0]} style={[style.premiumIB, { paddingVertical: minimalDrawer ? Outline.GapHorizontal : Outline.Horizontal, }, CommonStyles.justifyContentCenter_AlignItemsCenter]}>
               <MaterialCommunityIcons name={Icon.Coffee} color={premiumBg[1]} size={Size.Icon} />
               <Text numberOfLines={1} adjustsFontSizeToFit style={[style.premiumText, { color: premiumBg[1] }]}>{isPremium ? LocalText.you_vip : LocalText.donate_me}</Text>
             </ImageBackground>
@@ -343,7 +343,7 @@ const style = StyleSheet.create({
   logoImg: { width: Size.IconBig, height: Size.IconBig },
   appNameText: { fontSize: FontSize.Normal, fontWeight: FontWeight.Bold },
   bottomMasterView: { borderTopRightRadius: BorderRadius.BR, borderTopLeftRadius: BorderRadius.BR, paddingTop: Outline.GapHorizontal, paddingBottom: Outline.Horizontal, gap: Outline.GapVertical },
-  premiumIB: { marginLeft: Outline.Horizontal, flexDirection: 'row', gap: Outline.GapHorizontal, padding: Outline.GapVertical_2, paddingHorizontal: Outline.Horizontal, marginRight: Outline.Horizontal, borderRadius: BorderRadius.BR, overflow: 'hidden', },
+  premiumIB: { marginLeft: Outline.Horizontal, flexDirection: 'row', gap: Outline.GapHorizontal, paddingHorizontal: Outline.Horizontal, marginRight: Outline.Horizontal, borderRadius: BorderRadius.BR, overflow: 'hidden', },
   premiumText: { color: 'white', fontSize: FontSize.Small_L, fontWeight: FontWeight.B500 },
   versionContainerView: { marginLeft: Outline.Horizontal, flexDirection: 'row', alignItems: 'center' },
   versionBtnView: { marginLeft: Outline.GapVertical, borderRadius: BorderRadius.BR8, padding: Outline.VerticalMini },
