@@ -352,6 +352,6 @@ const style = StyleSheet.create({
   settingContainer: { marginLeft: Outline.Horizontal, flexDirection: 'row', gap: Outline.GapHorizontal, marginRight: Outline.Horizontal },
 
   minimalBtnView: { top: -Outline.Horizontal, width: '100%', position: 'absolute', alignItems: 'center', justifyContent: 'center' },
-  minimalTO: { width: '40%', padding: Outline.VerticalMini, borderRadius: BorderRadius.BR, alignItems: 'center', justifyContent: 'center' },
+  minimalTO: { aspectRatio: 2, padding: Outline.VerticalMini, borderRadius: BorderRadius.BR, alignItems: 'center', justifyContent: 'center' },
   minimalArrowView: { top: -Outline.VerticalMini },
 })
