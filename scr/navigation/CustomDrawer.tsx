@@ -5,7 +5,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
-import { RootState, useAppSelector } from "../redux/Store";
+import { RootState, useAppDispatch, useAppSelector } from "../redux/Store";
 import { ThemeContext } from "../constants/Colors";
 import { DrawerContentComponentProps, useDrawerStatus, } from '@react-navigation/drawer';
 import { Image, ImageBackground, Linking, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
@@ -27,6 +27,7 @@ import { useNavigation } from '@react-navigation/native';
 import { GoToScreen, setNavigation } from '../handle/GoodayAppState';
 import { usePremium } from '../hooks/usePremium';
 import InboxButton, { GetInboxButtonGlobalStatus } from '../screens/inbox/InboxButton';
+import { toggleMinialDrawer } from '../redux/UserDataSlice';
 
 const premiumBGs = [
   [require(`../../assets/images/premium_btn/0.jpg`), '#1c1c1c'],
@@ -39,8 +40,6 @@ const premiumBGs = [
   [require(`../../assets/images/premium_btn/8.jpg`), '#1c1c1c'],
   [require(`../../assets/images/premium_btn/1.jpg`), 'white'],
 ]
-
-// const urlbg = 'https://images.unsplash.com/photo-1548268770-66184a21657e?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzR8fHNreXxlbnwwfHwwfHx8MA%3D%3D'
 
 export function CustomDrawerContent(props: DrawerContentComponentProps) {
   const pressLogoCountRef = useRef(0)
@@ -60,6 +59,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
   const isDrawerOpen = useDrawerStatus()
   const navigation = useNavigation()
   const { isPremium, isLifetimed } = usePremium()
+  const dispatch = useAppDispatch()
 
   const [notice, onPressNotice] = useMemo(() => {
     const data = GetAppConfig()?.notice
@@ -148,6 +148,10 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
       OpenStore()
   }, [])
 
+  const onPressMinimalDrawer = useCallback(() => {
+    dispatch(toggleMinialDrawer())
+  }, [])
+
   const onPressLogo = useCallback(() => {
     changePremiumBtnBg()
 
@@ -165,7 +169,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
   }, [])
 
   const renderCategoryButtons = useCallback(() => {
-    return <ScrollView contentContainerStyle={{ paddingBottom: Outline.GapHorizontal, }} showsVerticalScrollIndicator={false}>
+    return <ScrollView contentContainerStyle={{ paddingBottom: Outline.GapVertical_2, }} showsVerticalScrollIndicator={false}>
       {
         routeCoupleArr.map((couple, idx) => {
           return <DrawerCoupleItem
@@ -248,6 +252,17 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
       {/* bottom buttons */}
 
       <View style={[style.bottomMasterView, { backgroundColor: theme.primary }]}>
+        {/* minimal button */}
+        <View style={style.settingContainer}>
+          <View style={style.minimalBtnView}>
+            <TouchableOpacity activeOpacity={0.9} onPress={onPressMinimalDrawer} style={[style.minimalTO, { backgroundColor: theme.primary, }]}>
+              <View style={style.minimalArrowView}>
+                <MaterialCommunityIcons name={minimalDrawer ? Icon.Up : Icon.Down} color={colorSavedText} size={Size.IconSmaller} />
+              </View>
+            </TouchableOpacity>
+          </View>
+        </View>
+
         {/* premium btn */}
 
         {
@@ -327,7 +342,7 @@ const style = StyleSheet.create({
   topMasterView: { marginHorizontal: Outline.GapVertical, flexDirection: 'row', marginBottom: Outline.GapVertical, },
   logoImg: { width: Size.IconBig, height: Size.IconBig },
   appNameText: { fontSize: FontSize.Normal, fontWeight: FontWeight.Bold },
-  bottomMasterView: { borderTopRightRadius: BorderRadius.BR, borderTopLeftRadius: BorderRadius.BR, paddingVertical: Outline.Horizontal, gap: Outline.GapVertical },
+  bottomMasterView: { borderTopRightRadius: BorderRadius.BR, borderTopLeftRadius: BorderRadius.BR, paddingTop: Outline.GapHorizontal, paddingBottom: Outline.Horizontal, gap: Outline.GapVertical },
   premiumIB: { marginLeft: Outline.Horizontal, flexDirection: 'row', gap: Outline.GapHorizontal, padding: Outline.GapVertical_2, paddingHorizontal: Outline.Horizontal, marginRight: Outline.Horizontal, borderRadius: BorderRadius.BR, overflow: 'hidden', },
   premiumText: { color: 'white', fontSize: FontSize.Small_L, fontWeight: FontWeight.B500 },
   versionContainerView: { marginLeft: Outline.Horizontal, flexDirection: 'row', alignItems: 'center' },
@@ -335,4 +350,8 @@ const style = StyleSheet.create({
   updateBtnTxt: { fontWeight: FontWeight.B500 },
   settingBtnView: { padding: Outline.VerticalMini, borderWidth: StyleSheet.hairlineWidth, borderRadius: BorderRadius.BR8, flexDirection: 'row', gap: Outline.GapHorizontal },
   settingContainer: { marginLeft: Outline.Horizontal, flexDirection: 'row', gap: Outline.GapHorizontal, marginRight: Outline.Horizontal },
+
+  minimalBtnView: { top: -Outline.Horizontal, width: '100%', position: 'absolute', alignItems: 'center', justifyContent: 'center' },
+  minimalTO: { width: '40%', padding: Outline.VerticalMini, borderRadius: BorderRadius.BR, alignItems: 'center', justifyContent: 'center' },
+  minimalArrowView: { top: -Outline.VerticalMini },
 })

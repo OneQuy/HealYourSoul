@@ -269,6 +269,8 @@ export enum Icon {
   MaxRight = 'chevron-double-right',
   Left = 'chevron-left',
   MaxLeft = 'chevron-double-left',
+  Down = 'chevron-down',
+  Up = 'chevron-up',
   Pin = 'pin',
   PinOutline = 'pin-outline',
   Link = 'link-variant',
