@@ -52,8 +52,8 @@ const UniversePicOfDayView = ({
   const onPressNextDay = useCallback(async (isNext: boolean) => {
     if ((isNext && IsToday(date)) ||
       (!isNext && IsSameDateMonthYear(MinDate, date))) {
-        Alert.alert(LocalText.popup_title_error, LocalText.popup_content_error_universe_out_range_date)
-        return
+      Alert.alert(LocalText.popup_title_error, LocalText.popup_content_error_universe_out_range_date)
+      return
     }
 
     track_SimpleWithParam('universe', isNext ? 'next_day' : 'previous_day')
@@ -136,6 +136,11 @@ const UniversePicOfDayView = ({
         scaleIcon: 1.5,
       },
       {
+        text: LocalText.today,
+        onPress: onPressToday,
+        icon: Icon.Today,
+      },
+      {
         text: LocalText.share,
         onPress: onPressShareText,
         icon: Icon.ShareText,
@@ -144,11 +149,6 @@ const UniversePicOfDayView = ({
       // {
       //   favoriteCallbackRef: favoriteCallbackRef,
       // },
-      {
-        text: LocalText.today,
-        onPress: onPressToday,
-        icon: Icon.Today,
-      },
       {
         text: LocalText.random_day,
         onPress: onPressRandom,
