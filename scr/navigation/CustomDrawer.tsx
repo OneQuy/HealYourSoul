@@ -53,6 +53,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
   const safeAreaInsets = useSafeAreaInsets()
   const theme = useContext(ThemeContext);
   const disableScreens = useAppSelector((state: RootState) => state.userData.disableScreens)
+  const minimalDrawer = useAppSelector((state) => state.userData.minimalDrawer === true)
   const [premiumBg, setPremiumBg] = useState<[NodeRequire, string]>([premiumBGs[0][0], 'black'])
   const [catItemHeight, setCatItemHeight] = useState(Math.max(50, heightPercentageToDP(7.5)))
   const [showRateAppOrShare, setShowRateAppOrShare] = useState(true)
@@ -260,47 +261,56 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
           </TouchableOpacity>
         }
 
-        {/* saved button,... */}
-        <View style={style.settingContainer}>
-          {/* saved */}
-          <TouchableOpacity onPress={onPressSavedButton} style={[style.settingBtnView, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter, { borderColor: theme.background, backgroundColor: isFocusSaved ? theme.background : theme.primary }]}>
-            <MaterialIcons name={Icon.Bookmark} color={colorSavedText} size={Size.IconTiny} />
-            <Text style={[{ color: colorSavedText }]}>{LocalText.saved_2}</Text>
-          </TouchableOpacity>
+        {/* saved button, upload */}
+        {
+          !minimalDrawer &&
+          <View style={style.settingContainer}>
+            {/* saved */}
+            <TouchableOpacity onPress={onPressSavedButton} style={[style.settingBtnView, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter, { borderColor: theme.background, backgroundColor: isFocusSaved ? theme.background : theme.primary }]}>
+              <MaterialIcons name={Icon.Bookmark} color={colorSavedText} size={Size.IconTiny} />
+              <Text style={[{ color: colorSavedText }]}>{LocalText.saved_2}</Text>
+            </TouchableOpacity>
 
-          {/* upload */}
-          <TouchableOpacity onPress={onPressUploadButton} style={[style.settingBtnView, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter, { borderColor: theme.background, backgroundColor: isFocusUpload ? theme.background : theme.primary }]}>
-            <MaterialIcons name={Icon.Upload} color={colorUploadText} size={Size.IconTiny} />
-            <Text style={[{ color: colorUploadText }]}>{LocalText.upload}</Text>
-          </TouchableOpacity>
-        </View>
+            {/* upload */}
+            <TouchableOpacity onPress={onPressUploadButton} style={[style.settingBtnView, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter, { borderColor: theme.background, backgroundColor: isFocusUpload ? theme.background : theme.primary }]}>
+              <MaterialIcons name={Icon.Upload} color={colorUploadText} size={Size.IconTiny} />
+              <Text style={[{ color: colorUploadText }]}>{LocalText.upload}</Text>
+            </TouchableOpacity>
+          </View>
+        }
 
         {/* setting & rating */}
-        <View style={style.settingContainer}>
-          {/* setting */}
-          <TouchableOpacity onPress={onPressSettingButton} style={[style.settingBtnView, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter, { borderColor: theme.background, backgroundColor: isFocusSetting ? theme.background : theme.primary }]}>
-            <MaterialIcons name={Icon.Setting} color={colorSettingText} size={Size.IconTiny} />
-            <Text style={[{ color: colorSettingText }]}>{LocalText.setting}</Text>
-          </TouchableOpacity>
-          {/* rate */}
-          <TouchableOpacity onPress={showRateAppOrShare ? RateApp : ShareApp} style={[style.settingBtnView, { borderColor: theme.background }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]}>
-            <MaterialIcons name={showRateAppOrShare ? Icon.Star : Icon.ShareText} color={theme.background} size={Size.IconTiny} />
-            <Text style={[{ color: theme.background }]}>{showRateAppOrShare ? LocalText.rate_me : LocalText.share_app_2}</Text>
-          </TouchableOpacity>
-        </View>
+        {
+          !minimalDrawer &&
+          <View style={style.settingContainer}>
+            {/* setting */}
+            <TouchableOpacity onPress={onPressSettingButton} style={[style.settingBtnView, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter, { borderColor: theme.background, backgroundColor: isFocusSetting ? theme.background : theme.primary }]}>
+              <MaterialIcons name={Icon.Setting} color={colorSettingText} size={Size.IconTiny} />
+              <Text style={[{ color: colorSettingText }]}>{LocalText.setting}</Text>
+            </TouchableOpacity>
+            {/* rate */}
+            <TouchableOpacity onPress={showRateAppOrShare ? RateApp : ShareApp} style={[style.settingBtnView, { borderColor: theme.background }, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter]}>
+              <MaterialIcons name={showRateAppOrShare ? Icon.Star : Icon.ShareText} color={theme.background} size={Size.IconTiny} />
+              <Text style={[{ color: theme.background }]}>{showRateAppOrShare ? LocalText.rate_me : LocalText.share_app_2}</Text>
+            </TouchableOpacity>
+          </View>
+        }
 
         {/* version */}
-        <View onTouchEnd={onPressVersionText} style={style.versionContainerView}>
-          {/* version text */}
-          <Text style={{ color: theme.background, }}>Version: v{versionAsNumber}{!showUpdateBtn ? ` (${LocalText.latest})` : ''}</Text>
-          {/* update btn */}
-          {
-            showUpdateBtn &&
-            <View style={[style.versionBtnView, { backgroundColor: theme.background, }]}>
-              <Text style={[style.updateBtnTxt, { color: theme.counterBackground, }]}>{LocalText.update}</Text>
-            </View>
-          }
-        </View>
+        {
+          (!minimalDrawer || showUpdateBtn) &&
+          <View onTouchEnd={onPressVersionText} style={style.versionContainerView}>
+            {/* version text */}
+            <Text style={{ color: theme.background, }}>Version: v{versionAsNumber}{!showUpdateBtn ? ` (${LocalText.latest})` : ''}</Text>
+            {/* update btn */}
+            {
+              showUpdateBtn &&
+              <View style={[style.versionBtnView, { backgroundColor: theme.background, }]}>
+                <Text style={[style.updateBtnTxt, { color: theme.counterBackground, }]}>{LocalText.update}</Text>
+              </View>
+            }
+          </View>
+        }
 
         {/* notice */}
         {
