@@ -1,13 +1,50 @@
 const { LogRed, LogGreen } = require('./Utils_NodeJS')
 const { DownloadFileAsync } = require('./common/FileUtils')
 
-// const minID = 1
-// const maxID = 182
+const MIN = 1
+const MAX = 182
 
-const minID = 182
-const maxID = 182
+const TRUNK = 50
 
-const PullAllRelativesOfEmojiAsync = async (id) => {
+const PullAllSingleEmoji = async () => {
+    const d = Date.now()
+
+    const arrUrls = []
+
+    const minID = 113
+    const maxID = 182
+
+    for (let i = minID; i <= maxID; i++) {
+        const path = `https://emojimix.app/emojimixfusion/a${i}.png`
+        arrUrls.push(path)
+
+        console.log(path);
+    }
+
+    const dest = './editor/other_data/emoji_mix/singles/'
+
+    const resArr = await Promise.all(arrUrls.map(url => {
+        const fileNameIdx = url.lastIndexOf('/')
+
+        return DownloadFileAsync(url, dest + (url.substring(fileNameIdx + 1)))
+    }))
+
+    let countError = 0
+
+    for (let i = 0; i <= resArr.length; i++) {
+        if (resArr[i] === undefined)
+            continue
+
+        countError++
+        LogRed('error: ' + resArr[i])
+    }
+
+    LogGreen('done, ' + (Date.now() - d) + 'ms', minID, maxID, dest)
+
+    return countError
+}
+
+const PullMixOfEmojiTrunkAsync = async (id, minID, maxID) => {
     const d = Date.now()
 
     const arrUrls = []
@@ -26,21 +63,41 @@ const PullAllRelativesOfEmojiAsync = async (id) => {
         return DownloadFileAsync(url, dest + (url.substring(fileNameIdx + 1)))
     }))
 
+    let countError = 0
+
     for (let i = 0; i <= resArr.length; i++) {
         if (resArr[i] === undefined)
             continue
 
-        LogRed('fail: ' + arrUrls[i] + ', error: ' + resArr[i])
+        countError++
+        // LogRed('error: ' + resArr[i])
     }
 
-    LogGreen('done, ' + (Date.now() - d) + 'ms', dest)
+    // LogGreen('done, ' + (Date.now() - d) + 'ms', minID, maxID, dest)
+
+    return countError
 }
 
+const PullEmojiAllAsync = async () => {
+    // PullMixOfEmojiAsync(133)
 
-const PullEmoji = () => {
-    PullAllRelativesOfEmojiAsync(1)
+    PullAllSingleEmoji()
+}
+
+const PullMixOfEmojiAsync = async (id) => {
+    let countError = 0
+
+    for (let i = MIN; i <= MAX; i += TRUNK) {
+
+        countError += await PullMixOfEmojiTrunkAsync(id, i, Math.min(i + TRUNK - 1, MAX))
+    }
+
+    if (countError > 0)
+        LogRed(id + ' error: ' + countError)
+    else
+        LogGreen(id + 'success all')
 }
 
 module.exports = {
-    PullEmoji
+    PullEmojiAllAsync
 }

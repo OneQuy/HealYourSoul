@@ -7,11 +7,11 @@ const { LogRed, LogGreen } = require("./src/Utils_NodeJS");
 const { IsParamExist, GetParam, } = require("./src/common/Utils");
 const { GenMyInstants } = require("./src/GenMyInstant");
 const { GenDogBreeds } = require("./src/GenDogBreeds");
-const { PullEmoji } = require("./src/PullEmoji");
+const { PullEmojiAllAsync } = require("./src/PullEmoji");
 
 async function JustDoIt() {
   if (IsParamExist('emoji')) {
-    PullEmoji()
+    PullEmojiAllAsync()
   }
   else if (IsParamExist('pull')) {
     const cat = GetParam('cat')
