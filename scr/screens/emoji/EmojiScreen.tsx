@@ -14,6 +14,7 @@ import BottomBar, { BottomBarItem } from '../others/BottomBar';
 import { SaveCurrentScreenForLoadNextTime, SaveMediaAsync, ShareImageAsync } from '../../handle/AppUtils';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
+import HeaderRightButtons from '../components/HeaderRightButtons';
 
 const MinEmojiId = 1
 const MaxEmojiId = 182
@@ -155,6 +156,14 @@ const EmojiScreen = () => {
       SaveCurrentScreenForLoadNextTime(navigation)
     }, [])
   )
+
+  // update header right
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => <HeaderRightButtons />
+    });
+  }, [])
 
   // main render
 
