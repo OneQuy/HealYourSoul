@@ -135,7 +135,7 @@ const EmojiScreen = () => {
   }, [])
 
   useEffect(() => {
-    if (!emojiUri_Left && !emojiUri_Right)
+    if (!emojiUri_Left || !emojiUri_Right)
       return
 
     const id1 = ExtractAllNumbersInText(emojiUri_Left)
