@@ -1,7 +1,7 @@
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { View, StyleSheet, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native'
+import { View, StyleSheet, TouchableOpacity, FlatList, ActivityIndicator, Animated } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { BorderRadius, Category, Icon, LocalText, Outline, Size } from '../../constants/AppConstants'
 import { ThemeContext } from '../../constants/Colors'
@@ -13,6 +13,7 @@ import { ExtractAllNumbersInText } from '../../handle/UtilsTS';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
 import { SaveCurrentScreenForLoadNextTime, SaveMediaAsync, ShareImageAsync } from '../../handle/AppUtils';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 
 const MinEmojiId = 1
 const MaxEmojiId = 182
@@ -30,6 +31,7 @@ const EmojiScreen = () => {
   const [showBorderForEmojiSide, setShowBorderForEmojiSide] = useState<'left' | 'right' | undefined>(undefined)
   const navigation = useNavigation()
   const lastSetEmojiSideIsLeftOrRight = useRef(false)
+  const mediaViewScaleAnimRef = useRef(new Animated.Value(1)).current
 
   // const [reasonCanNotUpload, setReasonCanNotUpload] = useState<undefined | { reason: string, showSubscribeButton?: boolean }>(undefined)
   // const [isHandling, setIsHandling] = useState(true)
@@ -39,7 +41,7 @@ const EmojiScreen = () => {
     return StyleSheet.create({
       masterView: { paddingTop: Outline.GapHorizontal, flex: 1, justifyContent: 'center', alignItems: 'center', gap: Outline.GapHorizontal, },
 
-      showView: { alignItems: 'center', gap: Outline.GapVertical_2 },
+      showView: { alignItems: 'center', gap: Outline.GapHorizontal, },
       plusView: { justifyContent: 'center', alignItems: 'center', gap: Outline.Horizontal, flexDirection: 'row' },
 
       bigEmojiView: { width: widthPercentageToDP(25), aspectRatio: 1, borderRadius: BorderRadius.BR, borderColor: theme.counterBackground, borderWidth: StyleSheet.hairlineWidth },
@@ -84,6 +86,10 @@ const EmojiScreen = () => {
   const onPressPin = useCallback(() => {
   }, [])
 
+  const onResultLoad = useCallback(() => {
+    playAnimLoadedMedia(mediaViewScaleAnimRef)
+  }, [])
+
   const renderItem = useCallback(({ item: uri }: { item: string }) => {
     return (
       <TouchableOpacity onPress={() => onPressEmojiInList(uri)}>
@@ -126,16 +132,6 @@ const EmojiScreen = () => {
 
     return arr
   }, [])
-
-  // handling something
-
-  // if (isHandling) {
-  //   return (
-  //     <View style={style.masterView}>
-  //       <ActivityIndicator color={theme.primary} />
-  //     </View>
-  //   )
-  // }
 
   useEffect(() => {
     if (!emojiUri_Left && !emojiUri_Right)
@@ -195,12 +191,15 @@ const EmojiScreen = () => {
 
         {/* result view */}
 
-        <ImageBackgroundOrView
-          newUriNewKey={true}
-          style={!emojiUri_Result ? style.resultEmojiView : style.resultEmojiView_Border}
-          source={{ uri: emojiUri_Result }}
-          indicatorProps={{ color: theme.counterBackground }}
-        />
+        <Animated.View style={{ transform: [{ scale: mediaViewScaleAnimRef }] }}>
+          <ImageBackgroundOrView
+            newUriNewKey={true}
+            style={!emojiUri_Result ? style.resultEmojiView : style.resultEmojiView_Border}
+            source={{ uri: emojiUri_Result }}
+            indicatorProps={{ color: theme.counterBackground }}
+            onLoad={onResultLoad}
+          />
+        </Animated.View>
       </View>
 
       {/* flat list pick emoji */}
