@@ -1,64 +1,89 @@
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { View, StyleSheet, Text, Image, TouchableOpacity, ActivityIndicator, Platform, Alert, AlertButton, ImageBackground } from 'react-native'
-import React, { useCallback, useContext, useMemo, useState } from 'react'
-import { BorderRadius, FileSizeLimitUploadInMb_Image, FileSizeLimitUploadInMb_Video, FontSize, Icon, LocalText, NotLimitUploadsValue, Outline, Size, StorageKey_LastTimeUpload, StorageKey_TodayUploadsCount } from '../../constants/AppConstants'
+import { View, StyleSheet, TouchableOpacity, FlatList } from 'react-native'
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { BorderRadius, Icon, Outline, Size } from '../../constants/AppConstants'
 import { ThemeContext } from '../../constants/Colors'
-import { openPicker } from '@baronha/react-native-multiple-image-picker';
-import { MediaType, UserUploadInfo } from '../../constants/Types';
-import { GetFileExtensionByFilepath, IsValuableArrayOrString, SafeValue, ToCanPrint } from '../../handle/UtilsTS';
 import { usePremium } from '../../hooks/usePremium';
-import { UserID } from '../../handle/UserID';
-import { FirebaseStorage_UploadAsync } from '../../firebase/FirebaseStorage';
-import { AlertWithError } from '../../handle/AppUtils';
-import { FirebaseDatabase_SetValueAsync } from '../../firebase/FirebaseDatabase';
-import { DoubleCheckGetAppConfigAsync } from '../../handle/AppConfigHandler';
-import { GetUserAsync } from '../../handle/tracking/UserMan';
-import { GetDateAsync_IsValueNotExistedOrEqualOverMinFromNow, GetNumberIntAsync_WithCheckAndResetNewDay, IncreaseNumberAsync_WithCheckAndResetNewDay, SetDateAsync_Now } from '../../handle/AsyncStorageUtils';
-import { GoToPremiumScreen } from '../components/HeaderXButton';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import { FileSizeInMB } from '../../handle/FileUtils';
+import { useNavigation } from '@react-navigation/native';
+import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading';
+import ImageBackgroundOrView from '../components/ImageBackgroundOrView';
 import { widthPercentageToDP } from 'react-native-responsive-screen';
-import { iapBg_1 } from '../IAP/IAPPage';
-import { Cheat } from '../../handle/Cheat';
-import { DelayAsync } from '../../handle/Utils';
-import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { ExtractAllNumbersInText } from '../../handle/UtilsTS';
 
+const MinEmojiId = 1
+const MaxEmojiId = 182
+
+const emojiColumn = 10
 
 const EmojiScreen = () => {
   const theme = useContext(ThemeContext);
-  const [reasonCanNotUpload, setReasonCanNotUpload] = useState<undefined | { reason: string, showSubscribeButton?: boolean }>(undefined)
-  const [isHandling, setIsHandling] = useState(true)
-  const { isPremium } = usePremium()
-  const navigation = useNavigation()
+  const { bottom: bottomInset } = useSafeAreaInsets()
+  const [emoji_1, setEmoji_1] = useState('')
+  const [emoji_2, setEmoji_2] = useState('')
+  const [emoji_Result, setEmoji_Result] = useState('')
+  const [selectingLeft, setSelectingLeft] = useState(true)
 
-  const reset = useCallback(async () => {
-  }, [])
+  // const [reasonCanNotUpload, setReasonCanNotUpload] = useState<undefined | { reason: string, showSubscribeButton?: boolean }>(undefined)
+  // const [isHandling, setIsHandling] = useState(true)
+  // const { isPremium } = usePremium()
+  // const navigation = useNavigation()
 
   const style = useMemo(() => {
     return StyleSheet.create({
-      masterView: { flex: 1, justifyContent: 'center', alignItems: 'center', gap: Outline.GapHorizontal, },
+      masterView: { paddingBottom: bottomInset, paddingTop: Outline.GapHorizontal, flex: 1, justifyContent: 'center', alignItems: 'center', gap: Outline.GapHorizontal, },
 
-      // rectEmptyView: { width: '70%', height: '50%', borderColor: theme.counterBackground, borderWidth: StyleSheet.hairlineWidth, borderRadius: BorderRadius.BR, justifyContent: 'center', alignItems: 'center' },
-      // bottomBtnsView: { marginTop: Outline.Vertical, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: Outline.GapHorizontal },
-      // uploadingView: { gap: Outline.GapHorizontal },
-      // image: { width: '70%', height: '50%', },
-      // checkboxTO: { marginHorizontal: Outline.GapVertical_2, flexDirection: 'row', alignItems: 'center', gap: Outline.GapHorizontal },
-      // readRuleTO: { marginTop: Outline.Vertical, borderRadius: BorderRadius.BR, borderColor: theme.counterBackground, borderWidth: StyleSheet.hairlineWidth, padding: Outline.GapVertical, alignItems: 'center', },
-      // bottomBtn: { minWidth: '30%', alignItems: 'center', justifyContent: 'center', borderRadius: BorderRadius.BR, borderColor: theme.counterBackground, borderWidth: StyleSheet.hairlineWidth, padding: Outline.GapVertical, },
-      // bottomBtn_Highlight: { minWidth: '30%', alignItems: 'center', justifyContent: 'center', borderRadius: BorderRadius.BR, backgroundColor: theme.primary, padding: Outline.GapVertical, },
-      // text: { color: theme.counterBackground, fontSize: FontSize.Small_L, },
-      // bottomBtnTxt_Highlight: { color: theme.counterPrimary, fontSize: FontSize.Small_L, },
-      // pickMediaTxt: { marginTop: Outline.GapVertical, textAlign: 'center', fontSize: FontSize.Normal, color: theme.counterBackground, },
-      // reasonTxt: { margin: Outline.Vertical, textAlign: 'center', fontSize: FontSize.Normal, color: theme.counterBackground, },
-      // plsSubBtnsView: { gap: Outline.GapHorizontal, flexDirection: 'row' },
-      // premiumIB: { padding: Outline.GapVertical, minWidth: widthPercentageToDP(30), borderRadius: BorderRadius.BR, overflow: 'hidden', justifyContent: 'center', alignItems: 'center', },
-      // refreshBtn: { padding: Outline.GapVertical, minWidth: widthPercentageToDP(30), borderColor: theme.counterBackground, borderRadius: BorderRadius.BR, borderWidth: StyleSheet.hairlineWidth, justifyContent: 'center', alignItems: 'center', },
-      // premiumText: { fontSize: FontSize.Small_L, color: 'black' },
+      showView: { alignItems: 'center', gap: Outline.GapVertical_2 },
+      plusView: { justifyContent: 'center', alignItems: 'center', gap: Outline.Horizontal, flexDirection: 'row' },
+
+      bigEmojiView: { width: widthPercentageToDP(30), aspectRatio: 1, borderRadius: BorderRadius.BR, borderColor: theme.counterBackground, borderWidth: StyleSheet.hairlineWidth },
+      bigEmojiView_Empty: { width: widthPercentageToDP(30), aspectRatio: 1, },
+
+      resultEmojiView: { width: widthPercentageToDP(50), aspectRatio: 1, borderRadius: BorderRadius.BR, borderColor: theme.counterBackground, borderWidth: StyleSheet.hairlineWidth },
+      resultEmojiView_Empty: { width: widthPercentageToDP(50), aspectRatio: 1 },
+
+      pickEmojiFlatlistView: { flex: 1, },
+      imageEmojiInList: { width: 30, aspectRatio: 1 },
+
       // refreshTxt: { fontSize: FontSize.Small_L, color: theme.counterBackground },
     })
-  }, [theme])
+  }, [theme, bottomInset])
+
+  const onPressEmojiBig = useCallback((left: boolean) => {
+    setSelectingLeft(left)
+  }, [])
+
+  const onPressEmojiInList = useCallback((uri: string) => {
+    if (selectingLeft)
+      setEmoji_1(uri)
+    else
+      setEmoji_2(uri)
+
+    setSelectingLeft(t => !t)
+  }, [selectingLeft])
+
+  const renderItem = useCallback(({ item: uri }: { item: string }) => {
+    return (
+      <TouchableOpacity onPress={() => onPressEmojiInList(uri)}>
+        <ImageBackgroundWithLoading
+          style={style.imageEmojiInList}
+          source={{ uri, cache: 'force-cache' }}
+        />
+      </TouchableOpacity>
+    )
+  }, [style, onPressEmojiInList])
+
+  const emojiUriArr = useMemo(() => {
+    const arr = []
+
+    for (let i = MinEmojiId; i <= MaxEmojiId; i++) {
+      arr.push(`https://emojimix.app/emojimixfusion/a${i}.png`)
+    }
+
+    return arr
+  }, [])
 
   // handling something
 
@@ -70,11 +95,56 @@ const EmojiScreen = () => {
   //   )
   // }
 
+  useEffect(() => {
+    if (!emoji_1 && !emoji_2)
+      return
+
+    const id1 = ExtractAllNumbersInText(emoji_1)
+    const id2 = ExtractAllNumbersInText(emoji_2)
+
+    if (id1.length <= 0 && id2.length <= 0)
+      return
+
+    const uri = `https://emojimix.app/emojimixfusion/${id1[0]}_${id2[0]}.png`
+
+    setEmoji_Result(uri)
+  }, [emoji_1, emoji_2])
   // main render
 
   return (
     <View style={style.masterView}>
+      {/* show view */}
 
+      <View style={style.showView}>
+        {/* plus view */}
+        <View style={style.plusView}>
+          <TouchableOpacity onPress={() => onPressEmojiBig(true)}>
+            <ImageBackgroundOrView style={!emoji_1 ? style.bigEmojiView : style.bigEmojiView_Empty} source={{ uri: emoji_1 }} />
+          </TouchableOpacity>
+
+          <MaterialCommunityIcons name={Icon.Plus} color={theme.counterBackground} size={Size.IconBig} />
+
+          <TouchableOpacity onPress={() => onPressEmojiBig(false)}>
+            <ImageBackgroundOrView style={!emoji_2 ? style.bigEmojiView : style.bigEmojiView_Empty} source={{ uri: emoji_2 }} />
+          </TouchableOpacity>
+        </View>
+
+        {/* result view */}
+
+        <ImageBackgroundOrView style={!emoji_Result ? style.resultEmojiView : style.resultEmojiView_Empty} source={{ uri: emoji_Result }} />
+      </View>
+
+      {/* flat list pick emoji */}
+
+      <View style={style.pickEmojiFlatlistView}>
+        <FlatList
+          data={emojiUriArr}
+          renderItem={renderItem}
+          keyExtractor={(item) => item}
+          numColumns={emojiColumn}
+          showsVerticalScrollIndicator={false}
+        />
+      </View>
     </View>
   )
 }
