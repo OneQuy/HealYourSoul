@@ -1,12 +1,14 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { BackgroundForTextCurrent, DiversityItemType, Inbox, SubscribedData } from "../constants/Types";
 import { ScreenName } from "../constants/AppConstants";
-import { AddOrRemoveItemInArray, ArrayAddWithCheckDuplicate, ArrayRemove, IsValuableArrayOrString } from "../handle/UtilsTS";
+import { ArrayAddWithCheckDuplicate, ArrayRemove, IsValuableArrayOrString } from "../handle/UtilsTS";
 
 export type UserDataState = {
     minimalDrawer: undefined | boolean,
 
     inboxes: Inbox[] | undefined,
+
+    pinnedEmojiMixes: [number, number][] | undefined,
 
     backgroundIdForText: undefined | BackgroundForTextCurrent[],
 
@@ -91,6 +93,8 @@ const initialState: UserDataState = {
     minimalDrawer: false,
 
     inboxes: [],
+
+    pinnedEmojiMixes: [],
 
     backgroundIdForText: undefined,
 
@@ -203,6 +207,25 @@ const slice = createSlice({
 
             arr.push(action.payload)
             state.backgroundIdForText = arr
+        },
+
+        // emoji
+
+        toggleEmojiMix: (state, action: PayloadAction<[number, number]>) => {
+            if (!state.pinnedEmojiMixes)
+                state.pinnedEmojiMixes = []
+
+            const item = state.pinnedEmojiMixes.find(i => {
+                return i[0] === action.payload[0] && i[1] === action.payload[1] ||
+                    i[1] === action.payload[0] && i[0] === action.payload[1]
+            })
+
+            if (!item) {
+                state.pinnedEmojiMixes.push(action.payload)
+                return
+            }
+            else
+                ArrayRemove(state.pinnedEmojiMixes, item)
         },
 
         // inbox
@@ -962,6 +985,8 @@ export const {
     toggleMarkAsReadInbox,
 
     setBackgroundIdForText,
+
+    toggleEmojiMix,
 } = slice.actions;
 
 export default slice.reducer

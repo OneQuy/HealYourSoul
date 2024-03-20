@@ -16,6 +16,8 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import HeaderRightButtons from '../components/HeaderRightButtons';
 import HairLine from '../components/HairLine';
+import { useAppDispatch, useAppSelector } from '../../redux/Store';
+import { toggleEmojiMix } from '../../redux/UserDataSlice';
 
 const MinEmojiId = 1
 const MaxEmojiId = 182
@@ -35,10 +37,29 @@ const EmojiScreen = () => {
   const navigation = useNavigation()
   const lastSetEmojiSideIsLeftOrRight = useRef(false)
   const mediaViewScaleAnimRef = useRef(new Animated.Value(1)).current
+  const pinnedEmojiMixes = useAppSelector(state => state.userData.pinnedEmojiMixes)
+  const dispatch = useAppDispatch()
 
   // const [reasonCanNotUpload, setReasonCanNotUpload] = useState<undefined | { reason: string, showSubscribeButton?: boolean }>(undefined)
   // const [isHandling, setIsHandling] = useState(true)
   // const { isPremium } = usePremium()
+
+  const ids = useMemo(() => {
+    const id1arr = ExtractAllNumbersInText(emojiUri_Left)
+    const id2arr = ExtractAllNumbersInText(emojiUri_Right)
+
+    if (id1arr.length <= 0 || id2arr.length <= 0)
+      return undefined
+
+    return [id1arr[0], id2arr[0]] as [number, number]
+  }, [emojiUri_Left, emojiUri_Right])
+
+  const pinnedUriArr = useMemo(() => {
+    if (!pinnedEmojiMixes)
+      return undefined
+
+    return pinnedEmojiMixes.map(i => mixEmojiUri(i[0], i[1]))
+  }, [pinnedEmojiMixes])
 
   const style = useMemo(() => {
     return StyleSheet.create({
@@ -52,6 +73,8 @@ const EmojiScreen = () => {
 
       resultEmojiView: { width: widthPercentageToDP(60), aspectRatio: 1, borderRadius: BorderRadius.BR, borderColor: theme.counterBackground, borderWidth: StyleSheet.hairlineWidth },
       resultEmojiView_Border: { width: widthPercentageToDP(60), aspectRatio: 1 },
+
+      pinnedView: { height: emojiSize, },
 
       pickEmojiFlatlistView: { flex: 1, },
       imageEmojiInList: { width: emojiSize, aspectRatio: 1 },
@@ -87,7 +110,11 @@ const EmojiScreen = () => {
   }, [showBorderForEmojiSide])
 
   const onPressPin = useCallback(() => {
-  }, [])
+    if (ids === undefined)
+      return
+
+    dispatch(toggleEmojiMix(ids))
+  }, [ids])
 
   const onResultLoad = useCallback(() => {
     playAnimLoadedMedia(mediaViewScaleAnimRef)
@@ -137,19 +164,11 @@ const EmojiScreen = () => {
   }, [])
 
   useEffect(() => {
-    if (!emojiUri_Left || !emojiUri_Right)
+    if (ids === undefined)
       return
 
-    const id1 = ExtractAllNumbersInText(emojiUri_Left)
-    const id2 = ExtractAllNumbersInText(emojiUri_Right)
-
-    if (id1.length <= 0 && id2.length <= 0)
-      return
-
-    const uri = `https://emojimix.app/emojimixfusion/${id1[0]}_${id2[0]}.png`
-
-    setEmojiUri_Result(uri)
-  }, [emojiUri_Left, emojiUri_Right])
+    setEmojiUri_Result(mixEmojiUri(ids[0], ids[1]))
+  }, [ids])
 
   // save last visit category screen
 
@@ -171,6 +190,21 @@ const EmojiScreen = () => {
 
   return (
     <View style={style.masterView}>
+      {/* pinned */}
+
+      {
+        pinnedUriArr &&
+        <View style={style.pinnedView}>
+          <FlatList
+            data={pinnedUriArr}
+            renderItem={renderItem}
+            keyExtractor={(item) => item}
+            showsVerticalScrollIndicator={false}
+            horizontal={true}
+          />
+        </View>
+      }
+
       {/* show view */}
 
       <View style={style.showView}>
@@ -240,3 +274,7 @@ const EmojiScreen = () => {
 }
 
 export default EmojiScreen
+
+const mixEmojiUri = (id1: number, id2: number) => {
+  return `https://emojimix.app/emojimixfusion/${id1}_${id2}.png`
+}
