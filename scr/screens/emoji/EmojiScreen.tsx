@@ -3,20 +3,22 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import { View, StyleSheet, TouchableOpacity, FlatList } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { BorderRadius, Icon, Outline, Size } from '../../constants/AppConstants'
+import { BorderRadius, Category, Icon, LocalText, Outline, Size } from '../../constants/AppConstants'
 import { ThemeContext } from '../../constants/Colors'
-import { usePremium } from '../../hooks/usePremium';
-import { useNavigation } from '@react-navigation/native';
 import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading';
 import ImageBackgroundOrView from '../components/ImageBackgroundOrView';
 import { widthPercentageToDP } from 'react-native-responsive-screen';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ExtractAllNumbersInText } from '../../handle/UtilsTS';
+import BottomBar, { BottomBarItem } from '../others/BottomBar';
+import { SaveMediaAsync, ShareImageAsync } from '../../handle/AppUtils';
 
 const MinEmojiId = 1
 const MaxEmojiId = 182
 
 const emojiColumn = 10
+
+const category = Category.Emoji
 
 const EmojiScreen = () => {
   const theme = useContext(ThemeContext);
@@ -33,7 +35,7 @@ const EmojiScreen = () => {
 
   const style = useMemo(() => {
     return StyleSheet.create({
-      masterView: { paddingBottom: bottomInset, paddingTop: Outline.GapHorizontal, flex: 1, justifyContent: 'center', alignItems: 'center', gap: Outline.GapHorizontal, },
+      masterView: { paddingTop: Outline.GapHorizontal, flex: 1, justifyContent: 'center', alignItems: 'center', gap: Outline.GapHorizontal, },
 
       showView: { alignItems: 'center', gap: Outline.GapVertical_2 },
       plusView: { justifyContent: 'center', alignItems: 'center', gap: Outline.Horizontal, flexDirection: 'row' },
@@ -74,6 +76,23 @@ const EmojiScreen = () => {
       </TouchableOpacity>
     )
   }, [style, onPressEmojiInList])
+
+  const bottomBarItems = useMemo(() => {
+    return [
+      {
+        text: LocalText.share,
+        onPress: () => ShareImageAsync(emoji_Result, category),
+        icon: Icon.ShareImage,
+        countType: 'share'
+      },
+      {
+        text: LocalText.save,
+        onPress: () => SaveMediaAsync(category, emoji_Result),
+        icon: Icon.Download,
+        countType: 'download',
+      },
+    ] as BottomBarItem[]
+  }, [emoji_Result])
 
   const emojiUriArr = useMemo(() => {
     const arr = []
@@ -145,6 +164,13 @@ const EmojiScreen = () => {
           showsVerticalScrollIndicator={false}
         />
       </View>
+
+      <BottomBar
+        items={bottomBarItems}
+        id={undefined}
+        category={category}
+      />
+
     </View>
   )
 }
