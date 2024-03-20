@@ -15,6 +15,7 @@ import { SaveCurrentScreenForLoadNextTime, SaveMediaAsync, ShareImageAsync } fro
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import HeaderRightButtons from '../components/HeaderRightButtons';
+import HairLine from '../components/HairLine';
 
 const MinEmojiId = 1
 const MaxEmojiId = 182
@@ -213,6 +214,8 @@ const EmojiScreen = () => {
 
       {/* flat list pick emoji */}
 
+      <HairLine widthPercent={'95%'} />
+
       <View style={style.pickEmojiFlatlistView}>
         <FlatList
           data={emojiUriArr}
@@ -222,6 +225,8 @@ const EmojiScreen = () => {
           showsVerticalScrollIndicator={false}
         />
       </View>
+
+      {/* bottom bar */}
 
       <BottomBar
         items={bottomBarItems}
