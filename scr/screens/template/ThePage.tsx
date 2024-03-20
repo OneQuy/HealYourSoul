@@ -18,7 +18,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { PickRandomElement, RoundNumber, SecondsToHourMinuteSecondString } from '../../handle/Utils';
 import { setMutedVideo } from '../../redux/MiscSlice';
-import { ColorNameToRgb, HexToRgb, ToCanPrint } from '../../handle/UtilsTS';
+import { ColorNameToRgb, HexToRgb } from '../../handle/UtilsTS';
 import { DrawerNavigationProp, useDrawerStatus } from '@react-navigation/drawer';
 import { DownloadProgressCallbackResult } from 'react-native-fs';
 import { NetLord } from '../../handle/NetLord';
