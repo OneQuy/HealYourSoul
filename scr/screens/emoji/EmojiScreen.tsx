@@ -9,7 +9,7 @@ import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading
 import ImageBackgroundOrView from '../components/ImageBackgroundOrView';
 import { widthPercentageToDP } from 'react-native-responsive-screen';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ExtractAllNumbersInText } from '../../handle/UtilsTS';
+import { ExtractAllNumbersInText, IsValuableArrayOrString } from '../../handle/UtilsTS';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
 import { SaveCurrentScreenForLoadNextTime, SaveMediaAsync, ShareImageAsync } from '../../handle/AppUtils';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
@@ -24,6 +24,7 @@ const MaxEmojiId = 182
 
 const emojiColumn = 7
 const emojiSize = (widthPercentageToDP(100) - Outline.GapVertical * 2) / emojiColumn
+const emojiSizePinnded = emojiSize / 1.5
 
 const category = Category.Emoji
 
@@ -74,10 +75,13 @@ const EmojiScreen = () => {
       resultEmojiView: { width: widthPercentageToDP(60), aspectRatio: 1, borderRadius: BorderRadius.BR, borderColor: theme.counterBackground, borderWidth: StyleSheet.hairlineWidth },
       resultEmojiView_Border: { width: widthPercentageToDP(60), aspectRatio: 1 },
 
-      pinnedView: { height: emojiSize, },
+      pinnedFlatlist: { gap: Outline.GapHorizontal, },
+      pinnedView: { height: emojiSizePinnded, },
 
       pickEmojiFlatlistView: { flex: 1, },
       imageEmojiInList: { width: emojiSize, aspectRatio: 1 },
+
+      imageEmojiPinned: { width: emojiSizePinnded, aspectRatio: 1 },
     })
   }, [theme, bottomInset])
 
@@ -125,6 +129,17 @@ const EmojiScreen = () => {
       <TouchableOpacity onPress={() => onPressEmojiInList(uri)}>
         <ImageBackgroundWithLoading
           style={style.imageEmojiInList}
+          source={{ uri, cache: 'force-cache' }}
+        />
+      </TouchableOpacity>
+    )
+  }, [style, onPressEmojiInList])
+
+  const renderItemPinned = useCallback(({ item: uri }: { item: string }) => {
+    return (
+      <TouchableOpacity onPress={() => onPressEmojiInList(uri)}>
+        <ImageBackgroundWithLoading
+          style={style.imageEmojiPinned}
           source={{ uri, cache: 'force-cache' }}
         />
       </TouchableOpacity>
@@ -190,21 +205,6 @@ const EmojiScreen = () => {
 
   return (
     <View style={style.masterView}>
-      {/* pinned */}
-
-      {
-        pinnedUriArr &&
-        <View style={style.pinnedView}>
-          <FlatList
-            data={pinnedUriArr}
-            renderItem={renderItem}
-            keyExtractor={(item) => item}
-            showsVerticalScrollIndicator={false}
-            horizontal={true}
-          />
-        </View>
-      }
-
       {/* show view */}
 
       <View style={style.showView}>
@@ -260,6 +260,23 @@ const EmojiScreen = () => {
           showsVerticalScrollIndicator={false}
         />
       </View>
+
+      {/* pinned */}
+
+      {
+        IsValuableArrayOrString(pinnedUriArr) &&
+        <View style={style.pinnedView}>
+          <FlatList
+            data={pinnedUriArr}
+            renderItem={renderItemPinned}
+            keyExtractor={(item) => item}
+            showsVerticalScrollIndicator={false}
+            horizontal={true}
+            contentContainerStyle={style.pinnedFlatlist}
+            showsHorizontalScrollIndicator={false}
+          />
+        </View>
+      }
 
       {/* bottom bar */}
 
