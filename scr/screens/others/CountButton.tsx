@@ -40,7 +40,10 @@ const CountButton = (
 
     const style = useMemo(() => {
         return StyleSheet.create({
-            masterTO: { gap: Outline.GapVertical, flex: 1, justifyContent: 'center', alignItems: 'center' },
+            masterTO: {
+                paddingVertical: Outline.GapVertical_2, gap: Outline.GapVertical, flex: 1, justifyContent: 'center', alignItems: 'center'
+            },
+
             countText: { color: theme.counterPrimary, fontSize: FontSize.Small },
         })
     }, [theme])
