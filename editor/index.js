@@ -42,7 +42,7 @@ async function JustDoIt() {
   else if (IsParamExist('push')) {
     let cat
 
-    if (IsParamExist('quote') || IsParamExist('qu'))
+    if (IsParamExist('quote') || IsParamExist('qu') || IsParamExist('mo'))
       cat = 'quote'
     else if (IsParamExist('draw') || IsParamExist('dr') || IsParamExist('wa'))
       cat = 'draw'
@@ -74,6 +74,8 @@ async function JustDoIt() {
       cat = 'sunset'
     else if (IsParamExist('vo'))
       cat = 'vocabulary'
+    else if (IsParamExist('clip')  || IsParamExist('ni'))
+      cat = 'niceclip'
     else if (IsParamExist('tu'))
       cat = 'tune'
     else {

@@ -12,6 +12,10 @@ export const ArtScreen = () => {
   return <ThePage category={Category.Art} />;
 }
 
+export const NiceClipScreen = () => {
+  return <ThePage category={Category.NiceClip} />;
+}
+
 export const AwesomeNatureScreen = () => {
   return <ThePage category={Category.AwesomeNature} />;
 }

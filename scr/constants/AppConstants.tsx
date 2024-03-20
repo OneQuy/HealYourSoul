@@ -61,7 +61,7 @@ export enum ScreenName {
   Inbox = 'Inbox',
   Admin = 'Admin',
   Gallery = 'Gallery',
-  Siena = 'Photos of Year 2',
+  NiceClip = 'Nice Clip',
   Memedroid = 'Random Meme 2',
   DogFact = 'Dog Fact',
   DogBreed = 'Dog Breed',
@@ -70,6 +70,7 @@ export enum ScreenName {
   AnimeQuote = 'Anime Quote',
   MovieQuote = 'Movie Quote',
   Universe = 'Universe',
+  Emoji = 'Emoji Mix',
 }
 
 // dir / file
@@ -93,6 +94,7 @@ export enum LocalPath {
   ListFile_Info = LocalPath.MasterDirName + '/info/list.json',
   ListFile_Sunset = LocalPath.MasterDirName + '/sunset/list.json',
   ListFile_Vocabulary = LocalPath.MasterDirName + '/vocabulary/list.json',
+  ListFile_NiceClip = LocalPath.MasterDirName + '/niceclip/list.json',
 }
 
 export enum FirebasePath {
@@ -113,6 +115,7 @@ export enum FirebasePath {
   ListFile_Typo = 'typo/list.json',
   ListFile_Sunset = 'sunset/list.json',
   ListFile_Vocabulary = 'vocabulary/list.json',
+  ListFile_NiceClip = 'niceclip/list.json',
 }
 
 export enum FirebaseDBPath {
@@ -133,6 +136,7 @@ export enum FirebaseDBPath {
   Version_Awesome = 'app/versions/awesome',
   Version_AwesomeNature = 'app/versions/awesomenature',
   Version_Vocabulary = 'app/versions/vocabulary',
+  Version_NiceClip = 'app/versions/niceclip',
 }
 
 // category
@@ -167,8 +171,7 @@ export enum Category {
   Tune = 27,
   Vocabulary = 28,
   AwesomeNature = 29,
-
-  Siena = 30,
+  NiceClip = 30,
   CatFact = 31,
   Universe = 32,
   AnimeImage = 33,
@@ -177,6 +180,7 @@ export enum Category {
   DogBreed = 36,
   AnimeQuote = 37,
   MovieQuote = 38,
+  Emoji = 39,
 }
 
 // margin / padding

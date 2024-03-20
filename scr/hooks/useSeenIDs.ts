@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Category } from '../constants/AppConstants';
 import { useAppDispatch, useAppSelector } from '../redux/Store';
-import { addDrawSeenID, addQuoteSeenID, addMemeSeenID, addLoveSeenID, addSatisfyingSeenID, addCatDogSeenID, addNSFWSeenID, addCuteSeenID, addArtSeenID, addSarcasmSeenID, addTypoSeenID, addSunsetSeenID, addInfoSeenID, addAwesomeSeenID, addTuneSeenID, addVocabularySeenID, addAwesomeNatureSeenID } from '../redux/UserDataSlice'
+import { addDrawSeenID, addQuoteSeenID, addMemeSeenID, addLoveSeenID, addSatisfyingSeenID, addCatDogSeenID, addNSFWSeenID, addCuteSeenID, addArtSeenID, addSarcasmSeenID, addTypoSeenID, addSunsetSeenID, addInfoSeenID, addAwesomeSeenID, addTuneSeenID, addVocabularySeenID, addAwesomeNatureSeenID, addNiceClipSeenID } from '../redux/UserDataSlice'
 
 const useSeenIDs = (category: Category, postID: number | string | undefined) => {
     const dispatch = useAppDispatch()
@@ -83,6 +83,8 @@ const useSeenIDs = (category: Category, postID: number | string | undefined) => 
             dispatch(addTuneSeenID(postID));
         else if (category === Category.AwesomeNature)
             dispatch(addAwesomeNatureSeenID(postID));
+        else if (category === Category.NiceClip)
+            dispatch(addNiceClipSeenID(postID));
         else
             throw new Error('NI cat: ' + category);
     }, [postID])

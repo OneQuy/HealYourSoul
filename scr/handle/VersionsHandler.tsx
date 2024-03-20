@@ -24,6 +24,7 @@ export type Versions = {
     tune: number,
     vocabulary: number,
     awesomenature: number,
+    niceclip: number,
 }
 
 export var versions: Versions;

@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { BackgroundForTextCurrent, DiversityItemType, Inbox, SubscribedData } from "../constants/Types";
-import { Category, ScreenName } from "../constants/AppConstants";
+import { ScreenName } from "../constants/AppConstants";
 import { AddOrRemoveItemInArray, ArrayAddWithCheckDuplicate, ArrayRemove, IsValuableArrayOrString } from "../handle/UtilsTS";
 
 export type UserDataState = {
@@ -27,10 +27,6 @@ export type UserDataState = {
     shortFilmsFavoritedIDs: (number | string)[],
 
     awardPictureFavoritedIDs: (number | string)[],
-
-    universeFavoritedIDs: (number | string)[],
-
-    sienaFavoritedIDs: (number | string)[],
 
     funWebsiteFavoritesIDs: (number | string)[],
 
@@ -86,6 +82,9 @@ export type UserDataState = {
 
     artSeenIDs: (number | string)[],
     artFavoritedIDs: (number | string)[],
+
+    niceClipSeenIDs: (number | string)[],
+    niceClipFavoritedIDs: (number | string)[],
 }
 
 const initialState: UserDataState = {
@@ -112,16 +111,15 @@ const initialState: UserDataState = {
 
     awardPictureFavoritedIDs: [],
 
-    universeFavoritedIDs: [],
-
-    sienaFavoritedIDs: [],
-
     funWebsiteFavoritesIDs: [],
 
     topMovieFavoritesIDs: [],
 
     drawSeenIDs: [],
     drawFavoritedIDs: [],
+
+    niceClipSeenIDs: [],
+    niceClipFavoritedIDs: [],
 
     memeSeenIDs: [],
     memeFavoritedIDs: [],
@@ -181,7 +179,7 @@ const slice = createSlice({
         resetDev: (state) => {
             state.backgroundIdForText = undefined
         },
-       
+
         // minimal drawer
 
         toggleMinialDrawer: (state) => {
@@ -379,24 +377,6 @@ const slice = createSlice({
                 state.awardPictureFavoritedIDs = []
 
             state.awardPictureFavoritedIDs = state.awardPictureFavoritedIDs.filter(i => i !== action.payload)
-        },
-
-        // universe
-
-        toggleFavoritedUniverse(state, action: PayloadAction<number | string>) {
-            if (!state.universeFavoritedIDs)
-                state.universeFavoritedIDs = []
-
-            AddOrRemoveItemInArray(state.universeFavoritedIDs, action.payload)
-        },
-
-        // siena
-
-        toggleFavoritedSiena(state, action: PayloadAction<number | string>) {
-            if (!state.sienaFavoritedIDs)
-                state.sienaFavoritedIDs = []
-
-            AddOrRemoveItemInArray(state.sienaFavoritedIDs, action.payload)
         },
 
         // top movies
@@ -776,6 +756,31 @@ const slice = createSlice({
             state.artFavoritedIDs = state.artFavoritedIDs.filter(i => i !== action.payload)
         },
 
+        // niceClip
+
+        addNiceClipSeenID(state, action: PayloadAction<number | string>) {
+            if (!state.niceClipSeenIDs)
+                state.niceClipSeenIDs = []
+
+            if (!state.niceClipSeenIDs.includes(action.payload))
+                state.niceClipSeenIDs.push(action.payload);
+        },
+
+        addNiceClipFavoritedID(state, action: PayloadAction<number | string>) {
+            if (!state.niceClipFavoritedIDs)
+                state.niceClipFavoritedIDs = []
+
+            if (!state.niceClipFavoritedIDs.includes(action.payload))
+                state.niceClipFavoritedIDs.push(action.payload);
+        },
+
+        removeNiceClipFavoritedID(state, action: PayloadAction<number | string>) {
+            if (!state.niceClipFavoritedIDs)
+                return
+
+            state.niceClipFavoritedIDs = state.niceClipFavoritedIDs.filter(i => i !== action.payload)
+        },
+
         // cute
 
         addCuteSeenID(state, action: PayloadAction<number | string>) {
@@ -945,6 +950,10 @@ export const {
     addAwesomeNatureSeenID,
     removeAwesomeNatureFavoritedID,
 
+    addNiceClipFavoritedID,
+    addNiceClipSeenID,
+    removeNiceClipFavoritedID,
+
     clearAllInboxes,
     clearInbox,
     setDidReadInbox,
@@ -953,9 +962,6 @@ export const {
     toggleMarkAsReadInbox,
 
     setBackgroundIdForText,
-
-    toggleFavoritedSiena,
-    toggleFavoritedUniverse,
 } = slice.actions;
 
 export default slice.reducer

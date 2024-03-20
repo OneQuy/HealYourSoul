@@ -58,7 +58,6 @@ const pairCatAndScreenName: [Category, ScreenName][] = [
     [Category.Tune, ScreenName.Tune],
     [Category.Vocabulary, ScreenName.Vocabulary],
     [Category.AwesomeNature, ScreenName.AwesomeNature],
-
     [Category.Universe, ScreenName.Universe],
     [Category.AnimeImage, ScreenName.AnimeImage],
     [Category.AnimeQuote, ScreenName.AnimeQuote],
@@ -67,7 +66,8 @@ const pairCatAndScreenName: [Category, ScreenName][] = [
     [Category.DogFact, ScreenName.DogFact],
     [Category.DogBreed, ScreenName.DogBreed],
     [Category.Memedroid, ScreenName.Memedroid],
-    [Category.Siena, ScreenName.Siena],
+    [Category.NiceClip, ScreenName.NiceClip],
+    [Category.Emoji, ScreenName.Emoji],
 ] as const
 
 const notContentScreen: ScreenName[] = [
@@ -172,6 +172,8 @@ export const GetListFileRLP = (cat: Category, localOrFb: boolean) => {
             return FirebasePath.ListFile_Info;
         else if (cat === Category.Awesome)
             return FirebasePath.ListFile_Awesome;
+        else if (cat === Category.NiceClip)
+            return FirebasePath.ListFile_NiceClip;
         else
             throw new Error('GetListFileRLP: ' + cat);
     }
@@ -210,6 +212,8 @@ export const GetListFileRLP = (cat: Category, localOrFb: boolean) => {
             return LocalPath.ListFile_Tune;
         else if (cat === Category.AwesomeNature)
             return LocalPath.ListFile_AwesomeNature;
+        else if (cat === Category.NiceClip)
+            return LocalPath.ListFile_NiceClip;
         else
             throw new Error('GetListFileRLP: ' + cat);
     }
@@ -263,6 +267,8 @@ export const GetDBVersionPath = (cat: Category) => {
         return FirebaseDBPath.Version_Tune;
     else if (cat === Category.AwesomeNature)
         return FirebaseDBPath.Version_AwesomeNature;
+    else if (cat === Category.NiceClip)
+        return FirebaseDBPath.Version_NiceClip;
     else
         throw new Error('GetDBPath: ' + cat);
 }
@@ -300,6 +306,8 @@ const GetMediaFullPath = (localOrFb: boolean, cat: Category, postID: number, med
         path = `sunset/data/${postID}/${mediaIdx}`;
     else if (cat === Category.Vocabulary)
         path = `vocabulary/data/${postID}/${mediaIdx}`;
+    else if (cat === Category.NiceClip)
+        path = `niceclip/data/${postID}/${mediaIdx}`;
     else if (cat === Category.Tune)
         path = `tune/data/${postID}/${mediaIdx}`;
     else if (cat === Category.AwesomeNature)
@@ -356,6 +364,8 @@ export const GetAllSavedLocalPostIDsListAsync = async (cat: Category) => {
         path = `sunset/data`;
     else if (cat === Category.Vocabulary)
         path = `vocabulary/data`;
+    else if (cat === Category.NiceClip)
+        path = `niceclip/data`;
     else
         throw new Error('GetDataFullPath: ' + cat);
 
@@ -673,6 +683,10 @@ export const GetIconOfScreen = (screen: ScreenName) => {
         return 'moon-waning-crescent'
     else if (screen === ScreenName.Memedroid)
         return 'emoticon-excited'
+    else if (screen === ScreenName.NiceClip)
+        return 'motion-play'
+    else if (screen === ScreenName.Emoji)
+        return 'sticker-emoji'
     else
         return Icon.HeartBroken
 }
