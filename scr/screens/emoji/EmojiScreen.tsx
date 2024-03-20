@@ -1,7 +1,7 @@
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { View, StyleSheet, TouchableOpacity, FlatList, ActivityIndicator, Animated } from 'react-native'
+import { View, StyleSheet, TouchableOpacity, FlatList, Animated } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { BorderRadius, Category, Icon, LocalText, Outline, Size } from '../../constants/AppConstants'
 import { ThemeContext } from '../../constants/Colors'
@@ -21,6 +21,7 @@ const MinEmojiId = 1
 const MaxEmojiId = 182
 
 const emojiColumn = 7
+const emojiSize = (widthPercentageToDP(100) - Outline.GapVertical * 2) / emojiColumn
 
 const category = Category.Emoji
 
@@ -53,7 +54,7 @@ const EmojiScreen = () => {
       resultEmojiView_Border: { width: widthPercentageToDP(60), aspectRatio: 1 },
 
       pickEmojiFlatlistView: { flex: 1, },
-      imageEmojiInList: { width: (widthPercentageToDP(100) - Outline.GapVertical * 2) / emojiColumn, aspectRatio: 1 },
+      imageEmojiInList: { width: emojiSize, aspectRatio: 1 },
     })
   }, [theme, bottomInset])
 
