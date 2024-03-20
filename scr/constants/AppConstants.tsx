@@ -394,6 +394,7 @@ export const LocalText = {
   got_it: 'Got it!',
   open_youtube: 'Open in Youtube',
   share_image: 'Share Image',
+  pin: 'Pin',
   random: 'Random',
   random_day: 'Random day',
   next: 'Next',

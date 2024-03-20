@@ -13,6 +13,7 @@ import { FilterOnlyLetterAndNumberFromString } from '../handle/UtilsTS'
 import { GetIconOfScreen } from '../handle/AppUtils'
 import { useAppDispatch, useAppSelector } from '../redux/Store'
 import { checkInScreen } from '../redux/UserDataSlice'
+import { widthPercentageToDP } from 'react-native-responsive-screen'
 
 const idealRatio = 2.5
 
@@ -140,6 +141,7 @@ const DrawerSingleItem = ({
                         <View style={{
                             width: '35%',
                             height: '35%',
+                            maxWidth: widthPercentageToDP(11),
                             left: Outline.GapVertical,
                             top: -Outline.GapVertical / 2,
                             backgroundColor: theme.primary,
