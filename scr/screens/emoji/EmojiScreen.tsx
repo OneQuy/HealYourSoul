@@ -48,8 +48,6 @@ const EmojiScreen = () => {
 
       pickEmojiFlatlistView: { flex: 1, },
       imageEmojiInList: { width: 30, aspectRatio: 1 },
-
-      // refreshTxt: { fontSize: FontSize.Small_L, color: theme.counterBackground },
     })
   }, [theme, bottomInset])
 
@@ -65,6 +63,9 @@ const EmojiScreen = () => {
 
     setSelectingLeft(t => !t)
   }, [selectingLeft])
+
+  const onPressPin = useCallback(() => {
+  }, [])
 
   const renderItem = useCallback(({ item: uri }: { item: string }) => {
     return (
@@ -86,13 +87,18 @@ const EmojiScreen = () => {
         countType: 'share'
       },
       {
+        text: LocalText.pin,
+        onPress: onPressPin,
+        icon: Icon.Pin,
+      },
+      {
         text: LocalText.save,
         onPress: () => SaveMediaAsync(category, emoji_Result),
         icon: Icon.Download,
         countType: 'download',
       },
     ] as BottomBarItem[]
-  }, [emoji_Result])
+  }, [emoji_Result, onPressPin])
 
   const emojiUriArr = useMemo(() => {
     const arr = []
