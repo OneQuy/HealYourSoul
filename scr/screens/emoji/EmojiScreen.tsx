@@ -42,11 +42,11 @@ const EmojiScreen = () => {
       showView: { alignItems: 'center', gap: Outline.GapVertical_2 },
       plusView: { justifyContent: 'center', alignItems: 'center', gap: Outline.Horizontal, flexDirection: 'row' },
 
-      bigEmojiView: { width: widthPercentageToDP(30), aspectRatio: 1, borderRadius: BorderRadius.BR, borderColor: theme.counterBackground, borderWidth: StyleSheet.hairlineWidth },
-      bigEmojiView_Border: { width: widthPercentageToDP(30), aspectRatio: 1, },
+      bigEmojiView: { width: widthPercentageToDP(25), aspectRatio: 1, borderRadius: BorderRadius.BR, borderColor: theme.counterBackground, borderWidth: StyleSheet.hairlineWidth },
+      bigEmojiView_Border: { width: widthPercentageToDP(25), aspectRatio: 1, },
 
-      resultEmojiView: { width: widthPercentageToDP(50), aspectRatio: 1, borderRadius: BorderRadius.BR, borderColor: theme.counterBackground, borderWidth: StyleSheet.hairlineWidth },
-      resultEmojiView_Border: { width: widthPercentageToDP(50), aspectRatio: 1 },
+      resultEmojiView: { width: widthPercentageToDP(60), aspectRatio: 1, borderRadius: BorderRadius.BR, borderColor: theme.counterBackground, borderWidth: StyleSheet.hairlineWidth },
+      resultEmojiView_Border: { width: widthPercentageToDP(60), aspectRatio: 1 },
 
       pickEmojiFlatlistView: { flex: 1, },
       imageEmojiInList: { width: (widthPercentageToDP(100) - Outline.GapVertical * 2) / emojiColumn, aspectRatio: 1 },
