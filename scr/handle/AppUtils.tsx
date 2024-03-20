@@ -12,11 +12,13 @@ import Clipboard from "@react-native-clipboard/clipboard";
 import { NavigationProp } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CheckDuplicateAndDownloadAsync } from "../firebase/FirebaseStorageDownloadManager";
-import { track_HandleError, track_Simple } from "./tracking/GoodayTracking";
+import { track_HandleError, track_PressSaveMedia, track_Simple, track_SimpleWithCat } from "./tracking/GoodayTracking";
 import { GetDateAsync, GetNumberIntAsync, SetNumberAsync } from "./AsyncStorageUtils";
 import { UserID } from "./UserID";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { DrawerParamList } from "../navigation/Navigator";
+import { SaveToGalleryAsync } from "./CameraRoll";
+import Share from 'react-native-share';
 
 const today = new Date()
 export const todayString = 'd' + today.getDate() + '_m' + (today.getMonth() + 1) + '_' + today.getFullYear()
@@ -219,15 +221,48 @@ export const GetListFileRLP = (cat: Category, localOrFb: boolean) => {
     }
 }
 
+export const ShareImageAsync = async (uri: string, category: Category) => {
+    if (!uri)
+        return
+
+    track_SimpleWithCat(category, 'share')
+
+    Share.open({
+        url: uri,
+    }).catch((err) => {
+        const error = ToCanPrint(err)
+
+        if (!error.includes('User did not share'))
+            Alert.alert('Fail', error)
+    })
+}
+
+export const SaveMediaAsync = async (category: Category, uri: string) => {
+    if (!uri) {
+        Alert.alert(LocalText.oops, LocalText.no_media_to_download);
+        return;
+    }
+
+    track_PressSaveMedia(category)
+
+    const error = await SaveToGalleryAsync(uri)
+
+    if (error !== null) { // error
+        Alert.alert(LocalText.error, ToCanPrint(error));
+    }
+    else { // success
+        GoodayToast(LocalText.saved)
+    }
+}
+
 export const CatToScreenName = (cat: Category): ScreenName | undefined => {
     const f = pairCatAndScreenName.find(i => i[0] === cat)
 
     if (f)
         return f[1]
-    else
-    {
+    else {
         console.log('[ne] CatToScreenName: ' + Category[cat]);
-        
+
         return undefined
     }
 }

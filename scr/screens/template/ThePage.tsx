@@ -7,26 +7,23 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import Share from 'react-native-share';
 import { View, Text, Image, TouchableOpacity, ActivityIndicator, Alert, PanResponder, LayoutChangeEvent, GestureResponderEvent, Animated, StyleSheet, } from 'react-native'
 import React, { useCallback, useLayoutEffect, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { BorderRadius, Category, FontSize, Icon, LocalText, NeedReloadReason, Opacity, Outline, Size } from '../../constants/AppConstants';
 import { ThemeContext } from '../../constants/Colors';
 import { heightPercentageToDP as hp, } from "react-native-responsive-screen";
 import { FileList, CheckAndFillEmptyPropertiesPost, MediaType, PostMetadata } from '../../constants/Types';
-import { CheckLocalFileAndGetURIAsync, CopyAndToast, GetAllSavedLocalPostIDsListAsync, HandleError, PreDownloadPosts, SaveCurrentScreenForLoadNextTime, ToastTheme } from '../../handle/AppUtils';
+import { CheckLocalFileAndGetURIAsync, CopyAndToast, GetAllSavedLocalPostIDsListAsync, HandleError, PreDownloadPosts, SaveCurrentScreenForLoadNextTime, SaveMediaAsync, ShareImageAsync } from '../../handle/AppUtils';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/Store';
 import { PickRandomElement, RoundNumber, SecondsToHourMinuteSecondString } from '../../handle/Utils';
 import { setMutedVideo } from '../../redux/MiscSlice';
 import { ColorNameToRgb, HexToRgb, ToCanPrint } from '../../handle/UtilsTS';
-import { ToastOptions, toast } from '@baronha/ting';
 import { DrawerNavigationProp, useDrawerStatus } from '@react-navigation/drawer';
 import { DownloadProgressCallbackResult } from 'react-native-fs';
 import { NetLord } from '../../handle/NetLord';
-import { SaveToGalleryAsync } from '../../handle/CameraRoll';
 import { Cheat } from '../../handle/Cheat';
-import { track_PressNextPost, track_PressNextPostMedia, track_PressSaveMedia, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
+import { track_PressNextPost, track_PressNextPostMedia, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
 import { SwipeResult, useSimpleGesture } from '../../hooks/useSimpleGesture';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
@@ -416,28 +413,11 @@ const ThePage = ({ category }: ThePageProps) => {
     // button handles
 
     const onPressDownloadMedia = useCallback(async () => {
-        if (!mediaURI.current) {
-            Alert.alert(LocalText.oops, LocalText.no_media_to_download);
-            return;
-        }
-
-        track_PressSaveMedia(category)
-
         setHandling(true);
-        const error = await SaveToGalleryAsync(mediaURI.current)
+
+        await SaveMediaAsync(category, mediaURI.current)
+
         setHandling(false);
-
-        if (error !== null) { // error
-            Alert.alert(LocalText.error, ToCanPrint(error));
-        }
-        else { // success
-            const options: ToastOptions = {
-                title: LocalText.saved,
-                ...ToastTheme(theme, 'done')
-            };
-
-            toast(options);
-        }
     }, [])
 
     const onPressNextMedia = useCallback(async (isNext: boolean) => {
@@ -522,21 +502,7 @@ const ThePage = ({ category }: ThePageProps) => {
     }, [onPressNextPost]);
 
     const onPressShareImage = useCallback(async () => {
-        if (!mediaURI.current)
-            return
-
-        track_SimpleWithCat(category, 'share')
-
-        Share
-            .open({
-                url: mediaURI.current,
-            })
-            .catch((err) => {
-                const error = ToCanPrint(err)
-
-                if (!error.includes('User did not share'))
-                    Alert.alert('Fail', error)
-            });
+        await ShareImageAsync(mediaURI.current, category)
     }, [])
 
     const onSwiped = useCallback((result: SwipeResult) => {
