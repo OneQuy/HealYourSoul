@@ -1,8 +1,8 @@
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { View, StyleSheet, TouchableOpacity, FlatList } from 'react-native'
-import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { View, StyleSheet, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native'
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { BorderRadius, Category, Icon, LocalText, Outline, Size } from '../../constants/AppConstants'
 import { ThemeContext } from '../../constants/Colors'
 import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading';
@@ -11,27 +11,29 @@ import { widthPercentageToDP } from 'react-native-responsive-screen';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ExtractAllNumbersInText } from '../../handle/UtilsTS';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
-import { SaveMediaAsync, ShareImageAsync } from '../../handle/AppUtils';
+import { SaveCurrentScreenForLoadNextTime, SaveMediaAsync, ShareImageAsync } from '../../handle/AppUtils';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 const MinEmojiId = 1
 const MaxEmojiId = 182
 
-const emojiColumn = 10
+const emojiColumn = 7
 
 const category = Category.Emoji
 
 const EmojiScreen = () => {
   const theme = useContext(ThemeContext);
   const { bottom: bottomInset } = useSafeAreaInsets()
-  const [emoji_1, setEmoji_1] = useState('')
-  const [emoji_2, setEmoji_2] = useState('')
-  const [emoji_Result, setEmoji_Result] = useState('')
-  const [selectingLeft, setSelectingLeft] = useState(true)
+  const [emojiUri_Left, setEmojiUri_Left] = useState('')
+  const [emojiUri_Right, setEmojiUri_Right] = useState('')
+  const [emojiUri_Result, setEmojiUri_Result] = useState('')
+  const [showBorderForEmojiSide, setShowBorderForEmojiSide] = useState<'left' | 'right' | undefined>(undefined)
+  const navigation = useNavigation()
+  const lastSetEmojiSideIsLeftOrRight = useRef(false)
 
   // const [reasonCanNotUpload, setReasonCanNotUpload] = useState<undefined | { reason: string, showSubscribeButton?: boolean }>(undefined)
   // const [isHandling, setIsHandling] = useState(true)
   // const { isPremium } = usePremium()
-  // const navigation = useNavigation()
 
   const style = useMemo(() => {
     return StyleSheet.create({
@@ -41,28 +43,43 @@ const EmojiScreen = () => {
       plusView: { justifyContent: 'center', alignItems: 'center', gap: Outline.Horizontal, flexDirection: 'row' },
 
       bigEmojiView: { width: widthPercentageToDP(30), aspectRatio: 1, borderRadius: BorderRadius.BR, borderColor: theme.counterBackground, borderWidth: StyleSheet.hairlineWidth },
-      bigEmojiView_Empty: { width: widthPercentageToDP(30), aspectRatio: 1, },
+      bigEmojiView_Border: { width: widthPercentageToDP(30), aspectRatio: 1, },
 
       resultEmojiView: { width: widthPercentageToDP(50), aspectRatio: 1, borderRadius: BorderRadius.BR, borderColor: theme.counterBackground, borderWidth: StyleSheet.hairlineWidth },
-      resultEmojiView_Empty: { width: widthPercentageToDP(50), aspectRatio: 1 },
+      resultEmojiView_Border: { width: widthPercentageToDP(50), aspectRatio: 1 },
 
       pickEmojiFlatlistView: { flex: 1, },
-      imageEmojiInList: { width: 30, aspectRatio: 1 },
+      imageEmojiInList: { width: (widthPercentageToDP(100) - Outline.GapVertical * 2) / emojiColumn, aspectRatio: 1 },
     })
   }, [theme, bottomInset])
 
-  const onPressEmojiBig = useCallback((left: boolean) => {
-    setSelectingLeft(left)
+  const onPressEmojiSide = useCallback((left: boolean) => {
+    setShowBorderForEmojiSide(left ? 'left' : 'right')
   }, [])
 
   const onPressEmojiInList = useCallback((uri: string) => {
-    if (selectingLeft)
-      setEmoji_1(uri)
-    else
-      setEmoji_2(uri)
+    let setForLeftOrRight = true
 
-    setSelectingLeft(t => !t)
-  }, [selectingLeft])
+    if (showBorderForEmojiSide === 'left')
+      setForLeftOrRight = true
+    else if (showBorderForEmojiSide === 'right')
+      setForLeftOrRight = false
+    else {
+      if (lastSetEmojiSideIsLeftOrRight.current)
+        setForLeftOrRight = false
+      else
+        setForLeftOrRight = true
+    }
+
+    if (setForLeftOrRight)
+      setEmojiUri_Left(uri)
+    else
+      setEmojiUri_Right(uri)
+
+    lastSetEmojiSideIsLeftOrRight.current = setForLeftOrRight
+
+    setShowBorderForEmojiSide(undefined)
+  }, [showBorderForEmojiSide])
 
   const onPressPin = useCallback(() => {
   }, [])
@@ -82,7 +99,7 @@ const EmojiScreen = () => {
     return [
       {
         text: LocalText.share,
-        onPress: () => ShareImageAsync(emoji_Result, category),
+        onPress: () => ShareImageAsync(emojiUri_Result, category),
         icon: Icon.ShareImage,
         countType: 'share'
       },
@@ -93,12 +110,12 @@ const EmojiScreen = () => {
       },
       {
         text: LocalText.save,
-        onPress: () => SaveMediaAsync(category, emoji_Result),
+        onPress: () => SaveMediaAsync(category, emojiUri_Result),
         icon: Icon.Download,
         countType: 'download',
       },
     ] as BottomBarItem[]
-  }, [emoji_Result, onPressPin])
+  }, [emojiUri_Result, onPressPin])
 
   const emojiUriArr = useMemo(() => {
     const arr = []
@@ -121,19 +138,28 @@ const EmojiScreen = () => {
   // }
 
   useEffect(() => {
-    if (!emoji_1 && !emoji_2)
+    if (!emojiUri_Left && !emojiUri_Right)
       return
 
-    const id1 = ExtractAllNumbersInText(emoji_1)
-    const id2 = ExtractAllNumbersInText(emoji_2)
+    const id1 = ExtractAllNumbersInText(emojiUri_Left)
+    const id2 = ExtractAllNumbersInText(emojiUri_Right)
 
     if (id1.length <= 0 && id2.length <= 0)
       return
 
     const uri = `https://emojimix.app/emojimixfusion/${id1[0]}_${id2[0]}.png`
 
-    setEmoji_Result(uri)
-  }, [emoji_1, emoji_2])
+    setEmojiUri_Result(uri)
+  }, [emojiUri_Left, emojiUri_Right])
+
+  // save last visit category screen
+
+  useFocusEffect(
+    useCallback(() => {
+      SaveCurrentScreenForLoadNextTime(navigation)
+    }, [])
+  )
+
   // main render
 
   return (
@@ -143,20 +169,38 @@ const EmojiScreen = () => {
       <View style={style.showView}>
         {/* plus view */}
         <View style={style.plusView}>
-          <TouchableOpacity onPress={() => onPressEmojiBig(true)}>
-            <ImageBackgroundOrView style={!emoji_1 ? style.bigEmojiView : style.bigEmojiView_Empty} source={{ uri: emoji_1 }} />
+          {/* left side emoji */}
+          <TouchableOpacity onPress={() => onPressEmojiSide(true)}>
+            <ImageBackgroundOrView
+              newUriNewKey={true}
+              style={(!emojiUri_Left || showBorderForEmojiSide === 'left') ? style.bigEmojiView : style.bigEmojiView_Border}
+              source={{ uri: emojiUri_Left }}
+              indicatorProps={{ color: theme.counterBackground }}
+            />
           </TouchableOpacity>
 
+          {/* plus icon */}
           <MaterialCommunityIcons name={Icon.Plus} color={theme.counterBackground} size={Size.IconBig} />
 
-          <TouchableOpacity onPress={() => onPressEmojiBig(false)}>
-            <ImageBackgroundOrView style={!emoji_2 ? style.bigEmojiView : style.bigEmojiView_Empty} source={{ uri: emoji_2 }} />
+          {/* right side emoji */}
+          <TouchableOpacity onPress={() => onPressEmojiSide(false)}>
+            <ImageBackgroundOrView
+              newUriNewKey={true}
+              style={(!emojiUri_Right || showBorderForEmojiSide === 'right') ? style.bigEmojiView : style.bigEmojiView_Border}
+              source={{ uri: emojiUri_Right }}
+              indicatorProps={{ color: theme.counterBackground }}
+            />
           </TouchableOpacity>
         </View>
 
         {/* result view */}
 
-        <ImageBackgroundOrView style={!emoji_Result ? style.resultEmojiView : style.resultEmojiView_Empty} source={{ uri: emoji_Result }} />
+        <ImageBackgroundOrView
+          newUriNewKey={true}
+          style={!emojiUri_Result ? style.resultEmojiView : style.resultEmojiView_Border}
+          source={{ uri: emojiUri_Result }}
+          indicatorProps={{ color: theme.counterBackground }}
+        />
       </View>
 
       {/* flat list pick emoji */}

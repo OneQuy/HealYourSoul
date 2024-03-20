@@ -290,7 +290,7 @@ export enum Icon {
   Gallery = 'view-dashboard',
   HeartFull = 'cards-heart',
   HeartOutline = 'cards-heart-outline',
-  Plus = 'plus-thick',
+  Plus = 'plus',
 
   // MaterialIcons
 
