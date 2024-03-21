@@ -9,9 +9,9 @@ import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading
 import ImageBackgroundOrView from '../components/ImageBackgroundOrView';
 import { widthPercentageToDP } from 'react-native-responsive-screen';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ExtractAllNumbersInText, IsValuableArrayOrString } from '../../handle/UtilsTS';
+import { ExtractAllNumbersInText, IsValuableArrayOrString, ToCanPrintError } from '../../handle/UtilsTS';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
-import { SaveCurrentScreenForLoadNextTime, SaveMediaAsync, ShareImageAsync } from '../../handle/AppUtils';
+import { AlertWithError, SaveCurrentScreenForLoadNextTime, SaveMediaAsync, ShareImageAsync } from '../../handle/AppUtils';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { playAnimLoadedMedia } from '../../handle/GoodayAnimation';
 import HeaderRightButtons from '../components/HeaderRightButtons';
@@ -265,6 +265,7 @@ const EmojiScreen = () => {
             source={{ uri: emojiUri_Result, cache: 'force-cache' }}
             indicatorProps={{ color: theme.counterBackground }}
             onLoad={onResultLoad}
+            onError={(e) => AlertWithError(e.nativeEvent?.error ?? e.nativeEvent)}
           />
         </Animated.View>
       </View>
