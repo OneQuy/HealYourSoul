@@ -1,5 +1,5 @@
 import { CommonActions } from '@react-navigation/native';
-import { Alert, AppStateStatus } from "react-native"
+import { Alert, AppStateStatus, Platform } from "react-native"
 import { RegisterOnChangedState, UnregisterOnChangedState } from "./AppStateMan"
 import { HandleAppConfigAsync } from "./AppConfigHandler"
 import { HandleStartupAlertAsync } from "./StartupAlert"
@@ -364,6 +364,7 @@ export const HandleGoodayStreakAsync = async (forceShow = false) => {
 
 const SetupOneSignal = () => {
     OneSignal.User.addTag('version', versionAsNumber.toString())
+    OneSignal.User.addTag('platform', Platform.OS)
 
     // Method for listening for notification clicks
 
