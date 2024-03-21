@@ -348,6 +348,8 @@ export const HandleGoodayStreakAsync = async (forceShow = false) => {
 
     if (data.currentStreak > 1)
         GoodayToast(LocalText.gooday_streak_2.replaceAll('##', data.currentStreak.toString()))
+    else if (data.bestStreak > 1)
+        GoodayToast(LocalText.gooday_streak_1_welcome)
     else
         GoodayToast(LocalText.gooday_streak_1)
 

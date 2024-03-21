@@ -548,6 +548,7 @@ export const LocalText = {
   rate_in_app_text: 'Tap the star you want to rate Gooday',
 
   gooday_streak_1: 'First day of Gooday streak!',
+  gooday_streak_1_welcome: 'Welcome back!',
   gooday_streak_2: 'You have a ##-Gooday streak in a row!',
 
   difficulty: 'Difficulty',
