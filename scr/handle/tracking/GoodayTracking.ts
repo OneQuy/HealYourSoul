@@ -144,7 +144,7 @@ export const track_OnUseEffectOnceEnterAppAsync = async (startFreshlyOpenAppTick
         event = 'updated_app'
 
         const objLastAlertText = await AsyncStorage.getItem(StorageKey_PressUpdateObject)
-        let lastAlertTickToNow = 0
+        let lastAlert = 'no_data'
         let obj
 
         if (objLastAlertText)
@@ -154,7 +154,7 @@ export const track_OnUseEffectOnceEnterAppAsync = async (startFreshlyOpenAppTick
             obj = JSON.parse(objLastAlertText)
 
             if (obj && typeof obj.last_alert_tick === 'number')
-                lastAlertTickToNow = Date.now() - obj.last_alert_tick
+                lastAlert = GetDayHourMinSecFromMs_ToString(Date.now() - obj.last_alert_tick)
         }
 
         MainTrack(event,
@@ -163,7 +163,7 @@ export const track_OnUseEffectOnceEnterAppAsync = async (startFreshlyOpenAppTick
             ],
             {
                 from: 'v' + lastInstalledVersion,
-                lastAlertTickToNow,
+                lastAlert,
                 ...obj,
             })
 
