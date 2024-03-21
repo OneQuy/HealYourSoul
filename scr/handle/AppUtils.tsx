@@ -3,9 +3,9 @@ import { Category, FirebaseDBPath, FirebasePath, Icon, LocalPath, LocalText, Nee
 import { GetColors, ThemeColor } from "../constants/Colors";
 import { CheckAndFillEmptyPropertiesPost, FileList, MediaType, PostMetadata, UserInfo } from "../constants/Types";
 import { Cheat } from "./Cheat";
-import { DeleteFileAsync, DeleteTempDirAsync, GetFLPFromRLP, IsExistedAsync } from "./FileUtils";
+import { DeleteFileAsync, DeleteTempDirAsync, DownloadFileAsync, GetFLPFromRLP, IsExistedAsync } from "./FileUtils";
 import { ToastOptions, toast } from "@baronha/ting";
-import { ColorNameToHex, SafeDateString, ToCanPrint, VersionToNumber } from "./UtilsTS";
+import { ColorNameToHex, RegexUrl, SafeDateString, ToCanPrint, VersionToNumber } from "./UtilsTS";
 import RNFS, { DownloadProgressCallbackResult, ReadDirItem } from "react-native-fs";
 import { IsInternetAvailableAsync } from "./NetLord";
 import Clipboard from "@react-native-clipboard/clipboard";
@@ -19,6 +19,7 @@ import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { DrawerParamList } from "../navigation/Navigator";
 import { SaveToGalleryAsync } from "./CameraRoll";
 import Share from 'react-native-share';
+import { TempDirName } from "./Utils";
 
 const today = new Date()
 export const todayString = 'd' + today.getDate() + '_m' + (today.getMonth() + 1) + '_' + today.getFullYear()
@@ -241,6 +242,20 @@ export const SaveMediaAsync = async (category: Category, uri: string) => {
     if (!uri) {
         Alert.alert(LocalText.oops, LocalText.no_media_to_download);
         return;
+    }
+
+    const isNeedDownload = uri.startsWith('http')
+
+    if (isNeedDownload) {
+        const flp = RNFS.DocumentDirectoryPath + '/' + TempDirName + '/image.jpg'
+        const res = await DownloadFileAsync(uri, flp, false)
+
+        if (res) {
+            Alert.alert('Can not download file to save!', ToCanPrint(res))
+            return
+        }
+        else
+            uri = flp
     }
 
     track_PressSaveMedia(category)
