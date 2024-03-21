@@ -7,6 +7,7 @@ import { versions } from "./VersionsHandler";
 import { IsInternetAvailableAsync } from "./NetLord";
 import { AlertNoInternet, GetListFileRLP, HandleError } from "./AppUtils";
 import { PreventCallDuplicateFunctionHandler } from "./PreventCallDuplicateFunctionHandler";
+import { ToCanPrint } from "./UtilsTS";
 
 const cachedFileLists: [Category, FileList][] = []
 
@@ -155,7 +156,11 @@ async function DownloadAndSaveFileListAsync(cat: Category): Promise<FileList | N
     const result = await FirebaseStorage_DownloadAndReadJsonAsync(GetListFileRLP(cat, false), GetListFileRLP(cat, true));
 
     if (result.error) {
-        HandleError('DownloadFileList-' + Category[cat], result.error)
+        const s = '' + ToCanPrint(result.error)
+
+        if (!s || !s.includes('Network request failed'))
+            HandleError('DownloadFileList-' + Category[cat], s)
+
         return NeedReloadReason.FailToGetContent;
     }
 
