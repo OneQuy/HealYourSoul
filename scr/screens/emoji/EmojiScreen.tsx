@@ -299,6 +299,7 @@ const EmojiScreen = () => {
         items={bottomBarItems}
         id={undefined}
         category={category}
+        minimal={true}
       />
 
     </View>

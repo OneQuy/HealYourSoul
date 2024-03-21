@@ -21,18 +21,22 @@ export type BottomBarItem = {
     countType?: CountType,
 }
 
+export const MinimalBottomBarHeight = Outline.VerticalMini
+
 const BottomBar = ({
     items,
     category,
     id,
+    minimal,
 }: {
     items: BottomBarItem[],
     category: Category,
 
     /**
      * id for count view & favorite
-     */
+    */
     id?: string | number,
+    minimal?: boolean,
 }) => {
     const theme = useContext(ThemeContext);
     const safeArea = useSafeAreaInsets()
@@ -47,10 +51,10 @@ const BottomBar = ({
                 flexDirection: 'row',
                 justifyContent: 'space-between',
             },
-            mainBtnTO: { paddingVertical: Outline.GapVertical_2, justifyContent: 'center', flex: 1, alignItems: 'center', gap: Outline.GapVertical },
+            mainBtnTO: { paddingVertical: minimal ? MinimalBottomBarHeight : Outline.GapVertical_2, justifyContent: 'center', flex: 1, alignItems: 'center', gap: Outline.GapVertical },
             mainBtnTxt: { color: theme.counterPrimary, fontSize: FontSize.Small },
         })
-    }, [theme, safeArea])
+    }, [theme, safeArea, minimal])
 
     const renderedItems = useMemo(() => {
         return items.map((item) => {
@@ -70,6 +74,7 @@ const BottomBar = ({
                     category={category}
                     id={id}
                     icon={item.icon}
+                    minimal={minimal}
                 />
             else {
                 return (

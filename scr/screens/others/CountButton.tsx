@@ -8,6 +8,7 @@ import { Category, FontSize, Outline, Size } from '../../constants/AppConstants'
 import { ThemeContext } from '../../constants/Colors';
 import { CountType } from '../../handle/LikeCountHandler';
 import useCount from '../../hooks/useCount';
+import { MinimalBottomBarHeight } from './BottomBar';
 
 export type CountButtonProps = {
     category: Category,
@@ -15,6 +16,7 @@ export type CountButtonProps = {
     type: CountType,
     icon: string,
     title: string,
+    minimal?: boolean,
     onPressFunc?: () => void,
 }
 
@@ -25,7 +27,8 @@ const CountButton = (
         icon,
         title,
         type,
-        onPressFunc
+        onPressFunc,
+        minimal,
     }: CountButtonProps) => {
     const theme = useContext(ThemeContext);
 
@@ -41,12 +44,12 @@ const CountButton = (
     const style = useMemo(() => {
         return StyleSheet.create({
             masterTO: {
-                paddingVertical: Outline.GapVertical_2, gap: Outline.GapVertical, flex: 1, justifyContent: 'center', alignItems: 'center'
+                paddingVertical: minimal ? MinimalBottomBarHeight : Outline.GapVertical_2, gap: Outline.GapVertical, flex: 1, justifyContent: 'center', alignItems: 'center'
             },
 
             countText: { color: theme.counterPrimary, fontSize: FontSize.Small },
         })
-    }, [theme])
+    }, [theme, minimal])
 
     return (
         <TouchableOpacity onPress={onPress} style={style.masterTO} >
