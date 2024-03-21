@@ -689,6 +689,7 @@ export const StorageKey_MiniIAPCount = 'mini_iap_count'
 export const StorageKey_ClickNotificationOneSignal = 'click_onesignal'
 export const StorageKey_GoodayAt = 'gooday_at'
 export const StorageKey_NeedToShowWhatsNewFromVer = 'whatsnew_from'
+export const StorageKey_PressUpdateObject = 'update_object'
 
 // export const StorageKey_LastTickAskRate = 'last_ask_rate'
 // export const StorageKey_LastAskRateIsPressRateOrNot = 'last_ask_rate_ok'

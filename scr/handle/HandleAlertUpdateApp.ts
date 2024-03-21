@@ -1,8 +1,9 @@
 import { GetAppConfig } from "./AppConfigHandler"
 import { OpenStore, versionAsNumber } from "./AppUtils"
-import { LocalText, StorageKey_LastAskForUpdateApp } from "../constants/AppConstants"
+import { LocalText, StorageKey_LastAskForUpdateApp, StorageKey_PressUpdateObject } from "../constants/AppConstants"
 import { Alert, AlertButton, Platform } from "react-native"
 import { GetDateAsync_IsValueNotExistedOrEqualOverDayFromNow, SetDateAsync_Now } from "./AsyncStorageUtils"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 const isLog = false
 
@@ -54,18 +55,32 @@ export const HandldAlertUpdateAppAsync = async () => {
         const arrBtn: AlertButton[] = []
 
         if (!data.force_update) {
-            arrBtn.push({
+            arrBtn.push({ // later btn
                 text: LocalText.later,
                 onPress: () => {
+                    AsyncStorage.setItem(StorageKey_PressUpdateObject, JSON.stringify({
+                        last_alert_tick: Date.now(),
+                        last_alert_press: 'later',
+                        last_alert_current_ver: versionAsNumber,
+                        last_alert_target: data.version
+                    }))
+
                     resolve(true)
                 }
             })
         }
 
-        arrBtn.push({
+        arrBtn.push({ // update btn
             text: LocalText.update,
             onPress: () => {
                 OpenStore()
+
+                AsyncStorage.setItem(StorageKey_PressUpdateObject, JSON.stringify({
+                    last_alert_tick: Date.now(),
+                    last_alert_press: 'update',
+                    last_alert_current_ver: versionAsNumber,
+                    last_alert_target: data.version
+                }))
 
                 if (!data.force_update)
                     resolve(true)

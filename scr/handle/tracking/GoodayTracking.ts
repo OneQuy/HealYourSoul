@@ -1,4 +1,4 @@
-import { Category, StorageKey_CachedPressNextPost, StorageKey_FirstTimeInstallTick, StorageKey_LastFreshlyOpenApp, StorageKey_LastInstalledVersion, StorageKey_LastTickTrackLocation, StorageKey_LastTrackCountryName, StorageKey_OpenAppOfDayCount, StorageKey_OpenAppTotalCount } from "../../constants/AppConstants"
+import { Category, StorageKey_CachedPressNextPost, StorageKey_FirstTimeInstallTick, StorageKey_LastFreshlyOpenApp, StorageKey_LastInstalledVersion, StorageKey_LastTickTrackLocation, StorageKey_LastTrackCountryName, StorageKey_OpenAppOfDayCount, StorageKey_OpenAppTotalCount, StorageKey_PressUpdateObject } from "../../constants/AppConstants"
 import { GetDateAsync, GetDateAsync_IsValueExistedAndIsToday, GetNumberIntAsync, SetDateAsync_Now, SetNumberAsync } from "../AsyncStorageUtils"
 import { MainTrack, TrackErrorOnFirebase } from "./Tracking"
 import { versionAsNumber } from "../AppUtils"
@@ -143,12 +143,26 @@ export const track_OnUseEffectOnceEnterAppAsync = async (startFreshlyOpenAppTick
         didUpdated = true
         event = 'updated_app'
 
+        const objLastAlertText = await AsyncStorage.getItem(StorageKey_PressUpdateObject)
+        let lastAlertTickToNow = 0
+        let obj
+
+        if (objLastAlertText)
+        {
+            obj = JSON.parse(objLastAlertText)
+
+            if (obj && typeof obj.last_alert_tick === 'number')
+                lastAlertTickToNow = Date.now() - obj.last_alert_tick
+        }
+
         MainTrack(event,
             [
                 `total/${event}`,
             ],
             {
-                from: 'v' + lastInstalledVersion
+                from: 'v' + lastInstalledVersion,
+                lastAlertTickToNow,
+                ...obj,
             })
 
         track_SimpleWithParam('versions', 'v' + versionAsNumber)
