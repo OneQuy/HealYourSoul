@@ -18,6 +18,7 @@ import HeaderRightButtons from '../components/HeaderRightButtons';
 import HairLine from '../components/HairLine';
 import { useAppDispatch, useAppSelector } from '../../redux/Store';
 import { toggleEmojiMix } from '../../redux/UserDataSlice';
+import { RandomInt } from '../../handle/Utils';
 
 const MinEmojiId = 1
 const MaxEmojiId = 182
@@ -106,7 +107,7 @@ const EmojiScreen = () => {
     setShowBorderForEmojiSide(undefined)
   }, [showBorderForEmojiSide])
 
-  const onPressEmojiPinned = useCallback((ids: [number, number]) => {
+  const set2Emoji = useCallback((ids: [number, number]) => {
     const leftUri = singleEmojiUri(ids[0])
     const rightUri = singleEmojiUri(ids[1])
 
@@ -120,6 +121,12 @@ const EmojiScreen = () => {
     })
 
   }, [ids, pinnedEmojiMixes])
+
+  const onPressRandom = useCallback(() => {
+    set2Emoji([
+      RandomInt(MinEmojiId, MaxEmojiId),
+      RandomInt(MinEmojiId, MaxEmojiId)])
+  }, [set2Emoji])
 
   const onPressPinInBottomBar = useCallback(() => {
     if (ids === undefined)
@@ -147,7 +154,7 @@ const EmojiScreen = () => {
     const uri = mixEmojiUri(ids[0], ids[1])
 
     return (
-      <TouchableOpacity onPress={() => onPressEmojiPinned(ids)}>
+      <TouchableOpacity onPress={() => set2Emoji(ids)}>
         <ImageBackgroundWithLoading
           style={style.imageEmojiPinned}
           source={{ uri, cache: 'force-cache' }}
@@ -170,13 +177,18 @@ const EmojiScreen = () => {
         icon: isPinned ? Icon.Pin : Icon.PinOutline,
       },
       {
+        text: LocalText.random,
+        onPress: onPressRandom,
+        icon: Icon.Dice,
+      },
+      {
         text: LocalText.save,
         onPress: () => SaveMediaAsync(category, emojiUri_Result),
         icon: Icon.Download,
         countType: 'download',
       },
     ] as BottomBarItem[]
-  }, [emojiUri_Result, onPressPinInBottomBar, isPinned])
+  }, [emojiUri_Result, onPressRandom, onPressPinInBottomBar, isPinned])
 
   const emojiUriArr = useMemo(() => {
     const arr = []
@@ -297,7 +309,6 @@ const EmojiScreen = () => {
 
       <BottomBar
         items={bottomBarItems}
-        id={undefined}
         category={category}
         minimal={true}
       />
