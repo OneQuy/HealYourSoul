@@ -2,7 +2,7 @@ import { Category, StorageKey_CachedPressNextPost, StorageKey_FirstTimeInstallTi
 import { GetDateAsync, GetDateAsync_IsValueExistedAndIsToday, GetNumberIntAsync, SetDateAsync_Now, SetNumberAsync } from "../AsyncStorageUtils"
 import { MainTrack, TrackErrorOnFirebase } from "./Tracking"
 import { versionAsNumber } from "../AppUtils"
-import { FilterOnlyLetterAndNumberFromString, GetDayHourMinSecFromMs_ToString, IsValuableArrayOrString, TimeOutError, ToCanPrint } from "../UtilsTS"
+import { DateDiff_WithNow, FilterOnlyLetterAndNumberFromString, GetDayHourMinSecFromMs_ToString, IsValuableArrayOrString, TimeOutError, ToCanPrint } from "../UtilsTS"
 import { UserID } from "../UserID"
 import { Dimensions, Platform } from "react-native"
 import { GetIPLocationAsync, IPLocation } from "../../hooks/useCountryFromIP"
@@ -92,6 +92,9 @@ export const track_OnUseEffectOnceEnterAppAsync = async (startFreshlyOpenAppTick
     const openTime = Date.now() - startFreshlyOpenAppTick
     const totalOpenAppCount = await GetNumberIntAsync(StorageKey_OpenAppTotalCount, 0)
     const openTodaySoFar = await GetNumberIntAsync(StorageKey_OpenAppOfDayCount, 0)
+    
+    const installedDate = await GetDateAsync(StorageKey_FirstTimeInstallTick)
+    const installedDateCount = installedDate ? Math.floor(DateDiff_WithNow(installedDate)) : 0
 
     MainTrack(event,
         [
@@ -102,6 +105,7 @@ export const track_OnUseEffectOnceEnterAppAsync = async (startFreshlyOpenAppTick
             openTime,
             totalOpenAppCount,
             openTodaySoFar,
+            installedDateCount,
         }
     )
 
