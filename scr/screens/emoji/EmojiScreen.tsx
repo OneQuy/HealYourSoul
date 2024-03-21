@@ -220,6 +220,7 @@ const EmojiScreen = () => {
     if (ids === undefined)
       return
 
+    track_SimpleWithParam('emoji', 'mixed')
     setEmojiUri_Result(mixEmojiUri(ids[0], ids[1]))
   }, [ids])
 
