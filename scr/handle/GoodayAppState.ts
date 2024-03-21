@@ -306,7 +306,7 @@ export const CheckAndShowAlertWhatsNewAsync = async (fromVer: number) => {
         if (configVerNum <= fromVer || configVerNum > versionAsNumber)
             continue
 
-        versionsToTrack += (configVerNum + '.')
+        versionsToTrack += ('v' + configVerNum)
 
         if (s === '')
             s = entries[i][1] as string
