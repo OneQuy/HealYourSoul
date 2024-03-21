@@ -149,6 +149,8 @@ export const track_OnUseEffectOnceEnterAppAsync = async (startFreshlyOpenAppTick
 
         if (objLastAlertText)
         {
+            AsyncStorage.removeItem(StorageKey_PressUpdateObject)
+
             obj = JSON.parse(objLastAlertText)
 
             if (obj && typeof obj.last_alert_tick === 'number')
