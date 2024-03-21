@@ -55,13 +55,6 @@ const EmojiScreen = () => {
     return [id1arr[0], id2arr[0]] as [number, number]
   }, [emojiUri_Left, emojiUri_Right])
 
-  const pinnedUriArr = useMemo(() => {
-    if (!pinnedEmojiMixes)
-      return undefined
-
-    return pinnedEmojiMixes.map(i => mixEmojiUri(i[0], i[1]))
-  }, [pinnedEmojiMixes])
-
   const style = useMemo(() => {
     return StyleSheet.create({
       masterView: { paddingTop: Outline.GapHorizontal, flex: 1, justifyContent: 'center', alignItems: 'center', gap: Outline.GapHorizontal, },
@@ -113,7 +106,22 @@ const EmojiScreen = () => {
     setShowBorderForEmojiSide(undefined)
   }, [showBorderForEmojiSide])
 
-  const onPressPin = useCallback(() => {
+  const onPressEmojiPinned = useCallback((ids: [number, number]) => {
+    const leftUri = singleEmojiUri(ids[0])
+    const rightUri = singleEmojiUri(ids[1])
+
+    onPressEmojiInList(leftUri)
+    onPressEmojiInList(rightUri)
+  }, [onPressEmojiInList])
+
+  const isPinned = useMemo(() => {
+    return ids && pinnedEmojiMixes && pinnedEmojiMixes.find(i => {
+      return (i[0] === ids[0] && i[1] === ids[1]) || (i[1] === ids[0] && i[0] === ids[1])
+    })
+
+  }, [ids, pinnedEmojiMixes])
+
+  const onPressPinInBottomBar = useCallback(() => {
     if (ids === undefined)
       return
 
@@ -135,9 +143,11 @@ const EmojiScreen = () => {
     )
   }, [style, onPressEmojiInList])
 
-  const renderItemPinned = useCallback(({ item: uri }: { item: string }) => {
+  const renderItemPinned = useCallback(({ item: ids }: { item: [number, number] }) => {
+    const uri = mixEmojiUri(ids[0], ids[1])
+
     return (
-      <TouchableOpacity onPress={() => onPressEmojiInList(uri)}>
+      <TouchableOpacity onPress={() => onPressEmojiPinned(ids)}>
         <ImageBackgroundWithLoading
           style={style.imageEmojiPinned}
           source={{ uri, cache: 'force-cache' }}
@@ -155,9 +165,9 @@ const EmojiScreen = () => {
         countType: 'share'
       },
       {
-        text: LocalText.pin,
-        onPress: onPressPin,
-        icon: Icon.Pin,
+        text: isPinned ? LocalText.unpin : LocalText.pin,
+        onPress: onPressPinInBottomBar,
+        icon: isPinned ? Icon.Pin : Icon.PinOutline,
       },
       {
         text: LocalText.save,
@@ -166,13 +176,13 @@ const EmojiScreen = () => {
         countType: 'download',
       },
     ] as BottomBarItem[]
-  }, [emojiUri_Result, onPressPin])
+  }, [emojiUri_Result, onPressPinInBottomBar, isPinned])
 
   const emojiUriArr = useMemo(() => {
     const arr = []
 
     for (let i = MinEmojiId; i <= MaxEmojiId; i++) {
-      arr.push(`https://emojimix.app/emojimixfusion/a${i}.png`)
+      arr.push(singleEmojiUri(i))
     }
 
     return arr
@@ -264,12 +274,17 @@ const EmojiScreen = () => {
       {/* pinned */}
 
       {
-        IsValuableArrayOrString(pinnedUriArr) &&
+        IsValuableArrayOrString(pinnedEmojiMixes) &&
+        <HairLine widthPercent={'95%'} />
+      }
+
+      {
+        IsValuableArrayOrString(pinnedEmojiMixes) && pinnedEmojiMixes &&
         <View style={style.pinnedView}>
           <FlatList
-            data={pinnedUriArr}
+            data={pinnedEmojiMixes}
             renderItem={renderItemPinned}
-            keyExtractor={(item) => item}
+            keyExtractor={(item) => item[0] + '_' + item[1]}
             showsVerticalScrollIndicator={false}
             horizontal={true}
             contentContainerStyle={style.pinnedFlatlist}
@@ -294,4 +309,8 @@ export default EmojiScreen
 
 const mixEmojiUri = (id1: number, id2: number) => {
   return `https://emojimix.app/emojimixfusion/${id1}_${id2}.png`
+}
+
+const singleEmojiUri = (id: number) => {
+  return `https://emojimix.app/emojimixfusion/a${id}.png`
 }
