@@ -430,14 +430,14 @@ export const LocalText = {
   read_all: 'Mark as read all',
   seen_posts: 'Viewed posts',
   favorited_posts: 'Loved posts',
-  
+
   memedroid_all: 'Random all',
   memedroid_trending: 'Trending',
   memedroid_day: 'Top day',
   memedroid_week: 'Top week',
   memedroid_month: 'Top month',
   memedroid_ever: 'Top ever',
-  
+
   random_meme_1_source_1: 'Source default',
   random_meme_1_source_2: 'Source 2',
 
@@ -575,6 +575,7 @@ export const LocalText = {
   introduce_AwardPicture: "Elevate your visual senses with our Award-Winning Pictures of the Year screen!\n\nImmerse yourself in a curated collection of the most captivating and awe-inspiring images that have earned accolades globally. Witness the world through the lens of excellence, one breathtaking photo at a time. 📸✨",
   introduce_Satisfying: "Indulge in a collection of visually pleasing moments where every frame radiates eye-catching allure and aesthetic satisfaction. ✨",
   introduce_Tune: "Catchy melodies I extracted from songs that captivate the listener. 🎵",
+  introduce_Universe: "Discover the cosmos! Each day a different image or photograph of our fascinating universe is featured, along with a brief explanation written by a professional astronomer. 🌟",
 
   // popup
 
@@ -585,7 +586,7 @@ export const LocalText = {
   popup_content_error: "Uh-oh! Something went wrong. We're fixing it. Thanks for your patience!",
   popup_content_error_empty: "The list is empty. Please pick at least 1 item!",
   popup_content_error_common: "Uh-oh! Something went wrong.",
-  
+
   popup_content_error_universe_today: "Today data not updated yet. Please wait and try the next time!",
   popup_content_error_universe_future: "You can not view the pic of tomorrow or a future date!",
   popup_content_error_universe_out_range_date: "Out of range of date.",

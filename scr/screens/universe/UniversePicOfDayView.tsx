@@ -24,6 +24,7 @@ import { track_PressRandom, track_SimpleWithCat, track_SimpleWithParam } from '.
 import { DownloadFileAsync, GetFLPFromRLP } from '../../handle/FileUtils';
 import Share from 'react-native-share';
 import { useHeightOfImageWhenWidthFull } from '../../hooks/useHeightOfImageWhenWidthFull';
+import useIntroduceCat from '../components/IntroduceCat';
 
 const MinDate = new Date(1995, 5, 20)
 
@@ -44,6 +45,7 @@ const UniversePicOfDayView = ({
   const theme = useContext(ThemeContext);
   const [handling, setHandling] = useState(true)
   const [curentDayData, setCurentDayData] = useState<UniversePicOfDayData | undefined>(undefined)
+  const [showIntroduceCat, renderShowIntroduceCat] = useIntroduceCat(category)
 
   const id = useMemo(() => {
     return SafeDateString(date, '_')
@@ -220,6 +222,11 @@ const UniversePicOfDayView = ({
   // save last visit category screen
 
   useFocusEffect(useCallback(() => SaveCurrentScreenForLoadNextTime(navigation), []))
+
+  // introduce cat
+
+  if (showIntroduceCat)
+    return renderShowIntroduceCat()
 
   return (
     <View pointerEvents={handling ? 'none' : 'auto'} style={[styleSheet.masterView, { backgroundColor: theme.background }]}>
