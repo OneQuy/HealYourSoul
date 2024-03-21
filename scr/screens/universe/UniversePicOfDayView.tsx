@@ -290,6 +290,7 @@ const UniversePicOfDayView = ({
         items={bottomBarItems}
         category={category}
         id={id}
+        minimal={true}
       />
 
       <MiniIAP postID={curentDayData?.title} />
