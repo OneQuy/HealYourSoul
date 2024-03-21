@@ -226,6 +226,20 @@ export const ShareImageAsync = async (uri: string, category: Category) => {
     if (!uri)
         return
 
+    const isNeedDownload = uri.startsWith('http')
+
+    if (isNeedDownload) {
+        const flp = RNFS.DocumentDirectoryPath + '/' + TempDirName + '/image.jpg'
+        const res = await DownloadFileAsync(uri, flp, false)
+
+        if (res) {
+            Alert.alert('Can not download file to share!', ToCanPrint(res))
+            return
+        }
+        else
+            uri = flp
+    }
+
     track_SimpleWithCat(category, 'share')
 
     Share.open({
