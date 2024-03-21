@@ -619,7 +619,7 @@ async function DownloadMedia(cat: Category, post: PostMetadata, mediaIdx: number
     }
 
     if (error) { // error
-        const e = `Cat: ${Category[cat]}, PostID: ${post.id}, Idx: ${mediaIdx}, ` + (error.code ?? ToCanPrint(error));
+        const e = `Cat: ${Category[cat]}, PostID: ${post.id}, Idx: ${mediaIdx}, ` + ToCanPrint(error);
         HandleError('DownloadMedia', e)
         return NeedReloadReason.FailToGetContent;
     }
