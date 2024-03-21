@@ -238,6 +238,10 @@ export const ShareImageAsync = async (uri: string, category: Category) => {
     })
 }
 
+/**
+ * 
+ * @param uri can be both web url or local file
+ */
 export const SaveMediaAsync = async (category: Category, uri: string) => {
     if (!uri) {
         Alert.alert(LocalText.oops, LocalText.no_media_to_download);
