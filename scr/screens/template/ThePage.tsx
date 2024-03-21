@@ -656,7 +656,7 @@ const ThePage = ({ category }: ThePageProps) => {
             authorView: { paddingHorizontal: Outline.GapVertical, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' },
             authorText: { flex: 1, fontSize: FontSize.Small, color: theme.counterBackground },
             authorCopyTO: { marginLeft: Outline.Horizontal, justifyContent: 'center', alignItems: 'center' },
-            titleTxt: { marginHorizontal: Outline.Horizontal, marginTop: Outline.GapHorizontal, textAlignVertical: 'center', fontSize: FontSize.Normal, color: theme.counterBackground },
+            titleTxt: { textAlign: 'center', marginHorizontal: Outline.Horizontal, marginTop: Outline.GapHorizontal, textAlignVertical: 'center', fontSize: FontSize.Normal, color: theme.counterBackground },
         })
     }, [theme])
 
@@ -717,7 +717,7 @@ const ThePage = ({ category }: ThePageProps) => {
             {/* title */}
             {
                 post.current === null || !post.current.title ? null :
-                    <Text numberOfLines={3} adjustsFontSizeToFit style={style.titleTxt}>{post.current.title}</Text>
+                    <Text numberOfLines={6} adjustsFontSizeToFit style={style.titleTxt}>{post.current.title}</Text>
             }
 
             {/* media view */}
