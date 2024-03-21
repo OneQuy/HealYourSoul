@@ -85,8 +85,9 @@ const EmojiScreen = () => {
     track_SimpleWithParam('emoji', 'force_show_border')
   }, [])
 
-  const onPressEmojiInList = useCallback((uri: string) => {
-    track_SimpleWithParam('emoji', 'emoji')
+  const onPressEmojiInList = useCallback((uri: string, tracking: boolean) => {
+    if (tracking === true)
+      track_SimpleWithParam('emoji', 'emoji')
 
     let setForLeftOrRight = true
 
@@ -115,8 +116,8 @@ const EmojiScreen = () => {
     const leftUri = singleEmojiUri(ids[0])
     const rightUri = singleEmojiUri(ids[1])
 
-    onPressEmojiInList(leftUri)
-    onPressEmojiInList(rightUri)
+    onPressEmojiInList(leftUri, false)
+    onPressEmojiInList(rightUri, false)
   }, [onPressEmojiInList])
 
   const onPressEmojiPinned = useCallback((ids: [number, number]) => {
@@ -157,7 +158,7 @@ const EmojiScreen = () => {
 
   const renderItem = useCallback(({ item: uri }: { item: string }) => {
     return (
-      <TouchableOpacity onPress={() => onPressEmojiInList(uri)}>
+      <TouchableOpacity onPress={() => onPressEmojiInList(uri, true)}>
         <ImageBackgroundWithLoading
           style={style.imageEmojiInList}
           source={{ uri, cache: 'force-cache' }}
