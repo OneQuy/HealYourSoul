@@ -237,7 +237,7 @@ const EmojiScreen = () => {
             <ImageBackgroundOrView
               newUriNewKey={true}
               style={(!emojiUri_Left || showBorderForEmojiSide === 'left') ? style.bigEmojiView : style.bigEmojiView_Border}
-              source={{ uri: emojiUri_Left }}
+              source={{ uri: emojiUri_Left, cache: 'force-cache' }}
               indicatorProps={{ color: theme.counterBackground }}
             />
           </TouchableOpacity>
@@ -250,7 +250,7 @@ const EmojiScreen = () => {
             <ImageBackgroundOrView
               newUriNewKey={true}
               style={(!emojiUri_Right || showBorderForEmojiSide === 'right') ? style.bigEmojiView : style.bigEmojiView_Border}
-              source={{ uri: emojiUri_Right }}
+              source={{ uri: emojiUri_Right, cache: 'force-cache' }}
               indicatorProps={{ color: theme.counterBackground }}
             />
           </TouchableOpacity>
@@ -262,7 +262,7 @@ const EmojiScreen = () => {
           <ImageBackgroundOrView
             newUriNewKey={true}
             style={!emojiUri_Result ? style.resultEmojiView : style.resultEmojiView_Border}
-            source={{ uri: emojiUri_Result }}
+            source={{ uri: emojiUri_Result, cache: 'force-cache' }}
             indicatorProps={{ color: theme.counterBackground }}
             onLoad={onResultLoad}
           />
