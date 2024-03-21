@@ -134,7 +134,7 @@ export const track_OnUseEffectOnceEnterAppAsync = async (startFreshlyOpenAppTick
 
     SetNumberAsync(StorageKey_LastInstalledVersion, versionAsNumber)
     let didUpdated = false
-    
+
     if (!Number.isNaN(lastInstalledVersion) && lastInstalledVersion !== versionAsNumber) {
         didUpdated = true
         event = 'updated_app'
@@ -392,6 +392,11 @@ export const checkAndTrackLocation = async () => {
     }
 
     console.log('****** track location', ToCanPrint(location));
+
+    if (location) {
+        // @ts-ignore
+        location.last_tracked_country = lastTrackCountry
+    }
 
     MainTrack(event, fbArr, location)
 }
