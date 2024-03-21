@@ -5,7 +5,7 @@ import { CheckAndFillEmptyPropertiesPost, FileList, MediaType, PostMetadata, Use
 import { Cheat } from "./Cheat";
 import { DeleteFileAsync, DeleteTempDirAsync, DownloadFileAsync, GetFLPFromRLP, IsExistedAsync } from "./FileUtils";
 import { ToastOptions, toast } from "@baronha/ting";
-import { ColorNameToHex, RegexUrl, SafeDateString, ToCanPrint, VersionToNumber } from "./UtilsTS";
+import { ColorNameToHex, SafeDateString, ToCanPrint, VersionToNumber } from "./UtilsTS";
 import RNFS, { DownloadProgressCallbackResult, ReadDirItem } from "react-native-fs";
 import { IsInternetAvailableAsync } from "./NetLord";
 import Clipboard from "@react-native-clipboard/clipboard";
