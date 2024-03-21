@@ -258,7 +258,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
           <View style={style.minimalBtnView}>
             <TouchableOpacity activeOpacity={0.9} onPress={onPressMinimalDrawer} style={[style.minimalTO, { backgroundColor: theme.primary, }]}>
               <View style={style.minimalArrowView}>
-                <MaterialCommunityIcons name={minimalDrawer ? Icon.Up : Icon.Down} color={colorSavedText} size={Size.IconSmaller} />
+                <MaterialCommunityIcons name={minimalDrawer ? Icon.Up : Icon.Down} color={theme.counterPrimary} size={Size.IconSmaller} />
               </View>
             </TouchableOpacity>
           </View>
