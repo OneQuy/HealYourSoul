@@ -79,7 +79,7 @@ const PullMixOfEmojiTrunkAsync = async (id, minID, maxID) => {
 }
 
 const PullEmojiAllAsync = async () => {
-    for (let i = 51; i <= 100; i++)
+    for (let i = 134; i <= 182; i++)
         await PullMixOfEmojiAsync(i)
 
     LogGreen('done')
