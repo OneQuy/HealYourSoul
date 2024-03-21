@@ -70,7 +70,7 @@ const PullMixOfEmojiTrunkAsync = async (id, minID, maxID) => {
             continue
 
         countError++
-        // LogRed('error: ' + resArr[i])
+        LogRed('error: ' + resArr[i])
     }
 
     // LogGreen('done, ' + (Date.now() - d) + 'ms', minID, maxID, dest)
@@ -79,8 +79,10 @@ const PullMixOfEmojiTrunkAsync = async (id, minID, maxID) => {
 }
 
 const PullEmojiAllAsync = async () => {
-    for (let i = 11; i <= 20; i++)
+    for (let i = 51; i <= 100; i++)
         await PullMixOfEmojiAsync(i)
+
+    LogGreen('done')
 
     // PullAllSingleEmoji()
 }
