@@ -19,6 +19,7 @@ import HairLine from '../components/HairLine';
 import { useAppDispatch, useAppSelector } from '../../redux/Store';
 import { toggleEmojiMix } from '../../redux/UserDataSlice';
 import { RandomInt } from '../../handle/Utils';
+import { track_PressRandom, track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 
 const MinEmojiId = 1
 const MaxEmojiId = 182
@@ -81,9 +82,12 @@ const EmojiScreen = () => {
 
   const onPressEmojiSide = useCallback((left: boolean) => {
     setShowBorderForEmojiSide(left ? 'left' : 'right')
+    track_SimpleWithParam('emoji', 'force_show_border')
   }, [])
 
   const onPressEmojiInList = useCallback((uri: string) => {
+    track_SimpleWithParam('emoji', 'emoji')
+
     let setForLeftOrRight = true
 
     if (showBorderForEmojiSide === 'left')
@@ -115,6 +119,11 @@ const EmojiScreen = () => {
     onPressEmojiInList(rightUri)
   }, [onPressEmojiInList])
 
+  const onPressEmojiPinned = useCallback((ids: [number, number]) => {
+    track_SimpleWithParam('emoji', 'emoji_pinned')
+    set2Emoji(ids)
+  }, [set2Emoji])
+
   const isPinned = useMemo(() => {
     return ids && pinnedEmojiMixes && pinnedEmojiMixes.find(i => {
       return (i[0] === ids[0] && i[1] === ids[1]) || (i[1] === ids[0] && i[0] === ids[1])
@@ -123,6 +132,8 @@ const EmojiScreen = () => {
   }, [ids, pinnedEmojiMixes])
 
   const onPressRandom = useCallback(() => {
+    track_PressRandom(true, category, undefined)
+
     set2Emoji([
       RandomInt(MinEmojiId, MaxEmojiId),
       RandomInt(MinEmojiId, MaxEmojiId)])
@@ -132,8 +143,13 @@ const EmojiScreen = () => {
     if (ids === undefined)
       return
 
+    if (isPinned)
+      track_SimpleWithParam('emoji', 'unpin')
+    else
+      track_SimpleWithParam('emoji', 'pin')
+
     dispatch(toggleEmojiMix(ids))
-  }, [ids])
+  }, [ids, isPinned])
 
   const onResultLoad = useCallback(() => {
     playAnimLoadedMedia(mediaViewScaleAnimRef)
@@ -154,7 +170,7 @@ const EmojiScreen = () => {
     const uri = mixEmojiUri(ids[0], ids[1])
 
     return (
-      <TouchableOpacity onPress={() => set2Emoji(ids)}>
+      <TouchableOpacity onPress={() => onPressEmojiPinned(ids)}>
         <ImageBackgroundWithLoading
           style={style.imageEmojiPinned}
           source={{ uri, cache: 'force-cache' }}
