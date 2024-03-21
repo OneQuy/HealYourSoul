@@ -25,9 +25,11 @@ export const GetRedditMemeAsync = async (): Promise<RandomImage | undefined> => 
 
         // @ts-ignore
         let arr: RandomImage[] = json.memes.map(i => {
+            const title = i.title && i.title.toLowerCase().includes('me') && i.title.toLowerCase().includes('irl') ? undefined : i.title
+
             return {
                 uri: i.url,
-                title: i.title,
+                title,
             } as RandomImage
         })
 
