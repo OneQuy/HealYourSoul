@@ -290,6 +290,7 @@ export const CheckAndShowAlertWhatsNewAsync = async (fromVer: number) => {
 
     const entries = Object.entries(configFromFb.value)
     let s = ''
+    let versionsToTrack = ''
 
     for (let i = 0; i < entries.length; i++) {
         var key = entries[i][0]
@@ -297,13 +298,15 @@ export const CheckAndShowAlertWhatsNewAsync = async (fromVer: number) => {
         if (!key.startsWith('v') || key.length < 4)
             continue
 
-        const verNum = Number.parseInt(key.substring(1))
+        const configVerNum = Number.parseInt(key.substring(1))
 
-        if (Number.isNaN(verNum))
+        if (Number.isNaN(configVerNum))
             continue
 
-        if (verNum <= fromVer || verNum > versionAsNumber)
+        if (configVerNum <= fromVer || configVerNum > versionAsNumber)
             continue
+
+        versionsToTrack += (configVerNum + '.')
 
         if (s === '')
             s = entries[i][1] as string
@@ -323,7 +326,7 @@ export const CheckAndShowAlertWhatsNewAsync = async (fromVer: number) => {
         LocalText.update_updated,
         `${LocalText.whats_new} v${versionAsNumber}:\n\n ${s}`)
 
-    track_Simple('show_whats_new')
+    track_SimpleWithParam('show_whats_new', versionsToTrack)
 }
 
 export const HandleGoodayStreakAsync = async (forceShow = false) => {
