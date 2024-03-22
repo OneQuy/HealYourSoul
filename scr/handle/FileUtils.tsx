@@ -331,8 +331,18 @@ export async function DownloadFile_GetJsonAsync(
   }
 }
 
-export function GetFLPFromRLP(rlp: string, checkAddFileAndSplashIfAndroid?: boolean): string {
-  if (Platform.OS === 'android' && checkAddFileAndSplashIfAndroid === true)
+export function CheckAndAddFileWithSplashIfAndroid(flp: string) {
+  if (Platform.OS !== 'android')
+    return flp
+
+  if (flp.startsWith('file://'))
+    return flp
+
+  return 'file://' + flp
+}
+
+export function GetFLPFromRLP(rlp: string, addFileWithSplashIfAndroid?: boolean): string {
+  if (Platform.OS === 'android' && addFileWithSplashIfAndroid === true)
     return 'file://' + RNFS.DocumentDirectoryPath + '/' + rlp;
   else
     return RNFS.DocumentDirectoryPath + '/' + rlp;

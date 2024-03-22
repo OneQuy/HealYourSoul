@@ -3,7 +3,7 @@ import { Category, FirebaseDBPath, FirebasePath, Icon, LocalPath, LocalText, Nee
 import { GetColors, ThemeColor } from "../constants/Colors";
 import { CheckAndFillEmptyPropertiesPost, FileList, MediaType, PostMetadata, UserInfo } from "../constants/Types";
 import { Cheat } from "./Cheat";
-import { DeleteFileAsync, DeleteTempDirAsync, DownloadFileAsync, GetFLPFromRLP, IsExistedAsync } from "./FileUtils";
+import { CheckAndAddFileWithSplashIfAndroid, DeleteFileAsync, DeleteTempDirAsync, DownloadFileAsync, GetFLPFromRLP, IsExistedAsync } from "./FileUtils";
 import { ToastOptions, toast } from "@baronha/ting";
 import { ColorNameToHex, SafeDateString, ToCanPrint, VersionToNumber } from "./UtilsTS";
 import RNFS, { DownloadProgressCallbackResult, ReadDirItem } from "react-native-fs";
@@ -222,9 +222,15 @@ export const GetListFileRLP = (cat: Category, localOrFb: boolean) => {
     }
 }
 
+/**
+ * 
+ * @param uri can be both internet url file or flp
+ */
 export const ShareImageAsync = async (uri: string, category: Category) => {
-    if (!uri)
+    if (!uri) {
+        Alert.alert('File uri is empty. Can not share')
         return
+    }
 
     const isNeedDownload = uri.startsWith('http')
 
@@ -243,7 +249,7 @@ export const ShareImageAsync = async (uri: string, category: Category) => {
     track_SimpleWithCat(category, 'share')
 
     Share.open({
-        url: uri,
+        url: CheckAndAddFileWithSplashIfAndroid(uri),
     }).catch((err) => {
         const error = ToCanPrint(err)
 
