@@ -1,4 +1,8 @@
 {
   "name": "HealYourSoul",
-  "displayName": "Gooday"
+  "displayName": "Gooday",
+  "react-native-google-mobile-ads": {
+    "android_app_id": "ca-app-pub-9208244284687724~3296387143",
+    "ios_app_id": "ca-app-pub-9208244284687724~1667626610"
+  }
 }
