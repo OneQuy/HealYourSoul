@@ -119,7 +119,7 @@ const TheRandomImage = ({
                 reasonToReload.current = NeedReloadReason.NoInternet
         }
 
-        track_PressRandom(shouldTracking, category, item !== undefined)
+        track_PressRandom(shouldTracking, category, item !== undefined, currentPopupSelectedItem?.displayText)
 
         setCurrentItem(item)
         setHandling(false)

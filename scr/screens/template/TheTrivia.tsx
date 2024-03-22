@@ -103,10 +103,10 @@ const TheTrivia = ({
                 reasonToReload.current = NeedReloadReason.NoInternet
         }
 
-        track_PressRandom(shouldTracking, category, res !== undefined)
+        track_PressRandom(shouldTracking, category, res !== undefined, difficulty)
 
         setHandling(false)
-    }, [])
+    }, [difficulty])
 
     const onPressAnwser = useCallback((answer: string) => {
         if (userChosenAnswer) // already pick answer
