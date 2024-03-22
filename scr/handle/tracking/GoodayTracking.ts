@@ -171,7 +171,7 @@ export const track_OnUseEffectOnceEnterAppAsync = async (startFreshlyOpenAppTick
 
     // show alert whats new
 
-    CheckAndShowAlertWhatsNewAsync(didUpdated ? lastInstalledVersion : NaN) // alert_priority 5 (doc)
+    CheckAndShowAlertWhatsNewAsync(didUpdated ? lastInstalledVersion : NaN) // alert_priority 'not_important' (doc)
 }
 
 export const SaveCachedPressNextPostAsync = async () => {

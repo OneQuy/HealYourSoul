@@ -7,8 +7,11 @@ alert priority:
 1. await HandleStartupAlertAsync() // alert_priority 1
 2. update app // alert_priority 2
 3. initNotificationAsync() // alert_priority 3 (doc)
-4. InitOneSignalAsync()  // alert_priority MUST FINAL (doc) // cuz perhaps too long to wait. maybe has alert request permission notification
-5. CheckAndShowAlertWhatsNewAsync() alert_priority 5 (doc)
+4. CheckAndInitAdmobAsync() // alert_priority 4 (doc) // no depended
+
+- InitOneSignalAsync()  // alert_priority MUST FINAL (doc) // cuz perhaps too long to wait. maybe has alert request permission notification
+
+-  CheckAndShowAlertWhatsNewAsync() // alert_priority 'not_important' (doc)
 
 =========================
 
