@@ -230,10 +230,10 @@ export const ShareImageAsync = async (uri: string, category: Category) => {
 
     if (isNeedDownload) {
         const flp = RNFS.DocumentDirectoryPath + '/' + TempDirName + '/image.jpg'
-        const res = await DownloadFileAsync(uri, flp, false)
+        const error = await DownloadFileAsync(uri, flp, false)
 
-        if (res) {
-            Alert.alert('Can not download file to share!', ToCanPrint(res))
+        if (error) {
+            Alert.alert('Can not download file to share!', ToCanPrint(error))
             return
         }
         else
