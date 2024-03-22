@@ -108,13 +108,14 @@ type ScreenNamePair = [keyof DrawerParamList, any]
 const Drawer = createDrawerNavigator<DrawerParamList>();
 
 const ScreenList: ScreenNamePair[] = [
-  [ScreenName.Emoji, EmojiScreen],
   [ScreenName.Meme, MemeScreen],
   [ScreenName.NSFW, NSFWScreen],
   [ScreenName.RandomMeme, RandomMemeScreen],
   [ScreenName.Memedroid, MemedroidScreen], // random meme 2
   [ScreenName.Comic, ComicScreen], // warm
   [ScreenName.CatDog, CatDogScreen],
+  [ScreenName.Emoji, EmojiScreen],
+  [ScreenName.Love, LoveScreen],
   [ScreenName.FunSound, FunSoundScreen],
   [ScreenName.Quote, QuoteScreen], // movivation
   [ScreenName.Art, ArtScreen],
@@ -124,7 +125,6 @@ const ScreenList: ScreenNamePair[] = [
   [ScreenName.Typo, TypoScreen],
   [ScreenName.Cute, CuteScreen],
   [ScreenName.Sunset, SunsetScreen], // picked nature
-  [ScreenName.Love, LoveScreen],
   [ScreenName.Satisfying, SatisfyingScreen],
   [ScreenName.Sarcasm, SarcasmScreen],
   [ScreenName.Universe, UniverseScreen],
