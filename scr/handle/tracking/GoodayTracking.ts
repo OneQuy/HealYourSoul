@@ -255,6 +255,21 @@ export const track_ToggleNotification = (type: string, toggle: boolean) => {
     )
 }
 
+export const track_SessionDuration = (ms: number) => {
+    const event = 'session_duration'
+
+    const inMin = Math.floor(ms / 1000 / 60)
+
+    MainTrack(event,
+        [
+            `total/${event}/${inMin}m/`,
+        ],
+        {
+            durationInSeconds: Math.floor(ms / 1000),
+        }
+    )
+}
+
 export const track_SimpleWithCat = (category: Category, event: string, trackDate: boolean = false) => {
     const fbArr = [
         `total/${event}/total`,

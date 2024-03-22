@@ -4,7 +4,7 @@ import { RegisterOnChangedState, UnregisterOnChangedState } from "./AppStateMan"
 import { HandleAppConfigAsync } from "./AppConfigHandler"
 import { HandleStartupAlertAsync } from "./StartupAlert"
 import { GoodayToast, startFreshlyOpenAppTick, versionAsNumber } from "./AppUtils"
-import { SaveCachedPressNextPostAsync, checkAndTrackLocation, track_NewlyInstallOrFirstOpenOfTheDayOldUserAsync, track_OnUseEffectOnceEnterAppAsync, track_OpenAppOfDayCount, track_ResetNavigation, track_SimpleWithParam, track_Streak } from "./tracking/GoodayTracking"
+import { SaveCachedPressNextPostAsync, checkAndTrackLocation, track_NewlyInstallOrFirstOpenOfTheDayOldUserAsync, track_OnUseEffectOnceEnterAppAsync, track_OpenAppOfDayCount, track_ResetNavigation, track_SessionDuration, track_SimpleWithParam, track_Streak } from "./tracking/GoodayTracking"
 import { FirebaseDatabaseTimeOutMs, LocalText, ScreenName, StorageKey_ClickNotificationOneSignal, StorageKey_GoodayAt, StorageKey_LastTimeCheckAndReloadAppConfig, StorageKey_LastTimeCheckFirstOpenAppOfTheDay, StorageKey_NeedToShowWhatsNewFromVer, StorageKey_OpenAppOfDayCount, StorageKey_OpenAppOfDayCountForDate, StorageKey_OpenAppTotalCount, StorageKey_ScreenToInit, StorageKey_StreakLastTime } from "../constants/AppConstants"
 import { GetDateAsync, GetDateAsync_IsValueExistedAndIsToday, GetDateAsync_IsValueNotExistedOrEqualOverMinFromNow, GetNumberIntAsync, GetPairNumberIntAndDateAsync, IncreaseNumberAsync, SetDateAsync_Now, SetNumberAsync, SetPairNumberIntAndDateAsync_Now, StorageAppendToArrayAsync, StorageGetArrayAsync } from "./AsyncStorageUtils"
 import { HandldAlertUpdateAppAsync } from "./HandleAlertUpdateApp"
@@ -21,9 +21,11 @@ const HowLongInMinutesToCount2TimesUseAppSeparately = 20
 
 const HowLongToReloadInMinute = 30
 
+type NavigationType = NavigationProp<ReactNavigation.RootParamList>
+
 var lastFireOnActiveOrOnceUseEffectWithCheckDuplicate = 0
 
-type NavigationType = NavigationProp<ReactNavigation.RootParamList>
+var lastActiveTick = Date.now()
 
 var isHandling_CheckAndTriggerFirstOpenAppOfTheDayAsync = false
 
@@ -180,6 +182,8 @@ export const ResetNavigation = async (lastTime?: Date) => {
 }
 
 const onActiveAsync = async () => {
+    lastActiveTick = Date.now()
+
     // check to show warning alert
 
     checkAndReloadAppAsync()
@@ -199,6 +203,10 @@ const onBackgroundAsync = async () => {
     // SaveCachedPressNextPost
 
     SaveCachedPressNextPostAsync()
+
+    // track session duration
+
+    track_SessionDuration(Date.now() - lastActiveTick)
 }
 
 const onStateChanged = (state: AppStateStatus) => {
