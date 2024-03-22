@@ -217,6 +217,10 @@ const BestShortFilmsScreen = () => {
 
     const [onBigViewStartTouch, onBigViewEndTouch] = useSimpleGesture(onTapCounted, onLongPressed, onSwiped)
 
+    const showOpenInYoutube = useMemo(() => {
+        return SafeValue(selectingItem?.url, '').includes('youtu.be') || SafeValue(selectingItem?.url, '').includes('youtube')
+    }, [selectingItem])
+
     const bottomBarItems = useMemo(() => {
         return [
             {
@@ -352,9 +356,8 @@ const BestShortFilmsScreen = () => {
             </View>
 
             {
-                (SafeValue(selectingItem?.url, '').includes('youtu.be') || SafeValue(selectingItem?.url, '').includes('youtube')) &&
                 <View style={styleSheet.openYtbAndView}>
-                    <TouchableOpacity onPress={onPressOpenYoutubeApp} style={styleSheet.openYtb}>
+                    <TouchableOpacity activeOpacity={showOpenInYoutube ? 0.2 : 0} onPress={showOpenInYoutube ? onPressOpenYoutubeApp : undefined} style={[styleSheet.openYtb, { opacity: showOpenInYoutube ? 1 : 0 }]}>
                         <MaterialCommunityIcons name={Icon.Youtube} color={theme.counterBackground} size={Size.IconSmaller} />
                         <Text style={{ color: theme.counterBackground, fontSize: FontSize.Small_L }}>{LocalText.open_youtube}</Text>
                     </TouchableOpacity>
