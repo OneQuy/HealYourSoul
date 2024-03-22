@@ -92,7 +92,7 @@ export const track_OnUseEffectOnceEnterAppAsync = async (startFreshlyOpenAppTick
     const openTime = Date.now() - startFreshlyOpenAppTick
     const totalOpenAppCount = await GetNumberIntAsync(StorageKey_OpenAppTotalCount, 0)
     const openTodaySoFar = await GetNumberIntAsync(StorageKey_OpenAppOfDayCount, 0)
-    
+
     const installedDate = await GetDateAsync(StorageKey_FirstTimeInstallTick)
     const installedDateCount = installedDate ? Math.floor(DateDiff_WithNow(installedDate)) : 0
 
@@ -147,8 +147,7 @@ export const track_OnUseEffectOnceEnterAppAsync = async (startFreshlyOpenAppTick
         let lastAlert = 'no_data'
         let obj
 
-        if (objLastAlertText)
-        {
+        if (objLastAlertText) {
             AsyncStorage.removeItem(StorageKey_PressUpdateObject)
 
             obj = JSON.parse(objLastAlertText)
@@ -269,6 +268,23 @@ export const track_SimpleWithCat = (category: Category, event: string, trackDate
         fbArr,
         {
             cat: Category[category],
+        }
+    )
+}
+
+export const track_ResetNavigation = (lastUpdateConfig?: Date) => {
+    const event = 'reset_navigation'
+
+    const fbArr = [
+        `total/${event}`,
+    ]
+
+    const lastTime = lastUpdateConfig === undefined ? 'no_data' : GetDayHourMinSecFromMs_ToString(lastUpdateConfig.getTime())
+
+    MainTrack(event,
+        fbArr,
+        {
+            lastUpdateConfig: lastTime,
         }
     )
 }

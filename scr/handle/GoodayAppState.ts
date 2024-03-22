@@ -4,8 +4,8 @@ import { RegisterOnChangedState, UnregisterOnChangedState } from "./AppStateMan"
 import { HandleAppConfigAsync } from "./AppConfigHandler"
 import { HandleStartupAlertAsync } from "./StartupAlert"
 import { GoodayToast, startFreshlyOpenAppTick, versionAsNumber } from "./AppUtils"
-import { SaveCachedPressNextPostAsync, checkAndTrackLocation, track_NewlyInstallOrFirstOpenOfTheDayOldUserAsync, track_OnUseEffectOnceEnterAppAsync, track_OpenAppOfDayCount, track_Simple, track_SimpleWithParam, track_Streak } from "./tracking/GoodayTracking"
-import { FirebaseDatabaseTimeOutMs, LocalText, ScreenName, StorageKey_ClickNotificationOneSignal, StorageKey_GoodayAt, StorageKey_LastTimeCheckAndReloadAppConfig, StorageKey_LastTimeCheckFirstOpenAppOfTheDay, StorageKey_NeedToShowWhatsNewFromVer, StorageKey_OpenAppOfDayCount, StorageKey_OpenAppOfDayCountForDate, StorageKey_OpenAppTotalCount, StorageKey_ScreenToInit, StorageKey_Streak, StorageKey_StreakLastTime } from "../constants/AppConstants"
+import { SaveCachedPressNextPostAsync, checkAndTrackLocation, track_NewlyInstallOrFirstOpenOfTheDayOldUserAsync, track_OnUseEffectOnceEnterAppAsync, track_OpenAppOfDayCount, track_ResetNavigation, track_SimpleWithParam, track_Streak } from "./tracking/GoodayTracking"
+import { FirebaseDatabaseTimeOutMs, LocalText, ScreenName, StorageKey_ClickNotificationOneSignal, StorageKey_GoodayAt, StorageKey_LastTimeCheckAndReloadAppConfig, StorageKey_LastTimeCheckFirstOpenAppOfTheDay, StorageKey_NeedToShowWhatsNewFromVer, StorageKey_OpenAppOfDayCount, StorageKey_OpenAppOfDayCountForDate, StorageKey_OpenAppTotalCount, StorageKey_ScreenToInit, StorageKey_StreakLastTime } from "../constants/AppConstants"
 import { GetDateAsync, GetDateAsync_IsValueExistedAndIsToday, GetDateAsync_IsValueNotExistedOrEqualOverMinFromNow, GetNumberIntAsync, GetPairNumberIntAndDateAsync, IncreaseNumberAsync, SetDateAsync_Now, SetNumberAsync, SetPairNumberIntAndDateAsync_Now, StorageAppendToArrayAsync, StorageGetArrayAsync } from "./AsyncStorageUtils"
 import { HandldAlertUpdateAppAsync } from "./HandleAlertUpdateApp"
 import { CheckAndPrepareDataForNotificationAsync, setNotificationAsync } from "./GoodayNotification"
@@ -41,6 +41,8 @@ export const setNavigation = (navi: NavigationType) => {
 
 /** reload (app config + file version) if app re-active after a period 1 HOUR */
 const checkAndReloadAppAsync = async () => {
+    const lastUpdate = await GetDateAsync(StorageKey_LastTimeCheckAndReloadAppConfig)
+
     if (!await GetDateAsync_IsValueNotExistedOrEqualOverMinFromNow(
         StorageKey_LastTimeCheckAndReloadAppConfig,
         HowLongToReloadInMinute)) {
@@ -66,7 +68,7 @@ const checkAndReloadAppAsync = async () => {
     // handle file version
 
     if (successDownloadFileVersion) { // reset screen
-        ResetNavigation()
+        ResetNavigation(lastUpdate)
     }
 
     // set tick
@@ -153,11 +155,9 @@ export const GoToScreen = (screen: ScreenName | string, param?: object) => {
     catch { }
 }
 
-export const ResetNavigation = async () => {
+export const ResetNavigation = async (lastTime?: Date) => {
     if (!navigation)
         return
-
-    console.log('[ResetNavigation]')
 
     try {
         const curScreen = await AsyncStorage.getItem(StorageKey_ScreenToInit);
@@ -165,7 +165,7 @@ export const ResetNavigation = async () => {
         if (!curScreen)
             return
 
-        track_Simple('reset_navigation')
+        track_ResetNavigation(lastTime)
 
         navigation.dispatch(
             CommonActions.reset({
