@@ -279,7 +279,7 @@ export const track_ResetNavigation = (lastUpdateConfig?: Date) => {
         `total/${event}`,
     ]
 
-    const lastTime = lastUpdateConfig === undefined ? 'no_data' : GetDayHourMinSecFromMs_ToString(lastUpdateConfig.getTime())
+    const lastTime = lastUpdateConfig === undefined ? 'no_data' : GetDayHourMinSecFromMs_ToString((Date.now() - lastUpdateConfig.getTime()))
 
     MainTrack(event,
         fbArr,
