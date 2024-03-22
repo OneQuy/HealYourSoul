@@ -43,8 +43,6 @@ const EmojiScreen = () => {
   const pinnedEmojiMixes = useAppSelector(state => state.userData.pinnedEmojiMixes)
   const dispatch = useAppDispatch()
 
-  // const [reasonCanNotUpload, setReasonCanNotUpload] = useState<undefined | { reason: string, showSubscribeButton?: boolean }>(undefined)
-  // const [isHandling, setIsHandling] = useState(true)
   // const { isPremium } = usePremium()
 
   const ids = useMemo(() => {
