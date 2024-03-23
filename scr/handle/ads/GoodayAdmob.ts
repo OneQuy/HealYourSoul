@@ -1,6 +1,8 @@
 import { StorageKey_AdsEventCount } from "../../constants/AppConstants"
 import { IncreaseNumberAsync } from "../AsyncStorageUtils"
+import { ToCanPrint } from "../UtilsTS"
 import { track_Ads } from "../tracking/GoodayTracking"
+import { TrackErrorOnFirebase } from "../tracking/Tracking"
 
 const TrackAsync = async (evt: string) => {
     track_Ads(evt, await IncreaseNumberAsync(StorageKey_AdsEventCount(evt)))
@@ -28,4 +30,10 @@ export const OnAdmobInterstitial_Closed = () => {
 
 export const OnAdmobInterstitial_Error = (e: Error) => {
     TrackAsync('error')
+
+    const s = `[Admob_Interstitial] ${ToCanPrint(e)}`
+
+    console.error(s)
+
+    TrackErrorOnFirebase(s, 'ads')
 }

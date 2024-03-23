@@ -85,8 +85,8 @@ export const GetFinalAptabaseIgnoredEventNames = () => {
     return finalAptabaseIgnoredEventNames
 }
 
-export const TrackErrorOnFirebase = (error: string) => {
-    const path = prefixFbTrackPath() + 'errors/' + Date.now()
+export const TrackErrorOnFirebase = (error: string, subpath?: string) => {
+    const path = prefixFbTrackPath() + 'errors/' + (subpath ? (subpath + '/') : '') + Date.now()
     FirebaseDatabase_SetValueAsync(path, error)
     console.log('track error firebase: ', path, ', ' + error);
 }
