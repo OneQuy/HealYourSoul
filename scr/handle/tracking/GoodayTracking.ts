@@ -1,8 +1,8 @@
-import { Category, StorageKey_CachedPressNextPost, StorageKey_FirstTimeInstallTick, StorageKey_LastFreshlyOpenApp, StorageKey_LastInstalledVersion, StorageKey_LastTickTrackLocation, StorageKey_LastTrackCountryName, StorageKey_OpenAppOfDayCount, StorageKey_OpenAppTotalCount, StorageKey_PressUpdateObject } from "../../constants/AppConstants"
-import { GetDateAsync, GetDateAsync_IsValueExistedAndIsToday, GetNumberIntAsync, SetDateAsync_Now, SetNumberAsync } from "../AsyncStorageUtils"
+import { Category, StorageKey_CachedPressNextPost, StorageKey_FirstTimeInstallTick, StorageKey_LastFreshlyOpenApp, StorageKey_LastInstalledVersion, StorageKey_LastTickTrackLocation, StorageKey_LastTrackCountryName, StorageKey_MiniIAPCount, StorageKey_OpenAppOfDayCount, StorageKey_OpenAppTotalCount, StorageKey_PressUpdateObject } from "../../constants/AppConstants"
+import { GetDateAsync, GetDateAsync_IsValueExistedAndIsToday, GetNumberIntAsync, GetPairNumberIntAndDateAsync, SetDateAsync_Now, SetNumberAsync } from "../AsyncStorageUtils"
 import { MainTrack, TrackErrorOnFirebase } from "./Tracking"
 import { versionAsNumber } from "../AppUtils"
-import { DateDiff_WithNow, FilterOnlyLetterAndNumberFromString, GetDayHourMinSecFromMs_ToString, IsValuableArrayOrString, TimeOutError, ToCanPrint } from "../UtilsTS"
+import { DateDiff_WithNow, FilterOnlyLetterAndNumberFromString, GetDayHourMinSecFromMs_ToString, IsNumType, IsValuableArrayOrString, TimeOutError, ToCanPrint } from "../UtilsTS"
 import { UserID } from "../UserID"
 import { Dimensions, Platform } from "react-native"
 import { GetIPLocationAsync, IPLocation } from "../../hooks/useCountryFromIP"
@@ -323,9 +323,10 @@ export const track_SimpleWithParam = (event: string, value: string) => {
     )
 }
 
-export const track_Ads = (type: string, count: number) => {
+export const track_Ads = async (type: string, count: number) => {
     const event = 'ads'
-    
+    const { number: triggerCount } = await GetPairNumberIntAndDateAsync(StorageKey_MiniIAPCount)
+
     MainTrack(event,
         [
             `total/${event}/` + type,
@@ -333,6 +334,7 @@ export const track_Ads = (type: string, count: number) => {
         {
             type,
             count,
+            triggerCount: IsNumType(triggerCount) ? triggerCount : 0,
         }
     )
 }
