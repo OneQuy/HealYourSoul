@@ -22,6 +22,7 @@ import HeaderRightButtons from '../components/HeaderRightButtons';
 import useIntroduceCat from '../components/IntroduceCat';
 import useDiversityItem from '../../hooks/useDiversityItem';
 import { OnPressedNextItemDiversity } from '../diversity/TheDiversity';
+import MiniIAP from '../components/MiniIAP';
 
 const category = Category.Wikipedia
 
@@ -310,6 +311,11 @@ const WikipediaScreen = () => {
             <BottomBar
                 items={bottomBarItems}
                 category={category}
+            />
+
+            {/* mini iap */}
+            <MiniIAP
+                triggerId={currentLink}
             />
         </View>
     )
