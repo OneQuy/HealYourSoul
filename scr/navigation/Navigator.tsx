@@ -210,6 +210,8 @@ const Navigator = ({ initialRouteName }: MainNavigatorProps) => {
     const interstitialSubscribe_Close = interstitial.addAdEventListener(AdEventType.CLOSED, OnAdmobInterstitial_Closed)
     const interstitialSubscribe_Error = interstitial.addAdEventListener(AdEventType.ERROR, OnAdmobInterstitial_Error)
 
+    AdmobInterstitial.Load()
+
     // return
 
     return () => {
