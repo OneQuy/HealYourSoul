@@ -17,6 +17,7 @@ import { createTelemetryDeckClient } from "./TelemetryDeck/TelemetryDeck";
 import { TELEMETRY_DECK_KEY } from "../../keys";
 import { SetDateAsync_Now } from "./AsyncStorageUtils";
 import { InitOneSignalAsync } from "./OneSignal";
+import { CheckAndInitAdmobAsync } from "./ads/Admob";
 
 export type LoadAppDataResult = {
     categoryScreenToOpenFirst: keyof DrawerParamList | null,
@@ -80,6 +81,10 @@ export async function LoadAppData(): Promise<LoadAppDataResult> {
     // init notifee
 
     await initNotificationAsync() // alert_priority 3 (doc) // no depended
+    
+    // init admob
+
+    await CheckAndInitAdmobAsync() // alert_priority 4 (doc) // no depended
 
     // one signal
 

@@ -18,15 +18,69 @@
 import mobileAds from 'react-native-google-mobile-ads';
 import { CheckAndRequestTrackingTransparencyAsync } from './iOSTrackingTransparency';
 
-var inited = false
+import { Platform } from "react-native";
+import { AdEventType, InterstitialAd } from "react-native-google-mobile-ads";
 
+var initedAdmob = false
+
+/**
+ * This will show up a popup request (if needed)
+ */
 export const CheckAndInitAdmobAsync = async () => {
-    if (inited)
+    if (initedAdmob)
         return
 
-    inited = true
+    initedAdmob = true
 
     await CheckAndRequestTrackingTransparencyAsync()
 
     await mobileAds().initialize()
+}
+
+class AdmobInterstitial {
+    private static interstitial: InterstitialAd | undefined
+
+    /**
+     * @returns InterstitialAd. You can register events base on it.
+     */
+    static Init = (androidUnitId: string, iosUnitId: string): InterstitialAd => {
+        if (this.interstitial)
+            return this.interstitial
+
+        const unit = Platform.OS === 'android' ? androidUnitId : iosUnitId
+
+        this.interstitial = InterstitialAd.createForAdRequest(unit)
+
+        return this.interstitial
+    }
+
+    /**
+     * 
+     * @returns if showed successully
+     */
+    static Show = (): boolean => {
+        if (!this.interstitial) {
+            console.error('[Show] Not inited AdmobInterstitial yet')
+            return false
+        }
+
+        if (this.interstitial.loaded) {
+            this.interstitial.show()
+            return true
+        }
+        else
+            return false
+    }
+
+    /**
+     * It's okay to call this multi times at the same time.
+     */
+    static Load = () => {
+        if (!this.interstitial) {
+            console.error('[Load] Not inited AdmobInterstitial yet')
+            return false
+        }
+
+        this.interstitial.load()
+    }
 }
