@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground, ActivityIndicator, Animated } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground, ActivityIndicator, Animated, Alert } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeContext } from '../../constants/Colors';
 import { BorderRadius, FontSize, FontWeight, LocalText, Outline, Size, StorageKey_CachedIAP, StorageKey_LastMiniIapProductIdxShowed, StorageKey_MiniIAPCount } from '../../constants/AppConstants';
@@ -137,6 +137,9 @@ const MiniIAP = ({
             const new_day_free = SafeValue(GetAppConfig()?.ads?.new_day_free, 50)
             const loop = SafeValue(GetAppConfig()?.ads?.loop, 50)
 
+            if (loop % 2 !== 0)
+                Alert.alert('Error', 'Loop config of Ads should be even number!')
+
             const freeLimit = Math.max(new_day_free, loop)
             // console.log('cur count', currentCount, 'freeLimit', freeLimit, 'loop', loop)
 
@@ -146,15 +149,15 @@ const MiniIAP = ({
                 return
 
             // calc...
-            
+
             const shouldShowAds = (currentCount - freeLimit) % loop === 0
-            const shouldShowMiniIap = (currentCount - freeLimit) % Math.floor(loop / 2) === 0
+            const shouldShowMiniIap = (currentCount - freeLimit) % (loop / 2) === 0
 
             // console.log('cur count', currentCount,
             //     'freeLimit', freeLimit,
             //     'percentDevide ads', (currentCount - freeLimit) % loop,
             //     'percentDevide mini iap', (currentCount - freeLimit) % Math.floor(loop / 2),
-            //     'Math.floor(loop / 2)', Math.floor(loop / 2))
+            //     ', (loop / 2) =', (loop / 2))
 
             if (!shouldShowAds && !shouldShowMiniIap) {
                 return
