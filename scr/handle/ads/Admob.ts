@@ -37,11 +37,38 @@ export const CheckAndInitAdmobAsync = async () => {
     await mobileAds().initialize()
 }
 
-class AdmobInterstitial {
+export class AdmobInterstitial {
     private static interstitial: InterstitialAd | undefined
 
     /**
      * @returns InterstitialAd. You can register events base on it.
+     * 
+     ## Usage:
+     ```tsx
+     useEffect(() => {
+        // init admob interstitial
+
+        const interstitial = AdmobInterstitial.Init(AdmobInter_Android, AdmobInter_iOS)
+
+        const interstitialSubscribe_Load = interstitial.addAdEventListener(AdEventType.LOADED, OnAdmobInterstitial_Loaded)
+        const interstitialSubscribe_Open = interstitial.addAdEventListener(AdEventType.OPENED, OnAdmobInterstitial_Opened)
+        const interstitialSubscribe_Click = interstitial.addAdEventListener(AdEventType.CLICKED, OnAdmobInterstitial_Clicked)
+        const interstitialSubscribe_Paid = interstitial.addAdEventListener(AdEventType.PAID, OnAdmobInterstitial_Paid)
+        const interstitialSubscribe_Close = interstitial.addAdEventListener(AdEventType.CLOSED, OnAdmobInterstitial_Closed)
+        const interstitialSubscribe_Error = interstitial.addAdEventListener(AdEventType.ERROR, OnAdmobInterstitial_Error)
+
+        // return
+
+        return () => {
+            interstitialSubscribe_Load()
+            interstitialSubscribe_Open()
+            interstitialSubscribe_Click()
+            interstitialSubscribe_Paid()
+            interstitialSubscribe_Close()
+            interstitialSubscribe_Error()
+        }
+    }, [])     
+     ```
      */
     static Init = (androidUnitId: string, iosUnitId: string): InterstitialAd => {
         if (this.interstitial)

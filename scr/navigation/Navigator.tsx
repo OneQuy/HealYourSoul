@@ -48,6 +48,10 @@ import { AnimeImageScreen } from '../screens/anime/AnimeImage';
 import { MemedroidScreen } from '../screens/other_thepage_screens/MemedroidScreen';
 import { RandomMemeScreen } from '../screens/other_thepage_screens/RandomMemeScreen';
 import EmojiScreen from '../screens/emoji/EmojiScreen';
+import { AdmobInterstitial } from '../handle/ads/Admob';
+import { AdmobInter_Android, AdmobInter_iOS } from '../../keys';
+import { AdEventType } from 'react-native-google-mobile-ads';
+import { OnAdmobInterstitial_Clicked, OnAdmobInterstitial_Closed, OnAdmobInterstitial_Error, OnAdmobInterstitial_Loaded, OnAdmobInterstitial_Opened, OnAdmobInterstitial_Paid } from '../handle/ads/GoodayAdmob';
 
 export type DrawerParamList = {
   [ScreenName.Meme]: { item: DiversityItemType } | undefined,
@@ -195,8 +199,32 @@ const Navigator = ({ initialRouteName }: MainNavigatorProps) => {
 
     OnUseEffectOnceEnterApp()
 
+    // init admob interstitial
+
+    const interstitial = AdmobInterstitial.Init(AdmobInter_Android, AdmobInter_iOS)
+
+    const interstitialSubscribe_Load = interstitial.addAdEventListener(AdEventType.LOADED, OnAdmobInterstitial_Loaded)
+    const interstitialSubscribe_Open = interstitial.addAdEventListener(AdEventType.OPENED, OnAdmobInterstitial_Opened)
+    const interstitialSubscribe_Click = interstitial.addAdEventListener(AdEventType.CLICKED, OnAdmobInterstitial_Clicked)
+    const interstitialSubscribe_Paid = interstitial.addAdEventListener(AdEventType.PAID, OnAdmobInterstitial_Paid)
+    const interstitialSubscribe_Close = interstitial.addAdEventListener(AdEventType.CLOSED, OnAdmobInterstitial_Closed)
+    const interstitialSubscribe_Error = interstitial.addAdEventListener(AdEventType.ERROR, OnAdmobInterstitial_Error)
+
+    // return
+
     return () => {
+      // unsubscribe app state
+
       RegisterGoodayAppState(false)
+
+      // unsubscribe ad interstital
+
+      interstitialSubscribe_Load()
+      interstitialSubscribe_Open()
+      interstitialSubscribe_Click()
+      interstitialSubscribe_Paid()
+      interstitialSubscribe_Close()
+      interstitialSubscribe_Error()
     }
   }, [])
 
