@@ -14,7 +14,7 @@ export type SignalType = ReturnType<typeof useTelemetryDeck>['signal']
 const aptabaseIgnoredEventNamesDefault: string[] = [
     'press_next_post_x5',
     'press_random',
-    'press_drawer_item',
+    // 'press_drawer_item',
     'press_previous_post',
     'dimension_screen',
     'dimension_window',
