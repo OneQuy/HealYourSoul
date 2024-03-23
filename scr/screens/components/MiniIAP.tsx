@@ -128,13 +128,13 @@ const MiniIAP = ({
             if (isPremium)
                 return
 
-            AdmobInterstitial.Load()
-
             if (triggerId === undefined ||
                 triggerId === '' ||
                 triggerId === 0 ||
                 Number.isNaN(triggerId))
                 return
+
+            AdmobInterstitial.Load()
 
             const currentCount = await IncreaseNumberAsync_WithCheckAndResetNewDay(StorageKey_MiniIAPCount, 0)
 
