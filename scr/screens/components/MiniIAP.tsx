@@ -6,12 +6,13 @@ import { logoScr } from '../others/SplashScreen';
 import { BuyPremiumAsync, allProducts, iapBg_1 } from '../IAP/IAPPage';
 import { useMyIAP } from '../../hooks/useMyIAP';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { GetNumberIntAsync, IncreaseNumberAsync, SetNumberAsync } from '../../handle/AsyncStorageUtils';
+import { GetNumberIntAsync, IncreaseNumberAsync, IncreaseNumberAsync_WithCheckAndResetNewDay, SetNumberAsync } from '../../handle/AsyncStorageUtils';
 import { useAppDispatch } from '../../redux/Store';
 import { GetAppConfig } from '../../handle/AppConfigHandler';
 import { SafeValue } from '../../handle/UtilsTS';
 import { usePremium } from '../../hooks/usePremium';
 import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
+import { AdmobInterstitial } from '../../handle/ads/Admob';
 
 const TOAnimated = Animated.createAnimatedComponent(TouchableOpacity)
 
@@ -54,6 +55,34 @@ const MiniIAP = ({
         track_SimpleWithParam('mini_iap', 'later')
     }, [])
 
+    const showAdsOrMiniIap = useCallback(async (forceMiniIap: boolean) => {
+        // console.log('showAdsOrMiniIap, forceMiniIap =', forceMiniIap);
+
+        // show ads
+
+        if (!forceMiniIap && AdmobInterstitial.Show())
+            return
+
+        // or show mini iap
+
+        if (!isReadyPurchase)
+            return
+
+        let idxProductShowedBefore = await GetNumberIntAsync(StorageKey_LastMiniIapProductIdxShowed, -1)
+
+        idxProductShowedBefore++
+
+        if (idxProductShowedBefore >= allProducts.length)
+            idxProductShowedBefore = 0
+
+        SetNumberAsync(StorageKey_LastMiniIapProductIdxShowed, idxProductShowedBefore)
+
+        setProduct(allProducts[idxProductShowedBefore])
+        setShowMiniIAP(true)
+
+        track_SimpleWithParam('mini_iap', 'show')
+    }, [isReadyPurchase])
+
     const style = useMemo(() => {
         return StyleSheet.create({
             master: { gap: Outline.GapVertical, padding: Outline.GapVertical, justifyContent: 'center', alignItems: 'center', backgroundColor: theme.background, width: '100%', height: '100%', position: 'absolute' },
@@ -95,39 +124,45 @@ const MiniIAP = ({
             if (isPremium)
                 return
 
-            if (
-                triggerId === undefined || 
-                triggerId === '' || 
-                triggerId === 0 || 
-                Number.isNaN(triggerId) || 
-                !isReadyPurchase)
+            AdmobInterstitial.Load()
+
+            if (triggerId === undefined ||
+                triggerId === '' ||
+                triggerId === 0 ||
+                Number.isNaN(triggerId))
                 return
 
-            const count = await IncreaseNumberAsync(StorageKey_MiniIAPCount, 0)
+            const currentCount = await IncreaseNumberAsync_WithCheckAndResetNewDay(StorageKey_MiniIAPCount, 0)
 
-            // console.log(count, triggerId);
+            const new_day_free = SafeValue(GetAppConfig()?.ads?.new_day_free, 50)
+            const loop = SafeValue(GetAppConfig()?.ads?.loop, 50)
 
-            const triggerNum = SafeValue(GetAppConfig()?.count_trigger_mini_iap, 30)
+            const freeLimit = Math.max(new_day_free, loop)
+            // console.log('cur count', currentCount, 'freeLimit', freeLimit, 'loop', loop)
 
-            if (count < triggerNum)
+            // not reached limit free of day, not show
+
+            if (currentCount < freeLimit)
                 return
 
-            // show!
+            // calc...
+            
+            const shouldShowAds = (currentCount - freeLimit) % loop === 0
+            const shouldShowMiniIap = (currentCount - freeLimit) % Math.floor(loop / 2) === 0
 
-            let idxShowedBefore = await GetNumberIntAsync(StorageKey_LastMiniIapProductIdxShowed, -1)
+            // console.log('cur count', currentCount,
+            //     'freeLimit', freeLimit,
+            //     'percentDevide ads', (currentCount - freeLimit) % loop,
+            //     'percentDevide mini iap', (currentCount - freeLimit) % Math.floor(loop / 2),
+            //     'Math.floor(loop / 2)', Math.floor(loop / 2))
 
-            idxShowedBefore++
+            if (!shouldShowAds && !shouldShowMiniIap) {
+                return
+            }
 
-            if (idxShowedBefore >= allProducts.length)
-                idxShowedBefore = 0
+            // show !
 
-            SetNumberAsync(StorageKey_LastMiniIapProductIdxShowed, idxShowedBefore)
-            SetNumberAsync(StorageKey_MiniIAPCount, 0)
-
-            setProduct(allProducts[idxShowedBefore])
-            setShowMiniIAP(true)
-
-            track_SimpleWithParam('mini_iap', 'show')
+            showAdsOrMiniIap(!shouldShowAds && shouldShowMiniIap)
         })()
     }, [triggerId])
 
