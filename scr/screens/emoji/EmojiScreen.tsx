@@ -20,6 +20,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/Store';
 import { toggleEmojiMix } from '../../redux/UserDataSlice';
 import { RandomInt } from '../../handle/Utils';
 import { track_PressRandom, track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
+import MiniIAP from '../components/MiniIAP';
 
 const MinEmojiId = 1
 const MaxEmojiId = 182
@@ -328,6 +329,14 @@ const EmojiScreen = () => {
         items={bottomBarItems}
         category={category}
         minimal={true}
+      />
+
+      {/* mini iap */}
+
+      <MiniIAP
+        triggerId={emojiUri_Result}
+        forceLoop={10}
+        forceNewDayFree={10}
       />
 
     </View>

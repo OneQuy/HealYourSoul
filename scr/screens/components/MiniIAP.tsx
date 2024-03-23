@@ -18,8 +18,12 @@ const TOAnimated = Animated.createAnimatedComponent(TouchableOpacity)
 
 const MiniIAP = ({
     triggerId,
+    forceNewDayFree,
+    forceLoop,
 }: {
-    triggerId: number | string | undefined
+    triggerId: number | string | undefined,
+    forceNewDayFree?: number,
+    forceLoop?: number,
 }) => {
     const theme = useContext(ThemeContext);
     const [product, setProduct] = useState(allProducts[0])
@@ -134,8 +138,13 @@ const MiniIAP = ({
 
             const currentCount = await IncreaseNumberAsync_WithCheckAndResetNewDay(StorageKey_MiniIAPCount, 0)
 
-            const new_day_free = SafeValue(GetAppConfig()?.ads?.new_day_free, 50)
-            const loop = SafeValue(GetAppConfig()?.ads?.loop, 50)
+            const new_day_free = forceNewDayFree !== undefined ?
+                forceNewDayFree :
+                SafeValue(GetAppConfig()?.ads?.new_day_free, 50)
+
+            const loop = forceLoop !== undefined ?
+                forceLoop :
+                SafeValue(GetAppConfig()?.ads?.loop, 50)
 
             if (loop % 2 !== 0)
                 Alert.alert('Error', 'Loop config of Ads should be even number!')
