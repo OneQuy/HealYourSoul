@@ -81,6 +81,14 @@ export class AdmobInterstitial {
         return this.interstitial
     }
 
+    static GetInstance = (): InterstitialAd | undefined => {
+        if (!this.interstitial || !initedAdmob) {
+            console.error('[GetInstance] Not inited AdmobInterstitial or CheckAndInitAdmobAsync yet')
+        }
+
+        return this.interstitial
+    }
+
     /**
      * 
      * @returns if showed successully
