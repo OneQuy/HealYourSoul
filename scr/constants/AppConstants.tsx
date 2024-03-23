@@ -1,5 +1,8 @@
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-native-responsive-screen";
 
+export const LoopAndNewDayFreeAdsForEmoji = 10
+export const MaxPinsForEmoji = 5
+
 export const FirstColorTextsIsFree = 13
 
 export const DaysToAskRate_ForFirstTimeAfterInstalledDays = 1
@@ -523,7 +526,8 @@ export const LocalText = {
 - Unlock all backgrounds for Fact, Joke & Quote.
 - Save an unlimited number of posts to watch later.
 - Re-watch the posts you loved without any page limits in Gallery.
-- Upload an unlimited number of memes.`,
+- Upload an unlimited number of memes,
+- Pin an unlimited number of mixed emojis.`,
 
   support_me: 'Support app',
   support_me_info: "- Support me in covering the monthly costs of the operation and data server.",
@@ -603,6 +607,8 @@ export const LocalText = {
   background_for_premium_content_bold: "Bold text is available exclusively for Premium users. Upgrade now to unlock access to all styles.",
   background_for_premium_content_sizebig: "Big text is available exclusively for Premium users. Upgrade now to unlock access to all styles.",
   background_for_premium_content_text_color: "This color is available exclusively for Premium users. Upgrade now to unlock access to all styles.",
+  
+  pinned_emoji_premium: "You've reached the limit of ## pinned emoji, which is the maximum quantity allowed in the free version. Please subscribe to pin an unlimited number of emoji.",
 }
 
 // storage

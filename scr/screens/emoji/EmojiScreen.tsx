@@ -1,15 +1,15 @@
 // @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { View, StyleSheet, TouchableOpacity, FlatList, Animated } from 'react-native'
+import { View, StyleSheet, TouchableOpacity, FlatList, Animated, Alert } from 'react-native'
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
-import { BorderRadius, Category, Icon, LocalText, Outline, Size } from '../../constants/AppConstants'
+import { BorderRadius, Category, Icon, LocalText, LoopAndNewDayFreeAdsForEmoji, MaxPinsForEmoji, Outline, Size } from '../../constants/AppConstants'
 import { ThemeContext } from '../../constants/Colors'
 import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading';
 import ImageBackgroundOrView from '../components/ImageBackgroundOrView';
 import { widthPercentageToDP } from 'react-native-responsive-screen';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ExtractAllNumbersInText, IsValuableArrayOrString, ToCanPrintError } from '../../handle/UtilsTS';
+import { ExtractAllNumbersInText, IsValuableArrayOrString } from '../../handle/UtilsTS';
 import BottomBar, { BottomBarItem } from '../others/BottomBar';
 import { AlertWithError, SaveCurrentScreenForLoadNextTime, SaveMediaAsync, ShareImageAsync } from '../../handle/AppUtils';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
@@ -21,6 +21,8 @@ import { toggleEmojiMix } from '../../redux/UserDataSlice';
 import { RandomInt } from '../../handle/Utils';
 import { track_PressRandom, track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 import MiniIAP from '../components/MiniIAP';
+import { usePremium } from '../../hooks/usePremium';
+import { GoToPremiumScreen } from '../components/HeaderXButton';
 
 const MinEmojiId = 1
 const MaxEmojiId = 182
@@ -43,8 +45,7 @@ const EmojiScreen = () => {
   const mediaViewScaleAnimRef = useRef(new Animated.Value(1)).current
   const pinnedEmojiMixes = useAppSelector(state => state.userData.pinnedEmojiMixes)
   const dispatch = useAppDispatch()
-
-  // const { isPremium } = usePremium()
+  const { isPremium } = usePremium()
 
   const ids = useMemo(() => {
     const id1arr = ExtractAllNumbersInText(emojiUri_Left)
@@ -143,13 +144,34 @@ const EmojiScreen = () => {
     if (ids === undefined)
       return
 
+    // need premium
+
+    if (!isPinned && !isPremium) {
+      Alert.alert(
+        LocalText.full_saved,
+        LocalText.pinned_emoji_premium.replaceAll("##", MaxPinsForEmoji.toString()),
+        [
+          {
+            text: LocalText.later,
+          },
+          {
+            text: LocalText.upgrade,
+            onPress: () => GoToPremiumScreen(navigation),
+          },
+        ])
+
+      return
+    }
+
+    // tracking
+
     if (isPinned)
       track_SimpleWithParam('emoji', 'unpin')
     else
       track_SimpleWithParam('emoji', 'pin')
 
     dispatch(toggleEmojiMix(ids))
-  }, [ids, isPinned])
+  }, [ids, isPinned, isPremium])
 
   const onResultLoad = useCallback(() => {
     playAnimLoadedMedia(mediaViewScaleAnimRef)
@@ -335,8 +357,8 @@ const EmojiScreen = () => {
 
       <MiniIAP
         triggerId={emojiUri_Result}
-        forceLoop={10}
-        forceNewDayFree={10}
+        forceLoop={LoopAndNewDayFreeAdsForEmoji}
+        forceNewDayFree={LoopAndNewDayFreeAdsForEmoji}
       />
 
     </View>
