@@ -383,7 +383,7 @@ const TheRandomImage = ({
                 />
             }
 
-            <MiniIAP postID={currentItem?.uri} />
+            <MiniIAP triggerId={currentItem?.uri} />
         </View>
     )
 }

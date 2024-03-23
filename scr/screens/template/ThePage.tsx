@@ -868,7 +868,9 @@ const ThePage = ({ category }: ThePageProps) => {
             {/* mini iap */}
 
             {
-                <MiniIAP postID={post.current?.id} />
+                <MiniIAP
+                    triggerId={mediaURI.current}
+                />
             }
         </View>
     )

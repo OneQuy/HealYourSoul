@@ -378,7 +378,7 @@ const BestShortFilmsScreen = () => {
                 isShowList && Array.isArray(shortFilms) ? <ListMovie getSelectingIdAsync={getSelectingIdxAsync} setIdx={(idx: number) => onPressNext(idx, 'menu')} list={shortFilms} /> : undefined
             }
 
-            <MiniIAP postID={idCurrent} />
+            <MiniIAP triggerId={idCurrent} />
         </View>
     )
 }

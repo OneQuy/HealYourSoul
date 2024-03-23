@@ -236,7 +236,7 @@ const UniverseMonthView = ({
 
       {/* mini iap */}
 
-      <MiniIAP postID={idForShowMiniIapAndCountView} />
+      <MiniIAP triggerId={idForShowMiniIapAndCountView} />
     </View >
   )
 }

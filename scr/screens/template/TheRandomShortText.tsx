@@ -357,7 +357,7 @@ const TheRandomShortText = ({
                 category={category}
             />
 
-            <MiniIAP postID={text} />
+            <MiniIAP triggerId={text} />
 
         </View >
     )

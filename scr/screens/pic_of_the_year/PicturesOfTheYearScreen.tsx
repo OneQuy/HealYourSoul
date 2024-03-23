@@ -395,7 +395,7 @@ const PicturesOfTheYearScreen = () => {
                 isShowAwardList ? <SelectAward setIdx={(idx: number) => onPressNext(idx, 'menu')} year={selectingYear} selectIdx={selectingPhotoIndex} /> : undefined
             }
 
-            <MiniIAP postID={selectingPhotoID} />
+            <MiniIAP triggerId={selectingPhotoID} />
         </View>
     )
 }

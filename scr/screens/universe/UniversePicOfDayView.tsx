@@ -300,7 +300,7 @@ const UniversePicOfDayView = ({
         minimal={true}
       />
 
-      <MiniIAP postID={curentDayData?.title} />
+      <MiniIAP triggerId={curentDayData?.title} />
     </View>
   )
 }

@@ -16,9 +16,9 @@ import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 const TOAnimated = Animated.createAnimatedComponent(TouchableOpacity)
 
 const MiniIAP = ({
-    postID,
+    triggerId,
 }: {
-    postID: number | string | undefined
+    triggerId: number | string | undefined
 }) => {
     const theme = useContext(ThemeContext);
     const [product, setProduct] = useState(allProducts[0])
@@ -95,7 +95,7 @@ const MiniIAP = ({
             if (isPremium)
                 return
 
-            if (!postID || !isReadyPurchase)
+            if (triggerId === undefined || !isReadyPurchase)
                 return
 
             const count = await IncreaseNumberAsync(StorageKey_MiniIAPCount, 0)
@@ -122,7 +122,7 @@ const MiniIAP = ({
 
             track_SimpleWithParam('mini_iap', 'show')
         })()
-    }, [postID])
+    }, [triggerId])
 
     if (!isReadyPurchase || !showMiniIAP) {
         return undefined

@@ -328,7 +328,7 @@ const FunWebsitesScreen = () => {
                 isShowList && Array.isArray(funWebsites) ? <ListWebsite getSelectingIdAsync={getSelectingIdAsync} setIdx={(idx: number) => onPressNext(idx, 'menu')} list={funWebsites} /> : undefined
             }
 
-            <MiniIAP postID={selectingItem?.id} />
+            <MiniIAP triggerId={selectingItem?.id} />
         </View>
     )
 }

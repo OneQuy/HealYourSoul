@@ -299,7 +299,7 @@ const TopMovieScreen = () => {
                 isShowList && Array.isArray(topMovies) ? <ListMovie getSelectingIdAsync={getSelectingIdxAsync} setIdx={(idx: number) => onPressNext(idx, 'menu')} list={topMovies} /> : undefined
             }
 
-            <MiniIAP postID={selectingItem?.title} />
+            <MiniIAP triggerId={selectingItem?.title} />
         </View>
     )
 }

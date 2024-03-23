@@ -245,7 +245,7 @@ const TheTrivia = ({
                 </TouchableOpacity>
             </View>
 
-            <MiniIAP postID={trivia?.question} />
+            <MiniIAP triggerId={trivia?.question} />
         </View>
     )
 }
