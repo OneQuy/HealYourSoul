@@ -146,7 +146,7 @@ const EmojiScreen = () => {
 
     // need premium
 
-    if (!isPinned && !isPremium) {
+    if (!isPinned && !isPremium && pinnedEmojiMixes && pinnedEmojiMixes.length >= MaxPinsForEmoji) {
       Alert.alert(
         LocalText.full_saved,
         LocalText.pinned_emoji_premium.replaceAll("##", MaxPinsForEmoji.toString()),
@@ -171,7 +171,7 @@ const EmojiScreen = () => {
       track_SimpleWithParam('emoji', 'pin')
 
     dispatch(toggleEmojiMix(ids))
-  }, [ids, isPinned, isPremium])
+  }, [ids, isPinned, pinnedEmojiMixes, isPremium])
 
   const onResultLoad = useCallback(() => {
     playAnimLoadedMedia(mediaViewScaleAnimRef)
