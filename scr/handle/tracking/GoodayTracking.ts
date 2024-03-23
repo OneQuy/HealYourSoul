@@ -323,7 +323,9 @@ export const track_SimpleWithParam = (event: string, value: string) => {
     )
 }
 
-export const track_Ads = (event: string, type: string, count: number) => {
+export const track_Ads = (type: string, count: number) => {
+    const event = 'ads'
+    
     MainTrack(event,
         [
             `total/${event}/` + type,
