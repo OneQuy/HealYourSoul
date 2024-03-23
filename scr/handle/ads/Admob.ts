@@ -59,8 +59,8 @@ class AdmobInterstitial {
      * @returns if showed successully
      */
     static Show = (): boolean => {
-        if (!this.interstitial) {
-            console.error('[Show] Not inited AdmobInterstitial yet')
+        if (!this.interstitial || !initedAdmob) {
+            console.error('[Show] Not inited AdmobInterstitial or CheckAndInitAdmobAsync yet')
             return false
         }
 
@@ -76,8 +76,8 @@ class AdmobInterstitial {
      * It's okay to call this multi times at the same time.
      */
     static Load = () => {
-        if (!this.interstitial) {
-            console.error('[Load] Not inited AdmobInterstitial yet')
+        if (!this.interstitial || !initedAdmob) {
+            console.error('[Load] Not inited AdmobInterstitial or CheckAndInitAdmobAsync yet')
             return false
         }
 
