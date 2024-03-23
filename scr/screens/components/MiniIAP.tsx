@@ -40,7 +40,7 @@ const MiniIAP = ({
 
     const onPressed_Buy = useCallback(async () => {
         track_SimpleWithParam('mini_iap', 'buy')
-        
+
         setProcessing(true)
         premiumScaleRef.setValue(1)
 
@@ -95,10 +95,17 @@ const MiniIAP = ({
             if (isPremium)
                 return
 
-            if (triggerId === undefined || !isReadyPurchase)
+            if (
+                triggerId === undefined || 
+                triggerId === '' || 
+                triggerId === 0 || 
+                Number.isNaN(triggerId) || 
+                !isReadyPurchase)
                 return
 
             const count = await IncreaseNumberAsync(StorageKey_MiniIAPCount, 0)
+
+            // console.log(count, triggerId);
 
             const triggerNum = SafeValue(GetAppConfig()?.count_trigger_mini_iap, 30)
 
