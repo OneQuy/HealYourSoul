@@ -10,7 +10,8 @@
  * 4. add this to plist file:
         <key>NSUserTrackingUsageDescription</key>
         <string>This identifier will be used to deliver personalized ads to you.</string>
- * 5. done!
+ * 5. go to Play console > App content, add Advertise ID
+ * 6. done!
  * 
  * Doc: https://docs.page/invertase/react-native-google-mobile-ads/displaying-ads#rewarded-interstitial-ads
  */
