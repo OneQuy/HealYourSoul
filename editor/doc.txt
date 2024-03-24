@@ -12,6 +12,9 @@ r chạy: node editor dogbreed
 tạo fact_dogs.json thủ công từ:
 
 https://github.com/kinduff/dog-api/blob/master/db/seeds.rb
+======================
+
+nếu emoji link bị hư, code lại lol. dùng 2 file zip backup emojis ở dropbox & gg drive.
 
 ======================
 
