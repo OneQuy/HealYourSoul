@@ -8,9 +8,18 @@ const { IsParamExist, GetParam, } = require("./src/common/Utils");
 const { GenMyInstants } = require("./src/GenMyInstant");
 const { GenDogBreeds } = require("./src/GenDogBreeds");
 const { PullEmojiAllAsync } = require("./src/PullEmoji");
+const { UploadTelegramBot } = require("./src/common/TelegramBotFileUpload");
 
 async function JustDoIt() {
-  if (IsParamExist('emoji')) {
+  if (IsParamExist('telegram')) {
+    const token = GetParam('token')
+    const flp = GetParam('flp')
+    const chatId = GetParam('chatid')
+    const alias = GetParam('alias')
+
+    UploadTelegramBot(flp, token, chatId, alias)
+  }
+  else if (IsParamExist('emoji')) {
     PullEmojiAllAsync()
   }
   else if (IsParamExist('pull')) {
@@ -74,7 +83,7 @@ async function JustDoIt() {
       cat = 'sunset'
     else if (IsParamExist('vo'))
       cat = 'vocabulary'
-    else if (IsParamExist('clip')  || IsParamExist('ni'))
+    else if (IsParamExist('clip') || IsParamExist('ni'))
       cat = 'niceclip'
     else if (IsParamExist('tu'))
       cat = 'tune'
