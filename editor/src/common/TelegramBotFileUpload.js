@@ -31,11 +31,12 @@ const UploadTelegramBot = async (token, flp, chatId, fileAlias) => {
         const chatId = msg.chat.id;
 
         bot.sendMessage(chatId, 'Chat ID: ' + chatId);
+
         // bot.sendMessage(chatId, 'Chat:\n\n' + JSON.stringify(msg, null, 1));
     });
 
     if (!chatId) {
-        LogRed('[UploadTelegramBot] Invalid chatId. Chat anything to the bot to get it.')
+        LogRed(`[UploadTelegramBot] Invalid chatId. Chat anything to the bot '${botname}' to get it.`)
 
         return;
     }
