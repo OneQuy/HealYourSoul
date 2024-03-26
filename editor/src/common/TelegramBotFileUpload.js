@@ -11,7 +11,7 @@ const UploadTelegramBot = async (flp, token, chatId, fileAlias) => {
     }
 
     if (!token || token.length <= 20) {
-        LogRed('[UploadTelegramBot] token is invalid: ' + token)
+        LogRed('[UploadTelegramBot] Token is invalid: ' + token)
         process.exit()
         return;
     }
@@ -20,6 +20,17 @@ const UploadTelegramBot = async (flp, token, chatId, fileAlias) => {
 
     const bot = new TelegramBot(token, { polling: true });
 
+    bot.on('polling_error', (error) => {
+        const msg = error?.message
+
+        if (msg === 'ETELEGRAM: 401 Unauthorized')
+            LogRed('[UploadTelegramBot] Maybe your token is invalid. ' + error)
+        else
+            LogRed('[UploadTelegramBot] Polling error. ' + error)
+
+        process.exit()
+    });
+
     const { name: botname } = await bot.getMyName()
 
     // Listen for any kind of message. There are different kinds of messages.
@@ -27,16 +38,17 @@ const UploadTelegramBot = async (flp, token, chatId, fileAlias) => {
     bot.on('message', (msg) => {
         const chatId = msg.chat.id;
 
-        bot.sendMessage(chatId, 'Chat:\n\n' + JSON.stringify(msg, null, 1));
+        bot.sendMessage(chatId, 'Chat ID: ' + chatId);
+        // bot.sendMessage(chatId, 'Chat:\n\n' + JSON.stringify(msg, null, 1));
     });
 
     if (!chatId) {
-        LogRed('[UploadTelegramBot] Not found chatid="###". Chat anything to bot to get chatid.')
+        LogRed('[UploadTelegramBot] Invalid chatId. Chat anything to the bot to get it.')
 
         return;
     }
 
-    console.log(`[UploadTelegramBot] sending file ${fileAlias ?? ''} to bot '${botname}'`)
+    console.log(`[UploadTelegramBot] Sending file ${fileAlias ?? ''} to bot '${botname}'`)
 
     if (fileAlias) {
         bot.sendMessage(chatId, fileAlias)
@@ -62,14 +74,6 @@ const UploadTelegramBot = async (flp, token, chatId, fileAlias) => {
 module.exports = {
     UploadTelegramBot
 }
-
-
-
-
-// bot.on('polling_error', (error) => {
-//     console.log('polling_error\n\n' + error);  // => 'EFATAL'
-// });
-
 
 
 //  // Matches "/echo [whatever]"
