@@ -15,7 +15,7 @@ const fs = require('fs');
  * @param {*} token How to get token: create bot be search ``@BotFather`` on Telegram.
  * @param {*} filepath full local file path.
  * @param {*} chatId How to get chatId: run UploadTelegramBot(yourToken, undefined, undefined, undefined). Then chat anything in your bot to get it.
- * @param {*} fileAlias (optianal) The text msg will be showed before the file uploaded.
+ * @param fileAlias (optianal) The text msg will be showed before the file uploaded.
  */
 const UploadFileToTelegramBot = async (token, filepath, chatId, fileAlias) => {
     if (!token) {
