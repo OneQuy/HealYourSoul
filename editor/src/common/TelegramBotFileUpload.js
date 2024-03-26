@@ -1,6 +1,5 @@
 const TelegramBot = require('node-telegram-bot-api')
 const fs = require('fs');
-const { LogGreen, LogRed } = require('../Utils_NodeJS');
 
 /**
  ## Usage:
@@ -14,7 +13,7 @@ const { LogGreen, LogRed } = require('../Utils_NodeJS');
  */
 const UploadTelegramBot = async (token, filepath, chatId, fileAlias) => {
     if (!token) {
-        LogRed('[UploadTelegramBot] Token is undefined')
+        console.error('[UploadTelegramBot] Token is undefined')
         process.exit()
     }
 
@@ -26,9 +25,9 @@ const UploadTelegramBot = async (token, filepath, chatId, fileAlias) => {
         const msg = error?.message
 
         if (msg === 'ETELEGRAM: 401 Unauthorized')
-            LogRed('[UploadTelegramBot] Maybe your token is invalid. ' + error)
+            console.error('[UploadTelegramBot] Maybe your token is invalid. ' + error)
         else
-            LogRed('[UploadTelegramBot] Polling error. ' + error)
+            console.error('[UploadTelegramBot] Polling error. ' + error)
 
         process.exit()
     });
@@ -46,13 +45,13 @@ const UploadTelegramBot = async (token, filepath, chatId, fileAlias) => {
     });
 
     if (!chatId) {
-        LogRed(`[UploadTelegramBot] Invalid chatId. Chat anything to the bot '${botname}' to get it.`)
+        console.error(`[UploadTelegramBot] Invalid chatId. Chat anything to the bot '${botname}' to get it.`)
 
         return;
     }
 
     if (!fs.existsSync(filepath)) {
-        LogRed('[UploadTelegramBot] Not found file: ' + filepath)
+        console.error('[UploadTelegramBot] Not found file: ' + filepath)
         process.exit()
     }
 
@@ -70,11 +69,11 @@ const UploadTelegramBot = async (token, filepath, chatId, fileAlias) => {
 
     bot.sendDocument(chatId, fileStream)
         .then(() => {
-            LogGreen(`[UploadTelegramBot] File sent to bot '${botname}' successfully: ${fileAlias ?? filepath}`)
+            console.log(`[UploadTelegramBot] File sent to bot '${botname}' successfully: ${fileAlias ?? filepath}`)
             process.exit()
         })
         .catch((error) => {
-            LogRed('[UploadTelegramBot] Error sending file:', error);
+            console.error('[UploadTelegramBot] Error sending file:', error);
             process.exit()
         })
 }
