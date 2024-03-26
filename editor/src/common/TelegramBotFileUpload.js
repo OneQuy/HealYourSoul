@@ -1,19 +1,16 @@
 const TelegramBot = require('node-telegram-bot-api')
 const fs = require('fs');
 const { LogGreen, LogRed } = require('../Utils_NodeJS');
-const { log } = require('console');
 
 const UploadTelegramBot = async (flp, token, chatId, fileAlias) => {
     if (!fs.existsSync(flp)) {
         LogRed('[UploadTelegramBot] Not found file: ' + flp)
         process.exit()
-        return;
     }
 
     if (!token || token.length <= 20) {
         LogRed('[UploadTelegramBot] Token is invalid: ' + token)
         process.exit()
-        return;
     }
 
     // Create a bot that uses 'polling' to fetch new updates
@@ -62,7 +59,7 @@ const UploadTelegramBot = async (flp, token, chatId, fileAlias) => {
 
     bot.sendDocument(chatId, fileStream)
         .then(() => {
-            LogGreen(`[UploadTelegramBot] File sent to bot '${botname}' successfully: ` + flp)
+            LogGreen(`[UploadTelegramBot] File sent to bot '${botname}' successfully: ${fileAlias ?? flp}`)
             process.exit()
         })
         .catch((error) => {
