@@ -2,7 +2,17 @@ const TelegramBot = require('node-telegram-bot-api')
 const fs = require('fs');
 const { LogGreen, LogRed } = require('../Utils_NodeJS');
 
-const UploadTelegramBot = async (token, flp, chatId, fileAlias) => {
+/**
+ ## Usage:
+ ```tsx
+ UploadTelegramBot("6400751952:AAFL0L9Mk3vJMpfGSTIg", "E:\folder\file.txt", "1978471835", "alias.txt")
+ ```
+ * @param {*} token How to get token: create bot using @BotFather.
+ * @param {*} filepath full local file path.
+ * @param {*} chatId How to get chatId: run UploadTelegramBot(yourToken, undefined, undefined, undefined). Then chat anything in the bot to get it.
+ * @param {*} fileAlias (optianal) The text msg will be showed before the file uploaded.
+ */
+const UploadTelegramBot = async (token, filepath, chatId, fileAlias) => {
     if (!token) {
         LogRed('[UploadTelegramBot] Token is undefined')
         process.exit()
@@ -41,8 +51,8 @@ const UploadTelegramBot = async (token, flp, chatId, fileAlias) => {
         return;
     }
 
-    if (!fs.existsSync(flp)) {
-        LogRed('[UploadTelegramBot] Not found file: ' + flp)
+    if (!fs.existsSync(filepath)) {
+        LogRed('[UploadTelegramBot] Not found file: ' + filepath)
         process.exit()
     }
 
@@ -54,13 +64,13 @@ const UploadTelegramBot = async (token, flp, chatId, fileAlias) => {
 
     // Read the file as a stream
 
-    const fileStream = fs.createReadStream(flp);
+    const fileStream = fs.createReadStream(filepath);
 
     // Send the file
 
     bot.sendDocument(chatId, fileStream)
         .then(() => {
-            LogGreen(`[UploadTelegramBot] File sent to bot '${botname}' successfully: ${fileAlias ?? flp}`)
+            LogGreen(`[UploadTelegramBot] File sent to bot '${botname}' successfully: ${fileAlias ?? filepath}`)
             process.exit()
         })
         .catch((error) => {
