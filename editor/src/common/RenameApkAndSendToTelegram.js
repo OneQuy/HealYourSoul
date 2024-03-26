@@ -1,5 +1,5 @@
 const { ReadFileJsonAsync, RenameFileAsync } = require("./FileUtils");
-const { UploadTelegramBot } = require("./TelegramBotFileUpload");
+const { UploadFileToTelegramBot } = require("./TelegramBotFileUpload");
 
 const RenameFileApkAndSendToTelegramAsync = async () => {
     const cur = process.cwd()
@@ -21,7 +21,7 @@ const RenameFileApkAndSendToTelegramAsync = async () => {
     if (!flp)
         return;
 
-    UploadTelegramBot(
+    UploadFileToTelegramBot(
         '6400751952:AAFL0L94MTUNSUHakZkcjbMk3vJMpfGSTIg',
         flp,
         '1978471835'

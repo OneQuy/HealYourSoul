@@ -1,17 +1,23 @@
+// Doc Telegram: https://github.com/yagop/node-telegram-bot-api/blob/master/doc/api.md
+
 const TelegramBot = require('node-telegram-bot-api')
 const fs = require('fs');
 
 /**
- ## Usage:
+ ## Install:
+ npm i --save-dev node-telegram-bot-api
+
+ ## Usage example:
  ```tsx
- UploadTelegramBot("6400751952:AAFL0L9Mk3vJMpfGSTIg", "E:\folder\file.txt", "1978471835", "alias.txt")
+ UploadTelegramBot("1234567890:AAFL0L9Mk3vxxxxx", "E:\folder\file.txt", "1234567890", "alias.txt")
  ```
- * @param {*} token How to get token: create bot using @BotFather.
+ 
+ * @param {*} token How to get token: create bot be search ``@BotFather`` on Telegram.
  * @param {*} filepath full local file path.
- * @param {*} chatId How to get chatId: run UploadTelegramBot(yourToken, undefined, undefined, undefined). Then chat anything in the bot to get it.
+ * @param {*} chatId How to get chatId: run UploadTelegramBot(yourToken, undefined, undefined, undefined). Then chat anything in your bot to get it.
  * @param {*} fileAlias (optianal) The text msg will be showed before the file uploaded.
  */
-const UploadTelegramBot = async (token, filepath, chatId, fileAlias) => {
+const UploadFileToTelegramBot = async (token, filepath, chatId, fileAlias) => {
     if (!token) {
         console.error('[UploadTelegramBot] Token is undefined')
         process.exit()
@@ -79,19 +85,5 @@ const UploadTelegramBot = async (token, filepath, chatId, fileAlias) => {
 }
 
 module.exports = {
-    UploadTelegramBot
+    UploadFileToTelegramBot
 }
-
-
-//  // Matches "/echo [whatever]"
-//  bot.onText(/\/echo (.+)/, (msg, match) => {
-//     // 'msg' is the received Message from Telegram
-//     // 'match' is the result of executing the regexp above on the text content
-//     // of the message
-
-//     const chatId = msg.chat.id;
-//     const resp = match[1]; // the captured "whatever"
-
-//     // send back the matched "whatever" to the chat
-//     bot.sendMessage(chatId, resp);
-// });
