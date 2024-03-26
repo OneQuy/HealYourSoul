@@ -9,9 +9,13 @@ const { GenMyInstants } = require("./src/GenMyInstant");
 const { GenDogBreeds } = require("./src/GenDogBreeds");
 const { PullEmojiAllAsync } = require("./src/PullEmoji");
 const { UploadTelegramBot } = require("./src/common/TelegramBotFileUpload");
+const { RenameFileApkAndSendToTelegramAsync } = require("./src/common/RenameApkAndSendToTelegram");
 
 async function JustDoIt() {
-  if (IsParamExist('telegram')) {
+  if (IsParamExist('sendapk')) {
+    RenameFileApkAndSendToTelegramAsync()
+  }
+  else if (IsParamExist('telegram')) {
     const token = GetParam('token')
     const flp = GetParam('flp')
     const chatId = GetParam('chatid')

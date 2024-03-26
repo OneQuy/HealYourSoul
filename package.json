@@ -9,7 +9,8 @@
     "start": "react-native start",
     "test": "jest",
     "incver": "node editor/incver",
-    "builda": "node editor/incver && cd android && ./gradlew assembleRelease",
+    "builda": "node editor/incver && cd android && ./gradlew assembleRelease && cc .. && node editor sendapk",
+    "sendapk": "node editor sendapk",
     "store": "cd android && ./gradlew bundlerelease"
   },
   "dependencies": {

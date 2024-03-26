@@ -69,13 +69,45 @@ const DownloadFileAsync = async (url, destPath) => {
     return error
 }
 
+/**
+ * 
+ * @returns undefined if failed
+ */
+const ReadFileJsonAsync = async (flp) => {
+    if (!fs.existsSync(flp)) {
+        console.error('[ReadFileJson] File not found: ' + flp)
+        return undefined
+    }
+
+    const data = await fsPromises.readFile(flp, 'utf8');
+
+    return JSON.parse(data);
+}
+
+/**
+ * 
+ * @returns if undefined if faided, flp after renaming if success
+ */
 const RenameFileAsync = async (flp, newFileNameWithExtension) => {
+    if (!fs.existsSync(flp)) {
+        console.error('[RenameFileAsync] File not found: ' + flp)
+        return undefined
+    }
+
+    if (!newFileNameWithExtension) {
+        console.error('[RenameFileAsync] new file name is empty')
+        return undefined
+    }
+
     const dir = path.dirname(flp)
     await fsPromises.rename(flp, dir + newFileNameWithExtension)
+
+    return dir + newFileNameWithExtension
 }
 
 module.exports = {
     CheckAndMkDirOfFilepathjAsync,
     DownloadFileAsync,
-    RenameFileAsync
+    RenameFileAsync,
+    ReadFileJsonAsync,
 }
