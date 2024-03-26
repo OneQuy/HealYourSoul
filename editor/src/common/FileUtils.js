@@ -1,6 +1,8 @@
 const fs = require('fs')
+const fsPromises = require('fs').promises;
 const https = require('https');
 const http = require('https');
+const path = require('path');
 
 /**
  * @param filePath can rlp or flp
@@ -67,7 +69,13 @@ const DownloadFileAsync = async (url, destPath) => {
     return error
 }
 
+const RenameFileAsync = async (flp, newFileNameWithExtension) => {
+    const dir = path.dirname(flp)
+    await fsPromises.rename(flp, dir + newFileNameWithExtension)
+}
+
 module.exports = {
     CheckAndMkDirOfFilepathjAsync,
     DownloadFileAsync,
+    RenameFileAsync
 }
