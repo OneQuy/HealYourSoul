@@ -17,7 +17,7 @@ async function JustDoIt() {
     const chatId = GetParam('chatid')
     const alias = GetParam('alias')
 
-    UploadTelegramBot(flp, token, chatId, alias)
+    UploadTelegramBot(token, flp, chatId, alias)
   }
   else if (IsParamExist('emoji')) {
     PullEmojiAllAsync()

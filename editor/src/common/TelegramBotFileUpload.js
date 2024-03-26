@@ -2,14 +2,9 @@ const TelegramBot = require('node-telegram-bot-api')
 const fs = require('fs');
 const { LogGreen, LogRed } = require('../Utils_NodeJS');
 
-const UploadTelegramBot = async (flp, token, chatId, fileAlias) => {
-    if (!fs.existsSync(flp)) {
-        LogRed('[UploadTelegramBot] Not found file: ' + flp)
-        process.exit()
-    }
-
-    if (!token || token.length <= 20) {
-        LogRed('[UploadTelegramBot] Token is invalid: ' + token)
+const UploadTelegramBot = async (token, flp, chatId, fileAlias) => {
+    if (!token) {
+        LogRed('[UploadTelegramBot] Token is undefined')
         process.exit()
     }
 
@@ -43,6 +38,11 @@ const UploadTelegramBot = async (flp, token, chatId, fileAlias) => {
         LogRed('[UploadTelegramBot] Invalid chatId. Chat anything to the bot to get it.')
 
         return;
+    }
+
+    if (!fs.existsSync(flp)) {
+        LogRed('[UploadTelegramBot] Not found file: ' + flp)
+        process.exit()
     }
 
     console.log(`[UploadTelegramBot] Sending file ${fileAlias ?? ''} to bot '${botname}'`)
