@@ -106,6 +106,15 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
     // console.log(curId);
   }, [])
 
+  const show_upload = useMemo(() => {
+    const data = GetAppConfig()
+
+    if (!data)
+      return false
+    else
+      return data.show_upload === 1
+  }, [])
+
   const showUpdateBtn = useMemo(() => {
     const data = GetAppConfig()?.latest_version
 
@@ -288,10 +297,14 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
             </TouchableOpacity>
 
             {/* upload */}
-            <TouchableOpacity onPress={onPressUploadButton} style={[style.settingBtnView, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter, { borderColor: theme.background, backgroundColor: isFocusUpload ? theme.background : theme.primary }]}>
-              <MaterialIcons name={Icon.Upload} color={colorUploadText} size={Size.IconTiny} />
-              <Text style={[{ color: colorUploadText }]}>{LocalText.upload}</Text>
-            </TouchableOpacity>
+
+            {
+              show_upload &&
+              <TouchableOpacity onPress={onPressUploadButton} style={[style.settingBtnView, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter, { borderColor: theme.background, backgroundColor: isFocusUpload ? theme.background : theme.primary }]}>
+                <MaterialIcons name={Icon.Upload} color={colorUploadText} size={Size.IconTiny} />
+                <Text style={[{ color: colorUploadText }]}>{LocalText.upload}</Text>
+              </TouchableOpacity>
+            }
           </View>
         }
 

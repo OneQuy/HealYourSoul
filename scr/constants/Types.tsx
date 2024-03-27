@@ -141,6 +141,7 @@ export type AppConfig = {
     remote_files: object,
     force_dev_01: number,
     count_trigger_mini_iap: number,
+    show_upload: number,
     ads: {
         new_day_free: number,
         loop: number,
