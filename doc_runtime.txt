@@ -9,8 +9,6 @@ alert priority:
 3. initNotificationAsync() // alert_priority 3 (doc)
 4. CheckAndInitAdmobAsync() // alert_priority 4 (doc) // no depended
 
-- InitOneSignalAsync()  // alert_priority MUST FINAL (doc) // cuz perhaps too long to wait. maybe has alert request permission notification
-
 -  CheckAndShowAlertWhatsNewAsync() // alert_priority 'not_important' (doc)
 
 =========================

@@ -16,7 +16,7 @@ import TelemetryDeck from "@telemetrydeck/sdk";
 import { createTelemetryDeckClient } from "./TelemetryDeck/TelemetryDeck";
 import { TELEMETRY_DECK_KEY } from "../../keys";
 import { SetDateAsync_Now } from "./AsyncStorageUtils";
-import { InitOneSignalAsync } from "./OneSignal";
+import { InitOneSignal } from "./OneSignal";
 import { CheckAndInitAdmobAsync } from "./ads/Admob";
 
 export type LoadAppDataResult = {
@@ -32,6 +32,12 @@ export async function LoadAppData(): Promise<LoadAppDataResult> {
     // init net checker
 
     NetLord.InitAsync();
+
+    // one signal
+
+    InitOneSignal() // no depended
+
+    // awaits
 
     const [
         _,
@@ -81,14 +87,10 @@ export async function LoadAppData(): Promise<LoadAppDataResult> {
     // init notifee
 
     await initNotificationAsync() // alert_priority 3 (doc) // no depended
-    
+
     // init admob
 
     await CheckAndInitAdmobAsync() // alert_priority 4 (doc) // no depended
-
-    // one signal
-
-    InitOneSignalAsync()  // alert_priority MUST FINAL (doc) // no depended
 
     // teleletry
 
