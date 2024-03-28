@@ -43,14 +43,14 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
-	<key>NSUserTrackingUsageDescription</key>
-	<string>This identifier will be used to deliver personalized ads to you.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>To download these media to your Gallery please accept this permission.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Please accept the permission to pick your meme for uploading to Gooday.</string>
 	<key>NSUserNotificationsUsageDescription</key>
 	<string>This identifier will be used to send fact, quote and joke that you registered to get notification everyday.</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>This identifier will be used to deliver personalized ads to you.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>MaterialIcons.ttf</string>
@@ -63,6 +63,8 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIStatusBarHidden</key>
+	<true/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
