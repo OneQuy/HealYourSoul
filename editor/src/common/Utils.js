@@ -98,6 +98,17 @@ function GetFileExtensionByFilepath(filepath) {
     return filepath.substring(dotIdx + 1, filepath.length);
 }
 
+function RemoveEmptyAndFalsyFromObject(obj) {
+    /**
+     * Creates a new object with empty strings, null, and undefined properties removed.
+     * @param {Object} obj The object to filter.
+     * @returns {Object} A new object with filtered properties.
+     */
+    return Object.fromEntries(
+        Object.entries(obj).filter(([key, value]) => value !== null && value !== undefined && value !== '')
+    );
+}
+
 module.exports = {
     GetParam,
     IsParamExist,
@@ -105,4 +116,5 @@ module.exports = {
     ArrayBufferToBuffer,
     GetFileExtensionByFilepath,
     Uint8ArrayToString,
+    RemoveEmptyAndFalsyFromObject,
 }

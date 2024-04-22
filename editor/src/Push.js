@@ -1,5 +1,5 @@
 const { PullFileListAsync } = require("./PullData")
-const { GetFileExtensionByFilepath } = require("./common/Utils")
+const { GetFileExtensionByFilepath, RemoveEmptyAndFalsyFromObject } = require("./common/Utils")
 const clipboard = require('copy-paste');
 const firebase = require('./common/Firebase_NodeJS')
 const firebaseStorage = require('./common/FirebaseStorage_NodeJS');
@@ -155,13 +155,27 @@ async function UploadPostAsync(category, title, author, authorUrl, notDeleteFile
     else
         mediaTypeArr = UriArrToMediaTypeArr(mediaURIs)
 
-    const newPost = {
+    let newPost = {
         id: newPostID,
         author,
         url: authorUrl,
         title,
         media: mediaTypeArr
     }
+
+    // simplize json
+
+    if (newPost.media &&
+        newPost.media.length === 1 &&
+        newPost.media[0] === 0)
+        // @ts-ignore
+        newPost.media = undefined
+
+    newPost = RemoveEmptyAndFalsyFromObject(newPost)
+
+    // console.log(newPost);
+
+    // ------
 
     if (onlyOverrideLatestMedia === true)
         console.log('override latest media mode, id', newPostID)
