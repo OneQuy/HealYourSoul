@@ -147,9 +147,9 @@ async function UploadPostAsync(category, title, author, authorUrl, notDeleteFile
 
     const fileList = await PullFileListAsync(category)
     
-    // for (let i = 0; i < fileList.posts.length; i++) {
-    //     fileList.posts[i] = RemoveEmptyAndFalsy(fileList.posts[i])
-    // }
+    for (let i = 0; i < fileList.posts.length; i++) {
+        fileList.posts[i] = RemoveEmptyAndFalsy(fileList.posts[i])
+    }
 
     const latestID = fileList.posts.length > 0 ? fileList.posts[0].id : -1;
     const newPostID = onlyOverrideLatestMedia === true ? latestID : latestID + 1
