@@ -109,7 +109,7 @@ function RemoveEmptyAndFalsy(obj) {
         // @ts-ignore
         obj.media = undefined
 
-    obj = RemoveEmptyAndFalsyFromObject(obj)
+    return RemoveEmptyAndFalsyFromObject(obj)
 }
 
 async function UploadPostAsync(category, title, author, authorUrl, notDeleteFilesAfterPush, smartAuthor, fromImgURL, fromVideoURL, onlyOverrideLatestMedia) {
@@ -181,7 +181,7 @@ async function UploadPostAsync(category, title, author, authorUrl, notDeleteFile
 
     // simplize json
 
-    RemoveEmptyAndFalsy(newPost)
+    newPost = RemoveEmptyAndFalsy(newPost)
 
     // ------
 
