@@ -101,6 +101,17 @@ function GetMediaTypeByFileExtension(extension) {
         throw new Error(extension + ' extention is not able to regconize');
 }
 
+function RemoveEmptyAndFalsy(obj) {
+    if (obj &&
+        obj.media &&
+        obj.media.length === 1 &&
+        obj.media[0] === 0)
+        // @ts-ignore
+        obj.media = undefined
+
+    obj = RemoveEmptyAndFalsyFromObject(obj)
+}
+
 async function UploadPostAsync(category, title, author, authorUrl, notDeleteFilesAfterPush, smartAuthor, fromImgURL, fromVideoURL, onlyOverrideLatestMedia) {
     console.log(category)
 
@@ -135,6 +146,11 @@ async function UploadPostAsync(category, title, author, authorUrl, notDeleteFile
     firebase.FirebaseInit()
 
     const fileList = await PullFileListAsync(category)
+
+    // fileList.posts.forEach(element => {
+    //     RemoveEmptyAndFalsy(element)
+    // });
+
     const latestID = fileList.posts.length > 0 ? fileList.posts[0].id : -1;
     const newPostID = onlyOverrideLatestMedia === true ? latestID : latestID + 1
     const smartAuthorRes = SmartAuthor(smartAuthor)
@@ -165,15 +181,7 @@ async function UploadPostAsync(category, title, author, authorUrl, notDeleteFile
 
     // simplize json
 
-    if (newPost.media &&
-        newPost.media.length === 1 &&
-        newPost.media[0] === 0)
-        // @ts-ignore
-        newPost.media = undefined
-
-    newPost = RemoveEmptyAndFalsyFromObject(newPost)
-
-    // console.log(newPost);
+    RemoveEmptyAndFalsy(newPost)
 
     // ------
 
