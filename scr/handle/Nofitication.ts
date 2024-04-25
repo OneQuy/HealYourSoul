@@ -1,5 +1,16 @@
 // https://notifee.app/react-native/docs
 
+// --------------------------------
+// INSTALL:
+//
+// npm i @notifee/react-native
+//
+// <key>NSUserNotificationsUsageDescription</key>
+// <string>Please grant permission to receive vocabulary notifications.</string>
+//
+//  iOS: add Push Notifications on XCode
+// --------------------------------
+
 import notifee, { AndroidChannel, AndroidImportance, AndroidStyle, Notification, NotificationAndroid, TimestampTrigger, TriggerType } from '@notifee/react-native';
 
 export type NotificationOption = {
