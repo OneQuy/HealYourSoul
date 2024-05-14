@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
-import { FetchListProductsAsync, IAPProduct, InitIAPAsync } from "../handle/IAP"
+import { FetchListProductsAsync, IAPProduct, InitIAPAsync } from './../handle/IAP'
 import { Product } from "react-native-iap"
 
 /**
@@ -7,7 +7,7 @@ import { Product } from "react-native-iap"
  * ## Usage
  * 1.
  ```tsx
-const { isInited, fetchedProducts } = useMyIAP(
+const { isReadyPurchase, fetchedProducts } = useMyIAP(
     allProducts,
     async (s: string) => AsyncStorage.setItem(StorageKey_CachedIAP, s),
     async () => AsyncStorage.getItem(StorageKey_CachedIAP))
