@@ -10,10 +10,12 @@ string utils
 array utils
 time
 number
+view, component utils
+object
 other utils
 */
 
-import { Alert, Platform, AlertButton, PermissionsAndroid, Linking } from "react-native";
+import { Alert, Platform, AlertButton, PermissionsAndroid, Linking, Image, Dimensions } from "react-native";
 import { Buffer as TheBuffer } from 'buffer'
 
 // const -------------------------
@@ -21,7 +23,12 @@ import { Buffer as TheBuffer } from 'buffer'
 export const TimeOutError = '[time_out]'
 export const TimeOutStandardInMs = 5000
 
+export const TempDirName = 'temp_dir';
+
 const DayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+const TimeUnitNames_Short = ['d', 'h', 'm', 's'] as const
+const TimeUnitNames_Full = ['Day', 'Hour', 'Minute', 'Second'] as const
 
 // color ------------------------
 
@@ -208,6 +215,24 @@ export function RGBToRGBAText(colorText: string, opacity: number): string {
 
 // file / dir ---------------------------
 
+export async function LoadJsonFromURLAsync(jsonURL: string) {
+    try {
+        var respone = await fetch(jsonURL);
+        var jsonObject = await respone.json();
+
+        return {
+            json: jsonObject,
+            error: null,
+        };
+    }
+    catch (err) {
+        return {
+            json: null,
+            error: err,
+        };
+    }
+}
+
 export function GetFileExtensionByFilepath(filepath: string): string {
     var dotIdx = filepath.lastIndexOf('.');
 
@@ -334,6 +359,123 @@ export const IsNumType = (o: any) => {
 
 // array utils ---------------------------
 
+export function GetElementsOfPageArray<T>(array: T[], pageIdx: number, countPerPage: number) {
+    if (!IsValuableArrayOrString(array)) {
+        return {
+            totalPageCount: 0,
+            items: undefined,
+            pageIdx
+        }
+    }
+
+    const totalPageCount = Math.ceil(array.length / countPerPage)
+
+    pageIdx = Clamp(pageIdx, 0, totalPageCount - 1)
+
+    const items = array.slice(pageIdx * countPerPage, pageIdx * countPerPage + countPerPage)
+
+    return {
+        totalPageCount,
+        items,
+        pageIdx
+    }
+}
+
+export const ArrayGroupElements = (array: any[], property: string) => array.reduce((grouped, element) => ({
+    ...grouped,
+    [element[property]]: [...(grouped[element[property]] || []), element]
+}), {})
+
+export function SafeArrayLength<T>(arr: T[] | any): number {
+    if (!Array.isArray(arr))
+        return 0
+
+    return arr.length
+}
+
+export function SafeGetArrayElement_ForceValue<T>(arr: T[] | any, defaultValue: T): T { // sub 
+    return SafeGetArrayElement(arr, defaultValue) as T
+}
+
+export function SafeGetArrayElement<T>( // main 
+    arr: T[] | any,
+    defaultValue: T | undefined = undefined,
+    index = 0,
+    loop = false,
+): undefined | T {
+    if (!Array.isArray(arr))
+        return defaultValue
+
+    if (arr.length === 0)
+        return defaultValue
+
+    if (!loop) {
+        if (index < 0 || arr.length <= index)
+            return defaultValue
+        else
+            return arr[index]
+    }
+    else { // loop
+        if (index < 0 && index % arr.length !== 0) {
+            return arr[arr.length - Math.abs(index) % arr.length]
+        }
+        else
+            return arr[index % arr.length]
+    }
+}
+
+export function IsAllValuableString(trimString: boolean, ...values: (string | null | undefined | number | object)[]): boolean { // sub 
+    return values.every((val => {
+        if (typeof val !== 'string')
+            return false
+
+        const s = trimString ? val.trim() : val
+
+        return s.length > 0
+    }))
+}
+
+export function IsValuableArrayOrString(value: any, trimString: boolean = true) { // main 
+    if (Array.isArray(value)) {
+        return value.length > 0
+    }
+    else if (typeof value === 'string') {
+        if (trimString && value)
+            value = value.trim()
+
+        return value && value.length > 0
+    }
+    else
+        return false
+}
+
+export function PickRandomElementWithCount<T>(arr: T[], count: number, excludeElement?: T): undefined | T[] {
+    const arrResult: T[] = []
+
+    for (let i = 0; i < count; i++) {
+        const item = PickRandomElement<T>(arr, excludeElement)
+
+        if (item === undefined)
+            return undefined
+
+        arrResult.push(item)
+    }
+
+    return arrResult
+}
+
+export function PickRandomElement<T>(arr: T[], excludeElement?: T): T | undefined {
+    if (!IsValuableArrayOrString(arr))
+        return undefined
+
+    while (true) {
+        let idx = Math.floor(Math.random() * arr.length);
+
+        if (arr.length <= 1 || excludeElement === undefined || excludeElement === null || !Object.is(arr[idx], excludeElement))
+            return arr[idx];
+    }
+}
+
 /**
  * 
  * @param arr 
@@ -355,7 +497,9 @@ export function ArrayAddWithCheckDuplicate<T>(
     arr: NonNullable<T>[],
     itemsToAdd: NonNullable<T> | NonNullable<T>[],
     propertyForCompareIfTypeIsObject?: string,
-    pushOrUnshift = true): boolean {
+    stringifyCompare?: boolean,
+    pushOrUnshift = true
+): boolean {
     const arrToAdd = Array.isArray(itemsToAdd) ? itemsToAdd : [itemsToAdd]
     let added = false
     const property = propertyForCompareIfTypeIsObject as keyof T
@@ -363,17 +507,27 @@ export function ArrayAddWithCheckDuplicate<T>(
     for (let i = 0; i < arrToAdd.length; i++) {
         const curItemToAdd = arrToAdd[i]
 
-        const foundIdx = arr.findIndex(f => {
-            if (propertyForCompareIfTypeIsObject && typeof curItemToAdd === 'object') {
-                return curItemToAdd[property] === f[property]
+        const foundIdx = arr.findIndex(element => {
+            const isObject = typeof curItemToAdd === 'object'
+
+            if (isObject && propertyForCompareIfTypeIsObject) {
+                return curItemToAdd[property] === element[property]
+            }
+            else if (stringifyCompare === true) {
+                const thisObj = JSON.stringify(curItemToAdd)
+                const arrElement = JSON.stringify(element)
+
+                return thisObj === arrElement
             }
             else
-                return f === curItemToAdd
+                return element === curItemToAdd
         })
 
         if (foundIdx >= 0) { // found => not add
             continue
         }
+
+        // add!
 
         added = true
 
@@ -411,23 +565,23 @@ export function ArrayRemove<T>(arr: T[], value: T): boolean {
 
 // string utils ---------------------------
 
+export function PrependZero(num: number): string {
+    if (num < 10 && num >= 0)
+        return '0' + num;
+    else
+        return num.toString();
+}
+
+export function AddS(word: string, count: number): string {
+    if (count > 1)
+        return word + 's'
+    else
+        return word
+}
+
 export function RemoveHTMLTags(text: string): string {
     const regex = /<[^>]*>/mgi
     return text.replace(regex, "")
-}
-
-export function IsValuableArrayOrString(value: any, trimString: boolean = true) {
-    if (Array.isArray(value)) {
-        return value.length > 0
-    }
-    else if (typeof value === 'string') {
-        if (trimString && value)
-            value = value.trim()
-
-        return value && value.length > 0
-    }
-    else
-        return false
 }
 
 /**
@@ -529,6 +683,10 @@ export function GetFirstLetters(inputString: string) {
     return result;
 }
 
+export function CapitalizeFirstLetter(str: string) {
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+}
+
 /**
  * @param wholeTxt 
  * @aa
@@ -621,9 +779,12 @@ export const SplitNumberInText = (text: string) => {
     return Number.parseFloat(numS)
 }
 
-export const ExtractAllNumbersInText = (text: string): number[] => {
+export const ExtractAllNumbersInText = (textOrAnthing: any): number[] => {
+    if (typeof textOrAnthing !== 'string')
+        return []
+
     const regex = /[+-]?\d+(\.\d+)?/g;
-    let floats = text.match(regex)?.map(function (v) { return parseFloat(v); });
+    let floats = textOrAnthing.match(regex)?.map(function (v) { return parseFloat(v); });
 
     if (!floats)
         return []
@@ -742,34 +903,25 @@ export const DayName = (date?: Date, is3Char?: boolean): string => {
         return name
 }
 
-export const GetDayHourMinSecFromMs_ToString = (ms: number, separator = '_', removeZeroElement = true): string => {
+export const GetDayHourMinSecFromMs_ToString = (
+    ms: number,
+    separator = '_',
+    removeZeroElement = true,
+    unitNameIsShortOrFull = true,
+    unitChar = '',
+): string => {
     let s = ''
 
     const arr = GetDayHourMinSecFromMs(ms)
+    const units = unitNameIsShortOrFull ? TimeUnitNames_Short : TimeUnitNames_Full
 
-    if (arr[0] > 0 || !removeZeroElement) {
-        s += arr[0] + 'd'
-    }
+    for (let i = 0; i < 4; i++) {
+        if (arr[i] > 0 || !removeZeroElement) {
+            if (s.length > 0)
+                s += separator
 
-    if (arr[1] > 0 || !removeZeroElement) {
-        if (s.length > 0)
-            s += separator
-
-        s += arr[1] + 'h'
-    }
-
-    if (arr[2] > 0 || !removeZeroElement) {
-        if (s.length > 0)
-            s += separator
-
-        s += arr[2] + 'm'
-    }
-
-    if (arr[3] > 0 || !removeZeroElement) {
-        if (s.length > 0)
-            s += separator
-
-        s += arr[3] + 's'
+            s += `${arr[i]}${unitChar}${units[i]}`
+        }
     }
 
     return s
@@ -795,6 +947,30 @@ export const GetDayHourMinSecFromMs = (ms: number): [number, number, number, num
 
 // number ---------------------------
 
+export function RandomBool() {
+    return Math.random() > 0.5
+}
+
+export function RandomInt(min: number, max: number) {
+    if (max < min) {
+        const tmp = min;
+        min = max;
+        max = tmp;
+    }
+
+    var rand = Math.round(Math.random() * (max - min));
+    return min + rand;
+}
+
+export function RandomIntExcept(min: number, max: number, except: number) {
+    for (; ;) {
+        let r = RandomInt(min, max);
+
+        if (r !== except)
+            return r;
+    }
+}
+
 export function NumberWithCommas(x: number) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 }
@@ -805,6 +981,124 @@ export const Clamp01 = (value: number) => {
 
 export const Clamp = (value: number, min: number, max: number) => {
     return Math.max(min, Math.min(max, value))
+}
+
+// view, component utils ---------------------
+
+export function GetWindowSize_Max() {
+    const window = Dimensions.get('window')
+    return Math.max(window.width, window.height)
+}
+
+export async function GetImageSizeAsync(uri: any): Promise<{ width: number, height: number } | Error> {
+    if (typeof uri !== 'string')
+        return new Error('[GetImageSizeAsync] uri is not a string')
+
+    return new Promise(resolve => {
+        Image.getSize(uri,
+            (w, h) => {
+                resolve({
+                    width: w,
+                    height: h,
+                })
+            },
+            (error: any) => {
+                resolve(CreateError(error))
+            })
+    })
+}
+
+/**
+## Usage:
+1.
+```tsx
+const getItemLayout = useCallback((
+    data: ArrayLike<ItemType[]> | null | undefined,
+    index: number,
+) => {
+    return FlatlistGetItemLayout(data, index, ITEM_SIZE)
+}, [])
+
+2.
+<FlatList
+    ...
+    getItemLayout={getItemLayout}
+/>
+```
+ */
+export function FlatlistGetItemLayout<T>(
+    data: ArrayLike<T> | null | undefined,
+    index: number,
+    itemOrientationSize: number,
+    gap = 0,
+    headPadding = 0,
+) {
+    return {
+        length: itemOrientationSize,
+        offset: headPadding + itemOrientationSize * index + (index * gap),
+        index,
+    }
+}
+
+export const ViewSizeOfImageInContainMode = (
+    /**
+     * imageRatio = image or view H / image or view W
+     */
+    imageRatio: number,
+
+    containerViewW: number,
+    containerViewH: number,
+) => {
+    if (imageRatio <= 0) {
+        console.error('[ViewSizeOfImageInContainMode] imageRatio can not be <= 0')
+
+        return {
+            width: containerViewW,
+            height: containerViewH,
+        }
+    }
+
+    let width, height: number
+
+    const isPortrait = imageRatio > 1
+
+    if (isPortrait) {
+        height = containerViewH
+        width = height / imageRatio
+
+        if (width > containerViewW) {
+            width = containerViewW
+            height = width * imageRatio
+        }
+    }
+    else {
+        width = containerViewW
+        height = width * imageRatio
+
+        if (height > containerViewH) {
+            height = containerViewH
+            width = height / imageRatio
+        }
+    }
+
+    return { width, height }
+}
+
+// object ---------------------------
+
+export function CloneObject<T>(obj: T): T {
+    return JSON.parse(JSON.stringify(obj)) as T
+}
+
+export function RemoveEmptyAndFalsyFromObject(obj: object) {
+    /**
+     * Creates a new object with empty strings, null, and undefined properties removed.
+     * @param {Object} obj The object to filter.
+     * @returns {Object} A new object with filtered properties.
+     */
+    return Object.fromEntries(
+        Object.entries(obj).filter(([key, value]) => value !== null && value !== undefined && value !== '')
+    );
 }
 
 // other utils ---------------------------
@@ -821,17 +1115,6 @@ export const IsPointInRect = ( // main
         return true
     else
         return false
-}
-
-export function RemoveEmptyAndFalsyFromObject(obj: object) {
-    /**
-     * Creates a new object with empty strings, null, and undefined properties removed.
-     * @param {Object} obj The object to filter.
-     * @returns {Object} A new object with filtered properties.
-     */
-    return Object.fromEntries(
-        Object.entries(obj).filter(([key, value]) => value !== null && value !== undefined && value !== '')
-    );
 }
 
 export const ToCanPrintError = (erroObj: any) => {
@@ -994,7 +1277,9 @@ export async function ExecuteWithTimeoutAsync<T>(asyncFunction: () => Promise<T>
     } catch (error) {
         return {
             result: undefined,
-            isTimeOut: error instanceof Error && error.message === TimeOutError
+
+            // @ts-ignore
+            isTimeOut: error?.message === TimeOutError
         }
     }
 }
@@ -1004,16 +1289,28 @@ export async function ExecuteWithTimeoutAsync<T>(asyncFunction: () => Promise<T>
  * @returns if anything === undefined => defaultValue
  * @returns if anything !== undefined => anythhing
  */
-export function SafeValue<T>(anything: undefined | T, defaultValue: T): T {
-    if (anything !== undefined)
-        return anything
+export function SafeValue<T>(anything: any, defaultValue: T, forceNaNToDefault = true): T {
+    if (typeof anything === typeof defaultValue) {
+        if (Number.isNaN(anything) && forceNaNToDefault)
+            return defaultValue
+        else
+            return anything
+    }
     else
         return defaultValue
 }
 
 export const CreateError = (anything: any): Error => {
-    if (anything instanceof Error)
+    if (anything?.message)
         return anything
     else
         return new Error(ToCanPrint(anything))
+}
+
+export async function DelayAsync(msTime: number) {
+    return new Promise(resolve => setTimeout(resolve, msTime));
+}
+
+export function LogStringify<T>(anything: any) {
+    console.log(JSON.stringify(anything, null, 1));
 }

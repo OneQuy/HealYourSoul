@@ -6,15 +6,12 @@
  * DOC
  * https://react-native-iap.dooboolab.com/docs/get-started
  * 
- * USAGE
-        await InitIAPAsync(
-            ids.map(i => i.product),
-            async (s: string) => AsyncStorage.setItem(StorageKey_CachedIAP, s),
-            async () => AsyncStorage.getItem(StorageKey_CachedIAP))
+ * USAGE: should call this first:
+        await InitIAPAsync(...)
  */
 
 
-import { Alert, Platform } from 'react-native';
+import { Platform } from 'react-native';
 import {
     initConnection,
     purchaseUpdatedListener,
@@ -29,18 +26,13 @@ import {
     ErrorCode,
     getAvailablePurchases,
 } from 'react-native-iap';
-import { ExecuteWithTimeoutAsync, TimeOutStandardInMs } from './UtilsTS';
-
-const FetchListProductsTimeOut = TimeOutStandardInMs
+import { SafeGetArrayElement, ToCanPrint } from './UtilsTS';
 
 export type IAPProduct = {
     sku: string,
     isConsumable: boolean,
     displayName: string,
 }
-
-// export type SuccessCallback = (sku: string) => void
-// export type ErrorCallback = (error: PurchaseError) => void
 
 var cachedProductsSetterAsync: ((text: string) => Promise<void>) | undefined = undefined
 var cachedProductsGetterAsync: (() => Promise<string | null>) | undefined = undefined
@@ -55,6 +47,14 @@ export var fetchedProducts: Product[] = []
 /**
  * @returns success: return undefined
  * @returns failed: new Error('...')
+ * 
+ * ### USAGE
+ * ```tsx
+        await InitIAPAsync(
+            ids.map(i => i.product),
+            async (s: string) => AsyncStorage.setItem(StorageKey_CachedIAP, s),
+            async () => AsyncStorage.getItem(StorageKey_CachedIAP))
+ * ```
  */
 export const InitIAPAsync = async (
     products: IAPProduct[],
@@ -94,7 +94,7 @@ export const InitIAPAsync = async (
     }
 
     purchaseUpdatedListener((purchase: SubscriptionPurchase | ProductPurchase) => {
-        const receipt = purchase.transactionReceipt
+        const receipt = purchase?.transactionReceipt
 
         // console.log('receipt', receipt);
 
@@ -108,12 +108,15 @@ export const InitIAPAsync = async (
         // in doing the below. It will also be impossible for the user to purchase consumables
         // again until you do this.
 
-        const product = products.find(i => i.sku === purchase.productId)
+        const product = products?.find(i => i.sku === purchase.productId)
 
-        if (!product)
-            throw new Error('IAP not found product: ' + purchase.productId)
-
-        finishTransaction({ purchase, isConsumable: product.isConsumable })
+        if (!product) {
+            // throw new Error('IAP not found product: ' + purchase.productId)
+            console.error('[purchaseUpdatedListener] IAP not found product: ' + purchase.productId)
+        }
+        else {
+            finishTransaction({ purchase, isConsumable: product.isConsumable })
+        }
     })
 
     return undefined
@@ -170,18 +173,12 @@ export const FetchListProductsAsync = async (skus: string[]) => {
     if (fetchedProducts.length > 0) // already fetched
         return fetchedProducts
 
-    if (!isInited) { // rare to happen
-        console.error('IAP not inited yet')
-        Alert.alert('[FetchListProductsAsync] IAP not inited yet')
-    }
+    if (!isInited)
+        throw new Error('IAP not inited yet')
 
-    const { result } = await ExecuteWithTimeoutAsync(
-        async () => await getProducts({ skus }),
-        FetchListProductsTimeOut)
+    fetchedProducts = await getProducts({ skus })
 
-    if (result && result.length > 0) { // loaded from store success, cached them
-        fetchedProducts = result
-        
+    if (fetchedProducts && fetchedProducts.length > 0) { // loaded from store success, cached them
         if (typeof cachedProductsSetterAsync === 'function') {
             cachedProductsSetterAsync(JSON.stringify(fetchedProducts))
         }
@@ -201,19 +198,34 @@ export const FetchListProductsAsync = async (skus: string[]) => {
 export const PurchaseAsync = async (sku: string) => {
     try {
         if (!isInited)
-            throw new Error('IAP not inited yet')
+            return new Error('[PurchaseAsync] IAP not inited yet')
 
         if (Platform.OS === 'android' && fetchedProducts.length <= 0) { // need to fetch on android
             await FetchListProductsAsync(initedProducts.map(i => i.sku))
         }
 
-        await requestPurchase({
+        const res = await requestPurchase({
             sku,
             skus: [sku],
             andDangerouslyFinishTransactionAutomaticallyIOS: false,
         })
 
-        return undefined
+        if (typeof res === 'object') {
+            let successProduct: ProductPurchase | undefined = undefined
+
+            if (Array.isArray(res)) {
+                successProduct = SafeGetArrayElement<ProductPurchase>(res)
+            }
+            else
+                successProduct = res
+
+            if (successProduct && successProduct.productId === sku) // success
+                return undefined
+            else // fail
+                return new Error('[PurchaseAsync] Invalid product: ' + sku + ', response: ' + ToCanPrint(res))
+        }
+        else
+            return new Error('[PurchaseAsync] Invalid response: ' + sku + ', response: void')
     } catch (err) {
         const errIAP = err as PurchaseError
 
