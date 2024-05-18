@@ -75,6 +75,8 @@ async function JustDoIt() {
       cat = 'art'
     else if (IsParamExist('sarcasm') || IsParamExist('sa'))
       cat = 'sarcasm'
+    else if (IsParamExist('av'))
+      cat = 'awesomevideo'
     else if (IsParamExist('awesome') || IsParamExist('aw'))
       cat = 'awesome'
     else if (IsParamExist('an'))

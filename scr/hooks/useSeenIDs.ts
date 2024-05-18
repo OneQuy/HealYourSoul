@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Category } from '../constants/AppConstants';
 import { useAppDispatch, useAppSelector } from '../redux/Store';
-import { addDrawSeenID, addQuoteSeenID, addMemeSeenID, addLoveSeenID, addSatisfyingSeenID, addCatDogSeenID, addNSFWSeenID, addCuteSeenID, addArtSeenID, addSarcasmSeenID, addTypoSeenID, addSunsetSeenID, addInfoSeenID, addAwesomeSeenID, addTuneSeenID, addVocabularySeenID, addAwesomeNatureSeenID, addNiceClipSeenID } from '../redux/UserDataSlice'
+import { addDrawSeenID, addQuoteSeenID, addMemeSeenID, addLoveSeenID, addSatisfyingSeenID, addCatDogSeenID, addNSFWSeenID, addCuteSeenID, addArtSeenID, addSarcasmSeenID, addTypoSeenID, addSunsetSeenID, addInfoSeenID, addAwesomeSeenID, addTuneSeenID, addVocabularySeenID, addAwesomeNatureSeenID, addNiceClipSeenID, addAwesomeVideoSeenID } from '../redux/UserDataSlice'
 
 const useSeenIDs = (category: Category, postID: number | string | undefined) => {
     const dispatch = useAppDispatch()
@@ -43,6 +43,8 @@ const useSeenIDs = (category: Category, postID: number | string | undefined) => 
             return state.userData.awesomeNatureSeenIDs;
         else if (category === Category.NiceClip)
             return state.userData.niceClipSeenIDs;
+        else if (category === Category.AwesomeVideo)
+            return state.userData.awesomeSeenIDs;
         else
             throw new Error('not implement cat: ' + category);
     })
@@ -87,6 +89,8 @@ const useSeenIDs = (category: Category, postID: number | string | undefined) => 
             dispatch(addAwesomeNatureSeenID(postID));
         else if (category === Category.NiceClip)
             dispatch(addNiceClipSeenID(postID));
+        else if (category === Category.AwesomeVideo)
+            dispatch(addAwesomeVideoSeenID(postID));
         else
             throw new Error('NI cat: ' + category);
     }, [postID])

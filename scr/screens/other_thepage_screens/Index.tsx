@@ -48,6 +48,10 @@ export const SarcasmScreen = () => {
   return <ThePage category={Category.Sarcasm} />;
 }
 
+export const AwesomeVideoScreen = () => {
+  return <ThePage category={Category.AwesomeVideo} />;
+}
+
 export const QuoteTextScreen = () => {
   return <TheRandomShortText
     category={Category.Quotetext}

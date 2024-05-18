@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Category } from "../constants/AppConstants";
 import { useAppDispatch } from "../redux/Store";
-import { addDrawFavoritedID, addQuoteFavoritedID, addMemeFavoritedID, removeDrawFavoritedID, removeQuoteFavoritedID, removeMemeFavoritedID, removeLoveFavoritedID, addLoveFavoritedID, removeSatisfyingFavoritedID, addSatisfyingFavoritedID, removeCatDogFavoritedID, addCatDogFavoritedID, removeNSFWFavoritedID, addNSFWFavoritedID, removeCuteFavoritedID, addCuteFavoritedID, removeArtFavoritedID, addArtFavoritedID, removeSarcasmFavoritedID, addSarcasmFavoritedID, removeAwardPictureFavoritedID, addAwardPictureFavoritedID, removeFunWebsiteFavoritedID, addFunWebsiteFavoritedID, removeTopMovieFavoritedID, addTopMovieFavoritedID, removeShortFilmsFavoritedID, addShortFilmsFavoritedID, removeSunsetFavoritedID, addSunsetFavoritedID, removeTypoFavoritedID, addTypoFavoritedID, removeAwesomeFavoritedID, addAwesomeFavoritedID, removeInfoFavoritedID, addInfoFavoritedID, removeTuneFavoritedID, addTuneFavoritedID, removeVocabularyFavoritedID, addVocabularyFavoritedID, removeAwesomeNatureFavoritedID, addAwesomeNatureFavoritedID, removeNiceClipFavoritedID, addNiceClipFavoritedID } from '../redux/UserDataSlice'
+import { addDrawFavoritedID, addQuoteFavoritedID, addMemeFavoritedID, removeDrawFavoritedID, removeQuoteFavoritedID, removeMemeFavoritedID, removeLoveFavoritedID, addLoveFavoritedID, removeSatisfyingFavoritedID, addSatisfyingFavoritedID, removeCatDogFavoritedID, addCatDogFavoritedID, removeNSFWFavoritedID, addNSFWFavoritedID, removeCuteFavoritedID, addCuteFavoritedID, removeArtFavoritedID, addArtFavoritedID, removeSarcasmFavoritedID, addSarcasmFavoritedID, removeAwardPictureFavoritedID, addAwardPictureFavoritedID, removeFunWebsiteFavoritedID, addFunWebsiteFavoritedID, removeTopMovieFavoritedID, addTopMovieFavoritedID, removeShortFilmsFavoritedID, addShortFilmsFavoritedID, removeSunsetFavoritedID, addSunsetFavoritedID, removeTypoFavoritedID, addTypoFavoritedID, removeAwesomeFavoritedID, addAwesomeFavoritedID, removeInfoFavoritedID, addInfoFavoritedID, removeTuneFavoritedID, addTuneFavoritedID, removeVocabularyFavoritedID, addVocabularyFavoritedID, removeAwesomeNatureFavoritedID, addAwesomeNatureFavoritedID, removeNiceClipFavoritedID, addNiceClipFavoritedID, removeAwesomeVideoFavoritedID, addAwesomeVideoFavoritedID } from '../redux/UserDataSlice'
 import { GetPostLikeCountAsync, LikePostAsync } from "../handle/LikeCountHandler";
 import useFavoritedIDs from "./useFavoritedIDs";
 
@@ -103,6 +103,12 @@ export default function useIsFavorited(category: Category, id: number | string |
                 dispatch(removeSarcasmFavoritedID(id));
             else
                 dispatch(addSarcasmFavoritedID(id));
+        }
+        else if (category === Category.AwesomeVideo) {
+            if (isFavorited)
+                dispatch(removeAwesomeVideoFavoritedID(id));
+            else
+                dispatch(addAwesomeVideoFavoritedID(id));
         }
         else if (category === Category.AwardPicture) {
             if (isFavorited)

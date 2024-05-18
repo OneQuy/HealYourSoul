@@ -82,6 +82,9 @@ export type UserDataState = {
     sarcasmSeenIDs: (number | string)[],
     sarcasmFavoritedIDs: (number | string)[],
 
+    awesomeVideoSeenIDs: (number | string)[],
+    awesomeVideoFavoritedIDs: (number | string)[],
+
     artSeenIDs: (number | string)[],
     artFavoritedIDs: (number | string)[],
 
@@ -145,6 +148,9 @@ const initialState: UserDataState = {
 
     awesomeSeenIDs: [],
     awesomeFavoritedIDs: [],
+
+    awesomeVideoSeenIDs: [],
+    awesomeVideoFavoritedIDs: [],
 
     awesomeNatureSeenIDs: [],
     awesomeNatureFavoritedIDs: [],
@@ -492,6 +498,31 @@ const slice = createSlice({
                 return
 
             state.awesomeNatureFavoritedIDs = state.awesomeNatureFavoritedIDs.filter(i => i !== action.payload)
+        },
+
+        // awesomeVideo
+
+        addAwesomeVideoSeenID(state, action: PayloadAction<number | string>) {
+            if (!state.awesomeVideoSeenIDs)
+                state.awesomeVideoSeenIDs = []
+
+            if (!state.awesomeVideoSeenIDs.includes(action.payload))
+                state.awesomeVideoSeenIDs.push(action.payload);
+        },
+
+        addAwesomeVideoFavoritedID(state, action: PayloadAction<number | string>) {
+            if (!state.awesomeVideoFavoritedIDs)
+                state.awesomeVideoFavoritedIDs = []
+
+            if (!state.awesomeVideoFavoritedIDs.includes(action.payload))
+                state.awesomeVideoFavoritedIDs.push(action.payload);
+        },
+
+        removeAwesomeVideoFavoritedID(state, action: PayloadAction<number | string>) {
+            if (!state.awesomeVideoFavoritedIDs)
+                return
+
+            state.awesomeVideoFavoritedIDs = state.awesomeVideoFavoritedIDs.filter(i => i !== action.payload)
         },
 
         // vocabulary
@@ -948,6 +979,10 @@ export const {
     addSarcasmSeenID,
     addSarcasmFavoritedID,
     removeSarcasmFavoritedID,
+
+    addAwesomeVideoSeenID,
+    addAwesomeVideoFavoritedID,
+    removeAwesomeVideoFavoritedID,
 
     addAwardPictureFavoritedID,
     removeAwardPictureFavoritedID,

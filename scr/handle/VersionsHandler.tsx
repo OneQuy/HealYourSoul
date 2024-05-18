@@ -25,6 +25,7 @@ export type Versions = {
     vocabulary: number,
     awesomenature: number,
     niceclip: number,
+    awesomevideo: number,
 }
 
 export var versions: Versions;

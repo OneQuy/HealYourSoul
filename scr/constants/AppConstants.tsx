@@ -74,6 +74,7 @@ export enum ScreenName {
   MovieQuote = 'Movie Quote',
   Universe = 'Universe',
   Emoji = 'Emoji Mix',
+  AwesomeVideo = 'Awesome Video',
 }
 
 // dir / file
@@ -98,6 +99,7 @@ export enum LocalPath {
   ListFile_Sunset = LocalPath.MasterDirName + '/sunset/list.json',
   ListFile_Vocabulary = LocalPath.MasterDirName + '/vocabulary/list.json',
   ListFile_NiceClip = LocalPath.MasterDirName + '/niceclip/list.json',
+  ListFile_AwesomeVideo = LocalPath.MasterDirName + '/awesomevideo/list.json',
 }
 
 export enum FirebasePath {
@@ -119,6 +121,7 @@ export enum FirebasePath {
   ListFile_Sunset = 'sunset/list.json',
   ListFile_Vocabulary = 'vocabulary/list.json',
   ListFile_NiceClip = 'niceclip/list.json',
+  ListFile_AwesomeVideo = 'awesomevideo/list.json',
 }
 
 export enum FirebaseDBPath {
@@ -140,6 +143,7 @@ export enum FirebaseDBPath {
   Version_AwesomeNature = 'app/versions/awesomenature',
   Version_Vocabulary = 'app/versions/vocabulary',
   Version_NiceClip = 'app/versions/niceclip',
+  Version_AwesomeVideo = 'app/versions/awesomevideo',
 }
 
 // category
@@ -184,6 +188,7 @@ export enum Category {
   AnimeQuote = 37,
   MovieQuote = 38,
   Emoji = 39,
+  AwesomeVideo = 40,
 }
 
 // margin / padding

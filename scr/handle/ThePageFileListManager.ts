@@ -116,6 +116,8 @@ async function CheckAndGetFileListAsync_Core(cat: Category): Promise<FileList | 
         needDownload = true;
     else if (cat === Category.AwesomeNature && localVersion < versions.awesomenature)
         needDownload = true;
+    else if (cat === Category.AwesomeVideo && localVersion < versions.awesomevideo)
+        needDownload = true;
     else if (cat === Category.NiceClip && localVersion < versions.niceclip)
         needDownload = true;
 

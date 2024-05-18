@@ -12,7 +12,7 @@ import LoveScreen from '../screens/love/LoveScreen';
 import { CustomDrawerContent } from './CustomDrawer';
 import NSFWScreen from '../screens/nsfw/NSFWScreen';
 import IAPPage from '../screens/IAP/IAPPage';
-import { ArtScreen, AwesomeNatureScreen, AwesomeScreen, CuteScreen, InfoScreen, NiceClipScreen, QuoteTextScreen, SarcasmScreen, SunsetScreen, TuneScreen, TypoScreen, VocabularyScreen, } from '../screens/other_thepage_screens/Index';
+import { ArtScreen, AwesomeNatureScreen, AwesomeScreen, AwesomeVideoScreen, CuteScreen, InfoScreen, NiceClipScreen, QuoteTextScreen, SarcasmScreen, SunsetScreen, TuneScreen, TypoScreen, VocabularyScreen, } from '../screens/other_thepage_screens/Index';
 import NinjaFactScreen from '../screens/ninja_fact/NinjaFactScreen';
 import PictureScreen from '../screens/picture/PictureScreen';
 import NinjaJokeScreen from '../screens/ninja_fact/NinjaJokeScreen';
@@ -94,6 +94,7 @@ export type DrawerParamList = {
   [ScreenName.DogBreed]: { item: DiversityItemType } | undefined,
   [ScreenName.Memedroid]: { item: DiversityItemType } | undefined,
   [ScreenName.Emoji]: { item: DiversityItemType } | undefined,
+  [ScreenName.AwesomeVideo]: { item: DiversityItemType } | undefined,
 
   [ScreenName.IAPPage]: undefined,
   [ScreenName.Setting]: undefined,
@@ -152,6 +153,7 @@ const ScreenList: ScreenNamePair[] = [
   [ScreenName.DogFact, DogFactScreen],
   [ScreenName.DogBreed, DogBreedScreen],
   [ScreenName.NiceClip, NiceClipScreen],
+  [ScreenName.AwesomeVideo, AwesomeVideoScreen],
 
   // app
 

@@ -47,6 +47,8 @@ const useFavoritedIDs = (category: Category) => {
             return state.userData.awesomeNatureFavoritedIDs;
         else if (category === Category.NiceClip)
             return state.userData.niceClipFavoritedIDs;
+        else if (category === Category.AwesomeVideo)
+            return state.userData.awesomeVideoFavoritedIDs;
         else
             throw new Error('NI cat: ' + Category[category]);
     })

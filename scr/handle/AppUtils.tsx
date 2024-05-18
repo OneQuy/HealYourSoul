@@ -71,6 +71,7 @@ const pairCatAndScreenName: [Category, ScreenName][] = [
     [Category.Memedroid, ScreenName.Memedroid],
     [Category.NiceClip, ScreenName.NiceClip],
     [Category.Emoji, ScreenName.Emoji],
+    [Category.AwesomeVideo, ScreenName.AwesomeVideo],
 ] as const
 
 const notContentScreen: ScreenName[] = [
@@ -177,6 +178,8 @@ export const GetListFileRLP = (cat: Category, localOrFb: boolean) => {
             return FirebasePath.ListFile_Awesome;
         else if (cat === Category.NiceClip)
             return FirebasePath.ListFile_NiceClip;
+        else if (cat === Category.AwesomeVideo)
+            return FirebasePath.ListFile_AwesomeVideo;
         else
             throw new Error('GetListFileRLP: ' + cat);
     }
@@ -217,6 +220,8 @@ export const GetListFileRLP = (cat: Category, localOrFb: boolean) => {
             return LocalPath.ListFile_AwesomeNature;
         else if (cat === Category.NiceClip)
             return LocalPath.ListFile_NiceClip;
+        else if (cat === Category.AwesomeVideo)
+            return LocalPath.ListFile_AwesomeVideo;
         else
             throw new Error('GetListFileRLP: ' + cat);
     }
@@ -343,6 +348,8 @@ export const GetDBVersionPath = (cat: Category) => {
         return FirebaseDBPath.Version_AwesomeNature;
     else if (cat === Category.NiceClip)
         return FirebaseDBPath.Version_NiceClip;
+    else if (cat === Category.AwesomeVideo)
+        return FirebaseDBPath.Version_AwesomeVideo;
     else
         throw new Error('GetDBPath: ' + cat);
 }
@@ -386,6 +393,8 @@ const GetMediaFullPath = (localOrFb: boolean, cat: Category, postID: number, med
         path = `tune/data/${postID}/${mediaIdx}`;
     else if (cat === Category.AwesomeNature)
         path = `awesomenature/data/${postID}/${mediaIdx}`;
+    else if (cat === Category.AwesomeVideo)
+        path = `awesomevideo/data/${postID}/${mediaIdx}`;
     else
         throw new Error('GetDataFullPath: ' + cat);
 
@@ -430,6 +439,8 @@ export const GetAllSavedLocalPostIDsListAsync = async (cat: Category) => {
         path = `tune/data`;
     else if (cat === Category.AwesomeNature)
         path = `awesomenature/data`;
+    else if (cat === Category.AwesomeVideo)
+        path = `awesomevideo/data`;
     else if (cat === Category.Typo)
         path = `typo/data`;
     else if (cat === Category.Info)
@@ -761,6 +772,8 @@ export const GetIconOfScreen = (screen: ScreenName) => {
         return 'motion-play'
     else if (screen === ScreenName.Emoji)
         return 'sticker-emoji'
+    else if (screen === ScreenName.AwesomeVideo)
+        return 'movie-open-star'
     else
         return Icon.HeartBroken
 }
