@@ -29,11 +29,11 @@ export const OnAdmobInterstitial_Closed = () => {
 }
 
 export const OnAdmobInterstitial_Error = (e: Error) => {
-    TrackAsync('error')
+    // TrackAsync('error')
 
-    const s = `[Admob_Interstitial] ${ToCanPrint(e)}`
+    // const s = `[Admob_Interstitial] ${ToCanPrint(e)}`
 
-    console.error(s)
+    // console.error(s)
 
-    TrackErrorOnFirebase(s, 'ads')
+    // TrackErrorOnFirebase(s, 'ads')
 }
