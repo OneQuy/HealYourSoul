@@ -26,7 +26,7 @@ import { InitAppStateMan } from '../handle/AppStateMan';
 import { OnUseEffectOnceEnterApp, RegisterGoodayAppState } from '../handle/GoodayAppState';
 import SettingScreen from '../screens/setting/SettingScreen';
 import { ThemeContext } from '../constants/Colors';
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { useTelemetryDeck } from "@typedigital/telemetrydeck-react"
 import { SetSignal } from '../handle/tracking/Tracking';
 import Onboarding from '../screens/onboarding/Onboarding';
@@ -52,6 +52,7 @@ import { AdmobInterstitial } from '../handle/ads/Admob';
 import { AdmobInter_Android, AdmobInter_iOS } from '../../keys';
 import { AdEventType } from 'react-native-google-mobile-ads';
 import { OnAdmobInterstitial_Clicked, OnAdmobInterstitial_Closed, OnAdmobInterstitial_Error, OnAdmobInterstitial_Loaded, OnAdmobInterstitial_Opened, OnAdmobInterstitial_Paid } from '../handle/ads/GoodayAdmob';
+import { ArrayRemove } from '../handle/UtilsTS';
 
 export type DrawerParamList = {
   [ScreenName.Meme]: { item: DiversityItemType } | undefined,
@@ -176,7 +177,15 @@ const Navigator = ({ initialRouteName }: MainNavigatorProps) => {
   }, [theme])
 
   const renderListScreens = useMemo(() => {
-    return ScreenList.map(([screenName, screen]) => {
+    let list = ScreenList
+
+    // remove NSFW for android
+
+    if (Platform.OS === 'android') {
+      list = list.filter(i => i[0] !== ScreenName.NSFW)
+    }
+
+    return list.map(([screenName, screen]) => {
       return <Drawer.Screen key={screenName} name={screenName} component={screen} />
     })
   }, [])
