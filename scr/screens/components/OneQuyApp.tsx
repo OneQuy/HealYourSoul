@@ -1,12 +1,29 @@
-import { View, Text, StyleSheet, ColorValue, TouchableOpacity, Dimensions } from 'react-native'
-import React, { useMemo } from 'react'
+import { View, Text, StyleSheet, ColorValue, TouchableOpacity, Dimensions, Linking, Platform } from 'react-native'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import ImageBackgroundWithLoading from './ImageBackgroundWithLoading'
+import { DownloadFile_GetJsonAsync } from '../../handle/FileUtils'
+import { TempDirName, ToCanPrint } from '../../handle/UtilsTS'
+
+const IsLog = true
+
+const JsonUrl = 'https://firebasestorage.googleapis.com/v0/b/onequyappgeneral.appspot.com/o/onequy_apps.json?alt=media&token=f674f251-106d-45b3-97d9-365f7cd6e6a7'
 
 const Window = Dimensions.get('window')
 
 const BorderRadius = Window.height * 0.02
 
 const Padding = Window.height * 0.008
+
+type OneQuyAppData = {
+    appName: string,
+    description: string,
+    logo: string,
+    android: string,
+    ios: string,
+}
+
+var cachedJson: undefined | OneQuyAppData[] = undefined
+var cachedCurrentAppIdx = 0
 
 const OneQuyApp = ({
     primaryColor = '#1c1c1c',
@@ -21,14 +38,22 @@ const OneQuyApp = ({
     backgroundColor?: ColorValue,
     fontSize?: number,
 }) => {
-    const currentApp = useMemo(() => {
-        return {
-            logo: 'https://play-lh.googleusercontent.com/eucsatvqG8yTQSl2k_2kCFHk1OLD1chJGsxL8JXn1gldKKfHEmZX4WrWPpUZk3Xaew=w480-h960-rw'
-        }
-    }, [])
+    const [listApps, set_listApps] = useState<undefined | OneQuyAppData[]>(undefined)
+    const [currentAppIdx, set_currentAppIdx] = useState(cachedCurrentAppIdx)
 
-    console.log(backgroundColor);
-    
+    const currentApp: OneQuyAppData | undefined = useMemo(() => {
+        if (!listApps || listApps.length <= 0)
+            return undefined
+
+        if (currentAppIdx < listApps.length)
+            return listApps[currentAppIdx]
+        else {
+            cachedCurrentAppIdx = 0
+            set_currentAppIdx(0)
+            return listApps[0]
+        }
+    }, [listApps, currentAppIdx])
+
     const style = useMemo(() => {
         return StyleSheet.create({
             master: {
@@ -113,13 +138,71 @@ const OneQuyApp = ({
         fontSize,
     ])
 
+    const onPressNextApp = useCallback(async () => {
+        if (!listApps || listApps.length <= 0)
+            return
+
+        set_currentAppIdx(t => (t < listApps.length - 1) ? t + 1 : 0)
+    }, [listApps])
+
+    const onPressInstall = useCallback(async () => {
+        if (!currentApp)
+            return
+
+        if (Platform.OS === 'android')
+            Linking.openURL(currentApp.android)
+        else
+            Linking.openURL(currentApp.ios)
+    }, [currentApp])
+
+    const checkDownloadJson = useCallback(async () => {
+        if (cachedJson) {
+            if (IsLog)
+                console.log('[OneQuyApp-checkDownloadJson] cached');
+
+            set_listApps(cachedJson)
+            return
+        }
+
+        if (IsLog)
+            console.log('[OneQuyApp-checkDownloadJson] downloading...');
+
+        const jsonRes = await DownloadFile_GetJsonAsync(
+            JsonUrl,
+            TempDirName + '/onequy_apps.json',
+            true,
+            false
+        )
+
+        if (IsLog)
+            console.log(
+                '[OneQuyApp-checkDownloadJson] downloaded success:',
+                jsonRes.error === null,
+                'error',
+                ToCanPrint(jsonRes.error)
+            )
+
+        if (jsonRes.json) {
+            cachedJson = jsonRes.json
+            set_listApps(cachedJson)
+        }
+    }, [])
+
+
+    useEffect(() => {
+        checkDownloadJson()
+    }, [])
+
+    if (!currentApp)
+        return undefined
+
     return (
         <View style={style.master}>
             {/* title */}
             <View style={style.titleView}>
-                <Text adjustsFontSizeToFit numberOfLines={1} style={style.titleTxt}>Vocaby</Text>
+                <Text adjustsFontSizeToFit numberOfLines={1} style={style.titleTxt}>{currentApp.appName}</Text>
                 {/* go next btn */}
-                <TouchableOpacity style={style.nextTO}>
+                <TouchableOpacity onPress={onPressNextApp} style={style.nextTO}>
                     <Text adjustsFontSizeToFit numberOfLines={1} style={style.nextTxt}>{'Next app'}</Text>
                 </TouchableOpacity>
             </View>
@@ -133,12 +216,12 @@ const OneQuyApp = ({
                 />
                 {/* description */}
                 <View style={style.descriptionTxtView}>
-                    <Text style={style.descriptionTxt}>{'Vocaby is your pocket English tutor, delivering vocabulary lessons directly to your mobile device through convenient notifications. Enhance your English skills effortlessly on the go!'}</Text>
+                    <Text style={style.descriptionTxt}>{currentApp.description}</Text>
                 </View>
             </View>
 
-
-            <TouchableOpacity style={style.installTO}>
+            {/* install btn */}
+            <TouchableOpacity onPress={onPressInstall} style={style.installTO}>
                 <Text style={style.installTxt}>{'Install'}</Text>
             </TouchableOpacity>
         </View>
