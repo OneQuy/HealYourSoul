@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, ColorValue, TouchableOpacity, Dimensions, Linking, Platform } from 'react-native'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import { View, Text, StyleSheet, ColorValue, TouchableOpacity, Dimensions, Linking, Platform, Animated } from 'react-native'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import ImageBackgroundWithLoading from './ImageBackgroundWithLoading'
 import { DownloadFile_GetJsonAsync } from '../../handle/FileUtils'
 import { TempDirName, ToCanPrint } from '../../handle/UtilsTS'
@@ -40,6 +40,8 @@ const OneQuyApp = ({
 }) => {
     const [listApps, set_listApps] = useState<undefined | OneQuyAppData[]>(undefined)
     const [currentAppIdx, set_currentAppIdx] = useState(cachedCurrentAppIdx)
+
+    const logoAnimated = useRef(new Animated.Value(0)).current
 
     const currentApp: OneQuyAppData | undefined = useMemo(() => {
         if (!listApps || listApps.length <= 0)
@@ -188,6 +190,20 @@ const OneQuyApp = ({
         }
     }, [])
 
+    useEffect(() => {
+        if (!currentApp?.logo) {
+            return
+        }
+
+        logoAnimated.setValue(0)
+
+        Animated.spring(logoAnimated,
+            {
+                useNativeDriver: false,
+                toValue: 1,
+            }
+        ).start()
+    }, [currentApp?.logo])
 
     useEffect(() => {
         checkDownloadJson()
@@ -203,17 +219,19 @@ const OneQuyApp = ({
                 <Text adjustsFontSizeToFit numberOfLines={1} style={style.titleTxt}>{currentApp.appName}</Text>
                 {/* go next btn */}
                 <TouchableOpacity onPress={onPressNextApp} style={style.nextTO}>
-                    <Text adjustsFontSizeToFit numberOfLines={1} style={style.nextTxt}>{'Next app'}</Text>
+                    <Text adjustsFontSizeToFit numberOfLines={1} style={style.nextTxt}>{`Next app ${currentAppIdx + 1}/${listApps?.length}`}</Text>
                 </TouchableOpacity>
             </View>
 
             {/* description */}
             <View style={style.descriptionView}>
                 {/* logo */}
-                <ImageBackgroundWithLoading
-                    source={{ uri: currentApp.logo }}
-                    style={style.logoImg}
-                />
+                <Animated.View style={{ transform: [{ scale: logoAnimated }] }}>
+                    <ImageBackgroundWithLoading
+                        source={{ uri: currentApp.logo }}
+                        style={style.logoImg}
+                    />
+                </Animated.View>
                 {/* description */}
                 <View style={style.descriptionTxtView}>
                     <Text style={style.descriptionTxt}>{currentApp.description}</Text>
