@@ -313,7 +313,7 @@ It's totally free. Download now!
 
 AppStore: https://apps.apple.com/us/app/gooday-make-your-day/id6471367879
 
-Google Play: https://play.google.com/store/apps/details?id=com.healyoursoul
+Google Play: https://play.google.com/store/apps/details?id=com.onequy.gooday
 
 #gooday #make_your_day_good`
 

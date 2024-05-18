@@ -556,7 +556,7 @@ export const HandleError = (methodName: string, error: any, keepSilentForUser?: 
 
 export function OpenStore() {
     const link = Platform.OS === 'android' ?
-        "market://details?id=com.healyoursoul" :
+        "market://details?id=com.onequy.gooday" :
         "https://apps.apple.com/us/app/gooday-make-your-day/id6471367879"
 
     Linking.openURL(link)
