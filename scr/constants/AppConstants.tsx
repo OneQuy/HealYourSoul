@@ -415,6 +415,7 @@ export const LocalText = {
   saved: 'Downloaded!',
   setting: 'Setting',
   animation: 'Animation',
+  check_out_apps: 'Check out my other awesome apps',
   rate_me: 'Rate app',
   save: 'Download',
   no_media_to_download: 'No media to download!',

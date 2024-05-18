@@ -28,6 +28,7 @@ import { GetIPLocationAsync } from '../../hooks/useCountryFromIP';
 import { UserID } from '../../handle/UserID';
 import { HandleGoodayStreakAsync } from '../../handle/GoodayAppState';
 import { resetSubscribe } from '../../redux/UserDataSlice';
+import OneQuyApp from '../components/OneQuyApp';
 
 const limitFeedback = 300
 
@@ -393,6 +394,18 @@ const SettingView = () => {
         {
           renderCommunityBtns
         }
+
+        {
+          hair100Width()
+        }
+
+        {/* other apps */}
+
+        <Text style={style.titleText}>{LocalText.check_out_apps}</Text>
+
+        <OneQuyApp
+
+        />
 
         {
           hair100Width()
