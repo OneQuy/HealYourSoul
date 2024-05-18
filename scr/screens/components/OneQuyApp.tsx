@@ -10,11 +10,13 @@ const Padding = Window.height * 0.008
 
 const OneQuyApp = ({
     primaryColor = '#1c1c1c',
+    counterPrimaryColor = '#fafafa',
     counterBackgroundColor = '#C1C1C1',
     backgroundColor = '#fafafa',
     fontSize = 13,
 }: {
     primaryColor?: ColorValue
+    counterPrimaryColor?: ColorValue
     counterBackgroundColor?: ColorValue
     backgroundColor?: ColorValue,
     fontSize?: number,
@@ -58,13 +60,14 @@ const OneQuyApp = ({
 
             installTxt: {
                 fontSize,
-                color: backgroundColor,
+                color: counterPrimaryColor,
             },
 
             nextTO: {
                 padding: Padding,
                 width: '20%',
-                backgroundColor: counterBackgroundColor,
+                borderColor: counterBackgroundColor,
+                borderWidth: StyleSheet.hairlineWidth,
                 justifyContent: 'center',
                 alignItems: 'center',
                 borderRadius: BorderRadius,
@@ -72,7 +75,7 @@ const OneQuyApp = ({
 
             nextTxt: {
                 fontSize,
-                color: backgroundColor,
+                color: counterBackgroundColor,
             },
 
             descriptionTxt: {
@@ -105,6 +108,7 @@ const OneQuyApp = ({
         backgroundColor,
         counterBackgroundColor,
         primaryColor,
+        counterPrimaryColor,
         fontSize,
     ])
 

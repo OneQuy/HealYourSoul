@@ -404,7 +404,11 @@ const SettingView = () => {
         <Text style={style.titleText}>{LocalText.check_out_apps}</Text>
 
         <OneQuyApp
-
+          primaryColor={theme.counterBackground}
+          counterPrimaryColor={theme.background}
+          backgroundColor={theme.background}
+          counterBackgroundColor={theme.counterBackground}
+          fontSize={FontSize.Small_L}
         />
 
         {
