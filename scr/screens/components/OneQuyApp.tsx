@@ -48,6 +48,7 @@ const OneQuyApp = ({
                 fontSize: fontSize * 1.5,
                 color: primaryColor,
                 fontWeight: 'bold',
+                flex: 1,
             },
 
             installTO: {
@@ -65,7 +66,7 @@ const OneQuyApp = ({
 
             nextTO: {
                 padding: Padding,
-                width: '20%',
+                // width: '20%',
                 borderColor: counterBackgroundColor,
                 borderWidth: StyleSheet.hairlineWidth,
                 justifyContent: 'center',
@@ -116,10 +117,10 @@ const OneQuyApp = ({
         <View style={style.master}>
             {/* title */}
             <View style={style.titleView}>
-                <Text style={style.titleTxt}>Vocaby</Text>
+                <Text adjustsFontSizeToFit numberOfLines={1} style={style.titleTxt}>Vocaby</Text>
                 {/* go next btn */}
                 <TouchableOpacity style={style.nextTO}>
-                    <Text style={style.nextTxt}>{'Next'}</Text>
+                    <Text adjustsFontSizeToFit numberOfLines={1} style={style.nextTxt}>{'Next app'}</Text>
                 </TouchableOpacity>
             </View>
 
