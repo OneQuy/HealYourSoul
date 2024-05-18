@@ -5,7 +5,7 @@ import { View, StyleSheet, Text, Image, TouchableOpacity, ActivityIndicator, Pla
 import React, { useCallback, useContext, useMemo, useState } from 'react'
 import { BorderRadius, FileSizeLimitUploadInMb_Image, FileSizeLimitUploadInMb_Video, FontSize, Icon, LocalText, NotLimitUploadsValue, Outline, Size, StorageKey_LastTimeUpload, StorageKey_TodayUploadsCount } from '../../constants/AppConstants'
 import { ThemeContext } from '../../constants/Colors'
-import { openPicker } from '@baronha/react-native-multiple-image-picker';
+// import { openPicker } from '@baronha/react-native-multiple-image-picker';
 import { MediaType, UserUploadInfo } from '../../constants/Types';
 import { GetFileExtensionByFilepath, IsValuableArrayOrString, SafeValue, ToCanPrint } from '../../handle/UtilsTS';
 import { usePremium } from '../../hooks/usePremium';
@@ -45,83 +45,85 @@ const UploadView = ({ setSubView }: { setSubView: (view: SubView) => void }) => 
     }, [])
 
     const onPressPickImage = useCallback(async () => {
-        track_SimpleWithParam('upload', 'pick_image')
+        console.error('install @baronha/react-native-multiple-image-picker first');
+        
+        // track_SimpleWithParam('upload', 'pick_image')
 
-        let response
+        // let response
 
-        try {
-            response = await openPicker({
-                maxSelectedAssets: 1,
-                usedCameraButton: false,
-            })
-        }
-        catch (e) {
-            if (e && !ToCanPrint(e).toString().includes('cancel')) {
-                AlertWithError(e)
-            }
-        }
+        // try {
+        //     response = await openPicker({
+        //         maxSelectedAssets: 1,
+        //         usedCameraButton: false,
+        //     })
+        // }
+        // catch (e) {
+        //     if (e && !ToCanPrint(e).toString().includes('cancel')) {
+        //         AlertWithError(e)
+        //     }
+        // }
 
-        if (!response || response.length == 0)
-            return
+        // if (!response || response.length == 0)
+        //     return
 
-        await DelayAsync(500)
+        // await DelayAsync(500)
 
-        let path: string
-        if (Platform.OS === 'android')
-            path = 'file://' + response[0].realPath;
-        else
-            path = response[0].path;
+        // let path: string
+        // if (Platform.OS === 'android')
+        //     path = 'file://' + response[0].realPath;
+        // else
+        //     path = response[0].path;
 
-        const type = GetMediaTypeByFileExtension(GetFileExtensionByFilepath(path))
+        // const type = GetMediaTypeByFileExtension(GetFileExtensionByFilepath(path))
 
-        if (type === undefined) { // unsupported file ext
-            Alert.alert(
-                LocalText.unsupport_file,
-                LocalText.unsupport_file_desc + '\n\nPath: ' + path)
+        // if (type === undefined) { // unsupported file ext
+        //     Alert.alert(
+        //         LocalText.unsupport_file,
+        //         LocalText.unsupport_file_desc + '\n\nPath: ' + path)
 
-            return
-        }
+        //     return
+        // }
 
-        // video only for premium
+        // // video only for premium
 
-        if (type === MediaType.Video && !isPremium) {
-            Alert.alert(
-                LocalText.popup_title_error,
-                LocalText.unsupport_video_for_premium,
-                [
-                    {
-                        text: LocalText.subscribe,
-                        onPress: () => GoToPremiumScreen(navigation)
-                    },
-                    {
-                        text: 'OK'
-                    }
-                ])
+        // if (type === MediaType.Video && !isPremium) {
+        //     Alert.alert(
+        //         LocalText.popup_title_error,
+        //         LocalText.unsupport_video_for_premium,
+        //         [
+        //             {
+        //                 text: LocalText.subscribe,
+        //                 onPress: () => GoToPremiumScreen(navigation)
+        //             },
+        //             {
+        //                 text: 'OK'
+        //             }
+        //         ])
 
-            return
-        }
+        //     return
+        // }
 
-        // file size
+        // // file size
 
-        const sizeMBOrError = await FileSizeInMB(path, false)
+        // const sizeMBOrError = await FileSizeInMB(path, false)
 
-        if (sizeMBOrError instanceof Error) { // error get file size
-            Alert.alert(
-                LocalText.popup_title_error,
-                ToCanPrint(sizeMBOrError))
+        // if (sizeMBOrError instanceof Error) { // error get file size
+        //     Alert.alert(
+        //         LocalText.popup_title_error,
+        //         ToCanPrint(sizeMBOrError))
 
-            return
-        }
-        else if ((sizeMBOrError > FileSizeLimitUploadInMb_Image && type === MediaType.Image) ||
-            (type === MediaType.Video && sizeMBOrError > FileSizeLimitUploadInMb_Video)) { // exceed limit file size
-            Alert.alert(
-                LocalText.unsupport_filesize_over_limit,
-                `Limit: ${type === MediaType.Image ? FileSizeLimitUploadInMb_Image : FileSizeLimitUploadInMb_Video} MB\nYour file size: ${sizeMBOrError.toFixed(1)} MB`)
+        //     return
+        // }
+        // else if ((sizeMBOrError > FileSizeLimitUploadInMb_Image && type === MediaType.Image) ||
+        //     (type === MediaType.Video && sizeMBOrError > FileSizeLimitUploadInMb_Video)) { // exceed limit file size
+        //     Alert.alert(
+        //         LocalText.unsupport_filesize_over_limit,
+        //         `Limit: ${type === MediaType.Image ? FileSizeLimitUploadInMb_Image : FileSizeLimitUploadInMb_Video} MB\nYour file size: ${sizeMBOrError.toFixed(1)} MB`)
 
-            return
-        }
+        //     return
+        // }
 
-        setMediaUri(path)
+        // setMediaUri(path)
     }, [isPremium])
 
     const refreshReasonCanNotUpload = useCallback(async () => {
