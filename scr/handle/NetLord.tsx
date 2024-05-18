@@ -32,7 +32,7 @@
 import { RegexUrl, TimeOutError } from "./UtilsTS"
 
 const IntervalCheckTime = 500; // in ms, throttle check time.
-const ThresholdFetchTime = 2000; //  in ms,  time-out when fetching
+const ThresholdFetchTime = 10000; //  in ms,  time-out when fetching
 
 // https://downloads.intercomcdn.com/i/o/118519/ddfeac07590ae764956095e7/4e16b83b84b7649bece46ae25a166d47.png
 
