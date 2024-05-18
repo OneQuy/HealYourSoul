@@ -1,6 +1,12 @@
 // Doc Telegram: https://github.com/yagop/node-telegram-bot-api/blob/master/doc/api.md
 
+// INSTALL
+// npm i dotenv node-telegram-bot-api --save-dev
+// .env: NTBA_FIX_350 = true
+
 const TelegramBot = require('node-telegram-bot-api')
+require('dotenv').config()
+
 const fs = require('fs');
 
 /**
@@ -15,9 +21,9 @@ const fs = require('fs');
  * @param {*} token How to get token: create bot be search ``@BotFather`` on Telegram.
  * @param {*} filepath full local file path.
  * @param {*} chatId How to get chatId: run UploadTelegramBot(yourToken, undefined, undefined, undefined). Then chat anything in your bot to get it.
- * @param fileAlias (optianal) The text msg will be showed before the file uploaded.
+ * @param fileNameWithExt if you want to replace the file name
  */
-const UploadFileToTelegramBot = async (token, filepath, chatId, fileAlias) => {
+const UploadFileToTelegramBot = async (token, filepath, chatId, fileNameWithExt) => {
     if (!token) {
         console.error('[UploadTelegramBot] Token is undefined')
         process.exit()
@@ -61,11 +67,7 @@ const UploadFileToTelegramBot = async (token, filepath, chatId, fileAlias) => {
         process.exit()
     }
 
-    console.log(`[UploadTelegramBot] Sending file ${fileAlias ?? ''} to bot '${botname}'`)
-
-    if (fileAlias) {
-        bot.sendMessage(chatId, fileAlias)
-    }
+    console.log(`[UploadTelegramBot] Sending file ${fileNameWithExt ?? ''} to bot '${botname}'`)
 
     // Read the file as a stream
 
@@ -73,9 +75,16 @@ const UploadFileToTelegramBot = async (token, filepath, chatId, fileAlias) => {
 
     // Send the file
 
-    bot.sendDocument(chatId, fileStream)
+    const fileOptions = {
+        // Explicitly specify the file name.
+        filename: fileNameWithExt ?? undefined,
+        // Explicitly specify the MIME type.
+        contentType: 'application/octet-stream',
+    };
+
+    bot.sendDocument(chatId, fileStream, {}, fileOptions)
         .then(() => {
-            console.log(`[UploadTelegramBot] File sent to bot '${botname}' successfully: ${fileAlias ?? filepath}`)
+            console.log(`[UploadTelegramBot] File sent to bot '${botname}' successfully: ${fileNameWithExt ?? filepath}`)
             process.exit()
         })
         .catch((error) => {
