@@ -1,4 +1,4 @@
-package com.healyoursoul;
+package com.onequy.gooday;
 import expo.modules.ReactActivityDelegateWrapper;
 
 import com.facebook.react.ReactActivity;

@@ -89,9 +89,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.healyoursoul"
+    namespace "com.onequy.gooday"
     defaultConfig {
-        applicationId "com.healyoursoul"
+        applicationId "com.onequy.gooday"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode gitCount
