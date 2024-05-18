@@ -69,8 +69,10 @@ const MiniIAP = ({
 
         // or show mini iap
 
-        if (!isReadyPurchase)
+        if (!isReadyPurchase) {
+            console.log('forceMiniIap but isReadyPurchase = false')
             return
+        }
 
         let idxProductShowedBefore = await GetNumberIntAsync(StorageKey_LastMiniIapProductIdxShowed, -1)
 
@@ -162,11 +164,13 @@ const MiniIAP = ({
             const shouldShowAds = (currentCount - freeLimit) % loop === 0
             const shouldShowMiniIap = (currentCount - freeLimit) % (loop / 2) === 0
 
-            // console.log('cur count', currentCount,
-            //     'freeLimit', freeLimit,
-            //     'percentDevide ads', (currentCount - freeLimit) % loop,
-            //     'percentDevide mini iap', (currentCount - freeLimit) % Math.floor(loop / 2),
-            //     ', (loop / 2) =', (loop / 2))
+            console.log('cur count', currentCount,
+                'freeLimit', freeLimit,
+                'percentDevide ads', (currentCount - freeLimit) % loop,
+                'percentDevide mini iap', (currentCount - freeLimit) % Math.floor(loop / 2),
+                'shouldShowAds', shouldShowAds,
+                'shouldShowMiniIap', shouldShowMiniIap,
+                ', (loop / 2) =', (loop / 2))
 
             if (!shouldShowAds && !shouldShowMiniIap) {
                 return
