@@ -25,6 +25,8 @@ const Increase = () => {
                 res = arr[0] + '.' + arr[1] + '.' + (parseInt(arr[2]) + 1)
             }
 
+            console.log(res);
+            
             lines[i] = line.replace(s, res)
             fs.writeFileSync('./package.json', lines.join('\n'))
             break

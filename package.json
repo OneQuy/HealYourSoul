@@ -1,6 +1,6 @@
 {
   "name": "gooday",
-  "version": "2.3.7",
+  "version": "2.3.8",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -8,9 +8,9 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
-    "incver": "node editor/incver",
-    "builda": "node editor/incver && cd android && ./gradlew assembleRelease && cd .. && node editor sendapk",
-    "sendapk": "node editor sendapk",
+    "incver": "node editor/src/common/incver",
+    "builda": "node editor/src/common/incver && git add . && git commit -am 'builda' && cd android && ./gradlew assembleRelease && cd .. && npm run sendapk",
+    "sendapk": "node editor/src/common/RenameApkAndSendToTelegram",
     "store": "cd android && ./gradlew bundlerelease"
   },
   "dependencies": {
