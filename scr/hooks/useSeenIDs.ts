@@ -44,7 +44,7 @@ const useSeenIDs = (category: Category, postID: number | string | undefined) => 
         else if (category === Category.NiceClip)
             return state.userData.niceClipSeenIDs;
         else if (category === Category.AwesomeVideo)
-            return state.userData.awesomeSeenIDs;
+            return state.userData.awesomeVideoSeenIDs;
         else
             throw new Error('not implement cat: ' + category);
     })
