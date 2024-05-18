@@ -47,7 +47,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
 
   const [isFocusSetting, onPressSetting] = useDrawerMenuItemUtils(ScreenName.Setting, props)
   const [isFocusSaved, onPressSaved] = useDrawerMenuItemUtils(ScreenName.Saved, props)
-  const [isFocusUpload, onPressUpload] = useDrawerMenuItemUtils(ScreenName.Upload, props)
+  // const [isFocusUpload, onPressUpload] = useDrawerMenuItemUtils(ScreenName.Upload, props)
 
   const safeAreaInsets = useSafeAreaInsets()
   const theme = useContext(ThemeContext);
@@ -106,14 +106,14 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
     // console.log(curId);
   }, [])
 
-  const show_upload = useMemo(() => {
-    const data = GetAppConfig()
+  // const show_upload = useMemo(() => {
+  //   const data = GetAppConfig()
 
-    if (!data)
-      return false
-    else
-      return data.show_upload === 1
-  }, [])
+  //   if (!data)
+  //     return false
+  //   else
+  //     return data.show_upload === 1
+  // }, [])
 
   const showUpdateBtn = useMemo(() => {
     const data = GetAppConfig()?.latest_version
@@ -203,10 +203,10 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
     onPressSaved()
   }, [onPressSaved])
 
-  const onPressUploadButton = useCallback(() => {
-    track_PressDrawerItem(FilterOnlyLetterAndNumberFromString(ScreenName.Upload))
-    onPressUpload()
-  }, [onPressUpload])
+  // const onPressUploadButton = useCallback(() => {
+  //   track_PressDrawerItem(FilterOnlyLetterAndNumberFromString(ScreenName.Upload))
+  //   onPressUpload()
+  // }, [onPressUpload])
 
   const onPressSettingButton = useCallback(() => {
     track_PressDrawerItem(FilterOnlyLetterAndNumberFromString(ScreenName.Setting))
@@ -227,7 +227,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
 
   const colorSettingText = !isFocusSetting ? theme.background : theme.primary
   const colorSavedText = !isFocusSaved ? theme.background : theme.primary
-  const colorUploadText = !isFocusUpload ? theme.background : theme.primary
+  // const colorUploadText = !isFocusUpload ? theme.background : theme.primary
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.background }}>
@@ -298,13 +298,13 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
 
             {/* upload */}
 
-            {
+            {/* {
               show_upload &&
               <TouchableOpacity onPress={onPressUploadButton} style={[style.settingBtnView, CommonStyles.flex1_justifyContentCenter_AlignItemsCenter, { borderColor: theme.background, backgroundColor: isFocusUpload ? theme.background : theme.primary }]}>
                 <MaterialIcons name={Icon.Upload} color={colorUploadText} size={Size.IconTiny} />
                 <Text style={[{ color: colorUploadText }]}>{LocalText.upload}</Text>
               </TouchableOpacity>
-            }
+            } */}
           </View>
         }
 

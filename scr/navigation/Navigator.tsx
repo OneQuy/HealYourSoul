@@ -36,7 +36,7 @@ import FunSoundScreen from '../screens/fun_sound/FunSoundScreen';
 import SavedScreen from '../screens/saved/SavedScreen';
 import { DiversityItemType } from '../constants/Types';
 import { setAppUtilsTheme } from '../handle/AppUtils';
-import UploadScreen from '../screens/upload/UploadScreen';
+// import UploadScreen from '../screens/upload/UploadScreen';
 import InboxScreen from '../screens/inbox/InboxScreen';
 import AdminScreen from '../screens/admin/AdminScreen';
 import GalleryScreen from '../screens/gallery/GalleryScreen';
@@ -98,7 +98,7 @@ export type DrawerParamList = {
   [ScreenName.IAPPage]: undefined,
   [ScreenName.Setting]: undefined,
   [ScreenName.Saved]: undefined,
-  [ScreenName.Upload]: undefined,
+  // [ScreenName.Upload]: undefined,
   [ScreenName.Inbox]: undefined,
   [ScreenName.Admin]: undefined,
   [ScreenName.Gallery]: { cat: Category },
@@ -158,7 +158,7 @@ const ScreenList: ScreenNamePair[] = [
   [ScreenName.IAPPage, IAPPage],
   [ScreenName.Setting, SettingScreen],
   [ScreenName.Saved, SavedScreen],
-  [ScreenName.Upload, UploadScreen],
+  // [ScreenName.Upload, UploadScreen],
   [ScreenName.Inbox, InboxScreen],
   [ScreenName.Admin, AdminScreen],
   [ScreenName.Gallery, GalleryScreen],
