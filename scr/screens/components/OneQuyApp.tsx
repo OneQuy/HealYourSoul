@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, ColorValue, TouchableOpacity, Dimensions, Linki
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import ImageBackgroundWithLoading from './ImageBackgroundWithLoading'
 import { DownloadFile_GetJsonAsync } from '../../handle/FileUtils'
-import { TempDirName, ToCanPrint } from '../../handle/UtilsTS'
+import { AnimatedSimpleSpring, AnimatedSimpleTiming, TempDirName, ToCanPrint } from '../../handle/UtilsTS'
 
 const IsLog = true
 
@@ -42,6 +42,8 @@ const OneQuyApp = ({
     const [currentAppIdx, set_currentAppIdx] = useState(cachedCurrentAppIdx)
 
     const logoAnimated = useRef(new Animated.Value(0)).current
+    const titleAnimated = useRef(new Animated.Value(0)).current
+    const descriptionAnimated = useRef(new Animated.Value(0)).current
 
     const currentApp: OneQuyAppData | undefined = useMemo(() => {
         if (!listApps || listApps.length <= 0)
@@ -191,19 +193,22 @@ const OneQuyApp = ({
     }, [])
 
     useEffect(() => {
-        if (!currentApp?.logo) {
+        if (!currentApp) {
             return
         }
 
-        logoAnimated.setValue(0)
+        // title
 
-        Animated.spring(logoAnimated,
-            {
-                useNativeDriver: false,
-                toValue: 1,
-            }
-        ).start()
-    }, [currentApp?.logo])
+        AnimatedSimpleTiming(titleAnimated, 700)
+
+        // logo
+
+        AnimatedSimpleSpring(logoAnimated, 0)
+
+        // description
+
+        AnimatedSimpleSpring(descriptionAnimated, 200)
+    }, [currentApp])
 
     useEffect(() => {
         checkDownloadJson()
@@ -216,7 +221,7 @@ const OneQuyApp = ({
         <View style={style.master}>
             {/* title */}
             <View style={style.titleView}>
-                <Text adjustsFontSizeToFit numberOfLines={1} style={style.titleTxt}>{currentApp.appName}</Text>
+                <Animated.Text adjustsFontSizeToFit numberOfLines={1} style={[style.titleTxt, { opacity: titleAnimated }]}>{currentApp.appName}</Animated.Text>
                 {/* go next btn */}
                 <TouchableOpacity onPress={onPressNextApp} style={style.nextTO}>
                     <Text adjustsFontSizeToFit numberOfLines={1} style={style.nextTxt}>{`Next app ${currentAppIdx + 1}/${listApps?.length}`}</Text>
@@ -232,10 +237,11 @@ const OneQuyApp = ({
                         style={style.logoImg}
                     />
                 </Animated.View>
+
                 {/* description */}
-                <View style={style.descriptionTxtView}>
+                <Animated.View style={[style.descriptionTxtView, { transform: [{ scale: descriptionAnimated }] }]}>
                     <Text style={style.descriptionTxt}>{currentApp.description}</Text>
-                </View>
+                </Animated.View>
             </View>
 
             {/* install btn */}
