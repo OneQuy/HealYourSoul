@@ -189,6 +189,8 @@ export type AppConfig = {
         funWeb?: string,
         funSound?: string,
         movieQuote?: string,
+        catFact?: string,
+        dogFact?: string,
     }
 }
 
