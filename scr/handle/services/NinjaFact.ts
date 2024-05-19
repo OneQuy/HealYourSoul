@@ -1,18 +1,33 @@
 import axios from 'axios';
-import { NINJA_FACT_KEY } from '../../../keys';
+import { NINJA_FACT_KEY, NINJA_FACT_KEY_2, NINJA_FACT_KEY_3 } from '../../../keys';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { StorageKey_NinjaFact } from '../../constants/AppConstants';
+import { StorageKey_NinjaFact, StorageKey_NinjaFact_NextApiKey } from '../../constants/AppConstants';
 import { GetApiDataItemFromCached } from '../AppUtils';
+import { GetNextApiKeyAsync } from '../AsyncStorageUtils';
 
-const options = {
-    method: 'GET',
-    url: 'https://facts-by-api-ninjas.p.rapidapi.com/v1/facts',
-    params: { limit: '30' },
-    headers: {
-        'X-RapidAPI-Key': NINJA_FACT_KEY,
-        'X-RapidAPI-Host': 'facts-by-api-ninjas.p.rapidapi.com'
+const GetOptionsAsync = async (increase?: boolean) => {
+    const apiKey = await GetNextApiKeyAsync(
+        StorageKey_NinjaFact_NextApiKey,
+        [
+            NINJA_FACT_KEY,
+            NINJA_FACT_KEY_2,
+            NINJA_FACT_KEY_3,
+        ],
+        increase
+    )
+
+    console.log('GetNinjaFactAsync-GetOptionsAsync', apiKey);
+
+    return {
+        method: 'GET',
+        url: 'https://facts-by-api-ninjas.p.rapidapi.com/v1/facts',
+        // params: { limit: '30' },
+        headers: {
+            'X-RapidAPI-Key': apiKey,
+            'X-RapidAPI-Host': 'facts-by-api-ninjas.p.rapidapi.com'
+        }
     }
-};
+}
 
 export const GetNinjaFactAsync = async (): Promise<string | undefined> => {
     try {
@@ -36,17 +51,25 @@ export const GetNinjaFactAsync = async (): Promise<string | undefined> => {
 
 export const GetFactListAsync_FromApi = async (): Promise<string[] | undefined> => {
     try {
-        const response = await axios.request(options);
+        const response = await axios.request(await GetOptionsAsync());
 
-        if (response.status !== 200)
+        if (response.status !== 200) {
+            await GetOptionsAsync(true) // change api key
             return undefined
+        }
 
-        if (!Array.isArray(response.data) || response.data.length <= 0)
+        if (!Array.isArray(response.data) || response.data.length <= 0) {
+            await GetOptionsAsync(true) // change api key
             return undefined
+        }
 
         return response.data.map(i => i.fact as string)
     }
     catch {
+        //  Request failed with status code 429 | ERR_BAD_REQUEST
+
+        await GetOptionsAsync(true) // change api key
+
         return undefined
     }
 }

@@ -164,13 +164,13 @@ const MiniIAP = ({
             const shouldShowAds = (currentCount - freeLimit) % loop === 0
             const shouldShowMiniIap = (currentCount - freeLimit) % (loop / 2) === 0
 
-            console.log('cur count', currentCount,
-                'freeLimit', freeLimit,
-                'percentDevide ads', (currentCount - freeLimit) % loop,
-                'percentDevide mini iap', (currentCount - freeLimit) % Math.floor(loop / 2),
-                'shouldShowAds', shouldShowAds,
-                'shouldShowMiniIap', shouldShowMiniIap,
-                ', (loop / 2) =', (loop / 2))
+            // console.log('cur count', currentCount,
+            //     'freeLimit', freeLimit,
+            //     'percentDevide ads', (currentCount - freeLimit) % loop,
+            //     'percentDevide mini iap', (currentCount - freeLimit) % Math.floor(loop / 2),
+            //     'shouldShowAds', shouldShowAds,
+            //     'shouldShowMiniIap', shouldShowMiniIap,
+            //     ', (loop / 2) =', (loop / 2))
 
             if (!shouldShowAds && !shouldShowMiniIap) {
                 return
