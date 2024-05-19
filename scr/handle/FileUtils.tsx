@@ -5,9 +5,8 @@
 // npx pod-install ios
 
 import RNFS, { DownloadProgressCallbackResult, StatResult } from "react-native-fs";
-import { LoadJsonFromURLAsync, TempDirName } from "./Utils";
 import { Platform } from "react-native";
-import { ShuffleArray, ToCanPrint } from "./UtilsTS";
+import { CreateError, LoadJsonFromURLAsync, ShuffleArray, TempDirName, ToCanPrint } from "./UtilsTS";
 
 /**
  * @returns null if success, otherwise error
@@ -41,10 +40,7 @@ export async function FileStat(path: string, isRLP: boolean = true): Promise<Sta
     return await RNFS.stat(path)
   }
   catch (e) {
-    if (e instanceof Error)
-      return e
-    else
-      return new Error(ToCanPrint(e))
+    return CreateError(e)
   }
 }
 
@@ -66,10 +62,7 @@ export async function FileSizeInMB(path: string, isRLP: boolean = true): Promise
     return sizeBytes / 1024 / 1024
   }
   catch (e) {
-    if (e instanceof Error)
-      return e
-    else
-      return new Error(ToCanPrint(e))
+    return CreateError(e)
   }
 }
 
@@ -101,6 +94,21 @@ export async function WriteTextAsync(path: string, text: string | null, isRLP: b
   catch (e) {
     return e;
   }
+}
+
+export async function ReadJsonFileAsync<T>(path: string, isRLP: boolean = true): Promise<T | Error> {
+  let readFileLocalRes = await ReadTextAsync(path, isRLP)
+
+  if (readFileLocalRes.text) {
+    try {
+      return JSON.parse(readFileLocalRes.text) as T
+    }
+    catch (e) {
+      return CreateError(e)
+    }
+  }
+  else
+    return CreateError(readFileLocalRes.error)
 }
 
 /**
