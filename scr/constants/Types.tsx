@@ -187,6 +187,7 @@ export type AppConfig = {
         animeImage?: string,
         textBG?: string,
         funWeb?: string,
+        funSound?: string,
     }
 }
 

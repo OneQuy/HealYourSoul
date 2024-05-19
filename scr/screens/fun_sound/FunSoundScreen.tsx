@@ -7,7 +7,7 @@ import { BorderRadius, Category, FontSize, Icon, NeedReloadReason, Outline, Size
 import useCheckAndDownloadRemoteFile from '../../hooks/useCheckAndDownloadRemoteFile'
 import { FunSound } from '../../constants/Types'
 import { TempDirName } from '../../handle/Utils'
-import { GetRemoteFileConfigVersion } from '../../handle/AppConfigHandler'
+import { GetRemoteFileConfigVersion, GetStaticFileUrl } from '../../handle/AppConfigHandler'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { ThemeContext } from '../../constants/Colors'
@@ -45,8 +45,11 @@ const FunSoundScreen = () => {
   const favoritedIDs = useAppSelector((state) => state.userData.funSoundFavoriteIDs)
   const insets = useSafeAreaInsets()
 
+  const file = GetStaticFileUrl('funSound', fileURL)
+  // console.log(file);
+
   const { result: funSounds, error: errorDownloadJson, reUpdateAsync: reUpdateData } = useCheckAndDownloadRemoteFile<FunSound[]>(
-    fileURL,
+    file,
     TempDirName + '/fun_sound.json',
     true,
     GetRemoteFileConfigVersion('fun_sound'),
