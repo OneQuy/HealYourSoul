@@ -169,6 +169,9 @@ const OneQuyApp = ({
                 console.log('[OneQuyApp-checkDownloadJson] cached');
 
             set_listApps(cachedJson)
+
+            set_currentAppIdx(t => (cachedJson && t < cachedJson.length - 1) ? t + 1 : 0)
+
             return
         }
 
@@ -191,7 +194,9 @@ const OneQuyApp = ({
             )
 
         if (jsonRes.json) {
+            // cachedJson = jsonRes.json as OneQuyAppData[]
             cachedJson = (jsonRes.json as OneQuyAppData[]).filter(i => i.appName !== excludeAppName)
+            
             ShuffleArray(cachedJson)
             set_listApps(cachedJson)
         }
