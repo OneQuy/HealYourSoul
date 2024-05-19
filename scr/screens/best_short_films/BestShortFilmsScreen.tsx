@@ -17,7 +17,7 @@ import { ToCanPrint, IsChar, IsNumChar, OpenYoutubeAsync, SafeValue } from '../.
 import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading';
 import useCheckAndDownloadRemoteFile from '../../hooks/useCheckAndDownloadRemoteFile';
 import { RandomInt, TempDirName } from '../../handle/Utils';
-import { GetRemoteFileConfigVersion } from '../../handle/AppConfigHandler';
+import { GetRemoteFileConfigVersion, GetStaticFileUrl } from '../../handle/AppConfigHandler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ListMovie from './SelectShortFilms';
 import { DownloadFileAsync, GetFLPFromRLP } from '../../handle/FileUtils';
@@ -46,8 +46,11 @@ const BestShortFilmsScreen = () => {
     const favoriteCallbackRef = useRef<(() => void) | undefined>(undefined);
     const [showIntroduceCat, renderShowIntroduceCat] = useIntroduceCat(category)
 
+    const file = GetStaticFileUrl('shortFilm', fileURL)
+    // console.log(file);
+
     const { result: shortFilms, error: errorDownloadJson, reUpdateAsync } = useCheckAndDownloadRemoteFile<ShortFilm[]>(
-        fileURL,
+        file,
         TempDirName + '/short_films.json',
         true,
         GetRemoteFileConfigVersion('short_films'),

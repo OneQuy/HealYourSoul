@@ -191,6 +191,7 @@ export type AppConfig = {
         movieQuote?: string,
         catFact?: string,
         dogFact?: string,
+        shortFilm?: string,
     }
 }
 
