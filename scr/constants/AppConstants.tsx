@@ -312,13 +312,13 @@ export enum Icon {
   Setting = 'settings',
 }
 
-export const shareAppText = `Gooday - Make your day good. A meme, information & positive stuffs app.
+export const shareAppText = `⭐️ Gooday - Make your day good. A meme, information & positive stuffs app.
 
-It's totally free. Download now!
+🔥 It's totally free. Download now!
 
-AppStore: https://apps.apple.com/us/app/gooday-make-your-day/id6471367879
+👉 AppStore: https://apps.apple.com/us/app/gooday-make-your-day/id6471367879
 
-Google Play: https://play.google.com/store/apps/details?id=com.onequy.gooday
+👉 Google Play: https://play.google.com/store/apps/details?id=com.onequy.gooday
 
 #gooday #make_your_day_good`
 

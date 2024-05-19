@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ColorValue, TouchableOpacity, Dimensions, Linking, Platform, Animated } from 'react-native'
+import { View, Text, StyleSheet, ColorValue, TouchableOpacity, Dimensions, Linking, Platform, Animated, Share } from 'react-native'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import ImageBackgroundWithLoading from './ImageBackgroundWithLoading'
 import { DownloadFile_GetJsonAsync } from '../../handle/FileUtils'
@@ -41,7 +41,7 @@ const OneQuyApp = ({
     fontSize?: number,
 }) => {
     const [listApps, set_listApps] = useState<undefined | OneQuyAppData[]>(undefined)
-    
+
     const [currentAppIdx, set_currentAppIdx] = useState(cachedCurrentAppIdx)
     cachedCurrentAppIdx = currentAppIdx
 
@@ -84,7 +84,18 @@ const OneQuyApp = ({
                 flex: 1,
             },
 
+            shareTO: {
+                flex: 1,
+                padding: Padding,
+                borderColor: primaryColor,
+                borderWidth: StyleSheet.hairlineWidth,
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: BorderRadius,
+            },
+
             installTO: {
+                flex: 1,
                 padding: Padding,
                 backgroundColor: primaryColor,
                 justifyContent: 'center',
@@ -153,6 +164,25 @@ const OneQuyApp = ({
         set_currentAppIdx(t => (t < listApps.length - 1) ? t + 1 : 0)
     }, [listApps])
 
+    const onPressShare = useCallback(async () => {
+        if (!currentApp)
+            return
+
+        Share.share({
+            title: `Check out ${currentApp.appName}!`,
+            message:
+`⭐️ Check out ${currentApp.appName}!
+
+${currentApp.description}
+
+🔥 Download now!
+
+👉 AppStore: ${currentApp.ios}
+
+👉 GooglePlay: ${currentApp.android}`,
+        })
+    }, [currentApp])
+
     const onPressInstall = useCallback(async () => {
         if (!currentApp)
             return
@@ -196,7 +226,7 @@ const OneQuyApp = ({
         if (jsonRes.json) {
             // cachedJson = jsonRes.json as OneQuyAppData[]
             cachedJson = (jsonRes.json as OneQuyAppData[]).filter(i => i.appName !== excludeAppName)
-            
+
             ShuffleArray(cachedJson)
             set_listApps(cachedJson)
         }
@@ -257,10 +287,17 @@ const OneQuyApp = ({
                 </Animated.View>
             </View>
 
-            {/* install btn */}
-            <TouchableOpacity onPress={onPressInstall} style={style.installTO}>
-                <Text style={style.installTxt}>{'Install'}</Text>
-            </TouchableOpacity>
+            <View style={style.descriptionView}>
+                {/* share btn */}
+                <TouchableOpacity onPress={onPressShare} style={style.shareTO}>
+                    <Text style={style.nextTxt}>{'Share'}</Text>
+                </TouchableOpacity>
+
+                {/* install btn */}
+                <TouchableOpacity onPress={onPressInstall} style={style.installTO}>
+                    <Text style={style.installTxt}>{'Install'}</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     )
 }
