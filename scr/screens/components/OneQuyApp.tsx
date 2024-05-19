@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import ImageBackgroundWithLoading from './ImageBackgroundWithLoading'
 import { DownloadFile_GetJsonAsync } from '../../handle/FileUtils'
 import { AnimatedSimpleSpring, AnimatedSimpleTiming, ShuffleArray, TempDirName, ToCanPrint } from '../../handle/UtilsTS'
+import { GetStaticFileUrl } from '../../handle/AppConfigHandler'
 
 const IsLog = true
 
@@ -171,7 +172,7 @@ const OneQuyApp = ({
         Share.share({
             title: `Check out ${currentApp.appName}!`,
             message:
-`⭐️ Check out ${currentApp.appName}!
+                `⭐️ Check out ${currentApp.appName}!
 
 ${currentApp.description}
 
@@ -208,8 +209,11 @@ ${currentApp.description}
         if (IsLog)
             console.log('[OneQuyApp-checkDownloadJson] downloading...');
 
+        const file = GetStaticFileUrl('onequyApps', JsonUrl)
+        // console.log(file);
+
         const jsonRes = await DownloadFile_GetJsonAsync(
-            JsonUrl,
+            file,
             TempDirName + '/onequy_apps.json',
             true,
             false
