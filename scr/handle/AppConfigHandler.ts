@@ -2,13 +2,27 @@ import { FirebaseDatabase_GetValueAsync } from "../firebase/FirebaseDatabase";
 import { SetNetLordFetchUrl } from "./NetLord";
 import { AppConfig } from "../constants/Types";
 import { FirebaseDatabaseTimeOutMs } from "../constants/AppConstants";
-import { ExecuteWithTimeoutAsync } from "./UtilsTS";
+import { ExecuteWithTimeoutAsync, IsValuableArrayOrString } from "./UtilsTS";
 
 const FirebaseDBPath = 'app/config';
 
 var appConfig: AppConfig | undefined
 
 export const GetAppConfig = () => appConfig
+
+export const GetStaticFileUrl = (property: string, defaultUrl: string): string => {
+    const config = GetAppConfig()
+
+    if (!config || !config.staticFile)
+        return defaultUrl
+
+    const s = config.staticFile[property as keyof AppConfig['staticFile']]
+
+    if (IsValuableArrayOrString(s))
+        return s
+    else
+        return defaultUrl
+}
 
 /**
  * 

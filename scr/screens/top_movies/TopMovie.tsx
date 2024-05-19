@@ -16,7 +16,7 @@ import { Clamp, ToCanPrint, ExtractAllNumbersInText, IsChar, IsNumChar } from '.
 import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading';
 import useCheckAndDownloadRemoteFile from '../../hooks/useCheckAndDownloadRemoteFile';
 import { RandomInt, TempDirName } from '../../handle/Utils';
-import { GetRemoteFileConfigVersion } from '../../handle/AppConfigHandler';
+import { GetAppConfig, GetRemoteFileConfigVersion, GetStaticFileUrl } from '../../handle/AppConfigHandler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ListMovie from './ListMovie';
 import { DownloadFileAsync, GetFLPFromRLP } from '../../handle/FileUtils';
@@ -40,8 +40,10 @@ const TopMovieScreen = () => {
     const [isShowList, setIsShowList] = useState(false)
     const favoriteCallbackRef = useRef<(() => void) | undefined>(undefined);
 
+    console.log('aaaa', GetStaticFileUrl('topMovie', fileURL));
+    
     const { result: topMovies, didDownload, error: errorDownloadJson, reUpdateAsync } = useCheckAndDownloadRemoteFile<TopMovie[]>(
-        fileURL,
+        GetStaticFileUrl('topMovie', fileURL),
         TempDirName + '/top_movies.json',
         true,
         GetRemoteFileConfigVersion('top_movies'),

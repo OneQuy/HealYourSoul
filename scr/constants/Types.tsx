@@ -179,6 +179,10 @@ export type AppConfig = {
         aptabaseProductionKey: string,
         aptabaseIgnores?: string,
         aptabaseRemoveIgnores?: string,
+    },
+
+    staticFile?: {
+        topMovie?: string,
     }
 }
 
