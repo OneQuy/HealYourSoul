@@ -33,6 +33,7 @@ const OneQuyApp = ({
     counterBackgroundColor = '#C1C1C1',
     backgroundColor = '#fafafa',
     fontSize = 13,
+    onEvent = undefined,
 }: {
     excludeAppName: string,
     primaryColor?: ColorValue
@@ -40,6 +41,7 @@ const OneQuyApp = ({
     counterBackgroundColor?: ColorValue
     backgroundColor?: ColorValue,
     fontSize?: number,
+    onEvent?: (event: string, currentApp: string) => void,
 }) => {
     const [listApps, set_listApps] = useState<undefined | OneQuyAppData[]>(undefined)
 
@@ -163,11 +165,17 @@ const OneQuyApp = ({
             return
 
         set_currentAppIdx(t => (t < listApps.length - 1) ? t + 1 : 0)
-    }, [listApps])
+
+        if (onEvent && currentApp)
+            onEvent('press_next_app', currentApp.appName)
+    }, [listApps, onEvent, currentApp])
 
     const onPressShare = useCallback(async () => {
         if (!currentApp)
             return
+
+        if (onEvent)
+            onEvent('press_share', currentApp.appName)
 
         Share.share({
             title: `Check out ${currentApp.appName}!`,
@@ -182,17 +190,20 @@ ${currentApp.description}
 
 👉 GooglePlay: ${currentApp.android}`,
         })
-    }, [currentApp])
+    }, [currentApp, onEvent])
 
     const onPressInstall = useCallback(async () => {
         if (!currentApp)
             return
 
+        if (onEvent)
+            onEvent('press_install', currentApp.appName)
+
         if (Platform.OS === 'android')
             Linking.openURL(currentApp.android)
         else
             Linking.openURL(currentApp.ios)
-    }, [currentApp])
+    }, [currentApp, onEvent])
 
     const checkDownloadJson = useCallback(async () => {
         if (cachedJson) {
@@ -219,10 +230,13 @@ ${currentApp.description}
             false
         )
 
+        if (onEvent)
+            onEvent('downloaded' + (jsonRes.json !== null ? '_success' : '_fail'), '')
+
         if (IsLog) {
             console.log(
                 '[OneQuyApp-checkDownloadJson] downloaded success:',
-                jsonRes.error === null,
+                jsonRes.json !== null,
                 'error',
                 ToCanPrint(jsonRes.error)
             )
@@ -230,15 +244,19 @@ ${currentApp.description}
 
         if (!jsonRes.json) {
             const arr = await ReadJsonFileAsync<OneQuyAppData[]>(TempDirName + '/onequy_apps.json', true)
+            const isArray = Array.isArray(arr)
 
             if (IsLog) {
                 console.log(
                     '[OneQuyApp-checkDownloadJson] loaded from local success:',
-                    Array.isArray(arr)
+                    isArray
                 )
             }
 
-            if (Array.isArray(arr)) {
+            if (onEvent)
+                onEvent('loaded_local' + (isArray ? '_success' : '_fail'), '')
+
+            if (isArray) {
                 jsonRes.json = arr
             }
         }
@@ -250,7 +268,7 @@ ${currentApp.description}
             ShuffleArray(cachedJson)
             set_listApps(cachedJson)
         }
-    }, [])
+    }, [onEvent])
 
     useEffect(() => {
         if (!currentApp) {
@@ -271,6 +289,9 @@ ${currentApp.description}
     }, [currentApp])
 
     useEffect(() => {
+        if (onEvent)
+            onEvent('appear', '')
+
         checkDownloadJson()
     }, [])
 
