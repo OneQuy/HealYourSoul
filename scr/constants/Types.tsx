@@ -184,6 +184,7 @@ export type AppConfig = {
     staticFile?: {
         topMovie?: string,
         dogBreed?: string,
+        animeImage?: string,
     }
 }
 

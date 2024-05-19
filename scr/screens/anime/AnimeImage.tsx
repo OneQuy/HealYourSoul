@@ -5,6 +5,7 @@ import { PopupSelectItem } from '../components/PopupSelect';
 import { RandomImage } from '../../constants/Types';
 import { GetApiDataItemFromCached } from '../../handle/AppUtils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { GetStaticFileUrl } from '../../handle/AppConfigHandler';
 
 export const AnimeImageScreen = () => {
     const getImage = useCallback(async (item: PopupSelectItem): Promise<RandomImage | undefined> => {
@@ -57,9 +58,12 @@ export const AnimeImageScreen = () => {
         }
     }, [])
 
+    const file = GetStaticFileUrl('animeImage', 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Fanime_image_subcatgories.json?alt=media&token=3d04ff71-5188-45c3-9935-3a47284dca54')
+    // console.log(file);
+
     return (
         <TheRandomImage_PopupSelect
-            fileURL='https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Fanime_image_subcatgories.json?alt=media&token=3d04ff71-5188-45c3-9935-3a47284dca54'
+            fileURL={file}
             configFileName='anime_image_subcatgories'
             category={Category.AnimeImage}
             currentItemIdxStorageKey={StorageKey_AnimeImage_CurrentIdx}
