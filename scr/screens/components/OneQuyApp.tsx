@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, ColorValue, TouchableOpacity, Dimensions, Linking, Platform, Animated, Share } from 'react-native'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import ImageBackgroundWithLoading from './ImageBackgroundWithLoading'
-import { DownloadFile_GetJsonAsync } from '../../handle/FileUtils'
+import { DownloadFile_GetJsonAsync, ReadJsonFileAsync } from '../../handle/FileUtils'
 import { AnimatedSimpleSpring, AnimatedSimpleTiming, ShuffleArray, TempDirName, ToCanPrint } from '../../handle/UtilsTS'
 import { GetStaticFileUrl } from '../../handle/AppConfigHandler'
 
@@ -219,13 +219,29 @@ ${currentApp.description}
             false
         )
 
-        if (IsLog)
+        if (IsLog) {
             console.log(
                 '[OneQuyApp-checkDownloadJson] downloaded success:',
                 jsonRes.error === null,
                 'error',
                 ToCanPrint(jsonRes.error)
             )
+        }
+
+        if (!jsonRes.json) {
+            const arr = await ReadJsonFileAsync<OneQuyAppData[]>(TempDirName + '/onequy_apps.json', true)
+
+            if (IsLog) {
+                console.log(
+                    '[OneQuyApp-checkDownloadJson] loaded from local success:',
+                    Array.isArray(arr)
+                )
+            }
+
+            if (Array.isArray(arr)) {
+                jsonRes.json = arr
+            }
+        }
 
         if (jsonRes.json) {
             // cachedJson = jsonRes.json as OneQuyAppData[]
