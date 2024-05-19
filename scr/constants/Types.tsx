@@ -192,6 +192,7 @@ export type AppConfig = {
         catFact?: string,
         dogFact?: string,
         shortFilm?: string,
+        animeQuotes?: string,
     }
 }
 

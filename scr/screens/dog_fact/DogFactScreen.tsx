@@ -2,6 +2,7 @@ import { Category, StorageKey_CatFact_CurrentFactIdx, StorageKey_DogFact_Current
 import { GetStaticFileUrl } from "../../handle/AppConfigHandler";
 import { TheRandomShortText_FileConfig } from "../template/TheRandomShortText_FileConfig";
 
+
 export const DogFactScreen = () => {
     const file = GetStaticFileUrl('dogFact', 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Ffact_dogs.json?alt=media&token=4aac62bc-f24a-4be2-9240-ce435d631ecc')
     // console.log(file);
@@ -17,6 +18,7 @@ export const DogFactScreen = () => {
     )
 }
 
+
 export const CatFactScreen = () => {
     const file = GetStaticFileUrl('catFact', 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Ffact_cats.json?alt=media&token=8a07c170-2013-49f5-bb15-a01726c6c3cd')
     // console.log(file);
@@ -31,7 +33,6 @@ export const CatFactScreen = () => {
         />
     )
 }
-
 
 
 export const MovieQuoteScreen = () => {

@@ -649,6 +649,7 @@ export const StorageKey_DogFact_CurrentFactIdx = 'dog_fact_idx'
 export const StorageKey_DogBreed_CurrentBreedIdx = 'dog_breed_idx'
 export const StorageKey_CatFact_CurrentFactIdx = 'cat_fact_idx'
 export const StorageKey_AnimeImage_CurrentIdx = 'anime_image_idx'
+export const StorageKey_AnimeQuote_CurrentIdx = 'anime_quote_idx'
 export const StorageKey_MovieQuote_CurrentIdx = 'movie_quote_idx'
 export const StorageKey_Memedroid_CurrentIdx = 'memedroid_idx'
 
