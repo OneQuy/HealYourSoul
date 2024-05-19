@@ -3,6 +3,7 @@ import { Category, LocalText, StorageKey_DogBreed_CurrentBreedIdx } from '../../
 import { TheRandomImage_PopupSelect } from '../template/TheRandomImage_PopupSelect';
 import { PopupSelectItem } from '../components/PopupSelect';
 import { RandomImage } from '../../constants/Types';
+import { GetStaticFileUrl } from '../../handle/AppConfigHandler';
 
 export const DogBreedScreen = () => {
     const getImage = useCallback(async (item: PopupSelectItem): Promise<RandomImage | undefined> => {
@@ -27,7 +28,7 @@ export const DogBreedScreen = () => {
 
     return (
         <TheRandomImage_PopupSelect
-            fileURL='https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Fdog_breeds.json?alt=media&token=e96761dd-9923-4082-83b9-19a1ee249b8d'
+            fileURL={GetStaticFileUrl('dogBreed', 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Fdog_breeds.json?alt=media&token=e96761dd-9923-4082-83b9-19a1ee249b8d')}
             configFileName='dog_breeds'
             category={Category.DogBreed}
             currentItemIdxStorageKey={StorageKey_DogBreed_CurrentBreedIdx}
