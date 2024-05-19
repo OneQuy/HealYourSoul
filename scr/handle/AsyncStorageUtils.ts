@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import { DateDiff, DateDiff_InHour, DateDiff_InMinute, IsNumType, IsToday, IsTodayAndSameHour } from "./UtilsTS"
+import { DateDiff, DateDiff_InHour, DateDiff_InMinute, IsToday, IsTodayAndSameHour } from "./UtilsTS"
 
 // boolean =================
 
@@ -267,7 +267,7 @@ export const SetDateAsync_Now = async (key: string): Promise<void> => {
     await SetDateAsync(key, Date.now())
 }
 
-// array =================
+// array as string =================
 
 export const StorageGetArrayAsync = async (key: string, separator = '|'): Promise<string[]> => {
     const valueS = await AsyncStorage.getItem(key)
@@ -291,4 +291,33 @@ export const StorageAppendToArrayAsync = async (key: string, value: string, sepa
     await AsyncStorage.setItem(key, set)
 
     return set
+}
+
+// array =================
+
+export const SetArrayAsync = async <T>(key: string, arr: T[]): Promise<void> => {
+    await AsyncStorage.setItem(key, JSON.stringify(arr))
+}
+
+export const AppendArrayAsync = async <T>(key: string, itemOrArr: T[] | T): Promise<void> => {
+    let savedArr = await GetArrayAsync<T>(key)
+
+    if (savedArr === undefined)
+        savedArr = []
+
+    if (Array.isArray(itemOrArr))
+        savedArr = savedArr.concat(itemOrArr)
+    else
+        savedArr.push(itemOrArr)
+
+    await SetArrayAsync(key, savedArr)
+}
+
+export const GetArrayAsync = async <T>(key: string): Promise<T[] | undefined> => {
+    const s = await AsyncStorage.getItem(key)
+
+    if (!s)
+        return undefined
+
+    return JSON.parse(s) as T[]
 }
