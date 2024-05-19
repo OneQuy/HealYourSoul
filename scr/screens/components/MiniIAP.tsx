@@ -6,7 +6,7 @@ import { logoScr } from '../others/SplashScreen';
 import { BuyPremiumAsync, allProducts, iapBg_1 } from '../IAP/IAPPage';
 import { useMyIAP } from '../../hooks/useMyIAP';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { GetNumberIntAsync, IncreaseNumberAsync, IncreaseNumberAsync_WithCheckAndResetNewDay, SetNumberAsync } from '../../handle/AsyncStorageUtils';
+import { GetNumberIntAsync, IncreaseNumberAsync_WithCheckAndResetNewDay, SetNumberAsync } from '../../handle/AsyncStorageUtils';
 import { useAppDispatch } from '../../redux/Store';
 import { GetAppConfig } from '../../handle/AppConfigHandler';
 import { SafeValue } from '../../handle/UtilsTS';
