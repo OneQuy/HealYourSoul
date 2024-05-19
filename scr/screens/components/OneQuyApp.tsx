@@ -41,7 +41,9 @@ const OneQuyApp = ({
     fontSize?: number,
 }) => {
     const [listApps, set_listApps] = useState<undefined | OneQuyAppData[]>(undefined)
+    
     const [currentAppIdx, set_currentAppIdx] = useState(cachedCurrentAppIdx)
+    cachedCurrentAppIdx = currentAppIdx
 
     const logoAnimated = useRef(new Animated.Value(0)).current
     const titleAnimated = useRef(new Animated.Value(0)).current
