@@ -6,7 +6,7 @@ import { cancelAllLocalNotificationsAsync, setNotification_ForNextDay, setNotifi
 import { GetBooleanAsync, GetDateAsync, SetDateAsync_Now } from "./AsyncStorageUtils";
 import { GetFactListAsync_FromApi } from "./services/NinjaFact";
 import { GetJokeListAsync_FromApi } from "./services/NinjaJoke";
-import { ShuffleArray } from "./UtilsTS";
+import { DelayAsync, ShuffleArray } from "./UtilsTS";
 import { PickRandomElement, RandomInt } from "./Utils";
 import { toast } from "@baronha/ting";
 import { track_Simple } from "./tracking/GoodayTracking";
@@ -129,6 +129,8 @@ export const CheckAndPrepareDataForNotificationAsync_Quote = async () => {
         await AsyncStorage.setItem(StorageKey_Quote_DataNoti, JSON.stringify(arr.concat(quotes)))
     }
 
+    await DelayAsync(2000)
+
     await CheckAndPrepareDataForNotificationAsync_Quote()
 }
 
@@ -165,6 +167,8 @@ export const CheckAndPrepareDataForNotificationAsync_Fact = async () => {
         await AsyncStorage.setItem(StorageKey_NinjaFact_DataNoti, JSON.stringify(arr.concat(strings)))
     }
 
+    await DelayAsync(2000)
+
     await CheckAndPrepareDataForNotificationAsync_Fact()
 }
 
@@ -199,6 +203,8 @@ export const CheckAndPrepareDataForNotificationAsync_Joke = async () => {
         SetDateAsync_Now(StorageKey_NinjaJoke_LastDateDownload_DataNoti)
         await AsyncStorage.setItem(StorageKey_NinjaJoke_DataNoti, JSON.stringify(arr.concat(strings)))
     }
+
+    await DelayAsync(2000)
 
     await CheckAndPrepareDataForNotificationAsync_Joke()
 }
