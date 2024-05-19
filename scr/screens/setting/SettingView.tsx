@@ -404,6 +404,7 @@ const SettingView = () => {
         <Text style={style.titleText}>{LocalText.check_out_apps}</Text>
 
         <OneQuyApp
+          excludeAppName='Gooday'
           primaryColor={theme.counterBackground}
           counterPrimaryColor={theme.background}
           backgroundColor={theme.background}

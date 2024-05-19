@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, ColorValue, TouchableOpacity, Dimensions, Linki
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import ImageBackgroundWithLoading from './ImageBackgroundWithLoading'
 import { DownloadFile_GetJsonAsync } from '../../handle/FileUtils'
-import { AnimatedSimpleSpring, AnimatedSimpleTiming, TempDirName, ToCanPrint } from '../../handle/UtilsTS'
+import { AnimatedSimpleSpring, AnimatedSimpleTiming, ShuffleArray, TempDirName, ToCanPrint } from '../../handle/UtilsTS'
 
 const IsLog = true
 
@@ -26,12 +26,14 @@ var cachedJson: undefined | OneQuyAppData[] = undefined
 var cachedCurrentAppIdx = 0
 
 const OneQuyApp = ({
+    excludeAppName = undefined,
     primaryColor = '#1c1c1c',
     counterPrimaryColor = '#fafafa',
     counterBackgroundColor = '#C1C1C1',
     backgroundColor = '#fafafa',
     fontSize = 13,
 }: {
+    excludeAppName?: string,
     primaryColor?: ColorValue
     counterPrimaryColor?: ColorValue
     counterBackgroundColor?: ColorValue
@@ -187,7 +189,8 @@ const OneQuyApp = ({
             )
 
         if (jsonRes.json) {
-            cachedJson = jsonRes.json
+            cachedJson = (jsonRes.json as OneQuyAppData[]).filter(i => excludeAppName === undefined || i.appName !== excludeAppName)
+            ShuffleArray(cachedJson)
             set_listApps(cachedJson)
         }
     }, [])
@@ -221,11 +224,14 @@ const OneQuyApp = ({
         <View style={style.master}>
             {/* title */}
             <View style={style.titleView}>
-                <Animated.Text adjustsFontSizeToFit numberOfLines={1} style={[style.titleTxt, { opacity: titleAnimated }]}>{currentApp.appName}</Animated.Text>
+                <Animated.Text adjustsFontSizeToFit numberOfLines={1} style={[style.titleTxt, { opacity: titleAnimated }]}>{currentApp.appName}</Animated.Text>
                 {/* go next btn */}
-                <TouchableOpacity onPress={onPressNextApp} style={style.nextTO}>
-                    <Text adjustsFontSizeToFit numberOfLines={1} style={style.nextTxt}>{`Next app ${currentAppIdx + 1}/${listApps?.length}`}</Text>
-                </TouchableOpacity>
+                {
+                    listApps && listApps.length > 1 &&
+                    <TouchableOpacity onPress={onPressNextApp} style={style.nextTO}>
+                        <Text adjustsFontSizeToFit numberOfLines={1} style={style.nextTxt}>{`Next app ${currentAppIdx + 1}/${listApps.length}`}</Text>
+                    </TouchableOpacity>
+                }
             </View>
 
             {/* description */}
