@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ColorValue, TouchableOpacity, Dimensions, Linking, Platform, Animated, Share } from 'react-native'
+import { View, Text, StyleSheet, ColorValue, TouchableOpacity, Dimensions, Linking, Platform, Animated, Share, ActivityIndicator } from 'react-native'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import ImageBackgroundWithLoading from './ImageBackgroundWithLoading'
 import { DownloadFile_GetJsonAsync, ReadJsonFileAsync } from '../../handle/FileUtils'
@@ -274,8 +274,13 @@ ${currentApp.description}
         checkDownloadJson()
     }, [])
 
-    if (!currentApp)
-        return undefined
+    if (!currentApp) {
+        return (
+            <View style={style.master}>
+                <ActivityIndicator color={primaryColor} />
+            </View>
+        )
+    }
 
     return (
         <View style={style.master}>
