@@ -186,6 +186,7 @@ export type AppConfig = {
         dogBreed?: string,
         animeImage?: string,
         textBG?: string,
+        funWeb?: string,
     }
 }
 

@@ -17,7 +17,7 @@ import { ShareOptions } from 'react-native-share';
 import ImageBackgroundWithLoading from '../components/ImageBackgroundWithLoading';
 import useCheckAndDownloadRemoteFile from '../../hooks/useCheckAndDownloadRemoteFile';
 import { TempDirName } from '../../handle/Utils';
-import { GetRemoteFileConfigVersion } from '../../handle/AppConfigHandler';
+import { GetRemoteFileConfigVersion, GetStaticFileUrl } from '../../handle/AppConfigHandler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ListWebsite from './ListWebsite';
 import { track_PressNextPost, track_SimpleWithCat } from '../../handle/tracking/GoodayTracking';
@@ -53,8 +53,12 @@ const FunWebsitesScreen = () => {
         playAnimLoadedMedia(mediaViewScaleAnimRef)
     }, [])
 
+
+    const file = GetStaticFileUrl('funWeb', fileURL)
+    // console.log(file);
+
     const { result: funWebsites, error: errorDownloadJson, reUpdateAsync: reUpdateData } = useCheckAndDownloadRemoteFile<FunWebsite[]>(
-        fileURL,
+        file,
         TempDirName + '/fun_website.json',
         true,
         GetRemoteFileConfigVersion('fun_websites'),
