@@ -25,7 +25,7 @@ const GenAnimeQuotes = async () => {
         if (element.Quote && element.Quote.length > 1 ||
             element.Character && element.Character.length > 1 ||
             element.Anime && element.Anime.length > 1) {
-                arr.push(`${element.Quote}\n- ${element.Character}\n${element.Anime}`)
+                arr.push(`${element.Quote}\n\n- ${element.Character}\n${element.Anime}`)
             }
     });
 
