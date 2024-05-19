@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { NINJA_JOKE_KEY, NINJA_JOKE_KEY_2 } from '../../../keys';
+import { NINJA_JOKE_KEY, NINJA_JOKE_KEY_2, NINJA_JOKE_KEY_3 } from '../../../keys';
 import { GetApiDataItemFromCached } from '../AppUtils';
 import { StorageKey_NinjaJoke, StorageKey_NinjaJoke_NextApiKey } from '../../constants/AppConstants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -11,6 +11,7 @@ const GetOptionsAsync = async (increase?: boolean) => {
         [
             NINJA_JOKE_KEY,
             NINJA_JOKE_KEY_2,
+            NINJA_JOKE_KEY_3,
         ],
         increase
     )
