@@ -13,6 +13,7 @@ import { SafeValue } from '../../handle/UtilsTS';
 import { usePremium } from '../../hooks/usePremium';
 import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 import { AdmobInterstitial } from '../../handle/ads/Admob';
+import OneQuyApp from './OneQuyApp';
 
 const TOAnimated = Animated.createAnimatedComponent(TouchableOpacity)
 
@@ -29,6 +30,7 @@ const MiniIAP = ({
     const [product, setProduct] = useState(allProducts[0])
     const [processing, setProcessing] = useState(false)
     const [showMiniIAP, setShowMiniIAP] = useState(false)
+    const [showMyApps, setshowMyApps] = useState(false)
     const dispatch = useAppDispatch()
     const { isPremium } = usePremium()
 
@@ -96,6 +98,7 @@ const MiniIAP = ({
             logoImg: { height: Size.IconBig, aspectRatio: 1, },
             iapTO: { borderRadius: BorderRadius.BR, overflow: 'hidden' },
             laterTO: { borderColor: theme.counterBackground, borderWidth: StyleSheet.hairlineWidth, borderRadius: BorderRadius.BR, minWidth: '60%', alignItems: 'center', padding: Outline.GapVertical_2, justifyContent: 'center', },
+            laterMyAppsTO: { width: '100%', alignItems: 'center', padding: Outline.GapVertical_2, justifyContent: 'center', },
             iapIB: { minWidth: '60%', alignItems: 'center', padding: Outline.GapVertical, justifyContent: 'center', },
             monthTxt: { color: 'black', fontSize: FontSize.Normal, fontWeight: FontWeight.Bold },
             priceTxt: { color: 'black', fontSize: FontSize.Small_L },
@@ -181,6 +184,28 @@ const MiniIAP = ({
             showAdsOrMiniIap(!shouldShowAds && shouldShowMiniIap)
         })()
     }, [triggerId])
+
+    if (showMyApps) {
+        return (
+            <View style={[style.master, { alignItems: 'flex-start' }]}>
+                <Text style={[style.benefitsTxt]}>{LocalText.check_out_apps}:</Text>
+
+                <OneQuyApp
+                    excludeAppName='Gooday'
+                    primaryColor={theme.counterBackground}
+                    counterPrimaryColor={theme.background}
+                    backgroundColor={theme.background}
+                    counterBackgroundColor={theme.counterBackground}
+                    fontSize={FontSize.Small_L}
+                />
+
+                {/* later btn */}
+                <TouchableOpacity onPress={undefined} style={style.laterMyAppsTO}>
+                    <Text style={style.benefitsTxt}>{LocalText.later}</Text>
+                </TouchableOpacity>
+            </View>
+        )
+    }
 
     if (!isReadyPurchase || !showMiniIAP) {
         return undefined
