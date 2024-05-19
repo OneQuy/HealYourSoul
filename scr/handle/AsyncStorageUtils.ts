@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import { DateDiff, DateDiff_InHour, DateDiff_InMinute, IsToday, IsTodayAndSameHour } from "./UtilsTS"
+import { DateDiff, DateDiff_InHour, DateDiff_InMinute, IsToday, IsTodayAndSameHour, SafeGetArrayElement } from "./UtilsTS"
 
 // boolean =================
 
@@ -320,4 +320,27 @@ export const GetArrayAsync = async <T>(key: string): Promise<T[] | undefined> =>
         return undefined
 
     return JSON.parse(s) as T[]
+}
+
+// other utils =================
+
+export const GetNextApiKeyAsync = async (
+    key: string,
+    apiKeys: string[],
+): Promise<string> => {
+    if (!apiKeys || apiKeys.length <= 0) {
+        console.error('[GetNextApiKeyAsync] keys is empty');
+        return ''
+    }
+
+    const savedIdx = await GetNumberIntAsync(key, -1)
+
+    let nowIdx = savedIdx + 1
+
+    if (nowIdx >= apiKeys.length)
+        nowIdx = 0
+
+    await SetNumberAsync(key, nowIdx)
+
+    return apiKeys[nowIdx]
 }

@@ -46,7 +46,10 @@ export const GetJokeListAsync_FromApi = async (): Promise<string[] | undefined> 
 
         return response.data.map(i => i.joke as string)
     }
-    catch { 
+    catch (e) {
+        //  LOG  bbbb [AxiosError: Request failed with status code 429]
+        // console.log('bbbb', e?.message, e?.code);
+
         return undefined
     }
 }
