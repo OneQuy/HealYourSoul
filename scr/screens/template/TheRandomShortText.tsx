@@ -20,7 +20,7 @@ import MiniIAP from '../components/MiniIAP';
 import useCheckAndDownloadRemoteFile from '../../hooks/useCheckAndDownloadRemoteFile';
 import { BackgroundForTextCurrent, BackgroundForTextType } from '../../constants/Types';
 import { TempDirName } from '../../handle/Utils';
-import { GetRemoteFileConfigVersion } from '../../handle/AppConfigHandler';
+import { GetRemoteFileConfigVersion, GetStaticFileUrl } from '../../handle/AppConfigHandler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAppDispatch, useAppSelector } from '../../redux/Store';
 import BackgroundForTextSelector, { IsBackgroundForText_ColorFree } from '../components/BackgroundForTextSelector';
@@ -70,8 +70,11 @@ const TheRandomShortText = ({
             return defaultBg.current
     })
 
+
+    const file = GetStaticFileUrl('textBG', backgroundsFileURL)
+
     const { result: backgrounds, didDownload, } = useCheckAndDownloadRemoteFile<BackgroundForTextType[]>(
-        backgroundsFileURL,
+        file,
         TempDirName + '/background_for_text.json',
         true,
         GetRemoteFileConfigVersion('background_for_text'),

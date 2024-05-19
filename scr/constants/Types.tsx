@@ -185,6 +185,7 @@ export type AppConfig = {
         topMovie?: string,
         dogBreed?: string,
         animeImage?: string,
+        textBG?: string,
     }
 }
 
