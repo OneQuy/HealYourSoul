@@ -30,7 +30,10 @@ const MiniIAP = ({
     const [product, setProduct] = useState(allProducts[0])
     const [processing, setProcessing] = useState(false)
     const [showMiniIAP, setShowMiniIAP] = useState(false)
+
     const [showMyApps, setshowMyApps] = useState(false)
+    const [laterBtnRemainSeconds, setLaterBtnRemainSeconds] = useState(5)
+
     const dispatch = useAppDispatch()
     const { isPremium } = usePremium()
 
@@ -56,13 +59,37 @@ const MiniIAP = ({
         setProcessing(false)
     }, [product])
 
+    const setOneQuyAppState = (remainSeconds?: number) => {
+        setshowMyApps(true)
+
+        let nowSeconds
+
+        if (typeof remainSeconds === 'number')
+            nowSeconds = remainSeconds
+        else
+            nowSeconds = laterBtnRemainSeconds - 1
+
+        console.log('nowSeconds', nowSeconds);
+
+        if (nowSeconds >= 1) {
+            setTimeout(() => setOneQuyAppState(nowSeconds - 1), 1000)
+        }
+
+        setLaterBtnRemainSeconds(nowSeconds)
+    }
+
+    const onPressed_LaterOneQuyApp = useCallback(() => {
+        if (laterBtnRemainSeconds <= 0)
+            setshowMyApps(false)
+    }, [laterBtnRemainSeconds])
+
     const onPressed_Later = useCallback(() => {
         setShowMiniIAP(false)
         track_SimpleWithParam('mini_iap', 'later')
     }, [])
 
     const showAdsOrMiniIap = useCallback(async (forceMiniIap: boolean) => {
-        // console.log('showAdsOrMiniIap, forceMiniIap =', forceMiniIap);
+        console.log('showAdsOrMiniIap, forceMiniIap =', forceMiniIap);
 
         // show ads
 
@@ -72,7 +99,10 @@ const MiniIAP = ({
         // or show mini iap
 
         if (!isReadyPurchase) {
-            console.log('forceMiniIap but isReadyPurchase = false')
+            console.log('show ads failed, to show mini iap but isReadyPurchase = false so show @onequy apps now')
+
+            setOneQuyAppState(5)
+
             return
         }
 
@@ -89,7 +119,7 @@ const MiniIAP = ({
         setShowMiniIAP(true)
 
         track_SimpleWithParam('mini_iap', 'show')
-    }, [isReadyPurchase])
+    }, [isReadyPurchase, setOneQuyAppState])
 
     const style = useMemo(() => {
         return StyleSheet.create({
@@ -200,8 +230,8 @@ const MiniIAP = ({
                 />
 
                 {/* later btn */}
-                <TouchableOpacity onPress={undefined} style={style.laterMyAppsTO}>
-                    <Text style={style.benefitsTxt}>{LocalText.later}</Text>
+                <TouchableOpacity onPress={onPressed_LaterOneQuyApp} style={style.laterMyAppsTO}>
+                    <Text style={style.benefitsTxt}>{laterBtnRemainSeconds > 0 ? laterBtnRemainSeconds.toString() : LocalText.later}</Text>
                 </TouchableOpacity>
             </View>
         )
