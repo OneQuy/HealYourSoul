@@ -5,13 +5,14 @@ import { StorageKey_NinjaJoke, StorageKey_NinjaJoke_NextApiKey } from '../../con
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GetNextApiKeyAsync } from '../AsyncStorageUtils';
 
-const GetOptionsAsync = async () => {
+const GetOptionsAsync = async (increase?: boolean) => {
     const apiKey = await GetNextApiKeyAsync(
         StorageKey_NinjaJoke_NextApiKey,
         [
             NINJA_JOKE_KEY,
             NINJA_JOKE_KEY_2,
-        ]
+        ],
+        increase
     )
 
     console.log('GetNinjaJokeAsync', apiKey);
@@ -53,21 +54,26 @@ export const GetJokeListAsync_FromApi = async (): Promise<string[] | undefined> 
 
         // console.log(response);
 
-        if (response.status !== 200)
+        if (response.status !== 200) {
+            await GetOptionsAsync(true) // change api key
             return undefined
+        }
 
-
-        if (!Array.isArray(response.data) || response.data.length <= 0)
+        if (!Array.isArray(response.data) || response.data.length <= 0) {
+            await GetOptionsAsync(true) // change api key
             return undefined
+        }
+
+        // success 
 
         console.log(response.data.length);
 
         return response.data.map(i => i.joke as string)
     }
     catch (e) {
-        //  Request failed with status code 429 ERR_BAD_REQUEST
+        //  Request failed with status code 429 | ERR_BAD_REQUEST
 
-        // console.log('bbbb', e?.message, e?.code);
+        await GetOptionsAsync(true) // change api key
 
         return undefined
     }
