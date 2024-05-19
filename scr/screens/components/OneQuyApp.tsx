@@ -26,14 +26,14 @@ var cachedJson: undefined | OneQuyAppData[] = undefined
 var cachedCurrentAppIdx = 0
 
 const OneQuyApp = ({
-    excludeAppName = undefined,
+    excludeAppName,
     primaryColor = '#1c1c1c',
     counterPrimaryColor = '#fafafa',
     counterBackgroundColor = '#C1C1C1',
     backgroundColor = '#fafafa',
     fontSize = 13,
 }: {
-    excludeAppName?: string,
+    excludeAppName: string,
     primaryColor?: ColorValue
     counterPrimaryColor?: ColorValue
     counterBackgroundColor?: ColorValue
@@ -191,7 +191,7 @@ const OneQuyApp = ({
             )
 
         if (jsonRes.json) {
-            cachedJson = (jsonRes.json as OneQuyAppData[]).filter(i => excludeAppName === undefined || i.appName !== excludeAppName)
+            cachedJson = (jsonRes.json as OneQuyAppData[]).filter(i => i.appName !== excludeAppName)
             ShuffleArray(cachedJson)
             set_listApps(cachedJson)
         }
