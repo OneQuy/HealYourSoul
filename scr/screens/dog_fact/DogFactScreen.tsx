@@ -1,4 +1,5 @@
 import { Category, StorageKey_CatFact_CurrentFactIdx, StorageKey_DogFact_CurrentFactIdx, StorageKey_MovieQuote_CurrentIdx } from "../../constants/AppConstants";
+import { GetStaticFileUrl } from "../../handle/AppConfigHandler";
 import { TheRandomShortText_FileConfig } from "../template/TheRandomShortText_FileConfig";
 
 export const DogFactScreen = () => {
@@ -25,11 +26,16 @@ export const CatFactScreen = () => {
     )
 }
 
+
+
 export const MovieQuoteScreen = () => {
+    const file = GetStaticFileUrl('movieQuote', 'https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Fmovie_quotes.json?alt=media&token=3aaf866c-2463-483f-8478-f73a18f84a42')
+    // console.log(file);
+
     return (
         <TheRandomShortText_FileConfig
             category={Category.MovieQuote}
-            fileURL='https://firebasestorage.googleapis.com/v0/b/warm-379a6.appspot.com/o/file_configs%2Fmovie_quotes.json?alt=media&token=3aaf866c-2463-483f-8478-f73a18f84a42'
+            fileURL={file}
             configFileName="movie_quotes"
             currentItemStorageKey={StorageKey_MovieQuote_CurrentIdx}
             shuffleIfJsonIsArray={true}
