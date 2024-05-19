@@ -79,8 +79,11 @@ const MiniIAP = ({
     }
 
     const onPressed_LaterOneQuyApp = useCallback(() => {
-        if (laterBtnRemainSeconds <= 0)
+        if (laterBtnRemainSeconds <= 0) {
             setshowMyApps(false)
+
+            track_OneQuyApps('press_later', '')
+        }
     }, [laterBtnRemainSeconds])
 
     const onPressed_Later = useCallback(() => {
