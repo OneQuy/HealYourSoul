@@ -297,6 +297,11 @@ export const track_Simple = (event: string) => {
     )
 }
 
+export const track_OneQuyApps = (event: string, currentAppName: string) => {
+    console.log(event, currentAppName);
+    
+}
+
 export const track_SimpleWithParam = (event: string, value: string) => {
     MainTrack(event,
         [

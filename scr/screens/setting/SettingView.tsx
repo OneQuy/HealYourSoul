@@ -10,7 +10,7 @@ import { ThemeContext } from '../../constants/Colors';
 import { BorderRadius, FontSize, FontWeight, Icon, LocalText, Outline, Size, StorageKey_DidRateInApp, StorageKey_FirstTimeInstallTick, StorageKey_IsAnimLoadMedia, StorageKey_LastTickSendFeedback, StorageKey_NinjaFact_ToggleNoti, StorageKey_NinjaJoke_ToggleNoti, StorageKey_Quote_ToggleNoti } from '../../constants/AppConstants';
 import { ScrollView } from 'react-native-gesture-handler';
 import { CopyAndToast, CreateUserInfoObjectAsync, OpenStore, RateApp, ShareApp } from '../../handle/AppUtils';
-import { location, track_RateInApp, track_Simple, track_SimpleWithParam, track_ToggleNotification } from '../../handle/tracking/GoodayTracking';
+import { location, track_OneQuyApps, track_RateInApp, track_Simple, track_SimpleWithParam, track_ToggleNotification } from '../../handle/tracking/GoodayTracking';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { GetBooleanAsync, GetDateAsync, GetDateAsync_IsValueExistedAndIsTodayAndSameHour, SetBooleanAsync, SetDateAsync_Now } from '../../handle/AsyncStorageUtils';
 import { IsValuableArrayOrString, SafeDateString, ToCanPrint } from '../../handle/UtilsTS';
@@ -410,6 +410,7 @@ const SettingView = () => {
           backgroundColor={theme.background}
           counterBackgroundColor={theme.counterBackground}
           fontSize={FontSize.Small_L}
+          onEvent={track_OneQuyApps}
         />
 
         {

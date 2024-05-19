@@ -11,7 +11,7 @@ import { useAppDispatch } from '../../redux/Store';
 import { GetAppConfig } from '../../handle/AppConfigHandler';
 import { SafeValue } from '../../handle/UtilsTS';
 import { usePremium } from '../../hooks/usePremium';
-import { track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
+import { track_OneQuyApps, track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 import { AdmobInterstitial } from '../../handle/ads/Admob';
 import OneQuyApp from './OneQuyApp';
 
@@ -227,6 +227,7 @@ const MiniIAP = ({
                     backgroundColor={theme.background}
                     counterBackgroundColor={theme.counterBackground}
                     fontSize={FontSize.Small_L}
+                    onEvent={track_OneQuyApps}
                 />
 
                 {/* later btn */}
