@@ -16,6 +16,9 @@ import { HandleVersionsFileAsync } from './VersionsHandler';
 import { GetStreakAsync, SetStreakAsync } from './Streak';
 import { OneSignal } from 'react-native-onesignal';
 import { FirebaseDatabase_GetValueAsyncWithTimeOut } from '../firebase/FirebaseDatabase';
+import { AppDispatch } from '../redux/Store';
+import { ClearUserForcePremiumDataAsync, GetUserForcePremiumDataAsync } from './tracking/UserMan';
+import { setForceSubscribe } from '../redux/UserDataSlice';
 
 const HowLongInMinutesToCount2TimesUseAppSeparately = 20
 
@@ -39,6 +42,18 @@ export const setNavigation = (navi: NavigationType) => {
     }
 
     navigation = navi
+}
+
+var appDispatch: AppDispatch | undefined = undefined
+
+export const setAppDispatch = (dispatch: AppDispatch) => {
+    if (dispatch === appDispatch) {
+        return
+    }
+
+    console.log('setttt');
+
+    appDispatch = dispatch
 }
 
 /** reload (app config + file version) if app re-active after a period 1 HOUR */
@@ -251,6 +266,10 @@ export const CheckAndTriggerFirstOpenAppOfTheDayAsync = async () => {
     // track day of week
 
     track_SimpleWithParam('gooday_week', DayName(undefined, true))
+
+    // CheckForcePremiumDataAsync
+
+    CheckForcePremiumDataAsync()
 }
 
 /**
@@ -364,6 +383,27 @@ export const HandleGoodayStreakAsync = async (forceShow = false) => {
 
     if (!forceShow)
         track_Streak(data.currentStreak, data.bestStreak)
+}
+
+const CheckForcePremiumDataAsync = async () => {
+    if (!appDispatch)
+        return
+
+    const data = await GetUserForcePremiumDataAsync()
+
+    console.log('[CheckForcePremiumDataAsync] data', data);
+
+    if (!data)
+        return
+
+    appDispatch(setForceSubscribe([
+        data.id,
+        data.tick
+    ]))
+
+    await ClearUserForcePremiumDataAsync()
+
+    track_SimpleWithParam('forced_subscribe', data.id + '__' + data.tick)
 }
 
 const SetupOneSignal = () => {

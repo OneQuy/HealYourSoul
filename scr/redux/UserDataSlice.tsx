@@ -306,6 +306,13 @@ const slice = createSlice({
                 tick: Date.now(),
             } as SubscribedData
         },
+        
+        setForceSubscribe: (state, action: PayloadAction<[string, number]>) => {
+            state.subscribedData = {
+                id: action.payload[0],
+                tick: action.payload[1],
+            } as SubscribedData
+        },
 
         resetSubscribe: (state) => {
             state.subscribedData = undefined
@@ -922,6 +929,7 @@ export const {
     removeFunSoundFavoritedID,
 
     setSubscribe,
+    setForceSubscribe,
     resetSubscribe,
 
     addDrawSeenID,

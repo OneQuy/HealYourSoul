@@ -24,7 +24,7 @@ import { toast } from '@baronha/ting';
 import { IsDev } from '../handle/IsDev';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { useNavigation } from '@react-navigation/native';
-import { GoToScreen, setNavigation } from '../handle/GoodayAppState';
+import { GoToScreen, setAppDispatch, setNavigation } from '../handle/GoodayAppState';
 import { usePremium } from '../hooks/usePremium';
 import InboxButton, { GetInboxButtonGlobalStatus } from '../screens/inbox/InboxButton';
 import { toggleMinialDrawer } from '../redux/UserDataSlice';
@@ -224,6 +224,10 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
     changePremiumBtnBg()
     setNavigation(navigation)
   }, [])
+  
+  useEffect(() => {
+    setAppDispatch(dispatch)
+  }, [dispatch])
 
   const colorSettingText = !isFocusSetting ? theme.background : theme.primary
   const colorSavedText = !isFocusSaved ? theme.background : theme.primary
