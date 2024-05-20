@@ -14,6 +14,7 @@ import { usePremium } from '../../hooks/usePremium';
 import { track_OneQuyApps, track_SimpleWithParam } from '../../handle/tracking/GoodayTracking';
 import { AdmobInterstitial } from '../../handle/ads/Admob';
 import OneQuyApp from './OneQuyApp';
+import useCountdown from '../../hooks/useCountdown';
 
 const TOAnimated = Animated.createAnimatedComponent(TouchableOpacity)
 
@@ -30,6 +31,9 @@ const MiniIAP = ({
     const [product, setProduct] = useState(allProducts[0])
     const [processing, setProcessing] = useState(false)
     const [showMiniIAP, setShowMiniIAP] = useState(false)
+    const { timeLeft: timeLeftLaterMiniIap, restartCountdown } = useCountdown(10, false)
+
+    // console.log('timeLeft', timeLeftLaterMiniIap);
 
     const [showMyApps, setshowMyApps] = useState(false)
     const [laterBtnRemainSeconds, setLaterBtnRemainSeconds] = useState(5)
@@ -87,9 +91,12 @@ const MiniIAP = ({
     }, [laterBtnRemainSeconds])
 
     const onPressed_Later = useCallback(() => {
+        if (timeLeftLaterMiniIap > 0)
+            return
+
         setShowMiniIAP(false)
         track_SimpleWithParam('mini_iap', 'later')
-    }, [])
+    }, [timeLeftLaterMiniIap])
 
     const showAdsOrMiniIap = useCallback(async (forceMiniIap: boolean) => {
         console.log('showAdsOrMiniIap, forceMiniIap =', forceMiniIap);
@@ -99,7 +106,7 @@ const MiniIAP = ({
         if (!forceMiniIap && AdmobInterstitial.Show())
             return
 
-        // or show mini iap
+        // or onequy apps
 
         if (!isReadyPurchase) {
             console.log('show ads failed, to show mini iap but isReadyPurchase = false so show @onequy apps now')
@@ -108,6 +115,8 @@ const MiniIAP = ({
 
             return
         }
+
+        // or show mini iap!
 
         let idxProductShowedBefore = await GetNumberIntAsync(StorageKey_LastMiniIapProductIdxShowed, -1)
 
@@ -119,10 +128,12 @@ const MiniIAP = ({
         SetNumberAsync(StorageKey_LastMiniIapProductIdxShowed, idxProductShowedBefore)
 
         setProduct(allProducts[idxProductShowedBefore])
+
         setShowMiniIAP(true)
+        restartCountdown()
 
         track_SimpleWithParam('mini_iap', 'show')
-    }, [isReadyPurchase, setOneQuyAppState])
+    }, [isReadyPurchase, setOneQuyAppState, restartCountdown])
 
     const style = useMemo(() => {
         return StyleSheet.create({
@@ -245,6 +256,9 @@ const MiniIAP = ({
         return undefined
     }
 
+    if (timeLeftLaterMiniIap > 1)
+        laterScaleRef.setValue(1)
+
     return (
         <View style={style.master} >
             <Image source={logoScr} resizeMode='contain' style={[style.logoImg]} />
@@ -266,7 +280,7 @@ const MiniIAP = ({
             {/* later btn */}
 
             <TOAnimated onPress={onPressed_Later} style={[style.laterTO, { transform: [{ scale: laterScaleRef }] }]}>
-                <Text style={style.benefitsTxt}>{LocalText.later}</Text>
+                <Text style={style.benefitsTxt}>{timeLeftLaterMiniIap > 0 ? `${timeLeftLaterMiniIap}s` : LocalText.later}</Text>
             </TOAnimated>
         </View>
     )
