@@ -1,6 +1,14 @@
 started project: 13/07/2023
 
 =========================
+cheat in Setting:
+
+- press install date to get User ID
+- press thank to get location
+- press 'Theme' to show streak
+- press 'Notification' to ResetSubscribe
+
+=========================
 
 alert priority:
 
