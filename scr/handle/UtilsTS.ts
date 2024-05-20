@@ -904,6 +904,11 @@ export const DayName = (date?: Date, is3Char?: boolean): string => {
         return name
 }
 
+export const GetTodayStringUnderscore = () => {
+    const today = new Date()
+    return 'd' + today.getDate() + '_m' + (today.getMonth() + 1) + '_' + today.getFullYear()
+}
+
 export const GetDayHourMinSecFromMs_ToString = (
     ms: number,
     separator = '_',
@@ -1314,12 +1319,19 @@ export async function ExecuteWithTimeoutAsync<T>(asyncFunction: () => Promise<T>
 
 /**
  * 
- * @returns if anything === undefined => defaultValue
- * @returns if anything !== undefined => anythhing
+ * @returns if (typeof anything !== typeof defaultValue) => defaultValue
+ * @returns if (typeof anything === typeof defaultValue) => anything
  */
-export function SafeValue<T>(anything: any, defaultValue: T, forceNaNToDefault = true): T {
+export function SafeValue<T>(
+    anything: any,
+    defaultValue: T,
+    forceNaNToDefault = true,
+    forceEmptyStringToDefault = true
+): T {
     if (typeof anything === typeof defaultValue) {
-        if (Number.isNaN(anything) && forceNaNToDefault)
+        if (forceEmptyStringToDefault && typeof anything === 'string' && anything.length <= 0)
+            return defaultValue
+        else if (forceNaNToDefault && Number.isNaN(anything))
             return defaultValue
         else
             return anything
