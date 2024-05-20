@@ -289,22 +289,6 @@ const SettingView = () => {
         ref={scrollRef}
         showsVerticalScrollIndicator={false} contentContainerStyle={style.scrollView}>
 
-        {/* rate in app */}
-
-        {
-          !showRateInApp ? undefined :
-            <>
-              <Text style={style.titleText}>{LocalText.rate_app}</Text>
-              <Text style={style.contentTxt}>{LocalText.rate_in_app_text}:</Text>
-
-              <View style={style.rateContainerView}>
-                {
-                  renderRateStars
-                }
-              </View>
-            </>
-        }
-
         {/* theme */}
 
         <Text
@@ -320,6 +304,35 @@ const SettingView = () => {
 
         <Text style={style.contentTxt}>{LocalText.specials_theme}</Text>
         <ThemeScroll mode='specials' />
+
+        {
+          hair100Width()
+        }
+        {/* other apps */}
+
+        <Text style={style.titleText}>{LocalText.check_out_apps}</Text>
+
+        <OneQuyApp
+          excludeAppName='Gooday'
+          primaryColor={theme.counterBackground}
+          counterPrimaryColor={theme.background}
+          backgroundColor={theme.background}
+          counterBackgroundColor={theme.counterBackground}
+          fontSize={FontSize.Small_L}
+          onEvent={track_OneQuyApps}
+        />
+
+        {
+          hair100Width()
+        }
+
+        {/* community */}
+
+        <Text style={style.titleText}>{LocalText.community}</Text>
+        <Text style={style.contentTxt}>{LocalText.community_content}:</Text>
+        {
+          renderCommunityBtns
+        }
 
         {
           hair100Width()
@@ -374,45 +387,34 @@ const SettingView = () => {
           hair100Width()
         }
 
-        {/* contact */}
+        {/* rate in app */}
 
-        <Text style={style.titleText}>{LocalText.Contact}</Text>
+        {
+          !showRateInApp ? undefined :
+            <>
+              <Text style={style.titleText}>{LocalText.rate_app}</Text>
+              <Text style={style.contentTxt}>{LocalText.rate_in_app_text}:</Text>
+
+              <View style={style.rateContainerView}>
+                {
+                  renderRateStars
+                }
+              </View>
+            </>
+        }
+
+        {/* share app */}
+
         <View style={style.flexRowWithGap}>
-          <Text style={style.contentTxt}>onequy@gmail.com</Text>
-          <TouchableOpacity onPress={() => onPress('email')} style={style.emailCopyTO} >
-            <MaterialIcons name={Icon.Copy} color={theme.counterBackground} size={Size.IconSmaller} />
+          <TouchableOpacity onPress={ShareApp} style={style.shareTO}>
+            <MaterialCommunityIcons name={Icon.ShareText} color={theme.counterPrimary} size={Size.IconSmaller} />
+            <Text style={style.btnText}>{LocalText.share_app}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={RateApp} style={style.shareTO}>
+            <MaterialCommunityIcons name={Icon.Star} color={theme.counterPrimary} size={Size.IconSmaller} />
+            <Text style={style.btnText}>{LocalText.rate_app}</Text>
           </TouchableOpacity>
         </View>
-        {
-          hair100Width()
-        }
-
-        {/* community */}
-
-        <Text style={style.titleText}>{LocalText.community}</Text>
-        <Text style={style.contentTxt}>{LocalText.community_content}:</Text>
-        {
-          renderCommunityBtns
-        }
-
-        {
-          hair100Width()
-        }
-
-        {/* other apps */}
-
-        <Text style={style.titleText}>{LocalText.check_out_apps}</Text>
-
-        <OneQuyApp
-          excludeAppName='Gooday'
-          primaryColor={theme.counterBackground}
-          counterPrimaryColor={theme.background}
-          backgroundColor={theme.background}
-          counterBackgroundColor={theme.counterBackground}
-          fontSize={FontSize.Small_L}
-          onEvent={track_OneQuyApps}
-        />
-
         {
           hair100Width()
         }
@@ -462,16 +464,13 @@ const SettingView = () => {
           hair100Width()
         }
 
-        {/* share app */}
+        {/* contact */}
 
+        <Text style={style.titleText}>{LocalText.Contact}</Text>
         <View style={style.flexRowWithGap}>
-          <TouchableOpacity onPress={ShareApp} style={style.shareTO}>
-            <MaterialCommunityIcons name={Icon.ShareText} color={theme.counterPrimary} size={Size.IconSmaller} />
-            <Text style={style.btnText}>{LocalText.share_app}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={RateApp} style={style.shareTO}>
-            <MaterialCommunityIcons name={Icon.Star} color={theme.counterPrimary} size={Size.IconSmaller} />
-            <Text style={style.btnText}>{LocalText.rate_app}</Text>
+          <Text style={style.contentTxt}>onequy@gmail.com</Text>
+          <TouchableOpacity onPress={() => onPress('email')} style={style.emailCopyTO} >
+            <MaterialIcons name={Icon.Copy} color={theme.counterBackground} size={Size.IconSmaller} />
           </TouchableOpacity>
         </View>
         {
