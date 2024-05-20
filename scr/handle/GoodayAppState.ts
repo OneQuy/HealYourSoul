@@ -18,7 +18,8 @@ import { OneSignal } from 'react-native-onesignal';
 import { FirebaseDatabase_GetValueAsyncWithTimeOut } from '../firebase/FirebaseDatabase';
 import { AppDispatch } from '../redux/Store';
 import { ClearUserForcePremiumDataAsync, GetUserForcePremiumDataAsync } from './tracking/UserMan';
-import { setForceSubscribe } from '../redux/UserDataSlice';
+import { resetSubscribe, setForceSubscribe } from '../redux/UserDataSlice';
+import { UserID } from './UserID';
 
 const HowLongInMinutesToCount2TimesUseAppSeparately = 20
 
@@ -50,8 +51,6 @@ export const setAppDispatch = (dispatch: AppDispatch) => {
     if (dispatch === appDispatch) {
         return
     }
-
-    console.log('setttt');
 
     appDispatch = dispatch
 }
@@ -396,14 +395,22 @@ const CheckForcePremiumDataAsync = async () => {
     if (!data)
         return
 
-    appDispatch(setForceSubscribe([
-        data.id,
-        data.tick
-    ]))
+    if (data.id === 'reset') {
+        appDispatch(resetSubscribe())
+    }
+    else {
+        appDispatch(setForceSubscribe([
+            data.id,
+            data.tick
+        ]))
+
+        track_SimpleWithParam('forced_subscribe', UserID() + '__' + data.id + '__' + data.tick)
+
+        Alert.alert('Wohoo!', 'You granted: ' + data.id + '. Really thanks for your support!')
+    }
 
     await ClearUserForcePremiumDataAsync()
 
-    track_SimpleWithParam('forced_subscribe', data.id + '__' + data.tick)
 }
 
 const SetupOneSignal = () => {
