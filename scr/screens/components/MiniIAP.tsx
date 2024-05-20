@@ -31,9 +31,12 @@ const MiniIAP = ({
     const [product, setProduct] = useState(allProducts[0])
     const [processing, setProcessing] = useState(false)
     const [showMiniIAP, setShowMiniIAP] = useState(false)
-    const { timeLeft: timeLeftLaterMiniIap, restartCountdown } = useCountdown(10, false)
 
-    // console.log('timeLeft', timeLeftLaterMiniIap);
+    const initCountdown = SafeValue(GetAppConfig()?.ads.laterMiniIap, 3)
+
+    const { timeLeft: timeLeftLaterMiniIap, restartCountdown } = useCountdown(initCountdown, false)
+
+    // console.log('timeLeft', timeLeftLaterMiniIap, initCountdown);
 
     const [showMyApps, setshowMyApps] = useState(false)
     const [laterBtnRemainSeconds, setLaterBtnRemainSeconds] = useState(5)

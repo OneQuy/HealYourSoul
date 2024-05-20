@@ -147,6 +147,7 @@ export type AppConfig = {
     ads: {
         new_day_free: number,
         loop: number,
+        laterMiniIap: number,
     },
     userUploadLimit: {
         freeUserUploadsPerDay: number,
