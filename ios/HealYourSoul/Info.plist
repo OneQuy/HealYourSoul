@@ -41,8 +41,6 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>To download these media to your Gallery please accept this permission.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
