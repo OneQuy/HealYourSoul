@@ -57,6 +57,8 @@ export type UserUploadPostStatus = 'approved' | '' | 'rejected' | 'banned'
 export type User = {
     inboxes?: Inbox[],
 
+    forcePremiumData?: SubscribedData,
+
     uploadLimit?: {
         uploadBannedReason?: string,
 

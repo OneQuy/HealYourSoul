@@ -1,5 +1,5 @@
 import { FirebaseDatabaseTimeOutMs } from "../../constants/AppConstants"
-import { CreateDefaultUser, Inbox, User } from "../../constants/Types"
+import { CreateDefaultUser, Inbox, SubscribedData, User } from "../../constants/Types"
 import { FirebaseDatabase_GetValueAsyncWithTimeOut, FirebaseDatabase_SetValueAsync } from "../../firebase/FirebaseDatabase"
 import { HandleError } from "../AppUtils"
 import { UserID } from "../UserID"
@@ -11,6 +11,10 @@ const GetUserFirebasePath = () => {
 
 const GetUserFirebasePath_AllInboxes = (userId?: string) => {
     return `user_data/users/${IsValuableArrayOrString(userId) ? userId : UserID()}/inboxes`
+}
+
+const GetUserFirebasePath_ForcePremiumData = (userId?: string) => {
+    return `user_data/users/${IsValuableArrayOrString(userId) ? userId : UserID()}/forcePremiumData`
 }
 
 /**
@@ -64,4 +68,19 @@ export const InboxUserAsync = async (inbox: Inbox, userId?: string): Promise<any
 
 export const ClearAllUserInboxesInFirebaseAsync = async (userId?: string): Promise<void> => {
     await FirebaseDatabase_SetValueAsync(GetUserFirebasePath_AllInboxes(userId), null)
+}
+
+// force subscribe data
+
+export const GetUserForcePremiumDataAsync = async (userId?: string): Promise<SubscribedData | null> => {
+    const userRes = await FirebaseDatabase_GetValueAsyncWithTimeOut(GetUserFirebasePath_ForcePremiumData(userId), FirebaseDatabaseTimeOutMs)
+
+    if (!userRes.value) // error or empty data user
+        return null
+
+    return userRes.value as SubscribedData
+}
+
+export const ClearUserForcePremiumDataAsync = async (userId?: string): Promise<void> => {
+    await FirebaseDatabase_SetValueAsync(GetUserFirebasePath_ForcePremiumData(userId), null)
 }
