@@ -397,6 +397,7 @@ const CheckForcePremiumDataAsync = async () => {
 
     if (data.id === 'reset') {
         appDispatch(resetSubscribe())
+        track_SimpleWithParam('forced_subscribe', UserID() + '__reset')
     }
     else {
         appDispatch(setForceSubscribe([
