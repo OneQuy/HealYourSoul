@@ -64,7 +64,7 @@ async function JustDoIt() {
       cat = 'catdog'
     else if (IsParamExist('love') || IsParamExist('lo'))
       cat = 'love'
-    else if (IsParamExist('satisfying') || IsParamExist('sa'))
+    else if (IsParamExist('satisfying') || IsParamExist('sg'))
       cat = 'satisfying'
     else if (IsParamExist('nsfw') || IsParamExist('ns'))
       cat = 'nsfw'
@@ -72,7 +72,7 @@ async function JustDoIt() {
       cat = 'cute'
     else if (IsParamExist('art') || IsParamExist('ar'))
       cat = 'art'
-    else if (IsParamExist('sarcasm') || IsParamExist('sa'))
+    else if (IsParamExist('sarcasm') || IsParamExist('sm'))
       cat = 'sarcasm'
     else if (IsParamExist('av'))
       cat = 'awesomevideo'
