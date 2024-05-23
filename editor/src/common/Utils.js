@@ -126,7 +126,7 @@ function IsValuableArrayOrString(value, trimString = true) {
         return false
 }
 
-export function ArrayAddWithCheckDuplicate(
+function ArrayAddWithCheckDuplicate(
     arr,
     itemsToAdd,
     propertyForCompareIfTypeIsObject,

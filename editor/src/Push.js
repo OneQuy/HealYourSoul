@@ -1,5 +1,5 @@
 const { PullFileListAsync } = require("./PullData")
-const { GetFileExtensionByFilepath, RemoveEmptyAndFalsyFromObject } = require("./common/Utils")
+const { GetFileExtensionByFilepath } = require("./common/Utils")
 const clipboard = require('copy-paste');
 const firebase = require('./common/Firebase_NodeJS')
 const firebaseStorage = require('./common/FirebaseStorage_NodeJS');
@@ -99,6 +99,18 @@ function GetMediaTypeByFileExtension(extension) {
         return 1
     else
         throw new Error(extension + ' extention is not able to regconize');
+}
+
+
+function RemoveEmptyAndFalsyFromObject(obj) {
+    /**
+     * Creates a new object with empty strings, null, and undefined properties removed.
+     * @param {Object} obj The object to filter.
+     * @returns {Object} A new object with filtered properties.
+     */
+    return Object.fromEntries(
+        Object.entries(obj).filter(([key, value]) => value !== null && value !== undefined && value !== '')
+    );
 }
 
 function RemoveEmptyAndFalsy(obj) {
