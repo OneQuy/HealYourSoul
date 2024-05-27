@@ -89,9 +89,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.onequy.gooday"
+    namespace "com.onequy.mygooday"
     defaultConfig {
-        applicationId "com.onequy.gooday"
+        applicationId "com.onequy.mygooday"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode gitCount

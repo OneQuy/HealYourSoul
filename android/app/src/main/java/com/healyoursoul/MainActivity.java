@@ -1,4 +1,4 @@
-package com.onequy.gooday;
+package com.onequy.mygooday;
 import expo.modules.ReactActivityDelegateWrapper;
 
 import com.facebook.react.ReactActivity;

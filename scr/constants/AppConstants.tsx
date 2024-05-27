@@ -318,7 +318,7 @@ export const shareAppText = `⭐️ Gooday - Make your day good. A meme, informa
 
 👉 AppStore: https://apps.apple.com/us/app/gooday-make-your-day/id6471367879
 
-👉 Google Play: https://play.google.com/store/apps/details?id=com.onequy.gooday
+👉 Google Play: https://play.google.com/store/apps/details?id=com.onequy.mygooday
 
 #gooday #make_your_day_good`
 

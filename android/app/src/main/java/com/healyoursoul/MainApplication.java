@@ -1,4 +1,4 @@
-package com.onequy.gooday;
+package com.onequy.mygooday;
 import android.content.res.Configuration;
 import expo.modules.ApplicationLifecycleDispatcher;
 import expo.modules.ReactNativeHostWrapper;
