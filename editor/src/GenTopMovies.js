@@ -3,8 +3,8 @@ const { LogRed, LogGreen, SplitSectionsFromText } = require("./Utils_NodeJS")
 const fs = require('fs')
 
 const filepath = './assets/json/top_movies.json'
-const source_html = './editor/top-movies-html.txt'
-const source_txt = './editor/movies.txt'
+const source_html = './editor/data_for_generate/top-movies-html.txt'
+const source_txt = './editor/data_for_generate/movies.txt'
 
 
 const rates = ['R', 'PG-13', 'Approved', 'Not Rate', 'PG']
