@@ -1,26 +1,26 @@
 [
  {
-  "desc": "Over the course of several years, two convicts form a friendship, seeking consolation and, eventually, redemption through basic compassion.",
+  "desc": "A banker convicted of uxoricide forms a friendship over a quarter century with a hardened convict, while maintaining his innocence and trying to remain hopeful through simple compassion.",
   "rank": 1,
   "title": "The Shawshank Redemption",
   "info": "1994 • 2h 22m • R",
-  "rate": "9.3 (2.9M)",
-  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNDE3ODcxYzMtY2YzZC00NmNlLWJiNDMtZDViZWM2MzIxZDYwXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_QL75_UX140_CR0"
+  "rate": "9.3 (3M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMDAyY2FhYjctNDc5OS00MDNlLThiMGUtY2UxYWVkNGY2ZjljXkEyXkFqcGc@._V1_QL75_UX140_CR0"
  },
  {
   "desc": "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.",
   "rank": 2,
   "title": "The Godfather",
   "info": "1972 • 2h 55m • R",
-  "rate": "9.2 (2M)",
-  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWJmNWYtYzZlODY3ZTk3OTFlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_QL75_UY207_CR3"
+  "rate": "9.2 (2.1M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BYTJkNGQyZDgtZDQ0NC00MDM0LWEzZWQtYzUzZDEwMDljZWNjXkEyXkFqcGc@._V1_QL75_UY207_CR3"
  },
  {
-  "desc": "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.",
+  "desc": "When a menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman, James Gordon and Harvey Dent must work together to put an end to the madness.",
   "rank": 3,
   "title": "The Dark Knight",
   "info": "2008 • 2h 32m • PG-13",
-  "rate": "9.0 (2.9M)",
+  "rate": "9.0 (3M)",
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_QL75_UX140_CR0"
  },
  {
@@ -29,15 +29,40 @@
   "title": "The Godfather Part II",
   "info": "1974 • 3h 22m • R",
   "rate": "9.0 (1.4M)",
+<<<<<<< Updated upstream
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMWMwMGQzZTItY2JlNC00OWZiLWIyMDctNDk2ZDQ2YjRjMWQ0XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_QL75_UY207_CR3"
+=======
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNzc1OWY5MjktZDllMi00ZDEzLWEwMGItYjk1YmRhYjBjNTVlXkEyXkFqcGc@._V1_QL75_UY207_CR3"
+>>>>>>> Stashed changes
  },
  {
   "desc": "The jury in a New York City murder trial is frustrated by a single member whose skeptical caution forces them to more carefully consider the evidence before jumping to a hasty verdict.",
   "rank": 5,
   "title": "12 Angry Men",
   "info": "1957 • 1h 36m • Approved",
+<<<<<<< Updated upstream
   "rate": "9.0 (869K)",
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMWU4N2FjNzYtNTVkNC00NzQ0LTg0MjAtYTJlMjFhNGUxZDFmXkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_QL75_UX140_CR0"
+=======
+  "rate": "9.0 (903K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BYjE4NzdmOTYtYjc5Yi00YzBiLWEzNDEtNTgxZGQ2MWVkN2NiXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "Gandalf and Aragorn lead the World of Men against Sauron's army to draw his gaze from Frodo and Sam as they approach Mount Doom with the One Ring.",
+  "rank": 6,
+  "title": "The Lord of the Rings: The Return of the King",
+  "info": "2003 • 3h 21m • PG-13",
+  "rate": "9.0 (2M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMTZkMjBjNWMtZGI5OC00MGU0LTk4ZTItODg2NWM3NTVmNWQ4XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "In German-occupied Poland during World War II, industrialist Oskar Schindler gradually becomes concerned for his Jewish workforce after witnessing their persecution by the Nazis.",
+  "rank": 7,
+  "title": "Schindler's List",
+  "info": "1993 • 3h 15m • R",
+  "rate": "9.0 (1.5M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNjM1ZDQxYWUtMzQyZS00MTE1LWJmZGYtNGUyNTdlYjM3ZmVmXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+>>>>>>> Stashed changes
  },
  {
   "desc": "In German-occupied Poland during World War II, industrialist Oskar Schindler gradually becomes concerned for his Jewish workforce after witnessing their persecution by the Nazis.",
@@ -60,18 +85,19 @@
   "rank": 8,
   "title": "Pulp Fiction",
   "info": "1994 • 2h 34m • R",
-  "rate": "8.9 (2.2M)",
-  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNGNhMDIzZTUtNTBlZi00MTRlLWFjM2ItYzViMjE3YzI5MjljXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_QL75_UY207_CR1"
+  "rate": "8.9 (2.3M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BYTViYTE3ZGQtNDBlMC00ZTAyLTkyODMtZGRiZDg0MjA2YThkXkEyXkFqcGc@._V1_QL75_UY207_CR1"
  },
  {
   "desc": "A meek Hobbit from the Shire and eight companions set out on a journey to destroy the powerful One Ring and save Middle-earth from the Dark Lord Sauron.",
   "rank": 9,
   "title": "The Lord of the Rings: The Fellowship of the Ring",
   "info": "2001 • 2h 58m • PG-13",
-  "rate": "8.9 (2M)",
-  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BN2EyZjM3NzUtNWUzMi00MTgxLWI0NTctMzY4M2VlOTdjZWRiXkEyXkFqcGdeQXVyNDUzOTQ5MjY@._V1_QL75_UX140_CR0"
+  "rate": "8.9 (2.1M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNzIxMDQ2YTctNDY4MC00ZTRhLTk4ODQtMTVlOWY4NTdiYmMwXkEyXkFqcGc@._V1_QL75_UX140_CR0"
  },
  {
+<<<<<<< Updated upstream
   "desc": "A bounty hunting scam joins two men in an uneasy alliance against a third in a race to find a fortune in gold buried in a remote cemetery.",
   "rank": 10,
   "title": "The Good, the Bad and the Ugly",
@@ -88,20 +114,42 @@
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNWIwODRlZTUtY2U3ZS00Yzg1LWJhNzYtMmZiYmEyNmU1NjMzXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_QL75_UY207_CR2"
  },
  {
+=======
+  "desc": "A bounty-hunting scam joins two men in an uneasy alliance against a third in a race to find a fortune in gold buried in a remote cemetery.",
+  "rank": 10,
+  "title": "The Good, the Bad and the Ugly",
+  "info": "1966 • 2h 58m • R",
+  "rate": "8.8 (838K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMWM5ZjQxM2YtNDlmYi00ZDNhLWI4MWUtN2VkYjBlMTY1ZTkwXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "The history of the United States from the 1950s to the '70s unfolds from the perspective of an Alabama man with an IQ of 75, who yearns to be reunited with his childhood sweetheart.",
+  "rank": 11,
+  "title": "Forrest Gump",
+  "info": "1994 • 2h 22m • PG-13",
+  "rate": "8.8 (2.3M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNDYwNzVjMTItZmU5YS00YjQ5LTljYjgtMjY2NDVmYWMyNWFmXkEyXkFqcGc@._V1_QL75_UY207_CR2"
+ },
+ {
+>>>>>>> Stashed changes
   "desc": "While Frodo and Sam edge closer to Mordor with the help of the shifty Gollum, the divided fellowship makes a stand against Sauron's new ally, Saruman, and his hordes of Isengard.",
   "rank": 12,
   "title": "The Lord of the Rings: The Two Towers",
   "info": "2002 • 2h 59m • PG-13",
   "rate": "8.8 (1.8M)",
+<<<<<<< Updated upstream
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZGMxZTdjZmYtMmE2Ni00ZTdkLWI5NTgtNjlmMjBiNzU2MmI5XkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_QL75_UX140_CR0"
+=======
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMGQxMDdiOWUtYjc1Ni00YzM1LWE2NjMtZTg3Y2JkMjEzMTJjXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+>>>>>>> Stashed changes
  },
  {
   "desc": "An insomniac office worker and a devil-may-care soap maker form an underground fight club that evolves into much more.",
   "rank": 13,
   "title": "Fight Club",
   "info": "1999 • 2h 19m • R",
-  "rate": "8.8 (2.3M)",
-  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMmEzNTkxYjQtZTc0MC00YTVjLTg5ZTEtZWMwOWVlYzY0NWIwXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_QL75_UX140_CR0"
+  "rate": "8.8 (2.4M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BOTgyOGQ1NDItNGU3Ny00MjU3LTg2YWEtNmEyYjBiMjI1Y2M5XkEyXkFqcGc@._V1_QL75_UX140_CR0"
  },
  {
   "desc": "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O., but his tragic past may doom the project and his team to disaster.",
@@ -112,12 +160,20 @@
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_QL75_UX140_CR0"
  },
  {
+<<<<<<< Updated upstream
   "desc": "After the Rebel Alliance are overpowered by the Empire, Luke Skywalker begins his Jedi training with Yoda, while his friends are pursued across the galaxy by Darth Vader and bounty hunter Boba Fett.",
+=======
+  "desc": "After the Empire overpowers the Rebel Alliance, Luke Skywalker begins his Jedi training with Yoda. At the same time, Darth Vader and bounty hunter Boba Fett pursue his friends across the galaxy.",
+>>>>>>> Stashed changes
   "rank": 15,
   "title": "Star Wars: Episode V - The Empire Strikes Back",
   "info": "1980 • 2h 4m • PG",
   "rate": "8.7 (1.4M)",
+<<<<<<< Updated upstream
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BYmU1NDRjNDgtMzhiMi00NjZmLTg5NGItZDNiZjU5NTU4OTE0XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_QL75_UX140_CR0"
+=======
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMTkxNGFlNDktZmJkNC00MDdhLTg0MTEtZjZiYWI3MGE5NWIwXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+>>>>>>> Stashed changes
  },
  {
   "desc": "When a beautiful stranger leads computer hacker Neo to a forbidding underworld, he discovers the shocking truth--the life he knows is the elaborate deception of an evil cyber-intelligence.",
@@ -125,7 +181,11 @@
   "title": "The Matrix",
   "info": "1999 • 2h 16m • R",
   "rate": "8.7 (2.1M)",
+<<<<<<< Updated upstream
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_QL75_UX140_CR0"
+=======
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BN2NmN2VhMTQtMDNiOS00NDlhLTliMjgtODE2ZTY0ODQyNDRhXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+>>>>>>> Stashed changes
  },
  {
   "desc": "The story of Henry Hill and his life in the mafia, covering his relationship with his wife Karen and his mob partners Jimmy Conway and Tommy DeVito.",
@@ -133,7 +193,11 @@
   "title": "Goodfellas",
   "info": "1990 • 2h 25m • R",
   "rate": "8.7 (1.3M)",
+<<<<<<< Updated upstream
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BY2NkZjEzMDgtN2RjYy00YzM1LWI4ZmQtMjIwYjFjNmI3ZGEwXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_QL75_UX140_CR0"
+=======
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BN2E5NzI2ZGMtY2VjNi00YTRjLWI1MDUtZGY5OWU1MWJjZjRjXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+>>>>>>> Stashed changes
  },
  {
   "desc": "In the Fall of 1963, a Korean War veteran and criminal pleads insanity and is admitted to a mental institution, where he rallies up the scared patients against the tyrannical nurse.",
@@ -141,6 +205,7 @@
   "title": "One Flew Over the Cuckoo's Nest",
   "info": "1975 • 2h 13m • R",
   "rate": "8.7 (1.1M)",
+<<<<<<< Updated upstream
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZjA0OWVhOTAtYWQxNi00YzNhLWI4ZjYtNjFjZTEyYjJlNDVlL2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_QL75_UX140_CR0"
  },
  {
@@ -278,16 +343,52 @@
   "info": "1960 • 1h 49m • R",
   "rate": "8.5 (721K)",
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNTQwNDM1YzItNDAxZC00NWY2LTk0M2UtNDIwNWI5OGUyNWUxXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_QL75_UX140_CR0"
+=======
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BYjBkMjgzMzYtNzRiMS00NDc3LWE4YTUtZjYxYjZhNjNhYzhhXkEyXkFqcGc@._V1_QL75_UX140_CR0"
  },
  {
-  "desc": "A former Roman General sets out to exact vengeance against the corrupt emperor who murdered his family and sent him into slavery.",
-  "rank": 36,
-  "title": "Gladiator",
-  "info": "2000 • 2h 35m • R",
-  "rate": "8.5 (1.6M)",
-  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkZTA1L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_QL75_UX140_CR0"
+  "desc": "When Earth becomes uninhabitable in the future, a farmer and ex-NASA pilot, Joseph Cooper, is tasked to pilot a spacecraft, along with a team of researchers, to find a new planet for humans.",
+  "rank": 19,
+  "title": "Interstellar",
+  "info": "2014 • 2h 49m • PG-13",
+  "rate": "8.7 (2.2M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BYzdjMDAxZGItMjI2My00ODA1LTlkNzItOWFjMDU5ZDJlYWY3XkEyXkFqcGc@._V1_QL75_UX140_CR0"
  },
  {
+  "desc": "Two detectives, a rookie and a veteran, hunt a serial killer who uses the seven deadly sins as his motives.",
+  "rank": 20,
+  "title": "Se7en",
+  "info": "1995 • 2h 7m • R",
+  "rate": "8.6 (1.9M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BY2IzNzMxZjctZjUxZi00YzAxLTk3ZjMtODFjODdhMDU5NDM1XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "An angel is sent from Heaven to help a desperately frustrated businessman by showing him what life would have been like if he had never existed.",
+  "rank": 21,
+  "title": "It's a Wonderful Life",
+  "info": "1946 • 2h 10m • PG",
+  "rate": "8.6 (520K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMDM4OWFhYjEtNTE5Yy00NjcyLTg5N2UtZDQwNDZlYjlmNDU5XkEyXkFqcGc@._V1_QL75_UY207_CR1"
+ },
+ {
+  "desc": "Farmers from a village exploited by bandits hire a veteran samurai for protection, and he gathers six other samurai to join him.",
+  "rank": 22,
+  "title": "Seven Samurai",
+  "info": "1954 • 3h 27m",
+  "rate": "8.6 (378K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZjliMWExOTMtZDQ3ZS00NWU3LWIyN2EtMjllNzk3ZTNlYzg4XkEyXkFqcGc@._V1_QL75_UY207_CR3"
+>>>>>>> Stashed changes
+ },
+ {
+  "desc": "A young F.B.I. cadet must receive the help of an incarcerated and manipulative cannibal killer to help catch another serial killer, a madman who skins his victims.",
+  "rank": 23,
+  "title": "The Silence of the Lambs",
+  "info": "1991 • 1h 58m • R",
+  "rate": "8.6 (1.6M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNDdhOGJhYzctYzYwZC00YmI2LWI0MjctYjg4ODdlMDExYjBlXkEyXkFqcGc@._V1_QL75_UY207_CR0"
+ },
+ {
+<<<<<<< Updated upstream
   "desc": "Miles Morales catapults across the multiverse, where he encounters a team of Spider-People charged with protecting its very existence. When the heroes clash on how to handle a new threat, Miles must redefine what it means to be a hero.",
   "rank": 37,
   "title": "Spider-Man: Across the Spider-Verse",
@@ -438,24 +539,289 @@
   "info": "2012 • 2h 45m • R",
   "rate": "8.5 (1.7M)",
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMjIyNTQ5NjQ1OV5BMl5BanBnXkFtZTcwODg1MDU4OA@@._V1_QL75_UX140_CR0"
+=======
+  "desc": "Following the Normandy Landings, a group of U.S. soldiers go behind enemy lines to retrieve a paratrooper whose brothers have been killed in action.",
+  "rank": 24,
+  "title": "Saving Private Ryan",
+  "info": "1998 • 2h 49m • R",
+  "rate": "8.6 (1.5M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZGZhZGQ1ZWUtZTZjYS00MDJhLWFkYjctN2ZlYjE5NWYwZDM2XkEyXkFqcGc@._V1_QL75_UY207_CR1"
+ },
+ {
+  "desc": "In the slums of Rio, two kids' paths diverge as one struggles to become a photographer and the other a kingpin.",
+  "rank": 25,
+  "title": "City of God",
+  "info": "2002 • 2h 10m • R",
+  "rate": "8.6 (824K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BYjY4NGI5OTUtY2ZlZS00Zjk4LTk5N2MtN2JmYWVjNGNmMGRlXkEyXkFqcGc@._V1_QL75_UY207_CR0"
+ },
+ {
+  "desc": "Paul Edgecomb, the head death row guard at a prison in 1930s Louisiana, meets an inmate, John Coffey, a black man who is accused of murdering two girls. His life changes drastically when he discovers that John has a special gift.",
+  "rank": 26,
+  "title": "The Green Mile",
+  "info": "1999 • 3h 9m • R",
+  "rate": "8.6 (1.5M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMTUxMzQyNjA5MF5BMl5BanBnXkFtZTYwOTU2NTY3._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "When an open-minded Jewish waiter and his son become victims of the Holocaust, he uses a perfect mixture of will, humor and imagination to protect his son from the dangers around their camp.",
+  "rank": 27,
+  "title": "Life Is Beautiful",
+  "info": "1997 • 1h 56m • PG-13",
+  "rate": "8.6 (765K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZTBhOGYzZjQtYzE0Mi00MGIwLWE0MWYtNzMxNTM2OTFkM2NjXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A cyborg, identical to the one who failed to kill Sarah Connor, must now protect her ten year old son John from an even more advanced and powerful cyborg.",
+  "rank": 28,
+  "title": "Terminator 2: Judgment Day",
+  "info": "1991 • 2h 17m • R",
+  "rate": "8.6 (1.2M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNGMyMGNkMDUtMjc2Ni00NWFlLTgyODEtZTY2MzBiZTg0OWZiXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a Wookiee and two droids to save the galaxy from the Empire's world-destroying battle station, while also attempting to rescue Princess Leia from the mysterious Darth Vader.",
+  "rank": 29,
+  "title": "Star Wars: Episode IV - A New Hope",
+  "info": "1977 • 2h 1m • PG",
+  "rate": "8.6 (1.5M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BOGUwMDk0Y2MtNjBlNi00NmRiLTk2MWYtMGMyMDlhYmI4ZDBjXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "Marty McFly, a 17-year-old high school student, is accidentally sent 30 years into the past in a time-traveling DeLorean invented by his close friend, the maverick scientist Doc Brown.",
+  "rank": 30,
+  "title": "Back to the Future",
+  "info": "1985 • 1h 56m • PG",
+  "rate": "8.5 (1.4M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZmM3ZjE0NzctNjBiOC00MDZmLTgzMTUtNGVlOWFlOTNiZDJiXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "During her family's move to the suburbs, a sullen 10-year-old girl wanders into a world ruled by gods, witches and spirits, and where humans are changed into beasts.",
+  "rank": 31,
+  "title": "Spirited Away",
+  "info": "2001 • 2h 4m • PG",
+  "rate": "8.6 (888K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNTEyNmEwOWUtYzkyOC00ZTQ4LTllZmUtMjk0Y2YwOGUzYjRiXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "During WWII, acclaimed Polish musician Wladyslaw faces various struggles as he loses contact with his family. As the situation worsens, he hides in the ruins of Warsaw in order to survive.",
+  "rank": 32,
+  "title": "The Pianist",
+  "info": "2002 • 2h 30m • R",
+  "rate": "8.5 (948K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMjEwNmEwYjgtNTk3ZC00NjljLTg5ZDctZTY3ZGQwZjRkZmQxXkEyXkFqcGc@._V1_QL75_UY207_CR5"
+ },
+ {
+  "desc": "A former Roman General sets out to exact vengeance against the corrupt emperor who murdered his family and sent him into slavery.",
+  "rank": 33,
+  "title": "Gladiator",
+  "info": "2000 • 2h 35m • R",
+  "rate": "8.5 (1.7M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BYWQ4YmNjYjEtOWE1Zi00Y2U4LWI4NTAtMTU0MjkxNWQ1ZmJiXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "Greed and class discrimination threaten the newly formed symbiotic relationship between the wealthy Park family and the destitute Kim clan.",
+  "rank": 34,
+  "title": "Parasite",
+  "info": "2019 • 2h 12m • R",
+  "rate": "8.5 (1M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BYjk1Y2U4MjQtY2ZiNS00OWQyLWI3MmYtZWUwNmRjYWRiNWNhXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A secretary on the run for embezzlement takes refuge at a secluded California motel owned by a repressed man and his overbearing mother.",
+  "rank": 35,
+  "title": "Psycho",
+  "info": "1960 • 1h 49m • R",
+  "rate": "8.5 (742K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BYjZhMzFiZjItODA3ZC00MmRhLWIzMGYtMmVjOWUwYTA3MTRjXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "Lion prince Simba and his father are targeted by his bitter uncle, who wants to ascend the throne himself.",
+  "rank": 36,
+  "title": "The Lion King",
+  "info": "1994 • 1h 28m",
+  "rate": "8.5 (1.2M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZGRiZDZhZjItM2M3ZC00Y2IyLTk3Y2MtMWY5YjliNDFkZTJlXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "An undercover cop and a mole in the police attempt to identify each other while infiltrating an Irish gang in South Boston.",
+  "rank": 37,
+  "title": "The Departed",
+  "info": "2006 • 2h 31m • R",
+  "rate": "8.5 (1.5M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMTI1MTY2OTIxNV5BMl5BanBnXkFtZTYwNjQ4NjY3._V1_QL75_UY207_CR0"
+ },
+ {
+  "desc": "A young boy and his little sister struggle to survive in Japan during World War II.",
+  "rank": 38,
+  "title": "Grave of the Fireflies",
+  "info": "1988 • 1h 28m",
+  "rate": "8.5 (335K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNTY5MmE2OGMtN2IxNC00MDY4LTkwMGEtZDUzOTYyNWE0ZTNjXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A promising young drummer enrolls at a cut-throat music conservatory where his dreams of greatness are mentored by an instructor who will stop at nothing to realize a student's potential.",
+  "rank": 39,
+  "title": "Whiplash",
+  "info": "2014 • 1h 46m • R",
+  "rate": "8.5 (1M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMDFjOWFkYzktYzhhMC00NmYyLTkwY2EtYjViMDhmNzg0OGFkXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "Living a life marked by violence, neo-Nazi Derek finally goes to prison after killing two black youths. Upon his release, Derek vows to change; he hopes to prevent his brother, Danny, who idolizes Derek, from following in his footsteps.",
+  "rank": 40,
+  "title": "American History X",
+  "info": "1998 • 1h 59m • R",
+  "rate": "8.5 (1.2M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMzhiOTQ0NDItOTg0Zi00OGVmLWE0OGEtMTI4NDM0NWMxZWU4XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "Miles Morales catapults across the multiverse, where he encounters a team of Spider-People charged with protecting its very existence. When the heroes clash on how to handle a new threat, Miles must redefine what it means to be a hero.",
+  "rank": 41,
+  "title": "Spider-Man: Across the Spider-Verse",
+  "info": "2023 • 2h 20m • PG",
+  "rate": "8.5 (427K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNThiZjA3MjItZGY5Ni00ZmJhLWEwN2EtOTBlYTA4Y2E0M2ZmXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "Rival 19th-century magicians engage in a bitter battle for trade secrets.",
+  "rank": 42,
+  "title": "The Prestige",
+  "info": "2006 • 2h 10m • PG-13",
+  "rate": "8.5 (1.5M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMjA4NDI0MTIxNF5BMl5BanBnXkFtZTYwNTM0MzY2._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "When a ronin requesting seppuku at a feudal lord's palace is told of the brutal suicide of another ronin who previously visited, he reveals how their pasts are intertwined - and in doing so challenges the clan's integrity.",
+  "rank": 43,
+  "title": "Harakiri",
+  "info": "1962 • 2h 13m",
+  "rate": "8.6 (76K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZThiZjU5ZDQtZDI4Mi00ZGYyLTkzOTktYmIzZTFlZTkxYzg5XkEyXkFqcGc@._V1_QL75_UY207_CR2"
+ },
+ {
+  "desc": "12-year-old Mathilda is reluctantly taken in by Léon, a professional assassin, after her family is murdered. An unusual relationship forms as she becomes his protégée and learns the assassin's trade.",
+  "rank": 44,
+  "title": "Léon: The Professional",
+  "info": "1994 • 1h 50m • R",
+  "rate": "8.5 (1.3M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNGRkYTNhOWQtYmI0Ni00MjZhLWJmMzAtMTA2Mjg4NGNiNDU0XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A cynical expatriate American cafe owner struggles to decide whether or not to help his former lover and her fugitive husband escape the Nazis in French Morocco.",
+  "rank": 45,
+  "title": "Casablanca",
+  "info": "1942 • 1h 42m • PG",
+  "rate": "8.5 (623K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNWEzN2U1YTYtYTQyMS00NTVkLWE2NGQtZWFlMmM0MDNjMmRiXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "The sole survivor of a pier shoot-out tells the story of how a notorious criminal influenced the events that began with five criminals meeting in a seemingly random police lineup.",
+  "rank": 46,
+  "title": "The Usual Suspects",
+  "info": "1995 • 1h 46m • R",
+  "rate": "8.5 (1.2M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BOTE5MDUxZDUtZWZmZC00NDVmLWFhOGQtNWI2YTc4NzY3MGQ0XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "After he becomes a quadriplegic from a paragliding accident, an aristocrat hires a young man from the projects to be his caregiver.",
+  "rank": 47,
+  "title": "The Intouchables",
+  "info": "2011 • 1h 52m • R",
+  "rate": "8.5 (960K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMTYxNDA3MDQwNl5BMl5BanBnXkFtZTcwNTU4Mzc1Nw@@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "Salvatore, a famous film director, returns to his hometown for the funeral of the local theater's film projectionist, Alfredo. He reminisces about his life as a young boy falling in love with cinema.",
+  "rank": 48,
+  "title": "Cinema Paradiso",
+  "info": "1988 • 2h 54m • PG",
+  "rate": "8.5 (295K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMTljNzc4YWEtYTZlMS00ODMyLWIwMTAtNWQxY2VkMDEwYTk5XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "The Tramp struggles to live in modern industrial society with the help of a young homeless woman.",
+  "rank": 49,
+  "title": "Modern Times",
+  "info": "1936 • 1h 27m",
+  "rate": "8.5 (269K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BODVkZGFhNGQtYjdiYi00Njc4LWFmYTItNTlmNzJjMTg1ZDc5XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "After investigating a mysterious transmission of unknown origin, the crew of a commercial spacecraft encounters a deadly lifeform.",
+  "rank": 50,
+  "title": "Alien",
+  "info": "1979 • 1h 57m • R",
+  "rate": "8.5 (998K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BN2NhMDk2MmEtZDQzOC00MmY5LThhYzAtMDdjZGFjOGZjMjdjXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A bored photographer recovering from a broken leg passes the time by watching his neighbors and begins to suspect one of them of murder.",
+  "rank": 51,
+  "title": "Rear Window",
+  "info": "1954 • 1h 52m • PG",
+  "rate": "8.5 (538K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BODZhOWI1ODgtMzdiOS00YjNkLTgwOGUtYmIyZDg5ZmQwMzQ1XkEyXkFqcGc@._V1_QL75_UY207_CR1"
+ },
+ {
+  "desc": "Paul Atreides unites with the Fremen while on a warpath of revenge against the conspirators who destroyed his family. Facing a choice between the love of his life and the fate of the universe, he endeavors to prevent a terrible future.",
+  "rank": 52,
+  "title": "Dune: Part Two",
+  "info": "2024 • 2h 46m • PG-13",
+  "rate": "8.5 (572K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNTc0YmQxMjEtODI5MC00NjFiLTlkMWUtOGQ5NjFmYWUyZGJhXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A mysterious stranger with a harmonica joins forces with a notorious desperado to protect a beautiful widow from a ruthless assassin working for the railroad.",
+  "rank": 53,
+  "title": "Once Upon a Time in the West",
+  "info": "1968 • 2h 46m • PG-13",
+  "rate": "8.5 (362K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZjYyNGY1MDEtN2I1MC00MGVhLTljZTYtODQ1NzQ0ODc2NzZlXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "With the help of a German bounty-hunter, a freed slave sets out to rescue his wife from a brutal plantation owner in Mississippi.",
+  "rank": 54,
+  "title": "Django Unchained",
+  "info": "2012 • 2h 45m • R",
+  "rate": "8.5 (1.8M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMjIyNTQ5NjQ1OV5BMl5BanBnXkFtZTcwODg1MDU4OA@@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "With the aid of a wealthy erratic tippler, a dewy-eyed tramp who has fallen in love with a sightless flower girl accumulates money to be able to help her medically.",
+  "rank": 55,
+  "title": "City Lights",
+  "info": "1931 • 1h 27m",
+  "rate": "8.5 (204K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BM2U4NjgzODUtODkyOC00YTE2LTlhNTItYzFlYmM1NTEzZDA2XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+>>>>>>> Stashed changes
  },
  {
   "desc": "A U.S. Army officer serving in Vietnam is tasked with assassinating a renegade Special Forces Colonel who sees himself as a god.",
   "rank": 56,
   "title": "Apocalypse Now",
   "info": "1979 • 2h 27m • R",
+<<<<<<< Updated upstream
   "rate": "8.4 (713K)",
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BYmQyNTA1ZGItNjZjMi00NzFlLWEzMWEtNWMwN2Q2MjJhYzEyXkEyXkFqcGdeQXVyMjUzOTY1NTc@._V1_QL75_UX140_CR0"
  },
  {
   "desc": "A man with short-term memory loss attempts to track down his wife's murderer.",
+=======
+  "rate": "8.4 (731K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZDhiMTljYjYtODc1Yy00MmEwLTg2OTYtYmE1YTRmNDE4MmEwXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "Leonard Shelby, an insurance investigator, suffers from anterograde amnesia and uses notes and tattoos to hunt for the man he thinks killed his wife, which is the last thing he remembers.",
+>>>>>>> Stashed changes
   "rank": 57,
   "title": "Memento",
   "info": "2000 • 1h 53m • R",
-  "rate": "8.4 (1.3M)",
-  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZTcyNjk1MjgtOWI3Mi00YzQwLWI5MTktMzY4ZmI2NDAyNzYzXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_QL75_UY207_CR1"
+  "rate": "8.4 (1.4M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BYmQ3MjliNjAtNWFiZS00YWI1LTlmZTktMzBiNDE1NjRhZjU0XkEyXkFqcGc@._V1_QL75_UY207_CR1"
  },
  {
+<<<<<<< Updated upstream
   "desc": "The real-life story of IPS Officer Manoj Kumar Sharma and IRS Officer Shraddha Joshi.",
   "rank": 58,
   "title": "12th Fail",
@@ -466,12 +832,17 @@
  {
   "desc": "In the distant future, a small waste-collecting robot inadvertently embarks on a space journey that will ultimately decide the fate of mankind.",
   "rank": 59,
+=======
+  "desc": "A robot who is responsible for cleaning a waste-covered Earth meets another robot and falls in love with her. Together, they set out on a journey that will alter the fate of mankind.",
+  "rank": 58,
+>>>>>>> Stashed changes
   "title": "WALL·E",
   "info": "2008 • 1h 38m",
   "rate": "8.4 (1.2M)",
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMjExMTg5OTU0NF5BMl5BanBnXkFtZTcwMjMxMzMzMw@@._V1_QL75_UX140_CR0"
  },
  {
+<<<<<<< Updated upstream
   "desc": "In 1936, archaeologist and adventurer Indiana Jones is hired by the U.S. government to find the Ark of the Covenant before the Nazis can obtain its awesome powers.",
   "rank": 60,
   "title": "Raiders of the Lost Ark",
@@ -488,10 +859,37 @@
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNmQyNmJjM2ItNTQzYi00ZjMxLWFjMDYtZjUyN2YwZDk5YWQ2XkEyXkFqcGdeQXVyMjUzOTY1NTc@._V1_QL75_UX140_CR0"
  },
  {
+=======
+  "desc": "In 1936, archaeologists and adventurers of the U.S. government hired Indiana Jones to find the Ark of the Covenant before the Nazis could obtain its extraordinary powers.",
+  "rank": 59,
+  "title": "Raiders of the Lost Ark",
+  "info": "1981 • 1h 55m • PG",
+  "rate": "8.4 (1.1M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BOGNhMjg2ZjgtYzk4Ni00MTViLTg1MmUtYzM2MDZiYjZlMmU3XkEyXkFqcGc@._V1_QL75_UY207_CR1"
+ },
+ {
+  "desc": "In 1984 East Berlin, an agent of the secret police conducting surveillance on a writer and his lover finds himself becoming increasingly absorbed by their lives.",
+  "rank": 60,
+  "title": "The Lives of Others",
+  "info": "2006 • 2h 17m • R",
+  "rate": "8.4 (422K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BYjM1N2Q0YWEtN2E5MC00NDM3LTk2NTEtMTc1NTk5OTA5ZGIzXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "The Avengers and their allies must be willing to sacrifice all in an attempt to defeat the powerful Thanos before his blitz of devastation and ruin puts an end to the universe.",
+  "rank": 61,
+  "title": "Avengers: Infinity War",
+  "info": "2018 • 2h 29m • PG-13",
+  "rate": "8.4 (1.3M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMjMxNjY2MDU1OV5BMl5BanBnXkFtZTgwNzY1MTUwNTM@._V1_QL75_UX140_CR0"
+ },
+ {
+>>>>>>> Stashed changes
   "desc": "A screenwriter develops a dangerous relationship with a faded film star determined to make a triumphant return.",
   "rank": 62,
   "title": "Sunset Boulevard",
   "info": "1950 • 1h 50m • Approved",
+<<<<<<< Updated upstream
   "rate": "8.4 (237K)",
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMTU0NTkyNzYwMF5BMl5BanBnXkFtZTgwMDU0NDk5MTI@._V1_QL75_UX140_CR0"
  },
@@ -510,6 +908,34 @@
   "info": "1957 • 1h 28m • Approved",
   "rate": "8.4 (213K)",
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BOTI5Nzc0OTMtYzBkMS00NjkxLThmM2UtNjM2ODgxN2M5NjNkXkEyXkFqcGdeQXVyNjQ2MjQ5NzM@._V1_QL75_UX140_CR0"
+=======
+  "rate": "8.4 (245K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMTU0NTkyNzYwMF5BMl5BanBnXkFtZTgwMDU0NDk5MTI@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "The real-life story of IPS Officer Manoj Kumar Sharma and IRS Officer Shraddha Joshi.",
+  "rank": 63,
+  "title": "12th Fail",
+  "info": "2023 • 2h 27m",
+  "rate": "8.8 (139K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNTE3OTIxZDYtNjA0NC00N2YxLTg1NGQtOTYxNmZkMDkwOWNjXkEyXkFqcGc@._V1_QL75_UY207_CR9"
+ },
+ {
+  "desc": "Teen Miles Morales becomes the Spider-Man of his universe and must join with five spider-powered individuals from other dimensions to stop a threat for all realities.",
+  "rank": 64,
+  "title": "Spider-Man: Into the Spider-Verse",
+  "info": "2018 • 1h 57m • PG",
+  "rate": "8.4 (710K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMjMwNDkxMTgzOF5BMl5BanBnXkFtZTgwNTkwNTQ3NjM@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A colonel defends three of his soldiers in a court-martial after they abandon a suicidal attack.",
+  "rank": 65,
+  "title": "Paths of Glory",
+  "info": "1957 • 1h 28m • Approved",
+  "rate": "8.4 (222K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNmQ2NmI2ODYtMDQzNS00NzQyLTkzZjgtZmZlYTQ5MTc1OWU3XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+>>>>>>> Stashed changes
  },
  {
   "desc": "Teen Miles Morales becomes the Spider-Man of his universe and must join with five spider-powered individuals from other dimensions to stop a threat for all realities.",
@@ -524,23 +950,39 @@
   "rank": 66,
   "title": "Witness for the Prosecution",
   "info": "1957 • 1h 56m • Approved",
+<<<<<<< Updated upstream
   "rate": "8.4 (138K)",
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNDQwODU5OWYtNDcyNi00MDQ1LThiOGMtZDkwNWJiM2Y3MDg0XkEyXkFqcGdeQXVyMDI2NDg0NQ@@._V1_QL75_UX140_CR0"
  },
  {
   "desc": "A family heads to an isolated hotel for the winter where a sinister presence influences the father into violence, while his psychic son sees horrific forebodings from both past and future.",
+=======
+  "rate": "8.4 (146K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNjRhNTQzMzQtMWViMi00ODQ1LTg0MTEtYWE4ZWZlYjM4YjJhXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A family heads to an isolated hotel for the winter, where a sinister presence influences the father into violence. At the same time, his psychic son sees horrifying forebodings from both the past and the future.",
+>>>>>>> Stashed changes
   "rank": 67,
   "title": "The Shining",
   "info": "1980 • 2h 26m • R",
   "rate": "8.4 (1.1M)",
+<<<<<<< Updated upstream
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZWFlYmY2MGEtZjVkYS00YzU4LTg0YjQtYzY1ZGE3NTA5NGQxXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_QL75_UX140_CR0"
+=======
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNmM5ZThhY2ItOGRjOS00NzZiLWEwYTItNDgyMjFkOTgxMmRiXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+>>>>>>> Stashed changes
  },
  {
   "desc": "Dictator Adenoid Hynkel tries to expand his empire while a poor Jewish barber tries to avoid persecution from Hynkel's regime.",
   "rank": 68,
   "title": "The Great Dictator",
   "info": "1940 • 2h 5m",
+<<<<<<< Updated upstream
   "rate": "8.4 (238K)",
+=======
+  "rate": "8.4 (246K)",
+>>>>>>> Stashed changes
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMjc4ZjEwNDUtMjlmZS00NzQ4LTg2N2MtMGI3ZjMyMmM3ZDM2XkEyXkFqcGc@._V1_QL75_UX140_CR0"
  },
  {
@@ -548,8 +990,13 @@
   "rank": 69,
   "title": "Aliens",
   "info": "1986 • 2h 17m • R",
+<<<<<<< Updated upstream
   "rate": "8.4 (766K)",
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BOGJkY2EyOWYtYWRmNy00ZTEzLTllMDAtYzYzYjA0ZjFhZWJjXkEyXkFqcGdeQXVyMTUzMDUzNTI3._V1_QL75_UX140_CR0"
+=======
+  "rate": "8.4 (797K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZjIyNGJhYzYtN2I1My00OTVhLWEyMzItZTVjNDMzOTVkYWViXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+>>>>>>> Stashed changes
  },
  {
   "desc": "In Nazi-occupied France during World War II, a plan to assassinate Nazi leaders by a group of Jewish U.S. soldiers coincides with a theatre owner's vengeful plans for the same.",
@@ -557,6 +1004,7 @@
   "title": "Inglourious Basterds",
   "info": "2009 • 2h 33m • R",
   "rate": "8.4 (1.6M)",
+<<<<<<< Updated upstream
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BOTJiNDEzOWYtMTVjOC00ZjlmLWE0NGMtZmE1OWVmZDQ2OWJhXkEyXkFqcGdeQXVyNTIzOTk5ODM@._V1_QL75_UX140_CR0"
  },
  {
@@ -638,6 +1086,225 @@
   "info": "1995 • 2h 58m • R",
   "rate": "8.3 (1.1M)",
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMzkzMmU0YTYtOWM3My00YzBmLWI0YzctOGYyNTkwMWE5MTJkXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_QL75_UY207_CR0"
+=======
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BODZhMWJlNjYtNDExNC00MTIzLTllM2ItOGQ2NGVjNDQ3MzkzXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "Bane, an imposing terrorist, attacks Gotham City and disrupts its eight-year-long period of peace. This forces Bruce Wayne to come out of hiding and don the cape and cowl of Batman again.",
+  "rank": 71,
+  "title": "The Dark Knight Rises",
+  "info": "2012 • 2h 44m • PG-13",
+  "rate": "8.4 (1.9M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMTk4ODQzNDY3Ml5BMl5BanBnXkFtZTcwODA0NTM4Nw@@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "Aspiring musician Miguel, confronted with his family's ancestral ban on music, enters the Land of the Dead to find his great-great-grandfather, a legendary singer.",
+  "rank": 72,
+  "title": "Coco",
+  "info": "2017 • 1h 45m • PG",
+  "rate": "8.4 (630K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMDIyM2E2NTAtMzlhNy00ZGUxLWI1NjgtZDY5MzhiMDc5NGU3XkEyXkFqcGc@._V1_QL75_UY207_CR3"
+ },
+ {
+  "desc": "The life, success and troubles of Wolfgang Amadeus Mozart, as told by Antonio Salieri, the contemporaneous composer who was deeply jealous of Mozart's talent and claimed to have murdered him.",
+  "rank": 73,
+  "title": "Amadeus",
+  "info": "1984 • 2h 40m • PG",
+  "rate": "8.4 (442K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMzc2MjM0NTMtOGY4NC00NzY1LWE2ODUtZjMzY2RhNGNkZDAyXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A cowboy doll is profoundly threatened and jealous when a new spaceman action figure supplants him as top toy in a boy's bedroom.",
+  "rank": 74,
+  "title": "Toy Story",
+  "info": "1995 • 1h 21m",
+  "rate": "8.3 (1.1M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZTA3OWVjOWItNjE1NS00NzZiLWE1MjgtZDZhMWI1ZTlkNzYwXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "After being kidnapped and imprisoned for fifteen years, Oh Dae-Su is released, only to find that he must track down his captor in five days.",
+  "rank": 75,
+  "title": "Oldboy",
+  "info": "2003 • 2h • R",
+  "rate": "8.3 (663K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMTI3NTQyMzU5M15BMl5BanBnXkFtZTcwMTM2MjgyMQ@@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "An unhinged American general orders a bombing attack on the Soviet Union, triggering a path to nuclear holocaust that a war room full of politicians and generals frantically tries to stop.",
+  "rank": 76,
+  "title": "Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb",
+  "info": "1964 • 1h 35m • PG",
+  "rate": "8.3 (532K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMjFjYzBlOTktMTI2OS00ZWVhLTgxMDUtNzAwODY2NmI3YTAzXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "After the devastating events of Avengers: Infinity War (2018), the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to reverse Thanos' actions and restore balance to the universe.",
+  "rank": 77,
+  "title": "Avengers: Endgame",
+  "info": "2019 • 3h 1m • PG-13",
+  "rate": "8.4 (1.3M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A sexually frustrated suburban father has a mid-life crisis after becoming infatuated with his daughter's best friend.",
+  "rank": 78,
+  "title": "American Beauty",
+  "info": "1999 • 2h 2m • R",
+  "rate": "8.3 (1.2M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMDI1MDE0OTMtMmI2MS00Yjc2LTg2MTItMWExYTg5NzA1OGUzXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "Will Hunting, a janitor at MIT, has a gift for mathematics, but needs help from a psychologist to find direction in his life.",
+  "rank": 79,
+  "title": "Good Will Hunting",
+  "info": "1997 • 2h 6m • R",
+  "rate": "8.3 (1.1M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNDdjZGQ5YzEtNTc2My00Mjc0LWFlMTctYzkwMzZlNzdiZWYzXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "Scottish warrior William Wallace leads his countrymen in a rebellion to free his homeland from the tyranny of King Edward I of England.",
+  "rank": 80,
+  "title": "Braveheart",
+  "info": "1995 • 2h 58m • R",
+  "rate": "8.3 (1.1M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNGMxZDBhNGQtYTZlNi00N2UzLWI4NDEtNmUzNWM2NTdmZDA0XkEyXkFqcGc@._V1_QL75_UY207_CR0"
+ },
+ {
+  "desc": "A German U-boat stalks the frigid waters of the North Atlantic as its young crew experience the sheer terror and claustrophobic life of a submariner in World War II.",
+  "rank": 81,
+  "title": "Das Boot",
+  "info": "1981 • 2h 29m",
+  "rate": "8.4 (274K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNGU0MWZlMTUtM2Y3Ny00NGNmLWE5NmEtN2YxOWQzMGM3ZWYzXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "On a journey to find the cure for a Tatarigami's curse, Ashitaka finds himself in the middle of a war between the forest gods and Tatara, a mining colony. In this quest he also meets San, the Mononoke Hime.",
+  "rank": 82,
+  "title": "Princess Mononoke",
+  "info": "1997 • 2h 13m • PG-13",
+  "rate": "8.3 (451K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNjAzODViNGEtMjBkYi00N2U5LWJjNjAtY2U0MGJhZTEwOTU0XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "Two teenagers share a profound, magical connection upon discovering they are swapping bodies. Things manage to become even more complicated when the boy and girl decide to meet in person.",
+  "rank": 83,
+  "title": "Your Name.",
+  "info": "2016 • 1h 46m",
+  "rate": "8.4 (343K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMjI1ODZkYTgtYTY3Yy00ZTJkLWFkOTgtZDUyYWM4MzQwNjk0XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "An executive of a Yokohama shoe company becomes a victim of extortion when his chauffeur's son is kidnapped by mistake and held for ransom.",
+  "rank": 84,
+  "title": "High and Low",
+  "info": "1963 • 2h 23m",
+  "rate": "8.4 (58K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BOTFmOTNjYjUtMDA2MC00ZTJiLThiYzktNDdjNzQwMjNkN2NmXkEyXkFqcGc@._V1_QL75_UY207_CR3"
+ },
+ {
+  "desc": "Arthur Fleck, a party clown and a failed stand-up comedian, leads an impoverished life with his ailing mother. However, when society shuns him and brands him as a freak, he decides to embrace the life of chaos in Gotham City.",
+  "rank": 85,
+  "title": "Joker",
+  "info": "2019 • 2h 2m • R",
+  "rate": "8.3 (1.6M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNzY3OWQ5NDktNWQ2OC00ZjdlLThkMmItMDhhNDk3NTFiZGU4XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "Two friends are searching for their long lost companion. They revisit their college days and recall the memories of their friend who inspired them to think differently, even as the rest of the world called them \"idiots\".",
+  "rank": 86,
+  "title": "3 Idiots",
+  "info": "2009 • 2h 50m • PG-13",
+  "rate": "8.4 (450K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNzc4ZWQ3NmYtODE0Ny00YTQ4LTlkZWItNTBkMGQ0MmUwMmJlXkEyXkFqcGc@._V1_QL75_UY207_CR2"
+ },
+ {
+  "desc": "A former Prohibition-era Jewish gangster returns to the Lower East Side of Manhattan 35 years later, where he must once again confront the ghosts and regrets of his old life.",
+  "rank": 87,
+  "title": "Once Upon a Time in America",
+  "info": "1984 • 3h 49m • R",
+  "rate": "8.3 (389K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMDQ0ZTg2OGUtZjMyOC00M2M5LThkMmItZmM2MmUzMmIxMWJhXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A silent film star falls for a chorus girl just as he and his delusionally jealous screen partner are trying to make the difficult transition to talking pictures in 1920s Hollywood.",
+  "rank": 88,
+  "title": "Singin' in the Rain",
+  "info": "1952 • 1h 43m",
+  "rate": "8.3 (269K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMGQzZDFjZWUtZDU4ZS00ZjM3LTgyYmItYjA3YmIwYzRkZWY3XkEyXkFqcGc@._V1_QL75_UY207_CR1"
+ },
+ {
+  "desc": "While serving a five-year sentence for a violent crime, a 12-year-old boy sues his parents for neglect.",
+  "rank": 89,
+  "title": "Capernaum",
+  "info": "2018 • 2h 6m • R",
+  "rate": "8.4 (113K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BYzEyMzQ1OTktZTljZi00OWQzLWE2ZmUtZjQyNzBjYjE1NTc0XkEyXkFqcGc@._V1_QL75_UY207_CR1"
+ },
+ {
+  "desc": "After finding an old rifle, a young boy joins the Soviet resistance movement against ruthless German forces and experiences the horrors of World War II.",
+  "rank": 90,
+  "title": "Come and See",
+  "info": "1985 • 2h 22m",
+  "rate": "8.3 (107K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNDlkZmVkZDAtZGFmMS00OWIzLWJkY2YtNWE5NjNhNjhiZGE3XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "The drug-induced utopias of four Coney Island people are shattered when their addictions run deep.",
+  "rank": 91,
+  "title": "Requiem for a Dream",
+  "info": "2000 • 1h 42m",
+  "rate": "8.3 (925K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BN2ZlMjIzZjctYzA2My00ZWYyLWI4ZjctMGI2NWYyNzFiZjAwXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "The toys are mistakenly delivered to a day-care center instead of the attic right before Andy leaves for college, and it's up to Woody to convince the other toys that they weren't abandoned and to return home.",
+  "rank": 92,
+  "title": "Toy Story 3",
+  "info": "2010 • 1h 43m",
+  "rate": "8.3 (918K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMTgxOTY4Mjc0MF5BMl5BanBnXkFtZTcwNTA4MDQyMw@@._V1_QL75_UY207_CR3"
+ },
+ {
+  "desc": "After rescuing Han Solo from Jabba the Hutt, the Rebel Alliance attempts to destroy the second Death Star while Luke struggles to help Darth Vader back from the dark side.",
+  "rank": 93,
+  "title": "Star Wars: Episode VI - Return of the Jedi",
+  "info": "1983 • 2h 11m • PG",
+  "rate": "8.3 (1.1M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNWEwOTI0MmUtMGNmNy00ODViLTlkZDQtZTg1YmQ3MDgyNTUzXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A teacher lives a lonely life, all the while struggling over his son's custody. His life slowly gets better as he finds love and receives good news from his son, but his new luck is about to be brutally shattered by an innocent little lie.",
+  "rank": 94,
+  "title": "The Hunt",
+  "info": "2012 • 1h 55m • R",
+  "rate": "8.3 (380K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMTg2NDg3ODg4NF5BMl5BanBnXkFtZTcwNzk3NTc3Nw@@._V1_QL75_UY207_CR3"
+ },
+ {
+  "desc": "When their relationship turns sour, a couple undergoes a medical procedure to have each other erased from their memories forever.",
+  "rank": 95,
+  "title": "Eternal Sunshine of the Spotless Mind",
+  "info": "2004 • 1h 48m • R",
+  "rate": "8.3 (1.1M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMTY4NzcwODg3Nl5BMl5BanBnXkFtZTcwNTEwOTMyMw@@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A bureaucrat tries to find meaning in his life after he discovers he has terminal cancer.",
+  "rank": 96,
+  "title": "Ikiru",
+  "info": "1952 • 2h 23m",
+  "rate": "8.3 (94K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZTk4OGEwNDQtOGI2MC00MTU2LTk0YTEtNmU5NTIxMWNkNDhlXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "When a mysterious artifact is uncovered on the Moon, a spacecraft manned by two humans and one supercomputer is sent to Jupiter to find its origins.",
+  "rank": 97,
+  "title": "2001: A Space Odyssey",
+  "info": "1968 • 2h 29m",
+  "rate": "8.3 (742K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNjU0NDFkMTQtZWY5OS00MmZhLTg3Y2QtZmJhMzMzMWYyYjc2XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+>>>>>>> Stashed changes
  },
  {
   "desc": "Will Hunting, a janitor at M.I.T., has a gift for mathematics, but needs help from a psychologist to find direction in his life.",
@@ -781,9 +1448,10 @@
   "title": "Reservoir Dogs",
   "info": "1992 • 1h 39m • R",
   "rate": "8.3 (1.1M)",
-  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZmExNmEwYWItYmQzOS00YjA5LTk2MjktZjEyZDE1Y2QxNjA1XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_QL75_UX140_CR0"
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMmMzYjg4NDctYWY0Mi00OGViLWIzMTMtYWNlZGY5ZDJmYjk3XkEyXkFqcGc@._V1_QL75_UX140_CR0"
  },
  {
+<<<<<<< Updated upstream
   "desc": "A bureaucrat tries to find meaning in his life after he discovers he has terminal cancer.",
   "rank": 99,
   "title": "Ikiru",
@@ -910,12 +1578,141 @@
   "info": "1962 • 2h 9m • Approved",
   "rate": "8.3 (334K)",
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNmVmYzcwNzMtMWM1NS00MWIyLThlMDEtYzUwZDgzODE1NmE2XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_QL75_UX140_CR0"
+=======
+  "desc": "A Manhattan insurance clerk tries to rise in his company by letting its executives use his apartment for trysts, but office politics and his own romantic hopes complicate matters.",
+  "rank": 99,
+  "title": "The Apartment",
+  "info": "1960 • 2h 5m • Approved",
+  "rate": "8.3 (204K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNDdhMzVhOWQtNDU2Mi00ZmZmLWJiZDMtY2QxMjhjY2Y1ZTI5XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "The story of T.E. Lawrence, the English officer who successfully united and led the diverse, often warring, Arab tribes during World War I in order to fight the Turks.",
+  "rank": 100,
+  "title": "Lawrence of Arabia",
+  "info": "1962 • 3h 47m • PG",
+  "rate": "8.3 (324K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BYjY0YTQ1OTAtYjEyNy00NTQ4LThlMTQtM2QwYTVhYWFhNjU5XkEyXkFqcGc@._V1_QL75_UY207_CR2"
+ },
+ {
+  "desc": "Twins journey to the Middle East to discover their family history and fulfill their mother's last wishes.",
+  "rank": 101,
+  "title": "Incendies",
+  "info": "2010 • 2h 11m • R",
+  "rate": "8.3 (218K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BYWFmMjdmNjctNzhhOC00ZmMzLTkwOGItMmVmZDU4MjE2MTYwXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "In the 1980s, a determined criminal-minded Cuban immigrant becomes the biggest drug smuggler in Miami, and is eventually undone by his own drug addiction.",
+  "rank": 102,
+  "title": "Scarface",
+  "info": "1983 • 2h 50m • R",
+  "rate": "8.3 (947K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNDUzYjY0NmUtMDM4OS00Y2Q5LWJiODYtNTk0ZTk0YjZhMTg1XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "An insurance representative is seduced by a dissatisfied housewife into a scheme of insurance fraud and murder that arouses the suspicion of his colleague, a claims investigator.",
+  "rank": 103,
+  "title": "Double Indemnity",
+  "info": "1944 • 1h 47m • Approved",
+  "rate": "8.3 (172K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BM2YwNjZlZDktNTlmNS00ODQwLWJmNmUtYmE1NTBhYjc1YTY5XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A New York City advertising executive goes on the run after being mistaken for a government agent by a group of foreign spies, and falls for a woman whose loyalties he begins to doubt.",
+  "rank": 104,
+  "title": "North by Northwest",
+  "info": "1959 • 2h 16m • Approved",
+  "rate": "8.3 (357K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZWIzODI2OGItMzM0Ny00OGRmLTlkNmItMDQxMTFmMTk3YmQwXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "Following the death of publishing tycoon Charles Foster Kane, reporters scramble to uncover the meaning of his final utterance: 'Rosebud.'",
+  "rank": 105,
+  "title": "Citizen Kane",
+  "info": "1941 • 1h 59m • PG",
+  "rate": "8.3 (476K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BYjk1ZDJlMmUtOWQ0Zi00MDM5LTk1OGYtODczNjFmMGYwZGVkXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A group of high-end professional thieves start to feel the heat from the LAPD when they unknowingly leave a verbal clue at their latest heist.",
+  "rank": 106,
+  "title": "Heat",
+  "info": "1995 • 2h 50m • R",
+  "rate": "8.3 (741K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMTkxYjU1OTMtYWViZC00ZjAzLWI3MDktZGQ2N2VmMjVjNDRlXkEyXkFqcGc@._V1_QL75_UY207_CR2"
+ },
+ {
+  "desc": "When the police in a German city are unable to catch a child-murderer, other criminals join in the manhunt.",
+  "rank": 107,
+  "title": "M",
+  "info": "1931 • 1h 39m",
+  "rate": "8.3 (174K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BODA4ODk3OTEzMF5BMl5BanBnXkFtZTgwMTQ2ODMwMzE@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A former San Francisco police detective juggles wrestling with his personal demons and becoming obsessed with the hauntingly beautiful woman he has been hired to trail, who may be deeply disturbed.",
+  "rank": 108,
+  "title": "Vertigo",
+  "info": "1958 • 2h 8m • PG",
+  "rate": "8.3 (439K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNzEyZTUxMWItMGVhYy00Y2NlLTljYTMtYzBmMzI1YmUyMDBkXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A pragmatic U.S. Marine observes the dehumanizing effects the Vietnam War has on his fellow recruits from their brutal boot camp training to the bloody street fighting in Hue.",
+  "rank": 109,
+  "title": "Full Metal Jacket",
+  "info": "1987 • 1h 56m • R",
+  "rate": "8.2 (811K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BYWUzNzZkNzUtNDdiYy00Nzk5LTgxMmItNTk0MjRjNjdjNDA0XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "78-year-old Carl Fredricksen travels to South America in his house equipped with balloons, inadvertently taking a young stowaway.",
+  "rank": 110,
+  "title": "Up",
+  "info": "2009 • 1h 36m • PG",
+  "rate": "8.3 (1.2M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNmI1ZTc5MWMtMDYyOS00ZDc2LTkzOTAtNjQ4NWIxNjYyNDgzXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "Despite being caught in her imaginative world, young waitress Amelie decides to help people find happiness. Her quest to spread joy leads her on a journey during which she finds true love.",
+  "rank": 111,
+  "title": "Amélie",
+  "info": "2001 • 2h 2m • R",
+  "rate": "8.3 (810K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BOTNmYzY0MWQtZGZmNy00Y2Y4LWFmMDQtMTZjYTdiYzEwZGQ2XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A dramatization of the life story of J. Robert Oppenheimer, the physicist who had a large hand in the development of the atomic bombs that brought an end to World War II.",
+  "rank": 112,
+  "title": "Oppenheimer",
+  "info": "2023 • 3h • R",
+  "rate": "8.3 (833K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BN2JkMDc5MGQtZjg3YS00NmFiLWIyZmQtZTJmNTM5MjVmYTQ4XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "Alex DeLarge and his droogs barbarize a decaying near-future.",
+  "rank": 113,
+  "title": "A Clockwork Orange",
+  "info": "1971 • 2h 16m • R",
+  "rate": "8.2 (901K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMTY3MjM1Mzc4N15BMl5BanBnXkFtZTgwODM0NzAxMDE@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A widowed lawyer in Depression-era Alabama defends a black man against a false rape charge while teaching his young children about the sad reality of prejudice.",
+  "rank": 114,
+  "title": "To Kill a Mockingbird",
+  "info": "1962 • 2h 9m • Approved",
+  "rate": "8.3 (340K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZTlkYWU4MGEtZmQyYi00OWEzLTgzY2EtYzVjOTEzYzAyNTk1XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+>>>>>>> Stashed changes
  },
  {
   "desc": "A married couple are faced with a difficult decision - to improve the life of their child by moving to another country or to stay in Iran and look after a deteriorating parent who has Alzheimer's disease.",
   "rank": 115,
   "title": "A Separation",
   "info": "2011 • 2h 3m • PG-13",
+<<<<<<< Updated upstream
   "rate": "8.3 (259K)",
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BN2JmMjViMjMtZTM5Mi00ZGZkLTk5YzctZDg5MjFjZDE4NjNkXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_QL75_UX140_CR0"
  },
@@ -950,20 +1747,62 @@
   "info": "2007 • 2h 42m • PG",
   "rate": "8.3 (207K)",
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMDhjZWViN2MtNzgxOS00NmI4LThiZDQtZDI3MzM4MDE4NTc0XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_QL75_UY207_CR3"
+=======
+  "rate": "8.3 (266K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMDM0ZWRmMzctM2M5ZS00ZjU0LWIxN2MtNWNlNGY1ZDhjMDVhXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A New York City police officer tries to save his estranged wife and several others taken hostage by terrorists during a Christmas party at the Nakatomi Plaza in Los Angeles.",
+  "rank": 116,
+  "title": "Die Hard",
+  "info": "1988 • 2h 12m • R",
+  "rate": "8.2 (977K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMGNlYmM1NmQtYWExMS00NmRjLTg5ZmEtMmYyYzJkMzljYWMxXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "Two grifters team up to pull off the ultimate con.",
+  "rank": 117,
+  "title": "The Sting",
+  "info": "1973 • 2h 9m • PG",
+  "rate": "8.3 (287K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZGI4OTk4MDMtYmQ1Ni00YTUzLTkyYTktZGUwMjMyN2M4NjQ5XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "In 1938, after his father goes missing while pursuing the Holy Grail, Indiana Jones finds himself up against the Nazis again to stop them from obtaining its powers.",
+  "rank": 118,
+  "title": "Indiana Jones and the Last Crusade",
+  "info": "1989 • 2h 7m • PG-13",
+  "rate": "8.2 (829K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNGIxNzQ0YzYtMjNmYi00YjBlLWFjNzEtNGE3ZGFmYTczM2MwXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A young boy is thought to be nothing but a lazy troublemaker until the new art teacher has the patience and compassion to discover the real problem behind his struggles in school.",
+  "rank": 119,
+  "title": "Like Stars on Earth",
+  "info": "2007 • 2h 42m • PG",
+  "rate": "8.3 (214K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZTI0ZGRiMDEtNGNjMS00MGU4LWI3OTktNzcxMDZmZTk3MTljXkEyXkFqcGc@._V1_QL75_UY207_CR3"
+>>>>>>> Stashed changes
  },
  {
   "desc": "In a futuristic city sharply divided between the working class and the city planners, the son of the city's mastermind falls in love with a working-class prophet who predicts the coming of a savior to mediate their differences.",
   "rank": 120,
   "title": "Metropolis",
   "info": "1927 • 2h 33m",
+<<<<<<< Updated upstream
   "rate": "8.3 (186K)",
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMTg5YWIyMWUtZDY5My00Zjc1LTljOTctYmI0MWRmY2M2NmRkXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_QL75_UY207_CR0"
+=======
+  "rate": "8.3 (192K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMjhjMGYyMjAtMzJkYy00NzhlLWIwY2MtMWQ2ODIxZDUyOGYyXkEyXkFqcGc@._V1_QL75_UY207_CR0"
+>>>>>>> Stashed changes
  },
  {
   "desc": "Unscrupulous boxing promoters, violent bookmakers, a Russian gangster, incompetent amateur robbers and supposedly Jewish jewelers fight to track down a priceless stolen diamond.",
   "rank": 121,
   "title": "Snatch",
   "info": "2000 • 1h 42m • R",
+<<<<<<< Updated upstream
   "rate": "8.2 (913K)",
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMTA2NDYxOGYtYjU1Mi00Y2QzLTgxMTQtMWI1MGI0ZGQ5MmU4XkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_QL75_UY207_CR1"
  },
@@ -990,12 +1829,33 @@
   "info": "2019 • 1h 59m • R",
   "rate": "8.2 (679K)",
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BOTdmNTFjNDEtNzg0My00ZjkxLTg1ZDAtZTdkMDc2ZmFiNWQ1XkEyXkFqcGdeQXVyNTAzNzgwNTg@._V1_QL75_UX140_CR0"
+=======
+  "rate": "8.2 (933K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BYzk5NjJkMTQtN2IyNC00YWM5LTlhZmMtNGI3MWNhMTU1YTc4XkEyXkFqcGc@._V1_QL75_UY207_CR1"
+ },
+ {
+  "desc": "April 6th, 1917. As an infantry battalion assembles to wage war deep in enemy territory, two soldiers are assigned to race against time and deliver a message that will stop 1,600 men from walking straight into a deadly trap.",
+  "rank": 122,
+  "title": "1917",
+  "info": "2019 • 1h 59m • R",
+  "rate": "8.2 (709K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BYzkxZjg2NDQtMGVjMy00NWZkLTk0ZDEtZWE3NDYwYjAyMTg1XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "As corruption grows in 1950s Los Angeles, three policemen - one strait-laced, one brutal, and one sleazy - investigate a series of murders with their own brand of justice.",
+  "rank": 123,
+  "title": "L.A. Confidential",
+  "info": "1997 • 2h 18m • R",
+  "rate": "8.2 (634K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BODdiMjY1OGYtNDk0NC00NGQ1LWI4MDItOTJhMTM0YjE1YTAzXkEyXkFqcGc@._V1_QL75_UY207_CR1"
+>>>>>>> Stashed changes
  },
  {
   "desc": "In post-war Italy, a working-class man's bicycle is stolen, endangering his efforts to find work. He and his son set out to find it.",
   "rank": 125,
   "title": "Bicycle Thieves",
   "info": "1948 • 1h 29m",
+<<<<<<< Updated upstream
   "rate": "8.3 (176K)",
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNWEwYTIwZDEtNDIwZi00ZmY1LTg1OGYtZDE5NWI2OGRmNmQzXkEyXkFqcGdeQXVyNDUzOTQ5MjY@._V1_QL75_UY207_CR2"
  },
@@ -1042,24 +1902,82 @@
  {
   "desc": "Based on the true story of Jordan Belfort, from his rise to a wealthy stock-broker living the high life to his fall involving crime, corruption and the federal government.",
   "rank": 131,
+=======
+  "rate": "8.3 (182K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZTQzYTIxYzItYmQ5YS00MmFhLWEyMjItNTBhMTRmM2Y5MDJhXkEyXkFqcGc@._V1_QL75_UY207_CR2"
+ },
+ {
+  "desc": "Traudl Junge, the final secretary for Adolf Hitler, tells of the Nazi dictator's final days in his Berlin bunker at the end of WWII.",
+  "rank": 125,
+  "title": "Downfall",
+  "info": "2004 • 2h 36m • R",
+  "rate": "8.2 (384K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMTU0NTU5NTAyMl5BMl5BanBnXkFtZTYwNzYwMDg2._V1_QL75_UY207_CR1"
+ },
+ {
+  "desc": "Mahavir Singh Phogat, a former wrestler, decides to fulfill his dream of winning a gold medal for his country by training his daughters for the Commonwealth Games despite the existing social stigmas.",
+  "rank": 126,
+  "title": "Dangal",
+  "info": "2016 • 2h 41m",
+  "rate": "8.3 (221K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMTQ4MzQzMzM2Nl5BMl5BanBnXkFtZTgwMTQ1NzU3MDI@._V1_QL75_UY207_CR4"
+ },
+ {
+  "desc": "A mentally unstable veteran works as a nighttime taxi driver in New York City, where the perceived decadence and sleaze fuels his urge for violent action.",
+  "rank": 127,
+  "title": "Taxi Driver",
+  "info": "1976 • 1h 54m • R",
+  "rate": "8.2 (958K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZDNhMGYwM2UtMTdlZS00MGQ1LWI2YzAtODY5YWI1MjYyNzRmXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "The real life of one of America's foremost founding fathers and first Secretary of the Treasury, Alexander Hamilton. Captured live on Broadway from the Richard Rodgers Theater with the original Broadway cast.",
+  "rank": 128,
+  "title": "Hamilton",
+  "info": "2020 • 2h 40m • PG-13",
+  "rate": "8.3 (123K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BYzBhOWY4ZTktMjE2NS00ZGIyLWJkOGMtNDQyN2JjZWFiODdiXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "Based on the true story of Jordan Belfort, from his rise to a wealthy stock-broker living the high life to his fall involving crime, corruption and the federal government.",
+  "rank": 129,
+>>>>>>> Stashed changes
   "title": "The Wolf of Wall Street",
   "info": "2013 • 3h • R",
   "rate": "8.2 (1.6M)",
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMjIxMjgxNTk0MF5BMl5BanBnXkFtZTgwNjIyOTg2MDE@._V1_QL75_UX140_CR0"
  },
  {
+<<<<<<< Updated upstream
   "desc": "After two male musicians witness a mob hit, they flee the state in an all-female band disguised as women, but further complications set in.",
   "rank": 132,
   "title": "Some Like It Hot",
   "info": "1959 • 2h 1m • Approved",
   "rate": "8.2 (284K)",
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNzAyOGIxYjAtMGY2NC00ZTgyLWIwMWEtYzY0OWQ4NDFjOTc5XkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_QL75_UX140_CR0"
+=======
+  "desc": "After witnessing his parents' death, Bruce learns the art of fighting to confront injustice. When he returns to Gotham as Batman, he must stop a secret society that intends to destroy the city.",
+  "rank": 130,
+  "title": "Batman Begins",
+  "info": "2005 • 2h 20m • PG-13",
+  "rate": "8.2 (1.6M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BODIyMDdhNTgtNDlmOC00MjUxLWE2NDItODA5MTdkNzY3ZTdhXkEyXkFqcGc@._V1_QL75_UY207_CR0"
+ },
+ {
+  "desc": "Two bounty killers with similar intentions but different motivations team up to track down a psychotic Mexican outlaw before he and his gang can carry out an audacious bank robbery.",
+  "rank": 131,
+  "title": "For a Few Dollars More",
+  "info": "1965 • 2h 12m • R",
+  "rate": "8.2 (283K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNTRmOTcyYmYtMTIwNi00ZGYyLTk4YjYtZGJlZTgwZGY0NGQyXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+>>>>>>> Stashed changes
  },
  {
   "desc": "A working-class Italian-American bouncer becomes the driver for an African-American classical pianist on a tour of venues through the 1960s American South.",
   "rank": 133,
   "title": "Green Book",
   "info": "2018 • 2h 10m • PG-13",
+<<<<<<< Updated upstream
   "rate": "8.2 (576K)",
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BYzIzYmJlYTYtNGNiYy00N2EwLTk4ZjItMGYyZTJiOTVkM2RlXkEyXkFqcGdeQXVyODY1NDk1NjE@._V1_QL75_UX140_CR0"
  },
@@ -1090,12 +2008,29 @@
  {
   "desc": "An insurance salesman discovers his whole life is actually a reality TV show.",
   "rank": 137,
+=======
+  "rate": "8.2 (613K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNDU5YTNmMmItN2QxNy00OGQ0LTg5MTctNzFmYjEzZjcwN2UwXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "After two male musicians witness a mob hit, they flee the state in an all-female band disguised as women, but further complications set in.",
+  "rank": 133,
+  "title": "Some Like It Hot",
+  "info": "1959 • 2h 1m • Approved",
+  "rate": "8.2 (291K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZTllZDYyNjEtY2RmMS00NmJhLWI4ODAtMTQ0NWFiZTJhZjA0XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "An insurance salesman begins to suspect that his whole life is actually some sort of reality TV show.",
+  "rank": 134,
+>>>>>>> Stashed changes
   "title": "The Truman Show",
   "info": "1998 • 1h 43m • PG",
   "rate": "8.2 (1.2M)",
-  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMDIzODcyY2EtMmY2MC00ZWVlLTgwMzAtMjQwOWUyNmJjNTYyXkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_QL75_UX140_CR0"
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNzA3ZjZlNzYtMTdjMy00NjMzLTk5ZGYtMTkyYzNiOGM1YmM3XkEyXkFqcGc@._V1_QL75_UX140_CR0"
  },
  {
+<<<<<<< Updated upstream
   "desc": "A seemingly timid but secretly ruthless ingénue insinuates herself into the lives of an aging Broadway star and her circle of theater friends.",
   "rank": 138,
   "title": "All About Eve",
@@ -1118,12 +2053,53 @@
   "info": "2010 • 2h 18m • R",
   "rate": "8.2 (1.5M)",
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BYzhiNDkyNzktNTZmYS00ZTBkLTk2MDAtM2U0YjU1MzgxZjgzXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_QL75_UX140_CR0"
+=======
+  "desc": "Fictionalized depiction of the 1947 Judges' Trial, the third of twelve trials of Nazi war criminals conducted by the American occupying forces in Nuremberg, Germany, in which former judges of Nazi Germany were tried for their actions.",
+  "rank": 135,
+  "title": "Judgment at Nuremberg",
+  "info": "1961 • 2h 59m • Approved",
+  "rate": "8.3 (89K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNDc2ODQ5NTE2MV5BMl5BanBnXkFtZTcwODExMjUyNA@@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "The Tramp cares for an abandoned child, but events put their relationship in jeopardy.",
+  "rank": 136,
+  "title": "The Kid",
+  "info": "1921 • 1h 8m",
+  "rate": "8.2 (139K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNjkxMzY1NTQtN2YwOS00NmIwLTlkNTMtMjNkMzk1ZTk3ZDU2XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A man refuses all assistance from his daughter as he ages. As he tries to make sense of his changing circumstances, he begins to doubt his loved ones, his own mind and even the fabric of his reality.",
+  "rank": 137,
+  "title": "The Father",
+  "info": "2020 • 1h 37m • PG-13",
+  "rate": "8.2 (206K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BYzUxMDAyMDAtNzIyZi00OGQ1LTllMjEtYzRjOThkZTUxNTliXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "Two US marshals are sent to a mental institution on an inhospitable island in order to investigate the disappearance of a patient.",
+  "rank": 138,
+  "title": "Shutter Island",
+  "info": "2010 • 2h 18m • R",
+  "rate": "8.2 (1.5M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BN2FjNWExYzEtY2YzOC00YjNlLTllMTQtNmIwM2Q1YzBhOWM1XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A seemingly timid but secretly ruthless ingénue insinuates herself into the lives of an aging Broadway star and her circle of theater friends.",
+  "rank": 139,
+  "title": "All About Eve",
+  "info": "1950 • 2h 18m • Approved",
+  "rate": "8.2 (143K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BOTM4ZjUzOGUtYzdlZi00ZmM5LTk5NTEtMjQxNDVmOTc5NWNlXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+>>>>>>> Stashed changes
  },
  {
   "desc": "A story of family, religion, hatred, oil and madness, focusing on a turn-of-the-century prospector in the early days of the business.",
   "rank": 141,
   "title": "There Will Be Blood",
   "info": "2007 • 2h 38m • R",
+<<<<<<< Updated upstream
   "rate": "8.2 (643K)",
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMjAxODQ4MDU5NV5BMl5BanBnXkFtZTcwMDU4MjU1MQ@@._V1_QL75_UX140_CR0"
  },
@@ -1316,10 +2292,101 @@
   "rank": 165,
   "title": "V for Vendetta",
   "info": "2005 • 2h 12m • R",
-  "rate": "8.2 (1.2M)",
-  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BOTI5ODc3NzExNV5BMl5BanBnXkFtZTcwNzYxNzQzMw@@._V1_QL75_UX140_CR0"
+=======
+  "rate": "8.2 (659K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMjAxODQ4MDU5NV5BMl5BanBnXkFtZTcwMDU4MjU1MQ@@._V1_QL75_UX140_CR0"
  },
  {
+  "desc": "An industrialist invites some experts to visit his theme park of cloned dinosaurs. After a power failure, the creatures run loose, putting everyone's lives, including his grandchildren's, in danger.",
+  "rank": 141,
+  "title": "Jurassic Park",
+  "info": "1993 • 2h 7m • PG-13",
+  "rate": "8.2 (1.1M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMjM2MDgxMDg0Nl5BMl5BanBnXkFtZTgwNTM2OTM5NDE@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "In Las Vegas, two best friends--a casino executive and a Mafia enforcer--compete for a gambling empire and a fast-living, fast-loving socialite.",
+  "rank": 142,
+  "title": "Casino",
+  "info": "1995 • 2h 58m • R",
+  "rate": "8.2 (582K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMDRlZWZjZjYtYzY2NS00ZWVjLTkwYzAtZTA2ZDAzMGRiYmYwXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "After being shot by a resentful former patient who he failed to help, a Philadelphia child psychologist seeks redemption by treating a young boy with a disturbing secret.",
+  "rank": 143,
+  "title": "The Sixth Sense",
+  "info": "1999 • 1h 47m • PG-13",
+  "rate": "8.2 (1.1M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZWQ2OTY0M2UtMTQxNC00MmIzLTllNDQtNDQ0MTQyYzI2M2ZiXkEyXkFqcGc@._V1_QL75_UY207_CR0"
+ },
+ {
+  "desc": "In Medieval Japan, an elderly warlord retires, handing over his empire to his three sons. However, he vastly underestimates how the new-found power will corrupt them and cause them to turn on each other...and him.",
+  "rank": 144,
+  "title": "Ran",
+  "info": "1985 • 2h 40m • R",
+  "rate": "8.2 (141K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZDk2NDY5YjktMjEyMC00OTJhLTkzM2EtY2Q4Y2RjYzc2Yjk4XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "The story involves Maverick confronting his past while training a group of younger Top Gun graduates, including the son of his deceased best friend, for a dangerous mission.",
+  "rank": 145,
+  "title": "Top Gun: Maverick",
+  "info": "2022 • 2h 10m • PG-13",
+  "rate": "8.2 (749K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMDBkZDNjMWEtOTdmMi00NmExLTg5MmMtNTFlYTJlNWY5YTdmXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "Violence and mayhem ensue after a hunter stumbles upon the aftermath of a drug deal gone wrong and over two million dollars in cash near the Rio Grande.",
+  "rank": 146,
+  "title": "No Country for Old Men",
+  "info": "2007 • 2h 2m • R",
+  "rate": "8.2 (1.1M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMjA5Njk3MjM4OV5BMl5BanBnXkFtZTcwMTc5MTE1MQ@@._V1_QL75_UY207_CR1"
+ },
+ {
+  "desc": "In 1944 Spain, a girl is sent to live with her ruthless stepfather. During the night, she meets a fairy who takes her to an old faun. He tells her she's a princess, but must prove her royalty by surviving three gruesome tasks.",
+  "rank": 147,
+  "title": "Pan's Labyrinth",
+  "info": "2006 • 1h 58m • R",
+  "rate": "8.2 (717K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BOTc1NTAxMWItMWFlNy00MmU2LTkwMTMtNzMwOTg5OTQ5YTFiXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A research team in Antarctica is hunted by a shape-shifting alien that assumes the appearance of its victims.",
+  "rank": 148,
+  "title": "The Thing",
+  "info": "1982 • 1h 49m • R",
+  "rate": "8.2 (488K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BYTA3NDU5MWEtNTk4Yy00ZDNkLThmZTQtMjU3ZGVhYzAyMzU4XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "Retired Old West gunslinger Will Munny reluctantly takes on one last job to avenge an injustice with the help of his old partner and a newer outlaw known simply as The Schofield Kid.",
+  "rank": 149,
+  "title": "Unforgiven",
+  "info": "1992 • 2h 10m • R",
+  "rate": "8.2 (447K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNmZmMzM3YWMtZjg5Yi00M2MxLTg3ZGItNGU4YjQxNDAxM2Q4XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A mathematical genius, John Nash made an astonishing discovery early in his career and stood on the brink of international acclaim. But the handsome and arrogant Nash soon found himself on a harrowing journey of self-discovery.",
+  "rank": 150,
+  "title": "A Beautiful Mind",
+  "info": "2001 • 2h 15m • PG-13",
+  "rate": "8.2 (1M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNzljZTk5ZDgtZTQ1Zi00NTM4LThlOGUtZDk2MGM4NDQ4NWQyXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "After waking from a four-year coma, a former assassin wreaks vengeance on the team of assassins who betrayed her.",
+  "rank": 151,
+  "title": "Kill Bill: Vol. 1",
+  "info": "2003 • 1h 51m • R",
+>>>>>>> Stashed changes
+  "rate": "8.2 (1.2M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZmMyYzJlZmYtY2I3NC00NjAyLTkyZWItZjdjZDI1YTYyYTEwXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+<<<<<<< Updated upstream
   "desc": "A retired legal counselor writes a novel hoping to find closure for one of his past unresolved homicide cases and for his unreciprocated love with his superior - both of which still haunt him decades later.",
   "rank": 166,
   "title": "The Secret in Their Eyes",
@@ -1394,16 +2461,208 @@
  {
   "desc": "Barely 17 yet, Frank is a skilled forger who has passed as a doctor, lawyer and pilot. FBI agent Carl becomes obsessed with tracking down the con man, who only revels in the pursuit.",
   "rank": 175,
+=======
+  "desc": "Two down-on-their-luck Americans searching for work in 1920s Mexico convince an old prospector to help them mine for gold in the Sierra Madre Mountains.",
+  "rank": 152,
+  "title": "The Treasure of the Sierra Madre",
+  "info": "1948 • 2h 6m • Approved",
+  "rate": "8.2 (136K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BOWM1YjFmODEtMWNhMC00YmI1LWI0Y2EtYzg0YTBhZWI4ODE3XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A crafty ronin comes to a town divided by two criminal gangs and decides to play them against each other to free the town.",
+  "rank": 153,
+  "title": "Yojimbo",
+  "info": "1961 • 1h 50m",
+  "rate": "8.2 (136K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BYzFkODA1N2QtY2UyMC00NTMwLWEyNzctMmE3YjIzNzE1MzY4XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "Keller Dover is facing every parent's worst nightmare. His six-year-old daughter, Anna, is missing, together with her friend, Joy, and as minutes turn to hours, panic sets in. The only lead is an RV that had been parked on their street.",
+  "rank": 154,
+  "title": "Prisoners",
+  "info": "2013 • 2h 33m • R",
+  "rate": "8.2 (848K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMTg0NTIzMjQ1NV5BMl5BanBnXkFtZTcwNDc3MzM5OQ@@._V1_QL75_UY207_CR0"
+ },
+ {
+  "desc": "After his son is captured in the Great Barrier Reef and taken to Sydney, a timid clownfish sets out on a journey to bring him home.",
+  "rank": 155,
+  "title": "Finding Nemo",
+  "info": "2003 • 1h 40m",
+  "rate": "8.2 (1.1M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMTc5NjExNTA5OV5BMl5BanBnXkFtZTYwMTQ0ODY2._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "Allied officers in a German prisoner of war camp during World War II making a daring plan for a mass escape by hundreds of their men, hoping to draw German personnel and resources away from combat operations.",
+  "rank": 156,
+  "title": "The Great Escape",
+  "info": "1963 • 2h 52m • Approved",
+  "rate": "8.2 (265K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMDRhNmJjMzEtMWU5MC00YmEyLTg3ZmYtNzYxZTI1ZGU4ZjI1XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "King Arthur and his Knights of the Round Table embark on a surreal, low-budget search for the Holy Grail, encountering many, very silly obstacles.",
+  "rank": 157,
+  "title": "Monty Python and the Holy Grail",
+  "info": "1975 • 1h 31m • PG",
+  "rate": "8.2 (582K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BYWY4YmUzZmUtMzQ0ZS00N2Y2LWJlODQtN2IwMDc1MWQwMmU3XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "After a shipwreck, an intelligent robot called Roz is stranded on an uninhabited island. To survive the harsh environment, Roz bonds with the island's animals and cares for an orphaned baby goose.",
+  "rank": 158,
+  "title": "The Wild Robot",
+  "info": "2024 • 1h 42m • PG",
+  "rate": "8.2 (107K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZjM2M2E3YzAtZDJjYy00MDhkLThiYmItOGZhNzQ3NTgyZmI0XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "When an unconfident young woman is cursed with an old body by a spiteful witch, her only chance of breaking the spell lies with a self-indulgent yet insecure young wizard and his companions in his legged, walking castle.",
+  "rank": 159,
+  "title": "Howl's Moving Castle",
+  "info": "2004 • 1h 59m • PG",
+  "rate": "8.2 (471K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMTY1OTg0MjE3MV5BMl5BanBnXkFtZTcwNTUxMTkyMQ@@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A Victorian surgeon rescues a heavily disfigured man who is mistreated while scraping a living as a side-show freak. Behind his monstrous façade, there is revealed a person of kindness, intelligence and sophistication.",
+  "rank": 160,
+  "title": "The Elephant Man",
+  "info": "1980 • 2h 4m • PG",
+  "rate": "8.2 (266K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMGE3MDZhNmMtMmUxZS00MDJmLTgxYmQtOGU4ODU0Y2JmNDI1XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A former tennis star arranges the murder of his adulterous wife.",
+  "rank": 161,
+  "title": "Dial M for Murder",
+  "info": "1954 • 1h 45m • PG",
+  "rate": "8.2 (195K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZmYzNDgzYjgtNmU3Ny00YzUxLWE3OWUtMjIxZmNkYTVhNDZmXkEyXkFqcGc@._V1_QL75_UY207_CR7"
+ },
+ {
+  "desc": "The rape of a bride and the murder of her samurai husband are recalled from the perspectives of a bandit, the bride, the samurai's ghost and a woodcutter.",
+  "rank": 162,
+  "title": "Rashomon",
+  "info": "1950 • 1h 28m",
+  "rate": "8.2 (186K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMjEzMzA4NDE2OF5BMl5BanBnXkFtZTcwNTc5MDI2NQ@@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A sheltered and manipulative Southern belle and a roguish profiteer face off in a turbulent romance as the society around them crumbles with the end of slavery and is rebuilt during the Civil War and Reconstruction periods.",
+  "rank": 163,
+  "title": "Gone with the Wind",
+  "info": "1939 • 3h 58m",
+  "rate": "8.2 (342K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BYmYxZTE3YzMtYmE2Yy00NmFlLTkzYTAtYTAzN2IzNDFkN2E0XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A private detective hired to expose an adulterer in 1930s Los Angeles finds himself caught up in a web of deceit, corruption, and murder.",
+  "rank": 164,
+  "title": "Chinatown",
+  "info": "1974 • 2h 10m • R",
+  "rate": "8.1 (360K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNmRmZTE0NmUtZjhiZi00MzQ3LTk3ZjctN2Q3ODYzY2U3MDk3XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A retired legal counselor writes a novel hoping to find closure for one of his past unresolved homicide cases and for his unreciprocated love with his superior - both of which still haunt him decades later.",
+  "rank": 165,
+  "title": "The Secret in Their Eyes",
+  "info": "2009 • 2h 9m • R",
+  "rate": "8.2 (229K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMTgwNTI3OTczOV5BMl5BanBnXkFtZTcwMTM3MTUyMw@@._V1_QL75_UY207_CR0"
+ },
+ {
+  "desc": "When four small-time criminals lose a rigged poker game against a London kingpin, he gives them one week to settle their enormous debt.",
+  "rank": 166,
+  "title": "Lock, Stock and Two Smoking Barrels",
+  "info": "1998 • 1h 47m • R",
+  "rate": "8.1 (629K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMmY1M2M5ZmMtYzllZC00YzAxLTk4MjktZDJkNjA1MTUwMGQ4XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "In a future British dystopian society, a shadowy freedom fighter, known only by the alias of \"V\", plots to overthrow the tyrannical government - with the help of a young woman.",
+  "rank": 167,
+  "title": "V for Vendetta",
+  "info": "2005 • 2h 12m • R",
+  "rate": "8.1 (1.2M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BOTI5ODc3NzExNV5BMl5BanBnXkFtZTcwNzYxNzQzMw@@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "After young Riley is uprooted from her Midwest life and moved to San Francisco, her emotions - Joy, Fear, Anger, Disgust and Sadness - conflict on how best to navigate a new city, house, and school.",
+  "rank": 168,
+  "title": "Inside Out",
+  "info": "2015 • 1h 35m • PG",
+  "rate": "8.1 (848K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BOTgxMDQwMDk0OF5BMl5BanBnXkFtZTgwNjU5OTg2NDE@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A simple act of kindness always sparks another, even in a frozen, faraway place. When Smeerensburg's new postman, Jesper, befriends toymaker Klaus, their gifts melt an age-old feud and deliver a sleigh full of holiday traditions.",
+  "rank": 169,
+  "title": "Klaus",
+  "info": "2019 • 1h 36m • PG",
+  "rate": "8.2 (207K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZDA4ODhlMzctNGRmYi00NmViLTkxZGYtZjRkNGQ5YzYwYWVlXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A mother personally challenges the local authorities to solve her daughter's murder when they fail to catch the culprit.",
+  "rank": 170,
+  "title": "Three Billboards Outside Ebbing, Missouri",
+  "info": "2017 • 1h 55m • R",
+  "rate": "8.1 (572K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMjI0ODcxNzM1N15BMl5BanBnXkFtZTgwMzIwMTEwNDI@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "The life of boxer Jake LaMotta, whose violence and temper that led him to the top in the ring destroyed his life outside of it.",
+  "rank": 171,
+  "title": "Raging Bull",
+  "info": "1980 • 2h 9m • R",
+  "rate": "8.1 (390K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMjlkYmYyZWQtNTZkOS00ZjA0LWEwNWUtNzE2ZGNiYjg0MjA2XkEyXkFqcGc@._V1_QL75_UY207_CR1"
+ },
+ {
+  "desc": "Renton, deeply immersed in the Edinburgh drug scene, tries to clean up and get out despite the allure of drugs and the influence of friends.",
+  "rank": 172,
+  "title": "Trainspotting",
+  "info": "1996 • 1h 33m • R",
+  "rate": "8.1 (741K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BYmVkNGJkMzQtYWQwOS00OTZmLThjODQtZjNjNzllYzRiNTE0XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "British POWs are forced to build a railway bridge across the river Kwai for their Japanese captors in occupied Burma, not knowing that the allied forces are planning a daring commando raid through the jungle to destroy it.",
+  "rank": 173,
+  "title": "The Bridge on the River Kwai",
+  "info": "1957 • 2h 41m • PG",
+  "rate": "8.1 (239K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNzdkYmU2YmItNmZiYy00OWQyLTg0YWYtZmUxM2U3YTRiNTQ1XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "Barely 17 yet, Frank is a skilled forger who has passed as a doctor, lawyer and pilot. FBI agent Carl becomes obsessed with tracking down the con man, who only revels in the pursuit.",
+  "rank": 174,
+>>>>>>> Stashed changes
   "title": "Catch Me If You Can",
   "info": "2002 • 2h 21m • PG-13",
   "rate": "8.1 (1.1M)",
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMTY5MzYzNjc5NV5BMl5BanBnXkFtZTYwNTUyNTc2._V1_QL75_UX140_CR0"
  },
  {
+<<<<<<< Updated upstream
+=======
+  "desc": "Minnesota car salesman Jerry Lundegaard's inept crime falls apart due to his and his henchmen's bungling and the persistent police work of the quite pregnant Marge Gunderson.",
+  "rank": 175,
+  "title": "Fargo",
+  "info": "1996 • 1h 38m • R",
+  "rate": "8.1 (743K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNjg4MWE0MjEtODFhNy00MjA5LTg5ODktMzgwNWFmZTAwNjBlXkEyXkFqcGc@._V1_QL75_UY207_CR0"
+ },
+ {
+>>>>>>> Stashed changes
   "desc": "The youngest son of an alcoholic former boxer returns home, where he's trained by his father for competition in a mixed martial arts tournament - a path that puts the fighter on a collision course with his estranged, older brother.",
   "rank": 176,
   "title": "Warrior",
   "info": "2011 • 2h 20m • PG-13",
+<<<<<<< Updated upstream
   "rate": "8.1 (499K)",
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMTk4ODk5MTMyNV5BMl5BanBnXkFtZTcwMDMyNTg0Ng@@._V1_QL75_UX140_CR0"
  },
@@ -1486,24 +2745,158 @@
   "info": "2014 • 1h 39m • R",
   "rate": "8.1 (889K)",
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMzM5NjUxOTEyMl5BMl5BanBnXkFtZTgwNjEyMDM0MDE@._V1_QL75_UX140_CR0"
+=======
+  "rate": "8.1 (508K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMTk4ODk5MTMyNV5BMl5BanBnXkFtZTcwMDMyNTg0Ng@@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "As the battle between the forces of good and evil in the wizarding world escalates, Harry Potter draws ever closer to his final confrontation with Voldemort.",
+  "rank": 177,
+  "title": "Harry Potter and the Deathly Hallows: Part 2",
+  "info": "2011 • 2h 10m • PG-13",
+  "rate": "8.1 (979K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BOTA1Mzc2N2ItZWRiNS00MjQzLTlmZDQtMjU0NmY1YWRkMGQ4XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "After a Hmong teenager tries to steal his prized 1972 Gran Torino, a disgruntled, prejudiced Korean War veteran seeks to redeem both the boy and himself.",
+  "rank": 178,
+  "title": "Gran Torino",
+  "info": "2008 • 1h 56m • R",
+  "rate": "8.1 (830K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMTc5NTk2OTU1Nl5BMl5BanBnXkFtZTcwMDc3NjAwMg@@._V1_QL75_UY207_CR0"
+ },
+ {
+  "desc": "With Spider-Man's identity now revealed, Peter asks Doctor Strange for help. When a spell goes wrong, dangerous foes from other worlds start to appear.",
+  "rank": 179,
+  "title": "Spider-Man: No Way Home",
+  "info": "2021 • 2h 28m • PG-13",
+  "rate": "8.2 (925K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMmFiZGZjMmEtMTA0Ni00MzA2LTljMTYtZGI2MGJmZWYzZTQ2XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "Frankie, an ill-tempered old coach, reluctantly agrees to train aspiring boxer Maggie. Impressed with her determination and talent, he helps her become the best and the two soon form a close bond.",
+  "rank": 180,
+  "title": "Million Dollar Baby",
+  "info": "2004 • 2h 12m • PG-13",
+  "rate": "8.1 (737K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMTkxNzA1NDQxOV5BMl5BanBnXkFtZTcwNTkyMTIzMw@@._V1_QL75_UY207_CR0"
+ },
+ {
+  "desc": "When two girls move to the country to be near their ailing mother, they have adventures with the wondrous forest spirits who live nearby.",
+  "rank": 181,
+  "title": "My Neighbor Totoro",
+  "info": "1988 • 1h 26m",
+  "rate": "8.1 (398K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BYWM3MDE3YjEtMzIzZC00ODE5LTgxNTItNmUyMTBkM2M2NmNiXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "In a post-apocalyptic wasteland, a woman rebels against a tyrannical ruler in search for her homeland with the aid of a group of female prisoners, a psychotic worshipper and a drifter named Max.",
+  "rank": 182,
+  "title": "Mad Max: Fury Road",
+  "info": "2015 • 2h • R",
+  "rate": "8.1 (1.1M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZDRkODJhOTgtOTc1OC00NTgzLTk4NjItNDgxZDY4YjlmNDY2XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "Tanjiro ventures to the south-southeast where he encounters a cowardly young man named Zenitsu Agatsuma. He is a fellow survivor from Final Selection and his sparrow asks Tanjiro to help keep him in line.",
+  "rank": 183,
+  "title": "Demon Slayer: Kimetsu no Yaiba - Tsuzumi Mansion Arc",
+  "info": "2021 • 1h 27m",
+  "rate": "8.7 (28K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZjQzYWUzMWYtMWNmMi00ZDYxLTgzYmItN2NjYTY2YWEyMzNlXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A Jewish prince is betrayed and sent into slavery by a Roman friend in 1st-century Jerusalem, but it's not long before he regains his freedom and comes back for revenge.",
+  "rank": 184,
+  "title": "Ben-Hur",
+  "info": "1959 • 3h 32m",
+  "rate": "8.1 (260K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNjg2M2E1YzYtOThmMC00NjAyLWI5MzgtMDEwOGFiODdlOGUzXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "After a boy loses his sister's pair of shoes, he goes on a series of adventures in order to find them. When he can't, he tries a new way to \"win\" a new pair.",
+  "rank": 185,
+  "title": "Children of Heaven",
+  "info": "1997 • 1h 29m • PG",
+  "rate": "8.2 (84K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZWZlMjNhNzgtZGRhOS00Y2U5LThjOTctODNjZTI0ZTBiYzBhXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "In the antebellum United States, Solomon Northup, a free black man from upstate New York, is abducted and sold into slavery.",
+  "rank": 186,
+  "title": "12 Years a Slave",
+  "info": "2013 • 2h 14m • R",
+  "rate": "8.1 (756K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMjExMTEzODkyN15BMl5BanBnXkFtZTcwNTU4NTc4OQ@@._V1_QL75_UX140_CR0"
+>>>>>>> Stashed changes
  },
  {
   "desc": "An Irish rogue wins the heart of a rich widow and assumes her dead husband's aristocratic position in 18th-century England.",
   "rank": 187,
   "title": "Barry Lyndon",
   "info": "1975 • 3h 5m • PG",
+<<<<<<< Updated upstream
   "rate": "8.1 (184K)",
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNmY0MWY2NDctZDdmMi00MjA1LTk0ZTQtZDMyZTQ1NTNlYzVjXkEyXkFqcGdeQXVyMjUzOTY1NTc@._V1_QL75_UX140_CR0"
  },
  {
   "desc": "With his wife's disappearance having become the focus of an intense media circus, a man sees the spotlight turned on him when it's suspected that he may not be innocent.",
   "rank": 188,
+=======
+  "rate": "8.1 (189K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNmM2MGQ5Y2UtYzA3ZC00ZDJlLTkwNDYtMjBmZGExZDJiN2RlXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A blade runner must pursue and terminate four replicants who stole a ship in space and have returned to Earth to find their creator.",
+  "rank": 188,
+  "title": "Blade Runner",
+  "info": "1982 • 1h 57m • R",
+  "rate": "8.1 (843K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BOWQ4YTBmNTQtMDYxMC00NGFjLTkwOGQtNzdhNmY1Nzc1MzUxXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A young man and woman meet on a train in Europe, and wind up spending one evening together in Vienna. Unfortunately, both know that this will probably be their only night together.",
+  "rank": 189,
+  "title": "Before Sunrise",
+  "info": "1995 • 1h 41m • R",
+  "rate": "8.1 (352K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZDZhZmI1ZTUtYWI3NC00NTMwLTk3NWMtNDc0OGNjM2I0ZjlmXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A writer encounters the owner of an aging high-class hotel, who tells him of his early years serving as a lobby boy in the hotel's glorious years under an exceptional concierge.",
+  "rank": 190,
+  "title": "The Grand Budapest Hotel",
+  "info": "2014 • 1h 39m • R",
+  "rate": "8.1 (912K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMzM5NjUxOTEyMl5BMl5BanBnXkFtZTgwNjEyMDM0MDE@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "World War II American Army Medic Desmond T. Doss, serving during the Battle of Okinawa, refuses to kill people and becomes the first man in American history to receive the Medal of Honor without firing a shot.",
+  "rank": 191,
+  "title": "Hacksaw Ridge",
+  "info": "2016 • 2h 19m • R",
+  "rate": "8.1 (622K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMjQ1NjM3MTUxNV5BMl5BanBnXkFtZTgwMDc5MTY5OTE@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "Maverick teacher John Keating returns in 1959 to the prestigious New England boys' boarding school where he was once a star student, using poetry to embolden his pupils to new heights of self-expression.",
+  "rank": 192,
+  "title": "Dead Poets Society",
+  "info": "1989 • 2h 8m • PG",
+  "rate": "8.1 (575K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMDYwNGVlY2ItMWYxMS00YjZiLWE5MTAtYWM5NWQ2ZWJjY2Q3XkEyXkFqcGc@._V1_QL75_UY207_CR0"
+ },
+ {
+  "desc": "The husband of a missing woman becomes the chief suspect in her disappearance.",
+  "rank": 193,
+>>>>>>> Stashed changes
   "title": "Gone Girl",
   "info": "2014 • 2h 29m • R",
   "rate": "8.1 (1.1M)",
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMTk0MDQ3MzAzOV5BMl5BanBnXkFtZTgwNzU1NzE3MjE@._V1_QL75_UY207_CR0"
  },
  {
+<<<<<<< Updated upstream
   "desc": "World War II American Army Medic Desmond T. Doss, serving during the Battle of Okinawa, refuses to kill people and becomes the first man in American history to receive the Medal of Honor without firing a shot.",
   "rank": 189,
   "title": "Hacksaw Ridge",
@@ -1598,12 +2991,69 @@
   "info": "1924 • 45m",
   "rate": "8.2 (57K)",
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZWFhOGU5NDctY2Q3YS00Y2VlLWI1NzEtZmIwY2ZiZjY4OTA2XkEyXkFqcGdeQXVyMDI2NDg0NQ@@._V1_QL75_UX140_CR0"
+=======
+  "desc": "In a small Korean province in 1986, two detectives struggle with the case of multiple young women being found raped and murdered by an unknown culprit.",
+  "rank": 194,
+  "title": "Memories of Murder",
+  "info": "2003 • 2h 12m",
+  "rate": "8.1 (231K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BYmRjOWE5NmMtYTdkYS00ODFlLWJiMTMtYzE2NDZlZjlkZDQ0XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "An Irish man's coerced confession to an I.R.A. bombing he did not commit results in the imprisonment of his father as well. Meanwhile, a British lawyer fights to clear their names and free them.",
+  "rank": 195,
+  "title": "In the Name of the Father",
+  "info": "1993 • 2h 13m • R",
+  "rate": "8.1 (193K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMGZiZDVjNzYtZWM4ZC00MzVkLThhNDEtMDJlOTBhYzVjMmNhXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "In order to power the city, monsters have to scare children so that they scream. However, the children are toxic to the monsters, and after a child gets through, two monsters realize things may not be what they think.",
+  "rank": 196,
+  "title": "Monsters, Inc.",
+  "info": "2001 • 1h 32m",
+  "rate": "8.1 (1M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMTY1NTI0ODUyOF5BMl5BanBnXkFtZTgwNTEyNjQ0MDE@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A prospector goes to the Klondike during the 1890s gold rush in hopes of making his fortune, and is smitten with a girl he sees in a dance hall.",
+  "rank": 197,
+  "title": "The Gold Rush",
+  "info": "1925 • 1h 35m • Approved",
+  "rate": "8.1 (122K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNGU1NjYzYTAtZmY0YS00NWIzLTkzNzUtYzc2ZTIyOTIxZjVhXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A rat who can cook makes an unusual alliance with a young kitchen worker at a famous Paris restaurant.",
+  "rank": 198,
+  "title": "Ratatouille",
+  "info": "2007 • 1h 51m",
+  "rate": "8.1 (864K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMTMzODU0NTkxMF5BMl5BanBnXkFtZTcwMjQ4MzMzMw@@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "Six short stories that explore the extremities of human behavior involving people in distress.",
+  "rank": 199,
+  "title": "Wild Tales",
+  "info": "2014 • 2h 2m • R",
+  "rate": "8.1 (224K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNzAzMjA1ODAxOV5BMl5BanBnXkFtZTgwODg4NTQzNDE@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A barber seeks vengeance after his home is burglarized, cryptically telling police his \"lakshmi\" has been taken, leaving them uncertain if it's a person or object. His quest to recover the elusive \"lakshmi\" unfolds.",
+  "rank": 200,
+  "title": "Maharaja",
+  "info": "2024 • 2h 21m",
+  "rate": "8.4 (59K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BOTFlMTIxOGItZTk0Zi00MTk2LWJiM2UtMzlhZWYzNjQ4N2Y3XkEyXkFqcGc@._V1_QL75_UY207_CR8"
+>>>>>>> Stashed changes
  },
  {
   "desc": "A hapless young Viking who aspires to hunt dragons becomes the unlikely friend of a young dragon himself, and learns there may be more to the creatures than he assumed.",
   "rank": 201,
   "title": "How to Train Your Dragon",
   "info": "2010 • 1h 38m • PG",
+<<<<<<< Updated upstream
   "rate": "8.1 (803K)",
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMjA5NDQyMjc2NF5BMl5BanBnXkFtZTcwMjg5ODcyMw@@._V1_QL75_UX140_CR0"
  },
@@ -1702,12 +3152,113 @@
   "info": "1957 • 1h 36m",
   "rate": "8.1 (199K)",
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BOWM3MmE0OGYtOGVlNC00OWE1LTk5ZTAtYmUwMDIwM2ZlNWJiXkEyXkFqcGdeQXVyMjUzOTY1NTc@._V1_QL75_UY207_CR1"
+=======
+  "rate": "8.1 (827K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMjA5NDQyMjc2NF5BMl5BanBnXkFtZTcwMjg5ODcyMw@@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "When a massive killer shark unleashes chaos on a beach community off Long Island, it's up to a local sheriff, a marine biologist, and an old seafarer to hunt the beast down.",
+  "rank": 202,
+  "title": "Jaws",
+  "info": "1975 • 2h 4m • PG",
+  "rate": "8.1 (683K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BYjViNDQzNmUtYzkxZi00NTk5LTljMmItYjJlZmZkODIxNjU1XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "An in-depth examination of the ways in which the Vietnam War impacts and disrupts the lives of several friends in a small steel mill town in Pennsylvania.",
+  "rank": 203,
+  "title": "The Deer Hunter",
+  "info": "1978 • 3h 3m • R",
+  "rate": "8.1 (371K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZGI4YmVhMzMtMWExMS00MGZiLTg2MmItM2I2MWZjODAyM2U5XkEyXkFqcGc@._V1_QL75_UY207_CR0"
+ },
+ {
+  "desc": "A film projectionist longs to be a detective, and puts his meagre skills to work when he is framed by a rival for stealing his girlfriend's father's pocketwatch.",
+  "rank": 204,
+  "title": "Sherlock Jr.",
+  "info": "1924 • 45m",
+  "rate": "8.2 (60K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMjQzM2E2NjYtYmRjMC00ZmVlLTljZTgtNmQ5MGZlNDYyZTc5XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "After being rejected by the Confederate military, not realizing it was due to his crucial civilian role, an engineer must single-handedly recapture his beloved locomotive after it is seized by Union spies and return it through enemy lines.",
+  "rank": 205,
+  "title": "The General",
+  "info": "1926 • 1h 18m",
+  "rate": "8.1 (101K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMTVhM2Y1MDUtMDkxYi00Y2UxLWI2MTMtZjMzYTY4ODM4MGIzXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "In 1976 Melbourne, a lonely 8-year-old girl strikes up a correspondence with an unlikely pen pal: a severely obese 44-year-old New Yorker with Asperger's syndrome.",
+  "rank": 206,
+  "title": "Mary and Max",
+  "info": "2009 • 1h 32m",
+  "rate": "8.1 (193K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNzY2Mjc4NjMtNGY4Mi00NzM5LTk3ZTQtN2VkNzVkMzRmM2Y2XkEyXkFqcGc@._V1_QL75_UY207_CR3"
+ },
+ {
+  "desc": "An ex-prize fighter turned New Jersey longshoreman struggles to stand up to his corrupt union bosses, including his older brother, as he starts to connect with the grieving sister of one of the syndicate's victims.",
+  "rank": 207,
+  "title": "On the Waterfront",
+  "info": "1954 • 1h 48m • Approved",
+  "rate": "8.1 (170K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZDJlYTM1ZGYtZTM4YS00MzFhLThiZjktYzQ0ZjAzMGYwZTU3XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "American car designer Carroll Shelby and driver Ken Miles battle corporate interference and the laws of physics to build a revolutionary race car for Ford in order to defeat Ferrari at the 24 Hours of Le Mans in 1966.",
+  "rank": 208,
+  "title": "Ford v Ferrari",
+  "info": "2019 • 2h 32m • PG-13",
+  "rate": "8.1 (507K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BOTBjNTEyNjYtYjdkNi00YzE5LTljYzUtZjVlYmYwZmJmZWYxXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "In a decrepit South American village, four men are hired to transport an urgent nitroglycerine shipment without the equipment that would make it safe.",
+  "rank": 209,
+  "title": "The Wages of Fear",
+  "info": "1953 • 2h 36m",
+  "rate": "8.1 (69K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMDdhOGMwODQtZGM2MS00NGQxLWEyZDMtOTkzMjFjYjI3ZmM2XkEyXkFqcGc@._V1_QL75_UY207_CR1"
+ },
+ {
+  "desc": "A naive youth leader is appointed to fill a vacancy in the U.S. Senate. His idealistic plans promptly collide with corruption at home and subterfuge from his hero in Washington, but he tries to forge ahead despite attacks on his character.",
+  "rank": 210,
+  "title": "Mr. Smith Goes to Washington",
+  "info": "1939 • 2h 9m • Approved",
+  "rate": "8.1 (124K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMDU4ZjNmMjEtMjcxYi00NDAxLWFlMjQtNWIyNjg5NWUzNTdjXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "After living a life marked by coldness, an aging professor is forced to confront the emptiness of his existence.",
+  "rank": 211,
+  "title": "Wild Strawberries",
+  "info": "1957 • 1h 32m",
+  "rate": "8.1 (118K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZWQ5MDllM2EtZWRmNS00MmZiLWI4ZWQtMjRiY2Q5MTAxODY4XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "Pulp novelist Holly Martins travels to shadowy, postwar Vienna, only to find himself investigating the mysterious death of an old friend, Harry Lime.",
+  "rank": 212,
+  "title": "The Third Man",
+  "info": "1949 • 1h 44m • Approved",
+  "rate": "8.1 (187K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNTAwZjAwZDUtNDc1Yi00OGY3LTgzMjktYjIyMjQzOWE3MmVhXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "In a future where mutants are nearly extinct, an elderly and weary Logan leads a quiet life. But when Laura, a mutant child pursued by scientists, comes to him for help, he must get her to safety.",
+  "rank": 213,
+  "title": "Logan",
+  "info": "2017 • 2h 17m • R",
+  "rate": "8.1 (874K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BM2JjODdkMGMtNmY2YS00OGM2LThiY2YtZGYyNzE4Nzc2ODA0XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+>>>>>>> Stashed changes
  },
  {
   "desc": "A small-time Philadelphia boxer gets a supremely rare chance to fight the world heavyweight champion in a bout in which he strives to go the distance for his self-respect.",
   "rank": 214,
   "title": "Rocky",
   "info": "1976 • 2h • PG",
+<<<<<<< Updated upstream
   "rate": "8.1 (630K)",
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNTBkMjg2MjYtYTZjOS00ODQ0LTg0MDEtM2FiNmJmOGU1NGEwXkEyXkFqcGdeQXVyMjUzOTY1NTc@._V1_QL75_UX140_CR0"
  },
@@ -1773,10 +3324,110 @@
   "title": "Before Sunset",
   "info": "2004 • 1h 20m • R",
   "rate": "8.1 (289K)",
+=======
+  "rate": "8.1 (649K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZDEyY2M2MGMtYjg5OC00ZWFjLWFkZDQtNmQzZTdiYmYzZTBkXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "An old couple visit their children and grandchildren in the city, but receive little attention.",
+  "rank": 215,
+  "title": "Tokyo Story",
+  "info": "1953 • 2h 17m",
+  "rate": "8.1 (72K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BODdkNzcxZjItMDU2Yy00Y2JlLWFkYTQtNzIwM2Q4MWU5MTU2XkEyXkFqcGc@._V1_QL75_UY207_CR2"
+ },
+ {
+  "desc": "Jeff \"The Dude\" Lebowski, mistaken for a millionaire of the same name, seeks restitution for his ruined rug and enlists his bowling buddies to help get it.",
+  "rank": 216,
+  "title": "The Big Lebowski",
+  "info": "1998 • 1h 57m • R",
+  "rate": "8.1 (880K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BY2E3OWQ5OWYtYTRkMC00NjVjLWIzZDQtNmRmM2ZiYTIyYmYxXkEyXkFqcGc@._V1_QL75_UY207_CR0"
+ },
+ {
+  "desc": "A knight returning to Sweden after the Crusades seeks answers about life, death, and the existence of God as he plays chess against the Grim Reaper during the Black Plague.",
+  "rank": 217,
+  "title": "The Seventh Seal",
+  "info": "1957 • 1h 36m",
+  "rate": "8.1 (205K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZDlmYTkzOWUtODQ0MS00MmM4LWE3ZjMtYTEwNGUwMmJkYzIxXkEyXkFqcGc@._V1_QL75_UY207_CR1"
+ },
+ {
+  "desc": "The true story of how the Boston Globe uncovered the massive scandal of child molestation and cover-up within the local Catholic Archdiocese, shaking the entire Catholic Church to its core.",
+  "rank": 218,
+  "title": "Spotlight",
+  "info": "2015 • 2h 9m • R",
+  "rate": "8.1 (513K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMjIyOTM5OTIzNV5BMl5BanBnXkFtZTgwMDkzODE2NjE@._V1_QL75_UY207_CR0"
+ },
+ {
+  "desc": "A little boy is held captive in a room with his mother since his birth, so he has never known the world outside.",
+  "rank": 219,
+  "title": "Room",
+  "info": "2015 • 1h 58m • R",
+  "rate": "8.1 (462K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMjE4NzgzNzEwMl5BMl5BanBnXkFtZTgwMTMzMDE0NjE@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A cyborg assassin from the future attempts to find and kill a young woman who is destined to give birth to a warrior that will lead a resistance to save humankind from extinction.",
+  "rank": 220,
+  "title": "The Terminator",
+  "info": "1984 • 1h 47m • R",
+  "rate": "8.1 (951K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZmE0YzIxM2QtMGNlMi00MjRmLWE3MWMtOWQzMGVjMmU0YTFmXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "Paul Rusesabagina, a hotel manager, houses over a thousand Tutsi refugees during their struggle against the Hutu militia in Rwanda, Africa.",
+  "rank": 221,
+  "title": "Hotel Rwanda",
+  "info": "2004 • 2h 1m • PG-13",
+  "rate": "8.1 (380K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BY2FmMWRmZmQtN2IzMS00OGVmLWFmNjktMTM0YWQzODcwYTEwXkEyXkFqcGc@._V1_QL75_UY207_CR0"
+ },
+ {
+  "desc": "Chris Taylor, a neophyte recruit in Vietnam, finds himself caught in a battle of wills between two sergeants, one good and the other evil. A shrewd examination of the brutality of war and the duality of man in conflict.",
+  "rank": 222,
+  "title": "Platoon",
+  "info": "1986 • 2h • R",
+  "rate": "8.1 (450K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZjE4YjllODAtZGMxZS00Mjg2LThkOWUtZjNkMjQ5YThiNDU4XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "Blacksmith Will Turner teams up with eccentric pirate \"Captain\" Jack Sparrow to save Elizabeth Swann, the governor's daughter and his love, from Jack's former pirate allies, who are now undead.",
+  "rank": 223,
+  "title": "Pirates of the Caribbean: The Curse of the Black Pearl",
+  "info": "2003 • 2h 23m • PG-13",
+  "rate": "8.1 (1.2M)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNDhlMzEyNzItMTA5Mi00YWRhLThlNTktYTQyMTA0MDIyNDEyXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "24 hours in the lives of three young men in the French suburbs the day after a violent riot.",
+  "rank": 224,
+  "title": "La haine",
+  "info": "1995 • 1h 38m",
+  "rate": "8.1 (206K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMThlMDA3NDYtZGM2Zi00NmJhLThlYWItZjViZTkzZWU1ZWRiXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "When a tribal man is arrested for a case of alleged theft, his wife turns to a human-rights lawyer to help bring justice.",
+  "rank": 225,
+  "title": "Jai Bhim",
+  "info": "2021 • 2h 44m • Approved",
+  "rate": "8.7 (223K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZjEyNDIzNmEtMjdkYS00ZDAwLTljOWYtNDRhYTVhYTlmOTk1XkEyXkFqcGc@._V1_QL75_UY207_CR13"
+ },
+ {
+  "desc": "Nine years after Jesse and Celine first met, they encounter each other again on the French leg of Jesse's book tour.",
+  "rank": 226,
+  "title": "Before Sunset",
+  "info": "2004 • 1h 20m • R",
+  "rate": "8.1 (297K)",
+>>>>>>> Stashed changes
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMTQ1MjAwNTM5Ml5BMl5BanBnXkFtZTYwNDM0MTc3._V1_QL75_UY207_CR0"
  },
  {
   "desc": "Three World War II veterans, two of them traumatized or disabled, return home to the American midwest to discover that they and their families have been irreparably changed.",
+<<<<<<< Updated upstream
   "rank": 223,
   "title": "The Best Years of Our Lives",
   "info": "1946 • 2h 50m • Approved",
@@ -1838,14 +3489,154 @@
   "info": "1986 • 1h 29m • R",
   "rate": "8.1 (443K)",
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BODJmY2Y2OGQtMDg2My00N2Q3LWJmZTUtYTc2ODBjZDVlNDlhXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_QL75_UX140_CR0"
+=======
+  "rank": 227,
+  "title": "The Best Years of Our Lives",
+  "info": "1946 • 2h 50m • Approved",
+  "rate": "8.1 (73K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNTgxMzUyODQtMDJmZC00ZGMyLWI3MzAtZTYwYjBjZjFmMzIxXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "In 1431, Jeanne d'Arc is placed on trial on charges of heresy. The ecclesiastical jurists attempt to force Jeanne to recant her claims of holy visions.",
+  "rank": 228,
+  "title": "The Passion of Joan of Arc",
+  "info": "1928 • 1h 54m",
+  "rate": "8.1 (63K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNTE1MDliZjgtYTU2Yy00YjAxLTljYTItNDE2ZGYwYTY1MGQ1XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "When a mysterious entity possesses a young girl, her mother seeks the help of two Catholic priests to save her life.",
+  "rank": 229,
+  "title": "The Exorcist",
+  "info": "1973 • 2h 2m • R",
+  "rate": "8.1 (470K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZjg3YjE4ZjAtYTdmYS00ZTBkLWE1ZjgtNzAzODUwNzRiYjlmXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "Young Dorothy Gale and her dog Toto are swept away by a tornado from their Kansas farm to the magical Land of Oz and embark on a quest with three new friends to see the Wizard, who can return her to her home and fulfill the others' wishes.",
+  "rank": 230,
+  "title": "The Wizard of Oz",
+  "info": "1939 • 1h 42m",
+  "rate": "8.1 (443K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BYWRmY2I0MGItYTQ0OC00NWZmLWIwMDktYjJlNDc0MzVhMmViXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+>>>>>>> Stashed changes
  },
  {
   "desc": "While trying to lead a quiet suburban life, a family of undercover superheroes are forced into action to save the world.",
   "rank": 231,
   "title": "The Incredibles",
   "info": "2004 • 1h 55m • PG",
+<<<<<<< Updated upstream
   "rate": "8.0 (812K)",
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMTY5OTU0OTc2NV5BMl5BanBnXkFtZTcwMzU4MDcyMQ@@._V1_QL75_UX140_CR0"
+=======
+  "rate": "8.0 (839K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMTY5OTU0OTc2NV5BMl5BanBnXkFtZTcwMzU4MDcyMQ@@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "James Hunt and Niki Lauda, two extremely skilled Formula One racers, have an intense rivalry with each other. However, it is their enmity that pushes them to their limits.",
+  "rank": 232,
+  "title": "Rush",
+  "info": "2013 • 2h 3m • R",
+  "rate": "8.1 (527K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMTZhOGQxM2ItNGQyYy00YzE5LWI5MjMtNmMzNGQzNDE1OTUzXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A television network cynically exploits a deranged former anchor's ravings and revelations about mass media for its own profit, but finds that his message may be difficult to control.",
+  "rank": 233,
+  "title": "Network",
+  "info": "1976 • 2h 1m • R",
+  "rate": "8.1 (176K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BY2E4ZGJiNTMtZTAxZC00MmVlLWI1NjYtMGVhMjhkOGEwZDhjXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A writer recounts a childhood journey with his friends to find the body of a missing boy.",
+  "rank": 234,
+  "title": "Stand by Me",
+  "info": "1986 • 1h 29m • R",
+  "rate": "8.1 (456K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNGJkNTUwM2MtZWE2MS00YjNkLWE3MjktNWQwZDQxMDIyZWVmXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A young novice is sent by her convent in 1930s Austria to become a governess to the seven children of a widowed naval officer.",
+  "rank": 235,
+  "title": "The Sound of Music",
+  "info": "1965 • 2h 52m",
+  "rate": "8.1 (271K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BYWJhYmU4MjQtZDJhYi00ZGVjLTlkNTEtNzkzNGVjOWQ3MjcwXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "Professor Wilson discovers a lost Akita puppy on his way home. Despite objections from his wife, Hachi endears himself to the family and grows to be Parker's loyal companion. As their bond grows deeper, a beautiful relationship unfolds.",
+  "rank": 236,
+  "title": "Hachi: A Dog's Tale",
+  "info": "2009 • 1h 33m",
+  "rate": "8.1 (322K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNTU5NjYyYTgtZGQ3My00MzRhLThjNGYtZmVjN2JjYjhkMjhhXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "The family of a left-wing journalist is torn apart after the military coup of Turkey in 1980.",
+  "rank": 237,
+  "title": "My Father and My Son",
+  "info": "2005 • 1h 52m",
+  "rate": "8.2 (96K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZDE3MTBkNmQtNGFjMC00YTcwLWExY2ItN2MyMGZkNWJlMmFmXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "In 1930s Korea, a girl is hired as a handmaiden to a Japanese heiress who lives a secluded life on a countryside estate. But the maid has a secret: She is a pickpocket recruited by a swindler to help seduce the Lady and steal her fortune.",
+  "rank": 238,
+  "title": "The Handmaiden",
+  "info": "2016 • 2h 25m",
+  "rate": "8.1 (183K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BOTllZDI1OGItOGUxNS00OGZhLWIzMjAtYzllZTY1YTA0ZmYwXkEyXkFqcGc@._V1_QL75_UY207_CR2"
+ },
+ {
+  "desc": "A captured French Resistance fighter during World War II engineers a daunting escape from a German prison in France.",
+  "rank": 239,
+  "title": "A Man Escaped",
+  "info": "1956 • 1h 41m",
+  "rate": "8.2 (27K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZDE3MjdlZDEtYmJiZi00YmE1LWJkOTMtYTMzZGYwOWU4MjYzXkEyXkFqcGc@._V1_QL75_UY207_CR3"
+ },
+ {
+  "desc": "During the German occupation of Poland, an acting troupe becomes embroiled in a Polish soldier's efforts to track down a German spy.",
+  "rank": 240,
+  "title": "To Be or Not to Be",
+  "info": "1942 • 1h 39m • Approved",
+  "rate": "8.1 (46K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BN2YwNDE4MjQtZjJlOS00ZjIwLWE3YjgtNmZkYWM3N2JmMWM3XkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A young boy befriends a giant robot from outer space that a paranoid government agent wants to destroy.",
+  "rank": 241,
+  "title": "The Iron Giant",
+  "info": "1999 • 1h 26m • PG",
+  "rate": "8.1 (239K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BODM4ZjZjMGEtYmFiMy00MThjLWIzZjUtMDU0ODg1NTI2MzIwXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "In the 1950s, fear and violence escalate as the people of Algiers fight for independence from the French government.",
+  "rank": 242,
+  "title": "The Battle of Algiers",
+  "info": "1966 • 2h 1m",
+  "rate": "8.1 (69K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMTY2Mjk0OGEtYTM3Yy00ZWZiLWFhNjAtNGExMjEzNGVmMDMxXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "After graduating from Emory University, top student and athlete Christopher McCandless abandons his possessions, gives his entire $24,000 savings account to charity and hitchhikes to Alaska to live in the wilderness.",
+  "rank": 243,
+  "title": "Into the Wild",
+  "info": "2007 • 2h 28m • R",
+  "rate": "8.1 (671K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BNTgwZTJhNWMtNzVjMy00YzQzLWI4MTAtYmJhOGQ5ZmQ3MDM0XkEyXkFqcGc@._V1_QL75_UY207_CR0"
+ },
+ {
+  "desc": "An Oklahoma family, driven off their farm by the poverty and hopelessness of the Dust Bowl, joins the westward migration to California, suffering the misfortunes of the homeless in the Great Depression.",
+  "rank": 244,
+  "title": "The Grapes of Wrath",
+  "info": "1940 • 2h 9m • Approved",
+  "rate": "8.1 (103K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BZDgzZjk3OGYtNWI2Ny00MDg3LTgwYWEtNjI1ODAxNjA3ZmFlXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+>>>>>>> Stashed changes
  },
  {
   "desc": "Professor Wilson discovers a lost Akita puppy on his way home. Despite objections from his wife, Hachi endears himself to the family and grows to be Parker's loyal companion. As their bond grows deeper, a beautiful relationship unfolds.",
@@ -1905,6 +3696,7 @@
  },
  {
   "desc": "A narcissistic, self-centered weatherman finds himself in a time loop on Groundhog Day.",
+<<<<<<< Updated upstream
   "rank": 239,
   "title": "Groundhog Day",
   "info": "1993 • 1h 41m • PG",
@@ -1998,5 +3790,52 @@
   "info": "2012 • 5h 21m",
   "rate": "8.2 (104K)",
   "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMTc5NjY4MjUwNF5BMl5BanBnXkFtZTgwODM3NzM5MzE@._V1_QL75_UX140_CR0"
+=======
+  "rank": 245,
+  "title": "Groundhog Day",
+  "info": "1993 • 1h 41m • PG",
+  "rate": "8.0 (704K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BOWE3MjQ3ZDAtNDQ2MC00YjBjLTk0ZWYtNjQ0YzQ4YWE3YTEyXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "An amateur dog fighter, a supermodel, and a derelict assassin, all separately struggling to find love, find their lives transformed by a devastating car wreck in Mexico City.",
+  "rank": 246,
+  "title": "Amores Perros",
+  "info": "2000 • 2h 34m • R",
+  "rate": "8.0 (258K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMmUzNDI1MDYtNmIxNC00NjczLTk0ZDEtYWFkZDcxMWVhYTEwXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "An aspiring author during the civil rights movement of the 1960s decides to write a book detailing the African American maids' point of view on the white families for which they work, and the hardships they go through on a daily basis.",
+  "rank": 247,
+  "title": "The Help",
+  "info": "2011 • 2h 26m • PG-13",
+  "rate": "8.1 (506K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BMTM5OTMyMjIxOV5BMl5BanBnXkFtZTcwNzU4MjIwNQ@@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A self-conscious woman juggles adjusting to her new role as an aristocrat's wife and avoiding being intimidated by his first wife's spectral presence.",
+  "rank": 248,
+  "title": "Rebecca",
+  "info": "1940 • 2h 10m • Approved",
+  "rate": "8.1 (151K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BYTI0MjUyODAtZTBkNC00MmIwLWFlNmYtMWE3ZmJlOWJjM2QyXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+ },
+ {
+  "desc": "A deaf girl, Shoko, is bullied by the popular Shoya. As Shoya continues to bully Shoko, the class turns its back on him. Shoko transfers and Shoya grows up as an outcast. Alone and depressed, the regretful Shoya finds Shoko to make amends.",
+  "rank": 249,
+  "title": "A Silent Voice: The Movie",
+  "info": "2016 • 2h 10m",
+  "rate": "8.1 (112K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BOTFiNzRiOWEtYTQwNy00NmRiLWE0ZWYtNTE0YjExZjFmZjkwXkEyXkFqcGc@._V1_QL75_UY207_CR2"
+ },
+ {
+  "desc": "A laid-back Southern man is sentenced to two years in a rural prison, but refuses to conform.",
+  "rank": 250,
+  "title": "Cool Hand Luke",
+  "info": "1967 • 2h 7m • Approved",
+  "rate": "8.0 (193K)",
+  "thumbnailUri": "https://m.media-amazon.com/images/M/MV5BYzI1NzBkNmMtOWRmMS00YmY2LTk5MjQtZjAzMmIwZDQ2M2UwXkEyXkFqcGc@._V1_QL75_UX140_CR0"
+>>>>>>> Stashed changes
  }
 ]

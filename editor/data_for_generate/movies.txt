@@ -4,9 +4,9 @@ Tim Robbins in The Shawshank Redemption (1994)
 2h 22m
 R
 9.3
- (2.9M)
+ (3M)
 
-Over the course of several years, two convicts form a friendship, seeking consolation and, eventually, redemption through basic compassion.
+A banker convicted of uxoricide forms a friendship over a quarter century with a hardened convict, while maintaining his innocence and trying to remain hopeful through simple compassion.
 DirectorFrank DarabontStarsTim RobbinsMorgan FreemanBob Gunton
 Marlon Brando in The Godfather (1972)
 2. The Godfather
@@ -14,28 +14,62 @@ Marlon Brando in The Godfather (1972)
 2h 55m
 R
 9.2
- (2M)
+ (2.1M)
 
 The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.
 DirectorFrancis Ford CoppolaStarsMarlon BrandoAl PacinoJames Caan
-Morgan Freeman, Gary Oldman, Christian Bale, Michael Caine, Aaron Eckhart, Heath Ledger, Maggie Gyllenhaal, Cillian Murphy, and Chin Han in The Dark Knight (2008)
+Christian Bale in The Dark Knight (2008)
 3. The Dark Knight
 2008
 2h 32m
 PG-13
 9.0
- (2.9M)
+ (3M)
 
-When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.
+When a menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman, James Gordon and Harvey Dent must work together to put an end to the madness.
 DirectorChristopher NolanStarsChristian BaleHeath LedgerAaron Eckhart
 Al Pacino in The Godfather Part II (1974)
 4. The Godfather Part II
 1974
 3h 22m
+<<<<<<< Updated upstream
+=======
 R
 9.0
  (1.4M)
 
+The early life and career of Vito Corleone in 1920s New York City is portrayed, while his son, Michael, expands and tightens his grip on the family crime syndicate.
+DirectorFrancis Ford CoppolaStarsAl PacinoRobert De NiroRobert Duvall
+Henry Fonda, Martin Balsam, Jack Klugman, Lee J. Cobb, Ed Begley, Edward Binns, John Fiedler, E.G. Marshall, Joseph Sweeney, George Voskovec, Jack Warden, and Robert Webber in 12 Angry Men (1957)
+5. 12 Angry Men
+1957
+1h 36m
+Approved
+9.0
+ (903K)
+
+The jury in a New York City murder trial is frustrated by a single member whose skeptical caution forces them to more carefully consider the evidence before jumping to a hasty verdict.
+DirectorSidney LumetStarsHenry FondaLee J. CobbMartin Balsam
+Liv Tyler, Sean Astin, Elijah Wood, Viggo Mortensen, Ian McKellen, and Andy Serkis in The Lord of the Rings: The Return of the King (2003)
+6. The Lord of the Rings: The Return of the King
+2003
+3h 21m
+PG-13
+9.0
+ (2M)
+
+Gandalf and Aragorn lead the World of Men against Sauron's army to draw his gaze from Frodo and Sam as they approach Mount Doom with the One Ring.
+DirectorPeter JacksonStarsElijah WoodViggo MortensenIan McKellen
+Schindler's List (1993)
+7. Schindler's List
+1993
+3h 15m
+>>>>>>> Stashed changes
+R
+9.0
+ (1.5M)
+
+<<<<<<< Updated upstream
 The early life and career of Vito Corleone in 1920s New York City is portrayed, while his son, Michael, expands and tightens his grip on the family crime syndicate.
 DirectorFrancis Ford CoppolaStarsAl PacinoRobert De NiroRobert Duvall
 Henry Fonda, Martin Balsam, Jack Klugman, Lee J. Cobb, Ed Begley, Edward Binns, John Fiedler, E.G. Marshall, Joseph Sweeney, George Voskovec, Jack Warden, and Robert Webber in 12 Angry Men (1957)
@@ -68,13 +102,17 @@ PG-13
 
 Gandalf and Aragorn lead the World of Men against Sauron's army to draw his gaze from Frodo and Sam as they approach Mount Doom with the One Ring.
 DirectorPeter JacksonStarsElijah WoodViggo MortensenIan McKellen
+=======
+In German-occupied Poland during World War II, industrialist Oskar Schindler gradually becomes concerned for his Jewish workforce after witnessing their persecution by the Nazis.
+DirectorSteven SpielbergStarsLiam NeesonRalph FiennesBen Kingsley
+>>>>>>> Stashed changes
 Uma Thurman in Pulp Fiction (1994)
 8. Pulp Fiction
 1994
 2h 34m
 R
 8.9
- (2.2M)
+ (2.3M)
 
 The lives of two mob hitmen, a boxer, a gangster and his wife, and a pair of diner bandits intertwine in four tales of violence and redemption.
 DirectorQuentin TarantinoStarsJohn TravoltaUma ThurmanSamuel L. Jackson
@@ -84,7 +122,7 @@ Liv Tyler, Sean Astin, Sean Bean, Elijah Wood, Cate Blanchett, Viggo Mortensen, 
 2h 58m
 PG-13
 8.9
- (2M)
+ (2.1M)
 
 A meek Hobbit from the Shire and eight companions set out on a journey to destroy the powerful One Ring and save Middle-earth from the Dark Lord Sauron.
 DirectorPeter JacksonStarsElijah WoodIan McKellenOrlando Bloom
@@ -92,6 +130,7 @@ The Good, the Bad and the Ugly (1966)
 10. The Good, the Bad and the Ugly
 1966
 2h 58m
+<<<<<<< Updated upstream
 R
 8.8
  (814K)
@@ -122,9 +161,63 @@ Brad Pitt and Edward Norton in Fight Club (1999)
 13. Fight Club
 1999
 2h 19m
+=======
+>>>>>>> Stashed changes
 R
 8.8
- (2.3M)
+ (838K)
+
+<<<<<<< Updated upstream
+An insomniac office worker and a devil-may-care soap maker form an underground fight club that evolves into much more.
+DirectorDavid FincherStarsBrad PittEdward NortonMeat Loaf
+Leonardo DiCaprio, Tom Berenger, Michael Caine, Lukas Haas, Marion Cotillard, Joseph Gordon-Levitt, Tom Hardy, Elliot Page, Ken Watanabe, and Dileep Rao in Inception (2010)
+14. Inception
+2010
+2h 28m
+=======
+A bounty-hunting scam joins two men in an uneasy alliance against a third in a race to find a fortune in gold buried in a remote cemetery.
+DirectorSergio LeoneStarsClint EastwoodEli WallachLee Van Cleef
+Tom Hanks in Forrest Gump (1994)
+11. Forrest Gump
+1994
+2h 22m
+>>>>>>> Stashed changes
+PG-13
+8.8
+ (2.6M)
+
+<<<<<<< Updated upstream
+A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O., but his tragic past may doom the project and his team to disaster.
+DirectorChristopher NolanStarsLeonardo DiCaprioJoseph Gordon-LevittElliot Page
+Harrison Ford, Anthony Daniels, Carrie Fisher, Mark Hamill, James Earl Jones, David Prowse, Kenny Baker, and Peter Mayhew in Star Wars: Episode V - The Empire Strikes Back (1980)
+15. Star Wars: Episode V - The Empire Strikes Back
+1980
+2h 4m
+PG
+8.7
+ (1.4M)
+
+After the Rebel Alliance are overpowered by the Empire, Luke Skywalker begins his Jedi training with Yoda, while his friends are pursued across the galaxy by Darth Vader and bounty hunter Boba Fett.
+=======
+The history of the United States from the 1950s to the '70s unfolds from the perspective of an Alabama man with an IQ of 75, who yearns to be reunited with his childhood sweetheart.
+DirectorRobert ZemeckisStarsTom HanksRobin WrightGary Sinise
+Liv Tyler, Sean Astin, Christopher Lee, Elijah Wood, Viggo Mortensen, Miranda Otto, Ian McKellen, Orlando Bloom, John Rhys-Davies, and Andy Serkis in The Lord of the Rings: The Two Towers (2002)
+12. The Lord of the Rings: The Two Towers
+2002
+2h 59m
+PG-13
+8.8
+ (1.8M)
+
+While Frodo and Sam edge closer to Mordor with the help of the shifty Gollum, the divided fellowship makes a stand against Sauron's new ally, Saruman, and his hordes of Isengard.
+DirectorPeter JacksonStarsElijah WoodIan McKellenViggo Mortensen
+Brad Pitt and Edward Norton in Fight Club (1999)
+13. Fight Club
+1999
+2h 19m
+R
+8.8
+ (2.4M)
 
 An insomniac office worker and a devil-may-care soap maker form an underground fight club that evolves into much more.
 DirectorDavid FincherStarsBrad PittEdward NortonMeat Loaf
@@ -146,7 +239,8 @@ PG
 8.7
  (1.4M)
 
-After the Rebel Alliance are overpowered by the Empire, Luke Skywalker begins his Jedi training with Yoda, while his friends are pursued across the galaxy by Darth Vader and bounty hunter Boba Fett.
+After the Empire overpowers the Rebel Alliance, Luke Skywalker begins his Jedi training with Yoda. At the same time, Darth Vader and bounty hunter Boba Fett pursue his friends across the galaxy.
+>>>>>>> Stashed changes
 DirectorIrvin KershnerStarsMark HamillHarrison FordCarrie Fisher
 Keanu Reeves, Laurence Fishburne, Joe Pantoliano, and Carrie-Anne Moss in The Matrix (1999)
 16. The Matrix
@@ -178,16 +272,32 @@ R
 
 In the Fall of 1963, a Korean War veteran and criminal pleads insanity and is admitted to a mental institution, where he rallies up the scared patients against the tyrannical nurse.
 DirectorMilos FormanStarsJack NicholsonLouise FletcherMichael Berryman
+<<<<<<< Updated upstream
 Brad Pitt and Morgan Freeman in Se7en (1995)
 19. Se7en
+=======
+Matthew McConaughey in Interstellar (2014)
+19. Interstellar
+2014
+2h 49m
+PG-13
+8.7
+ (2.2M)
+
+When Earth becomes uninhabitable in the future, a farmer and ex-NASA pilot, Joseph Cooper, is tasked to pilot a spacecraft, along with a team of researchers, to find a new planet for humans.
+DirectorChristopher NolanStarsMatthew McConaugheyAnne HathawayJessica Chastain
+Brad Pitt and Morgan Freeman in Se7en (1995)
+20. Se7en
+>>>>>>> Stashed changes
 1995
 2h 7m
 R
 8.6
- (1.8M)
+ (1.9M)
 
 Two detectives, a rookie and a veteran, hunt a serial killer who uses the seven deadly sins as his motives.
 DirectorDavid FincherStarsMorgan FreemanBrad PittKevin Spacey
+<<<<<<< Updated upstream
 Matthew McConaughey in Interstellar (2014)
 20. Interstellar
 2014
@@ -198,11 +308,14 @@ PG-13
 
 When Earth becomes uninhabitable in the future, a farmer and ex-NASA pilot, Joseph Cooper, is tasked to pilot a spacecraft, along with a team of researchers, to find a new planet for humans.
 DirectorChristopher NolanStarsMatthew McConaugheyAnne HathawayJessica Chastain
+=======
+>>>>>>> Stashed changes
 James Stewart and Donna Reed in It's a Wonderful Life (1946)
 21. It's a Wonderful Life
 1946
 2h 10m
 PG
+<<<<<<< Updated upstream
 8.6
  (500K)
 
@@ -280,12 +393,32 @@ Paul Atreides unites with Chani and the Fremen while seeking revenge against the
 DirectorDenis VilleneuveStarsTimothée ChalametZendayaRebecca Ferguson
 Arnold Schwarzenegger in Terminator 2: Judgment Day (1991)
 29. Terminator 2: Judgment Day
+=======
+8.6
+ (520K)
+
+An angel is sent from Heaven to help a desperately frustrated businessman by showing him what life would have been like if he had never existed.
+DirectorFrank CapraStarsJames StewartDonna ReedLionel Barrymore
+Seven Samurai (1954)
+22. Seven Samurai
+1954
+3h 27m
+Not Rated
+8.6
+ (378K)
+
+Farmers from a village exploited by bandits hire a veteran samurai for protection, and he gathers six other samurai to join him.
+DirectorAkira KurosawaStarsToshirô MifuneTakashi ShimuraKeiko Tsushima
+Jodie Foster in The Silence of the Lambs (1991)
+23. The Silence of the Lambs
+>>>>>>> Stashed changes
 1991
-2h 17m
+1h 58m
 R
 8.6
- (1.2M)
+ (1.6M)
 
+<<<<<<< Updated upstream
 A cyborg, identical to the one who failed to kill Sarah Connor, must now protect her ten year old son John from an even more advanced and powerful cyborg.
 DirectorJames CameronStarsArnold SchwarzeneggerLinda HamiltonEdward Furlong
 Anthony Daniels, Carrie Fisher, Mark Hamill, James Earl Jones, David Prowse, and Kenny Baker in Star Wars: Episode IV - A New Hope (1977)
@@ -400,6 +533,172 @@ R
 DirectorLuc BessonStarsJean RenoGary OldmanNatalie Portman
 Edward Norton in American History X (1998)
 41. American History X
+=======
+A young F.B.I. cadet must receive the help of an incarcerated and manipulative cannibal killer to help catch another serial killer, a madman who skins his victims.
+DirectorJonathan DemmeStarsJodie FosterAnthony HopkinsScott Glenn
+Tom Hanks, Matt Damon, Tom Sizemore, and Edward Burns in Saving Private Ryan (1998)
+24. Saving Private Ryan
+1998
+2h 49m
+R
+8.6
+ (1.5M)
+
+Following the Normandy Landings, a group of U.S. soldiers go behind enemy lines to retrieve a paratrooper whose brothers have been killed in action.
+DirectorSteven SpielbergStarsTom HanksMatt DamonTom Sizemore
+Inhabitants of Belo Vale Boa Morte and Cidade de Congonhas and Paige Ellens in City of God (2002)
+25. City of God
+2002
+2h 10m
+R
+8.6
+ (824K)
+
+In the slums of Rio, two kids' paths diverge as one struggles to become a photographer and the other a kingpin.
+DirectorFernando MeirellesKátia LundStarsAlexandre RodriguesLeandro FirminoMatheus Nachtergaele
+Movie Poster
+26. The Green Mile
+1999
+3h 9m
+R
+8.6
+ (1.5M)
+
+Paul Edgecomb, the head death row guard at a prison in 1930s Louisiana, meets an inmate, John Coffey, a black man who is accused of murdering two girls. His life changes drastically when he discovers that John has a special gift.
+DirectorFrank DarabontStarsTom HanksMichael Clarke DuncanDavid Morse
+Roberto Benigni, Nicoletta Braschi, and Giorgio Cantarini in Life Is Beautiful (1997)
+27. Life Is Beautiful
+1997
+1h 56m
+PG-13
+8.6
+ (765K)
+
+When an open-minded Jewish waiter and his son become victims of the Holocaust, he uses a perfect mixture of will, humor and imagination to protect his son from the dangers around their camp.
+DirectorRoberto BenigniStarsRoberto BenigniNicoletta BraschiGiorgio Cantarini
+Arnold Schwarzenegger in Terminator 2: Judgment Day (1991)
+28. Terminator 2: Judgment Day
+1991
+2h 17m
+R
+8.6
+ (1.2M)
+
+A cyborg, identical to the one who failed to kill Sarah Connor, must now protect her ten year old son John from an even more advanced and powerful cyborg.
+DirectorJames CameronStarsArnold SchwarzeneggerLinda HamiltonEdward Furlong
+Anthony Daniels, Carrie Fisher, Mark Hamill, James Earl Jones, David Prowse, and Kenny Baker in Star Wars: Episode IV - A New Hope (1977)
+29. Star Wars: Episode IV - A New Hope
+1977
+2h 1m
+PG
+8.6
+ (1.5M)
+
+Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a Wookiee and two droids to save the galaxy from the Empire's world-destroying battle station, while also attempting to rescue Princess Leia from the mysterious Darth Vader.
+DirectorGeorge LucasStarsMark HamillHarrison FordCarrie Fisher
+Michael J. Fox in Back to the Future (1985)
+30. Back to the Future
+1985
+1h 56m
+PG
+8.5
+ (1.4M)
+
+Marty McFly, a 17-year-old high school student, is accidentally sent 30 years into the past in a time-traveling DeLorean invented by his close friend, the maverick scientist Doc Brown.
+DirectorRobert ZemeckisStarsMichael J. FoxChristopher LloydLea Thompson
+Spirited Away (2001)
+31. Spirited Away
+2001
+2h 4m
+PG
+8.6
+ (888K)
+
+During her family's move to the suburbs, a sullen 10-year-old girl wanders into a world ruled by gods, witches and spirits, and where humans are changed into beasts.
+DirectorHayao MiyazakiStarsDaveigh ChaseSuzanne PleshetteMiyu Irino
+The Pianist (2002)
+32. The Pianist
+2002
+2h 30m
+R
+8.5
+ (948K)
+
+During WWII, acclaimed Polish musician Wladyslaw faces various struggles as he loses contact with his family. As the situation worsens, he hides in the ruins of Warsaw in order to survive.
+DirectorRoman PolanskiStarsAdrien BrodyThomas KretschmannFrank Finlay
+Russell Crowe in Gladiator (2000)
+33. Gladiator
+2000
+2h 35m
+R
+8.5
+ (1.7M)
+
+A former Roman General sets out to exact vengeance against the corrupt emperor who murdered his family and sent him into slavery.
+DirectorRidley ScottStarsRussell CroweJoaquin PhoenixConnie Nielsen
+Song Kang-ho, Jung Ik-han, Jung Hyun-jun, Lee Joo-hyung, Lee Ji-hye, Lee Sun-kyun, Cho Yeo-jeong, Park Myeong-hoon, Park Keun-rok, Jang Hye-jin, Lee Jeong-eun, Choi Woo-sik, Park Seo-joon, Park So-dam, and Jung Ji-so in Parasite (2019)
+34. Parasite
+2019
+2h 12m
+R
+8.5
+ (1M)
+
+Greed and class discrimination threaten the newly formed symbiotic relationship between the wealthy Park family and the destitute Kim clan.
+DirectorBong Joon HoStarsSong Kang-hoLee Sun-kyunCho Yeo-jeong
+Anthony Perkins, John Gavin, Janet Leigh, and Heather Dawn May in Psycho (1960)
+35. Psycho
+1960
+1h 49m
+R
+8.5
+ (742K)
+
+A secretary on the run for embezzlement takes refuge at a secluded California motel owned by a repressed man and his overbearing mother.
+DirectorAlfred HitchcockStarsAnthony PerkinsJanet LeighVera Miles
+Matthew Broderick in The Lion King (1994)
+36. The Lion King
+1994
+1h 28m
+G
+8.5
+ (1.2M)
+
+Lion prince Simba and his father are targeted by his bitter uncle, who wants to ascend the throne himself.
+DirectorRoger AllersRob MinkoffStarsMatthew BroderickJeremy IronsJames Earl Jones
+Leonardo DiCaprio, Jack Nicholson, and Matt Damon in The Departed (2006)
+37. The Departed
+2006
+2h 31m
+R
+8.5
+ (1.5M)
+
+An undercover cop and a mole in the police attempt to identify each other while infiltrating an Irish gang in South Boston.
+DirectorMartin ScorseseStarsLeonardo DiCaprioMatt DamonJack Nicholson
+Corinne Orr, Ayano Shiraishi, Tsutomu Tatsumi, J. Robert Spencer, Emily Neves, and Adam Gibbs in Grave of the Fireflies (1988)
+38. Grave of the Fireflies
+1988
+1h 28m
+Not Rated
+8.5
+ (335K)
+
+A young boy and his little sister struggle to survive in Japan during World War II.
+DirectorIsao TakahataStarsTsutomu TatsumiAyano ShiraishiAkemi Yamaguchi
+Miles Teller in Whiplash (2014)
+39. Whiplash
+2014
+1h 46m
+R
+8.5
+ (1M)
+
+A promising young drummer enrolls at a cut-throat music conservatory where his dreams of greatness are mentored by an instructor who will stop at nothing to realize a student's potential.
+DirectorDamien ChazelleStarsMiles TellerJ.K. SimmonsMelissa Benoist
+Edward Norton in American History X (1998)
+40. American History X
+>>>>>>> Stashed changes
 1998
 1h 59m
 R
@@ -408,6 +707,7 @@ R
 
 Living a life marked by violence, neo-Nazi Derek finally goes to prison after killing two black youths. Upon his release, Derek vows to change; he hopes to prevent his brother, Danny, who idolizes Derek, from following in his footsteps.
 DirectorTony KayeStarsEdward NortonEdward FurlongBeverly D'Angelo
+<<<<<<< Updated upstream
 Miles Teller in Whiplash (2014)
 42. Whiplash
 2014
@@ -460,30 +760,102 @@ The sole survivor of a pier shoot-out tells the story of how a notorious crimina
 DirectorBryan SingerStarsKevin SpaceyGabriel ByrneChazz Palminteri
 Ingrid Bergman, Humphrey Bogart, Peter Lorre, Claude Rains, Sydney Greenstreet, Paul Henreid, and Conrad Veidt in Casablanca (1942)
 47. Casablanca
+=======
+Oscar Isaac, Andy Samberg, Jake Johnson, Daniel Kaluuya, Hailee Steinfeld, Karan Soni, Shameik Moore, and Issa Rae in Spider-Man: Across the Spider-Verse (2023)
+41. Spider-Man: Across the Spider-Verse
+2023
+2h 20m
+PG
+8.5
+ (427K)
+
+Miles Morales catapults across the multiverse, where he encounters a team of Spider-People charged with protecting its very existence. When the heroes clash on how to handle a new threat, Miles must redefine what it means to be a hero.
+DirectorJoaquim Dos SantosKemp PowersJustin K. ThompsonStarsShameik MooreHailee SteinfeldBrian Tyree Henry
+Christian Bale, Hugh Jackman, and Scarlett Johansson in The Prestige (2006)
+42. The Prestige
+2006
+2h 10m
+PG-13
+8.5
+ (1.5M)
+
+Rival 19th-century magicians engage in a bitter battle for trade secrets.
+DirectorChristopher NolanStarsChristian BaleHugh JackmanScarlett Johansson
+Harakiri (1962)
+43. Harakiri
+1962
+2h 13m
+Not Rated
+8.6
+ (76K)
+
+When a ronin requesting seppuku at a feudal lord's palace is told of the brutal suicide of another ronin who previously visited, he reveals how their pasts are intertwined - and in doing so challenges the clan's integrity.
+DirectorMasaki KobayashiStarsTatsuya NakadaiAkira IshihamaShima Iwashita
+Natalie Portman and Jean Reno in Léon: The Professional (1994)
+44. Léon: The Professional
+1994
+1h 50m
+R
+8.5
+ (1.3M)
+
+12-year-old Mathilda is reluctantly taken in by Léon, a professional assassin, after her family is murdered. An unusual relationship forms as she becomes his protégée and learns the assassin's trade.
+DirectorLuc BessonStarsJean RenoGary OldmanNatalie Portman
+Ingrid Bergman, Humphrey Bogart, Peter Lorre, Claude Rains, Sydney Greenstreet, Paul Henreid, and Conrad Veidt in Casablanca (1942)
+45. Casablanca
+>>>>>>> Stashed changes
 1942
 1h 42m
 PG
 8.5
+<<<<<<< Updated upstream
  (608K)
 
 A cynical expatriate American cafe owner struggles to decide whether or not to help his former lover and her fugitive husband escape the Nazis in French Morocco.
 DirectorMichael CurtizStarsHumphrey BogartIngrid BergmanPaul Henreid
 François Cluzet and Omar Sy in The Intouchables (2011)
 48. The Intouchables
+=======
+ (623K)
+
+A cynical expatriate American cafe owner struggles to decide whether or not to help his former lover and her fugitive husband escape the Nazis in French Morocco.
+DirectorMichael CurtizStarsHumphrey BogartIngrid BergmanPaul Henreid
+Kevin Spacey, Stephen Baldwin, Gabriel Byrne, Benicio Del Toro, and Kevin Pollak in The Usual Suspects (1995)
+46. The Usual Suspects
+1995
+1h 46m
+R
+8.5
+ (1.2M)
+
+The sole survivor of a pier shoot-out tells the story of how a notorious criminal influenced the events that began with five criminals meeting in a seemingly random police lineup.
+DirectorBryan SingerStarsKevin SpaceyGabriel ByrneChazz Palminteri
+François Cluzet and Omar Sy in The Intouchables (2011)
+47. The Intouchables
+>>>>>>> Stashed changes
 2011
 1h 52m
 R
 8.5
+<<<<<<< Updated upstream
  (933K)
+=======
+ (960K)
+>>>>>>> Stashed changes
 
 After he becomes a quadriplegic from a paragliding accident, an aristocrat hires a young man from the projects to be his caregiver.
 DirectorOlivier NakacheÉric ToledanoStarsFrançois CluzetOmar SyAnne Le Ny
 Cinema Paradiso (1988)
+<<<<<<< Updated upstream
 49. Cinema Paradiso
+=======
+48. Cinema Paradiso
+>>>>>>> Stashed changes
 1988
 2h 54m
 PG
 8.5
+<<<<<<< Updated upstream
  (284K)
 
 A filmmaker recalls his childhood when falling in love with the pictures at the cinema of his home village and forms a deep friendship with the cinema's projectionist.
@@ -548,13 +920,93 @@ R
 
 With the help of a German bounty-hunter, a freed slave sets out to rescue his wife from a brutal plantation owner in Mississippi.
 DirectorQuentin TarantinoStarsJamie FoxxChristoph WaltzLeonardo DiCaprio
+=======
+ (295K)
+
+Salvatore, a famous film director, returns to his hometown for the funeral of the local theater's film projectionist, Alfredo. He reminisces about his life as a young boy falling in love with cinema.
+DirectorGiuseppe TornatoreStarsPhilippe NoiretEnzo CannavaleAntonella Attili
+Charles Chaplin in Modern Times (1936)
+49. Modern Times
+1936
+1h 27m
+G
+8.5
+ (269K)
+
+The Tramp struggles to live in modern industrial society with the help of a young homeless woman.
+DirectorCharles ChaplinStarsCharles ChaplinPaulette GoddardHenry Bergman
+Alien (1979)
+50. Alien
+1979
+1h 57m
+R
+8.5
+ (998K)
+
+After investigating a mysterious transmission of unknown origin, the crew of a commercial spacecraft encounters a deadly lifeform.
+DirectorRidley ScottStarsSigourney WeaverTom SkerrittJohn Hurt
+Grace Kelly, James Stewart, Georgine Darcy, Judith Evelyn, and Harry Landers in Rear Window (1954)
+51. Rear Window
+1954
+1h 52m
+PG
+8.5
+ (538K)
+
+A bored photographer recovering from a broken leg passes the time by watching his neighbors and begins to suspect one of them of murder.
+DirectorAlfred HitchcockStarsJames StewartGrace KellyWendell Corey
+Javier Bardem, Josh Brolin, Stellan Skarsgård, Rebecca Ferguson, Dave Bautista, Austin Butler, Timothée Chalamet, Zendaya, Florence Pugh, and Souheila Yacoub in Dune: Part Two (2024)
+52. Dune: Part Two
+2024
+2h 46m
+PG-13
+8.5
+ (572K)
+
+Paul Atreides unites with the Fremen while on a warpath of revenge against the conspirators who destroyed his family. Facing a choice between the love of his life and the fate of the universe, he endeavors to prevent a terrible future.
+DirectorDenis VilleneuveStarsTimothée ChalametZendayaRebecca Ferguson
+Once Upon a Time in the West (1968)
+53. Once Upon a Time in the West
+1968
+2h 46m
+PG-13
+8.5
+ (362K)
+
+A mysterious stranger with a harmonica joins forces with a notorious desperado to protect a beautiful widow from a ruthless assassin working for the railroad.
+DirectorSergio LeoneStarsHenry FondaCharles BronsonClaudia Cardinale
+Leonardo DiCaprio, Jamie Foxx, and Christoph Waltz in Django Unchained (2012)
+54. Django Unchained
+2012
+2h 45m
+R
+8.5
+ (1.8M)
+
+With the help of a German bounty-hunter, a freed slave sets out to rescue his wife from a brutal plantation owner in Mississippi.
+DirectorQuentin TarantinoStarsJamie FoxxChristoph WaltzLeonardo DiCaprio
+Charles Chaplin in City Lights (1931)
+55. City Lights
+1931
+1h 27m
+G
+8.5
+ (204K)
+
+With the aid of a wealthy erratic tippler, a dewy-eyed tramp who has fallen in love with a sightless flower girl accumulates money to be able to help her medically.
+DirectorCharles ChaplinStarsCharles ChaplinVirginia CherrillFlorence Lee
+>>>>>>> Stashed changes
 Marlon Brando and Martin Sheen in Apocalypse Now (1979)
 56. Apocalypse Now
 1979
 2h 27m
 R
 8.4
+<<<<<<< Updated upstream
  (713K)
+=======
+ (731K)
+>>>>>>> Stashed changes
 
 A U.S. Army officer serving in Vietnam is tasked with assassinating a renegade Special Forces Colonel who sees himself as a god.
 DirectorFrancis Ford CoppolaStarsMartin SheenMarlon BrandoRobert Duvall
@@ -564,6 +1016,7 @@ Guy Pearce and Carrie-Anne Moss in Memento (2000)
 1h 53m
 R
 8.4
+<<<<<<< Updated upstream
  (1.3M)
 
 A man with short-term memory loss attempts to track down his wife's murderer.
@@ -579,40 +1032,82 @@ The real-life story of IPS Officer Manoj Kumar Sharma and IRS Officer Shraddha J
 DirectorVidhu Vinod ChopraStarsVikrant MasseyMedha ShankrAnant Joshi
 WALL·E (2008)
 59. WALL·E
+=======
+ (1.4M)
+
+Leonard Shelby, an insurance investigator, suffers from anterograde amnesia and uses notes and tattoos to hunt for the man he thinks killed his wife, which is the last thing he remembers.
+DirectorChristopher NolanStarsGuy PearceCarrie-Anne MossJoe Pantoliano
+WALL·E (2008)
+58. WALL·E
+>>>>>>> Stashed changes
 2008
 1h 38m
 G
 8.4
  (1.2M)
 
+<<<<<<< Updated upstream
 In the distant future, a small waste-collecting robot inadvertently embarks on a space journey that will ultimately decide the fate of mankind.
 DirectorAndrew StantonStarsBen BurttElissa KnightJeff Garlin
 Harrison Ford, Karen Allen, Paul Freeman, Wolf Kahler, Ronald Lacey, and Terry Richards in Raiders of the Lost Ark (1981)
 60. Raiders of the Lost Ark
+=======
+A robot who is responsible for cleaning a waste-covered Earth meets another robot and falls in love with her. Together, they set out on a journey that will alter the fate of mankind.
+DirectorAndrew StantonStarsBen BurttElissa KnightJeff Garlin
+Harrison Ford, Karen Allen, Paul Freeman, Wolf Kahler, Ronald Lacey, and Terry Richards in Raiders of the Lost Ark (1981)
+59. Raiders of the Lost Ark
+>>>>>>> Stashed changes
 1981
 1h 55m
 PG
 8.4
+<<<<<<< Updated upstream
  (1M)
 
 In 1936, archaeologist and adventurer Indiana Jones is hired by the U.S. government to find the Ark of the Covenant before the Nazis can obtain its awesome powers.
 DirectorSteven SpielbergStarsHarrison FordKaren AllenPaul Freeman
 Martina Gedeck, Sebastian Koch, and Ulrich Mühe in The Lives of Others (2006)
 61. The Lives of Others
+=======
+ (1.1M)
+
+In 1936, archaeologists and adventurers of the U.S. government hired Indiana Jones to find the Ark of the Covenant before the Nazis could obtain its extraordinary powers.
+DirectorSteven SpielbergStarsHarrison FordKaren AllenPaul Freeman
+Martina Gedeck, Sebastian Koch, and Ulrich Mühe in The Lives of Others (2006)
+60. The Lives of Others
+>>>>>>> Stashed changes
 2006
 2h 17m
 R
 8.4
+<<<<<<< Updated upstream
  (412K)
 
 In 1984 East Berlin, an agent of the secret police conducting surveillance on a writer and his lover finds himself becoming increasingly absorbed by their lives.
 DirectorFlorian Henckel von DonnersmarckStarsUlrich MüheMartina GedeckSebastian Koch
+=======
+ (422K)
+
+In 1984 East Berlin, an agent of the secret police conducting surveillance on a writer and his lover finds himself becoming increasingly absorbed by their lives.
+DirectorFlorian Henckel von DonnersmarckStarsUlrich MüheMartina GedeckSebastian Koch
+Don Cheadle, Robert Downey Jr., Josh Brolin, Vin Diesel, Paul Bettany, Bradley Cooper, Chris Evans, Sean Gunn, Scarlett Johansson, Elizabeth Olsen, Chris Pratt, Mark Ruffalo, Zoe Saldana, Benedict Wong, Terry Notary, Anthony Mackie, Chris Hemsworth, Dave Bautista, Benedict Cumberbatch, Chadwick Boseman, Sebastian Stan, Danai Gurira, Karen Gillan, Pom Klementieff, Letitia Wright, and Tom Holland in Avengers: Infinity War (2018)
+61. Avengers: Infinity War
+2018
+2h 29m
+PG-13
+8.4
+ (1.3M)
+
+The Avengers and their allies must be willing to sacrifice all in an attempt to defeat the powerful Thanos before his blitz of devastation and ruin puts an end to the universe.
+DirectorAnthony RussoJoe RussoStarsRobert Downey Jr.Chris HemsworthMark Ruffalo
+>>>>>>> Stashed changes
 William Holden, Nancy Olson, and Gloria Swanson in Sunset Boulevard (1950)
 62. Sunset Boulevard
 1950
 1h 50m
 Approved
 8.4
+<<<<<<< Updated upstream
  (237K)
 
 A screenwriter develops a dangerous relationship with a faded film star determined to make a triumphant return.
@@ -639,21 +1134,59 @@ After a failed attack on a German position, a general orders three soldiers, cho
 DirectorStanley KubrickStarsKirk DouglasRalph MeekerAdolphe Menjou
 Spider-Man: Into the Spider-Verse (2018)
 65. Spider-Man: Into the Spider-Verse
+=======
+ (245K)
+
+A screenwriter develops a dangerous relationship with a faded film star determined to make a triumphant return.
+DirectorBilly WilderStarsWilliam HoldenGloria SwansonErich von Stroheim
+Vikrant Massey in 12th Fail (2023)
+63. 12th Fail
+2023
+2h 27m
+8.8
+ (139K)
+
+The real-life story of IPS Officer Manoj Kumar Sharma and IRS Officer Shraddha Joshi.
+DirectorVidhu Vinod ChopraStarsVikrant MasseyMedha ShankrAnant Joshi
+Spider-Man: Into the Spider-Verse (2018)
+64. Spider-Man: Into the Spider-Verse
+>>>>>>> Stashed changes
 2018
 1h 57m
 PG
 8.4
+<<<<<<< Updated upstream
  (676K)
 
 Teen Miles Morales becomes the Spider-Man of his universe and must join with five spider-powered individuals from other dimensions to stop a threat for all realities.
 DirectorBob PersichettiPeter RamseyRodney RothmanStarsShameik MooreJake JohnsonHailee Steinfeld
+=======
+ (710K)
+
+Teen Miles Morales becomes the Spider-Man of his universe and must join with five spider-powered individuals from other dimensions to stop a threat for all realities.
+DirectorBob PersichettiPeter RamseyRodney RothmanStarsShameik MooreJake JohnsonHailee Steinfeld
+Kirk Douglas in Paths of Glory (1957)
+65. Paths of Glory
+1957
+1h 28m
+Approved
+8.4
+ (222K)
+
+A colonel defends three of his soldiers in a court-martial after they abandon a suicidal attack.
+DirectorStanley KubrickStarsKirk DouglasRalph MeekerAdolphe Menjou
+>>>>>>> Stashed changes
 Witness for the Prosecution (1957)
 66. Witness for the Prosecution
 1957
 1h 56m
 Approved
 8.4
+<<<<<<< Updated upstream
  (138K)
+=======
+ (146K)
+>>>>>>> Stashed changes
 
 A veteran British barrister must defend his client in a murder trial that has surprise after surprise.
 DirectorBilly WilderStarsTyrone PowerMarlene DietrichCharles Laughton
@@ -665,7 +1198,11 @@ R
 8.4
  (1.1M)
 
+<<<<<<< Updated upstream
 A family heads to an isolated hotel for the winter where a sinister presence influences the father into violence, while his psychic son sees horrific forebodings from both past and future.
+=======
+A family heads to an isolated hotel for the winter, where a sinister presence influences the father into violence. At the same time, his psychic son sees horrifying forebodings from both the past and the future.
+>>>>>>> Stashed changes
 DirectorStanley KubrickStarsJack NicholsonShelley DuvallDanny Lloyd
 Charles Chaplin and Paulette Goddard in The Great Dictator (1940)
 68. The Great Dictator
@@ -673,7 +1210,11 @@ Charles Chaplin and Paulette Goddard in The Great Dictator (1940)
 2h 5m
 G
 8.4
+<<<<<<< Updated upstream
  (238K)
+=======
+ (246K)
+>>>>>>> Stashed changes
 
 Dictator Adenoid Hynkel tries to expand his empire while a poor Jewish barber tries to avoid persecution from Hynkel's regime.
 DirectorCharles ChaplinStarsCharles ChaplinPaulette GoddardJack Oakie
@@ -683,7 +1224,11 @@ Sigourney Weaver and Carrie Henn in Aliens (1986)
 2h 17m
 R
 8.4
+<<<<<<< Updated upstream
  (766K)
+=======
+ (797K)
+>>>>>>> Stashed changes
 
 Decades after surviving the Nostromo incident, Ellen Ripley is sent out to re-establish contact with a terraforming colony but finds herself battling the Alien Queen and her offspring.
 DirectorJames CameronStarsSigourney WeaverMichael BiehnCarrie Henn
@@ -703,6 +1248,7 @@ Morgan Freeman, Gary Oldman, Christian Bale, Michael Caine, Matthew Modine, Anne
 2h 44m
 PG-13
 8.4
+<<<<<<< Updated upstream
  (1.8M)
 
 Eight years after the Joker's reign of chaos, Batman is coerced out of exile with the assistance of the mysterious Selina Kyle in order to defend Gotham City from the vicious guerrilla terrorist Bane.
@@ -719,16 +1265,83 @@ An unhinged American general orders a bombing attack on the Soviet Union, trigge
 DirectorStanley KubrickStarsPeter SellersGeorge C. ScottSterling Hayden
 Alfonso Arau, Benjamin Bratt, Alanna Ubach, Gael García Bernal, Dyana Ortelli, Herbert Siguenza, and Anthony Gonzalez in Coco (2017)
 73. Coco
+=======
+ (1.9M)
+
+Bane, an imposing terrorist, attacks Gotham City and disrupts its eight-year-long period of peace. This forces Bruce Wayne to come out of hiding and don the cape and cowl of Batman again.
+DirectorChristopher NolanStarsChristian BaleTom HardyAnne Hathaway
+Alfonso Arau, Benjamin Bratt, Alanna Ubach, Gael García Bernal, Dyana Ortelli, Herbert Siguenza, and Anthony Gonzalez in Coco (2017)
+72. Coco
+>>>>>>> Stashed changes
 2017
 1h 45m
 PG
 8.4
+<<<<<<< Updated upstream
  (594K)
 
 Aspiring musician Miguel, confronted with his family's ancestral ban on music, enters the Land of the Dead to find his great-great-grandfather, a legendary singer.
 DirectorLee UnkrichAdrian MolinaStarsAnthony GonzalezGael García BernalBenjamin Bratt
 Kevin Spacey, Thora Birch, Mena Suvari, and Wes Bentley in American Beauty (1999)
 74. American Beauty
+=======
+ (630K)
+
+Aspiring musician Miguel, confronted with his family's ancestral ban on music, enters the Land of the Dead to find his great-great-grandfather, a legendary singer.
+DirectorLee UnkrichAdrian MolinaStarsAnthony GonzalezGael García BernalBenjamin Bratt
+Amadeus (1984)
+73. Amadeus
+1984
+2h 40m
+PG
+8.4
+ (442K)
+
+The life, success and troubles of Wolfgang Amadeus Mozart, as told by Antonio Salieri, the contemporaneous composer who was deeply jealous of Mozart's talent and claimed to have murdered him.
+DirectorMilos FormanStarsF. Murray AbrahamTom HulceElizabeth Berridge
+Tom Hanks, R. Lee Ermey, Tim Allen, Annie Potts, John Ratzenberger, Wallace Shawn, Jim Varney, and Don Rickles in Toy Story (1995)
+74. Toy Story
+1995
+1h 21m
+G
+8.3
+ (1.1M)
+
+A cowboy doll is profoundly threatened and jealous when a new spaceman action figure supplants him as top toy in a boy's bedroom.
+DirectorJohn LasseterStarsTom HanksTim AllenDon Rickles
+Oldboy (2003)
+75. Oldboy
+2003
+2h
+R
+8.3
+ (663K)
+
+After being kidnapped and imprisoned for fifteen years, Oh Dae-Su is released, only to find that he must track down his captor in five days.
+DirectorPark Chan-wookStarsChoi Min-sikYoo Ji-taeKang Hye-jeong
+Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb (1964)
+76. Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb
+1964
+1h 35m
+PG
+8.3
+ (532K)
+
+An unhinged American general orders a bombing attack on the Soviet Union, triggering a path to nuclear holocaust that a war room full of politicians and generals frantically tries to stop.
+DirectorStanley KubrickStarsPeter SellersGeorge C. ScottSterling Hayden
+Don Cheadle, Robert Downey Jr., Josh Brolin, Bradley Cooper, Chris Evans, Sean Gunn, Scarlett Johansson, Brie Larson, Jeremy Renner, Paul Rudd, Mark Ruffalo, Chris Hemsworth, Danai Gurira, and Karen Gillan in Avengers: Endgame (2019)
+77. Avengers: Endgame
+2019
+3h 1m
+PG-13
+8.4
+ (1.3M)
+
+After the devastating events of Avengers: Infinity War (2018), the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to reverse Thanos' actions and restore balance to the universe.
+DirectorAnthony RussoJoe RussoStarsRobert Downey Jr.Chris EvansMark Ruffalo
+Kevin Spacey, Thora Birch, Mena Suvari, and Wes Bentley in American Beauty (1999)
+78. American Beauty
+>>>>>>> Stashed changes
 1999
 2h 2m
 R
@@ -737,6 +1350,7 @@ R
 
 A sexually frustrated suburban father has a mid-life crisis after becoming infatuated with his daughter's best friend.
 DirectorSam MendesStarsKevin SpaceyAnnette BeningThora Birch
+<<<<<<< Updated upstream
 Oldboy (2003)
 75. Oldboy
 2003
@@ -786,6 +1400,18 @@ Das Boot (1981)
 
 A German U-boat stalks the frigid waters of the North Atlantic as its young crew experience the sheer terror and claustrophobic life of a submariner in World War II.
 DirectorWolfgang PetersenStarsJürgen ProchnowHerbert GrönemeyerKlaus Wennemann
+=======
+Robin Williams and Matt Damon in Good Will Hunting (1997)
+79. Good Will Hunting
+1997
+2h 6m
+R
+8.3
+ (1.1M)
+
+Will Hunting, a janitor at MIT, has a gift for mathematics, but needs help from a psychologist to find direction in his life.
+DirectorGus Van SantStarsRobin WilliamsMatt DamonBen Affleck
+>>>>>>> Stashed changes
 Mel Gibson in Braveheart (1995)
 80. Braveheart
 1995
@@ -796,6 +1422,7 @@ R
 
 Scottish warrior William Wallace leads his countrymen in a rebellion to free his homeland from the tyranny of King Edward I of England.
 DirectorMel GibsonStarsMel GibsonSophie MarceauPatrick McGoohan
+<<<<<<< Updated upstream
 Robin Williams and Matt Damon in Good Will Hunting (1997)
 81. Good Will Hunting
 1997
@@ -832,15 +1459,47 @@ Your Name. (2016)
 1h 46m
 8.4
  (323K)
+=======
+Das Boot (1981)
+81. Das Boot
+1981
+2h 29m
+8.4
+ (274K)
+
+A German U-boat stalks the frigid waters of the North Atlantic as its young crew experience the sheer terror and claustrophobic life of a submariner in World War II.
+DirectorWolfgang PetersenStarsJürgen ProchnowHerbert GrönemeyerKlaus Wennemann
+Claire Danes and Yuriko Ishida in Princess Mononoke (1997)
+82. Princess Mononoke
+1997
+2h 13m
+PG-13
+8.3
+ (451K)
+
+On a journey to find the cure for a Tatarigami's curse, Ashitaka finds himself in the middle of a war between the forest gods and Tatara, a mining colony. In this quest he also meets San, the Mononoke Hime.
+DirectorHayao MiyazakiStarsYôji MatsudaYuriko IshidaYûko Tanaka
+Your Name. (2016)
+83. Your Name.
+2016
+1h 46m
+8.4
+ (343K)
+>>>>>>> Stashed changes
 
 Two teenagers share a profound, magical connection upon discovering they are swapping bodies. Things manage to become even more complicated when the boy and girl decide to meet in person.
 DirectorMakoto ShinkaiStarsRyunosuke KamikiMone KamishiraishiRyo Narita
 Toshirô Mifune, Kenjirô Ishiyama, Kyôko Kagawa, Tatsuya Mihashi, and Tatsuya Nakadai in High and Low (1963)
+<<<<<<< Updated upstream
 85. High and Low
+=======
+84. High and Low
+>>>>>>> Stashed changes
 1963
 2h 23m
 Not Rated
 8.4
+<<<<<<< Updated upstream
  (54K)
 
 An executive of a Yokohama shoe company becomes a victim of extortion when his chauffeur's son is kidnapped by mistake and held for ransom.
@@ -857,21 +1516,60 @@ A former Prohibition-era Jewish gangster returns to the Lower East Side of Manha
 DirectorSergio LeoneStarsRobert De NiroJames WoodsElizabeth McGovern
 Sharman Joshi, Aamir Khan, and Madhavan in 3 Idiots (2009)
 87. 3 Idiots
+=======
+ (58K)
+
+An executive of a Yokohama shoe company becomes a victim of extortion when his chauffeur's son is kidnapped by mistake and held for ransom.
+DirectorAkira KurosawaStarsToshirô MifuneYutaka SadaTatsuya Nakadai
+Joaquin Phoenix in Joker (2019)
+85. Joker
+2019
+2h 2m
+R
+8.3
+ (1.6M)
+
+Arthur Fleck, a party clown and a failed stand-up comedian, leads an impoverished life with his ailing mother. However, when society shuns him and brands him as a freak, he decides to embrace the life of chaos in Gotham City.
+DirectorTodd PhillipsStarsJoaquin PhoenixRobert De NiroZazie Beetz
+Sharman Joshi, Aamir Khan, and Madhavan in 3 Idiots (2009)
+86. 3 Idiots
+>>>>>>> Stashed changes
 2009
 2h 50m
 PG-13
 8.4
+<<<<<<< Updated upstream
  (436K)
 
 Two friends are searching for their long lost companion. They revisit their college days and recall the memories of their friend who inspired them to think differently, even as the rest of the world called them "idiots".
 DirectorRajkumar HiraniStarsAamir KhanMadhavanMona Singh
+=======
+ (450K)
+
+Two friends are searching for their long lost companion. They revisit their college days and recall the memories of their friend who inspired them to think differently, even as the rest of the world called them "idiots".
+DirectorRajkumar HiraniStarsAamir KhanMadhavanMona Singh
+Robert De Niro, James Woods, William Forsythe, Brian Bloom, Adrian Curran, James Hayden, Rusty Jacobs, and Scott Tiler in Once Upon a Time in America (1984)
+87. Once Upon a Time in America
+1984
+3h 49m
+R
+8.3
+ (389K)
+
+A former Prohibition-era Jewish gangster returns to the Lower East Side of Manhattan 35 years later, where he must once again confront the ghosts and regrets of his old life.
+DirectorSergio LeoneStarsRobert De NiroJames WoodsElizabeth McGovern
+>>>>>>> Stashed changes
 Gene Kelly, Debbie Reynolds, and Donald O'Connor in Singin' in the Rain (1952)
 88. Singin' in the Rain
 1952
 1h 43m
 G
 8.3
+<<<<<<< Updated upstream
  (261K)
+=======
+ (269K)
+>>>>>>> Stashed changes
 
 A silent film star falls for a chorus girl just as he and his delusionally jealous screen partner are trying to make the difficult transition to talking pictures in 1920s Hollywood.
 DirectorStanley DonenGene KellyStarsGene KellyDonald O'ConnorDebbie Reynolds
@@ -881,7 +1579,11 @@ Capernaum (2018)
 2h 6m
 R
 8.4
+<<<<<<< Updated upstream
  (106K)
+=======
+ (113K)
+>>>>>>> Stashed changes
 
 While serving a five-year sentence for a violent crime, a 12-year-old boy sues his parents for neglect.
 DirectorNadine LabakiStarsZain Al RafeeaYordanos ShiferawBoluwatife Treasure Bankole
@@ -890,8 +1592,13 @@ Aleksey Kravchenko in Come and See (1985)
 1985
 2h 22m
 Not Rated
+<<<<<<< Updated upstream
 8.4
  (98K)
+=======
+8.3
+ (107K)
+>>>>>>> Stashed changes
 
 After finding an old rifle, a young boy joins the Soviet resistance movement against ruthless German forces and experiences the horrors of World War II.
 DirectorElem KlimovStarsAleksey KravchenkoOlga MironovaLiubomiras Laucevicius
@@ -901,9 +1608,15 @@ Jennifer Connelly in Requiem for a Dream (2000)
 1h 42m
 NC-17
 8.3
+<<<<<<< Updated upstream
  (901K)
 
 The drug-induced utopias of four Coney Island people are shattered when their addictions run deep..
+=======
+ (925K)
+
+The drug-induced utopias of four Coney Island people are shattered when their addictions run deep.
+>>>>>>> Stashed changes
 DirectorDarren AronofskyStarsEllen BurstynJared LetoJennifer Connelly
 Tom Hanks, Joan Cusack, Tim Allen, John Ratzenberger, Wallace Shawn, Jodi Benson, Blake Clark, Estelle Harris, Jeff Pidgeon, Don Rickles, and Frank Welker in Toy Story 3 (2010)
 92. Toy Story 3
@@ -911,7 +1624,11 @@ Tom Hanks, Joan Cusack, Tim Allen, John Ratzenberger, Wallace Shawn, Jodi Benson
 1h 43m
 G
 8.3
+<<<<<<< Updated upstream
  (895K)
+=======
+ (918K)
+>>>>>>> Stashed changes
 
 The toys are mistakenly delivered to a day-care center instead of the attic right before Andy leaves for college, and it's up to Woody to convince the other toys that they weren't abandoned and to return home.
 DirectorLee UnkrichStarsTom HanksTim AllenJoan Cusack
@@ -923,10 +1640,27 @@ PG
 8.3
  (1.1M)
 
+<<<<<<< Updated upstream
 After rescuing Han Solo from Jabba the Hutt, the Rebel Alliance attempt to destroy the second Death Star, while Luke struggles to help Darth Vader back from the dark side.
 DirectorRichard MarquandStarsMark HamillHarrison FordCarrie Fisher
 Jim Carrey and Kate Winslet in Eternal Sunshine of the Spotless Mind (2004)
 94. Eternal Sunshine of the Spotless Mind
+=======
+After rescuing Han Solo from Jabba the Hutt, the Rebel Alliance attempts to destroy the second Death Star while Luke struggles to help Darth Vader back from the dark side.
+DirectorRichard MarquandStarsMark HamillHarrison FordCarrie Fisher
+Mads Mikkelsen in The Hunt (2012)
+94. The Hunt
+2012
+1h 55m
+R
+8.3
+ (380K)
+
+A teacher lives a lonely life, all the while struggling over his son's custody. His life slowly gets better as he finds love and receives good news from his son, but his new luck is about to be brutally shattered by an innocent little lie.
+DirectorThomas VinterbergStarsMads MikkelsenThomas Bo LarsenAnnika Wedderkopp
+Jim Carrey and Kate Winslet in Eternal Sunshine of the Spotless Mind (2004)
+95. Eternal Sunshine of the Spotless Mind
+>>>>>>> Stashed changes
 2004
 1h 48m
 R
@@ -935,6 +1669,7 @@ R
 
 When their relationship turns sour, a couple undergoes a medical procedure to have each other erased from their memories forever.
 DirectorMichel GondryStarsJim CarreyKate WinsletTom Wilkinson
+<<<<<<< Updated upstream
 Mads Mikkelsen in The Hunt (2012)
 95. The Hunt
 2012
@@ -947,10 +1682,25 @@ A teacher lives a lonely life, all the while struggling over his son's custody. 
 DirectorThomas VinterbergStarsMads MikkelsenThomas Bo LarsenAnnika Wedderkopp
 2001: A Space Odyssey (1968)
 96. 2001: A Space Odyssey
+=======
+Takashi Shimura in Ikiru (1952)
+96. Ikiru
+1952
+2h 23m
+Not Rated
+8.3
+ (94K)
+
+A bureaucrat tries to find meaning in his life after he discovers he has terminal cancer.
+DirectorAkira KurosawaStarsTakashi ShimuraNobuo KanekoShin'ichi Himori
+2001: A Space Odyssey (1968)
+97. 2001: A Space Odyssey
+>>>>>>> Stashed changes
 1968
 2h 29m
 G
 8.3
+<<<<<<< Updated upstream
  (722K)
 
 After uncovering a mysterious artifact buried beneath the Lunar surface, a spacecraft is sent to Jupiter to find its origins: a spacecraft manned by two men and the supercomputer HAL 9000.
@@ -965,6 +1715,12 @@ R
 
 The story of American scientist J. Robert Oppenheimer and his role in the development of the atomic bomb.
 DirectorChristopher NolanStarsCillian MurphyEmily BluntMatt Damon
+=======
+ (742K)
+
+When a mysterious artifact is uncovered on the Moon, a spacecraft manned by two humans and one supercomputer is sent to Jupiter to find its origins.
+DirectorStanley KubrickStarsKeir DulleaGary LockwoodWilliam Sylvester
+>>>>>>> Stashed changes
 Steve Buscemi, Harvey Keitel, Michael Madsen, Tim Roth, and Chris Penn in Reservoir Dogs (1992)
 98. Reservoir Dogs
 1992
@@ -975,6 +1731,7 @@ R
 
 When a simple jewelry heist goes horribly wrong, the surviving criminals begin to suspect that one of them is a police informant.
 DirectorQuentin TarantinoStarsHarvey KeitelTim RothMichael Madsen
+<<<<<<< Updated upstream
 Takashi Shimura in Ikiru (1952)
 99. Ikiru
 1952
@@ -997,20 +1754,44 @@ The story of T.E. Lawrence, the English officer who successfully united and led 
 DirectorDavid LeanStarsPeter O'TooleAlec GuinnessAnthony Quinn
 Jack Lemmon and Shirley MacLaine in The Apartment (1960)
 101. The Apartment
+=======
+Jack Lemmon and Shirley MacLaine in The Apartment (1960)
+99. The Apartment
+>>>>>>> Stashed changes
 1960
 2h 5m
 Approved
 8.3
+<<<<<<< Updated upstream
  (198K)
 
 A Manhattan insurance clerk tries to rise in his company by letting its executives use his apartment for trysts, but complications and a romance of his own ensue.
 DirectorBilly WilderStarsJack LemmonShirley MacLaineFred MacMurray
 Mélissa Désormeaux-Poulin in Incendies (2010)
 102. Incendies
+=======
+ (204K)
+
+A Manhattan insurance clerk tries to rise in his company by letting its executives use his apartment for trysts, but office politics and his own romantic hopes complicate matters.
+DirectorBilly WilderStarsJack LemmonShirley MacLaineFred MacMurray
+Alec Guinness, Anthony Quinn, Peter O'Toole, José Ferrer, and Jack Hawkins in Lawrence of Arabia (1962)
+100. Lawrence of Arabia
+1962
+3h 47m
+PG
+8.3
+ (324K)
+
+The story of T.E. Lawrence, the English officer who successfully united and led the diverse, often warring, Arab tribes during World War I in order to fight the Turks.
+DirectorDavid LeanStarsPeter O'TooleAlec GuinnessAnthony Quinn
+Mélissa Désormeaux-Poulin in Incendies (2010)
+101. Incendies
+>>>>>>> Stashed changes
 2010
 2h 11m
 R
 8.3
+<<<<<<< Updated upstream
  (202K)
 
 Twins journey to the Middle East to discover their family history and fulfill their mother's last wishes.
@@ -1047,30 +1828,95 @@ When the police in a German city are unable to catch a child-murderer, other cri
 DirectorFritz LangStarsPeter LorreEllen WidmannInge Landgut
 Al Pacino in Scarface (1983)
 106. Scarface
+=======
+ (218K)
+
+Twins journey to the Middle East to discover their family history and fulfill their mother's last wishes.
+DirectorDenis VilleneuveStarsLubna AzabalMélissa Désormeaux-PoulinMaxim Gaudette
+Al Pacino in Scarface (1983)
+102. Scarface
+>>>>>>> Stashed changes
 1983
 2h 50m
 R
 8.3
+<<<<<<< Updated upstream
  (920K)
 
 In 1980 Miami, a determined Cuban immigrant takes over a drug cartel and succumbs to greed.
 DirectorBrian De PalmaStarsAl PacinoMichelle PfeifferSteven Bauer
 Edward G. Robinson, Barbara Stanwyck, and Fred MacMurray in Double Indemnity (1944)
 107. Double Indemnity
+=======
+ (947K)
+
+In the 1980s, a determined criminal-minded Cuban immigrant becomes the biggest drug smuggler in Miami, and is eventually undone by his own drug addiction.
+DirectorBrian De PalmaStarsAl PacinoMichelle PfeifferSteven Bauer
+Edward G. Robinson, Barbara Stanwyck, and Fred MacMurray in Double Indemnity (1944)
+103. Double Indemnity
+>>>>>>> Stashed changes
 1944
 1h 47m
 Approved
 8.3
+<<<<<<< Updated upstream
  (168K)
 
 A Los Angeles insurance representative lets an alluring housewife seduce him into a scheme of insurance fraud and murder that arouses the suspicion of his colleague, an insurance investigator.
 DirectorBilly WilderStarsFred MacMurrayBarbara StanwyckEdward G. Robinson
+=======
+ (172K)
+
+An insurance representative is seduced by a dissatisfied housewife into a scheme of insurance fraud and murder that arouses the suspicion of his colleague, a claims investigator.
+DirectorBilly WilderStarsFred MacMurrayBarbara StanwyckEdward G. Robinson
+Cary Grant, Alfred Hitchcock, Eva Marie Saint, and Philip Ober in North by Northwest (1959)
+104. North by Northwest
+1959
+2h 16m
+Approved
+8.3
+ (357K)
+
+A New York City advertising executive goes on the run after being mistaken for a government agent by a group of foreign spies, and falls for a woman whose loyalties he begins to doubt.
+DirectorAlfred HitchcockStarsCary GrantEva Marie SaintJames Mason
+Orson Welles, Dorothy Comingore, and Ruth Warrick in Citizen Kane (1941)
+105. Citizen Kane
+1941
+1h 59m
+PG
+8.3
+ (476K)
+
+Following the death of publishing tycoon Charles Foster Kane, reporters scramble to uncover the meaning of his final utterance: 'Rosebud.'
+DirectorOrson WellesStarsOrson WellesJoseph CottenDorothy Comingore
+Robert De Niro, Val Kilmer, Al Pacino, Ted Levine, Wes Studi, Jerry Trimble, and Mykelti Williamson in Heat (1995)
+106. Heat
+1995
+2h 50m
+R
+8.3
+ (741K)
+
+A group of high-end professional thieves start to feel the heat from the LAPD when they unknowingly leave a verbal clue at their latest heist.
+DirectorMichael MannStarsAl PacinoRobert De NiroVal Kilmer
+M (1931)
+107. M
+1931
+1h 39m
+Passed
+8.3
+ (174K)
+
+When the police in a German city are unable to catch a child-murderer, other criminals join in the manhunt.
+DirectorFritz LangStarsPeter LorreEllen WidmannInge Landgut
+>>>>>>> Stashed changes
 Vertigo (1958)
 108. Vertigo
 1958
 2h 8m
 PG
 8.3
+<<<<<<< Updated upstream
  (428K)
 
 A former San Francisco police detective juggles wrestling with his personal demons and becoming obsessed with the hauntingly beautiful woman he has been hired to trail, who may be deeply disturbed.
@@ -1117,23 +1963,84 @@ In the future, a sadistic gang leader is imprisoned and volunteers for a conduct
 DirectorStanley KubrickStarsMalcolm McDowellPatrick MageeMichael Bates
 Edward Asner, Bob Peterson, and Jordan Nagai in Up (2009)
 113. Up
+=======
+ (439K)
+
+A former San Francisco police detective juggles wrestling with his personal demons and becoming obsessed with the hauntingly beautiful woman he has been hired to trail, who may be deeply disturbed.
+DirectorAlfred HitchcockStarsJames StewartKim NovakBarbara Bel Geddes
+Full Metal Jacket (1987)
+109. Full Metal Jacket
+1987
+1h 56m
+R
+8.2
+ (811K)
+
+A pragmatic U.S. Marine observes the dehumanizing effects the Vietnam War has on his fellow recruits from their brutal boot camp training to the bloody street fighting in Hue.
+DirectorStanley KubrickStarsMatthew ModineR. Lee ErmeyVincent D'Onofrio
+Edward Asner, Bob Peterson, and Jordan Nagai in Up (2009)
+110. Up
+>>>>>>> Stashed changes
 2009
 1h 36m
 PG
 8.3
+<<<<<<< Updated upstream
  (1.1M)
 
 78-year-old Carl Fredricksen travels to Paradise Falls in his house equipped with balloons, inadvertently taking a young stowaway.
 DirectorPete DocterBob PetersonStarsEdward AsnerJordan NagaiJohn Ratzenberger
+=======
+ (1.2M)
+
+78-year-old Carl Fredricksen travels to South America in his house equipped with balloons, inadvertently taking a young stowaway.
+DirectorPete DocterBob PetersonStarsEdward AsnerJordan NagaiJohn Ratzenberger
+Audrey Tautou in Amélie (2001)
+111. Amélie
+2001
+2h 2m
+R
+8.3
+ (810K)
+
+Despite being caught in her imaginative world, young waitress Amelie decides to help people find happiness. Her quest to spread joy leads her on a journey during which she finds true love.
+DirectorJean-Pierre JeunetStarsAudrey TautouMathieu KassovitzRufus
+Cillian Murphy in Oppenheimer (2023)
+112. Oppenheimer
+2023
+3h
+R
+8.3
+ (833K)
+
+A dramatization of the life story of J. Robert Oppenheimer, the physicist who had a large hand in the development of the atomic bombs that brought an end to World War II.
+DirectorChristopher NolanStarsCillian MurphyEmily BluntMatt Damon
+Malcolm McDowell in A Clockwork Orange (1971)
+113. A Clockwork Orange
+1971
+2h 16m
+R
+8.2
+ (901K)
+
+Alex DeLarge and his droogs barbarize a decaying near-future.
+DirectorStanley KubrickStarsMalcolm McDowellPatrick MageeMichael Bates
+>>>>>>> Stashed changes
 Gregory Peck, Mary Badham, and Phillip Alford in To Kill a Mockingbird (1962)
 114. To Kill a Mockingbird
 1962
 2h 9m
 Approved
 8.3
+<<<<<<< Updated upstream
  (334K)
 
 Atticus Finch, a widowed lawyer in Depression-era Alabama, defends a Black man against an undeserved rape charge, and tries to educate his young children against prejudice.
+=======
+ (340K)
+
+A widowed lawyer in Depression-era Alabama defends a black man against a false rape charge while teaching his young children about the sad reality of prejudice.
+>>>>>>> Stashed changes
 DirectorRobert MulliganStarsGregory PeckJohn MegnaFrank Overton
 Leila Hatami and Payman Maadi in A Separation (2011)
 115. A Separation
@@ -1141,6 +2048,7 @@ Leila Hatami and Payman Maadi in A Separation (2011)
 2h 3m
 PG-13
 8.3
+<<<<<<< Updated upstream
  (259K)
 
 A married couple are faced with a difficult decision - to improve the life of their child by moving to another country or to stay in Iran and look after a deteriorating parent who has Alzheimer's disease.
@@ -1157,10 +2065,39 @@ Two grifters team up to pull off the ultimate con.
 DirectorGeorge Roy HillStarsPaul NewmanRobert RedfordRobert Shaw
 Sean Connery, Harrison Ford, Denholm Elliott, Michael Byrne, Alison Doody, and John Rhys-Davies in Indiana Jones and the Last Crusade (1989)
 117. Indiana Jones and the Last Crusade
+=======
+ (266K)
+
+A married couple are faced with a difficult decision - to improve the life of their child by moving to another country or to stay in Iran and look after a deteriorating parent who has Alzheimer's disease.
+DirectorAsghar FarhadiStarsPayman MaadiLeila HatamiSareh Bayat
+Bruce Willis in Die Hard (1988)
+116. Die Hard
+1988
+2h 12m
+R
+8.2
+ (977K)
+
+A New York City police officer tries to save his estranged wife and several others taken hostage by terrorists during a Christmas party at the Nakatomi Plaza in Los Angeles.
+DirectorJohn McTiernanStarsBruce WillisAlan RickmanBonnie Bedelia
+Paul Newman and Robert Redford in The Sting (1973)
+117. The Sting
+1973
+2h 9m
+PG
+8.3
+ (287K)
+
+Two grifters team up to pull off the ultimate con.
+DirectorGeorge Roy HillStarsPaul NewmanRobert RedfordRobert Shaw
+Sean Connery, Harrison Ford, Denholm Elliott, Michael Byrne, Alison Doody, and John Rhys-Davies in Indiana Jones and the Last Crusade (1989)
+118. Indiana Jones and the Last Crusade
+>>>>>>> Stashed changes
 1989
 2h 7m
 PG-13
 8.2
+<<<<<<< Updated upstream
  (813K)
 
 In 1938, after his father goes missing while pursuing the Holy Grail, Indiana Jones finds himself up against the Nazis again to stop them from obtaining its powers.
@@ -1175,20 +2112,31 @@ R
 
 A New York City police officer tries to save his estranged wife and several others taken hostage by terrorists during a Christmas party at the Nakatomi Plaza in Los Angeles.
 DirectorJohn McTiernanStarsBruce WillisAlan RickmanBonnie Bedelia
+=======
+ (829K)
+
+In 1938, after his father goes missing while pursuing the Holy Grail, Indiana Jones finds himself up against the Nazis again to stop them from obtaining its powers.
+DirectorSteven SpielbergStarsHarrison FordSean ConneryAlison Doody
+>>>>>>> Stashed changes
 Aamir Khan and Darsheel Safary in Like Stars on Earth (2007)
 119. Like Stars on Earth
 2007
 2h 42m
 PG
 8.3
+<<<<<<< Updated upstream
  (207K)
+=======
+ (214K)
+>>>>>>> Stashed changes
 
-An eight-year-old boy is thought to be a lazy trouble-maker, until the new art teacher has the patience and compassion to discover the real problem behind his struggles in school.
+A young boy is thought to be nothing but a lazy troublemaker until the new art teacher has the patience and compassion to discover the real problem behind his struggles in school.
 DirectorAamir KhanAmole GupteStarsDarsheel SafaryAamir KhanTisca Chopra
 Brigitte Helm in Metropolis (1927)
 120. Metropolis
 1927
 2h 33m
+<<<<<<< Updated upstream
 Not Rated
 8.3
  (186K)
@@ -1257,20 +2205,79 @@ A mentally unstable veteran works as a nighttime taxi driver in New York City, w
 DirectorMartin ScorseseStarsRobert De NiroJodie FosterCybill Shepherd
 Downfall (2004)
 127. Downfall
+=======
+Not Rated
+8.3
+ (192K)
+
+In a futuristic city sharply divided between the working class and the city planners, the son of the city's mastermind falls in love with a working-class prophet who predicts the coming of a savior to mediate their differences.
+DirectorFritz LangStarsBrigitte HelmAlfred AbelGustav Fröhlich
+Brad Pitt, Benicio Del Toro, Dennis Farina, Vinnie Jones, Jason Statham, and Ade in Snatch (2000)
+121. Snatch
+2000
+1h 42m
+R
+8.2
+ (933K)
+
+Unscrupulous boxing promoters, violent bookmakers, a Russian gangster, incompetent amateur robbers and supposedly Jewish jewelers fight to track down a priceless stolen diamond.
+DirectorGuy RitchieStarsJason StathamBrad PittStephen Graham
+George MacKay and Dean-Charles Chapman in 1917 (2019)
+122. 1917
+2019
+1h 59m
+R
+8.2
+ (709K)
+
+April 6th, 1917. As an infantry battalion assembles to wage war deep in enemy territory, two soldiers are assigned to race against time and deliver a message that will stop 1,600 men from walking straight into a deadly trap.
+DirectorSam MendesStarsDean-Charles ChapmanGeorge MacKayDaniel Mays
+Kim Basinger, Russell Crowe, Kevin Spacey, Danny DeVito, and Guy Pearce in L.A. Confidential (1997)
+123. L.A. Confidential
+1997
+2h 18m
+R
+8.2
+ (634K)
+
+As corruption grows in 1950s Los Angeles, three policemen - one strait-laced, one brutal, and one sleazy - investigate a series of murders with their own brand of justice.
+DirectorCurtis HansonStarsKevin SpaceyRussell CroweGuy Pearce
+Bicycle Thieves (1948)
+124. Bicycle Thieves
+1948
+1h 29m
+Not Rated
+8.3
+ (182K)
+
+In post-war Italy, a working-class man's bicycle is stolen, endangering his efforts to find work. He and his son set out to find it.
+DirectorVittorio De SicaStarsLamberto MaggioraniEnzo StaiolaLianella Carell
+Downfall (2004)
+125. Downfall
+>>>>>>> Stashed changes
 2004
 2h 36m
 R
 8.2
+<<<<<<< Updated upstream
  (376K)
+=======
+ (384K)
+>>>>>>> Stashed changes
 
 Traudl Junge, the final secretary for Adolf Hitler, tells of the Nazi dictator's final days in his Berlin bunker at the end of WWII.
 DirectorOliver HirschbiegelStarsBruno GanzAlexandra Maria LaraUlrich Matthes
 Dangal (2016)
+<<<<<<< Updated upstream
 128. Dangal
+=======
+126. Dangal
+>>>>>>> Stashed changes
 2016
 2h 41m
 Not Rated
 8.3
+<<<<<<< Updated upstream
  (212K)
 
 Former wrestler Mahavir Singh Phogat and his two wrestler daughters struggle towards glory at the Commonwealth Games in the face of societal oppression.
@@ -1285,6 +2292,42 @@ R
 
 Two bounty hunters with the same intentions team up to track down a gang of outlaws led by a psychotic Mexican bandit, who is plotting an audacious bank robbery.
 DirectorSergio LeoneStarsClint EastwoodLee Van CleefGian Maria Volontè
+=======
+ (221K)
+
+Mahavir Singh Phogat, a former wrestler, decides to fulfill his dream of winning a gold medal for his country by training his daughters for the Commonwealth Games despite the existing social stigmas.
+DirectorNitesh TiwariStarsAamir KhanSakshi TanwarFatima Sana Shaikh
+Robert De Niro in Taxi Driver (1976)
+127. Taxi Driver
+1976
+1h 54m
+R
+8.2
+ (958K)
+
+A mentally unstable veteran works as a nighttime taxi driver in New York City, where the perceived decadence and sleaze fuels his urge for violent action.
+DirectorMartin ScorseseStarsRobert De NiroJodie FosterCybill Shepherd
+Lin-Manuel Miranda in Hamilton (2020)
+128. Hamilton
+2020
+2h 40m
+PG-13
+8.3
+ (123K)
+
+The real life of one of America's foremost founding fathers and first Secretary of the Treasury, Alexander Hamilton. Captured live on Broadway from the Richard Rodgers Theater with the original Broadway cast.
+DirectorThomas KailStarsLin-Manuel MirandaPhillipa SooLeslie Odom Jr.
+Leonardo DiCaprio, Chris Kerson, and Jonah Hill in The Wolf of Wall Street (2013)
+129. The Wolf of Wall Street
+2013
+3h
+R
+8.2
+ (1.6M)
+
+Based on the true story of Jordan Belfort, from his rise to a wealthy stock-broker living the high life to his fall involving crime, corruption and the federal government.
+DirectorMartin ScorseseStarsLeonardo DiCaprioJonah HillMargot Robbie
+>>>>>>> Stashed changes
 Christian Bale in Batman Begins (2005)
 130. Batman Begins
 2005
@@ -1295,6 +2338,7 @@ PG-13
 
 After witnessing his parents' death, Bruce learns the art of fighting to confront injustice. When he returns to Gotham as Batman, he must stop a secret society that intends to destroy the city.
 DirectorChristopher NolanStarsChristian BaleMichael CaineKen Watanabe
+<<<<<<< Updated upstream
 Leonardo DiCaprio and Jonah Hill in The Wolf of Wall Street (2013)
 131. The Wolf of Wall Street
 2013
@@ -1317,10 +2361,25 @@ After two male musicians witness a mob hit, they flee the state in an all-female
 DirectorBilly WilderStarsMarilyn MonroeTony CurtisJack Lemmon
 Viggo Mortensen and Mahershala Ali in Green Book (2018)
 133. Green Book
+=======
+Clint Eastwood and Lee Van Cleef in For a Few Dollars More (1965)
+131. For a Few Dollars More
+1965
+2h 12m
+R
+8.2
+ (283K)
+
+Two bounty killers with similar intentions but different motivations team up to track down a psychotic Mexican outlaw before he and his gang can carry out an audacious bank robbery.
+DirectorSergio LeoneStarsClint EastwoodLee Van CleefGian Maria Volontè
+Viggo Mortensen and Mahershala Ali in Green Book (2018)
+132. Green Book
+>>>>>>> Stashed changes
 2018
 2h 10m
 PG-13
 8.2
+<<<<<<< Updated upstream
  (576K)
 
 A working-class Italian-American bouncer becomes the driver for an African-American classical pianist on a tour of venues through the 1960s American South.
@@ -1355,16 +2414,33 @@ Approved
 
 In 1948, an American court in occupied Germany tries four Nazis judged for war crimes.
 DirectorStanley KramerStarsSpencer TracyBurt LancasterRichard Widmark
+=======
+ (613K)
+
+A working-class Italian-American bouncer becomes the driver for an African-American classical pianist on a tour of venues through the 1960s American South.
+DirectorPeter FarrellyStarsViggo MortensenMahershala AliLinda Cardellini
+Marilyn Monroe, Tony Curtis, and Jack Lemmon in Some Like It Hot (1959)
+133. Some Like It Hot
+1959
+2h 1m
+Approved
+8.2
+ (291K)
+
+After two male musicians witness a mob hit, they flee the state in an all-female band disguised as women, but further complications set in.
+DirectorBilly WilderStarsMarilyn MonroeTony CurtisJack Lemmon
+>>>>>>> Stashed changes
 Jim Carrey in The Truman Show (1998)
-137. The Truman Show
+134. The Truman Show
 1998
 1h 43m
 PG
 8.2
  (1.2M)
 
-An insurance salesman discovers his whole life is actually a reality TV show.
+An insurance salesman begins to suspect that his whole life is actually some sort of reality TV show.
 DirectorPeter WeirStarsJim CarreyEd HarrisLaura Linney
+<<<<<<< Updated upstream
 All About Eve (1950)
 138. All About Eve
 1950
@@ -1387,50 +2463,133 @@ After thirty years, Maverick is still pushing the envelope as a top naval aviato
 DirectorJoseph KosinskiStarsTom CruiseJennifer ConnellyMiles Teller
 Leonardo DiCaprio in Shutter Island (2010)
 140. Shutter Island
+=======
+Marlene Dietrich, Judy Garland, Burt Lancaster, Spencer Tracy, Montgomery Clift, Maximilian Schell, and Richard Widmark in Judgment at Nuremberg (1961)
+135. Judgment at Nuremberg
+1961
+2h 59m
+Approved
+8.3
+ (89K)
+
+Fictionalized depiction of the 1947 Judges' Trial, the third of twelve trials of Nazi war criminals conducted by the American occupying forces in Nuremberg, Germany, in which former judges of Nazi Germany were tried for their actions.
+DirectorStanley KramerStarsSpencer TracyBurt LancasterRichard Widmark
+Charles Chaplin and Jackie Coogan in The Kid (1921)
+136. The Kid
+1921
+1h 8m
+Passed
+8.2
+ (139K)
+
+The Tramp cares for an abandoned child, but events put their relationship in jeopardy.
+DirectorCharles ChaplinStarsCharles ChaplinEdna PurvianceJackie Coogan
+Anthony Hopkins and Olivia Colman in The Father (2020)
+137. The Father
+2020
+1h 37m
+PG-13
+8.2
+ (206K)
+
+A man refuses all assistance from his daughter as he ages. As he tries to make sense of his changing circumstances, he begins to doubt his loved ones, his own mind and even the fabric of his reality.
+DirectorFlorian ZellerStarsAnthony HopkinsOlivia ColmanMark Gatiss
+Leonardo DiCaprio in Shutter Island (2010)
+138. Shutter Island
+>>>>>>> Stashed changes
 2010
 2h 18m
 R
 8.2
  (1.5M)
 
+<<<<<<< Updated upstream
 Teddy Daniels and Chuck Aule, two US marshals, are sent to an asylum on a remote island in order to investigate the disappearance of a patient, where Teddy uncovers a shocking truth about the place.
 DirectorMartin ScorseseStarsLeonardo DiCaprioEmily MortimerMark Ruffalo
+=======
+Two US marshals are sent to a mental institution on an inhospitable island in order to investigate the disappearance of a patient.
+DirectorMartin ScorseseStarsLeonardo DiCaprioEmily MortimerMark Ruffalo
+All About Eve (1950)
+139. All About Eve
+1950
+2h 18m
+Approved
+8.2
+ (143K)
+
+A seemingly timid but secretly ruthless ingénue insinuates herself into the lives of an aging Broadway star and her circle of theater friends.
+DirectorJoseph L. MankiewiczStarsBette DavisAnne BaxterGeorge Sanders
+>>>>>>> Stashed changes
 Daniel Day-Lewis in There Will Be Blood (2007)
 141. There Will Be Blood
 2007
 2h 38m
 R
 8.2
+<<<<<<< Updated upstream
  (643K)
 
 A story of family, religion, hatred, oil and madness, focusing on a turn-of-the-century prospector in the early days of the business.
 DirectorPaul Thomas AndersonStarsDaniel Day-LewisPaul DanoCiarán Hinds
-Robert De Niro, Sharon Stone, and Joe Pesci in Casino (1995)
-142. Casino
-1995
-2h 58m
-R
-8.2
- (566K)
+=======
+ (659K)
 
-In Las Vegas, two best friends - a casino executive and a mafia enforcer - compete for a gambling empire and a fast-living, fast-loving socialite.
-DirectorMartin ScorseseStarsRobert De NiroSharon StoneJoe Pesci
+A story of family, religion, hatred, oil and madness, focusing on a turn-of-the-century prospector in the early days of the business.
+DirectorPaul Thomas AndersonStarsDaniel Day-LewisPaul DanoCiarán Hinds
 Jeff Goldblum, Richard Attenborough, Laura Dern, Sam Neill, Ariana Richards, BD Wong, Joseph Mazzello, Martin Ferrero, and Bob Peck in Jurassic Park (1993)
-143. Jurassic Park
+141. Jurassic Park
 1993
 2h 7m
 PG-13
 8.2
  (1.1M)
 
+An industrialist invites some experts to visit his theme park of cloned dinosaurs. After a power failure, the creatures run loose, putting everyone's lives, including his grandchildren's, in danger.
+DirectorSteven SpielbergStarsSam NeillLaura DernJeff Goldblum
+>>>>>>> Stashed changes
+Robert De Niro, Sharon Stone, and Joe Pesci in Casino (1995)
+142. Casino
+1995
+2h 58m
+R
+8.2
+<<<<<<< Updated upstream
+ (566K)
+=======
+ (582K)
+>>>>>>> Stashed changes
+
+In Las Vegas, two best friends--a casino executive and a Mafia enforcer--compete for a gambling empire and a fast-living, fast-loving socialite.
+DirectorMartin ScorseseStarsRobert De NiroSharon StoneJoe Pesci
+<<<<<<< Updated upstream
+Jeff Goldblum, Richard Attenborough, Laura Dern, Sam Neill, Ariana Richards, BD Wong, Joseph Mazzello, Martin Ferrero, and Bob Peck in Jurassic Park (1993)
+143. Jurassic Park
+1993
+2h 7m
+=======
+Haley Joel Osment in The Sixth Sense (1999)
+143. The Sixth Sense
+1999
+1h 47m
+>>>>>>> Stashed changes
+PG-13
+8.2
+ (1.1M)
+
+<<<<<<< Updated upstream
 A pragmatic paleontologist touring an almost complete theme park on an island in Central America is tasked with protecting a couple of kids after a power failure causes the park's cloned dinosaurs to run loose.
 DirectorSteven SpielbergStarsSam NeillLaura DernJeff Goldblum
+=======
+After being shot by a resentful former patient who he failed to help, a Philadelphia child psychologist seeks redemption by treating a young boy with a disturbing secret.
+DirectorM. Night ShyamalanStarsBruce WillisHaley Joel OsmentToni Collette
+>>>>>>> Stashed changes
 Ran (1985)
 144. Ran
 1985
 2h 40m
 R
 8.2
+<<<<<<< Updated upstream
  (137K)
 
 In Medieval Japan, an elderly warlord retires, handing over his empire to his three sons. However, he vastly underestimates how the new-found power will corrupt them and cause them to turn on each other...and him.
@@ -1457,10 +2616,59 @@ In the Falangist Spain of 1944, the bookish young stepdaughter of a sadistic arm
 DirectorGuillermo del ToroStarsIvana BaqueroAriadna GilSergi López
 Clint Eastwood, Morgan Freeman, Gene Hackman, and Richard Harris in Unforgiven (1992)
 147. Unforgiven
+=======
+ (141K)
+
+In Medieval Japan, an elderly warlord retires, handing over his empire to his three sons. However, he vastly underestimates how the new-found power will corrupt them and cause them to turn on each other...and him.
+DirectorAkira KurosawaStarsTatsuya NakadaiAkira TeraoJinpachi Nezu
+Tom Cruise in Top Gun: Maverick (2022)
+145. Top Gun: Maverick
+2022
+2h 10m
+PG-13
+8.2
+ (749K)
+
+The story involves Maverick confronting his past while training a group of younger Top Gun graduates, including the son of his deceased best friend, for a dangerous mission.
+DirectorJoseph KosinskiStarsTom CruiseJennifer ConnellyMiles Teller
+Javier Bardem and Josh Brolin in No Country for Old Men (2007)
+146. No Country for Old Men
+2007
+2h 2m
+R
+8.2
+ (1.1M)
+
+Violence and mayhem ensue after a hunter stumbles upon the aftermath of a drug deal gone wrong and over two million dollars in cash near the Rio Grande.
+DirectorEthan CoenJoel CoenStarsTommy Lee JonesJavier BardemJosh Brolin
+Ivana Baquero in Pan's Labyrinth (2006)
+147. Pan's Labyrinth
+2006
+1h 58m
+R
+8.2
+ (717K)
+
+In 1944 Spain, a girl is sent to live with her ruthless stepfather. During the night, she meets a fairy who takes her to an old faun. He tells her she's a princess, but must prove her royalty by surviving three gruesome tasks.
+DirectorGuillermo del ToroStarsIvana BaqueroAriadna GilSergi López
+The Thing (1982)
+148. The Thing
+1982
+1h 49m
+R
+8.2
+ (488K)
+
+A research team in Antarctica is hunted by a shape-shifting alien that assumes the appearance of its victims.
+DirectorJohn CarpenterStarsKurt RussellWilford BrimleyKeith David
+Clint Eastwood, Morgan Freeman, Gene Hackman, and Richard Harris in Unforgiven (1992)
+149. Unforgiven
+>>>>>>> Stashed changes
 1992
 2h 10m
 R
 8.2
+<<<<<<< Updated upstream
  (437K)
 
 Retired Old West gunslinger William Munny reluctantly takes on one last job, with the help of his old partner Ned Logan and a young man, The "Schofield Kid."
@@ -1477,10 +2685,19 @@ Violence and mayhem ensue after a hunter stumbles upon the aftermath of a drug d
 DirectorEthan CoenJoel CoenStarsTommy Lee JonesJavier BardemJosh Brolin
 Russell Crowe in A Beautiful Mind (2001)
 149. A Beautiful Mind
+=======
+ (447K)
+
+Retired Old West gunslinger Will Munny reluctantly takes on one last job to avenge an injustice with the help of his old partner and a newer outlaw known simply as The Schofield Kid.
+DirectorClint EastwoodStarsClint EastwoodGene HackmanMorgan Freeman
+Russell Crowe in A Beautiful Mind (2001)
+150. A Beautiful Mind
+>>>>>>> Stashed changes
 2001
 2h 15m
 PG-13
 8.2
+<<<<<<< Updated upstream
  (990K)
 
 A mathematical genius, John Nash made an astonishing discovery early in his career and stood on the brink of international acclaim. But the handsome and arrogant Nash soon found himself on a harrowing journey of self-discovery.
@@ -1495,6 +2712,12 @@ R
 
 A research team in Antarctica is hunted by a shape-shifting alien that assumes the appearance of its victims.
 DirectorJohn CarpenterStarsKurt RussellWilford BrimleyKeith David
+=======
+ (1M)
+
+A mathematical genius, John Nash made an astonishing discovery early in his career and stood on the brink of international acclaim. But the handsome and arrogant Nash soon found himself on a harrowing journey of self-discovery.
+DirectorRon HowardStarsRussell CroweEd HarrisJennifer Connelly
+>>>>>>> Stashed changes
 Uma Thurman in Kill Bill: Vol. 1 (2003)
 151. Kill Bill: Vol. 1
 2003
@@ -1503,13 +2726,18 @@ R
 8.2
  (1.2M)
 
+<<<<<<< Updated upstream
 After awakening from a four-year coma, a former assassin wreaks vengeance on the team of assassins who betrayed her.
+=======
+After waking from a four-year coma, a former assassin wreaks vengeance on the team of assassins who betrayed her.
+>>>>>>> Stashed changes
 DirectorQuentin TarantinoStarsUma ThurmanDavid CarradineDaryl Hannah
 Humphrey Bogart, Tim Holt, and Walter Huston in The Treasure of the Sierra Madre (1948)
 152. The Treasure of the Sierra Madre
 1948
 2h 6m
 Approved
+<<<<<<< Updated upstream
 8.2
  (133K)
 
@@ -1547,6 +2775,35 @@ Allied prisoners of war plan for several hundred of their number to escape from 
 DirectorJohn SturgesStarsSteve McQueenJames GarnerRichard Attenborough
 Willem Dafoe, Albert Brooks, Ellen DeGeneres, and Brad Garrett in Finding Nemo (2003)
 156. Finding Nemo
+=======
+8.2
+ (136K)
+
+Two down-on-their-luck Americans searching for work in 1920s Mexico convince an old prospector to help them mine for gold in the Sierra Madre Mountains.
+DirectorJohn HustonStarsHumphrey BogartWalter HustonTim Holt
+Toshirô Mifune and Tatsuya Nakadai in Yojimbo (1961)
+153. Yojimbo
+1961
+1h 50m
+Not Rated
+8.2
+ (136K)
+
+A crafty ronin comes to a town divided by two criminal gangs and decides to play them against each other to free the town.
+DirectorAkira KurosawaStarsToshirô MifuneEijirô TônoTatsuya Nakadai
+Jake Gyllenhaal and Hugh Jackman in Prisoners (2013)
+154. Prisoners
+2013
+2h 33m
+R
+8.2
+ (848K)
+
+Keller Dover is facing every parent's worst nightmare. His six-year-old daughter, Anna, is missing, together with her friend, Joy, and as minutes turn to hours, panic sets in. The only lead is an RV that had been parked on their street.
+DirectorDenis VilleneuveStarsHugh JackmanJake GyllenhaalViola Davis
+Albert Brooks, Ellen DeGeneres, and Barry Humphries in Finding Nemo (2003)
+155. Finding Nemo
+>>>>>>> Stashed changes
 2003
 1h 40m
 G
@@ -1555,6 +2812,7 @@ G
 
 After his son is captured in the Great Barrier Reef and taken to Sydney, a timid clownfish sets out on a journey to bring him home.
 DirectorAndrew StantonLee UnkrichStarsAlbert BrooksEllen DeGeneresAlexander Gould
+<<<<<<< Updated upstream
 Jake Gyllenhaal and Hugh Jackman in Prisoners (2013)
 157. Prisoners
 2013
@@ -1575,13 +2833,49 @@ Not Rated
 
 The rape of a bride and the murder of her samurai husband are recalled from the perspectives of a bandit, the bride, the samurai's ghost and a woodcutter.
 DirectorAkira KurosawaStarsToshirô MifuneMachiko KyôMasayuki Mori
+=======
+Richard Attenborough, Steve McQueen, and James Garner in The Great Escape (1963)
+156. The Great Escape
+1963
+2h 52m
+Approved
+8.2
+ (265K)
+
+Allied officers in a German prisoner of war camp during World War II making a daring plan for a mass escape by hundreds of their men, hoping to draw German personnel and resources away from combat operations.
+DirectorJohn SturgesStarsSteve McQueenJames GarnerRichard Attenborough
+John Cleese, Terry Gilliam, Graham Chapman, Eric Idle, Terry Jones, Michael Palin, and Monty Python in Monty Python and the Holy Grail (1975)
+157. Monty Python and the Holy Grail
+1975
+1h 31m
+PG
+8.2
+ (582K)
+
+King Arthur and his Knights of the Round Table embark on a surreal, low-budget search for the Holy Grail, encountering many, very silly obstacles.
+DirectorTerry GilliamTerry JonesStarsGraham ChapmanJohn CleeseEric Idle
+Pedro Pascal, Boone Storm, and Lupita Nyong'o in The Wild Robot (2024)
+158. The Wild Robot
+2024
+1h 42m
+PG
+8.2
+ (107K)
+
+After a shipwreck, an intelligent robot called Roz is stranded on an uninhabited island. To survive the harsh environment, Roz bonds with the island's animals and cares for an orphaned baby goose.
+DirectorChris SandersStarsLupita Nyong'oPedro PascalKit Connor
+>>>>>>> Stashed changes
 Christian Bale, Jean Simmons, Chieko Baishô, and Takuya Kimura in Howl's Moving Castle (2004)
 159. Howl's Moving Castle
 2004
 1h 59m
 PG
 8.2
+<<<<<<< Updated upstream
  (452K)
+=======
+ (471K)
+>>>>>>> Stashed changes
 
 When an unconfident young woman is cursed with an old body by a spiteful witch, her only chance of breaking the spell lies with a self-indulgent yet insecure young wizard and his companions in his legged, walking castle.
 DirectorHayao MiyazakiStarsChieko BaishôTakuya KimuraTatsuya Gashûin
@@ -1591,6 +2885,7 @@ John Hurt in The Elephant Man (1980)
 2h 4m
 PG
 8.2
+<<<<<<< Updated upstream
  (259K)
 
 A Victorian surgeon rescues a heavily disfigured man who is mistreated while scraping a living as a side-show freak. Behind his monstrous façade, there is revealed a person of kindness, intelligence and sophistication.
@@ -1607,20 +2902,46 @@ A private detective hired to expose an adulterer in 1930s Los Angeles finds hims
 DirectorRoman PolanskiStarsJack NicholsonFaye DunawayJohn Huston
 Grace Kelly and Anthony Dawson in Dial M for Murder (1954)
 162. Dial M for Murder
+=======
+ (266K)
+
+A Victorian surgeon rescues a heavily disfigured man who is mistreated while scraping a living as a side-show freak. Behind his monstrous façade, there is revealed a person of kindness, intelligence and sophistication.
+DirectorDavid LynchStarsAnthony HopkinsJohn HurtAnne Bancroft
+Grace Kelly and Anthony Dawson in Dial M for Murder (1954)
+161. Dial M for Murder
+>>>>>>> Stashed changes
 1954
 1h 45m
 PG
 8.2
+<<<<<<< Updated upstream
  (189K)
 
 A former tennis star arranges the murder of his adulterous wife.
 DirectorAlfred HitchcockStarsRay MillandGrace KellyRobert Cummings
+=======
+ (195K)
+
+A former tennis star arranges the murder of his adulterous wife.
+DirectorAlfred HitchcockStarsRay MillandGrace KellyRobert Cummings
+Toshirô Mifune in Rashomon (1950)
+162. Rashomon
+1950
+1h 28m
+Not Rated
+8.2
+ (186K)
+
+The rape of a bride and the murder of her samurai husband are recalled from the perspectives of a bandit, the bride, the samurai's ghost and a woodcutter.
+DirectorAkira KurosawaStarsToshirô MifuneMachiko KyôMasayuki Mori
+>>>>>>> Stashed changes
 Clark Gable and Vivien Leigh in Gone with the Wind (1939)
 163. Gone with the Wind
 1939
 3h 58m
 G
 8.2
+<<<<<<< Updated upstream
  (335K)
 
 A sheltered and manipulative Southern belle and a roguish profiteer face off in a turbulent romance as the society around them crumbles with the end of slavery and is rebuilt during the Civil War and Reconstruction periods.
@@ -1647,20 +2968,68 @@ In a future British dystopian society, a shadowy freedom fighter, known only by 
 DirectorJames McTeigueStarsHugo WeavingNatalie PortmanRupert Graves
 Ricardo Darín and Soledad Villamil in The Secret in Their Eyes (2009)
 166. The Secret in Their Eyes
+=======
+ (342K)
+
+A sheltered and manipulative Southern belle and a roguish profiteer face off in a turbulent romance as the society around them crumbles with the end of slavery and is rebuilt during the Civil War and Reconstruction periods.
+DirectorVictor FlemingGeorge CukorSam WoodStarsClark GableVivien LeighThomas Mitchell
+Jack Nicholson and Faye Dunaway in Chinatown (1974)
+164. Chinatown
+1974
+2h 10m
+R
+8.1
+ (360K)
+
+A private detective hired to expose an adulterer in 1930s Los Angeles finds himself caught up in a web of deceit, corruption, and murder.
+DirectorRoman PolanskiStarsJack NicholsonFaye DunawayJohn Huston
+Ricardo Darín and Soledad Villamil in The Secret in Their Eyes (2009)
+165. The Secret in Their Eyes
+>>>>>>> Stashed changes
 2009
 2h 9m
 R
 8.2
+<<<<<<< Updated upstream
  (223K)
 
 A retired legal counselor writes a novel hoping to find closure for one of his past unresolved homicide cases and for his unreciprocated love with his superior - both of which still haunt him decades later.
 DirectorJuan José CampanellaStarsRicardo DarínSoledad VillamilPablo Rago
 Lewis Black, Bill Hader, Amy Poehler, Phyllis Smith, and Mindy Kaling in Inside Out (2015)
 167. Inside Out
+=======
+ (229K)
+
+A retired legal counselor writes a novel hoping to find closure for one of his past unresolved homicide cases and for his unreciprocated love with his superior - both of which still haunt him decades later.
+DirectorJuan José CampanellaStarsRicardo DarínSoledad VillamilPablo Rago
+Jason Flemyng, Dexter Fletcher, Vinnie Jones, Jason Statham, and Nick Moran in Lock, Stock and Two Smoking Barrels (1998)
+166. Lock, Stock and Two Smoking Barrels
+1998
+1h 47m
+R
+8.1
+ (629K)
+
+When four small-time criminals lose a rigged poker game against a London kingpin, he gives them one week to settle their enormous debt.
+DirectorGuy RitchieStarsJason FlemyngDexter FletcherNick Moran
+Natalie Portman and Hugo Weaving in V for Vendetta (2005)
+167. V for Vendetta
+2005
+2h 12m
+R
+8.1
+ (1.2M)
+
+In a future British dystopian society, a shadowy freedom fighter, known only by the alias of "V", plots to overthrow the tyrannical government - with the help of a young woman.
+DirectorJames McTeigueStarsHugo WeavingNatalie PortmanRupert Graves
+Lewis Black, Bill Hader, Amy Poehler, Phyllis Smith, and Mindy Kaling in Inside Out (2015)
+168. Inside Out
+>>>>>>> Stashed changes
 2015
 1h 35m
 PG
 8.1
+<<<<<<< Updated upstream
  (789K)
 
 After young Riley is uprooted from her Midwest life and moved to San Francisco, her emotions - Joy, Fear, Anger, Disgust and Sadness - conflict on how best to navigate a new city, house, and school.
@@ -1707,10 +3076,19 @@ British POWs are forced to build a railway bridge across the river Kwai for thei
 DirectorDavid LeanStarsWilliam HoldenAlec GuinnessJack Hawkins
 Joan Cusack, Jason Schwartzman, Rashida Jones, Sergio Pablos, Will Sasso, J.K. Simmons, and Neda Margrethe Labba in Klaus (2019)
 172. Klaus
+=======
+ (848K)
+
+After young Riley is uprooted from her Midwest life and moved to San Francisco, her emotions - Joy, Fear, Anger, Disgust and Sadness - conflict on how best to navigate a new city, house, and school.
+DirectorPete DocterRonnie Del CarmenStarsAmy PoehlerBill HaderLewis Black
+Joan Cusack, Jason Schwartzman, Rashida Jones, Sergio Pablos, Will Sasso, J.K. Simmons, and Neda Margrethe Labba in Klaus (2019)
+169. Klaus
+>>>>>>> Stashed changes
 2019
 1h 36m
 PG
 8.2
+<<<<<<< Updated upstream
  (191K)
 
 A simple act of kindness always sparks another, even in a frozen, faraway place. When Smeerensburg's new postman, Jesper, befriends toymaker Klaus, their gifts melt an age-old feud and deliver a sleigh full of holiday traditions.
@@ -1737,6 +3115,54 @@ With Spider-Man's identity now revealed, Peter asks Doctor Strange for help. Whe
 DirectorJon WattsStarsTom HollandZendayaBenedict Cumberbatch
 Leonardo DiCaprio and Tom Hanks in Catch Me If You Can (2002)
 175. Catch Me If You Can
+=======
+ (207K)
+
+A simple act of kindness always sparks another, even in a frozen, faraway place. When Smeerensburg's new postman, Jesper, befriends toymaker Klaus, their gifts melt an age-old feud and deliver a sleigh full of holiday traditions.
+DirectorSergio PablosCarlos Martínez LópezStarsJason SchwartzmanJ.K. SimmonsRashida Jones
+Woody Harrelson, Frances McDormand, and Sam Rockwell in Three Billboards Outside Ebbing, Missouri (2017)
+170. Three Billboards Outside Ebbing, Missouri
+2017
+1h 55m
+R
+8.1
+ (572K)
+
+A mother personally challenges the local authorities to solve her daughter's murder when they fail to catch the culprit.
+DirectorMartin McDonaghStarsFrances McDormandWoody HarrelsonSam Rockwell
+Robert De Niro in Raging Bull (1980)
+171. Raging Bull
+1980
+2h 9m
+R
+8.1
+ (390K)
+
+The life of boxer Jake LaMotta, whose violence and temper that led him to the top in the ring destroyed his life outside of it.
+DirectorMartin ScorseseStarsRobert De NiroCathy MoriartyJoe Pesci
+Ewan McGregor, Robert Carlyle, Jonny Lee Miller, Ewen Bremner, and Kelly Macdonald in Trainspotting (1996)
+172. Trainspotting
+1996
+1h 33m
+R
+8.1
+ (741K)
+
+Renton, deeply immersed in the Edinburgh drug scene, tries to clean up and get out despite the allure of drugs and the influence of friends.
+DirectorDanny BoyleStarsEwan McGregorEwen BremnerJonny Lee Miller
+Alec Guinness, William Holden, Jack Hawkins, Sessue Hayakawa, Geoffrey Horne, and Ann Sears in The Bridge on the River Kwai (1957)
+173. The Bridge on the River Kwai
+1957
+2h 41m
+PG
+8.1
+ (239K)
+
+British POWs are forced to build a railway bridge across the river Kwai for their Japanese captors in occupied Burma, not knowing that the allied forces are planning a daring commando raid through the jungle to destroy it.
+DirectorDavid LeanStarsWilliam HoldenAlec GuinnessJack Hawkins
+Leonardo DiCaprio and Tom Hanks in Catch Me If You Can (2002)
+174. Catch Me If You Can
+>>>>>>> Stashed changes
 2002
 2h 21m
 PG-13
@@ -1745,12 +3171,26 @@ PG-13
 
 Barely 17 yet, Frank is a skilled forger who has passed as a doctor, lawyer and pilot. FBI agent Carl becomes obsessed with tracking down the con man, who only revels in the pursuit.
 DirectorSteven SpielbergStarsLeonardo DiCaprioTom HanksChristopher Walken
+<<<<<<< Updated upstream
+=======
+Fargo (1996)
+175. Fargo
+1996
+1h 38m
+R
+8.1
+ (743K)
+
+Minnesota car salesman Jerry Lundegaard's inept crime falls apart due to his and his henchmen's bungling and the persistent police work of the quite pregnant Marge Gunderson.
+DirectorJoel CoenEthan CoenStarsWilliam H. MacyFrances McDormandSteve Buscemi
+>>>>>>> Stashed changes
 Joel Edgerton and Tom Hardy in Warrior (2011)
 176. Warrior
 2011
 2h 20m
 PG-13
 8.1
+<<<<<<< Updated upstream
  (499K)
 
 The youngest son of an alcoholic former boxer returns home, where he's trained by his father for competition in a mixed martial arts tournament - a path that puts the fighter on a collision course with his estranged, older brother.
@@ -1787,10 +3227,19 @@ Frankie, an ill-tempered old coach, reluctantly agrees to train aspiring boxer M
 DirectorClint EastwoodStarsHilary SwankClint EastwoodMorgan Freeman
 Rupert Grint, Daniel Radcliffe, and Emma Watson in Harry Potter and the Deathly Hallows: Part 2 (2011)
 180. Harry Potter and the Deathly Hallows: Part 2
+=======
+ (508K)
+
+The youngest son of an alcoholic former boxer returns home, where he's trained by his father for competition in a mixed martial arts tournament - a path that puts the fighter on a collision course with his estranged, older brother.
+DirectorGavin O'ConnorStarsTom HardyNick NolteJoel Edgerton
+Rupert Grint, Daniel Radcliffe, and Emma Watson in Harry Potter and the Deathly Hallows: Part 2 (2011)
+177. Harry Potter and the Deathly Hallows: Part 2
+>>>>>>> Stashed changes
 2011
 2h 10m
 PG-13
 8.1
+<<<<<<< Updated upstream
  (951K)
 
 Harry, Ron, and Hermione search for Voldemort's remaining Horcruxes in their effort to destroy the Dark Lord as the final battle rages on at Hogwarts.
@@ -1887,12 +3336,61 @@ World War II American Army Medic Desmond T. Doss, serving during the Battle of O
 DirectorMel GibsonStarsAndrew GarfieldSam WorthingtonLuke Bracey
 Charlize Theron and Tom Hardy in Mad Max: Fury Road (2015)
 190. Mad Max: Fury Road
+=======
+ (979K)
+
+As the battle between the forces of good and evil in the wizarding world escalates, Harry Potter draws ever closer to his final confrontation with Voldemort.
+DirectorDavid YatesStarsDaniel RadcliffeEmma WatsonRupert Grint
+Clint Eastwood in Gran Torino (2008)
+178. Gran Torino
+2008
+1h 56m
+R
+8.1
+ (830K)
+
+After a Hmong teenager tries to steal his prized 1972 Gran Torino, a disgruntled, prejudiced Korean War veteran seeks to redeem both the boy and himself.
+DirectorClint EastwoodStarsClint EastwoodBee VangChristopher Carley
+Willem Dafoe, Alfred Molina, Thomas Haden Church, Jamie Foxx, Rhys Ifans, Benedict Cumberbatch, Zendaya, and Tom Holland in Spider-Man: No Way Home (2021)
+179. Spider-Man: No Way Home
+2021
+2h 28m
+PG-13
+8.2
+ (925K)
+
+With Spider-Man's identity now revealed, Peter asks Doctor Strange for help. When a spell goes wrong, dangerous foes from other worlds start to appear.
+DirectorJon WattsStarsTom HollandZendayaBenedict Cumberbatch
+Clint Eastwood, Morgan Freeman, and Hilary Swank in Million Dollar Baby (2004)
+180. Million Dollar Baby
+2004
+2h 12m
+PG-13
+8.1
+ (737K)
+
+Frankie, an ill-tempered old coach, reluctantly agrees to train aspiring boxer Maggie. Impressed with her determination and talent, he helps her become the best and the two soon form a close bond.
+DirectorClint EastwoodStarsHilary SwankClint EastwoodMorgan Freeman
+My Neighbor Totoro (1988)
+181. My Neighbor Totoro
+1988
+1h 26m
+G
+8.1
+ (398K)
+
+When two girls move to the country to be near their ailing mother, they have adventures with the wondrous forest spirits who live nearby.
+DirectorHayao MiyazakiStarsHitoshi TakagiNoriko HidakaChika Sakamoto
+Charlize Theron and Tom Hardy in Mad Max: Fury Road (2015)
+182. Mad Max: Fury Road
+>>>>>>> Stashed changes
 2015
 2h
 R
 8.1
  (1.1M)
 
+<<<<<<< Updated upstream
 In a post-apocalyptic wasteland, a woman rebels against a tyrannical ruler in search for her homeland with the aid of a group of female prisoners, a psychotic worshiper and a drifter named Max.
 DirectorGeorge MillerStarsTom HardyCharlize TheronNicholas Hoult
 Charles Chaplin in The Gold Rush (1925)
@@ -1927,20 +3425,185 @@ An Irish man's coerced confession to an I.R.A. bombing he did not commit results
 DirectorJim SheridanStarsDaniel Day-LewisPete PostlethwaiteAlison Crosbie
 Robin Williams in Dead Poets Society (1989)
 194. Dead Poets Society
+=======
+In a post-apocalyptic wasteland, a woman rebels against a tyrannical ruler in search for her homeland with the aid of a group of female prisoners, a psychotic worshipper and a drifter named Max.
+DirectorGeorge MillerStarsTom HardyCharlize TheronNicholas Hoult
+Demon Slayer: Kimetsu no Yaiba - Tsuzumi Mansion Arc (2021)
+183. Demon Slayer: Kimetsu no Yaiba - Tsuzumi Mansion Arc
+2021
+1h 27m
+8.7
+ (28K)
+
+Tanjiro ventures to the south-southeast where he encounters a cowardly young man named Zenitsu Agatsuma. He is a fellow survivor from Final Selection and his sparrow asks Tanjiro to help keep him in line.
+DirectorHaruo Sotozaki
+Ben-Hur (1959)
+184. Ben-Hur
+1959
+3h 32m
+G
+8.1
+ (260K)
+
+A Jewish prince is betrayed and sent into slavery by a Roman friend in 1st-century Jerusalem, but it's not long before he regains his freedom and comes back for revenge.
+DirectorWilliam WylerStarsCharlton HestonJack HawkinsStephen Boyd
+Children of Heaven (1997)
+185. Children of Heaven
+1997
+1h 29m
+PG
+8.2
+ (84K)
+
+After a boy loses his sister's pair of shoes, he goes on a series of adventures in order to find them. When he can't, he tries a new way to "win" a new pair.
+DirectorMajid MajidiStarsMohammad Amir NajiAmir Farrokh HashemianBahare Seddiqi
+Chiwetel Ejiofor in 12 Years a Slave (2013)
+186. 12 Years a Slave
+2013
+2h 14m
+R
+8.1
+ (756K)
+
+In the antebellum United States, Solomon Northup, a free black man from upstate New York, is abducted and sold into slavery.
+DirectorSteve McQueenStarsChiwetel EjioforMichael Kenneth WilliamsMichael Fassbender
+Barry Lyndon (1975)
+187. Barry Lyndon
+1975
+3h 5m
+PG
+8.1
+ (189K)
+
+An Irish rogue wins the heart of a rich widow and assumes her dead husband's aristocratic position in 18th-century England.
+DirectorStanley KubrickStarsRyan O'NealMarisa BerensonPatrick Magee
+Harrison Ford and Sean Young in Blade Runner (1982)
+188. Blade Runner
+1982
+1h 57m
+R
+8.1
+ (843K)
+
+A blade runner must pursue and terminate four replicants who stole a ship in space and have returned to Earth to find their creator.
+DirectorRidley ScottStarsHarrison FordRutger HauerSean Young
+Ethan Hawke and Julie Delpy in Before Sunrise (1995)
+189. Before Sunrise
+1995
+1h 41m
+R
+8.1
+ (352K)
+
+A young man and woman meet on a train in Europe, and wind up spending one evening together in Vienna. Unfortunately, both know that this will probably be their only night together.
+DirectorRichard LinklaterStarsEthan HawkeJulie DelpyAndrea Eckert
+The Grand Budapest Hotel (2014)
+190. The Grand Budapest Hotel
+2014
+1h 39m
+R
+8.1
+ (912K)
+
+A writer encounters the owner of an aging high-class hotel, who tells him of his early years serving as a lobby boy in the hotel's glorious years under an exceptional concierge.
+DirectorWes AndersonStarsRalph FiennesF. Murray AbrahamMathieu Amalric
+Andrew Garfield in Hacksaw Ridge (2016)
+191. Hacksaw Ridge
+2016
+2h 19m
+R
+8.1
+ (622K)
+
+World War II American Army Medic Desmond T. Doss, serving during the Battle of Okinawa, refuses to kill people and becomes the first man in American history to receive the Medal of Honor without firing a shot.
+DirectorMel GibsonStarsAndrew GarfieldSam WorthingtonLuke Bracey
+Robin Williams in Dead Poets Society (1989)
+192. Dead Poets Society
+>>>>>>> Stashed changes
 1989
 2h 8m
 PG
 8.1
+<<<<<<< Updated upstream
  (549K)
 
 Maverick teacher John Keating returns in 1959 to the prestigious New England boys' boarding school where he was once a star student, using poetry to embolden his pupils to new heights of self-expression.
 DirectorPeter WeirStarsRobin WilliamsRobert Sean LeonardEthan Hawke
 Rita Cortese, Ricardo Darín, Diego Gentile, Darío Grandinetti, Oscar Martínez, María Marull, Erica Rivas, Leonardo Sbaraglia, Mónica Villa, María Onetto, and Julieta Zylberberg in Wild Tales (2014)
 195. Wild Tales
+=======
+ (575K)
+
+Maverick teacher John Keating returns in 1959 to the prestigious New England boys' boarding school where he was once a star student, using poetry to embolden his pupils to new heights of self-expression.
+DirectorPeter WeirStarsRobin WilliamsRobert Sean LeonardEthan Hawke
+Ben Affleck in Gone Girl (2014)
+193. Gone Girl
+2014
+2h 29m
+R
+8.1
+ (1.1M)
+
+The husband of a missing woman becomes the chief suspect in her disappearance.
+DirectorDavid FincherStarsBen AffleckRosamund PikeNeil Patrick Harris
+Memories of Murder (2003)
+194. Memories of Murder
+2003
+2h 12m
+Not Rated
+8.1
+ (231K)
+
+In a small Korean province in 1986, two detectives struggle with the case of multiple young women being found raped and murdered by an unknown culprit.
+DirectorBong Joon HoStarsSong Kang-hoKim Sang-kyungKim Roe-ha
+Daniel Day-Lewis in In the Name of the Father (1993)
+195. In the Name of the Father
+1993
+2h 13m
+R
+8.1
+ (193K)
+
+An Irish man's coerced confession to an I.R.A. bombing he did not commit results in the imprisonment of his father as well. Meanwhile, a British lawyer fights to clear their names and free them.
+DirectorJim SheridanStarsDaniel Day-LewisPete PostlethwaiteAlison Crosbie
+Billy Crystal and John Goodman in Monsters, Inc. (2001)
+196. Monsters, Inc.
+2001
+1h 32m
+G
+8.1
+ (1M)
+
+In order to power the city, monsters have to scare children so that they scream. However, the children are toxic to the monsters, and after a child gets through, two monsters realize things may not be what they think.
+DirectorPete DocterDavid SilvermanLee UnkrichStarsBilly CrystalJohn GoodmanMary Gibbs
+Charles Chaplin in The Gold Rush (1925)
+197. The Gold Rush
+1925
+1h 35m
+Approved
+8.1
+ (122K)
+
+A prospector goes to the Klondike during the 1890s gold rush in hopes of making his fortune, and is smitten with a girl he sees in a dance hall.
+DirectorCharles ChaplinStarsCharles ChaplinMack SwainTom Murray
+Janeane Garofalo, Ian Holm, Peter O'Toole, Brian Dennehy, John Ratzenberger, James Remar, Will Arnett, Brad Garrett, Kathy Griffin, Brad Bird, Lindsey Collins, Walt Dohrn, Tony Fucile, Michael Giacchino, Bradford Lewis, Danny Mann, Teddy Newton, Patton Oswalt, Lou Romano, Peter Sohn, Jake Steinfeld, Stéphane Roux, Lori Richardson, Thomas Keller, Julius Callahan, Marco Boerries, Andrea Boerries, and Jack Bird in Ratatouille (2007)
+198. Ratatouille
+2007
+1h 51m
+G
+8.1
+ (864K)
+
+A rat who can cook makes an unusual alliance with a young kitchen worker at a famous Paris restaurant.
+DirectorBrad BirdJan PinkavaStarsBrad GarrettLou RomanoPatton Oswalt
+Rita Cortese, Ricardo Darín, Diego Gentile, Darío Grandinetti, Oscar Martínez, María Marull, Erica Rivas, Leonardo Sbaraglia, Mónica Villa, María Onetto, and Julieta Zylberberg in Wild Tales (2014)
+199. Wild Tales
+>>>>>>> Stashed changes
 2014
 2h 2m
 R
 8.1
+<<<<<<< Updated upstream
  (217K)
 
 Six short stories that explore the extremities of human behavior involving people in distress.
@@ -1996,12 +3659,32 @@ Passed
 A film projectionist longs to be a detective, and puts his meagre skills to work when he is framed by a rival for stealing his girlfriend's father's pocketwatch.
 DirectorBuster KeatonStarsBuster KeatonKathryn McGuireJoe Keaton
 Jay Baruchel in How to Train Your Dragon (2010)
+=======
+ (224K)
+
+Six short stories that explore the extremities of human behavior involving people in distress.
+DirectorDamián SzifronStarsDarío GrandinettiMaría MarullMónica Villa
+Maharaja (2024)
+200. Maharaja
+2024
+2h 21m
+8.4
+ (59K)
+
+A barber seeks vengeance after his home is burglarized, cryptically telling police his "lakshmi" has been taken, leaving them uncertain if it's a person or object. His quest to recover the elusive "lakshmi" unfolds.
+DirectorNithilan SaminathanStarsVijay SethupathiAnurag KashyapMamta Mohandas
+Jay Baruchel and Randy Thom in How to Train Your Dragon (2010)
+>>>>>>> Stashed changes
 201. How to Train Your Dragon
 2010
 1h 38m
 PG
 8.1
+<<<<<<< Updated upstream
  (803K)
+=======
+ (827K)
+>>>>>>> Stashed changes
 
 A hapless young Viking who aspires to hunt dragons becomes the unlikely friend of a young dragon himself, and learns there may be more to the creatures than he assumed.
 DirectorDean DeBloisChris SandersStarsJay BaruchelGerard ButlerChristopher Mintz-Plasse
@@ -2011,6 +3694,7 @@ Susan Backlinie and Bruce in Jaws (1975)
 2h 4m
 PG
 8.1
+<<<<<<< Updated upstream
  (662K)
 
 When a killer shark unleashes chaos on a beach community off Cape Cod, it's up to a local sheriff, a marine biologist, and an old seafarer to hunt the beast down.
@@ -2037,10 +3721,49 @@ In a decrepit South American village, four men are hired to transport an urgent 
 DirectorHenri-Georges ClouzotStarsYves MontandCharles VanelPeter van Eyck
 Mary and Max (2009)
 205. Mary and Max
+=======
+ (683K)
+
+When a massive killer shark unleashes chaos on a beach community off Long Island, it's up to a local sheriff, a marine biologist, and an old seafarer to hunt the beast down.
+DirectorSteven SpielbergStarsRoy ScheiderRobert ShawRichard Dreyfuss
+Robert De Niro in The Deer Hunter (1978)
+203. The Deer Hunter
+1978
+3h 3m
+R
+8.1
+ (371K)
+
+An in-depth examination of the ways in which the Vietnam War impacts and disrupts the lives of several friends in a small steel mill town in Pennsylvania.
+DirectorMichael CiminoStarsRobert De NiroChristopher WalkenJohn Cazale
+Buster Keaton in Sherlock Jr. (1924)
+204. Sherlock Jr.
+1924
+45m
+Passed
+8.2
+ (60K)
+
+A film projectionist longs to be a detective, and puts his meagre skills to work when he is framed by a rival for stealing his girlfriend's father's pocketwatch.
+DirectorBuster KeatonStarsBuster KeatonKathryn McGuireJoe Keaton
+Buster Keaton in The General (1926)
+205. The General
+1926
+1h 18m
+Passed
+8.1
+ (101K)
+
+After being rejected by the Confederate military, not realizing it was due to his crucial civilian role, an engineer must single-handedly recapture his beloved locomotive after it is seized by Union spies and return it through enemy lines.
+DirectorClyde BruckmanBuster KeatonStarsBuster KeatonMarion MackGlen Cavender
+Mary and Max (2009)
+206. Mary and Max
+>>>>>>> Stashed changes
 2009
 1h 32m
 Not Rated
 8.1
+<<<<<<< Updated upstream
  (187K)
 
 In 1976 Melbourne, a lonely 8-year-old girl strikes up a correspondence with an unlikely pen pal: a severely obese 44-year-old New Yorker with Asperger's syndrome.
@@ -2077,10 +3800,29 @@ A rat who can cook makes an unusual alliance with a young kitchen worker at a fa
 DirectorBrad BirdJan PinkavaStarsBrad GarrettLou RomanoPatton Oswalt
 Christian Bale and Matt Damon in Ford v Ferrari (2019)
 209. Ford v Ferrari
+=======
+ (193K)
+
+In 1976 Melbourne, a lonely 8-year-old girl strikes up a correspondence with an unlikely pen pal: a severely obese 44-year-old New Yorker with Asperger's syndrome.
+DirectorAdam ElliotStarsToni CollettePhilip Seymour HoffmanEric Bana
+Marlon Brando in On the Waterfront (1954)
+207. On the Waterfront
+1954
+1h 48m
+Approved
+8.1
+ (170K)
+
+An ex-prize fighter turned New Jersey longshoreman struggles to stand up to his corrupt union bosses, including his older brother, as he starts to connect with the grieving sister of one of the syndicate's victims.
+DirectorElia KazanStarsMarlon BrandoKarl MaldenLee J. Cobb
+Christian Bale and Matt Damon in Ford v Ferrari (2019)
+208. Ford v Ferrari
+>>>>>>> Stashed changes
 2019
 2h 32m
 PG-13
 8.1
+<<<<<<< Updated upstream
  (479K)
 
 American car designer Carroll Shelby and driver Ken Miles battle corporate interference and the laws of physics to build a revolutionary race car for Ford in order to defeat Ferrari at the 24 Hours of Le Mans in 1966.
@@ -2089,10 +3831,21 @@ Setsuko Hara and Chishû Ryû in Tokyo Story (1953)
 210. Tokyo Story
 1953
 2h 16m
+=======
+ (507K)
+
+American car designer Carroll Shelby and driver Ken Miles battle corporate interference and the laws of physics to build a revolutionary race car for Ford in order to defeat Ferrari at the 24 Hours of Le Mans in 1966.
+DirectorJames MangoldStarsMatt DamonChristian BaleJon Bernthal
+The Wages of Fear (1953)
+209. The Wages of Fear
+1953
+2h 36m
+>>>>>>> Stashed changes
 Not Rated
 8.1
  (69K)
 
+<<<<<<< Updated upstream
 An old couple visit their children and grandchildren in the city, but receive little attention.
 DirectorYasujirô OzuStarsChishû RyûChieko HigashiyamaSô Yamamura
 Julianne Moore and Jeff Bridges in The Big Lebowski (1998)
@@ -2125,12 +3878,57 @@ Not Rated
 
 A knight returning to Sweden after the Crusades seeks answers about life, death, and the existence of God as he plays chess against the Grim Reaper during the Black Plague.
 DirectorIngmar BergmanStarsMax von SydowGunnar BjörnstrandBengt Ekerot
+=======
+In a decrepit South American village, four men are hired to transport an urgent nitroglycerine shipment without the equipment that would make it safe.
+DirectorHenri-Georges ClouzotStarsYves MontandCharles VanelPeter van Eyck
+James Stewart, Jean Arthur, Claude Rains, Edward Arnold, Beulah Bondi, Guy Kibbee, Thomas Mitchell, and Eugene Pallette in Mr. Smith Goes to Washington (1939)
+210. Mr. Smith Goes to Washington
+1939
+2h 9m
+Approved
+8.1
+ (124K)
+
+A naive youth leader is appointed to fill a vacancy in the U.S. Senate. His idealistic plans promptly collide with corruption at home and subterfuge from his hero in Washington, but he tries to forge ahead despite attacks on his character.
+DirectorFrank CapraStarsJames StewartJean ArthurClaude Rains
+Wild Strawberries (1957)
+211. Wild Strawberries
+1957
+1h 32m
+Not Rated
+8.1
+ (118K)
+
+After living a life marked by coldness, an aging professor is forced to confront the emptiness of his existence.
+DirectorIngmar BergmanStarsVictor SjöströmBibi AnderssonIngrid Thulin
+The Third Man (1949)
+212. The Third Man
+1949
+1h 44m
+Approved
+8.1
+ (187K)
+
+Pulp novelist Holly Martins travels to shadowy, postwar Vienna, only to find himself investigating the mysterious death of an old friend, Harry Lime.
+DirectorCarol ReedStarsOrson WellesJoseph CottenAlida Valli
+Hugh Jackman in Logan (2017)
+213. Logan
+2017
+2h 17m
+R
+8.1
+ (874K)
+
+In a future where mutants are nearly extinct, an elderly and weary Logan leads a quiet life. But when Laura, a mutant child pursued by scientists, comes to him for help, he must get her to safety.
+DirectorJames MangoldStarsHugh JackmanPatrick StewartDafne Keen
+>>>>>>> Stashed changes
 Sylvester Stallone and Talia Shire in Rocky (1976)
 214. Rocky
 1976
 2h
 PG
 8.1
+<<<<<<< Updated upstream
  (630K)
 
 A small-time Philadelphia boxer gets a supremely rare chance to fight the world heavyweight champion in a bout in which he strives to go the distance for his self-respect.
@@ -2147,10 +3945,49 @@ In a future where mutants are nearly extinct, an elderly and weary Logan leads a
 DirectorJames MangoldStarsHugh JackmanPatrick StewartDafne Keen
 Michael Keaton, Liev Schreiber, Brian d'Arcy James, Mark Ruffalo, and Rachel McAdams in Spotlight (2015)
 216. Spotlight
+=======
+ (649K)
+
+A small-time Philadelphia boxer gets a supremely rare chance to fight the world heavyweight champion in a bout in which he strives to go the distance for his self-respect.
+DirectorJohn G. AvildsenStarsSylvester StalloneTalia ShireBurt Young
+Setsuko Hara and Chishû Ryû in Tokyo Story (1953)
+215. Tokyo Story
+1953
+2h 17m
+Not Rated
+8.1
+ (72K)
+
+An old couple visit their children and grandchildren in the city, but receive little attention.
+DirectorYasujirô OzuStarsChishû RyûChieko HigashiyamaSô Yamamura
+Julianne Moore and Jeff Bridges in The Big Lebowski (1998)
+216. The Big Lebowski
+1998
+1h 57m
+R
+8.1
+ (880K)
+
+Jeff "The Dude" Lebowski, mistaken for a millionaire of the same name, seeks restitution for his ruined rug and enlists his bowling buddies to help get it.
+DirectorJoel CoenEthan CoenStarsJeff BridgesJohn GoodmanJulianne Moore
+The Seventh Seal (1957)
+217. The Seventh Seal
+1957
+1h 36m
+Not Rated
+8.1
+ (205K)
+
+A knight returning to Sweden after the Crusades seeks answers about life, death, and the existence of God as he plays chess against the Grim Reaper during the Black Plague.
+DirectorIngmar BergmanStarsMax von SydowGunnar BjörnstrandBengt Ekerot
+Michael Keaton, Liev Schreiber, Brian d'Arcy James, Mark Ruffalo, and Rachel McAdams in Spotlight (2015)
+218. Spotlight
+>>>>>>> Stashed changes
 2015
 2h 9m
 R
 8.1
+<<<<<<< Updated upstream
  (503K)
 
 The true story of how the Boston Globe uncovered the massive scandal of child molestation and cover-up within the local Catholic Archdiocese, shaking the entire Catholic Church to its core.
@@ -2167,20 +4004,58 @@ Paul Rusesabagina, a hotel manager, houses over a thousand Tutsi refugees during
 DirectorTerry GeorgeStarsDon CheadleSophie OkonedoJoaquin Phoenix
 Arnold Schwarzenegger in The Terminator (1984)
 218. The Terminator
+=======
+ (513K)
+
+The true story of how the Boston Globe uncovered the massive scandal of child molestation and cover-up within the local Catholic Archdiocese, shaking the entire Catholic Church to its core.
+DirectorTom McCarthyStarsMark RuffaloMichael KeatonRachel McAdams
+Brie Larson and Jacob Tremblay in Room (2015)
+219. Room
+2015
+1h 58m
+R
+8.1
+ (462K)
+
+A little boy is held captive in a room with his mother since his birth, so he has never known the world outside.
+DirectorLenny AbrahamsonStarsBrie LarsonJacob TremblaySean Bridgers
+Arnold Schwarzenegger in The Terminator (1984)
+220. The Terminator
+>>>>>>> Stashed changes
 1984
 1h 47m
 R
 8.1
+<<<<<<< Updated upstream
  (927K)
 
 A human soldier is sent from 2029 to 1984 to stop an almost indestructible cyborg killing machine, sent from the same year, which has been programmed to execute a young woman whose unborn son is the key to humanity's future salvation.
 DirectorJames CameronStarsArnold SchwarzeneggerLinda HamiltonMichael Biehn
 Charlie Sheen, Willem Dafoe, John C. McGinley, and Kevin Eshelman in Platoon (1986)
 219. Platoon
+=======
+ (951K)
+
+A cyborg assassin from the future attempts to find and kill a young woman who is destined to give birth to a warrior that will lead a resistance to save humankind from extinction.
+DirectorJames CameronStarsArnold SchwarzeneggerLinda HamiltonMichael Biehn
+Don Cheadle, Nick Nolte, Joaquin Phoenix, Mosa Kaiser, Sophie Okonedo, Ofentse Modiselle, and Mathabo Pieterson in Hotel Rwanda (2004)
+221. Hotel Rwanda
+2004
+2h 1m
+PG-13
+8.1
+ (380K)
+
+Paul Rusesabagina, a hotel manager, houses over a thousand Tutsi refugees during their struggle against the Hutu militia in Rwanda, Africa.
+DirectorTerry GeorgeStarsDon CheadleSophie OkonedoJoaquin Phoenix
+Charlie Sheen, Willem Dafoe, John C. McGinley, and Kevin Eshelman in Platoon (1986)
+222. Platoon
+>>>>>>> Stashed changes
 1986
 2h
 R
 8.1
+<<<<<<< Updated upstream
  (441K)
 
 Chris Taylor, a neophyte recruit in Vietnam, finds himself caught in a battle of wills between two sergeants, one good and the other evil. A shrewd examination of the brutality of war and the duality of man in conflict.
@@ -2227,12 +4102,21 @@ Three World War II veterans, two of them traumatized or disabled, return home to
 DirectorWilliam WylerStarsMyrna LoyDana AndrewsFredric March
 Johnny Depp, Geoffrey Rush, Orlando Bloom, and Keira Knightley in Pirates of the Caribbean: The Curse of the Black Pearl (2003)
 224. Pirates of the Caribbean: The Curse of the Black Pearl
+=======
+ (450K)
+
+Chris Taylor, a neophyte recruit in Vietnam, finds himself caught in a battle of wills between two sergeants, one good and the other evil. A shrewd examination of the brutality of war and the duality of man in conflict.
+DirectorOliver StoneStarsCharlie SheenTom BerengerWillem Dafoe
+Johnny Depp, Geoffrey Rush, Orlando Bloom, and Keira Knightley in Pirates of the Caribbean: The Curse of the Black Pearl (2003)
+223. Pirates of the Caribbean: The Curse of the Black Pearl
+>>>>>>> Stashed changes
 2003
 2h 23m
 PG-13
 8.1
  (1.2M)
 
+<<<<<<< Updated upstream
 Blacksmith Will Turner teams up with eccentric pirate "Captain" Jack Sparrow to save his love, the governor's daughter, from Jack's former pirate allies, who are now undead.
 DirectorGore VerbinskiStarsJohnny DeppGeoffrey RushOrlando Bloom
 Max von Sydow in The Exorcist (1973)
@@ -2247,10 +4131,27 @@ When a young girl is possessed by a mysterious entity, her mother seeks the help
 DirectorWilliam FriedkinStarsEllen BurstynMax von SydowLinda Blair
 Suriya and Lijo Mol Jose in Jai Bhim (2021)
 226. Jai Bhim
+=======
+Blacksmith Will Turner teams up with eccentric pirate "Captain" Jack Sparrow to save Elizabeth Swann, the governor's daughter and his love, from Jack's former pirate allies, who are now undead.
+DirectorGore VerbinskiStarsJohnny DeppGeoffrey RushOrlando Bloom
+Vincent Cassel in La haine (1995)
+224. La haine
+1995
+1h 38m
+Not Rated
+8.1
+ (206K)
+
+24 hours in the lives of three young men in the French suburbs the day after a violent riot.
+DirectorMathieu KassovitzStarsVincent CasselHubert KoundéSaïd Taghmaoui
+Suriya and Lijo Mol Jose in Jai Bhim (2021)
+225. Jai Bhim
+>>>>>>> Stashed changes
 2021
 2h 44m
 Approved
 8.7
+<<<<<<< Updated upstream
  (218K)
 
 When a tribal man is arrested for a case of alleged theft, his wife turns to a human-rights lawyer to help bring justice.
@@ -2277,10 +4178,59 @@ A television network cynically exploits a deranged former anchor's ravings and r
 DirectorSidney LumetStarsFaye DunawayWilliam HoldenPeter Finch
 Judy Garland, Ray Bolger, Jack Haley, Bert Lahr, and Frank Morgan in The Wizard of Oz (1939)
 229. The Wizard of Oz
+=======
+ (223K)
+
+When a tribal man is arrested for a case of alleged theft, his wife turns to a human-rights lawyer to help bring justice.
+DirectorT.J. GnanavelStarsSuriyaLijo Mol JoseManikandan K.
+Ethan Hawke and Julie Delpy in Before Sunset (2004)
+226. Before Sunset
+2004
+1h 20m
+R
+8.1
+ (297K)
+
+Nine years after Jesse and Celine first met, they encounter each other again on the French leg of Jesse's book tour.
+DirectorRichard LinklaterStarsEthan HawkeJulie DelpyVernon Dobtcheff
+Dana Andrews, Myrna Loy, Fredric March, Virginia Mayo, and Teresa Wright in The Best Years of Our Lives (1946)
+227. The Best Years of Our Lives
+1946
+2h 50m
+Approved
+8.1
+ (73K)
+
+Three World War II veterans, two of them traumatized or disabled, return home to the American midwest to discover that they and their families have been irreparably changed.
+DirectorWilliam WylerStarsMyrna LoyDana AndrewsFredric March
+Maria Falconetti and Eugene Silvain in The Passion of Joan of Arc (1928)
+228. The Passion of Joan of Arc
+1928
+1h 54m
+Passed
+8.1
+ (63K)
+
+In 1431, Jeanne d'Arc is placed on trial on charges of heresy. The ecclesiastical jurists attempt to force Jeanne to recant her claims of holy visions.
+DirectorCarl Theodor DreyerStarsMaria FalconettiEugene SilvainAndré Berley
+Max von Sydow in The Exorcist (1973)
+229. The Exorcist
+1973
+2h 2m
+R
+8.1
+ (470K)
+
+When a mysterious entity possesses a young girl, her mother seeks the help of two Catholic priests to save her life.
+DirectorWilliam FriedkinStarsEllen BurstynMax von SydowLinda Blair
+Judy Garland, Ray Bolger, Jack Haley, Bert Lahr, and Frank Morgan in The Wizard of Oz (1939)
+230. The Wizard of Oz
+>>>>>>> Stashed changes
 1939
 1h 42m
 G
 8.1
+<<<<<<< Updated upstream
  (430K)
 
 Young Dorothy Gale and her dog Toto are swept away by a tornado from their Kansas farm to the magical Land of Oz, and embark on a quest with three new friends to see the Wizard, who can return her to her home and fulfill the others' wishes.
@@ -2295,12 +4245,19 @@ R
 
 A writer recounts a childhood journey with his friends to find the body of a missing boy.
 DirectorRob ReinerStarsWil WheatonRiver PhoenixCorey Feldman
+=======
+ (443K)
+
+Young Dorothy Gale and her dog Toto are swept away by a tornado from their Kansas farm to the magical Land of Oz and embark on a quest with three new friends to see the Wizard, who can return her to her home and fulfill the others' wishes.
+DirectorVictor FlemingKing VidorStarsJudy GarlandFrank MorganRay Bolger
+>>>>>>> Stashed changes
 Samuel L. Jackson, Holly Hunter, Jason Lee, Craig T. Nelson, Brad Bird, Sarah Vowell, and Spencer Fox in The Incredibles (2004)
 231. The Incredibles
 2004
 1h 55m
 PG
 8.0
+<<<<<<< Updated upstream
  (812K)
 
 While trying to lead a quiet suburban life, a family of undercover superheroes are forced into action to save the world.
@@ -2347,40 +4304,176 @@ After graduating from Emory University, top student and athlete Christopher McCa
 DirectorSean PennStarsEmile HirschVince VaughnCatherine Keener
 Julie Andrews, Christopher Plummer, Charmian Carr, Angela Cartwright, Duane Chase, Nicholas Hammond, Kym Karath, Heather Menzies-Urich, and Debbie Turner in The Sound of Music (1965)
 236. The Sound of Music
+=======
+ (839K)
+
+While trying to lead a quiet suburban life, a family of undercover superheroes are forced into action to save the world.
+DirectorBrad BirdStarsCraig T. NelsonSamuel L. JacksonHolly Hunter
+Daniel Brühl and Chris Hemsworth in Rush (2013)
+232. Rush
+2013
+2h 3m
+R
+8.1
+ (527K)
+
+James Hunt and Niki Lauda, two extremely skilled Formula One racers, have an intense rivalry with each other. However, it is their enmity that pushes them to their limits.
+DirectorRon HowardStarsDaniel BrühlChris HemsworthOlivia Wilde
+Network (1976)
+233. Network
+1976
+2h 1m
+R
+8.1
+ (176K)
+
+A television network cynically exploits a deranged former anchor's ravings and revelations about mass media for its own profit, but finds that his message may be difficult to control.
+DirectorSidney LumetStarsFaye DunawayWilliam HoldenPeter Finch
+Stand by Me (1986)
+234. Stand by Me
+1986
+1h 29m
+R
+8.1
+ (456K)
+
+A writer recounts a childhood journey with his friends to find the body of a missing boy.
+DirectorRob ReinerStarsWil WheatonRiver PhoenixCorey Feldman
+Julie Andrews, Christopher Plummer, Charmian Carr, Angela Cartwright, Duane Chase, Nicholas Hammond, Kym Karath, Heather Menzies-Urich, and Debbie Turner in The Sound of Music (1965)
+235. The Sound of Music
+>>>>>>> Stashed changes
 1965
 2h 52m
 G
 8.1
+<<<<<<< Updated upstream
  (262K)
 
 A young novice is sent by her convent in 1930s Austria to become a governess to the seven children of a widowed naval officer.
 DirectorRobert WiseStarsJulie AndrewsChristopher PlummerEleanor Parker
 Jack Benny and Carole Lombard in To Be or Not to Be (1942)
 237. To Be or Not to Be
+=======
+ (271K)
+
+A young novice is sent by her convent in 1930s Austria to become a governess to the seven children of a widowed naval officer.
+DirectorRobert WiseStarsJulie AndrewsChristopher PlummerEleanor Parker
+Richard Gere in Hachi: A Dog's Tale (2009)
+236. Hachi: A Dog's Tale
+2009
+1h 33m
+G
+8.1
+ (322K)
+
+Professor Wilson discovers a lost Akita puppy on his way home. Despite objections from his wife, Hachi endears himself to the family and grows to be Parker's loyal companion. As their bond grows deeper, a beautiful relationship unfolds.
+DirectorLasse HallströmStarsRichard GereJoan AllenCary-Hiroyuki Tagawa
+Hümeyra, Fikret Kuskan, Çetin Tekindor, Özge Özberk, and Ege Tanman in My Father and My Son (2005)
+237. My Father and My Son
+2005
+1h 52m
+Not Rated
+8.2
+ (96K)
+
+The family of a left-wing journalist is torn apart after the military coup of Turkey in 1980.
+DirectorÇagan IrmakStarsÇetin TekindorFikret KuskanHümeyra
+Kim Min-hee, Ha Jung-woo, Cho Jin-woong, and Kim Tae-ri in The Handmaiden (2016)
+238. The Handmaiden
+2016
+2h 25m
+Not Rated
+8.1
+ (183K)
+
+In 1930s Korea, a girl is hired as a handmaiden to a Japanese heiress who lives a secluded life on a countryside estate. But the maid has a secret: She is a pickpocket recruited by a swindler to help seduce the Lady and steal her fortune.
+DirectorPark Chan-wookStarsKim Min-heeHa Jung-wooCho Jin-woong
+A Man Escaped (1956)
+239. A Man Escaped
+1956
+1h 41m
+Not Rated
+8.2
+ (27K)
+
+A captured French Resistance fighter during World War II engineers a daunting escape from a German prison in France.
+DirectorRobert BressonStarsFrançois LeterrierCharles Le ClaincheMaurice Beerblock
+Jack Benny and Carole Lombard in To Be or Not to Be (1942)
+240. To Be or Not to Be
+>>>>>>> Stashed changes
 1942
 1h 39m
 Approved
 8.1
+<<<<<<< Updated upstream
  (43K)
 
 During the German occupation of Poland, an acting troupe becomes embroiled in a Polish soldier's efforts to track down a German spy.
 DirectorErnst LubitschStarsCarole LombardJack BennyRobert Stack
 Fouzia El Kader, Brahim Hadjadj, and Jean Martin in The Battle of Algiers (1966)
 238. The Battle of Algiers
+=======
+ (46K)
+
+During the German occupation of Poland, an acting troupe becomes embroiled in a Polish soldier's efforts to track down a German spy.
+DirectorErnst LubitschStarsCarole LombardJack BennyRobert Stack
+Jennifer Aniston, Harry Connick Jr., John Mahoney, Christopher McDonald, Vin Diesel, and Bob Bergen in The Iron Giant (1999)
+241. The Iron Giant
+1999
+1h 26m
+PG
+8.1
+ (239K)
+
+A young boy befriends a giant robot from outer space that a paranoid government agent wants to destroy.
+DirectorBrad BirdStarsEli MarienthalHarry Connick Jr.Jennifer Aniston
+Fouzia El Kader, Brahim Hadjadj, and Jean Martin in The Battle of Algiers (1966)
+242. The Battle of Algiers
+>>>>>>> Stashed changes
 1966
 2h 1m
 Not Rated
 8.1
+<<<<<<< Updated upstream
  (66K)
 
 In the 1950s, fear and violence escalate as the people of Algiers fight for independence from the French government.
 DirectorGillo PontecorvoStarsBrahim HadjadjJean MartinYacef Saadi
 Bill Murray and Andie MacDowell in Groundhog Day (1993)
 239. Groundhog Day
+=======
+ (69K)
+
+In the 1950s, fear and violence escalate as the people of Algiers fight for independence from the French government.
+DirectorGillo PontecorvoStarsBrahim HadjadjJean MartinYacef Saadi
+Emile Hirsch in Into the Wild (2007)
+243. Into the Wild
+2007
+2h 28m
+R
+8.1
+ (671K)
+
+After graduating from Emory University, top student and athlete Christopher McCandless abandons his possessions, gives his entire $24,000 savings account to charity and hitchhikes to Alaska to live in the wilderness.
+DirectorSean PennStarsEmile HirschVince VaughnCatherine Keener
+Henry Fonda, John Carradine, Jane Darwell, Dorris Bowdon, Frank Darien, and Russell Simpson in The Grapes of Wrath (1940)
+244. The Grapes of Wrath
+1940
+2h 9m
+Approved
+8.1
+ (103K)
+
+An Oklahoma family, driven off their farm by the poverty and hopelessness of the Dust Bowl, joins the westward migration to California, suffering the misfortunes of the homeless in the Great Depression.
+DirectorJohn FordStarsHenry FondaJane DarwellJohn Carradine
+Bill Murray and Andie MacDowell in Groundhog Day (1993)
+245. Groundhog Day
+>>>>>>> Stashed changes
 1993
 1h 41m
 PG
 8.0
+<<<<<<< Updated upstream
  (687K)
 
 A narcissistic, self-centered weatherman finds himself in a time loop on Groundhog Day.
@@ -2495,3 +4588,59 @@ Not Rated
 
 A clash between Sultan and Shahid Khan leads to the expulsion of Khan from Wasseypur, and ignites a deadly blood feud spanning three generations.
 DirectorAnurag KashyapStarsManoj BajpayeeNawazuddin SiddiquiTigmanshu Dhulia
+=======
+ (704K)
+
+A narcissistic, self-centered weatherman finds himself in a time loop on Groundhog Day.
+DirectorHarold RamisStarsBill MurrayAndie MacDowellChris Elliott
+Emilio Echevarría, Gael García Bernal, and Goya Toledo in Amores Perros (2000)
+246. Amores Perros
+2000
+2h 34m
+R
+8.0
+ (258K)
+
+An amateur dog fighter, a supermodel, and a derelict assassin, all separately struggling to find love, find their lives transformed by a devastating car wreck in Mexico City.
+DirectorAlejandro G. IñárrituStarsEmilio EchevarríaGael García BernalGoya Toledo
+Viola Davis, Bryce Dallas Howard, Octavia Spencer, and Emma Stone in The Help (2011)
+247. The Help
+2011
+2h 26m
+PG-13
+8.1
+ (506K)
+
+An aspiring author during the civil rights movement of the 1960s decides to write a book detailing the African American maids' point of view on the white families for which they work, and the hardships they go through on a daily basis.
+DirectorTate TaylorStarsViola DavisEmma StoneOctavia Spencer
+Joan Fontaine and Laurence Olivier in Rebecca (1940)
+248. Rebecca
+1940
+2h 10m
+Approved
+8.1
+ (151K)
+
+A self-conscious woman juggles adjusting to her new role as an aristocrat's wife and avoiding being intimidated by his first wife's spectral presence.
+DirectorAlfred HitchcockStarsLaurence OlivierJoan FontaineGeorge Sanders
+A Silent Voice: The Movie (2016)
+249. A Silent Voice: The Movie
+2016
+2h 10m
+Not Rated
+8.1
+ (112K)
+
+A deaf girl, Shoko, is bullied by the popular Shoya. As Shoya continues to bully Shoko, the class turns its back on him. Shoko transfers and Shoya grows up as an outcast. Alone and depressed, the regretful Shoya finds Shoko to make amends.
+DirectorTaichi IshidateNaoko YamadaStarsMiyu IrinoSaori HayamiAoi Yûki
+Paul Newman in Cool Hand Luke (1967)
+250. Cool Hand Luke
+1967
+2h 7m
+Approved
+8.0
+ (193K)
+
+A laid-back Southern man is sentenced to two years in a rural prison, but refuses to conform.
+DirectorStuart RosenbergStarsPaul NewmanGeorge KennedyStrother Martin
+>>>>>>> Stashed changes
