@@ -1,3 +1,13 @@
+gen movie top 250:
+
+chuẩn bị 2 file này:
+1. './editor/data_for_generate/top-movies-html.txt'
+2. './editor/data_for_generate/movies.txt'
+
+node editor movie
+
+======================
+
 tạo dog_breeds.json:
 
 copy json từ đây 
